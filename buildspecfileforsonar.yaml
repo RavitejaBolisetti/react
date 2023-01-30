@@ -6,8 +6,8 @@ phases:
   pre_build:
     commands:
       - npm i
-      - npm install -D typescript
-      - npm install -D ts-node
+      #- npm install -D typescript
+     # - npm install -D ts-node
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
       - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
       - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
@@ -20,8 +20,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the dist folder
-      - npm run build
-      - npm run sonar
+      - sonar-scanner -Dsonar.sources=src/app/ -Dsonar.projectKey=common-authentication-service -Dsonar.host.url=http://a4663bf2bc4dd421bad82b6cdb2056f7-256513795.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_dc31eb1c86aa50c7ffcf9c777afa78a66daf4f17
   post_build:
     commands:
       - echo Build completed on `date`
