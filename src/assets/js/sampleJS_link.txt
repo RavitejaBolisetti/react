@@ -1,0 +1,16 @@
+<!-- ChartJS -->
+<script src="asset/js/plugin/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="asset/js/plugin/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="asset/js/plugin/jquery.vmap.min.js"></script>
+<script src="asset/js/plugin/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="asset/js/plugin/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="asset/js/plugin/moment.min.js"></script>
+<script src="asset/js/plugin/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="asset/js/bootstrap.min.js"></script>
+<!-- Summernote -->
+<script src="asset/js/plugin/summernote-bs4.min.js"></script>

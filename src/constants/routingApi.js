@@ -1,0 +1,2 @@
+export const BASE_URL_LOGIN = 'https://hfu1udz3dk.execute-api.ap-south-1.amazonaws.com/dev/login';
+export const BASE_URL_USER_DETAIL = 'https://anmtqmm3kg.execute-api.ap-south-1.amazonaws.com/dev/users';

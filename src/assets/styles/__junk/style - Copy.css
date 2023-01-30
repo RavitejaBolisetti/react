@@ -1,0 +1,83 @@
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #ea3434;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #f0f5ef;
+    --gray-dark: #343a40;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+html {font-family: sans-serif; line-height: 1.15; -webkit-text-size-adjust: 100%;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
+body {margin: 0; font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;  font-weight: 400; line-height: 1.5; color: #212529;text-align: left; background-color: #fff;}
+
+.fl{float:left}
+.fr{float:right}
+.cls{clear:both}
+.pad1{padding:auto;} 
+.pad0{padding:0px;}
+.padl0{padding-left:0px;}
+.padR0M{padding-right:0px;} 
+.padR0{padding-right:0px;}
+.padb10{padding-bottom:10px;}
+.mr0{ margin:0px !important;}
+.mrt5{ margin-top:5px;}
+.mrt10{ margin-top:10px !important;}
+.mrt15M{ margin-top:auto;} /*asitava*/
+.mrt20{ margin-top:20px!important;}
+.mrt25{ margin-top:25px!important;}
+.mrt30{ margin-top:30px!important;}
+.mrt70{ margin-top:70px!important;}
+.mrl15{ margin-left:15px;}
+.mrr5{ margin-right:5px;}
+.mrb10{ margin-bottom:10px;}
+.brdNon{border: none;}
+.mendatory{color: #ff0000;}
+.minHeight188{min-height:188px;}
+.minHeight200{min-height:200px;}
+.col-centered{float: none;margin: 0 auto;}
+.textAlign{text-align:center;}
+.displayInlineBlock{    display: inline-block;}
+.col-centered{float: none;margin: 0 auto;}
+.overflowHidden{overflow:hidden;}
+.overflowYScroll{overflow-y: scroll;}
+#wrapper {width: 100%;}
+.homePageWrapper{padding: 0 15px;  min-height: 568px;  background-color: #eaeaea;}/*asitava*/
+#page-wrapper {padding: 0 15px; min-height: 568px;  background-color: #eaeaea;}
+.fieldBorderBox{margin:0px; padding:5px; border:1px solid #D2D2D2; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; overflow:hidden; width:100%; float:left; position:relative;}
+
+*,
+*::before,
+*::after {box-sizing: border-box;}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section { display: block;}
+
+.brand-text { color: var(--red);  font-size: 36px; line-height: 0.7; font-weight: 800; }
+
+
+
+
+
+

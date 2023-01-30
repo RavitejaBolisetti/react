@@ -1,0 +1,58 @@
+/************* card section Style *************/
+.card {
+	border: none;
+}
+.card-header {
+	cursor: pointer;
+	border-bottom: none;
+	background-color: $var-white;
+	color: $var-headerColor;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+	padding: 0.75rem 1.25rem;
+	position: relative;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+	&::after {
+		display: block;
+		clear: both;
+		content: "";
+	}
+	.title {
+		font-size: 16px;
+		color: $var-gray;
+	}
+	.accicon {
+		float: right;
+		font-size: 20px;
+		width: 1.2em;
+	}
+	>.card-tools {
+		float: right;
+		margin-right: -0.625rem;
+	}
+	&:not(.collapsed) {
+		.rotate-icon {
+			transform: rotate(180deg);
+		}
+	}
+}
+.card-body {
+	&::after {
+		display: block;
+		clear: both;
+		content: "";
+	}
+	border-top: 1px solid #F4F4F4;
+	padding: 0px;
+}
+.card-title {
+	float: left;
+	font-size: 1.1rem;
+	font-weight: 400;
+	margin: 0;
+	.titleICO {
+		color: $var-gray-dark4;
+		font-size: var(--font-size16);
+		margin-right: 5px;
+	}
+}

@@ -1,0 +1,231 @@
+/************* login section Style *************/
+.loginSection {
+    background: url(../../img/login_splash.png)no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100vh;
+    padding: 10px 0 0 0;
+
+    .loginMMlogo {
+        float: right;
+        padding: 10px 10px 10px 0;
+        width: 100%;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .loginlogoSection {
+        text-align: center;
+        margin-top: 10px;
+
+        color: $var-white;
+
+        .logotext {
+            padding: 10px 0px 0px 0;
+            text-transform: uppercase;
+        }
+    }
+
+    .login-wrap {
+        // width: 32%;
+        /* height:98%; */
+        margin: 10px auto 10px;
+        padding: 0px 7px;
+        background: #28272C;
+        opacity: 0.8;
+        box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
+        border-radius: 19px;
+        -moz-border-radius: 19px;
+        -webkit-border-radius: 19px;
+        border: 0px solid #000000;
+
+        .login-html {
+            width: 100%;
+            height: 100%;
+            padding: 10px 20px;
+
+            .login-form {
+                min-height: 345px;
+                position: relative;
+                -webkit-perspective: 1000px;
+                perspective: 1000px;
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+
+                .loginHeading {
+                    margin: 5px 0 30px;
+                    padding: 0;
+                    text-align: center;
+
+                    h4 {
+                        font-size: 26px;
+                        color: $var-white;
+                        text-align: center;
+                        font-weight: 300;
+                        margin: 4px 0;
+                    }
+
+                    .loginsubHeading {
+                        font-size: 14px;
+                        color: $var-white;
+                        text-align: center;
+                        font-weight: normal;
+                    }
+                }
+
+                .input-group {
+                    width: 100%;
+                    margin-bottom: 15px;
+
+                    .input-group-prepend {
+                        margin-right: -1px;
+                        display: flex;
+
+                        .input-group-text {
+                            background: none;
+                            color: $var-white;
+                            border: none;
+                            border-bottom: 1px solid $var-white;
+
+                            i {
+                                color: $var-white;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+
+                    .input,
+                    .input:focus,
+                    .input:active {
+                        background: none;
+                        border: none;
+                        border-bottom: 1px solid $var-white;
+                        box-shadow: none !important;
+                        color: $var-white;
+
+                    }
+
+                    .label,
+                    .button {
+                        text-transform: uppercase;
+                    }
+
+                    .button {
+                        width: 100%;
+                        color: $var-white;
+                        display: block;
+                        background: $var-appBut;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        border: none;
+                        padding: 10px;
+                    }
+
+                    .logininputLabel {
+                        color: $var-white;
+                        font-size: $var-font-size16 !important;
+                        margin: 4px 0 0 10px;
+                    }
+
+                    .inputOTP {
+                        width: 13%;
+                        color: $var-white;
+                        display: block;
+                        padding: 10px 0px;
+                        background: none;
+                        border: none;
+                        border-bottom: 1px solid $var-white;
+                        float: left;
+                        text-align: center;
+                        margin: 0 3px;
+                    }
+
+                }
+
+                .loginFooter {
+                    color: $var-white;
+                    text-align: center;
+                    font-weight: normal;
+                    width: 100%;
+
+                    a {
+                        font-size: $var-font-size16;
+                        color: $var-white;
+                        text-align: center;
+                        font-weight: normal;
+                    }
+                }
+
+                .forgotOTPSec {
+                    display: none;
+                }
+
+            }
+        }
+
+    }
+}
+
+/*************OTP Timer***************/
+.OTPtimer {
+    color: $var-white;
+    padding: 0;
+    font-size: $var-font-size26;
+    float: right;
+}
+
+.timer {
+    margin-top: 10px;
+
+    &>svg {
+        width: 100px;
+        height: 100px;
+
+        &>circle {
+            fill: none;
+            stroke-opacity: 0.3;
+            color: $var-white;
+            stroke: #FF3E5B;
+            stroke-width: 6;
+            transform-origin: center center;
+            transform: rotate(-90deg);
+
+            &+circle {
+                stroke-dasharray: 1;
+                stroke-dashoffset: 1;
+                stroke-linecap: round;
+                stroke-opacity: 1;
+            }
+        }
+
+        &>text {
+            fill: white;
+            font-size: 1.5rem;
+
+            &+text {
+                fill: white;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    &.animatable {
+        &>svg {
+            &>circle {
+                &+circle {
+                    transition: stroke-dashoffset 0.3s ease;
+                }
+            }
+        }
+    }
+}
+
+tspan {
+    color: $var-white;
+}
+
+#otpTimerID {
+    margin-top: -15px;
+}

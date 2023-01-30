@@ -1,0 +1,1357 @@
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-white.alert-success .icon, 
+.alert-white.alert-success .icon:after {
+  border-color: #54a754;
+  background: #60c060;
+}
+
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #98cce6;
+  color: #3a87ad;
+}
+
+.alert-white.alert-info .icon, 
+.alert-white.alert-info .icon:after {
+  border-color: #3a8ace;
+  background: #4d90fd;
+}
+
+
+.alert-white.alert-warning .icon, 
+.alert-white.alert-warning .icon:after {
+  border-color: #d68000;
+  background: #fc9700;
+}
+textarea:focus, input:focus, select:focus, button:focus{
+    outline: none;
+}
+
+.form-container {padding-top: 10px; z-index: 3;}
+.form-container .form_tab-navigation {position: relative;}
+/* .card { background-color: #FFFFFF; padding: 10px 0; width: 100%; border-radius: 6px; color: rgba(0,0,0, 0.87);  background: #fff; display: flow-root; float:left;} */
+.form_card {box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);}
+.form_card1 {box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);}
+.form_card .input-group{width:100%}
+.form_card[data-color="red"] .moving-tab {
+  position: absolute;
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background-color: #f44336;
+  top: -4px;
+  left: 0px;
+  border-radius: 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 16px 26px -10px rgba(244, 67, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(244, 67, 54, 0.2);
+}
+/*.form_card[data-color="red"] .picture:hover {
+  border-color: #f44336;
+}*/
+.form_card[data-color="red"] .choice:hover .icon, .form_card[data-color="red"] .choice.active .icon {
+  border-color: #f44336;
+  color: #f44336;
+}
+.form_card[data-color="red"] .form-group .form-control {
+  background-image: linear-gradient(#f44336, #f44336), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form_card[data-color="red"] .form-group .form-control:disabled {
+  background: #e4e4e4; padding:0 3px;
+}
+.form_card[data-color="red"] .checkbox input[type=checkbox]:checked + .checkbox-material .check {
+  background-color: #f44336;
+}
+.form_card[data-color="red"] .radio input[type=radio]:checked ~ .check {
+  background-color: #f44336;
+}
+.form_card[data-color="red"] .radio input[type=radio]:checked ~ .circle {
+  border-color: #f44336;
+}
+
+.form_card .form_Contaner-footer {
+  padding: 0 15px;
+}
+
+.form_card .disabled {
+  display: none;
+}
+
+.form_card .tab-content {
+
+  padding: 20px 15px;
+}
+.form_card .form_Contaner-footer .checkbox {
+  margin-top: 16px;
+}
+
+.form_card .form_header {
+  text-align: left;
+  /*padding: 5px 20px ;*/
+  padding: 5px 0px ;
+}
+.form_card .form_header h3 {
+  margin: 5px 0;
+  font-size:18px;
+}
+.form_card .form_header .form-title { margin: 5px 0; font-size:18px; color:var(--red); border-bottom:var(--gray) 1px solid; padding:5px 15px 10px; }
+.form_card .form_header .form-title1 { margin: 5px 0; font-size:18px; color:#C64211; border-bottom:#C64211 1px solid; padding:5px 15px 30px; }
+.form_card .form_header .form-subtitle { margin: 5px 0; font-size:16px; color:#353434; border-bottom:#828080 1px solid; padding:5px 15px 10px;}
+.form_card .form_header .form-subtitle1 { margin: 5px 0; font-size:16px; color:#353434; border-bottom:#828080 1px solid; padding:5px 15px 30px;}
+.form_card .form_header .form-subtitle2 { margin: 0; font-size:16px; color:#353434; border-bottom:#828080 1px solid; padding:0px 15px 10px;}
+.form_header h4 {margin: 5px 0; font-size:16px;}
+.form_card .form-title {
+  margin: 0;
+}
+.form_card .nav-pills > li {
+  text-align: center;
+}
+
+.form_card .btn {
+  text-transform: uppercase;
+}
+.form_card .info-text {
+  text-align: center;
+  font-weight: 300;
+  margin: 10px 0 30px;
+}
+.form_card .choice {
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.form_card .choice .icon {
+  text-align: center;
+  vertical-align: middle;
+  height: 116px;
+  width: 116px;
+  border-radius: 50%;
+  color: #999999;
+  margin: 0 auto 20px;
+  border: 4px solid #CCCCCC;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+.form_card .choice i {
+  font-size: 40px;
+  line-height: 111px;
+}
+.form_card .choice:hover .icon, .form_card .choice.active .icon {
+  border-color: #2ca8ff;
+}
+.form_card .choice input[type="radio"],
+.form_card .choice input[type="checkbox"] {
+  position: absolute;
+  left: -10000px;
+  z-index: -1;
+}
+.form_card .btn-finish {
+  display: none;
+}
+.form_card .description {
+  color: #999999;
+  font-size: 14px;
+}
+
+.form_card .add-on{float: right; top: 12px;  position: absolute;  right: 0;}
+
+.form_card .form-control {
+  height: 36px;
+  padding: 7px 0;
+  font-size: 14px;
+  line-height: 1.42857;
+}
+
+/*
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="date"].form-control,
+  input[type="time"].form-control,
+  input[type="datetime-local"].form-control,
+  input[type="month"].form-control {
+    line-height: 36px;
+  }
+  input[type="date"].input-sm, .input-group-sm input[type="date"],
+  input[type="time"].input-sm, .input-group-sm
+  input[type="time"],
+  input[type="datetime-local"].input-sm, .input-group-sm
+  input[type="datetime-local"],
+  input[type="month"].input-sm, .input-group-sm
+  input[type="month"] {
+    line-height: 24px;
+  }
+  input[type="date"].input-lg, .input-group-lg input[type="date"],
+  input[type="time"].input-lg, .input-group-lg
+  input[type="time"],
+  input[type="datetime-local"].input-lg, .input-group-lg
+  input[type="datetime-local"],
+  input[type="month"].input-lg, .input-group-lg
+  input[type="month"] {
+    line-height: 44px;
+  }
+}
+.radio label,
+.checkbox label {
+  min-height: 20px;
+}
+
+.form-control-static {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  min-height: 34px;
+}
+
+.input-sm .input-sm {
+  height: 24px;
+  padding: 3px 0;
+  font-size: 11px;
+  line-height: 1.5;
+  border-radius: 0;
+}
+.input-sm select.input-sm {
+  height: 24px;
+  line-height: 24px;
+}
+
+.form-group-sm .form-control {
+  height: 24px;
+  padding: 3px 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.form-group-sm select.form-control {
+  height: 24px;
+  line-height: 24px;
+}
+
+.form-group-sm .form-control-static {
+  height: 24px;
+  min-height: 31px;
+  padding: 4px 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.input-lg .input-lg {
+  height: 44px;
+  padding: 9px 0;
+  font-size: 18px;
+  line-height: 1.33333;
+  border-radius: 0;
+}
+.input-lg select.input-lg {
+  height: 44px;
+  line-height: 44px;
+}
+
+
+.form-group-lg .form-control {
+  height: 44px;
+  padding: 9px 0;
+  font-size: 18px;
+  line-height: 1.33333;
+}
+.form-group-lg select.form-control {
+  height: 44px;
+  line-height: 44px;
+}
+
+.form-group-lg .form-control-static {
+  height: 44px;
+  min-height: 38px;
+  padding: 10px 0;
+  font-size: 18px;
+  line-height: 1.33333;
+}
+
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+  padding-top: 8px;
+}
+.form-horizontal .radio,
+.form-horizontal .checkbox {
+  min-height: 28px;
+}
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    padding-top: 8px;
+  }
+}
+@media (min-width: 768px) {
+  .form-horizontal .form-group-lg .control-label {
+    padding-top: 13.0px;
+    font-size: 18px;
+  }
+}
+@media (min-width: 768px) {
+  .form-horizontal .form-group-sm .control-label {
+    padding-top: 4px;
+    font-size: 11px;
+  }
+}
+*/
+/*.label {
+  border-radius: 3px;
+}
+.label, .label.label-default {
+  background-color: #FFFFFF;
+}
+.label.label-inverse {
+  background-color: #212121;
+}
+.label.label-primary {
+  background-color: #9c27b0;
+}
+.label.label-success {
+  background-color: #4caf50;
+}
+.label.label-info {
+  background-color: #00bcd4;
+}
+.label.label-warning {
+  background-color: #ff9800;
+}
+.label.label-danger {
+  background-color: #f44336;
+}
+.label.label-rose {
+  background-color: #e91e63;
+}
+*/
+.form_card .form-control,
+.form_card .form-group .form-control {
+  border: 0;
+  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-size: 0 2px, 100% 1px;
+  background-repeat: no-repeat;
+  background-position: center bottom, center calc(100% - 1px);
+  background-color: transparent;
+  transition: background 0s ease-out;
+  float: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-weight: 400;
+}
+.form_card .form-control::-moz-placeholder,
+.form_card .form-group .form-control::-moz-placeholder {
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-control:-ms-input-placeholder,
+.form_card .form-group .form-control:-ms-input-placeholder {
+  color: #AAAAAA;
+  font-weight: 400;
+}
+/*
+.form_card .form-control::-webkit-input-placeholder,
+.form-group .form-control::-webkit-input-placeholder {
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form-control[readonly], .form-control[disabled], fieldset[disabled] .form-control,
+.form-group .form-control[readonly],
+.form-group .form-control[disabled], fieldset[disabled]
+.form-group .form-control {
+  background-color: transparent;
+}
+.form-control[disabled], fieldset[disabled] .form-control,
+.form-group .form-control[disabled], fieldset[disabled]
+.form-group .form-control {
+  background-image: none;
+  border-bottom: 1px dotted #D2D2D2;
+}
+*/
+.form-group {
+  position: relative;
+}
+.form-group.label-static label.control-label, .form-group.label-placeholder label.control-label, .form-group.label-floating label.control-label {
+  position: absolute;
+  pointer-events: none;
+  transition: 0.3s ease all;
+}
+/*.form-group.label-floating label.control-label {
+  will-change: left, top, contents;
+}
+.form-group.label-placeholder:not(.is-empty) label.control-label {
+  display: none;
+}
+.form-group .help-block {
+  position: absolute;
+  display: none;
+}
+.form-group.is-focused .form-control {
+  outline: none;
+  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-size: 100% 2px, 100% 1px;
+  box-shadow: none;
+  transition-duration: 0.3s;
+}
+.form-group.is-focused .form-control .material-input:after {
+  background-color: #9c27b0;
+}
+.form-group.is-focused.form-info .form-control {
+  background-image: linear-gradient(#00bcd4, #00bcd4), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.is-focused.form-success .form-control {
+  background-image: linear-gradient(#4caf50, #4caf50), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.is-focused.form-warning .form-control {
+  background-image: linear-gradient(#ff9800, #ff9800), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.is-focused.form-danger .form-control {
+  background-image: linear-gradient(#f44336, #f44336), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.is-focused.form-rose .form-control {
+  background-image: linear-gradient(#e91e63, #e91e63), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.is-focused.form-white .form-control {
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(#D2D2D2, #D2D2D2);
+}*/
+.form-group.is-focused.label-placeholder label,
+.form-group.is-focused.label-placeholder label.control-label {
+  color: #AAAAAA;
+}
+.form-group.is-focused .help-block {
+  display: block;
+}
+.form-group.has-warning .form-control {
+  box-shadow: none;
+}
+.form-group.has-warning.is-focused .form-control {
+  background-image: linear-gradient(#ff9800, #ff9800), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.has-warning label.control-label,
+.form-group.has-warning .help-block {
+  color: #ff9800;
+}
+.form-group.has-error .form-control {
+  box-shadow: none;
+}
+.form-group.has-error.is-focused .form-control {
+  background-image: linear-gradient(#f44336, #f44336), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.has-error label.control-label,
+.form-group.has-error .help-block {
+  color: #f44336;
+}
+.form-group.has-success .form-control {
+  box-shadow: none;
+}
+.form-group.has-success.is-focused .form-control {
+  background-image: linear-gradient(#4caf50, #4caf50), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.has-success label.control-label,
+.form-group.has-success .help-block {
+  color: #4caf50;
+}
+.form-group.has-info .form-control {
+  box-shadow: none;
+}
+.form-group.has-info.is-focused .form-control {
+  background-image: linear-gradient(#00bcd4, #00bcd4), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.has-info label.control-label,
+.form-group.has-info .help-block {
+  color: #00bcd4;
+}
+.form-group textarea {
+  resize: none;
+}
+.form-group textarea ~ .form-control-highlight {
+  margin-top: -11px;
+}
+.form-group select {
+  appearance: none;
+}
+.form-group select ~ .material-input:after {
+  display: none;
+}
+
+.form-control {
+  margin-bottom: 7px;
+}
+.form-control::-moz-placeholder {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form-control:-ms-input-placeholder {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form-control::-webkit-input-placeholder {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form-group-lg textarea.form-control,
+.form-group-lg select[multiple].form-control {
+  height: auto;
+}
+.input-lg textarea.input-lg,
+.input-lg select[multiple].input-lg {
+  height: auto;
+}
+.form-group-sm textarea.form-control,
+.form-group-sm select[multiple].form-control {
+  height: auto;
+}
+.input-sm textarea.input-sm,
+.input-sm select[multiple].input-sm {
+  height: auto;
+}
+
+
+/*********************************************************************/
+
+.form_card .checkbox label,
+.form_card .radio label,
+.form_card label {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+
+.form_card label.control-label {
+  font-size: 11px;
+  line-height: 1.07143;
+  color: #AAAAAA;
+  font-weight: 400;
+  margin: 16px 0 0 0;
+}
+
+
+.form_card .form-group {
+  padding-bottom: 7px;
+  margin: 27px 0 0 0;
+  width:100%
+}
+.form_card .form-group .form-control {
+  margin-bottom: 7px;
+}
+.form_card .form-group .form-control::-moz-placeholder {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group .form-control:-ms-input-placeholder {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group .form-control::-webkit-input-placeholder {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group .checkbox label,
+.form_card .form-group .radio label,
+.form_card .form-group label {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group label.control-label {
+  font-size: 11px;
+  line-height: 1.07143;
+  color: #565555;
+  font-weight: 400;
+  margin: 16px 0 0 0;
+}
+.form_card .form-group .help-block {
+  margin-top: 0;
+  font-size: 11px;
+}
+.form_card .form-group.label-floating label.control-label, .form_card .form-group.label-placeholder label.control-label {
+  top: -7px;
+  font-size: 14px;
+  line-height: 1.42857;
+}
+.form_card .form-group.label-static label.control-label, .form_card .form-group.label-floating.is-focused label.control-label,.form_card .form-group.label-floating:not(.is-empty) label.control-label {
+  top: -28px;
+  left: 0;
+  font-size: 11px;
+  line-height: 1.07143;
+}
+.form_card .form-group.label-floating input.form-control:-webkit-autofill ~ label.control-label label.control-label {
+  top: -28px;
+  left: 0;
+  font-size: 11px;
+  line-height: 1.07143;
+}
+
+.form_card .form_card .form-group.form-group-sm {
+  padding-bottom: 3px;
+  margin: 21px 0 0 0;
+}
+.form_card .form-group.form-group-sm .form-control {
+  margin-bottom: 3px;
+}
+.form_card .form-group.form-group-sm .form-control::-moz-placeholder {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-sm .form-control:-ms-input-placeholder {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-sm .form-control::-webkit-input-placeholder {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-sm .checkbox label,
+.form_card .form-group.form-group-sm .radio label,
+.form_card .form-group.form-group-sm label {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-sm label.control-label {
+  font-size: 9px;
+  line-height: 1.125;
+  color: #AAAAAA;
+  font-weight: 400;
+  margin: 16px 0 0 0;
+}
+.form_card .form-group.form-group-sm .help-block {
+  margin-top: 0;
+  font-size: 9px;
+}
+.form_card .form-group.form-group-sm.label-floating label.control-label, .form_card .form-group.form-group-sm.label-placeholder label.control-label {
+  top: -11px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.form_card .form-group.form-group-sm.label-static label.control-label, .form_card .form-group.form-group-sm.label-floating.is-focused label.control-label, .form-group.form-group-sm.label-floating:not(.is-empty) label.control-label {
+  top: -25px;
+  left: 0;
+  font-size: 9px;
+  line-height: 1.125;
+}
+.form_card .form-group.form-group-sm.label-floating input.form-control:-webkit-autofill ~ label.control-label label.control-label {
+  top: -25px;
+  left: 0;
+  font-size: 9px;
+  line-height: 1.125;
+}
+
+.form_card .form-group.form-group-lg {
+  padding-bottom: 9px;
+  margin: 30px 0 0 0;
+}
+.form_card .form-group.form-group-lg .form-control {
+  margin-bottom: 9px;
+}
+.form_card .form-group.form-group-lg .form-control::-moz-placeholder {
+  font-size: 18px;
+  line-height: 1.33333;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-lg .form-control:-ms-input-placeholder {
+  font-size: 18px;
+  line-height: 1.33333;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-lg .form-control::-webkit-input-placeholder {
+  font-size: 18px;
+  line-height: 1.33333;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group .form-control::-moz-placeholder {color:#565555;}
+.form_card .form-group .form-control:-ms-input-placeholder {color:#565555;}
+.form_card .form-group .form-control::-webkit-input-placeholder {color:#565555;}
+.form_card .form-group.form-group-lg .checkbox label,
+.form_card .form-group.form-group-lg .radio label,
+.form_card .form-group.form-group-lg label {
+  font-size: 18px;
+  line-height: 1.33333;
+  color: #AAAAAA;
+  font-weight: 400;
+}
+.form_card .form-group.form-group-lg label.control-label {
+  font-size: 14px;
+  line-height: 1.0;
+  color: #AAAAAA;
+  font-weight: 400;
+  margin: 16px 0 0 0;
+}
+.form_card .form-group.form-group-lg .help-block {
+  margin-top: 0;
+  font-size: 14px;
+}
+.form_card .form-group.form-group-lg.label-floating label.control-label,.form_card .form-group.form-group-lg.label-placeholder label.control-label {
+  top: -5px;
+  font-size: 18px;
+  line-height: 1.33333;
+}
+.form_card .form-group.form-group-lg.label-static label.control-label, .form_card .form-group.form-group-lg.label-floating.is-focused label.control-label, .form-group.form-group-lg.label-floating:not(.is-empty) label.control-label {
+  top: -32px;
+  left: 0;
+  font-size: 14px;
+  line-height: 1.0;
+}
+.form_card .form-group.form-group-lg.label-floating input.form-control:-webkit-autofill ~ label.control-label label.control-label {
+  top: -32px;
+  left: 0;
+  font-size: 14px;
+  line-height: 1.0;
+}
+
+.form_card select.form-control {
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+.form_card .form-group.is-focused select.form-control {
+  box-shadow: none;
+  border-color: #D2D2D2;
+}
+.form_card select.form-control[multiple],.form_card .form-group.is-focused select.form-control[multiple] {
+  height: 85px;
+}
+
+.form_card .input-group-btn .btn {
+  margin: 0 0 7px 0;
+}
+
+.form_card .form-group.form-group-sm .input-group-btn .btn {
+  margin: 0 0 3px 0;
+}
+.form_card .form-group.form-group-lg .input-group-btn .btn {
+  margin: 0 0 9px 0;
+}
+
+.form_card .input-group .input-group-btn {
+  padding: 0 12px;
+}
+/*.form_card .input-group .input-group-addon {
+  border: 0;
+  background: transparent;
+  padding: 6px 15px 0px;
+}*/
+
+.form_card .form-group input[type=file] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.form_card .form-control-feedback {
+  opacity: 0;
+}
+.form_card .has-success .form-control-feedback {
+  color: #4caf50;
+  opacity: 1;
+}
+.form_card .has-error .form-control-feedback {
+  color: #f44336;
+  opacity: 1;
+}
+
+/******************Button Face*************************/
+.form_card .btn {
+  border: none;
+  border-radius: 3px;
+  position: relative;
+  padding: 12px 30px;
+  margin: 10px 1px;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form_card .btn, .btn.btn-default {
+  box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+}
+.form_card .form_card .btn::-moz-focus-inner {
+  border: 0;
+} 
+.form_card .btn,.form_card .btn:hover,
+.form_card .btn:focus,.form_card .btn:active,
+.form_card .btn.active,
+.form_card .btn:active:focus,
+.form_card .btn:active:hover,
+.form_card .btn.active:focus,
+.form_card .btn.active:hover,
+.form_card .open > .btn.dropdown-toggle,
+.form_card .open > .btn.dropdown-toggle:focus,
+.form_card .open > .btn.dropdown-toggle:hover,
+.form_card .btn.btn-default,
+.form_card .btn.btn-default:hover,
+.form_card .btn.btn-default:focus,
+.form_card .btn.btn-default:active,
+.form_card .btn.btn-default.active,
+.form_card .btn.btn-default:active:focus,
+.form_card .btn.btn-default:active:hover,
+.form_card .btn.btn-default.active:focus,
+.form_card .btn.btn-default.active:hover,
+.form_card .open > .btn.btn-default.dropdown-toggle,
+.form_card .open > .btn.btn-default.dropdown-toggle:focus,
+.form_card .open > .btn.btn-default.dropdown-toggle:hover {
+  background-color: #999999;
+  color: #FFFFFF;
+}
+.form_card .btn:focus,.form_card .btn:active,.form_card .btn:hover,.form_card .btn.btn-default:focus,.form_card .btn.btn-default:active,.form_card .btn.btn-default:hover {
+  box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
+}
+.form_card .btn.disabled,.form_card .btn.disabled:hover,.form_card .btn.disabled:focus,.form_card .btn.disabled.focus,.form_card .btn.disabled:active,.form_card .btn.disabled.active,.form_card .btn:disabled,
+.form_card .btn:disabled:hover,.form_card .btn:disabled:focus,.form_card .btn:disabled.focus,.form_card .btn:disabled:active,
+.form_card .btn:disabled.active,.form_card .btn[disabled],.form_card .btn[disabled]:hover,.form_card .btn[disabled]:focus,
+.form_card .btn[disabled].focus,.form_card .btn[disabled]:active,.form_card .btn[disabled].active,.form_card fieldset[disabled] .btn,
+.form_card fieldset[disabled] .btn:hover, .form_card fieldset[disabled] .btn:focus, .form_card fieldset[disabled] .btn.focus, 
+.form_card fieldset[disabled] .btn:active,.form_card fieldset[disabled] .btn.active, .form_card .btn.btn-default.disabled,
+.form_card .btn.btn-default.disabled:hover,.form_card .btn.btn-default.disabled:focus,.form_card .btn.btn-default.disabled.focus,.form_card .btn.btn-default.disabled:active,.form_card .btn.btn-default.disabled.active,.form_card .btn.btn-default:disabled, 
+.form_card .btn.btn-default:disabled:hover,.form_card .btn.btn-default:disabled:focus,.form_card .btn.btn-default:disabled.focus,.form_card .btn.btn-default:disabled:active,
+.form_card .btn.btn-default:disabled.active,.form_card .btn.btn-default[disabled],.form_card .btn.btn-default[disabled]:hover,.form_card .btn.btn-default[disabled]:focus, 
+.form_card .btn.btn-default[disabled].focus,.form_card .btn.btn-default[disabled]:active,.form_card .btn.btn-default[disabled].active, fieldset[disabled] .btn.btn-default,
+.form_card fieldset[disabled] .btn.btn-default:hover, fieldset[disabled] .btn.btn-default:focus,
+.form_card fieldset[disabled] .btn.btn-default.focus, fieldset[disabled] .btn.btn-default:active,
+.form_card fieldset[disabled] .btn.btn-default.active {
+  box-shadow: none;
+}
+.form_card .btn.btn-simple, .form_card .btn.btn-default.btn-simple {
+  background-color: transparent;
+  color: #999999;
+  box-shadow: none;
+}
+.form_card .btn.btn-simple:hover, .form_card .btn.btn-simple:focus, .form_card  .btn.btn-simple:active,.form_card .btn.btn-default.btn-simple:hover,
+.form_card .btn.btn-default.btn-simple:focus, 
+.form_card .btn.btn-default.btn-simple:active {
+  background-color: transparent;
+  color: #999999;
+}
+/*.form_card .btn.btn-primary {
+  box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+}*/
+.form_card  .btn.btn-primary, 
+.form_card .btn.btn-primary:hover, 
+.form_card .btn.btn-primary:focus, 
+.form_card .btn.btn-primary:active, 
+.form_card .btn.btn-primary.active, 
+.form_card .btn.btn-primary:active:focus, 
+.form_card .btn.btn-primary:active:hover, 
+.form_card .btn.btn-primary.active:focus, 
+.form_card .btn.btn-primary.active:hover, 
+.form_card .open > .btn.btn-primary.dropdown-toggle,
+.form_card .open > .btn.btn-primary.dropdown-toggle:focus,
+.form_card .open > .btn.btn-primary.dropdown-toggle:hover {
+  background-color: #309bff;
+  color: #FFFFFF;
+}
+ /*.form_card .btn.btn-primary:focus,
+.form_card .btn.btn-primary:active,
+.form_card .btn.btn-primary:hover {
+ box-shadow: 0 14px 26px -12px rgba(252, 228, 217, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);
+}*/
+.form_card .btn.btn-primary.disabled,
+.form_card .btn.btn-primary.disabled:hover,
+.form_card .btn.btn-primary.disabled:focus,
+.form_card .btn.btn-primary.disabled.focus,
+.form_card .btn.btn-primary.disabled:active,
+.form_card .btn.btn-primary.disabled.active,.form_card .btn.btn-primary:disabled,.form_card .btn.btn-primary:disabled:hover,
+.form_card .btn.btn-primary:disabled:focus,.form_card .btn.btn-primary:disabled.focus,.form_card .btn.btn-primary:disabled:active,
+.form_card .btn.btn-primary:disabled.active,.form_card .btn.btn-primary[disabled],.form_card .btn.btn-primary[disabled]:hover,
+.form_card .btn.btn-primary[disabled]:focus,.form_card .btn.btn-primary[disabled].focus,.form_card .btn.btn-primary[disabled]:active,
+.form_card .btn.btn-primary[disabled].active, .form_card fieldset[disabled] .btn.btn-primary,
+.form_card fieldset[disabled] .btn.btn-primary:hover,.form_card fieldset[disabled] .btn.btn-primary:focus,.form_card fieldset[disabled] .btn.btn-primary.focus,
+.form_card fieldset[disabled] .btn.btn-primary:active, fieldset[disabled] .btn.btn-primary.active {
+  box-shadow: none;
+}
+.form_card .btn.btn-primary.btn-simple {
+  background-color: transparent;
+  color: #9c27b0;
+  box-shadow: none;
+}
+.form_card .btn.btn-primary.btn-simple:hover,.form_card .btn.btn-primary.btn-simple:focus,.form_card .btn.btn-primary.btn-simple:active {
+  background-color: transparent;
+  color: #9c27b0;
+}
+
+.form_card .btn.btn-info {
+  box-shadow: 0 2px 2px 0 rgba(0, 188, 212, 0.14), 0 3px 1px -2px rgba(0, 188, 212, 0.2), 0 1px 5px 0 rgba(0, 188, 212, 0.12);
+}
+.form_card .btn.btn-info,.form_card .btn.btn-info:hover,.form_card .btn.btn-info:focus,.form_card .btn.btn-info:active,.form_card .btn.btn-info.active,.form_card .btn.btn-info:active:focus,
+.form_card .btn.btn-info:active:hover,.form_card .btn.btn-info.active:focus,.form_card .btn.btn-info.active:hover,
+.form_card .open > .btn.btn-info.dropdown-toggle,.form_card .open > .btn.btn-info.dropdown-toggle:focus,
+.form_card .open > .btn.btn-info.dropdown-toggle:hover {
+  background-color: #00bcd4;
+  color: #FFFFFF;
+}
+.form_card .btn.btn-info:focus,.form_card .btn.btn-info:active,.form_card .btn.btn-info:hover {
+  box-shadow: 0 14px 26px -12px rgba(0, 188, 212, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 188, 212, 0.2);
+}
+.form_card .btn.btn-info.disabled,
+.form_card .btn.btn-info.disabled:hover,
+.form_card .btn.btn-info.disabled:focus,.form_card .btn.btn-info.disabled.focus,.form_card .btn.btn-info.disabled:active,
+.form_card .btn.btn-info.disabled.active,.form_card .btn.btn-info:disabled,.form_card .btn.btn-info:disabled:hover,
+.form_card .btn.btn-info:disabled:focus,.form_card .btn.btn-info:disabled.focus,.form_card .btn.btn-info:disabled:active,
+.form_card .btn.btn-info:disabled.active,.form_card .btn.btn-info[disabled],.form_card .btn.btn-info[disabled]:hover,
+.form_card .btn.btn-info[disabled]:focus,.form_card .btn.btn-info[disabled].focus,.form_card .btn.btn-info[disabled]:active,
+.form_card .btn.btn-info[disabled].active,.form_card fieldset[disabled] .btn.btn-info,.form_card fieldset[disabled] .btn.btn-info:hover,
+.form_card fieldset[disabled] .btn.btn-info:focus,.form_card fieldset[disabled] .btn.btn-info.focus,.form_card fieldset[disabled] .btn.btn-info:active, 
+.form_card fieldset[disabled] .btn.btn-info.active {
+  box-shadow: none;
+}
+.form_card .btn.btn-info.btn-simple {
+  background-color: transparent;
+  color: #00bcd4;
+  box-shadow: none;
+}
+.form_card .btn.btn-info.btn-simple:hover,.form_card .btn.btn-info.btn-simple:focus,.form_card .btn.btn-info.btn-simple:active {
+  background-color: transparent;
+  color: #00bcd4;
+}
+.form_card .btn.btn-success {
+  box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12);
+}
+.form_card .btn.btn-success,.form_card .btn.btn-success:hover,.form_card .btn.btn-success:focus,.form_card .btn.btn-success:active,.form_card .btn.btn-success.active,.form_card .btn.btn-success:active:focus,
+.form_card .btn.btn-success:active:hover,.form_card .btn.btn-success.active:focus,.form_card .btn.btn-success.active:hover,.form_card .open > .btn.btn-success.dropdown-toggle,.form_card .open > .btn.btn-success.dropdown-toggle:focus, 
+.form_card .open > .btn.btn-success.dropdown-toggle:hover {
+  background-color: #4caf50;
+  color: #FFFFFF;
+}
+
+
+.form_card .btn.btn-success:focus,.form_card .btn.btn-success:active,.form_card .btn.btn-success:hover {
+  box-shadow: 0 14px 26px -12px rgba(76, 175, 80, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(76, 175, 80, 0.2);
+}
+.form_card .btn.btn-success.disabled,.form_card .btn.btn-success.disabled:hover,.form_card .btn.btn-success.disabled:focus,
+.form_card .btn.btn-success.disabled.focus,.form_card .btn.btn-success.disabled:active,.form_card .btn.btn-success.disabled.active,
+.form_card .btn.btn-success:disabled,.form_card .btn.btn-success:disabled:hover,.form_card .btn.btn-success:disabled:focus,
+.form_card .btn.btn-success:disabled.focus,.form_card .btn.btn-success:disabled:active,.form_card .btn.btn-success:disabled.active,
+.form_card .btn.btn-success[disabled],.form_card .btn.btn-success[disabled]:hover,
+.form_card .btn.btn-success[disabled]:focus, .btn.btn-success[disabled].focus,
+.form_card .btn.btn-success[disabled]:active,.form_card .btn.btn-success[disabled].active,.form_card fieldset[disabled] .btn.btn-success,
+.form_card fieldset[disabled] .btn.btn-success:hover,.form_card fieldset[disabled] .btn.btn-success:focus,
+.form_card fieldset[disabled] .btn.btn-success.focus,.form_card fieldset[disabled] .btn.btn-success:active,.form_card fieldset[disabled] .btn.btn-success.active {
+  box-shadow: none;
+}
+.form_card .btn.btn-success.btn-simple {
+  background-color: transparent;
+  color: #4caf50;
+  box-shadow: none;
+}
+.form_card .btn.btn-success.btn-simple:hover,.form_card .btn.btn-success.btn-simple:focus,.form_card .btn.btn-success.btn-simple:active {
+  background-color: transparent;
+  color: #4caf50;
+}
+.form_card .btn.btn-warning {
+  box-shadow: 0 2px 2px 0 rgba(255, 152, 0, 0.14), 0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12);
+}
+.form_card .btn.btn-warning,.form_card .btn.btn-warning:hover,.form_card .btn.btn-warning:focus,.form_card .btn.btn-warning:active, 
+.form_card .btn.btn-warning.active,.form_card .btn.btn-warning:active:focus,.form_card .btn.btn-warning:active:hover,
+.form_card .btn.btn-warning.active:focus,.form_card .btn.btn-warning.active:hover,.form_card .open > .btn.btn-warning.dropdown-toggle,
+.form_card .open > .btn.btn-warning.dropdown-toggle:focus, .open > .btn.btn-warning.dropdown-toggle:hover {
+  background-color: #ff9800;
+  color: #FFFFFF;
+}
+.form_card .btn.btn-warning:focus,.form_card .btn.btn-warning:active,.form_card .btn.btn-warning:hover {
+  box-shadow: 0 14px 26px -12px rgba(255, 152, 0, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(255, 152, 0, 0.2);
+}
+.form_card .btn.btn-warning.disabled,.form_card .btn.btn-warning.disabled:hover,.form_card .btn.btn-warning.disabled:focus,
+.form_card .btn.btn-warning.disabled.focus,.form_card .btn.btn-warning.disabled:active,.form_card .btn.btn-warning.disabled.active,
+.form_card .btn.btn-warning:disabled,.form_card .btn.btn-warning:disabled:hover,.form_card .btn.btn-warning:disabled:focus,
+.form_card .btn.btn-warning:disabled.focus, .btn.btn-warning:disabled:active,.form_card .btn.btn-warning:disabled.active,
+.form_card .btn.btn-warning[disabled],.form_card .btn.btn-warning[disabled]:hover,.form_card .btn.btn-warning[disabled]:focus,
+.form_card .btn.btn-warning[disabled].focus,.form_card .btn.btn-warning[disabled]:active,.form_card .btn.btn-warning[disabled].active,
+.form_card fieldset[disabled] .btn.btn-warning,.form_card fieldset[disabled] .btn.btn-warning:hover,
+.form_card fieldset[disabled] .btn.btn-warning:focus,.form_card fieldset[disabled] .btn.btn-warning.focus,.form_card fieldset[disabled] .btn.btn-warning:active,
+.form_card fieldset[disabled] .btn.btn-warning.active {
+  box-shadow: none;
+}
+.form_card .btn.btn-warning.btn-simple {
+  background-color: transparent;
+  color: #ff9800;
+  box-shadow: none;
+}
+.form_card .btn.btn-warning.btn-simple:hover,.form_card .btn.btn-warning.btn-simple:focus,.form_card .btn.btn-warning.btn-simple:active {
+  background-color: transparent;
+  color: #ff9800;
+}
+.form_card .btn.btn-danger {
+  box-shadow: 0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12);
+}
+.form_card .btn.btn-danger,.form_card .btn.btn-danger:hover,.form_card .btn.btn-danger:focus,.form_card .btn.btn-danger:active,
+.form_card .btn.btn-danger.active,.form_card .btn.btn-danger:active:focus,.form_card .btn.btn-danger:active:hover,
+.form_card .btn.btn-danger.active:focus,.form_card .btn.btn-danger.active:hover,.form_card .open > .btn.btn-danger.dropdown-toggle,
+.form_card .open > .btn.btn-danger.dropdown-toggle:focus, .open > .btn.btn-danger.dropdown-toggle:hover {
+  background-color: var(--red);
+  color: #FFFFFF;
+}
+
+.form_card .btn.btn-add {
+  box-shadow: 0 2px 2px 0 rgba(188, 83, 43, 0.14), 0 3px 1px -2px rgba(188, 83, 43, 0.2), 0 1px 5px 0 rgba(188, 83, 43, 0.12);
+}
+.form_card .btn.btn-add,.form_card .btn.btn-add:hover,.form_card .btn.btn-add:focus,.form_card .btn.btn-add:active,
+.form_card .btn.btn-add.active,.form_card .btn.btn-add:active:focus,.form_card .btn.btn-add:active:hover,
+.form_card .btn.btn-add.active:focus,.form_card .btn.btn-add.active:hover,.form_card .open > .btn.btn-add.dropdown-toggle,
+.form_card .open > .btn.btn-add.dropdown-toggle:focus, .open > .btn.btn-add.dropdown-toggle:hover {
+  background-color: #f46b36;
+  color: #FFFFFF;
+}
+.form_card .btn.btn-browse {
+  box-shadow: 0 2px 2px 0 rgba(188, 83, 43, 0.14), 0 3px 1px -2px rgba(188, 83, 43, 0.2), 0 1px 5px 0 rgba(188, 83, 43, 0.12); padding:5px 10px;
+}
+.form_card .btn.btn-browse,.form_card .btn.btn-browse:hover,.form_card .btn.btn-browse:focus,.form_card .btn.btn-browse:active,
+.form_card .btn.btn-browse.active,.form_card .btn.btn-browse:active:focus,.form_card .btn.btn-browse:active:hover,
+.form_card .btn.btn-browse.active:focus,.form_card .btn.btn-browse.active:hover,.form_card .open > .btn.btn-browse.dropdown-toggle,
+.form_card .open > .btn.btn-browse.dropdown-toggle:focus, .open > .btn.btn-browse.dropdown-toggle:hover {
+  background-color: #f46b36;
+  color: #FFFFFF;
+}
+.form_card .smallbtn{padding:5px; margin: 1px;}
+.form_card .rejectButton_active{background-color: #ff2c3f !important;}
+.form_card .approveButton_active{background-color: #5b9908 !important;}
+/**************************************/
+
+
+/*            Navigation menu                */
+/*.form_card .nav-pills { background-color: rgba(200, 200, 200, 0.2);}
+.form_card .nav-pills > li + li { margin-left: 0;}
+.form_card .nav-pills > li > a { border: 0 !important;  border-radius: 0; line-height: 18px;  text-transform: uppercase;  font-size: 12px;  font-weight: 500;  min-width: 100px;  text-align: center;  color: #555555 !important;}
+.form_card .nav-pills > li.active > a,
+.form_card .nav-pills > li.active > a:hover,
+.form_card .nav-pills > li.active > a:focus,
+.form_card .nav-pills > li > a:hover,
+.form_card .nav-pills > li > a:focus {
+  background-color: inherit;
+}
+.form_card .nav-pills > li i {
+  display: block;
+  font-size: 30px;
+  padding: 15px 0;
+}
+.form_card .nav > li > a{padding:10px;}*/
+/************Popepover**********************/
+.form_card .popover,.form_card .tooltip-inner {
+  color: #555555;
+  line-height: 1.5em;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+
+.form_card .popover {
+  padding: 0;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+.form_card .popover.left > .arrow,.form_card .popover.right > .arrow, .popover.top > .arrow, .popover.bottom > .arrow {
+  border: none;
+}
+
+.form_card .popover-title {
+  background-color: #FFFFFF;
+  border: none;
+  padding: 15px 5px 5px;
+  font-size: 1.3em;
+  
+}
+
+.form_card .popover-content {
+  padding: 10px 15px 15px;
+  line-height: 1.4;
+}
+
+.form_card .tooltip.in {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0px, 0);
+  -moz-transform: translate3d(0, 0px, 0);
+  -o-transform: translate3d(0, 0px, 0);
+  -ms-transform: translate3d(0, 0px, 0);
+  transform: translate3d(0, 0px, 0);
+}
+
+.form_card .tooltip {
+  opacity: 0;
+  transition: opacity, transform .2s ease;
+  -webkit-transform: translate3d(0, 5px, 0);
+  -moz-transform: translate3d(0, 5px, 0);
+  -o-transform: translate3d(0, 5px, 0);
+  -ms-transform: translate3d(0, 5px, 0);
+  transform: translate3d(0, 5px, 0);
+}
+.form_card .tooltip.left .tooltip-arrow {
+  border-left-color: #FFFFFF;
+}
+.form_card .tooltip.right .tooltip-arrow {
+  border-right-color: #FFFFFF;
+}
+.form_card .tooltip.top .tooltip-arrow {
+  border-top-color: #FFFFFF;
+}
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color: #FFFFFF;
+}
+
+.form_card .tooltip-inner {
+  padding: 10px 15px;
+  min-width: 100px;
+  text-align: center;
+}
+.form_card .btncheckbox{    padding: 5px 17px;     margin-top: 0;}
+
+.buttonHolder{text-align:center; width:100%;}
+/************************Form Start****************************/
+
+.checkbox label {
+  cursor: pointer;
+  padding-left: 0;
+  color: rgba(0,0,0, 0.26);
+}
+
+.checkbox input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+  margin: 0;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  left: 0;
+  pointer-events: none;
+}
+.checkbox .checkbox-material {
+  vertical-align: middle;
+  position: relative;
+  top: 3px;
+  padding-right: 5px;
+}
+
+.checkbox .checkbox-material .check {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(0,0,0, .54);
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 3px;
+}
+.checkbox .checkbox-material .check:before {
+  position: absolute;
+  content: "";
+  transform: rotate(45deg);
+  display: block;
+  margin-top: -3px;
+  margin-left: 7px;
+  width: 0;
+  height: 0;
+  background: red;
+  box-shadow: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0 inset;
+  animation: checkbox-off 0.3s forwards;
+}
+.checkbox input[type=checkbox]:checked + .checkbox-material .check:before {
+  color: #FFFFFF;
+  box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+  animation: checkbox-on 0.3s forwards;
+}
+
+#radioBtn .notActive{color: #000; background-color: #fff;}
+#radioBtn .active{background:#f46b36}
+.addButton{padding: 7px 16px !important;}
+.searchField{ border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border: 1px solid #c1c1c1; padding: 6px 10px 12px;}
+.uploadActionArea{padding: 32px 0 0 0;}
+.uploadActionArea .button{margin:0 5px!important;}
+.uploadActionArea1{padding:0;}
+.uploadActionArea1 .button{margin:0 5px!important;}
+
+@media (max-width: 767px) {
+	.btn-breadcrumb { margin-left: 10px; margin-right: 10px; width: calc(100% - 20px) !important; }
+}
+
+.btn-breadcrumb{
+	width: 100%;
+	background-color: #fff;
+	border-radius: 4px;
+	border: solid 1px #ccc;
+}
+.btn-breadcrumb .btn{
+	border-color: transparent; border: 0px solid transparent;
+	border-right: 1px solid transparent !important; 
+	font-size: 11px;
+}
+.breadcrumb-default{ background-color: #fff; }
+.btn-primary,.breadcrumb-primary{ background-color: #337ab7; }
+.btn-primary:hover{background-color: #286090;}
+
+.breadcrumb-success{ background-color: #5cb85c; }
+.breadcrumb-info{ background-color: #5bc0de; }
+.breadcrumb-warning{ background-color: #f0ad4e; }
+.breadcrumb-danger{ background-color: #d9534f; }
+.breadcrumb-negro{ background-color: #d4d4d4; }
+
+.btn-breadcrumb .btn:last-child {font-weight: bold; text-decoration: underline;}
+.btn-breadcrumb .btn:last-child:after{margin-left: -2px;}
+.btn-breadcrumb .btn:last-child:before{margin-left: -1px;}
+
+.btn-breadcrumb .btn-derecha{
+	float: right;
+	margin-right: 0px;
+	padding: 6px 10px 6px 10px !important;
+	margin-left: 0px !important;
+	border-radius: 0px !important; 
+}
+.btn-breadcrumb .btn-derecha:first-child { 
+	border-top-right-radius: 2px !important; 
+	border-bottom-right-radius: 2px !important; 
+}
+
+.btn-breadcrumb .btn-derecha:after, .btn-breadcrumb .btn-derecha:before{
+	content: none !important;
+}
+
+.btn-breadcrumb .btn:after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 10px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -14px;
+  margin-left: 0px;
+  left: 100%;
+  z-index: 3;
+}
+.btn-breadcrumb .btn:before {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 10px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -14px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 3;
+}
+
+
+/** The Spacing **/
+.btn-breadcrumb .btn {padding:6px 12px 6px 24px;}
+.btn-breadcrumb .btn:first-child {padding:6px 6px 6px 10px;}
+.btn-breadcrumb .btn:last-child {padding:6px 18px 6px 24px;}
+
+/** Default button **/
+.btn-breadcrumb .btn.btn-default:after { border-left: 10px solid #fff;}
+.btn-breadcrumb .btn.btn-default:hover:after {border-left: 10px solid #fff;}
+.btn-breadcrumb .btn.btn-default:hover:before, .btn-breadcrumb .btn.btn-default:before {border-left: 10px solid #adadad;}
+.breadcrumb-default{ border: solid 1px #adadad; }
+
+/** Primary button **/
+.btn-breadcrumb .btn.btn-primary:after {border-left: 10px solid #337ab7;}
+.btn-breadcrumb .btn.btn-primary:hover:after {border-left: 10px solid #286090;}
+.btn-breadcrumb .btn.btn-primary:hover:before, .btn-breadcrumb .btn.btn-primary:before {border-left: 10px solid #204d74;}
+.breadcrumb-primary{ border: solid 1px #204d74; }
+
+/** Success button **/
+.btn-breadcrumb .btn.btn-success:after {border-left: 10px solid #5cb85c;}
+.btn-breadcrumb .btn.btn-success:hover:after {border-left: 10px solid #449d44;}
+.btn-breadcrumb .btn.btn-success:hover:before, .btn-breadcrumb .btn.btn-success:before {border-left: 10px solid #398439;}
+.breadcrumb-success{ border: solid 1px #398439; }
+
+/** Danger button **/
+.btn-breadcrumb .btn.btn-danger:after {border-left: 10px solid #d9534f;}
+.btn-breadcrumb .btn.btn-danger:hover:after {border-left: 10px solid #c9302c;}
+.btn-breadcrumb .btn.btn-danger:hover:before, .btn-breadcrumb .btn.btn-danger:before {border-left: 10px solid #ac2925;}
+.breadcrumb-danger{ border: solid 1px #ac2925; }
+
+/** Warning button **/
+.btn-breadcrumb .btn.btn-warning:after {border-left: 10px solid #f0ad4e;}
+.btn-breadcrumb .btn.btn-warning:hover:after {border-left: 10px solid #ec971f;}
+.btn-breadcrumb .btn.btn-warning:hover:before, .btn-breadcrumb .btn.btn-warning:before {border-left: 10px solid #d58512;}
+.breadcrumb-warning{ border: solid 1px #d58512; }
+
+/** Info button **/
+.btn-breadcrumb .btn.btn-info:after {border-left: 10px solid #5bc0de;}
+.btn-breadcrumb .btn.btn-info:hover:after {border-left: 10px solid #31b0d5;}
+.btn-breadcrumb .btn.btn-info:hover:before, .btn-breadcrumb .btn.btn-info:before {border-left: 10px solid #269abc;}
+.breadcrumb-info{ border: solid 1px #269abc; }
+.btn-breadcrumb .btn-Current {color: #745449; background-color: #f3c0ad; border-color: #ca9d8c; text-decoration: none!important; cursor: auto!important;}
+.btn-breadcrumb .btn-Current:hover:before, .btn-breadcrumb .btn-Current:before{border-left: 10px solid #f3c0ad;}
+.btn-breadcrumb .btn-Current:hover:after, .btn-breadcrumb .btn-Current:after{border-left: 10px solid #f3c0ad;}
+
+/** FIP button **/
+.fip_butt{margin: 19px 0 0 11px; background-color: #C64211; border: #BA4610 1px solid; color:#fff;}
+.fip_butt:hover, .rejected_butt:focus, .rejected_butt:active{color:#fff;  background-color: #e0501b;}
+
+.fip_butt1{margin: 0px 0 0 0px; background-color: #C64211; border: #BA4610 1px solid; color:#fff;}
+.fip_butt1:hover, .fip_butt1:focus, .fip_butt1:active{color:#fff;  background-color: #e0501b;}
+
+.tableTextField{width:100%; height:28px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #D2D2D2	;}
+.tableTextDatTimeField{width:100%; height:28px; border-radius: 5px 0px 0px 5px; -moz-border-radius: 5px 0px 0px 5px; -webkit-border-radius: 5px 0px 0px 5px; border: 1px solid #D2D2D2	;}
+.tableTextField1{width:120px; height:28px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #D2D2D2	;}
+.tableTextField2{width:100%; height:28px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #D2D2D2	;}
+.tableTextDatTimeField1{width:120px; height:28px; border-radius: 5px 0px 0px 5px; -moz-border-radius: 5px 0px 0px 5px; -webkit-border-radius: 5px 0px 0px 5px; border: 1px solid #D2D2D2	;}
+
+/*********Pagination************/
+/*.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{ background-color: #C64211; border-color: #BA4610;}*/
+.paginationdropdown{margin:15px 0 0px 10px!important; font-weight:normal!important;}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{background-color: #C64211!important; border-color: #BA4610!important;}
+
+/********Multiple Radio Button**************/
+.radioButtonWrap {padding:0px;}
+.radioButtonWrap .btn.btn-primary, .radioButtonWrap .btn.btn-primary:hover, .radioButtonWrap .btn.btn-primary:focus, .radioButtonWrap .btn.btn-primary:active, .radioButtonWrap .btn.btn-primary.active, .radioButtonWrap .btn.btn-primary:active:focus, .radioButtonWrap .btn.btn-primary:active:hover, .radioButtonWrap .btn.btn-primary.active:focus, .radioButtonWrap .btn.btn-primary.active:hover, .radioButtonWrap .open > .btn.btn-primary.dropdown-toggle, .radioButtonWrap .open > .btn.btn-primary.dropdown-toggle:focus, .radioButtonWrap .open > .btn.btn-primary.dropdown-toggle:hover{background: none; border:1px solid #f46b36!important; color:#555; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+.radioButtonWrap .btn{padding: 5px; margin:7px;}
+.radioButtonWrap .btn span.glyphicon {opacity: 0;}
+.radioButtonWrap .btn.active span.glyphicon {opacity: 1; color:#f46b36}
+
+
+
+.form-search { position: relative; margin-right:10px; border:1px solid #C64211; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; height:25px}
+.form-search input{border:none;}
+.search-query { padding-left:26px; font-size: 13px; line-height:14px;}
+.form-search:before {   content:''; font-family: "Font Awesome 5 Brands"; display: block;    width: 14px;    height: 14px; background-image: url(http://getbootstrap.com/2.3.2/assets/img/glyphicons-halflings.png);    background-position: -48px 0;    position: absolute;    top:8px;    left:8px;    opacity: .5;    z-index: 1000;}
+
+.choosenselectAll{border: none;  background: none;  position: absolute;  top: -13px;   right: 0;  color: #C64211; font-size:11px;}
+
+.farmerIdSearch{width: 94%!important;}
+.searchBtn{padding: 9px 25px 9px 10px!important; background-color: #C64211;  color: #FFFFFF; border-radius: 5px!important; -moz-border-radius: 5px!important; -webkit-border-radius: 5px!important; position: absolute;  top: 0; right: -18px;}
+/*.tableTextField{width:100%; height:28px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #D2D2D2	;}
+.tableTextDatTimeField{width:100%; height:28px; border-radius: 5px 0px 0px 5px; -moz-border-radius: 5px 0px 0px 5px; -webkit-border-radius: 5px 0px 0px 5px; border: 1px solid #D2D2D2	;}*/
+/********model Dialog Box*************/
+.modal-header{padding: 5px 15px 0px;  border-bottom: 0px solid #e5e5e5;}
+.modelHeading{margin: 5px 7px;  font-size: 20px;  color: #C64211;    padding: 5px 20px 10px; text-align:center;}
+.modal-body{overflow:hidden;}
