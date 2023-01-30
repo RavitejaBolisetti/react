@@ -1,9 +1,11 @@
 import React from 'react';
 import { Layout } from 'antd';
 
+import styles from './Footer.module.css';
+
 const { Footer: FooterLayout } = Layout;
 
-export default function Footer() {
+export const Footer = () => {
     return (
         <FooterLayout id="footerSection" className="main-footer">
             <div className="link">
@@ -16,4 +18,4 @@ export default function Footer() {
             </div>
         </FooterLayout>
     );
-}
+};
