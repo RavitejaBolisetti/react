@@ -6,6 +6,8 @@ phases:
   pre_build:
     commands:
       - npm i
+      - npm install -D typescript
+      - npm install -D ts-node
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
       - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
       - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
