@@ -1,4 +1,4 @@
 import { GeoPage } from './Geo';
-import { ProductHierarchy } from './ProductHierarchy';
+import { ProductHierarchyPage } from './ProductHierarchy';
 
-export { GeoPage, ProductHierarchy };
+export { GeoPage, ProductHierarchyPage };
