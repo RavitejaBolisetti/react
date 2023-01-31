@@ -22,8 +22,12 @@
   background-color: '#ffffff';
 }
 
-.logoContainer{
+.logoContainer {
   padding: 0px 10px;
+}
+
+:global .ant-input-group-wrapper {
+  vertical-align: inherit;
 }
 
 .brandLink {
@@ -36,11 +40,12 @@
 }
 
 .brandLink .brandImage {
-  float: left;
+  /* float: left; */
   line-height: .18;
   margin-left: 1rem;
   margin-right: .5rem;
-  margin-top: -3px;
+  /* margin-top: -3px; */
+  /* margin-bottom: 15px; */
   max-height: 44px;
   width: auto;
 }
@@ -48,7 +53,7 @@
 :global .ant-layout .ant-layout-sider-trigger {
   position: absolute;
   width: 0px !important;
-  top: 22px;
+  top: 25px;
   z-index: 1;
   /* height: 48px; */
   color: #ea2929;
@@ -63,7 +68,7 @@
 /* icon for collapse position when not collapsed */
 :global .ant-layout .ant-layout-sider-trigger .anticon-left {
   position: absolute;
-  left: 205px;
+  left: 212px;
 }
 
 /* icon for collapse position when collapsed */
@@ -139,7 +144,7 @@
   height: 50px;
   display: flex;
   align-items: center;
-  padding-left: 35px;
+  padding-left: 18px;
   font-size: 16px;
   bottom: 0;
   position: absolute;
