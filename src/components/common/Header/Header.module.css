@@ -1,0 +1,17 @@
+.welcomeUser {
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 0px solid #000000;
+    padding: 2px 3px 0;
+    font-size: 12px;
+}
+
+.welcomeUser .userText {
+    /* float: right; */
+    margin: 0;
+    color: #0B0B0C;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 700;
+}

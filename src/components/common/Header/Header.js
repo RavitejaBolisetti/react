@@ -89,7 +89,7 @@ export const Header = () => {
                     <li className=" welcomeUser">
                         <Dropdown menu={{ items }} trigger={['click']}>
                             <a className="nav-link" data-toggle="dropdown" href="/">
-                                <Avatar>MA</Avatar>
+                                <Avatar shape="square">MA</Avatar>
                                 <Space>
                                     <div className="userText">
                                         <div className="dealername">Mahindra Automotive</div>
@@ -107,14 +107,15 @@ export const Header = () => {
                     <li className="">
                         <a className="nav-link" data-toggle="dropdown" href="/">
                             <Badge count={5}>
-                                <FaBell />
+                                <FaBell size={20} />
                             </Badge>
                         </a>
                     </li>
                     <li className="">
                         <a className="nav-link" data-toggle="dropdown" href="/">
-                            <FaHeadset />
-                            <div className="helpLine">OneStop Help Desk</div>
+                            <FaHeadset size={20} />
+                            <div className="helpLine">OneStop</div>
+                            <span>Help Desk</span>
                         </a>
                     </li>
 
