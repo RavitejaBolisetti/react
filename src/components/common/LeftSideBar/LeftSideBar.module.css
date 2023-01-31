@@ -42,7 +42,7 @@
 .brandLink .brandImage {
   /* float: left; */
   line-height: .18;
-  margin-left: 1rem;
+  margin-left: 6px;
   margin-right: .5rem;
   /* margin-top: -3px; */
   /* margin-bottom: 15px; */
@@ -74,7 +74,7 @@
 /* icon for collapse position when collapsed */
 :global .ant-layout .ant-layout-sider-trigger .anticon-right {
   position: absolute;
-  left: 50px;
+  left: 60px;
 }
 
 /* background color of the menu list & sub-menu list */

@@ -21,9 +21,7 @@ import { bindActionCreators } from 'redux';
 const { Search } = Input;
 const { Sider } = Layout;
 
-const mapStateToProps = (state) => {
-    console.log("🚀 ~ file: LeftSideBar.js:25 ~ mapStateToProps ~ state", state);
-    
+const mapStateToProps = (state) => {    
     const {
         common: {
             LeftSideBar: { collapsed = false },
@@ -87,7 +85,6 @@ const items = [
 ];
 
 const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
-    console.log('🚀 ~ file: LeftSideBar.js:81 ~ LeftSideBarMain ~ collapsed, setCollapsed', collapsed);
     const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
     const [openKeys, setOpenKeys] = useState(['sub1']);
     const onOpenChange = (keys) => {
