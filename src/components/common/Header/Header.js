@@ -1,6 +1,6 @@
 import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Switch, Space } from 'antd';
+import { Space } from 'antd';
 import { FaRegIdBadge, FaUserMd, FaHeadset } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
@@ -112,8 +112,8 @@ export const Header = () => {
                 <ul className="navbar-nav ml-auto">
                     {/* <!-- Notifications Dropdown Menu --> */}
                     <li className="nav-item dropdown">
-                        <Dropdown overlay={notifications} trigger={['click']}>
-                            <a className="nav-link" data-toggle="dropdown" href="#">
+                        <Dropdown>
+                            <a className="nav-link" data-toggle="dropdown" href="/">
                                 <i className="far fa-bell"></i>
                                 <span className="badge badge-warning navbar-badge">15</span>
                             </a>
@@ -130,7 +130,7 @@ export const Header = () => {
                     {/* <!-- User Profile --> */}
 
                     <li className="nav-item dropdown welcomeUser">
-                        <Dropdown overlay={menu} trigger={['click']}>
+                        <Dropdown>
                             <a className="nav-link" data-toggle="dropdown" href="/" onClick={(e) => e.preventDefault()}>
                                 {/* <!-- <i className="fa fa-user userICO" aria-hidden="true"></i> --> */}
                                 <div className="circle-singleline">JS</div>

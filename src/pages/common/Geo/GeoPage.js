@@ -1,13 +1,27 @@
 import React from 'react';
 
-import TreeView from 'pages/common/TreeView';
+import TreeView from 'components/common/TreeView';
 
-import 'assets/style/new_robin.scss';
-import 'assets/style/sidebar.css';
-import 'font-awesome/css/font-awesome.min.css';
+// import 'assets/style/new_robin.scss';
+// import 'assets/style/sidebar.css';
+// import 'font-awesome/css/font-awesome.min.css';
 import { withLayoutMaster } from 'components/withLayoutMaster';
+import { Form, Row, Col, Input, Select } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 export const GeoPageBase = () => {
+    const [form] = Form.useForm();
+
+    const onSubmit = (e) => {
+        console.log('djks');
+        form.validateFields()
+            .then((err, values) => {
+                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
+            })
+            .catch((errorInfo) => {
+                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
+            });
+    };
     return (
         <section className="content">
             <div id="page-wrapper">
@@ -29,7 +43,7 @@ export const GeoPageBase = () => {
                                             <button type="button" className="btn btn-outline mr0 mrl15 fr boxShdwNon">
                                                 Exit
                                             </button>
-                                            <button type="button" className="btn btn-outline fr mr0 boxShdwNon" onclick="buttonClicked()">
+                                            <button type="button" className="btn btn-outline fr mr0 boxShdwNon">
                                                 <i className="fa fa-history mrr5" aria-hidden="true"></i>
                                                 Change History
                                             </button>
@@ -55,72 +69,68 @@ export const GeoPageBase = () => {
                                     </div>
 
                                     <div className="right col">
-                                        <form className="row">
-                                            <div className="pad7" id="productHierarchy">
-                                                <div className="col-md-6">
-                                                    <label className="control-label-blk">Attribute Level</label>
-                                                    <select className="form-control">
-                                                        <option>Select</option>
-                                                        <option>Mahindra Scorpio</option>
-                                                        <option>Mahindra KUV100 NXT</option>
-                                                        <option>Mahindra Scorpio Classic</option>
-                                                        <option>Mahindra Thar</option>
-                                                        <option>Mahindra Bolero</option>
-                                                    </select>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="control-label-blk">Parent</label>
-                                                    <div className=" input-group">
-                                                        <input name="name" type="text" placeholder="Parent" className="form-control" />
-                                                        <div className="input-group-append">
-                                                            <button type="button" id="hierarchyChange" className="btn btn-outline srchbtn mr0 boxShdwNon">
-                                                                <i className="fa fa-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="control-label-blk">Code</label>
-                                                    <input name="name" type="text" placeholder="Type Code here" className="form-control" />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="control-label-blk">Short Description</label>
-                                                    <input name="name" type="text" placeholder="Type here" className="form-control" />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="control-label-blk">Long Description</label>
-                                                    <textarea name="name" type="text" placeholder="Type here" rows="5" id="comment" className="form-control"></textarea>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="control-label-blk">Status</label>
-                                                    <div className="switchToggle">
-                                                        <input type="checkbox" id="switch2" checked />
-                                                        <label for="switch2">Status</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-12 mrt10">
+                                        <Form layout="vertical">
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                    <Form.Item name="Attribute Level" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                                                        <Select
+                                                            defaultValue="Mahindra Bolero"
+                                                            options={[
+                                                                { value: 'Mahindra Scorpio', label: 'Mahindra Scorpio' },
+                                                                { value: 'Mahindra KUV100 NXT', label: 'Mahindra KUV100 NXT' },
+                                                                { value: 'Mahindra Scorpio Classic', label: 'Mahindra Scorpio Classic' },
+                                                                { value: 'Mahindra Thar', label: 'Mahindra Thar' },
+                                                                { value: 'Mahindra Bolero', label: 'Mahindra Bolero' },
+                                                            ]}
+                                                        />
+                                                    </Form.Item>
+                                                </Col>
+
+                                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                    <Form.Item name="Parent" label="Parent" rules={[validateRequiredInputField('Parent')]}>
+                                                        <Input />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                    <Form.Item name="Code" label="Code" rules={[validateRequiredInputField('Code')]}>
+                                                        <Input placeholder="input placeholder" />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                                    <Form.Item name="Short Description" label="Code" rules={[validateRequiredInputField('Parent')]}>
+                                                        <Input placeholder="input placeholder" />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
                                                         <i className="fa fa-undo mrr5"></i>
                                                         Reset
                                                     </button>
-                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
+                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15" onClick={onSubmit}>
                                                         <i className="fa fa-save mrr5"></i>Save
                                                     </button>
                                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
                                                         <i className="fa-solid fa-user-group mrr5"></i> Add Sibling
                                                     </button>
-                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15" onclick="buttonClicked()">
+                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
                                                         <i className="fa-solid fa-user-plus mrr5"></i>
                                                         Add Child
                                                     </button>
 
-                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15" onclick="buttonClicked()">
-                                                        <i className="fas fa-edit mrr5"></i>
+                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
+                                                        <i className="fa fa-edit mrr5"></i>
                                                         Edit
                                                     </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                                </Col>
+                                            </Row>
+                                            {/* <div className="pad7" id="productHierarchy">
+                                                <div className="col-md-12 mrt10"></div>
+                                            </div> */}
+                                        </Form>
                                     </div>
                                 </div>
                             </div>

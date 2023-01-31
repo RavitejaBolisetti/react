@@ -70,7 +70,7 @@ const DashboardPageBase = (props) => {
                                                     </div>
 
                                                     <div className="buttonHolder">
-                                                        <button type="button" onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                                        <button type="button" onClick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
                                                             View Dashboard
                                                         </button>
                                                     </div>
@@ -156,7 +156,7 @@ const DashboardPageBase = (props) => {
                                                                 <h4>Lorem Ipsum is simply dummy text.</h4>
                                                                 <div className="textContaner">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled </div>
                                                                 <div className="buttonHolder">
-                                                                    <button type="button" onclick="window.location.href='dasboard.html'" className="btn btn-outline_main">
+                                                                    <button type="button" onClick="window.location.href='dasboard.html'" className="btn btn-outline_main">
                                                                         View Dashboard
                                                                     </button>
                                                                 </div>
@@ -166,7 +166,7 @@ const DashboardPageBase = (props) => {
                                                                 <h4>Lorem Ipsum is simply dummy text.</h4>
                                                                 <div className="textContaner">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled </div>
                                                                 <div className="buttonHolder">
-                                                                    <button type="button" onclick="window.location.href='dasboard.html'" className="btn btn-outline_main">
+                                                                    <button type="button" onClick="window.location.href='dasboard.html'" className="btn btn-outline_main">
                                                                         View Dashboard
                                                                     </button>
                                                                 </div>
@@ -176,7 +176,7 @@ const DashboardPageBase = (props) => {
                                                                 <h4>Lorem Ipsum is simply dummy text.</h4>
                                                                 <div className="textContaner">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled </div>
                                                                 <div className="buttonHolder">
-                                                                    <button type="button" onclick="window.location.href='dasboard.html'" className="btn btn-outline_main">
+                                                                    <button type="button" onClick="window.location.href='dasboard.html'" className="btn btn-outline_main">
                                                                         View Dashboard
                                                                     </button>
                                                                 </div>
