@@ -1,11 +1,13 @@
 import React from 'react';
+import { Space, Badge, Dropdown, Menu, Avatar } from 'antd';
+
 import { DownOutlined } from '@ant-design/icons';
-import { Space } from 'antd';
-import { FaRegIdBadge, FaUserMd, FaHeadset } from 'react-icons/fa';
+import { FaRegIdBadge, FaUserMd, FaHeadset, FaBell } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
-import { Dropdown, Menu } from 'antd';
+
+import styles from './Header.module.css';
 
 export const Header = () => {
     const items = [
@@ -13,7 +15,7 @@ export const Header = () => {
             key: '1',
             label: (
                 <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    Branch Location{' '}
+                    Branch Location
                 </a>
             ),
             children: [
@@ -36,65 +38,58 @@ export const Header = () => {
             ),
         },
     ];
-    const menu = (
-        <Menu>
-            <Menu.Item>
-                <a href="https://www.antgroup.com">
-                    <FaRegIdBadge />{' '}
-                </a>
-                My Profile
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-                <AiFillSetting /> Settings
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-                <TbFileReport /> FAQ
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-                <FaUserMd /> Training/Help
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-                <FiLogOut /> Logout
-            </Menu.Item>
-        </Menu>
-    );
 
-    const notifications = (
-        <Menu>
-            <Menu.ItemGroup title="15 Notifications">
-                <a href="https://www.antgroup.com"></a>
-            </Menu.ItemGroup>
-            <Menu.Divider />
-            <Menu.Item>
-                {' '}
-                <i className="fas fa-envelope mr-2"></i>4 new messages
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-                {' '}
-                <i className="fas fa-users mr-2"></i>8 friend requests
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-                <i className="fas fa-file mr-2"></i> 3 new reports
-            </Menu.Item>
-        </Menu>
-    );
+    const userSettingMenu = [
+        {
+            key: '1',
+            label: (
+                <a href="https://www.antgroup.com">
+                    <FaRegIdBadge /> My Profile
+                </a>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <a href="https://www.antgroup.com">
+                    <AiFillSetting /> Settings
+                </a>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <a href="https://www.antgroup.com">
+                    <TbFileReport /> FAQ
+                </a>
+            ),
+        },
+        {
+            key: '4',
+            label: (
+                <a href="https://www.antgroup.com">
+                    <FaUserMd /> Training/Help
+                </a>
+            ),
+        },
+        {
+            key: '5',
+            label: (
+                <a href="https://www.antgroup.com">
+                    <FiLogOut /> Logout
+                </a>
+            ),
+        },
+    ];
 
     return (
         <div>
-            <nav className="navbar navbar-expand navbar-white navbar-light padr27">
+            <nav className="navbar navbar-expand">
                 <ul className="navbar-nav">
-                    <li className="nav-item dropdown welcomeUser">
+                    <li className=" welcomeUser">
                         <Dropdown menu={{ items }} trigger={['click']}>
                             <a className="nav-link" data-toggle="dropdown" href="/">
-                                <div className="circle-singleline" id="dealerLogo">
-                                    MA
-                                </div>
+                                <Avatar>MA</Avatar>
                                 <Space>
                                     <div className="userText">
                                         <div className="dealername">Mahindra Automotive</div>
@@ -108,42 +103,39 @@ export const Header = () => {
                     </li>
                 </ul>
 
-                {/* <!-- Right navbar links --> */}
                 <ul className="navbar-nav ml-auto">
-                    {/* <!-- Notifications Dropdown Menu --> */}
-                    <li className="nav-item dropdown">
-                        <Dropdown>
-                            <a className="nav-link" data-toggle="dropdown" href="/">
-                                <i className="far fa-bell"></i>
-                                <span className="badge badge-warning navbar-badge">15</span>
-                            </a>
-                        </Dropdown>
-                    </li>
-                    {/* <!-- Notifications Dropdown Menu --> */}
-                    <li className="nav-item dropdown">
+                    <li className="">
                         <a className="nav-link" data-toggle="dropdown" href="/">
-                            {/* <!-- <img className="fl" src="asset/img/help.png"> --> */}
+                            <Badge count={5}>
+                                <FaBell />
+                            </Badge>
+                        </a>
+                    </li>
+                    <li className="">
+                        <a className="nav-link" data-toggle="dropdown" href="/">
                             <FaHeadset />
                             <div className="helpLine">OneStop Help Desk</div>
                         </a>
                     </li>
-                    {/* <!-- User Profile --> */}
 
-                    <li className="nav-item dropdown welcomeUser">
-                        <Dropdown>
-                            <a className="nav-link" data-toggle="dropdown" href="/" onClick={(e) => e.preventDefault()}>
-                                {/* <!-- <i className="fa fa-user userICO" aria-hidden="true"></i> --> */}
-                                <div className="circle-singleline">JS</div>
-                                <Space>
-                                    <div className="userText">
-                                        <div>John Smith</div>
-                                        <span className="userServiceArea">+91-9865443234</span>
-                                        <DownOutlined />
-                                        {/* <i className="fas fa-angle-down right" aria-hidden="true"></i> */}
-                                    </div>
-                                </Space>
-                            </a>
-                        </Dropdown>
+                    <li className=" welcomeUser">
+                        <>
+                            <Avatar>JS</Avatar>
+                            <Space>
+                                <div className="userText">
+                                    <div>John Smith</div>
+                                    <span className="userServiceArea">+91-9865443234</span>
+                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                        <a onClick={(e) => e.preventDefault()}>
+                                            <Space>
+                                                <DownOutlined />
+                                            </Space>
+                                        </a>
+                                    </Dropdown>
+                                </div>
+                            </Space>
+                        </>
+                        {/* </Dropdown> */}
                     </li>
                 </ul>
             </nav>
