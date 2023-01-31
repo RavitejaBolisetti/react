@@ -87,7 +87,7 @@ export const Header = () => {
 
     return (
         <div>
-            <nav className="main-header navbar navbar-expand navbar-white navbar-light padr27">
+            <nav className="navbar navbar-expand navbar-white navbar-light padr27">
                 <ul className="navbar-nav">
                     <li className="nav-item dropdown welcomeUser">
                         <Dropdown menu={{ items }} trigger={['click']}>
@@ -97,7 +97,7 @@ export const Header = () => {
                                 </div>
                                 <Space>
                                     <div className="userText">
-                                        <span className="dealername">Mahindra Automotive</span>
+                                        <div className="dealername">Mahindra Automotive</div>
                                         <span className="userServiceArea">Vikhroli (W) Mumbai</span>
                                         {/* <i className="fa fa-angle-down" aria-hidden="true"></i> */}
                                         <DownOutlined />
@@ -136,7 +136,7 @@ export const Header = () => {
                                 <div className="circle-singleline">JS</div>
                                 <Space>
                                     <div className="userText">
-                                        <span>John Smith</span>
+                                        <div>John Smith</div>
                                         <span className="userServiceArea">+91-9865443234</span>
                                         <DownOutlined />
                                         {/* <i className="fas fa-angle-down right" aria-hidden="true"></i> */}
