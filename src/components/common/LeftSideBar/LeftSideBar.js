@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    setCollapsed: () => { },
+    setCollapsed: () => {},
 };
 
 function getItem(label, key, icon, children, type) {
@@ -46,7 +46,7 @@ const items = [
     getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
         getItem('Product Master', '2'),
         getItem('Product Hirarachy', '3'),
-        getItem('Hirarchy Attribute Master', '4'),
+        getItem('Hirarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hirarchy Attribute Master', '34')]),
         getItem('Role Management', '5'),
         getItem('User Self Registration', '6'),
         getItem('Geographical Hirarchy', '7'),
@@ -85,7 +85,7 @@ const LeftSideBarMain = ({ collapsed, setCollapsed, kuldeep }) => {
     const onSearch = (value) => console.log(value);
 
     const theme = 'light';
-    const handleTheme = () => { };
+    const handleTheme = () => {};
 
     return (
         <>
@@ -101,7 +101,6 @@ const LeftSideBarMain = ({ collapsed, setCollapsed, kuldeep }) => {
                 <Menu mode="inline" inlineIndent={15} openKeys={openKeys} onOpenChange={onOpenChange} collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme}>
-
                     {theme === 'dark' ? (
                         <BsMoon size={14} className="text-[#FF3E5B]" />
                     ) : (
