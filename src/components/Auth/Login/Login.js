@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Form, message, Row, Col, Button } from 'antd';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Form, Row, Col, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import { FiLock } from 'react-icons/fi';
 import { FaKey, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
@@ -17,7 +16,7 @@ import * as IMAGES from 'assets';
 import 'assets/style/new_robin.css';
 import styles from './Login.module.css';
 
-import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
+// import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
 import { ROUTING_FORGOT_PASSWORD } from 'constants/routing';
 import { connect } from 'react-redux';
 
@@ -55,61 +54,27 @@ const mapDispatchToProps = {
 const Login = (props) => {
     const { doLogin, isError, message } = props;
     const [form] = Form.useForm();
-    const [post, setPost] = useState();
     const [showPassword, setShowPassword] = useState(false);
     const [captcha, setCaptcha] = useState(false);
 
-    const [loginErrors, setLoginErrors] = useState();
-    const [visibleErrorModal, setVisibleErrorModal] = useState(false);
-    // eslint-disable-next-line no-unused-vars
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const recaptchaRef = React.useRef(null);
 
-    useEffect(() => {
-        axios.get(BASE_URL_USER_DETAIL.concat('/101')).then((response) => {});
-    }, []);
-
     const onFinish = (values) => {
-        setVisibleErrorModal(false);
-        // if (captcha) {
-        // const userLoginData = {
-        //     userId: values?.userId,
-        //     password: values?.password,
-        // };
-        // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (captcha) {
+            // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            // values.timeZone = timeZone;
 
-        // console.log(values);
+            doLogin(values, loginPageIsLoading);
 
-        // values.timeZone = timeZone;
-        // values.geoLocation = this.state.geoLocation;
-        // values.password = values?.password;
-        doLogin(values, loginPageIsLoading);
-
-        // axios.post(BASE_URL_LOGIN, userLoginData).then((response) => {
-        //     console.log('🚀 ~ file: Login.js:42 ~ axios.post ~ response', response);
-        //     if (response?.data?.statusCode === 500) {
-        //         setVisibleErrorModal(true);
-        //         setLoginErrors({
-        //             title: 'Interval Server Error',
-        //             message: response.data.responseMessage || 'internal server error.',
-        //         });
-        //     } else if (response?.data?.statusCode === 400) {
-        //         setVisibleErrorModal(true);
-        //         setLoginErrors({
-        //             title: 'Invalid credentials',
-        //             message: response.data.responseMessage || 'Please re-enter correct credentials.',
-        //         });
-        //     } else if (response?.data?.statusCode === 200) {
-        //         localStorage.setItem('userData', JSON.stringify(response.data));
-        //         message.info(response.data.responseMessage);
-        //         setPost(response.data);
-        //         form.resetFields();
-        //         recaptchaRef.current.reset();
-        //         setCaptcha('');
-        //         navigate('/dashboard');
-        //     }
-        // });
-        // }
+            // localStorage.setItem('userData', JSON.stringify(response.data));
+            // message.info(response.data.responseMessage);
+            // setPost(response.data);
+            // form.resetFields();
+            // recaptchaRef.current.reset();
+            // setCaptcha('');
+            // navigate('/dashboard');
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -216,7 +181,7 @@ const Login = (props) => {
                             <FaExclamationTriangle size={18} />
                         </span>
                         {'Error'}
-                        <span className="fr hide-btn loginErrorClose" onClick={() => setVisibleErrorModal(false)}>
+                        <span className="fr hide-btn loginErrorClose" onClick={() => {}}>
                             <FaTimes size={18} />
                         </span>
                     </h5>
