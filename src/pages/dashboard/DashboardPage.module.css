@@ -7,3 +7,28 @@
   border-bottom: dashed 1px #a5b5c2;
   margin-bottom: 30px;
 }
+
+:global .ant-card .ant-card-head-title{
+  font-size: 1.1rem;
+  float :left;
+  font-weight: 500;
+ }
+ 
+ 
+ :global .ant-card.ant-card-body{
+  padding: 12px;
+ }
+
+
+ :global .ant-carousel .slick-dots li button::after{
+  background-color: #EA3434;
+  /* margin: 5px; */
+  inset: 0.5em;
+ }
+
+ :global .ant-carousel .slick-dots li button{
+  margin: 0px 30px 0px 2px;
+  top: 30px;
+ 
+  padding:0px 10px;
+ }
