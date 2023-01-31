@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiLock } from 'react-icons/fi';
 import { FaKey, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { doLogin, doCloseLoginError, doCloseLoginFailure, doCloseUnAuthenticatedError } from 'store/actions/auth';
@@ -134,7 +135,7 @@ const Login = (props) => {
                 <div className="logotext">Dealer Management System</div>
             </div>
             <Row>
-                <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '0 auto' }}>
+                <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
                     <div className="login-wrap">
                         <Form form={form} name="login_from" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
@@ -151,7 +152,7 @@ const Login = (props) => {
                                                     <div className="input-group mb-3">
                                                         <div className="input-group-prepend">
                                                             <span className="input-group-text login_input-group-text">
-                                                                <FiLock size={18} />
+                                                                <AiOutlineMail size={18} />
                                                             </span>
                                                         </div>
                                                         <input type="text" className="form-control input loginTextfield" placeholder="User ID(MILE ID.Parent ID)" />
@@ -164,10 +165,10 @@ const Login = (props) => {
                                                                 {' '}
                                                                 <div className="input-group-prepend">
                                                                     <span className="input-group-text login_input-group-text">
-                                                                        <FaKey size={18} />
+                                                                        <AiOutlineLock size={18} />
                                                                     </span>
                                                                 </div>
-                                                                <input type="password" id="password" className="form-control input loginTextfield" placeholder="Password" />
+                                                                <input type={showPassword ? 'text' : 'password'} id="password" className="form-control input loginTextfield" placeholder="Password" />
                                                                 <div className="input-group-prepend">
                                                                     <span className="input-group-text login_input-group-text fr" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
                                                                         {!showPassword ? <AiOutlineEyeInvisible className="text-[#DEDEDE]" size={18} /> : <AiOutlineEye className="text-white" size={18} />}
@@ -185,7 +186,7 @@ const Login = (props) => {
                                                 </Row>
 
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mrt10}>
                                                         <Button className={styles.button} type="primary" htmlType="submit">
                                                             Login
                                                         </Button>
