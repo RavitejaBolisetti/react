@@ -25,6 +25,7 @@ export const withLayout = (HeaderComponent, LeftMenuComponent, FooterComponent, 
                                 margin: '24px 16px 0',
                                 overflow: 'initial',
                                 background: '#ffffff',
+                                height:'80vh',
                             }}
                         >
                             <PageContentComponent props={props} />
