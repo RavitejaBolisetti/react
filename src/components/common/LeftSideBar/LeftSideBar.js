@@ -21,7 +21,7 @@ import { bindActionCreators } from 'redux';
 const { Search } = Input;
 const { Sider } = Layout;
 
-const mapStateToProps = (state) => {    
+const mapStateToProps = (state) => {
     const {
         common: {
             LeftSideBar: { collapsed = false },
@@ -105,11 +105,11 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     };
 
     const theme = 'light';
-    const handleTheme = () => {};
+    const handleTheme = () => { };
 
     return (
         <>
-            <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4' }}>
+            <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%)' }}>
                 <div className={styles.logoContainer}>
                     <a href="javascripy::void" className={styles.brandLink}>
                         {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}

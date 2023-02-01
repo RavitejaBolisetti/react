@@ -1,19 +1,62 @@
+:global .ant-layout .ant-layout-header {
+    line-height: 50px;
+}
+
 .headerLeft {
     padding-left: 30px;
 }
 
-.headerRight {
-    padding-right: 30px;
+.userAvatar {
+    padding-top: 12px;
 }
 
-.userAvatar {
-    padding-top: 10px;
+.userText {
+    float: right;
+    /* margin: 10px 0 0 4px !important; */
+    padding-top: 16px;
+    color: #0B0B0C;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.dealerName {
+    color: #ea3434;
+    font-size: 20px;
+    padding-bottom: 2px;
+}
+
+.userServiceArea {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.navLink {
+    color: #0B0B0C;
+    padding: 5px;
+}
+
+.navLink:hover {
+    color: #ea3434;
+}
+
+/* :global .ant-dropdown .ant-dropdown-menu {
+    margin-left: 50px;
+} */
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
+    text-decoration: none;
+}
+
+.headerRight {
+    float: right;
+    padding-right: 30px;
+    padding-top: 22px;
 }
 
 .navbarNav {
     display: flex;
-    flex-direction: column;
-
+    flex-direction: row;
     list-style: none;
 }
 
@@ -22,33 +65,37 @@
     justify-content: flex-start;
 }
 
-.navbarExpand .navbarNav {
+/* .navbarExpand .navbarNav {
     flex-direction: row;
-}
+} */
 
 .navbarExpand .navbarNav .navLink {
-    padding-right: 1rem;
-    padding-left: 1rem;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.userText {
-    float: right;
-    margin: 10px 0 0 4px !important;
-    color: #0B0B0C;
-    line-height: 20px;
-    font-size: 14px;
-    font-weight: 700;
+:global .ant-badge .ant-badge-count {
+    color: #212529;
+    background-color: #ffc107;
 }
 
-.welcomeUser .dealerName {
-    color: #ea3434;
-}
-
-.welcomeUser .userServiceArea {
-    color: #6c757d;
+.helpLineText {
+    display: inline-block;
     font-size: 12px;
+    line-height: 12px;
+    padding-left: 5px;
 }
 
-.headerRight {
-    float: right;
+.welcomeUser {
+    padding-left: 10px;
+    margin-top: -20px;
+}
+
+.welcomeUser .navLink {
+    color: #0B0B0C;
+    padding: 5px !important;
+}
+
+.welcomeUser .navLink:hover {
+    color: #ea3434 !important;
 }

@@ -1,8 +1,5 @@
 import React from 'react';
 
-// import 'assets/style/new_robin.scss';
-// import 'font-awesome/css/font-awesome.min.css';
-import styles from './DashboardPage.module.css';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { connect } from 'react-redux';
@@ -12,8 +9,9 @@ import { AiFillDashboard } from 'react-icons/ai';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { BiLineChart } from 'react-icons/bi';
 import { RiFileShield2Line } from 'react-icons/ri';
-import { FaRupeeSign, FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
+import { FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
 
+import styles from './DashboardPage.module.css';
 const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
