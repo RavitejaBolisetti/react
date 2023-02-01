@@ -87,8 +87,8 @@ export const GeoPageBase = () => {
                         <div id="outer" className="leftpanel">
                             <div id="Inner">
                                 <div className="treemenu mrt30">
-                                    <TreeView />
-                                    <GeoTree editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                    {/* <TreeView /> */}
+                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                 </div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@ export const GeoPageBase = () => {
                                 <h3>Parent Hierarchy</h3>
                                 <hr></hr>
                                 <Space direction="vertical"></Space>
-                                <GeoTree />
+                                <TreeView />
                             </Modal>
 
                             <Row gutter={20}>
