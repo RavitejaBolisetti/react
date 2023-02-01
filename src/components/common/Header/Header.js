@@ -13,7 +13,6 @@ import customMenuLink from 'utils/customMenuLink';
 import styles from './Header.module.css';
 
 export const Header = () => {
-
     const items = [
         customMenuLink({
             title: 'Branch Location',
@@ -40,13 +39,13 @@ export const Header = () => {
         customMenuLink({
             key: '1',
             title: 'My Profile',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_PROFILE,
             icon: <FaRegIdBadge />,
         }),
         customMenuLink({
             key: '2',
             title: 'Settings',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_SETTING,
             icon: <AiFillSetting />,
         }),
         customMenuLink({
@@ -64,7 +63,9 @@ export const Header = () => {
         customMenuLink({
             key: '6',
             title: 'Logout',
-            link: routing.ROUTING_HOME,
+            onclick: () => {
+                console.log('Logout : I am clicked ');
+            },
             icon: <FiLogOut />,
         }),
     ];
