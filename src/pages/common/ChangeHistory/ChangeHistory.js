@@ -3,75 +3,207 @@ import React from 'react';
 import { Table } from 'antd';
 const columns = [
     {
-        title: 'Name',
-        dataIndex: 'name',
+        title: 'Changed/Modified Date',
+        dataIndex: 'ChangeDate',
         filters: [
             {
-                text: 'Joe',
-                value: 'Joe',
+                text: '12/09/2023',
+                value: "12/09/2023",
             },
+           
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.ChangeDate.startsWith(value),
+        width: '210px',
+    },
+
+    {
+        title: 'Employee Code',
+        dataIndex: 'EmployeeCode',
+        filters: [
             {
-                text: 'Category 1',
-                value: 'Category 1',
-            },
-            {
-                text: 'Category 2',
-                value: 'Category 2',
+                text: '19489',
+                value: '19489',
             },
         ],
         filterMode: 'tree',
         filterSearch: true,
-        onFilter: (value, record) => record.name.startsWith(value),
-        width: '30%',
+        onFilter: (value, record) => record.EmployeeCode.startsWith(value),
+        width: '210px',
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
-        sorter: (a, b) => a.age - b.age,
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
+        title: 'Employee Name',
+        dataIndex: 'EmployeeName',
         filters: [
             {
-                text: 'London',
-                value: 'London',
-            },
-            {
-                text: 'New York',
-                value: 'New York',
+                text: 'Vivek',
+                value: 'Vivek',
             },
         ],
-        onFilter: (value, record) => record.address.startsWith(value),
+        filterMode: 'tree',
         filterSearch: true,
-        width: '40%',
+        onFilter: (value, record) => record.EmployeeName.startsWith(value),
+        width: '210px',
     },
+
+
+    // {
+    //     title: 'Attribute',
+    //     dataIndex: 'Attribute',
+    //     sorter: (a, b) => a.age - b.age,
+    //     width: '30%',
+    // },
+    {
+        title: 'Attribute',
+        dataIndex: 'Attribute',
+        filters: [
+            {
+                text: 'Attribute 6',
+                value: 'Attribute 6',
+            },
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.Attribute.startsWith(value),
+        width: '210px',
+    },
+    {
+        title: ' Code',
+        dataIndex: 'Code',
+        filters: [
+            {
+                text: 'UP',
+                value: 'UP',
+            },
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.Code.startsWith(value),
+        width: '210px',
+    },
+
+    {
+        title: 'Parent',
+        dataIndex: 'Parent',
+        filters: [
+            {
+                text: 'India',
+                value: 'India',
+            },
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.Parent.startsWith(value),
+        width: '210px',
+    },
+    {
+        title: 'Short Description',
+        dataIndex: 'ShortDescription',
+        filters: [
+            {
+                text: 'SMT 7STR',
+                value: 'SMT 7STR',
+            },
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.ShortDescription.startsWith(value),
+        width: '210px',
+    },
+    {
+        title: 'Long Description',
+        dataIndex: 'LongDescription',
+        filters: [
+            {
+                text: 'This Smt 7STR..',
+                value: 'This Smt 7STR variant comes..',
+            },
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.LongDescription.startsWith(value),
+        width: '210px',
+    },
+    {
+        title: 'Status',
+        dataIndex: 'Status',
+        filters: [
+            {
+                text: 'Active',
+                value: 'Active',
+            },
+            {
+                text: 'Inactive',
+                value: 'Inactive',
+            },
+        ],
+        filterMode: 'tree',
+        filterSearch: true,
+        onFilter: (value, record) => record.Status.startsWith(value),
+        width: '210px',
+    },
+    
+
 ];
 const data = [
     {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
+        ChangeDate:"12/09/2023",
+        EmployeeCode:"19489",
+        EmployeeName:"Vivek",
+        Attribute:"Attribute 6",
+        Code:"UP",
+        Parent:"India",
+        ShortDescription:"SMT 7STR",
+        LongDescription:"This Smt 7STR variant comes..",
+        Status:"Inactive",
     },
     {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
+        ChangeDate:"12/09/2023",
+        EmployeeCode:"19489",
+        EmployeeName:"Vivek",
+        Attribute:"Attribute 6",
+        Code:"UP",
+        Parent:"India",
+        ShortDescription:"SMT 7STR",
+        LongDescription:"This Smt 7STR variant comes..",
+        Status:"Active",
     },
     {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
+        ChangeDate:"12/09/2022",
+        EmployeeCode:"19489",
+        EmployeeName:"Vivek",
+        Attribute:"Attribute 6",
+        Code:"UP",
+        Parent:"India",
+        ShortDescription:"SMT 7STR",
+        LongDescription:"This Smt 7STR variant comes..",
+        Status:"Inactive",
     },
     {
-        key: '4',
-        name: 'Jim Red',
-        age: 32,
-        address: 'London No. 2 Lake Park',
+        ChangeDate:"12/09/2023",
+        EmployeeCode:"19489",
+        EmployeeName:"Vivek",
+        Attribute:"Attribute 6",
+        Code:"UP",
+        Parent:"India",
+        ShortDescription:"SMT 7STR",
+        LongDescription:"This Smt 7STR variant comes..",
+        Status:"Active",
     },
+    {
+        ChangeDate:"12/09/2023",
+        EmployeeCode:"19489",
+        EmployeeName:"Vivek",
+        Attribute:"Attribute 6",
+        Code:"UP",
+        Parent:"India",
+        ShortDescription:"SMT 7STR",
+        LongDescription:"This Smt 7STR variant comes..",
+        Status:"Active",
+    },
+    
+    
 ];
 const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -87,6 +219,10 @@ export const ChangeHistory = () => {
                 total: 500,
             }}
             onChange={onChange}
+            scroll={{
+                x: 1300,
+                y: 300,
+              }}
         />
     );
 };
