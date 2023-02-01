@@ -23,6 +23,7 @@ import { bindActionCreators } from 'redux';
 
 // import data from './LeftSideBar.module.css';
 import menuData from 'constants/menuSample.json';
+import customMenuLink from 'utils/customMenuLink';
 
 const { Search } = Input;
 const { Sider } = Layout;
@@ -51,15 +52,15 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-function getItem(label, key, icon, children, type) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-        type,
-    };
-}
+// function getItem(label, key, icon, children, type) {
+//     return {
+//         key,
+//         icon,
+//         children,
+//         label,
+//         type,
+//     };
+// }
 
 // const items = [
 //     getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]),
@@ -90,32 +91,62 @@ function getItem(label, key, icon, children, type) {
 //     getItem('Services', 'sub8', <FaWrench fontSize={20} />),
 // ];
 
-const items = [];
-// const generateMenuList = (data) => {
-//     for (let i = 0; i < data.length; i++) {
-//         console.log('Kuldeep', i, data);
-//         const menu = data[i];
-//         getItem(menu.menuTitle, menu.menuId, menu.menuIconUrl);
-//         if (menu.subMenu) {
-//             generateMenuList(menu.subMenu);
-//         }
-//         items.push();
-//     }
-// };
-
 const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     console.log('menuData', menuData?.data);
 
+    // const generateMenuList = (data) => {
+    //     for (let i = 0; i < data.length; i++) {
+    //         console.log('Kuldeep', i, data);
+    //         const menu = data[i];
+    //         getItem(menu.menuTitle, menu.menuId, menu.menuIconUrl);
+    //         if (menu.subMenu) {
+    //             generateMenuList(menu.subMenu);
+    //         }
+    //         items.push();
+    //     }
+    // };
+
     // generateMenuList(menuData?.data);
+
     const items = [];
     menuData?.data.map((menu) => {
-        menuData.subMenu?.data.map((submenu)=> {
-            items.push(getItem(menu.menuTitle, menu.menuId, menu.menuIconUrl, [getItem(menu.menuTitle, menu.menuId, menu.menuIconUrl, [getItem(menu.menuTitle, menu.menuId, menu.menuIconUrl)])]));
-            console.log('items', items);
-    
+        const subMenu = [];
+        // if (menu.subMenu) {
+        menu?.subMenu.map((menu) => {
+
+
+            subMenu.push(
+                customMenuLink({
+                    key: '1.1.' + menu.menuId,
+                    id: menu.menuId,
+                    title: menu.menuTitle,
+                    icon: menu.menuIconUrl,
+                    children: subMenu,
+                })
+            );
+
+
+            subMenu.push(
+                customMenuLink({
+                    title: menu.menuTitle,
+                    key: menu.menuId,
+                    id: menu.menuId,
+                    icon: menu.menuIconUrl,
+                })
+            );
             return undefined;
-        })
-        
+        });
+
+        items.push(
+            customMenuLink({
+                key: '1.1.' + menu.menuId,
+                id: menu.menuId,
+                title: menu.menuTitle,
+                icon: menu.menuIconUrl,
+                children: subMenu,
+            })
+        );
+        return undefined;
     });
 
     // items.push(getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]));
