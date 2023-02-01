@@ -1,9 +1,8 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { Col, Row } from 'antd';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import styles from './SettingPage.module.css';
+import styles from './ContactPage.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -19,12 +18,12 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-const SettingPageBase = (props) => {
+const ContactPageBase = (props) => {
     return (
         <Row>
-            <Col>Coming Soon!</Col>
+            <Col>Coming Soon! </Col>
         </Row>
     );
 };
 
-export const SettingPage = connect(mapStateToProps, null)(withLayoutMaster(SettingPageBase));
+export const ContactPage = connect(mapStateToProps, null)(withLayoutMaster(ContactPageBase));

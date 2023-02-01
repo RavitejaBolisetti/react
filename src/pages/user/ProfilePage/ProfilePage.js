@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
 const ProfilePageBase = (props) => {
     return (
         <Row>
-            <Col>My Profile Page</Col>
+            <Col>Coming Soon!</Col>
         </Row>
     );
 };
