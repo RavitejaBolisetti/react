@@ -1,16 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
 
 import TreeView from 'components/common/TreeView';
-
+import GeoTree from './Sample/GeoTree';
 // import 'assets/style/new_robin.scss';
 // import 'assets/style/sidebar.css';
 // import 'font-awesome/css/font-awesome.min.css';
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { Form, Row, Col, Input, Select } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
+import Antd from './Sample/Antd';
+import Antd2 from './Sample/Antd2';
+import ModalUtil from './Sample/ModalUtil';
+
+const { Option } = Select;
+
 export const GeoPageBase = () => {
+    const [activate, setActivate] = useState({
+        Attribute: '',
+        Parent: '',
+        Code: '',
+        Name: '',
+    });
+
+    const handle = (event) => {
+        setActivate({
+            ...activate,
+            [event.target.name]: event.target.value,
+        });
+        // console.log(event.target.name);
+    };
+
     const [form] = Form.useForm();
+    const [open, setOpen] = useState(false);
+    const [antdForm, setAntdForm] = useState(false);
+    const [formContent, setFormContent] = useState({
+        Attribute: '',
+        Parent: '',
+        Code: '',
+        Name: '',
+    });
+    const [editableFormContent, setEditableFormContent] = useState({
+        editAttribute: false,
+        editParent: false,
+        editCode: false,
+        editName: false,
+    });
 
     const onSubmit = (e) => {
         console.log('djks');
@@ -63,6 +99,7 @@ export const GeoPageBase = () => {
                                             <div id="Inner">
                                                 <div className="treemenu mrt30">
                                                     <TreeView />
+                                                    <GeoTree editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                                 </div>
                                             </div>
                                         </div>
@@ -73,63 +110,121 @@ export const GeoPageBase = () => {
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                                     <Form.Item name="Attribute Level" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
-                                                        <Select
-                                                            defaultValue="Mahindra Bolero"
-                                                            options={[
-                                                                { value: 'Mahindra Scorpio', label: 'Mahindra Scorpio' },
-                                                                { value: 'Mahindra KUV100 NXT', label: 'Mahindra KUV100 NXT' },
-                                                                { value: 'Mahindra Scorpio Classic', label: 'Mahindra Scorpio Classic' },
-                                                                { value: 'Mahindra Thar', label: 'Mahindra Thar' },
-                                                                { value: 'Mahindra Bolero', label: 'Mahindra Bolero' },
-                                                            ]}
-                                                        />
+                                                        {/* <Select placeholder={props.formContent.geoCode} disabled={props.editableFormContent.editAttribute} allowClear> */}
+                                                        <Select>
+                                                            <Option value="Continent">Continent</Option>
+                                                            <Option value="Country">Country</Option>
+                                                            <Option value="State">State</Option>
+                                                            <Option value="City">District/City</Option>
+                                                            <Option value="Tashil">Tashil</Option>
+                                                            <Option value="Pincode">Pincode</Option>
+                                                        </Select>
                                                     </Form.Item>
                                                 </Col>
 
                                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                    <Form.Item name="Parent" label="Parent" rules={[validateRequiredInputField('Parent')]}>
-                                                        <Input />
+                                                    <Form.Item
+                                                        label="Parent"
+                                                        name="Parent"
+                                                        className="control-label-blk"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Please Select a parent !',
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input.Group compact>
+                                                            <Input
+                                                                style={{
+                                                                    width: 'calc(100% - 48px)',
+                                                                }}
+                                                                //  readOnly={props.editableFormContent.editParent}
+                                                                name="Parent"
+                                                                onChange={handle}
+                                                                placeholder="Parent"
+                                                            />
+
+                                                            <Button
+                                                                type="primary"
+                                                                id="hierarchyChange"
+                                                                className="btn btn-outline srchbtn mr0 boxShdwNon"
+                                                                // disabled={props.editableFormContent.editParent}
+                                                                onClick={() => setOpen(true)}
+                                                            >
+                                                                <FaSearch />
+                                                            </Button>
+                                                        </Input.Group>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
+
+                                            <Modal
+                                                title=""
+                                                centered
+                                                open={open}
+                                                onOk={() => setOpen(false)}
+                                                onCancel={() => setOpen(false)}
+
+                                                // bodyStyle={{height:800 }}
+                                            >
+                                                <h3>Parent Hierarchy</h3>
+                                                <hr></hr>
+                                                <Space direction="vertical"></Space>
+                                                <GeoTree />
+                                            </Modal>
+
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                    <Form.Item name="Code" label="Code" rules={[validateRequiredInputField('Code')]}>
-                                                        <Input placeholder="input placeholder" />
+                                                    <Form.Item
+                                                        label="Code"
+                                                        name="Code"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Please Enter the Code !',
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input name="Code" onChange={handle} placeholder="Code" />
                                                     </Form.Item>
                                                 </Col>
+
                                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                    <Form.Item name="Short Description" label="Code" rules={[validateRequiredInputField('Parent')]}>
-                                                        <Input placeholder="input placeholder" />
+                                                    <Form.Item
+                                                        label="Name"
+                                                        name="Name"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Please input the name!',
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input name="Name" onChange={handle} placeholder="Name" />
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
+
                                             <Row>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Form.Item name="Active inactive button" label="Status">
+                                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
+                                                    </Form.Item>
                                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                                        <i className="fa fa-undo mrr5"></i>
-                                                        Reset
-                                                    </button>
-                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15" onClick={onSubmit}>
-                                                        <i className="fa fa-save mrr5"></i>Save
-                                                    </button>
-                                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                                        <i className="fa-solid fa-user-group mrr5"></i> Add Sibling
+                                                        <FaEdit className="fas fa-edit mrr5" />
+                                                        Edit
                                                     </button>
                                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                                        <i className="fa-solid fa-user-plus mrr5"></i>
+                                                        <FaUserPlus className="fa-solid fa-user-plus mrr5" />
                                                         Add Child
                                                     </button>
-
                                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                                        <i className="fa fa-edit mrr5"></i>
-                                                        Edit
+                                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
+                                                        Add Sibling
                                                     </button>
                                                 </Col>
                                             </Row>
-                                            {/* <div className="pad7" id="productHierarchy">
-                                                <div className="col-md-12 mrt10"></div>
-                                            </div> */}
                                         </Form>
                                     </div>
                                 </div>
