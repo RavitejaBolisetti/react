@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Space, Badge, Dropdown, Menu, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaUserMd, FaHeadset, FaBell } from 'react-icons/fa';
+import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
@@ -87,20 +87,22 @@ export const Header = () => {
             <Row>
                 <Col xs={24} sm={10} md={10} lg={10} xl={10} xxl={10}>
                     <div className={styles.headerLeft}>
-                        <Dropdown menu={{ items }} trigger={['click']}>
-                            <Space>
-                                <div className={styles.userAvatar}>
-                                    <Avatar shape="square" size={35}>MA</Avatar>
-                                </div>
-                                <div className={styles.userText}>
-                                    <div className={styles.dealerName}>Mahindra Automotive</div>
+                        <Space>
+                            <div className={styles.userAvatar}>
+                                <Avatar shape="square" size="large" style={{ backgroundColor: '#808080', fontSize: '20px', lineHeight: '35px' }}>
+                                    MA
+                                </Avatar>
+                            </div>
+                            <div className={styles.userText}>
+                                <div className={styles.dealerName}>Mahindra Automotive</div>
+                                <span className={styles.userServiceArea}>Vikhroli (W) Mumbai</span>
+                                <Dropdown menu={{ items }} trigger={['click']}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
-                                        <span className={styles.userServiceArea}>Vikhroli (W) Mumbai</span>
                                         <DownOutlined />
                                     </a>
-                                </div>
-                            </Space>
-                        </Dropdown>
+                                </Dropdown>
+                            </div>
+                        </Space>
                     </div>
                 </Col>
                 <Col xs={24} sm={14} md={14} lg={14} xl={14} xxl={14}>
@@ -108,29 +110,31 @@ export const Header = () => {
                         <div className={`${styles.navbar} ${styles.navbarExpand}`}>
                             <ul className={`${styles.navbarNav} ${styles.mlAuto}`}>
                                 <li>
-                                    <a className="nav-link" data-toggle="dropdown" href="/">
-                                        <Badge count={5}>
-                                            <FaBell size={20} />
+                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                        <Badge pill size="small" count={11}>
+                                            <FaRegBell size={20} />
                                         </Badge>
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="nav-link" data-toggle="dropdown" href="/">
+                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
                                         <FaHeadset size={20} />
-                                        <div className="helpLine">OneStop</div>
-                                        <span>Help Desk</span>
+                                        <span className={styles.helpLineText}>
+                                            OneStop <br></br> Help Desk
+                                        </span>
                                     </a>
                                 </li>
-
-                                <li className=" welcomeUser">
+                                <li className={styles.welcomeUser}>
                                     <>
-                                        <Avatar>JS</Avatar>
                                         <Space>
-                                            <div className="userText">
+                                            <div className={styles.userAvatar}>
+                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>JS</Avatar>
+                                            </div>
+                                            <div className={styles.userText}>
                                                 <div>John Smith</div>
-                                                <span className="userServiceArea">+91-9865443234</span>
+                                                <span className={styles.userServiceArea}>+91-9865443234</span>
                                                 <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                    <a onClick={(e) => e.preventDefault()}>
+                                                    <a className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                         <Space>
                                                             <DownOutlined />
                                                         </Space>
@@ -146,7 +150,6 @@ export const Header = () => {
                     </div>
                 </Col>
             </Row>
-
         </div>
     );
 };
