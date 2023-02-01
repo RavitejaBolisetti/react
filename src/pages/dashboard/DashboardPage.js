@@ -1,7 +1,4 @@
 import React from 'react';
-
-
-import { withLayoutMaster } from 'components/withLayoutMaster';
 import { connect } from 'react-redux';
 import imdimg from 'assets/img/img_md.png';
 import { Carousel, Card, Button, Row, Col, Input } from 'antd';
@@ -11,8 +8,10 @@ import { BiLineChart } from 'react-icons/bi';
 import { RiFileShield2Line } from 'react-icons/ri';
 import { FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
 
+import { withLayoutMaster } from 'components/withLayoutMaster';
 import styles from './DashboardPage.module.css';
 const { Search } = Input;
+
 const mapStateToProps = (state) => {
     const {
         common: {
