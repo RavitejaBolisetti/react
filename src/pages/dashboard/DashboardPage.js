@@ -14,13 +14,22 @@ import { BiLineChart } from 'react-icons/bi';
 import { RiFileShield2Line } from 'react-icons/ri';
 import { FaRupeeSign, FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
 
-const mapStateToProps = (state) => {
-    return {
-        kuldeep: 'Singh',
+const mapStateToProps = (state) => {    
+    const {
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    let returnValue = {
+        collapsed,
     };
+
+    return returnValue;
 };
 
 const DashboardPageBase = (props) => {
+    
     return (
         <>
             <div className="content-wrapper">

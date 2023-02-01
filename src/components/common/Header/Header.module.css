@@ -1,0 +1,54 @@
+.headerLeft {
+    padding-left: 30px;
+}
+
+.headerRight {
+    padding-right: 30px;
+}
+
+.userAvatar {
+    padding-top: 10px;
+}
+
+.navbarNav {
+    display: flex;
+    flex-direction: column;
+
+    list-style: none;
+}
+
+.navbarExpand {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+
+.navbarExpand .navbarNav {
+    flex-direction: row;
+}
+
+.navbarExpand .navbarNav .navLink {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.userText {
+    float: right;
+    margin: 10px 0 0 4px !important;
+    color: #0B0B0C;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.welcomeUser .dealerName {
+    color: #ea3434;
+}
+
+.welcomeUser .userServiceArea {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.headerRight {
+    float: right;
+}
