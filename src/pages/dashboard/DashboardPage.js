@@ -1,27 +1,36 @@
 import React from 'react';
 
-import 'assets/style/new_robin.scss';
-import 'font-awesome/css/font-awesome.min.css';
-import styles from './DashboardPage.module.css';
+
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { connect } from 'react-redux';
 import imdimg from 'assets/img/img_md.png';
 import { Carousel, Card, Button, Badge } from 'antd';
-import {AiFillDashboard} from 'react-icons/ai'
+import { AiFillDashboard } from 'react-icons/ai';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { BiLineChart } from 'react-icons/bi';
-import { RiFileShield2Line} from 'react-icons/ri'
-import { FaRupeeSign, FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
+import { RiFileShield2Line } from 'react-icons/ri';
+import { FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
+
+import styles from './DashboardPage.module.css';
+// import 'assets/style/new_robin.scss';
+// import 'font-awesome/css/font-awesome.min.css';
 
 const mapStateToProps = (state) => {
-    return {
-        kuldeep: 'Singh',
+    const {
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    let returnValue = {
+        collapsed,
     };
+
+    return returnValue;
 };
 
 const DashboardPageBase = (props) => {
-  
     return (
         <>
             <div className="content-wrapper">
@@ -52,11 +61,16 @@ const DashboardPageBase = (props) => {
                             <ul className="drag-sort-enable">
                                 <li>
                                     <Card
-                                        title={<> <AiFillDashboard/> Dashboard</>}
+                                        title={
+                                            <>
+                                                {' '}
+                                                <AiFillDashboard /> Dashboard
+                                            </>
+                                        }
                                         avatar=""
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div>
@@ -87,11 +101,14 @@ const DashboardPageBase = (props) => {
                                 </li>
                                 <li>
                                     <Card
-                                        title={<><FaClock /> Action Items</>}
-                                        
+                                        title={
+                                            <>
+                                                <FaClock /> Action Items
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div className="direct-chat-messages">
@@ -130,10 +147,14 @@ const DashboardPageBase = (props) => {
                                 </li>
                                 <li>
                                     <Card
-                                        title={ <><FaNewspaper/> News</>}
+                                        title={
+                                            <>
+                                                <FaNewspaper /> News
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <Carousel autoplay>
@@ -171,10 +192,14 @@ const DashboardPageBase = (props) => {
                                 </li>
                                 <li>
                                     <Card
-                                        title={<><FaChalkboard/> Upcoming Trainings</>}
+                                        title={
+                                            <>
+                                                <FaChalkboard /> Upcoming Trainings
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div>
@@ -184,10 +209,15 @@ const DashboardPageBase = (props) => {
                                 </li>
                                 <li>
                                     <Card
-                                        title= { <> <FaBirthdayCake/> Birthday Calendar</>}
+                                        title={
+                                            <>
+                                                {' '}
+                                                <FaBirthdayCake /> Birthday Calendar
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <Carousel autoplay>
@@ -229,10 +259,15 @@ const DashboardPageBase = (props) => {
                                 </li>
                                 <li>
                                     <Card
-                                        title={<> <RiFileShield2Line/> Knowledge Center</>}
+                                        title={
+                                            <>
+                                                {' '}
+                                                <RiFileShield2Line /> Knowledge Center
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div className="card-body">
