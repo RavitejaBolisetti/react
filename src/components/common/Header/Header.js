@@ -17,7 +17,6 @@ export const Header = () => {
         customMenuLink({
             title: 'Branch Location',
             link: routing.ROUTING_HOME,
-            icon: <FaRegIdBadge />,
             children: [
                 customMenuLink({
                     title: 'Mahindra Randhawa Motors',
