@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Row, Col, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiLock } from 'react-icons/fi';
 import { FaKey, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
@@ -17,7 +17,7 @@ import 'assets/style/new_robin.css';
 import styles from './Login.module.css';
 
 // import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
-import { ROUTING_FORGOT_PASSWORD } from 'constants/routing';
+import { ROUTING_FORGOT_PASSWORD,ROUTING_DASHBOARD1 } from 'constants/routing';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -57,15 +57,16 @@ const Login = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [captcha, setCaptcha] = useState(false);
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const recaptchaRef = React.useRef(null);
 
     const onFinish = (values) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
+            navigate(ROUTING_DASHBOARD1);
 
-            doLogin(values, loginPageIsLoading);
+            // doLogin(values, loginPageIsLoading);
 
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
@@ -73,7 +74,6 @@ const Login = (props) => {
             // form.resetFields();
             // recaptchaRef.current.reset();
             // setCaptcha('');
-            // navigate('/dashboard');
         }
     };
 
