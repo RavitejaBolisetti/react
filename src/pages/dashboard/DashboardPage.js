@@ -7,11 +7,11 @@ import styles from './DashboardPage.module.css';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { connect } from 'react-redux';
 import imdimg from 'assets/img/img_md.png';
-import { Carousel, Card, Button, Badge } from 'antd';
-import {AiFillDashboard} from 'react-icons/ai'
+import { Carousel, Card, Button, Row, Col } from 'antd';
+import { AiFillDashboard } from 'react-icons/ai';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { BiLineChart } from 'react-icons/bi';
-import { RiFileShield2Line} from 'react-icons/ri'
+import { RiFileShield2Line } from 'react-icons/ri';
 import { FaRupeeSign, FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
 
 const mapStateToProps = (state) => {
@@ -21,7 +21,6 @@ const mapStateToProps = (state) => {
 };
 
 const DashboardPageBase = (props) => {
-  
     return (
         <>
             <div className="content-wrapper">
@@ -49,14 +48,19 @@ const DashboardPageBase = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <ul className="drag-sort-enable">
-                                <li>
+                            <Row>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Card
-                                        title={<> <AiFillDashboard/> Dashboard</>}
+                                        title={
+                                            <>
+                                                {' '}
+                                                <AiFillDashboard /> Dashboard
+                                            </>
+                                        }
                                         avatar=""
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div>
@@ -84,14 +88,17 @@ const DashboardPageBase = (props) => {
                                             </div>
                                         </div>
                                     </Card>
-                                </li>
-                                <li>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Card
-                                        title={<><FaClock /> Action Items</>}
-                                        
+                                        title={
+                                            <>
+                                                <FaClock /> Action Items
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div className="direct-chat-messages">
@@ -127,13 +134,17 @@ const DashboardPageBase = (props) => {
                                             </div>
                                         </div>
                                     </Card>
-                                </li>
-                                <li>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Card
-                                        title={ <><FaNewspaper/> News</>}
+                                        title={
+                                            <>
+                                                <FaNewspaper /> News
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <Carousel autoplay>
@@ -168,26 +179,35 @@ const DashboardPageBase = (props) => {
                                             </div>
                                         </Carousel>
                                     </Card>
-                                </li>
-                                <li>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Card
-                                        title={<><FaChalkboard/> Upcoming Trainings</>}
+                                        title={
+                                            <>
+                                                <FaChalkboard /> Upcoming Trainings
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div>
                                             <div className="direct-chat-messages"></div>
                                         </div>
                                     </Card>
-                                </li>
-                                <li>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Card
-                                        title= { <> <FaBirthdayCake/> Birthday Calendar</>}
+                                        title={
+                                            <>
+                                                {' '}
+                                                <FaBirthdayCake /> Birthday Calendar
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <Carousel autoplay>
@@ -226,20 +246,33 @@ const DashboardPageBase = (props) => {
                                             </div>
                                         </Carousel>
                                     </Card>
-                                </li>
-                                <li>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Card
-                                        title={<> <RiFileShield2Line/> Knowledge Center</>}
+                                        title={
+                                            <>
+                                                {' '}
+                                                <RiFileShield2Line /> Knowledge Center
+                                            </>
+                                        }
                                         bordered={false}
                                         style={{
-                                            "width":  "100%",
+                                            width: '100%',
                                         }}
                                     >
                                         <div className="card-body">
                                             <div className="direct-chat-messages"></div>
                                         </div>
                                     </Card>
-                                </li>
+                                </Col>
+                            </Row>
+                            <ul className="drag-sort-enable">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
                             </ul>
                         </div>
                     </div>
