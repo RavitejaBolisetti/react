@@ -7,79 +7,67 @@ import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
 
+import * as routing from 'constants/routing';
+import customMenuLink from 'utils/customMenuLink';
+
 import styles from './Header.module.css';
 
 export const Header = () => {
     const items = [
-        {
-            key: '1',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    Branch Location
-                </a>
-            ),
+        customMenuLink({
+            title: 'Branch Location',
+            link: routing.ROUTING_HOME,
+            icon: <FaRegIdBadge />,
             children: [
-                {
-                    key: '1-1',
-                    label: 'Mahindra Randhawa Motors',
-                },
-                {
-                    key: '1-2',
-                    label: 'MG Motor India',
-                },
+                customMenuLink({
+                    title: 'Mahindra Randhawa Motors',
+                    link: routing.ROUTING_HOME,
+                }),
+                customMenuLink({
+                    title: 'MG Motor India',
+                    link: routing.ROUTING_HOME,
+                }),
             ],
-        },
-        {
-            key: '2',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard2">
-                    Finacial Year{' '}
-                </a>
-            ),
-        },
+        }),
+        customMenuLink({
+            title: 'Finacial Year',
+            link: routing.ROUTING_HOME,
+        }),
     ];
 
     const userSettingMenu = [
-        {
+        customMenuLink({
             key: '1',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <FaRegIdBadge /> My Profile
-                </a>
-            ),
-        },
-        {
+            title: 'My Profile',
+            link: routing.ROUTING_USER_PROFILE,
+            icon: <FaRegIdBadge />,
+        }),
+        customMenuLink({
             key: '2',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <AiFillSetting /> Settings
-                </a>
-            ),
-        },
-        {
+            title: 'Settings',
+            link: routing.ROUTING_USER_SETTING,
+            icon: <AiFillSetting />,
+        }),
+        customMenuLink({
             key: '3',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <TbFileReport /> FAQ
-                </a>
-            ),
-        },
-        {
+            title: 'FAQ',
+            link: routing.ROUTING_HOME,
+            icon: <TbFileReport />,
+        }),
+        customMenuLink({
             key: '4',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <FaUserMd /> Training/Help
-                </a>
-            ),
-        },
-        {
-            key: '5',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <FiLogOut /> Logout
-                </a>
-            ),
-        },
+            title: 'Training/Help',
+            link: routing.ROUTING_HOME,
+            icon: <FaUserMd />,
+        }),
+        customMenuLink({
+            key: '6',
+            title: 'Logout',
+            onclick: () => {
+                console.log('Logout : I am clicked ');
+            },
+            icon: <FiLogOut />,
+        }),
     ];
 
     return (
@@ -143,7 +131,6 @@ export const Header = () => {
                                             </div>
                                         </Space>
                                     </>
-                                    {/* </Dropdown> */}
                                 </li>
                             </ul>
                         </div>
