@@ -14,7 +14,7 @@ import { BiLineChart } from 'react-icons/bi';
 import { RiFileShield2Line } from 'react-icons/ri';
 import { FaRupeeSign, FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
 
-const mapStateToProps = (state) => {    
+const mapStateToProps = (state) => {
     const {
         common: {
             LeftSideBar: { collapsed = false },
@@ -29,7 +29,6 @@ const mapStateToProps = (state) => {
 };
 
 const DashboardPageBase = (props) => {
-    
     return (
         <>
             <div className="content-wrapper">
@@ -58,7 +57,7 @@ const DashboardPageBase = (props) => {
                                 </div>
                             </div>
                             <Row>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                                     <Card
                                         title={
                                             <>
@@ -98,7 +97,7 @@ const DashboardPageBase = (props) => {
                                         </div>
                                     </Card>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                                     <Card
                                         title={
                                             <>
@@ -144,7 +143,7 @@ const DashboardPageBase = (props) => {
                                         </div>
                                     </Card>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                                     <Card
                                         title={
                                             <>
@@ -189,7 +188,7 @@ const DashboardPageBase = (props) => {
                                         </Carousel>
                                     </Card>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                                     <Card
                                         title={
                                             <>
@@ -206,7 +205,7 @@ const DashboardPageBase = (props) => {
                                         </div>
                                     </Card>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                                     <Card
                                         title={
                                             <>
@@ -256,11 +255,10 @@ const DashboardPageBase = (props) => {
                                         </Carousel>
                                     </Card>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                                     <Card
                                         title={
                                             <>
-                                                {' '}
                                                 <RiFileShield2Line /> Knowledge Center
                                             </>
                                         }
