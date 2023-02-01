@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
-import GeoTree from './Sample/GeoTree';
+// import TreeView from 'components/common/TreeView';
+import { GeoTree as TreeView } from './Sample/GeoTree';
 // import 'assets/style/new_robin.scss';
 // import 'assets/style/sidebar.css';
 // import 'font-awesome/css/font-awesome.min.css';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-
-import Antd from './Sample/Antd';
-import Antd2 from './Sample/Antd2';
-import ModalUtil from './Sample/ModalUtil';
 
 const { Option } = Select;
 
@@ -98,8 +94,7 @@ export const GeoPageBase = () => {
                                         <div id="outer" className="leftpanel">
                                             <div id="Inner">
                                                 <div className="treemenu mrt30">
-                                                    <TreeView />
-                                                    <GeoTree editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +166,7 @@ export const GeoPageBase = () => {
                                                 <h3>Parent Hierarchy</h3>
                                                 <hr></hr>
                                                 <Space direction="vertical"></Space>
-                                                <GeoTree />
+                                                <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                             </Modal>
 
                                             <Row gutter={20}>
