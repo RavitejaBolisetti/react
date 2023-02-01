@@ -20,6 +20,6 @@ export const ROUTING_USER_BRANCH = ROUTING_USER.concat('branch');
 export const ROUTING_USER_FINANACIAL = ROUTING_USER.concat('financial');
 
 export const ROUTING_USER_TERM = ROUTING_HOME.concat('term');
-export const ROUTING_USER_ABOUT = '/about';
-export const ROUTING_USER_DISCLAIMER = '/disclaimer';
-export const ROUTING_USER_CONTACT = '/contact';
+export const ROUTING_USER_ABOUT = ROUTING_HOME.concat('about');
+export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
+export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact');
