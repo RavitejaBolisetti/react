@@ -34,16 +34,33 @@ const DashboardPageBase = (props) => {
     return (
         <>
             <Row gutter={20}>
+                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                   
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                            <div >
+                                <span className={styles.headingGradient}>Welcome back John! </span>
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
+                            <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
+                        </Col>
+                    </Row>
+                    <div className={styles.pageHeaderNameSection}></div> </Col>
+            </Row>
+
+            {/* <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                    <div className="headingGradient">
+                    <div className={styles.headingGradient}>
                         <span className="innerheading">Welcome back John! </span>
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
                     <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
                 </Col>
+                
             </Row>
-
+            */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                     <Card
@@ -89,7 +106,7 @@ const DashboardPageBase = (props) => {
                         }
                         className={styles.mb10}
                     >
-                        <div className="direct-chat-messages">
+                        <div className={styles.directChatMessages}>
                             <div className="scrollbar" id="scrollHBar">
                                 <div className="force-overflow">
                                     <ul className="dashboardList">
