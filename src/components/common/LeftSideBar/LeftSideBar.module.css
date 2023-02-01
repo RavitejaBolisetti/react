@@ -68,13 +68,13 @@
 /* icon for collapse position when not collapsed */
 :global .ant-layout .ant-layout-sider-trigger .anticon-left {
   position: absolute;
-  left: 212px;
+  left: 208px;
 }
 
 /* icon for collapse position when collapsed */
 :global .ant-layout .ant-layout-sider-trigger .anticon-right {
   position: absolute;
-  left: 60px;
+  left: 55px;
 }
 
 /* background color of the menu list & sub-menu list */
@@ -84,6 +84,7 @@
 
 :global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   background-color: transparent;
+  padding-left: 17px !important;
 }
 
 /* changes on menu list items on hover */
@@ -109,24 +110,25 @@
   overflow-y: scroll;
   min-height: 74vh;
 }
+
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track
-{
-	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
-	background-color: #F4F4F4;
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  background-color: #F4F4F4;
 }
+
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar
-{
-	width: 5px;
-	background-color: #F4F4F4;
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
+  width: 5px;
+  background-color: #F4F4F4;
 }
+
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb
-{
-	background-color: #ea3434;
-	/* border: 2px solid ; */
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
+  background-color: #ea3434;
+  /* border: 2px solid ; */
 }
+
 :global .ant-menu-light.ant-menu-root.ant-menu-inline,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
   border-inline-end: none;
@@ -165,8 +167,8 @@
   width: 40px;
 }
 
-:global :where(.css-dev-only-do-not-override-aprs5d).ant-input-search .ant-input:hover, 
-:global :where(.css-dev-only-do-not-override-aprs5d).ant-input-search .ant-input:focus{
+:global :where(.css-dev-only-do-not-override-aprs5d).ant-input-search .ant-input:hover,
+:global :where(.css-dev-only-do-not-override-aprs5d).ant-input-search .ant-input:focus {
   border-color: #0458f7;
 }
 
@@ -187,4 +189,3 @@
 .changeTheme:hover {
   color: #ea2929 !important;
 }
-

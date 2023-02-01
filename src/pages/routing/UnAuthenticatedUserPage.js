@@ -7,16 +7,25 @@ import { DashboardPage } from 'pages/dashboard';
 import { SplashPage } from 'pages/splash';
 import { GeoPage, ProductHierarchyPage } from 'pages/common';
 
+import { ProfilePage } from 'pages/user/ProfilePage';
+import { SettingPage } from 'pages/user/SettingPage';
+
 export const UnAuthenticatedUserPage = () => {
     return (
         <Router>
             <Routes>
+                <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
+                <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
                 <Route path={routing.ROUTING_COMMON_GEO} element={<GeoPage />} />
                 <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
                 <Route path={routing.ROUTING_DASHBOARD1} element={<DashboardPage />} />
                 <Route path={routing.ROUTING_LOGIN} element={<LoginPage />} exact />
                 <Route path={routing.ROUTING_FORGOT_PASSWORD} element={<ForgotPasswordPage />} exact />
                 <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
+
+                {/* Profile Pages                */}
+
+
                 <Route path="*" exact />
             </Routes>
         </Router>
