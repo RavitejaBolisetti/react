@@ -20,17 +20,17 @@ export const Header = () => {
             children: [
                 customMenuLink({
                     title: 'Mahindra Randhawa Motors',
-                    link: routing.ROUTING_HOME,
+                    link: routing.ROUTING_USER_MAHINDRA,
                 }),
                 customMenuLink({
                     title: 'MG Motor India',
-                    link: routing.ROUTING_HOME,
+                    link: routing.ROUTING_USER_MG,
                 }),
             ],
         }),
         customMenuLink({
             title: 'Finacial Year',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_FINANACIAL,
         }),
     ];
 
@@ -50,13 +50,13 @@ export const Header = () => {
         customMenuLink({
             key: '3',
             title: 'FAQ',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_FAQ,
             icon: <TbFileReport />,
         }),
         customMenuLink({
             key: '4',
             title: 'Training/Help',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_TRAINING,
             icon: <FaUserMd />,
         }),
         customMenuLink({
