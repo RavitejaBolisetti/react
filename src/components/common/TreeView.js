@@ -6,67 +6,51 @@ const { Search } = Input;
 
 const treeData = [
     {
-        title: 'Ajay',
-        key: '0-0',
+        title: 'Asia',
+        key: 'Continent',
         children: [
             {
-                title: 'parent 1-0',
+                title: 'India',
                 key: '0-0-0',
                 children: [
                     {
-                        title: 'leaf',
+                        title: 'Uttarakhand',
                         key: '0-0-0-0',
                         children: [
                             {
-                                title: 'leaf',
+                                title: 'Nainital',
                                 key: '0-0-0-0-1',
-                            },
-                            {
-                                title: 'leaf',
-                                key: '0-0-0-0-2',
-                            },
-                            {
-                                title: 'leaf',
-                                key: '0-0-0-0-3',
                             },
                         ],
                     },
                     {
-                        title: 'leaf',
+                        title: 'Haldwani',
                         key: '0-0-0-2',
                     },
                 ],
             },
             {
-                title: 'parent 1-1',
+                title: 'Nepal',
                 key: '0-0-1',
                 children: [
                     {
-                        title: 'leaf',
+                        title: 'Kathmandu',
                         key: '0-0-1-0',
                     },
                 ],
             },
             {
-                title: 'parent 1-2',
+                title: 'Bangladesh',
                 key: '0-0-2',
                 children: [
                     {
-                        title: 'leaf',
+                        title: 'Dhaka',
                         key: '0-0-2-0',
-                    },
-                    {
-                        title: 'leaf',
-                        key: '0-0-2-1',
-                    },
+                    }
                 ],
             },
         ],
-    },
-    {
-        title: 'Kuldeep',
-        key: '0-1',
-    },
+    }
 ];
 
 const defaultData = treeData;
