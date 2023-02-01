@@ -8,27 +8,35 @@
   margin-bottom: 30px;
 }
 
-:global .ant-card .ant-card-head-title{
+:global .ant-card .ant-card-head-title {
   font-size: 1.1rem;
-  float :left;
+  float: left;
   font-weight: 500;
- }
- 
- 
- :global .ant-card.ant-card-body{
+}
+
+
+:global .ant-card.ant-card-body {
   padding: 12px;
- }
+}
 
 
- :global .ant-carousel .slick-dots li button::after{
+:global .ant-carousel .slick-dots li button::after {
   background-color: #EA3434;
   /* margin: 5px; */
   inset: 0.5em;
- }
+}
 
- :global .ant-carousel .slick-dots li button{
+:global .ant-carousel .slick-dots li button {
   margin: 0px 30px 0px 2px;
   top: 30px;
- 
-  padding:0px 10px;
- }
+
+  padding: 0px 10px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.floatRight {
+  float: right;
+}
