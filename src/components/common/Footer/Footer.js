@@ -11,10 +11,11 @@ export const Footer = () => {
             <div className={styles.footerLink}>
                 <a href="/">Terms of use</a>
                 <a href="/">About us</a>
-                <a href="/">Disclaimer</a> <a href="/">Contact Us</a>
+                <a href="/">Disclaimer</a>
+                <a href="/">Contact Us</a>
             </div>
             <div className={styles.footerBottomText}>
-                Copyright &copy; 2022-2023 <a href="/">ROBIN</a>. All rights reserved.
+                Copyright &copy; 2022-2023 "<a href="/">ROBIN</a>". All rights reserved.
             </div>
         </FooterLayout>
     );
