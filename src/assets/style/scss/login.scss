@@ -234,4 +234,9 @@ tspan {
 
 @media (max-width: 768px) {
     .loginSection .loginMMlogo{padding: 10px 0;  width: 100%; text-align: center; margin-right: 0; }
+    .loginSection .loginlogoSection .logotext{font-size: 18px;}
+    .loginSection .login-wrap .login-html .login-form .loginHeading{
+        margin: 5px 0 15px;
+    }
+    .ant-form-item{margin-bottom: 14px !important;}
 }

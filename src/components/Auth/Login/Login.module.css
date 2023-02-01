@@ -84,7 +84,7 @@ p {
 }
 
 .loginSection .login-wrap .login-html .login-form .loginHeading {
-    margin: 5px 0 30px;
+    margin: 5px 0 16px;
     padding: 0;
     text-align: center;
 }
@@ -176,6 +176,11 @@ p {
     text-align: center;
     font-weight: normal;
     width: 100%;
+    margin-top: 10px;
+}
+:global :where(.css-dev-only-do-not-override-169n7e2).ant-form-item .ant-form-item-explain-error{
+    color: #FF3E5B;
+    font-size: 12px;
 }
 
 .loginSection .login-wrap .login-html .login-form .loginFooter a {
@@ -253,3 +258,4 @@ select.form-control:focus::-ms-value {
     width: 100%;
 }
 .mrt10{margin-top: 10px;}
+
