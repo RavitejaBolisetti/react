@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Badge, Dropdown, Menu, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Menu, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaUserMd, FaHeadset, FaBell } from 'react-icons/fa';
@@ -7,139 +7,133 @@ import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
 
+import * as routing from 'constants/routing';
+import customMenuLink from 'utils/customMenuLink';
+
 import styles from './Header.module.css';
 
 export const Header = () => {
+
     const items = [
-        {
-            key: '1',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    Branch Location
-                </a>
-            ),
+        customMenuLink({
+            title: 'Branch Location',
+            link: routing.ROUTING_HOME,
+            icon: <FaRegIdBadge />,
             children: [
-                {
-                    key: '1-1',
-                    label: 'Mahindra Randhawa Motors',
-                },
-                {
-                    key: '1-2',
-                    label: 'MG Motor India',
-                },
+                customMenuLink({
+                    title: 'Mahindra Randhawa Motors',
+                    link: routing.ROUTING_HOME,
+                }),
+                customMenuLink({
+                    title: 'MG Motor India',
+                    link: routing.ROUTING_HOME,
+                }),
             ],
-        },
-        {
-            key: '2',
-            label: (
-              <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard2">
-                 Finacial Year </a>
-                
-            ),
-        },
+        }),
+        customMenuLink({
+            title: 'Finacial Year',
+            link: routing.ROUTING_HOME,
+        }),
     ];
 
     const userSettingMenu = [
-        {
+        customMenuLink({
             key: '1',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <FaRegIdBadge /> My Profile
-                </a>
-            ),
-        },
-        {
+            title: 'My Profile',
+            link: routing.ROUTING_HOME,
+            icon: <FaRegIdBadge />,
+        }),
+        customMenuLink({
             key: '2',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <AiFillSetting /> Settings
-                </a>
-            ),
-        },
-        {
+            title: 'Settings',
+            link: routing.ROUTING_HOME,
+            icon: <AiFillSetting />,
+        }),
+        customMenuLink({
             key: '3',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <TbFileReport /> FAQ
-                </a>
-            ),
-        },
-        {
+            title: 'FAQ',
+            link: routing.ROUTING_HOME,
+            icon: <TbFileReport />,
+        }),
+        customMenuLink({
             key: '4',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <FaUserMd /> Training/Help
-                </a>
-            ),
-        },
-        {
-            key: '5',
-            label: (
-                <a href="https://www.antgroup.com">
-                    <FiLogOut /> Logout
-                </a>
-            ),
-        },
+            title: 'Training/Help',
+            link: routing.ROUTING_HOME,
+            icon: <FaUserMd />,
+        }),
+        customMenuLink({
+            key: '6',
+            title: 'Logout',
+            link: routing.ROUTING_HOME,
+            icon: <FiLogOut />,
+        }),
     ];
 
     return (
-        <div>
-            <nav className="navbar navbar-expand">
-                <ul className="navbar-nav">
-                    <li className=" welcomeUser">
+        <div className={styles.headerContainer}>
+            <Row>
+                <Col xs={24} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                    <div className={styles.headerLeft}>
                         <Dropdown menu={{ items }} trigger={['click']}>
-                            <a className="nav-link" data-toggle="dropdown" href="/">
-                                <Avatar shape="square">MA</Avatar>
-                                <Space>
-                                    <div className="userText">
-                                        <div className="dealername">Mahindra Automotive</div>
-                                        <span className="userServiceArea">Vikhroli (W) Mumbai</span>
-                                        {/* <i className="fa fa-angle-down" aria-hidden="true"></i> */}
-                                        <DownOutlined />
-                                    </div>
-                                </Space>
-                            </a>
-                        </Dropdown>
-                    </li>
-                </ul>
-
-                <ul className="navbar-nav ml-auto">
-                    <li className="">
-                        <a className="nav-link" data-toggle="dropdown" href="/">
-                            <Badge count={5}>
-                                <FaBell size={20} />
-                            </Badge>
-                        </a>
-                    </li>
-                    <li className="">
-                        <a className="nav-link" data-toggle="dropdown" href="/">
-                            <FaHeadset size={20} />
-                            <div className="helpLine">OneStop</div>
-                            <span>Help Desk</span>
-                        </a>
-                    </li>
-
-                    <li className=" welcomeUser">
-                        <>
-                            <Avatar>JS</Avatar>
                             <Space>
-                                <div className="userText">
-                                    <div>John Smith</div>
-                                    <span className="userServiceArea">+91-9865443234</span>
-                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                        <a onClick={(e) => e.preventDefault()}>
-                                            <Space>
-                                                <DownOutlined />
-                                            </Space>
-                                        </a>
-                                    </Dropdown>
+                                <div className={styles.userAvatar}>
+                                    <Avatar shape="square" size={35}>
+                                        MA
+                                    </Avatar>
+                                </div>
+                                <div className={styles.userText}>
+                                    <div className={styles.dealerName}>Mahindra Automotive</div>
+                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                        <span className={styles.userServiceArea}>Vikhroli (W) Mumbai</span>
+                                        <DownOutlined />
+                                    </a>
                                 </div>
                             </Space>
-                        </>
-                        {/* </Dropdown> */}
-                    </li>
-                </ul>
-            </nav>
+                        </Dropdown>
+                    </div>
+                </Col>
+                <Col xs={24} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                    <div className={styles.headerRight}>
+                        <div className={`${styles.navbar} ${styles.navbarExpand}`}>
+                            <ul className={`${styles.navbarNav} ${styles.mlAuto}`}>
+                                <li>
+                                    <a className="nav-link" data-toggle="dropdown" href="/">
+                                        <Badge count={5}>
+                                            <FaBell size={20} />
+                                        </Badge>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="nav-link" data-toggle="dropdown" href="/">
+                                        <FaHeadset size={20} />
+                                        <div className="helpLine">OneStop</div>
+                                        <span>Help Desk</span>
+                                    </a>
+                                </li>
+
+                                <li className=" welcomeUser">
+                                    <>
+                                        <Avatar>JS</Avatar>
+                                        <Space>
+                                            <div className="userText">
+                                                <div>John Smith</div>
+                                                <span className="userServiceArea">+91-9865443234</span>
+                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                    <a onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <DownOutlined />
+                                                        </Space>
+                                                    </a>
+                                                </Dropdown>
+                                            </div>
+                                        </Space>
+                                    </>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 };

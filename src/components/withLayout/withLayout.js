@@ -7,16 +7,15 @@ import 'assets/style/new_robin.scss';
 import 'font-awesome/css/font-awesome.min.css';
 
 const { Header, Content } = Layout;
+
 export const withLayout = (HeaderComponent, LeftMenuComponent, FooterComponent, PageContentComponent) => {
-    const colorBgContainer = '#ffffff';
-    const collapsed = false;
-    const setCollapsed = () => {};
+    const colorBgContainer = '#ffffff';  
     return (props) =>
-        console.log(props) || (
+       (
             <>
                 <Layout hasSider style={{ backgroundColor: '#ffffff' }} theme="dark">
                     <LeftMenuComponent />
-                    <Layout className="site-layout" style={{ marginLeft: collapsed ? 90 : 250, backgroundColor: '#ffffff' }}>
+                    <Layout className="site-layout" style={{ marginLeft: props.collapsed ? 90 : 250, backgroundColor: '#ffffff' }}>
                         <Header style={{ padding: 0, background: colorBgContainer }}>
                             <HeaderComponent />
                         </Header>
