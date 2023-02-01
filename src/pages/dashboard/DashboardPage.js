@@ -7,13 +7,22 @@ import styles from './DashboardPage.module.css';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => {
-    return {
-        kuldeep: 'Singh',
+const mapStateToProps = (state) => {    
+    const {
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    let returnValue = {
+        collapsed,
     };
+
+    return returnValue;
 };
 
 const DashboardPageBase = (props) => {
+    
     return (
         <>
             <div className="content-wrapper">

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 
+import { setCollapsed } from 'store/actions/common/leftsidebar';
+
 import { FaCreativeCommonsShare, FaAddressBook, FaWrench } from 'react-icons/fa';
 import { BsFillStarFill, BsMoon } from 'react-icons/bs';
 import { AiFillCar } from 'react-icons/ai';
@@ -14,22 +16,34 @@ import { Input, Menu, Layout } from 'antd';
 import { connect } from 'react-redux';
 
 import styles from './LeftSideBar.module.css';
+import { bindActionCreators } from 'redux';
 
 const { Search } = Input;
 const { Sider } = Layout;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {    
+    const {
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
     let returnValue = {
-        kuldeep: 'singh',
-        collapsed: false,
+        collapsed,
     };
 
     return returnValue;
 };
 
-const mapDispatchToProps = {
-    setCollapsed: () => { },
-};
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            setCollapsed,
+        },
+        dispatch
+    ),
+});
 
 function getItem(label, key, icon, children, type) {
     return {
@@ -46,7 +60,7 @@ const items = [
     getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
         getItem('Product Master', '2'),
         getItem('Product Hirarachy', '3'),
-        getItem('Hirarchy Attribute Master', '4'),
+        getItem('Hirarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hirarchy Attribute Master', '34')]),
         getItem('Role Management', '5'),
         getItem('User Self Registration', '6'),
         getItem('Geographical Hirarchy', '7'),
@@ -70,7 +84,7 @@ const items = [
     getItem('Services', 'sub8', <FaWrench fontSize={20} />),
 ];
 
-const LeftSideBarMain = ({ collapsed, setCollapsed, kuldeep }) => {
+const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
     const [openKeys, setOpenKeys] = useState(['sub1']);
     const onOpenChange = (keys) => {
@@ -84,12 +98,18 @@ const LeftSideBarMain = ({ collapsed, setCollapsed, kuldeep }) => {
 
     const onSearch = (value) => console.log(value);
 
+    const onSubmit = (value) => {
+        console.log('🚀 ~ file: LeftSideBar.js:96 ~ onSubmit ~ value', value);
+
+        setCollapsed(value);
+    };
+
     const theme = 'light';
-    const handleTheme = () => { };
+    const handleTheme = () => {};
 
     return (
         <>
-            <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4' }}>
+            <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4' }}>
                 <div className={styles.logoContainer}>
                     <a href="javascripy::void" className={styles.brandLink}>
                         {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
@@ -101,7 +121,6 @@ const LeftSideBarMain = ({ collapsed, setCollapsed, kuldeep }) => {
                 <Menu mode="inline" inlineIndent={15} openKeys={openKeys} onOpenChange={onOpenChange} collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme}>
-
                     {theme === 'dark' ? (
                         <BsMoon size={14} className="text-[#FF3E5B]" />
                     ) : (
