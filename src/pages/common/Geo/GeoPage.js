@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
-import GeoTree from './Sample/GeoTree';
+// import TreeView from 'components/common/TreeView';
+import { GeoTree as TreeView } from './Sample/GeoTree';
 // import 'assets/style/new_robin.scss';
 // import 'assets/style/sidebar.css';
 // import 'font-awesome/css/font-awesome.min.css';
@@ -10,9 +10,6 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import styles from './GeoPage.module.css';
-import Antd from './Sample/Antd';
-import Antd2 from './Sample/Antd2';
-import ModalUtil from './Sample/ModalUtil';
 
 const { Option } = Select;
 
