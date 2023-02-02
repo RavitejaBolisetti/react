@@ -39,13 +39,13 @@
   float: right;
 }
 
-.btnOutline {
+.exitButton {
   border: 1px solid #ff3e5b;
   border-radius: 3px;
   position: relative;
   padding: 18px 36px;
   margin: 4px 1px;
-  font-size: 12px;
+  font-size: 14px;
   color: #ff3e5b;
   line-height: 2px;
   background-color: #fff;
@@ -57,14 +57,14 @@
   float: right;
 }
 
-.btnOutline:hover,
-.btnOutline:focus,
-.btnOutline:active,
-.btnOutline.active,
-.btnOutline:active:focus,
-.btnOutline.active:hover {
+.exitButton:hover,
+.exitButton:focus,
+.exitButton:active,
+.exitButton.active,
+.exitButton:active:focus,
+.exitButton.active:hover {
   background-color: #ff3e5b;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 :global .ant-btn-default {
@@ -157,22 +157,34 @@
 }
 
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 576px) {
 
   /* For mobile phones: */
   :global .ant-input-group {
     width: auto;
   }
-  
-    .pageHeaderNameSection {
-      /* border-bottom: 1px solid #DEDEDE; */
-      border-bottom: 0px;
-      padding: 0px;
-      margin: 0 0 10px 0;
-    } 
-    .btnOutline {
-      
-      margin: 20px 1px 4px 1px;
-   
-    }
+
+  .headingGradient {
+    padding-bottom: 10px;
+    border-bottom: 4px solid;
+    border-image: linear-gradient(to right, #efa3a3, #cac9ee);
+    border-image-slice: 1;
+    /* margin-bottom: 20px; */
+    font-size: 16px;
+  }
+
+  .pageHeaderNameSection {
+    /* border-bottom: 1px solid #DEDEDE; */
+    border-bottom: 0px;
+    padding: 0px;
+    margin: 0 0 10px 0;
+  }
+
+  .exitButton {
+    padding: 10px 15px;
+    margin: 0;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 2px;
+  }
 }

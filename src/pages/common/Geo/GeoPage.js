@@ -11,6 +11,7 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
+import { BsStar } from 'react-icons/bs';
 
 const { Option } = Select;
 
@@ -75,32 +76,33 @@ export const GeoPageBase = () => {
             <MetaTag metaTitle={'Geographical Hierarchy'} />
 
             <Row gutter={20}>
+                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                    <div>
+                        <span className={styles.headingGradient}>Geographical Hierarchy</span>
+                        <BsStar size={18} />
+                    </div>
+                </Col>
+                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} >
+                    <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
+                        Exit
+                    </Button>
+                </Col>
+            </Row>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                            <div>
-                                <span className={styles.headingGradient}>Geographical Hierarchy</span>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6}>
-                            <Button danger onclick="window.location.href='#'" className={styles.btnOutline}>
-                                Exit
-                            </Button>
-                        </Col>
-                    </Row>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                     <div className={styles.leftpanel}>
-                       
-                            
-                                <div className={styles.treemenu}>
-                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
-                                </div>
-                            
-                       
+
+
+                        <div className={styles.treemenu}>
+                            <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                        </div>
+
+
                     </div>
                 </Col>
 
