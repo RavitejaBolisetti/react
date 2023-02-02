@@ -18,7 +18,7 @@ import 'assets/style/new_robin.scss';
 import styles from './Login.module.css';
 
 // import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
-import { ROUTING_FORGOT_PASSWORD,ROUTING_DASHBOARD1 } from 'constants/routing';
+import { ROUTING_FORGOT_PASSWORD,ROUTING_DASHBOARD1, ROUTING_DASHBOARD } from 'constants/routing';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -65,14 +65,13 @@ const Login = (props) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
-            navigate(ROUTING_DASHBOARD1);
-
-            // doLogin(values, loginPageIsLoading);
+            doLogin(values, loginPageIsLoading);
+            navigate(ROUTING_DASHBOARD);
+            form.resetFields();
 
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
             // setPost(response.data);
-            // form.resetFields();
             // recaptchaRef.current.reset();
             // setCaptcha('');
         }
