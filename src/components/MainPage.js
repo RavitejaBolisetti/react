@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { AuthenticatedUserPage } from 'pages/routing/AuthenticatedUserPage';
 import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';
 import { useNavigate } from 'react-router-dom';
-import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
+import { ROUTING_DASHBOARD, ROUTING_HOME, ROUTING_LOGIN } from 'constants/routing';
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
@@ -28,10 +28,8 @@ const mapDispatchToProps = (dispatch) => ({
 const MainPageBase = ({ isLoggedIn, doLogout }) => {
     const navigate = useNavigate();
 
-    console.log('isLoggedIn', isLoggedIn);
     useEffect(() => {
-        console.log('im', isLoggedIn);
-        isLoggedIn ? navigate(ROUTING_DASHBOARD) : navigate(ROUTING_LOGIN);
+        // isLoggedIn ? navigate(ROUTING_DASHBOARD) : navigate(ROUTING_HOME);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
