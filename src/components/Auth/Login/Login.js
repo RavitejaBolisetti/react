@@ -48,6 +48,10 @@ const mapDispatchToProps = {
     doCloseUnAuthenticatedError,
 };
 
+function hideError() {
+    document.getElementById('loginErrorDiv').style.display = 'none';
+}
+
 const Login = (props) => {
     const { doLogin, isError, message } = props;
     const [form] = Form.useForm();
@@ -177,7 +181,8 @@ const Login = (props) => {
                             <FaExclamationTriangle size={18} />
                         </span>
                         {'Error'}
-                        <span className="fr hide-btn loginErrorClose" onClick={() => {}}>
+                        {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
+                        <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
                             <FaTimes size={18} />
                         </span>
                     </h5>
