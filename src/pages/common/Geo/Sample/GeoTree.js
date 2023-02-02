@@ -1,5 +1,5 @@
-import { CarryOutOutlined, CheckOutlined, FormOutlined } from '@ant-design/icons';
-import { Select, Switch, Tree } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
+import {  Tree } from 'antd';
 import { useState } from 'react';
 
 import treeData2 from './geoData2.json';
@@ -36,16 +36,12 @@ export const GeoTree = (props) => {
         }
         return setShowLeafIcon(false);
     };
+
     return (
         <div>
             <Tree
                 showLine={
                     true
-                    // showLine
-                    //   ? {
-                    //       showLeafIcon,
-                    //     }
-                    //   : false
                 }
                 showIcon={showIcon}
                 defaultExpandedKeys={[]}
