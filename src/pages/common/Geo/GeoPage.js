@@ -11,8 +11,6 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { connect } from 'react-redux';
-import ParentHierarchy from './ParentHierarchy';
 
 const { Option } = Select;
 
