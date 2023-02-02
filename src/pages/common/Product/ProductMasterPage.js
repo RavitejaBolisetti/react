@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Table, Switch, Popconfirm, Form, Select, Row, Col,Button,Modal } from 'antd';
+import { Table, Switch, Popconfirm, Form, Select, Row, Col, Button, Modal, Input } from 'antd';
 import { FaTrash } from "react-icons/fa";
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -13,71 +13,46 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 const { Option } = Select;
 export const ProductMasterPageBase = () => {
-const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [attri,setAttri]=useState(false);
+    const [bottom, setBottom] = useState('bottomLeft');
+    const handleattri=()=> {
+        setAttri(!attri);
+        console.log(attri);
+    }
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const columns = [
         {
             title: 'Srl.',
             dataIndex: 'Srl',
 
-            width: '210px',
+            width: "10%",
         },
 
         {
-            title: 'Product Status',
-            dataIndex: 'ProductStatus',
+            title: 'Attribute Name',
+            dataIndex: 'AttributeName',
 
-
-
-            width: '210px',
+            width: "30%",
         },
         {
-            title: 'Product Description',
-            dataIndex: 'ProductDescription',
+            title: 'Attribute Value',
+            render: () => <Input placeholder="Dummy Place Holder" readonly="true" />,
+            dataIndex: 'AttributeValue',
 
-            width: '210px',
+            width: "30%",
         },
 
 
-        // {
-        //     title: 'Description',
-        //     dataIndex: 'Description',
-        //     sorter: (a, b) => a.age - b.age,
-        //     width: '30%',
-        // },
-        {
-            title: 'Description to be printed on Invoice',
-            dataIndex: 'Description',
 
-            width: '210px',
-        },
-        {
-            title: ' Status',
-            key: 'key',
-            dataIndex: 'key',
-            render: () => <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />,
-            width: '210px',
-        },
-
-        {
-            title: 'Product Attributes',
-            dataIndex: 'Parent',
-            render: (_, record) =>
-                dataSource.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-                        <FaTrash />
-                    </Popconfirm>
-                ) : null,
-            width: '210px',
-        },
 
 
 
@@ -87,64 +62,73 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataSource, setDataSource] = useState([
         {
             Srl: "1.",
-            ProductStatus: "T123456788",
-            ProductDescription: "Mahindra Scorpio",
-            Description: "Lorem ipsum is a name for...",
-            Status: "Active",
-            key: "6",
-            Parent: "India",
-            ShortDescription: "SMT 7STR",
-            LongDescription: "This Smt 7STR variant comes..",
-            Status: "Inactive",
+            AttributeName: "	Product Division",
+            AttributeValue: "Mahindra Scorpio"
+
+
         },
         {
             Srl: "2.",
-            ProductStatus: "T123456788",
-            ProductDescription: "Mahindra Scorpio",
-            Description: "Lorem ipsum is a name for...",
+            AttributeName: "Model Group",
+            AttributeValue: "Mahindra Scorpio"
 
-            Parent: "India",
-            key: "4",
-            ShortDescription: "SMT 7STR",
-            LongDescription: "This Smt 7STR variant comes..",
-            Status: "Active",
         },
         {
             Srl: "3.",
-            ProductStatus: "T123456788",
-            ProductDescription: "Mahindra Scorpio",
-            Description: "Lorem ipsum is a name for...",
-            Status: "Active",
-            key: "2",
-            Parent: "India",
-            ShortDescription: "SMT 7STR",
-            LongDescription: "This Smt 7STR variant comes..",
-            Status: "Inactive",
+            AttributeName: "Sales Model Group",
+            AttributeValue: "Mahindra Scorpio",
+
         },
         {
             Srl: "4.",
-            ProductStatus: "T123456788",
-            ProductDescription: "Mahindra Scorpio",
-            Description: "Lorem ipsum is a name for...",
-            Status: "Active",
-            key: "1",
-            Parent: "India",
-            ShortDescription: "SMT 7STR",
-            LongDescription: "This Smt 7STR variant comes..",
+            AttributeName: "Model Family",
+            AttributeValue: "Mahindra Scorpio",
+
 
         },
         {
             Srl: "5.",
-            ProductStatus: "T123456788",
-            ProductDescription: "Mahindra Scorpio",
-            Description: "Lorem ipsum is a name for...",
-            Status: "Active",
-            key: "3",
-            Parent: "India",
-            ShortDescription: "SMT 7STR",
-            LongDescription: "This Smt 7STR variant comes..",
+            AttributeName: "Vehicle Type",
+            AttributeValue: "Mahindra Scorpio",
+
 
         },
+        {
+            Srl: "6.",
+            AttributeName: "Vehicle Category",
+            AttributeValue: "Mahindra Scorpio"
+
+
+        },
+        {
+            Srl: "7.",
+            AttributeName: "Body Type",
+            AttributeValue: "Mahindra Scorpio"
+
+
+        },
+        {
+            Srl: "8.",
+            AttributeName: "Vehicle Category",
+            AttributeValue: "Mahindra Scorpio"
+
+
+        },
+        {
+            Srl: "9.",
+            AttributeName: "Seating Capacity",
+            AttributeValue: "Mahindra Scorpio"
+
+
+        },
+        {
+            Srl: "10.",
+            AttributeName: "Trim Level",
+            AttributeValue: "Mahindra Scorpio"
+
+
+        },
+        
 
 
     ])
@@ -153,95 +137,28 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         setDataSource(newData);
     };
     return (
+
         <>
-            <Form layout="vertical">
-                <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="Parent Hierarchy Name" label="Parent Hierarchy Name" rules={[validateRequiredSelectField('Parent Hierarchy Name')]}>
-                            <Select
-                                defaultValue="Select"
-                                options={[
-                                    { value: 'Mahindra Electric', label: 'Mahindra Electric' },
-                                    { value: 'Mahindra SUV', label: 'Mahindra SUV ' },
-                                    { value: 'Mahindra Tractors', label: 'Mahindra Tractors ' },
-                                    { value: 'Mahndra 2 Wheelers', label: 'Mahindra 2 Wheelers' },
-                                    { value: 'Mahindra Truck & Bus', label: 'Mahindra Truck & Bus' },
-                                ]}
-                            />
-
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={2400} sm={1200} md={1200} lg={120} xl={120}>
-                        <Form.Item name="Choose Parent Hierarchy" label="Choose Parent Hierarchy">
-                            <Button type="primary" className="btn btn-outline srchbtn mr0 boxShdwNon"
-                            onClick={showModal}>CHANGE PARENT</Button>
-                        </Form.Item>
-                        <Modal title="Choose Product Hierarchy"  open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <p>Parent Hierarchy</p>
-                        <Form layout="inline">
-                <Row gutter={24}>
-                    
-                    <Col  span={8}>
-                        
-                        <Form.Item name="Parent Hierarchy "  rules={[validateRequiredSelectField('Parent Hierarchy Name')]}>
-                            <Select
-                                defaultValue="Choose Parent Hierarchy"
-                                options={[
-                                    { value: 'Mahindra Electric', label: 'Mahindra Electric' },
-                                    { value: 'Mahindra SUV', label: 'Mahindra SUV ' },
-                                    { value: 'Mahindra Tractors', label: 'Mahindra Tractors ' },
-                                    { value: 'Mahndra 2 Wheelers', label: 'Mahindra 2 Wheelers' },
-                                    { value: 'Mahindra Truck & Bus', label: 'Mahindra Truck & Bus' },
-                                ]}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item rules={[validateRequiredSelectField('Parent Hierarchy Name')]}>
-                            <Select
-                                defaultValue="Choose Child Hierarchy"
-                                options={[
-                                    { value: 'Mahindra Electric', label: 'Mahindra Electric' },
-                                    { value: 'Mahindra SUV', label: 'Mahindra SUV ' },
-                                    { value: 'Mahindra Tractors', label: 'Mahindra Tractors ' },
-                                    { value: 'Mahndra 2 Wheelers', label: 'Mahindra 2 Wheelers' },
-                                    { value: 'Mahindra Truck & Bus', label: 'Mahindra Truck & Bus' },
-                                ]}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item  rules={[validateRequiredSelectField('Parent Hierarchy Name')]}>
-                            <Select
-                                defaultValue="Choose Sub-Child Hierarchy"
-                                options={[
-                                    { value: 'Mahindra Electric', label: 'Mahindra Electric' },
-                                    { value: 'Mahindra SUV', label: 'Mahindra SUV ' },
-                                    { value: 'Mahindra Tractors', label: 'Mahindra Tractors ' },
-                                    { value: 'Mahndra 2 Wheelers', label: 'Mahindra 2 Wheelers' },
-                                    { value: 'Mahindra Truck & Bus', label: 'Mahindra Truck & Bus' },
-                                ]}
-                            />
-                        </Form.Item>
-                    </Col>
-                    </Row>
-                    </Form>
-                        </Modal>
-                    </Col>
-                </Row>
-
-            </Form>
-
-            <Table
+            <h5>Product Attributes Details (Mahindra Scorpio Classic Petrol)</h5>
+            <Button onClick={handleattri} danger>View Attribute Detail</Button>
+            { attri ?<>
+            
+            
+             <Table
+              style={{width: '70%', fontSize: '40px'}}
                 columns={columns}
                 dataSource={dataSource}
                 onChange={onChange}
-                scroll={{
-                    x: 1300,
-                    y: 300,
+                pagination={{
+                    position:[bottom],
+                    pageSize: 10,
+                    total: 50
                 }}
-            />
+                // scroll={{
+                //     x: 300,
+                //     y: 300,
+                // }}
+            /></>: null }
         </>
     );
 };
