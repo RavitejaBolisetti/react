@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 
 import styles from './LeftSideBar.module.css';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+import * as routing from 'constants/routing';
 
 const { Search } = Input;
 const { Sider } = Layout;
@@ -56,14 +58,14 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-    getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]),
+    getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem(<Link to={routing.ROUTING_DASHBOARD1}>{'Dashboard'}</Link>, '1')]),
     getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
         getItem('Product Master', '2'),
-        getItem('Product Hirarachy', '3'),
-        getItem('Hirarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hirarchy Attribute Master', '34')]),
+        getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, '3'),
+        getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
         getItem('Role Management', '5'),
         getItem('User Self Registration', '6'),
-        getItem('Geographical Hirarchy', '7'),
+        getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, '7'),
         getItem('Dealer Hirerachy', '8'),
         getItem('Dealer & Product Mapping', '9'),
         getItem('Terms & Conditions- Dealer', '10'),

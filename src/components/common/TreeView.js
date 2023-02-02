@@ -6,67 +6,91 @@ const { Search } = Input;
 
 const treeData = [
     {
-        title: 'Ajay',
-        key: '0-0',
+        title: 'Europe',
+        key: '1-0',
         children: [
             {
-                title: 'parent 1-0',
-                key: '0-0-0',
+                title: 'Germany',
+                key: '1-0-0-0',
                 children: [
                     {
-                        title: 'leaf',
-                        key: '0-0-0-0',
-                        children: [
-                            {
-                                title: 'leaf',
-                                key: '0-0-0-0-1',
-                            },
-                            {
-                                title: 'leaf',
-                                key: '0-0-0-0-2',
-                            },
-                            {
-                                title: 'leaf',
-                                key: '0-0-0-0-3',
-                            },
-                        ],
+                        title: 'Berlin',
+                        key: '1-0-0-0-0',                        
                     },
                     {
-                        title: 'leaf',
-                        key: '0-0-0-2',
+                        title: 'Bavaria',
+                        key: '1-0-0-0-2',
                     },
                 ],
             },
             {
-                title: 'parent 1-1',
-                key: '0-0-1',
+                title: 'Italy',
+                key: '1-0-0-1',
                 children: [
                     {
-                        title: 'leaf',
-                        key: '0-0-1-0',
+                        title: 'Rome',
+                        key: '1-0-0-1-0',
                     },
                 ],
             },
             {
-                title: 'parent 1-2',
-                key: '0-0-2',
+                title: 'France',
+                key: '1-0-0-2',
                 children: [
                     {
-                        title: 'leaf',
-                        key: '0-0-2-0',
-                    },
-                    {
-                        title: 'leaf',
-                        key: '0-0-2-1',
-                    },
+                        title: 'Paris',
+                        key: '1-0-0-2-0',
+                    }
                 ],
             },
         ],
     },
     {
-        title: 'Kuldeep',
-        key: '0-1',
-    },
+        title: 'Asia',
+        key: '2-0',
+        children: [
+            {
+                title: 'India',
+                key: '0-0-0',
+                children: [
+                    {
+                        title: 'Uttarakhand',
+                        key: '0-0-0-0',
+                        children: [
+                            {
+                                title: 'Nainital',
+                                key: '0-0-0-0-1',
+                            },
+                        ],
+                    },
+                    {
+                        title: 'Haldwani',
+                        key: '0-0-0-2',
+                    },
+                ],
+            },
+            {
+                title: 'Nepal',
+                key: '0-0-1',
+                children: [
+                    {
+                        title: 'Kathmandu',
+                        key: '0-0-1-0',
+                    },
+                ],
+            },
+            {
+                title: 'Bangladesh',
+                key: '0-0-2',
+                children: [
+                    {
+                        title: 'Dhaka',
+                        key: '0-0-2-0',
+                    }
+                ],
+            },
+        ],
+    }
 ];
 
 const defaultData = treeData;

@@ -8,8 +8,23 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import TreeView from 'components/common/TreeView';
 import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import styles from './ProductHierarchyPage.module.css';
+import { connect } from 'react-redux';
 
 const { TextArea } = Input;
+
+const mapStateToProps = (state) => {
+    const {
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    let returnValue = {
+        collapsed,
+    };
+
+    return returnValue;
+};
 
 export const ProductHierarchyBase = () => {
     const [form] = Form.useForm();
@@ -56,7 +71,7 @@ export const ProductHierarchyBase = () => {
                                                 Exit
                                             </button>
                                             <button type="button" className="btn btn-outline fr mr0 boxShdwNon">
-                                                <i className="fa fa-history mrr5" aria-hidden="true"></i>
+                                                {/* <i className="fa fa-history mrr5" aria-hidden="true"></i> */}
                                                 Change History
                                             </button>
                                         </div>
@@ -67,9 +82,9 @@ export const ProductHierarchyBase = () => {
                             <div className="leftbar">
                                 <div className="row">
                                     <div>
-                                        <button className="semicircle">
+                                        {/* <button className="semicircle">
                                             <i className="fa fa-chevron-right mrl5" aria-hidden="true"></i>
-                                        </button>
+                                        </button> */}
 
                                         <div id="outer" className="leftpanel">
                                             <div id="Inner">
@@ -195,4 +210,4 @@ export const ProductHierarchyBase = () => {
     );
 };
 
-export const ProductHierarchyPage = withLayoutMaster(ProductHierarchyBase);
+export const ProductHierarchyPage = connect(mapStateToProps, null)(withLayoutMaster(ProductHierarchyBase));

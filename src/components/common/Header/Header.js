@@ -17,21 +17,20 @@ export const Header = () => {
         customMenuLink({
             title: 'Branch Location',
             link: routing.ROUTING_HOME,
-            icon: <FaRegIdBadge />,
             children: [
                 customMenuLink({
                     title: 'Mahindra Randhawa Motors',
-                    link: routing.ROUTING_HOME,
+                    // link: routing.ROUTING_HOME,
                 }),
                 customMenuLink({
                     title: 'MG Motor India',
-                    link: routing.ROUTING_HOME,
+                    // link: routing.ROUTING_HOME,
                 }),
             ],
         }),
         customMenuLink({
             title: 'Finacial Year',
-            link: routing.ROUTING_HOME,
+            // link: routing.ROUTING_HOME,
         }),
     ];
 
