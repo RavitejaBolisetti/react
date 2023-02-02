@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { withSpinner } from './withSpinner';
@@ -24,8 +24,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MainPageBase = ({ isLoggedIn, doLogout }) => {
-    const isLogged = false;
-    return <div style={{ height: '100%' }}>{isLogged ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
+    useEffect(() => {
+        // isLoggedIn ? navigate(ROUTING_DASHBOARD) : navigate(ROUTING_HOME);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoggedIn]);
+
+    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
 };
 
 const MainPageWithSpinner = withSpinner(MainPageBase);

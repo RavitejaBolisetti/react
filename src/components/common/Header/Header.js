@@ -1,198 +1,175 @@
 import React from 'react';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+
 import { DownOutlined } from '@ant-design/icons';
-import { Space } from 'antd';
-import { FaRegIdBadge, FaUserMd, FaHeadset } from 'react-icons/fa';
+import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
-import { Dropdown, Menu } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
-export const Header = () => {
-    const items: MenuProps['items'] = [
+import * as routing from 'constants/routing';
+import customMenuLink from 'utils/customMenuLink';
+
+import styles from './Header.module.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { doLogoutAPI } from 'store/actions/auth';
+
+const { confirm } = Modal;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
         {
-          key: '1',
-          label:(
-            
-             ' Branch Location '
-              
-          ),
-                 children: [
-                    {
-                      key: '1-1',
-                      label: (<a  target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard2">Mahindra Randhawa Motors</a>),
-                    },
-                    {
-                      key: '1-2',
-                      label:( <a  target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard2">MG Motor India</a>),
-                    }
-                  ],
-          
+            doLogout: doLogoutAPI,
         },
-        {
+        dispatch
+    ),
+});
+
+const HeaderMain = ({ doLogout }) => {
+    const showConfirm = () => {
+        confirm({
+            title: 'Are you sure to logout?',
+            icon: <ExclamationCircleFilled />,
+            // content: 'Some descriptions',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                doLogout({ successAction: () => {} });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
+
+    const items = [
+        customMenuLink({
+            title: 'Branch Location',
+            link: routing.ROUTING_HOME,
+            children: [
+                customMenuLink({
+                    title: 'Mahindra Randhawa Motors',
+                }),
+                customMenuLink({
+                    title: 'MG Motor India',
+                }),
+            ],
+        }),
+        customMenuLink({
+            title: 'Finacial Year',
+        }),
+    ];
+
+    const userSettingMenu = [
+        customMenuLink({
+            key: '1',
+            title: 'My Profile',
+            link: routing.ROUTING_USER_PROFILE,
+            icon: <FaRegIdBadge />,
+        }),
+        customMenuLink({
             key: '2',
-            label: (
-              <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard2">
-                 Finacial Year </a>
-                
-            ),
-          },
-        
-      ];
-      const menu = (
-        <Menu>
-             
-          <Menu.Item><a href="http://localhost:3000/dashboard2"><FaRegIdBadge/> </a>My Profile</Menu.Item>
-          <Menu.Divider />
-          <Menu.Item><a href="http://localhost:3000/dashboard2"><AiFillSetting/> </a>Settings</Menu.Item>
-          <Menu.Divider />
-           <Menu.Item><a href="http://localhost:3000/dashboard2"><TbFileReport/> </a>FAQ</Menu.Item>
-           <Menu.Divider />
-           <Menu.Item><a href="http://localhost:3000/dashboard2"><FaUserMd/> </a>Training/Help</Menu.Item>
-           <Menu.Divider />
-           <Menu.Item><a href="http://localhost:3000/dashboard2"><FiLogOut/> </a>Logout</Menu.Item>
-           
+            title: 'Settings',
+            link: routing.ROUTING_USER_SETTING,
+            icon: <AiFillSetting />,
+        }),
+        customMenuLink({
+            key: '3',
+            title: 'FAQ',
+            link: routing.ROUTING_USER_FAQ,
+            icon: <TbFileReport />,
+        }),
+        customMenuLink({
+            key: '4',
+            title: 'Training/Help',
+            link: routing.ROUTING_USER_TRAINING,
+            icon: <FaUserMd />,
+        }),
+        customMenuLink({
+            key: '6',
+            title: 'Logout',
+            onclick: showConfirm,
+            icon: <FiLogOut />,
+        }),
+    ];
 
-
-        </Menu>
-      );
-
-      const notifications=(
-        <Menu>
-            <Menu.ItemGroup title="15 Notifications" ><a href="http://localhost:3000/dashboard2"></a></Menu.ItemGroup>
-            <Menu.Divider />
-          <Menu.Item ><a href="http://localhost:3000/dashboard2"> <i className="fas fa-envelope mr-2"></i></a>4 new messages</Menu.Item>
-          <Menu.Divider />
-           <Menu.Item><a href="http://localhost:3000/dashboard2"> <i className="fas fa-users mr-2"></i></a>8 friend requests</Menu.Item>
-           <Menu.Divider />
-           <Menu.Item><a href="http://localhost:3000/dashboard2"><i className="fas fa-file mr-2"></i></a> 3 new reports</Menu.Item>
-
-
-        </Menu>
-      );
-      
-return(
-    <>
-    <div>
-    <nav className="main-header navbar navbar-expand navbar-white navbar-light padr27">
-    {/* <!-- Left navbar links --> */}
-	<ul className="navbar-nav">
-		{/* <!-- <li className="nav-item">
-			<a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars"></i></a>
-		</li> -->
-		<!-- <li className="nav-item welcomeUser">
-			<span className="userText dealername mrt5">Mahindra Automotive			
-				<a className="nav-link" data-toggle="dropdown" href="#">
-				<span className="userServiceArea">Vikhroli (W) Mumbai <i className="fa fa-angle-down" aria-hidden="true"></i></span>
-			</span>		</a>
-			<div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-				<ul>
-					<li><a href="#">Location 1</a></li>
-					<li><a href="#"> Location 1</a></li>
-					<li><a href="#"> Location 1</a></li>
-					<li><a href="#"> Location 1</a></li>
-					
-				</ul>
-			</div>
-		</li> --> */}
-      
-        
-        
-		<li className="nav-item dropdown welcomeUser">
-        <Dropdown menu={{ items }} trigger={['click']}>
-			<a className="nav-link" data-toggle="dropdown" href="#" onClick={(e) => e.preventDefault()}>
-				<div className="circle-singleline" id="dealerLogo">MA</div>
-                <Space>
-				<div className="userText">
-					<span className="dealername">Mahindra Automotive</span>
-					<span className="userServiceArea">Vikhroli (W) Mumbai</span>
-					{/* <i className="fa fa-angle-down" aria-hidden="true"></i> */}
-                    <DownOutlined />
-				</div>
-                </Space>
-			</a>
-            </Dropdown>
-			{/* <div className="dropdown-menu dropdown-menu-lg dropdown-menu-left">
-				<ul>
-					<li><a href="#">Branch Location</a>
-						<ul className="dropdown-menu dropdown-menu-lg dropdown-menu-left">
-							<li><a href="#">Mahindra Randhawa Motors</a></li>
-							<li><a href="#">MG Motor India</a></li>
-						</ul>
-					</li>
-					<li><a href="#">Finacial Year</a></li>
-				</ul>
-			</div> */}
-		</li>
-	</ul>
-    
-	{/* <!-- Right navbar links --> */}
-	<ul className="navbar-nav ml-auto">
-		{/* <!-- Notifications Dropdown Menu --> */}
-		<li className="nav-item dropdown">
-            <Dropdown overlay={notifications} trigger={['click']}>
-			<a className="nav-link" data-toggle="dropdown" href="#">
-				<i className="far fa-bell"></i>
-				<span className="badge badge-warning navbar-badge">15</span>
-			</a>
-			{/* <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-				<span className="dropdown-item dropdown-header">15 Notifications</span>
-				<div className="dropdown-divider"></div>
-				<ul>
-					<li><a href="#"><i className="fas fa-envelope mr-2"></i> 4 new messages</a></li>
-					<li><a href="#"><i className="fas fa-users mr-2"></i> 8 friend requests</a></li>
-					<li><a href="#"><i className="fas fa-file mr-2"></i> 3 new reports</a></li>
-				</ul>
-				<div className="dropdown-divider"></div>
-				<a href="notifications.html" className="dropdown-footer">See All Notifications</a>
-			</div> */}
-            </Dropdown>
-		</li>
-		{/* <!-- Notifications Dropdown Menu --> */}
-		<li className="nav-item dropdown">
-			<a className="nav-link" data-toggle="dropdown" href="#">
-				{/* <!-- <img className="fl" src="asset/img/help.png"> --> */}
-				<FaHeadset/>
-				<div className="helpLine">OneStop Help Desk</div>
-			</a>
-		</li>
-		{/* <!-- User Profile --> */}
-        
-		<li className="nav-item dropdown welcomeUser">
-         <Dropdown overlay={menu} trigger={['click']}>
-			<a className="nav-link" data-toggle="dropdown" href="#"  onClick={(e) => e.preventDefault()}>
-				{/* <!-- <i className="fa fa-user userICO" aria-hidden="true"></i> --> */}
-				<div className="circle-singleline">JS</div>
-                <Space>
-				<div className="userText">
-					<span>John Smith</span>
-					<span className="userServiceArea">+91-9865443234</span>
-                    <DownOutlined />
-					{/* <i className="fas fa-angle-down right" aria-hidden="true"></i> */}
-				</div>
-                </Space>
-			</a>
-            </Dropdown>
-			{/* <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right mrr16">
-				<ul>
-					<li><a href="my_profile.html"><i className="fa-solid fa-id-badge iconSection"></i> My Profile</a></li>
-					<li><a href="configurable_parameter.html"><i className="fa-solid fa-gear iconSection"></i> Settings</a>
-					</li>
-					<li><a href="#"><i className="fa-solid fa-file-circle-question iconSection"></i> FAQ</a></li>
-					<li>
-						<a href="#"><i className="fa-solid fa-chalkboard-user iconSection"></i> Training/Help</a>
-					</li>
-					<li><a href="#"><i className="fa-solid fa-right-from-bracket iconSection"></i>Logout</a></li>
-				</ul>
-			</div> */}
-		</li>
-
-	</ul>
-</nav>
-    </div>
-
-
-
-	
-    </>
-)
+    return (
+        <div className={styles.headerContainer}>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
+                    <div className={styles.headerLeft}>
+                        <Space>
+                            <div className={styles.userAvatar}>
+                                <Avatar shape="square" size="large" style={{ backgroundColor: '#808080', fontSize: '20px', lineHeight: '35px' }}>
+                                    MA
+                                </Avatar>
+                            </div>
+                            <div className={styles.userText}>
+                                <div className={styles.dealerName}>Mahindra Automotive</div>
+                                <span className={styles.userServiceArea}>Vikhroli (W) Mumbai</span>
+                                <Dropdown menu={{ items }} trigger={['click']}>
+                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                        <DownOutlined />
+                                    </a>
+                                </Dropdown>
+                            </div>
+                        </Space>
+                    </div>
+                </Col>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
+                    <div className={styles.headerRight}>
+                        <div className={styles.navbarExpand}>
+                            <div className={styles.navbarNav}>
+                                <div className={styles.floatLeft}>
+                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                        <Badge pill size="small" count={11}>
+                                            <FaRegBell size={20} />
+                                        </Badge>
+                                    </a>
+                                </div>
+                                <div className={styles.floatLeft}>
+                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                        <FaHeadset size={20} />
+                                        <span className={styles.helpLineText}>
+                                            OneStop <br></br> Help Desk
+                                        </span>
+                                    </a>
+                                </div>
+                                <div className={styles.welcomeUser}>
+                                    <>
+                                        <Space>
+                                            <div className={styles.userAvatar}>
+                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>JS</Avatar>
+                                            </div>
+                                            <div className={styles.userText}>
+                                                <div>John Smith</div>
+                                                <span className={styles.userServiceArea}>
+                                                    +91-9865443234
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                        <a className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                            <Space>
+                                                                <DownOutlined />
+                                                            </Space>
+                                                        </a>
+                                                    </Dropdown>
+                                                </span>
+                                            </div>
+                                        </Space>
+                                    </>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+            <div style={{ clear: 'both' }}></div>
+        </div>
+    );
 };
+
+export const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderMain);
