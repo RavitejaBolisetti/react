@@ -1,8 +1,9 @@
 import React from 'react';
 
+import styles from './ChangeHistory.module.css';
+
 import { Table } from 'antd';
 
-import moment from 'moment';
 const columns = [
     {
         title: 'Changed/Modified Date',
@@ -10,9 +11,8 @@ const columns = [
         filters: [
             {
                 text: '12/09/2023',
-                value: "12/09/2023",
+                value: '12/09/2023',
             },
-           
         ],
         filterMode: 'tree',
         filterSearch: true,
@@ -52,7 +52,6 @@ const columns = [
         sortDirections: ['descend', 'ascend'],
         width: '210px',
     },
-
 
     // {
     //     title: 'Attribute',
@@ -155,20 +154,18 @@ const columns = [
         
         width: '210px',
     },
-    
-
 ];
 const data = [
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Inactive",
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
     },
     {
         ChangeDate:"11/09/2023",
@@ -193,15 +190,37 @@ const data = [
         Status:"Inactive",
     },
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Active",
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
     },
     {
         ChangeDate:"12/09/2023",
@@ -214,8 +233,17 @@ const data = [
         LongDescription:"This Smt 7STR variant comes..",
         Status:"Active",
     },
-    
-    
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
 ];
 const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);

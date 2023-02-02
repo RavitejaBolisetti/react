@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
-import { Form, Row, Col, Button } from 'antd';
+import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiLock } from 'react-icons/fi';
-import { FaKey, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-
 import ReCAPTCHA from 'react-google-recaptcha';
+import { Form, Row, Col, Button } from 'antd';
+import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
 import { doLogin, doCloseLoginError, doCloseLoginFailure, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
+import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
+import styles from './Login.module.css';
+
 import * as IMAGES from 'assets';
 
 import 'assets/style/new_robin.css';
-import styles from './Login.module.css';
-
-// import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
-import { ROUTING_FORGOT_PASSWORD,ROUTING_DASHBOARD1 } from 'constants/routing';
-import { connect } from 'react-redux';
+import 'assets/style/new_robin.scss';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -51,6 +49,10 @@ const mapDispatchToProps = {
     doCloseUnAuthenticatedError,
 };
 
+function hideError() {
+    document.getElementById('loginErrorDiv').style.display = 'none';
+}
+
 const Login = (props) => {
     const { doLogin, isError, message } = props;
     const [form] = Form.useForm();
@@ -64,14 +66,13 @@ const Login = (props) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
-            navigate(ROUTING_DASHBOARD1);
-
-            // doLogin(values, loginPageIsLoading);
+            doLogin(values, loginPageIsLoading);
+            navigate(ROUTING_DASHBOARD);
+            form.resetFields();
 
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
             // setPost(response.data);
-            // form.resetFields();
             // recaptchaRef.current.reset();
             // setCaptcha('');
         }
@@ -102,7 +103,7 @@ const Login = (props) => {
             <Row>
                 <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
                     <div className="login-wrap">
-                        <Form form={form} name="login_from" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
                             <Row>
                                 <Col span={24}>
@@ -146,7 +147,7 @@ const Login = (props) => {
 
                                                 <Row gutter={20}>
                                                     <Col span={24}>
-                                                        <ReCAPTCHA ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
+                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
                                                     </Col>
                                                 </Row>
 
@@ -181,7 +182,8 @@ const Login = (props) => {
                             <FaExclamationTriangle size={18} />
                         </span>
                         {'Error'}
-                        <span className="fr hide-btn loginErrorClose" onClick={() => {}}>
+                        {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
+                        <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
                             <FaTimes size={18} />
                         </span>
                     </h5>

@@ -6,13 +6,13 @@ const customMenuLink = ({ key = Math.random(), title, link, icon, children = und
         key: key,
         label: link ? (
             <Link to={link}>
-                {icon && icon}
-                {title}
+                {icon ? icon : undefined}
+                {' ' + title}
             </Link>
         ) : (
             <span onClick={onclick}>
-                {icon && icon}
-                {title}
+                {icon ? icon : undefined}
+                {' ' + title}
             </span>
         ),
         children,

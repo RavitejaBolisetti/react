@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Col, Row } from 'antd';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import styles from './SettingPage.module.css';
+import MetaTag from 'utils/MetaTag';
 
 const mapStateToProps = (state) => {
     const {
@@ -19,11 +19,14 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-const SettingPageBase = (props) => {
+const SettingPageBase = () => {
     return (
-        <Row>
-            <Col>Setting Page</Col>
-        </Row>
+        <>
+            <MetaTag metaTitle={'Setting'} />
+            <Row>
+                <Col>Coming Soon!</Col>
+            </Row>
+        </>
     );
 };
 
