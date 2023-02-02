@@ -68,11 +68,11 @@ const Login = (props) => {
             // values.timeZone = timeZone;
             doLogin(values, loginPageIsLoading);
             navigate(ROUTING_DASHBOARD);
+            form.resetFields();
 
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
             // setPost(response.data);
-            // form.resetFields();
             // recaptchaRef.current.reset();
             // setCaptcha('');
         }

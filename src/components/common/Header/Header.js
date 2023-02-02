@@ -1,11 +1,12 @@
 import React from 'react';
-import { Row, Col, Space, Badge, Dropdown, Menu, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import * as routing from 'constants/routing';
 import customMenuLink from 'utils/customMenuLink';
@@ -15,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 
+const { confirm } = Modal;
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
@@ -28,6 +30,23 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = ({ doLogout }) => {
+    const showConfirm = () => {
+        confirm({
+            title: 'Are you sure to logout?',
+            icon: <ExclamationCircleFilled />,
+            // content: 'Some descriptions',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                doLogout({ successAction: () => {} });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
+
     const items = [
         customMenuLink({
             title: 'Branch Location',
@@ -74,9 +93,7 @@ const HeaderMain = ({ doLogout }) => {
         customMenuLink({
             key: '6',
             title: 'Logout',
-            onclick: () => {
-                doLogout({ successAction: () => {} });
-            },
+            onclick: showConfirm,
             icon: <FiLogOut />,
         }),
     ];
