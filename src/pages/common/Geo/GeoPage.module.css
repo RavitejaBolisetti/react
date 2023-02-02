@@ -102,7 +102,8 @@
 
 .treemenu {
   margin: 24px 0px;
-  padding-left: 25px;
+  /* padding-left: 25px; */
+  padding-left: 0px;
   padding-bottom: 0px;
   line-height: 2em;
   list-style: none;
@@ -124,12 +125,12 @@
   box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
   pointer-events: auto;
   padding: 20px 24px;
-  max-height: 300px;
-  overflow-y: scroll;
+  max-height: 300vh;
+  /* overflow-y: scroll; */
 }
 
 .leftpanel {
-  padding: 0.8em 5.8em 0.8em 0.5em;
+  padding: 0.2em;
   width: 99%;
   background: #f4f4f4;
   margin-left: 8px;
@@ -137,9 +138,9 @@
   border-radius: 10px;
   margin-bottom: 100px;
   height: 300px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   white-space: nowrap;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .ant-input-group-wrapper {
@@ -155,10 +156,23 @@
   background: transparent;
 }
 
+
 @media only screen and (max-width: 768px) {
 
   /* For mobile phones: */
   :global .ant-input-group {
     width: auto;
   }
+  
+    .pageHeaderNameSection {
+      /* border-bottom: 1px solid #DEDEDE; */
+      border-bottom: 0px;
+      padding: 0px;
+      margin: 0 0 10px 0;
+    } 
+    .btnOutline {
+      
+      margin: 20px 1px 4px 1px;
+   
+    }
 }

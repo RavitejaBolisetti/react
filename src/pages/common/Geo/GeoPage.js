@@ -94,13 +94,13 @@ export const GeoPageBase = () => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                     <div className={styles.leftpanel}>
-                        <div className={styles.outer}>
-                            <div id="Inner">
+                       
+                            
                                 <div className={styles.treemenu}>
                                     <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                 </div>
-                            </div>
-                        </div>
+                            
+                       
                     </div>
                 </Col>
 

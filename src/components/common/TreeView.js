@@ -187,15 +187,15 @@ const TreeView = () => {
         return loop(defaultData);
     }, [searchValue]);
     return (
-        <div>
+        <div >
             <Search
                 style={{
-                    marginBottom: 8,
+                    marginBottom: 8, 'width': '100%'
                 }}
                 placeholder="Search"
                 onChange={onChange}
             />
-            <div>
+            <div className={styles.scrollTreeData}>
                 <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
             </div>
         </div>
