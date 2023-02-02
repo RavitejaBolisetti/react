@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 import { withAuthToken, withAuthTokenAndUserId } from 'utils//withAuthToken';
 
 import { ENCRYPT_KEY } from 'constants/constants';
-import { BASE_URL_LOGIN } from 'constants/routingApi';
+import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
 
 export const APP_VERSION = 'APP_VERSION';
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
@@ -79,7 +79,7 @@ export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
 
 export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) => (dispatch) => {
     const { successAction } = params;
-    const url = 'logout';
+    const url = BASE_URL_LOGOUT;
 
     const authPostLogout = () => {
         dispatch(logoutClearAllData());
@@ -144,7 +144,6 @@ const authPostLoginActions =
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
     try {
         const authToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
-        console.log('authToken', authToken);
         if (!authToken) {
             dispatch(authDoLogout());
         } else {
