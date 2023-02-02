@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { Layout, theme } from 'antd';
+import React from 'react';
+import { Layout } from 'antd';
 
 import styles from './withLayout.module.css';
-
-// import 'assets/style/new_robin.scss';
-// import 'font-awesome/css/font-awesome.min.css';
 
 const { Header, Content } = Layout;
 

@@ -14,6 +14,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import * as IMAGES from 'assets';
 
 import 'assets/style/new_robin.css';
+import 'assets/style/new_robin.scss';
 import styles from './Login.module.css';
 
 // import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
