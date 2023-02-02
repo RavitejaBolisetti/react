@@ -138,9 +138,9 @@ const authPostLoginActions =
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_TOKEN, authToken);
         }
 
-        const { username: userName, username: userId, exp, client_id: clientId } = jwtDecode(authToken);
+        const { username: userName, username: userId } = jwtDecode(authToken);
 
-        dispatch(authLoginSucess(authToken, userName, userName, exp, clientId, userId));
+        dispatch(authLoginSucess(authToken, userName, userId));
     };
 
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
