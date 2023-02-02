@@ -7,7 +7,6 @@
     font-size: 12px;
     color: #fff;
     padding: 1px 15px;
-    /* padding-bottom: 3px; */
     text-align: center;
     text-transform: uppercase;
 }
@@ -36,4 +35,23 @@
 
 .footerBottomText a:hover {
     color: #ea3434;
+}
+
+@media (max-width: 576px) {
+    .footerLink {
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .footerLink a {
+        margin: 0px 6px;
+    }
+
+    .footerBottomText {
+        font-size: 9px;
+    }
+
+    .footerBottomText a {
+        font-size: 10px;
+    }
 }

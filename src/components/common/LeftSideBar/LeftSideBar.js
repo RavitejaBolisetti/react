@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 
 import styles from './LeftSideBar.module.css';
 import { bindActionCreators } from 'redux';
+import { Link, useLocation } from 'react-router-dom';
+import * as routing from 'constants/routing';
 
 const { Search } = Input;
 const { Sider } = Layout;
@@ -56,14 +58,14 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-    getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]),
+    getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]),
     getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
         getItem('Product Master', '2'),
-        getItem('Product Hirarachy', '3'),
-        getItem('Hirarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hirarchy Attribute Master', '34')]),
+        getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
+        getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
         getItem('Role Management', '5'),
         getItem('User Self Registration', '6'),
-        getItem('Geographical Hirarchy', '7'),
+        getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
         getItem('Dealer Hirerachy', '8'),
         getItem('Dealer & Product Mapping', '9'),
         getItem('Terms & Conditions- Dealer', '10'),
@@ -85,6 +87,9 @@ const items = [
 ];
 
 const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
+    const location = useLocation();
+    const pagePath = location.pathname;
+
     const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
     const [openKeys, setOpenKeys] = useState(['sub1']);
     const onOpenChange = (keys) => {
@@ -105,7 +110,8 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     };
 
     const theme = 'light';
-    const handleTheme = () => { };
+    const handleTheme = () => {};
+    const defaultOpenKey = pagePath?.indexOf('dashboard') ? 'sub1' : pagePath?.indexOf('common') ? 'sub2' : '';
 
     return (
         <>
@@ -118,7 +124,7 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
                     {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                 </div>
 
-                <Menu mode="inline" inlineIndent={15} openKeys={openKeys} onOpenChange={onOpenChange} collapsed={collapsed.toString()} items={items} />
+                <Menu mode="inline" inlineIndent={15} defaultSelectedKeys={[routing.ROUTING_COMMON_GEO]}   collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme}>
                     {theme === 'dark' ? (
