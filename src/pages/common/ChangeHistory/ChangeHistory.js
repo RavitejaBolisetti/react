@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from './ChangeHistory.module.css';
+
 import { Table } from 'antd';
 const columns = [
     {
@@ -214,7 +216,7 @@ export const ChangeHistory = () => {
             }}
             onChange={onChange}
             scroll={{
-                x: 'auto',
+                x: 1200,
             }}
         />
     );
