@@ -1,0 +1,12 @@
+.mainContainer {
+    margin: 24px 16px 0;
+    overflow: initial;
+    background: #ffffff;
+    min-height: 80vh !important;
+}
+
+@media (max-width: 576px) {
+    .mainContainer {
+        margin-top: 10px;
+    }
+}

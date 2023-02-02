@@ -11,11 +11,12 @@ import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
 import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
+import styles from './Login.module.css';
+
 import * as IMAGES from 'assets';
 
-import styles from './Login.module.css';
 import 'assets/style/new_robin.css';
-
+import 'assets/style/new_robin.scss';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
