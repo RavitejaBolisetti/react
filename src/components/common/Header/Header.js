@@ -11,8 +11,23 @@ import * as routing from 'constants/routing';
 import customMenuLink from 'utils/customMenuLink';
 
 import styles from './Header.module.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { doLogoutAPI } from 'store/actions/auth';
 
-export const Header = () => {
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            doLogout: doLogoutAPI,
+        },
+        dispatch
+    ),
+});
+
+const HeaderMain = ({ doLogout }) => {
     const items = [
         customMenuLink({
             title: 'Branch Location',
@@ -63,7 +78,7 @@ export const Header = () => {
             key: '6',
             title: 'Logout',
             onclick: () => {
-                console.log('Logout : I am clicked ');
+                doLogout({ successAction: () => {} });
             },
             icon: <FiLogOut />,
         }),
@@ -139,3 +154,5 @@ export const Header = () => {
         </div>
     );
 };
+
+export const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderMain);

@@ -1,33 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { Splash } from "components/Splash";
-import { LoginPage } from "pages/auth/Login";
-import MetaTag from "utils/MetaTag";
-import { ROUTING_DASHBOARD, ROUTING_LOGIN } from "constants/routing";
+import { Splash } from 'components/Splash';
+import { LoginPage } from 'pages/auth/Login';
+import MetaTag from 'utils/MetaTag';
+import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
 
-export const SplashPage = () => {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    // isLoading: state.global.isLoading,
+});
 
-  useEffect(() => {
-    setTimeout(() => {
-      const userData = JSON.parse(localStorage.getItem("userData"));
-      setIsLoading(false);
-      navigate(userData ? ROUTING_DASHBOARD : ROUTING_LOGIN);
-    }, 5000);
-  }, [navigate]);
+const SplashPageBase = ({ isLoggedIn }) => {
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
 
-  return (
-    <>
-      {isLoading ? (
-        <div>
-          <MetaTag metaTitle="Spash" metaDescription="splash" />
-          <Splash />
-        </div>
-      ) : (
-        <LoginPage />
-      )}
-    </>
-  );
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+            navigate(isLoggedIn ? ROUTING_DASHBOARD : ROUTING_LOGIN);
+        }, 1500);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        <>
+            {isLoading ? (
+                <div>
+                    <MetaTag metaTitle="Spash" metaDescription="splash" />
+                    <Splash />
+                </div>
+            ) : (
+                <LoginPage />
+            )}
+        </>
+    );
 };
+
+export const SplashPage = connect(mapStateToProps, null)(SplashPageBase);
