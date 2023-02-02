@@ -71,7 +71,8 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Attribute.startsWith(value),
-        sorter: (a, b) => a.Attribute - b.Attribute,
+        sorter: (a, b) => a.Attribute.length - b.Attribute.length,
+        sortDirections: ['descend', 'ascend'],
         width: '210px',
     },
     {
@@ -117,7 +118,6 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.ShortDescription.startsWith(value),
-        
         width: '210px',
     },
     {
@@ -132,7 +132,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.LongDescription.startsWith(value),
-       
+  
         width: '210px',
     },
     {
@@ -151,7 +151,6 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Status.startsWith(value),
-        
         width: '210px',
     },
 ];
