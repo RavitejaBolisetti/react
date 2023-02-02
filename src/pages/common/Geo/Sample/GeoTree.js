@@ -1,95 +1,112 @@
-import { CarryOutOutlined, CheckOutlined, FormOutlined } from '@ant-design/icons';
-import { Select, Switch, Tree } from 'antd';
+import { CheckOutlined, FormOutlined } from '@ant-design/icons';
+import { Tree, Input } from 'antd';
 import { useState } from 'react';
 
-import treeData2 from './geoData2.json'
-let formContent= [{}];
+import treeData from './geoData2.json';
+const { Search } = Input;
 
-const GeoTree = (props) => {
-  const [showLine, setShowLine] = useState(true);
-  const [showIcon, setShowIcon] = useState(false);
-  const [showLeafIcon, setShowLeafIcon] = useState(true);
-  
-  const onSelect = (selectedKeys, info) => {
-  // console.log('selected', selectedKeys, info);
-   //props.formContent= info.node;
-  // console.log(props)
-  //  props.setFormContent(info.node)
- // console.log(props.open)
-  if(props.open===true){
- // props.setFormContent(info.node);
-   props.setFormContent(info.node);
-   //props.setAntdForm(true);
-   console.log("if")
-  //  props.setEditableFormContent({
-  //   editAttribute:true,
-  //   editParent:true,
-  //   editCode:true,
-  //   editName:true,
-  // });
-}
-  else {
-    console.log("else")
+const defaultData = treeData?.data;
 
-    props.setFormContent(info.node);
-    props.setAntdForm(true);
-    props.setEditableFormContent({
-     editAttribute:true,
-     editParent:true,
-     editCode:true,
-     editName:true,
-   });
-  }
-  
-  }
-
-  
-  
-  const handleLeafIconChange = (value) => {
-    if (value === 'custom') {
-      return setShowLeafIcon(<CheckOutlined />);
-    }
-    if (value === 'true') {
-      return setShowLeafIcon(true);
-    }
-    return setShowLeafIcon(false);
-  };
-  return (
-    <div>
-      {/* <div
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        showLine: <Switch checked={!!showLine} onChange={setShowLine} />
-        <br />
-        <br />
-        showIcon: <Switch checked={showIcon} onChange={setShowIcon} />
-        <br />
-        <br />
-        showLeafIcon:{' '}
-        <Select defaultValue="true" onChange={handleLeafIconChange}>
-          <Select.Option value="true">True</Select.Option>
-          <Select.Option value="false">False</Select.Option>
-          <Select.Option value="custom">Custom icon</Select.Option>
-        </Select>
-      </div> */}
-      <Tree
-        showLine={true
-          // showLine
-          //   ? {
-          //       showLeafIcon,
-          //     }
-          //   : false
+const dataList = [];
+const generateList = (data) => {
+    for (let i = 0; i < data.length; i++) {
+        const node = data[i];
+        const { key, title } = node;
+        dataList.push({
+            key,
+            title,
+        });
+        if (node.children) {
+            generateList(node.children);
         }
-        showIcon={showIcon}
-        defaultExpandedKeys={[]}
-        onSelect={onSelect}
-        treeData={treeData2.data}
-        fieldNames={{ title: "geoName", children: "subGeo",key: "geoParentCode" }}
-      />
-    </div>
-  );
+    }
 };
-export default GeoTree;
-//export { formContent };
+generateList(defaultData);
+const getParentKey = (key, tree) => {
+    let parentKey;
+    for (let i = 0; i < tree.length; i++) {
+        const node = tree[i];
+        if (node.children) {
+            if (node.children.some((item) => item.key === key)) {
+                parentKey = node.key;
+            } else if (getParentKey(key, node.children)) {
+                parentKey = getParentKey(key, node.children);
+            }
+        }
+    }
+    return parentKey;
+};
+
+export const GeoTree = (props) => {
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
+    const onExpand = (newExpandedKeys) => {
+        setExpandedKeys(newExpandedKeys);
+        setAutoExpandParent(false);
+    };
+
+    const [showLine, setShowLine] = useState(true);
+    const [showIcon, setShowIcon] = useState(false);
+    const [showLeafIcon, setShowLeafIcon] = useState(true);
+
+    const onSelect = (selectedKeys, info) => {
+        if (props.open === true) {
+            props.setFormContent(info.node);
+        } else {
+            console.log('else');
+
+            props.setFormContent(info.node);
+            props.setAntdForm(true);
+            props.setEditableFormContent({
+                editAttribute: true,
+                editParent: true,
+                editCode: true,
+                editName: true,
+            });
+        }
+    };
+
+    const handleLeafIconChange = (value) => {
+        if (value === 'custom') {
+            return setShowLeafIcon(<CheckOutlined />);
+        }
+        if (value === 'true') {
+            return setShowLeafIcon(true);
+        }
+        return setShowLeafIcon(false);
+    };
+
+    const onChange = (e) => {
+        const { value } = e.target;
+        // console.log('Kuldeep', dataList, value);
+        const newExpandedKeys = dataList
+            .map((item) => {
+                if (item.title.indexOf(value) > -1) {
+                    return getParentKey(item.key, dataList);
+                }
+                return null;
+            })
+            .filter((item, i, self) => item && self.indexOf(item) === i);
+
+        // console.log('newExpandedKeys', newExpandedKeys);
+
+        setExpandedKeys(newExpandedKeys);
+        setSearchValue(value);
+        setAutoExpandParent(true);
+    };
+
+    return (
+        <div>
+            <Search
+                style={{
+                    marginBottom: 8,
+                }}
+                placeholder="Search"
+                onChange={onChange}
+            />
+
+            <Tree showLine={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} showIcon={showIcon} onSelect={onSelect} treeData={treeData.data} fieldNames={{ title: 'geoName', children: 'subGeo', key: 'geoParentCode' }} />
+        </div>
+    );
+};

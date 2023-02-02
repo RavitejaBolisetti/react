@@ -20,6 +20,8 @@ import { connect } from 'react-redux';
 
 import styles from './LeftSideBar.module.css';
 import { bindActionCreators } from 'redux';
+import { Link, useLocation } from 'react-router-dom';
+import * as routing from 'constants/routing';
 
 // import data from './LeftSideBar.module.css';
 import menuData from 'constants/menuSample.json';
@@ -52,106 +54,90 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-// function getItem(label, key, icon, children, type) {
-//     return {
-//         key,
-//         icon,
-//         children,
-//         label,
-//         type,
-//     };
-// }
+function getItem(label, key, icon, children, type) {
+    return {
+        key,
+        icon,
+        children,
+        label,
+        type,
+    };
+}
 
-// const items = [
-//     getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]),
-//     getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
-//         getItem('Product Master', '2'),
-//         getItem('Product Hirarachy', '3'),
-//         getItem('Hirarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hirarchy Attribute Master', '34')]),
-//         getItem('Role Management', '5'),
-//         getItem('User Self Registration', '6'),
-//         getItem('Geographical Hirarchy', '7'),
-//         getItem('Dealer Hirerachy', '8'),
-//         getItem('Dealer & Product Mapping', '9'),
-//         getItem('Terms & Conditions- Dealer', '10'),
-//         getItem('Terms & Conditions- Manufacturer', '11'),
-//         getItem('Document Type Master', '12'),
-//         getItem('Manufacturer Hirerachy', '13'),
-//         getItem('Document Search', '14'),
-//         getItem('Branch & Dealer Mapping', '15'),
-//         getItem('Vehicle Details', '16'),
-//         getItem('Application Master', '17'),
-//     ]),
+const items = [
+    getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]),
+    getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
+        getItem('Product Master', '2'),
+        getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
+        getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
+        getItem('Role Management', '5'),
+        getItem('User Self Registration', '6'),
+        getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
+        getItem('Dealer Hirerachy', '8'),
+        getItem('Dealer & Product Mapping', '9'),
+        getItem('Terms & Conditions- Dealer', '10'),
+        getItem('Terms & Conditions- Manufacturer', '11'),
+        getItem('Document Type Master', '12'),
+        getItem('Manufacturer Hirerachy', '13'),
+        getItem('Document Search', '14'),
+        getItem('Branch & Dealer Mapping', '15'),
+        getItem('Vehicle Details', '16'),
+        getItem('Application Master', '17'),
+    ]),
 
-//     getItem('DBP', 'sub4', <FaAddressBook />, [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+    getItem('DBP', 'sub4', <FaAddressBook />, [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
 
-//     getItem('Financial Accounting', 'sub5', <BiRupee fontSize={20} />),
-//     getItem('HR & MLES', 'sub6', <GrGroup fontSize={20} />),
-//     getItem('Sales', 'sub7', <AiFillCar fontSize={20} />, [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-//     getItem('Services', 'sub8', <FaWrench fontSize={20} />),
-// ];
+    getItem('Financial Accounting', 'sub5', <BiRupee fontSize={20} />),
+    getItem('HR & MLES', 'sub6', <GrGroup fontSize={20} />),
+    getItem('Sales', 'sub7', <AiFillCar fontSize={20} />, [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
+    getItem('Services', 'sub8', <FaWrench fontSize={20} />),
+];
+
 
 const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
-    console.log('menuData', menuData?.data);
+    const location = useLocation();
+    const pagePath = location.pathname;
 
-    // const generateMenuList = (data) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //         console.log('Kuldeep', i, data);
-    //         const menu = data[i];
-    //         getItem(menu.menuTitle, menu.menuId, menu.menuIconUrl);
-    //         if (menu.subMenu) {
-    //             generateMenuList(menu.subMenu);
-    //         }
-    //         items.push();
-    //     }
-    // };
-
-    // generateMenuList(menuData?.data);
-
-    const items = [];
-    menuData?.data.map((menu) => {
-        const subMenu = [];
-        // if (menu.subMenu) {
-        menu?.subMenu.map((menu) => {
+    // const items = [];
+    // menuData?.data.map((menu) => {
+    //     const subMenu = [];
+    //     // if (menu.subMenu) {
+    //     menu?.subMenu.map((menu) => {
 
 
-            subMenu.push(
-                customMenuLink({
-                    key: '1.1.' + menu.menuId,
-                    id: menu.menuId,
-                    title: menu.menuTitle,
-                    icon: menu.menuIconUrl,
-                    children: subMenu,
-                })
-            );
+    //         subMenu.push(
+    //             customMenuLink({
+    //                 key: '1.1.' + menu.menuId,
+    //                 id: menu.menuId,
+    //                 title: menu.menuTitle,
+    //                 icon: menu.menuIconUrl,
+    //                 children: subMenu,
+    //             })
+    //         );
 
 
-            subMenu.push(
-                customMenuLink({
-                    title: menu.menuTitle,
-                    key: menu.menuId,
-                    id: menu.menuId,
-                    icon: menu.menuIconUrl,
-                })
-            );
-            return undefined;
-        });
+    //         subMenu.push(
+    //             customMenuLink({
+    //                 title: menu.menuTitle,
+    //                 key: menu.menuId,
+    //                 id: menu.menuId,
+    //                 icon: menu.menuIconUrl,
+    //             })
+    //         );
+    //         return undefined;
+    //     });
 
-        items.push(
-            customMenuLink({
-                key: '1.1.' + menu.menuId,
-                id: menu.menuId,
-                title: menu.menuTitle,
-                icon: menu.menuIconUrl,
-                children: subMenu,
-            })
-        );
-        return undefined;
-    });
-
-    // items.push(getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]));
-    // items.push(getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]));
-    // items.push(getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem('Dashboard', '1')]));
+    //     items.push(
+    //         customMenuLink({
+    //             key: '1.1.' + menu.menuId,
+    //             id: menu.menuId,
+    //             title: menu.menuTitle,
+    //             icon: menu.menuIconUrl,
+    //             children: subMenu,
+    //         })
+    //     );
+    //     return undefined;
+    // });
 
     const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
     const [openKeys, setOpenKeys] = useState(['sub1']);
@@ -174,6 +160,7 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
 
     const theme = 'light';
     const handleTheme = () => {};
+    const defaultOpenKey = pagePath?.indexOf('dashboard') ? 'sub1' : pagePath?.indexOf('common') ? 'sub2' : '';
 
     return (
         <>
@@ -189,7 +176,7 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
                     </Link>
                 </div>
 
-                <Menu mode="inline" inlineIndent={15} openKeys={openKeys} onOpenChange={onOpenChange} collapsed={collapsed.toString()} items={items} />
+                <Menu mode="inline" inlineIndent={15} defaultSelectedKeys={[routing.ROUTING_COMMON_GEO]}   collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme}>
                     {theme === 'dark' ? (

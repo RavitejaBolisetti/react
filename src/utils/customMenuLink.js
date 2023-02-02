@@ -7,12 +7,12 @@ const customMenuLink = ({ key = (Math.random() * 1000), title, link, icon, child
         label: link ? (
             <Link to={link}>
                 {icon && icon}
-                {title}
+                {' ' + title}
             </Link>
         ) : (
             <span onClick={onclick}>
                 {icon && icon}
-                {title}
+                {' ' + title}
             </span>
         ),
         children,
