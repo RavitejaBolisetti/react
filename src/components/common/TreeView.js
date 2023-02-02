@@ -6,8 +6,48 @@ const { Search } = Input;
 
 const treeData = [
     {
+        title: 'Europe',
+        key: '1-0',
+        children: [
+            {
+                title: 'Germany',
+                key: '1-0-0-0',
+                children: [
+                    {
+                        title: 'Berlin',
+                        key: '1-0-0-0-0',                        
+                    },
+                    {
+                        title: 'Bavaria',
+                        key: '1-0-0-0-2',
+                    },
+                ],
+            },
+            {
+                title: 'Italy',
+                key: '1-0-0-1',
+                children: [
+                    {
+                        title: 'Rome',
+                        key: '1-0-0-1-0',
+                    },
+                ],
+            },
+            {
+                title: 'France',
+                key: '1-0-0-2',
+                children: [
+                    {
+                        title: 'Paris',
+                        key: '1-0-0-2-0',
+                    }
+                ],
+            },
+        ],
+    },
+    {
         title: 'Asia',
-        key: 'Continent',
+        key: '2-0',
         children: [
             {
                 title: 'India',

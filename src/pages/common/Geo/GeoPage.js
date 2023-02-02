@@ -6,11 +6,12 @@ import TreeView from 'components/common/TreeView';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
-import {  validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 
 import MetaTag from 'utils/MetaTag';
 import styles from './GeoPage.module.css';
 import { connect } from 'react-redux';
+import ParentHierarchy from './ParentHierarchy';
 
 const { Option } = Select;
 
@@ -166,21 +167,6 @@ export const GeoPageBase = () => {
                                         </Col>
                                     </Row>
 
-                                    <Modal
-                                        title=""
-                                        centered
-                                        open={open}
-                                        onOk={() => setOpen(false)}
-                                        onCancel={() => setOpen(false)}
-
-                                        // bodyStyle={{height:800 }}
-                                    >
-                                        <h3>Parent Hierarchy</h3>
-                                        <hr></hr>
-                                        <Space direction="vertical"></Space>
-                                        <TreeView />
-                                    </Modal>
-
                                     <Row gutter={20}>
                                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                             <Form.Item
@@ -246,6 +232,7 @@ export const GeoPageBase = () => {
                     </div>
                 </div>
             </Row>
+            <ParentHierarchy title={'Parent Hierarchy'} setOpen={setOpen} open={open} />
         </>
     );
 };
