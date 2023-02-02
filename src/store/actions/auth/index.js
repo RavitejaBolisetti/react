@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 import { withAuthToken, withAuthTokenAndUserId } from 'utils//withAuthToken';
 
 import { ENCRYPT_KEY } from 'constants/constants';
-import { BASE_URL_LOGIN } from 'constants/routingApi';
+import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
 
 export const APP_VERSION = 'APP_VERSION';
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
@@ -34,14 +34,12 @@ const encryptStorage = new EncryptStorage(APIKEY, {
     // prefix: '@enc',
 });
 
-export const authLoginSucess = (token, userName, email, roleRight, lastLoginDate) => ({
+export const authLoginSucess = (token, userName, userId) => ({
     type: AUTH_LOGIN_SUCCESS,
     token,
     userName,
-    email,
-    roleRight,
+    userId,
     isLoggedIn: true,
-    lastLoginDate,
 });
 
 const receiveVersionData = (data) => ({
@@ -81,7 +79,7 @@ export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
 
 export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) => (dispatch) => {
     const { successAction } = params;
-    const url = '/api/users/logout/' + userId;
+    const url = BASE_URL_LOGOUT;
 
     const authPostLogout = () => {
         dispatch(logoutClearAllData());
@@ -90,7 +88,8 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) =>
     const logoutError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
-        if (res.status) {
+        if (res?.data?.statusCode) {
+            message.info(res?.data?.responseMessage);
             successAction && successAction();
             authPostLogout();
         } else {
@@ -99,9 +98,10 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) =>
     };
 
     const apiCallParams = {
-        method: 'put',
+        method: 'post',
         url,
         token,
+        userId,
         data: undefined,
         onSuccess,
         onError: () => logoutError('There was an error, Please try again'),
@@ -112,16 +112,13 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) =>
     };
     axiosAPICall(apiCallParams);
 });
-// const clearAll = ({
-//     type: CLEAR_ALL_DATA
-// })
 
 const logoutClearAllData = () => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_ROLE_RIGHTS);
     localStorage.removeItem(LOCAL_STORAGE_KEY_MODULE_RIGHTS);
-    history.push('/');
     dispatch(authDoLogout(message));
+    window.location.href = '/login';
 };
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
     dispatch(unAuthenticate(errorMessage));
@@ -135,23 +132,20 @@ export const clearAllAuthentication = (message) => (dispatch) => {
 };
 
 const authPostLoginActions =
-    ({ authToken, roleRight, saveTokenAndRoleRights = true }) =>
+    ({ authToken, saveTokenAndRoleRights = true }) =>
     (dispatch) => {
         if (saveTokenAndRoleRights) {
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_TOKEN, authToken);
-            encryptStorage.setItem(LOCAL_STORAGE_KEY_ROLE_RIGHTS, roleRight);
         }
 
-        const { sub: userName, email, nameid, sid: contactId, birthdate: lastLoginDate, typ: siteId } = jwtDecode(authToken);
+        const { username: userName, username: userId, exp, client_id: clientId } = jwtDecode(authToken);
 
-        dispatch(authLoginSucess(authToken, userName, email, roleRight, nameid, contactId, lastLoginDate, siteId));
+        dispatch(authLoginSucess(authToken, userName, userName, exp, clientId, userId));
     };
 
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
     try {
         const authToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
-        const roleRights = encryptStorage.getItem(LOCAL_STORAGE_KEY_ROLE_RIGHTS);
-
         if (!authToken) {
             dispatch(authDoLogout());
         } else {
@@ -160,8 +154,6 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
                 dispatch(
                     authPostLoginActions({
                         authToken,
-                        saveTokenAndRoleRights: false,
-                        roleRight: roleRights,
                     })
                 );
             } else {
@@ -194,11 +186,10 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
         }
     };
 
-    const authPostLogin = (token, roleRight) => {
+    const authPostLogin = (token) => {
         dispatch(
             authPostLoginActions({
                 authToken: token,
-                roleRight,
             })
         );
     };
@@ -214,8 +205,9 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
     }
     const onWarning = (errorMessage) => loginError(errorMessage);
     const onSuccess = (res) => {
-        if (res.data.token) {
-            authPostLogin(res.data.token, res.data.roleRight);
+        console.log(res, res?.data?.data?.accessToken, jwtDecode(res?.data?.data?.accessToken));
+        if (res?.data?.data?.accessToken) {
+            authPostLogin(res?.data?.data?.accessToken);
         } else {
             loginError('There was an error, Please try again');
         }

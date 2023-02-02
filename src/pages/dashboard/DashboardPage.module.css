@@ -8,27 +8,93 @@
   margin-bottom: 30px;
 }
 
-:global .ant-card .ant-card-head-title{
+:global .ant-card .ant-card-head-title {
   font-size: 1.1rem;
-  float :left;
+  float: left;
   font-weight: 500;
- }
- 
- 
- :global .ant-card.ant-card-body{
+}
+
+
+:global .ant-card.ant-card-body {
   padding: 12px;
- }
+}
 
 
- :global .ant-carousel .slick-dots li button::after{
+:global .ant-carousel .slick-dots li button::after {
   background-color: #EA3434;
   /* margin: 5px; */
   inset: 0.5em;
- }
+}
 
- :global .ant-carousel .slick-dots li button{
+:global .ant-carousel .slick-dots li button {
   margin: 0px 30px 0px 2px;
-  top: 30px;
- 
-  padding:0px 10px;
- }
+  top: 46px;
+  padding: 0px 10px;
+}
+
+
+.mb10 {
+  margin-bottom: 20px;
+}
+
+.floatRight {
+  float: right;
+
+}
+
+.headingGradient {
+  padding-bottom: 6px;
+  border-radius: 5px;
+  border: 0px;
+  border-bottom: 4px solid;
+  border-image: linear-gradient(to right, #EFA3A3, #CAC9EE);
+  border-image-slice: 1;
+  text-decoration: none;
+  margin-bottom: 30px;
+  color: #0B0B0C;
+  font-size: 20px;
+}
+
+.pageHeaderNameSection {
+  border-bottom: 1px solid #DEDEDE;
+  padding: 0px;
+  margin: 0 0 20px 0;
+}
+
+/* .directChatMessages {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+  height: 250px;
+  /* overflow: auto; --
+  padding: 10px;
+} */
+
+:global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
+  padding: 24px;
+  border-radius: 0 0 8px 8px;
+  height: 250px;
+}
+
+:global .ant-row {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 0;
+  margin-right: 0px !important;
+}
+
+@media only screen and (max-width: 768px) {
+
+  /* For mobile phones: */
+  [class*="col-"] {
+    width: 100%;
+    /* margin-top:18px; */
+  }
+
+  .pageHeaderNameSection {
+    /* border-bottom: 1px solid #DEDEDE; */
+    border-bottom: 0px;
+    padding: 0px;
+    margin: 0 0 20px 0;
+  }
+
+}
