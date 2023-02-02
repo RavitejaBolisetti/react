@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select, Switch } from 'antd';
+import { Button, Col, Input, Form, Row, Select, Switch, Space } from 'antd';
 import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -77,10 +77,14 @@ export const GeoPageBase = () => {
 
             <Row gutter={20}>
                 <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                    <div>
-                        <span className={styles.headingGradient}>Geographical Hierarchy</span>
-                        <BsStar size={18} />
-                    </div>
+                    <Space>
+                        <div>
+                            <span className={styles.headingGradient}>Geographical Hierarchy</span>
+                        </div>
+                        <div className={styles.favIconHeading}>
+                            <BsStar size={18} />
+                        </div>
+                    </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} >
                     <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
