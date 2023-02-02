@@ -15,7 +15,7 @@ export const ROUTING_USER_SETTING = ROUTING_USER.concat('setting');
 export const ROUTING_USER_FAQ = ROUTING_USER.concat('faq');
 export const ROUTING_USER_TRAINING = ROUTING_USER.concat('training');
 
-export const ROUTING_USER_TERM = ROUTING_HOME.concat('term');
-export const ROUTING_USER_ABOUT = ROUTING_HOME.concat('about');
+export const ROUTING_USER_TERM = ROUTING_HOME.concat('termOfUse');
+export const ROUTING_USER_ABOUT = ROUTING_HOME.concat('aboutUs');
 export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
-export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact');
+export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contactUs');
