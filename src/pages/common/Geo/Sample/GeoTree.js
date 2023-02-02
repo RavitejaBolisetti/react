@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+import { CheckOutlined } from '@ant-design/icons';
+import {  Tree } from 'antd';
+=======
 import { CheckOutlined, FormOutlined } from '@ant-design/icons';
 import { Tree, Input } from 'antd';
+>>>>>>> c5e434d80692863d0eec90efaa55afbbc8f9a1c8
 import { useState } from 'react';
 
 import treeData from './geoData2.json';
@@ -77,6 +82,19 @@ export const GeoTree = (props) => {
         return setShowLeafIcon(false);
     };
 
+<<<<<<< HEAD
+    return (
+        <div>
+            <Tree
+                showLine={
+                    true
+                }
+                showIcon={showIcon}
+                defaultExpandedKeys={[]}
+                onSelect={onSelect}
+                treeData={treeData2.data}
+                fieldNames={{ title: 'geoName', children: 'subGeo', key: 'geoParentCode' }}
+=======
     const onChange = (e) => {
         const { value } = e.target;
         // console.log('Kuldeep', dataList, value);
@@ -104,6 +122,7 @@ export const GeoTree = (props) => {
                 }}
                 placeholder="Search"
                 onChange={onChange}
+>>>>>>> c5e434d80692863d0eec90efaa55afbbc8f9a1c8
             />
 
             <Tree showLine={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} showIcon={showIcon} onSelect={onSelect} treeData={treeData.data} fieldNames={{ title: 'geoName', children: 'subGeo', key: 'geoParentCode' }} />
