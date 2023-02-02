@@ -60,19 +60,19 @@ const Login = (props) => {
     const recaptchaRef = React.useRef(null);
 
     const onFinish = (values) => {
-        // if (captcha) {
-        // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        // values.timeZone = timeZone;
-        doLogin(values, loginPageIsLoading);
-        navigate(ROUTING_DASHBOARD);
+        if (captcha) {
+            // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            // values.timeZone = timeZone;
+            doLogin(values, loginPageIsLoading);
+            navigate(ROUTING_DASHBOARD);
 
-        // localStorage.setItem('userData', JSON.stringify(response.data));
-        // message.info(response.data.responseMessage);
-        // setPost(response.data);
-        // form.resetFields();
-        // recaptchaRef.current.reset();
-        // setCaptcha('');
-        // }
+            // localStorage.setItem('userData', JSON.stringify(response.data));
+            // message.info(response.data.responseMessage);
+            // setPost(response.data);
+            // form.resetFields();
+            // recaptchaRef.current.reset();
+            // setCaptcha('');
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -100,7 +100,7 @@ const Login = (props) => {
             <Row>
                 <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
                     <div className="login-wrap">
-                        <Form form={form} name="login_from" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
                             <Row>
                                 <Col span={24}>
@@ -111,17 +111,17 @@ const Login = (props) => {
                                                     <h4>Welcome!</h4>
                                                     <div className="loginsubHeading">Please enter your credentials to login</div>
                                                 </div>
-                                                <Form.Item name="userId" initialValue={'user1'} rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
+                                                <Form.Item name="userId" rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
                                                     <div className="input-group mb-3">
                                                         <div className="input-group-prepend">
                                                             <span className="input-group-text login_input-group-text">
                                                                 <AiOutlineMail size={18} />
                                                             </span>
                                                         </div>
-                                                        <input type="text" value={'user1'} className="form-control input loginTextfield" placeholder="User ID(MILE ID.Parent ID)" />
+                                                        <input type="text" className="form-control input loginTextfield" placeholder="User ID(MILE ID.Parent ID)" />
                                                     </div>
                                                 </Form.Item>
-                                                <Form.Item name="password" initialValue={'Test@1234'} rules={[validateRequiredInputField('password')]}>
+                                                <Form.Item name="password" rules={[validateRequiredInputField('password')]}>
                                                     <Row gutter={20}>
                                                         <Col span={24}>
                                                             <div className="input-group mb-3">
@@ -131,7 +131,7 @@ const Login = (props) => {
                                                                         <AiOutlineLock size={18} />
                                                                     </span>
                                                                 </div>
-                                                                <input type={!showPassword ? 'text' : 'password'} id="password" className="form-control input loginTextfield" placeholder="Password" />
+                                                                <input type={showPassword ? 'text' : 'password'} id="password" className="form-control input loginTextfield" placeholder="Password" />
                                                                 <div className="input-group-prepend">
                                                                     <span className="input-group-text login_input-group-text fr" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
                                                                         {!showPassword ? <AiOutlineEyeInvisible className="text-[#DEDEDE]" size={18} /> : <AiOutlineEye className="text-white" size={18} />}
