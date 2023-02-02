@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Table } from 'antd';
+
+import moment from 'moment';
 const columns = [
     {
         title: 'Changed/Modified Date',
@@ -15,6 +17,8 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.ChangeDate.startsWith(value),
+        // sorter: (a, b) => new Date(a.ChangeDate).toLocaleString() - new Date(b.ChangeDate).toLocaleString(),
+        sorter: (a, b) => new Date(a.ChangeDate).valueOf() - new Date(b.ChangeDate),
         width: '210px',
     },
 
@@ -44,6 +48,8 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeName.startsWith(value),
+        sorter: (a, b) => a.EmployeeName.length - b.EmployeeName.length,
+        sortDirections: ['descend', 'ascend'],
         width: '210px',
     },
 
@@ -66,6 +72,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Attribute.startsWith(value),
+        sorter: (a, b) => a.Attribute - b.Attribute,
         width: '210px',
     },
     {
@@ -80,6 +87,8 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Code.startsWith(value),
+        sorter: (a, b) => a.Code.length - b.Code.length,
+        sortDirections: ['descend', 'ascend'],
         width: '210px',
     },
 
@@ -109,6 +118,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.ShortDescription.startsWith(value),
+        
         width: '210px',
     },
     {
@@ -123,6 +133,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.LongDescription.startsWith(value),
+       
         width: '210px',
     },
     {
@@ -141,6 +152,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Status.startsWith(value),
+        
         width: '210px',
     },
     
@@ -159,9 +171,9 @@ const data = [
         Status:"Inactive",
     },
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
+        ChangeDate:"11/09/2023",
+        EmployeeCode:"19488",
+        EmployeeName:"Agarwal",
         Attribute:"Attribute 6",
         Code:"UP",
         Parent:"India",
@@ -170,11 +182,11 @@ const data = [
         Status:"Active",
     },
     {
-        ChangeDate:"12/09/2022",
+        ChangeDate:"14/09/2022",
         EmployeeCode:"19489",
-        EmployeeName:"Vivek",
+        EmployeeName:"Bishnoi",
         Attribute:"Attribute 6",
-        Code:"UP",
+        Code:"MP",
         Parent:"India",
         ShortDescription:"SMT 7STR",
         LongDescription:"This Smt 7STR variant comes..",
@@ -193,11 +205,11 @@ const data = [
     },
     {
         ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
+        EmployeeCode:"19484",
         EmployeeName:"Vivek",
         Attribute:"Attribute 6",
         Code:"UP",
-        Parent:"India",
+        Parent:"Germany",
         ShortDescription:"SMT 7STR",
         LongDescription:"This Smt 7STR variant comes..",
         Status:"Active",
@@ -220,8 +232,7 @@ export const ChangeHistory = () => {
             }}
             onChange={onChange}
             scroll={{
-                x: 1300,
-                y: 300,
+                x:"auto"
               }}
         />
     );
