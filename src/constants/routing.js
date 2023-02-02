@@ -7,7 +7,7 @@ export const ROUTING_DASHBOARD1 = '/dashboard1';
 
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo');
-export const ROUTING_COMMON_PRODUCT = ROUTING_COMMON.concat('productMaster');
+export const ROUTING_COMMON_PRODUCT_MASTER = ROUTING_COMMON.concat('productMaster');
 export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('productHierarchy');
 
 export const ROUTING_USER = '/user/';
