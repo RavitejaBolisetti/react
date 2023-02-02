@@ -60,7 +60,7 @@ function getItem(label, key, icon, children, type) {
 const items = [
     getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]),
     getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
-        getItem('Product Master', '2'),
+        getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_MASTER}>{'Product Master'}</Link>, '2'),
         getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
         getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
         getItem('Role Management', '5'),
