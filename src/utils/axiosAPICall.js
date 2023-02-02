@@ -25,7 +25,6 @@ const baseAPICall = (params) => {
         axiosConfig = {
             ...axiosConfig,
             headers,
-            url: url + '?userId=' + userId + '&token=' + token,
         };
     }
 

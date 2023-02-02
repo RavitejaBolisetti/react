@@ -97,9 +97,10 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) =>
     };
 
     const apiCallParams = {
-        method: 'put',
+        method: 'post',
         url,
         token,
+        userId,
         data: undefined,
         onSuccess,
         onError: () => logoutError('There was an error, Please try again'),

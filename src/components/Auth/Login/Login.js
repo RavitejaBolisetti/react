@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import { Form, Row, Col, Button } from 'antd';
+import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { Form, Row, Col, Button } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-
-import ReCAPTCHA from 'react-google-recaptcha';
 
 import { doLogin, doCloseLoginError, doCloseLoginFailure, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
+import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import * as IMAGES from 'assets';
 
-import 'assets/style/new_robin.css';
 import styles from './Login.module.css';
+import 'assets/style/new_robin.css';
 
-// import { BASE_URL_LOGIN, BASE_URL_USER_DETAIL } from 'constants/routingApi';
-import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
-import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -144,7 +142,7 @@ const Login = (props) => {
 
                                                 <Row gutter={20}>
                                                     <Col span={24}>
-                                                        <ReCAPTCHA ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
+                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
                                                     </Col>
                                                 </Row>
 

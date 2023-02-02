@@ -9,7 +9,6 @@ import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
-    // isLoading: state.global.isLoading,
 });
 
 const SplashPageBase = ({ isLoggedIn }) => {
@@ -20,7 +19,7 @@ const SplashPageBase = ({ isLoggedIn }) => {
         setTimeout(() => {
             setIsLoading(false);
             navigate(isLoggedIn ? ROUTING_DASHBOARD : ROUTING_LOGIN);
-        }, 1500);
+        }, 3000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
