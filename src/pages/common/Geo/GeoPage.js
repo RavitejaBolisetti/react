@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Button, Col, Input, Form, Row, Select, Switch } from 'antd';
 import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
-// import { GeoTree as TreeView } from './Sample/GeoTree';
-
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
-
 import MetaTag from 'utils/MetaTag';
-import styles from './GeoPage.module.css';
-import { connect } from 'react-redux';
+
+import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
+
+import styles from './GeoPage.module.css';
 
 const { Option } = Select;
 
@@ -53,6 +52,7 @@ export const GeoPageBase = () => {
         Code: '',
         Name: '',
     });
+
     const [editableFormContent, setEditableFormContent] = useState({
         editAttribute: false,
         editParent: false,
@@ -60,16 +60,16 @@ export const GeoPageBase = () => {
         editName: false,
     });
 
-    const onSubmit = (e) => {
-        console.log('djks');
-        form.validateFields()
-            .then((err, values) => {
-                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-            })
-            .catch((errorInfo) => {
-                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-            });
-    };
+    // const onSubmit = (e) => {
+    //     console.log('djks');
+    //     form.validateFields()
+    //         .then((err, values) => {
+    //             console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
+    //         })
+    //         .catch((errorInfo) => {
+    //             console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
+    //         });
+    // };
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
@@ -97,7 +97,6 @@ export const GeoPageBase = () => {
                         <div className={styles.outer}>
                             <div id="Inner">
                                 <div className={styles.treemenu}>
-                                    {/* <TreeView /> */}
                                     <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                 </div>
                             </div>
@@ -160,21 +159,6 @@ export const GeoPageBase = () => {
                                 </Col>
                             </Row>
 
-                            <Modal
-                                title=""
-                                centered
-                                open={open}
-                                onOk={() => setOpen(false)}
-                                onCancel={() => setOpen(false)}
-
-                                // bodyStyle={{height:800 }}
-                            >
-                                <h3>Parent Hierarchy</h3>
-                                <hr></hr>
-                                <Space direction="vertical"></Space>
-                                <TreeView />
-                            </Modal>
-
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item
@@ -212,10 +196,10 @@ export const GeoPageBase = () => {
                                     <Form.Item name="Active inactive button" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
                                     </Form.Item>
-                                    {/* <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                                <FaEdit className="fas fa-edit mrr5" />
-                                                Edit
-                                            </button> */}
+                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
+                                        <FaEdit className="fas fa-edit mrr5" />
+                                        Edit
+                                    </button>
                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
                                         <FaUserPlus className="fa-solid fa-user-plus mrr5" />
                                         Add Child

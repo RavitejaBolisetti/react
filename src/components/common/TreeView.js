@@ -3,7 +3,7 @@ import { Select, Switch, Tree, Input } from 'antd';
 import { useState, useMemo } from 'react';
 import styles from './TreeView.module.css';
 
-const { Search } = Input
+const { Search } = Input;
 
 const treeData = [
     {
@@ -16,7 +16,7 @@ const treeData = [
                 children: [
                     {
                         title: 'Berlin',
-                        key: '1-0-0-0-0',                        
+                        key: '1-0-0-0-0',
                     },
                     {
                         title: 'Bavaria',
@@ -41,7 +41,7 @@ const treeData = [
                     {
                         title: 'Paris',
                         key: '1-0-0-2-0',
-                    }
+                    },
                 ],
             },
         ],
@@ -87,11 +87,11 @@ const treeData = [
                     {
                         title: 'Dhaka',
                         key: '0-0-2-0',
-                    }
+                    },
                 ],
             },
         ],
-    }
+    },
 ];
 
 const defaultData = treeData;
@@ -173,11 +173,9 @@ const TreeView = () => {
                     );
                 if (item.children) {
                     return {
-                       
-                          title,
+                        title,
                         key: item.key,
                         children: loop(item.children),
-                       
                     };
                 }
                 return {
@@ -198,7 +196,7 @@ const TreeView = () => {
                 onChange={onChange}
             />
             <div>
-            <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
+                <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
             </div>
         </div>
     );
