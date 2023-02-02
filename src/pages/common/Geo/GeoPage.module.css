@@ -96,3 +96,59 @@
     border-radius: 4px;
     height: 36px;
 }
+.treemenu{
+
+  margin: 24px 0px;
+    padding-left: 25px;
+    padding-bottom: 0px;
+    line-height: 2em;
+    list-style: none;
+   background-color: transparent;
+    color: #342C2C;
+  }
+
+  :global .ant-tree .ant-tree-list-holder-inner {
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+:global .ant-modal .ant-modal-content {
+  position: relative;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+  pointer-events: auto;
+  padding: 20px 24px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+.leftpanel {
+  padding: 0.8em 5.8em 0.8em 0.5em;
+  width: 99%;
+  background: #F4f4f4; 
+  margin-left: 8px;
+  box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
+  border-radius: 10px;
+  margin-bottom: 100px;
+  height: 300px;
+  overflow-y: scroll;
+  white-space: nowrap;
+  margin-top: 30px;
+}
+.ant-input-group-wrapper {
+  vertical-align: inherit;
+  margin-top: 13px;
+}
+.outer {
+  transition: max-width 1s;
+  }
+  :global .ant-tree {
+    background: transparent;
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+:global .ant-input-group {
+      width:auto; 
+}
+}

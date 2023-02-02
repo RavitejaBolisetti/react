@@ -1,8 +1,9 @@
 import { CarryOutOutlined, CheckOutlined, FormOutlined } from '@ant-design/icons';
 import { Select, Switch, Tree, Input } from 'antd';
 import { useState, useMemo } from 'react';
+import styles from './TreeView.module.css';
 
-const { Search } = Input;
+const { Search } = Input
 
 const treeData = [
     {
@@ -172,9 +173,11 @@ const TreeView = () => {
                     );
                 if (item.children) {
                     return {
-                        title,
+                       
+                          title,
                         key: item.key,
                         children: loop(item.children),
+                       
                     };
                 }
                 return {
@@ -194,7 +197,9 @@ const TreeView = () => {
                 placeholder="Search"
                 onChange={onChange}
             />
+            <div>
             <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
+            </div>
         </div>
     );
 };

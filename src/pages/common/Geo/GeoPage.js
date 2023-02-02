@@ -92,20 +92,14 @@ export const GeoPageBase = () => {
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
-            <Row gutter={20}>
-                <div className="leftbar">
-                    <div className="row">
+            <Row gutter={20}> 
                         <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
-                            <div>
-                                {/* <button className="semicircle">
-                                    <i className="fa fa-chevron-right mrl5" aria-hidden="true"></i>
-                                </button> */}
-
-                                <div id="outer" className="leftpanel">
+                            <div className={styles.leftpanel} >
+                             <div className={styles.outer}>
                                     <div id="Inner">
-                                        <div className="treemenu mrt30">
+                                        <div className={styles.treemenu}>
                                             {/* <TreeView /> */}
-                                            <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                            <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen}/>
                                         </div>
                                     </div>
                                 </div>
@@ -229,8 +223,8 @@ export const GeoPageBase = () => {
                                 </Form>
                             </div>
                         </Col>
-                    </div>
-                </div>
+                    
+               
             </Row>
             <ParentHierarchy title={'Parent Hierarchy'} setOpen={setOpen} open={open} />
         </>
