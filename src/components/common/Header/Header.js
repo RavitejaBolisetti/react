@@ -20,17 +20,14 @@ export const Header = () => {
             children: [
                 customMenuLink({
                     title: 'Mahindra Randhawa Motors',
-                    link: routing.ROUTING_USER_MAHINDRA,
                 }),
                 customMenuLink({
                     title: 'MG Motor India',
-                    link: routing.ROUTING_USER_MG,
                 }),
             ],
         }),
         customMenuLink({
             title: 'Finacial Year',
-            link: routing.ROUTING_USER_FINANACIAL,
         }),
     ];
 
@@ -119,7 +116,8 @@ export const Header = () => {
                                             </div>
                                             <div className={styles.userText}>
                                                 <div>John Smith</div>
-                                                <span className={styles.userServiceArea}>+91-9865443234
+                                                <span className={styles.userServiceArea}>
+                                                    +91-9865443234
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <a className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>
