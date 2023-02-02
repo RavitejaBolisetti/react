@@ -35,17 +35,14 @@ const HeaderMain = ({ doLogout }) => {
             children: [
                 customMenuLink({
                     title: 'Mahindra Randhawa Motors',
-                    // link: routing.ROUTING_HOME,
                 }),
                 customMenuLink({
                     title: 'MG Motor India',
-                    // link: routing.ROUTING_HOME,
                 }),
             ],
         }),
         customMenuLink({
             title: 'Finacial Year',
-            // link: routing.ROUTING_HOME,
         }),
     ];
 
@@ -65,13 +62,13 @@ const HeaderMain = ({ doLogout }) => {
         customMenuLink({
             key: '3',
             title: 'FAQ',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_FAQ,
             icon: <TbFileReport />,
         }),
         customMenuLink({
             key: '4',
             title: 'Training/Help',
-            link: routing.ROUTING_HOME,
+            link: routing.ROUTING_USER_TRAINING,
             icon: <FaUserMd />,
         }),
         customMenuLink({
@@ -86,8 +83,8 @@ const HeaderMain = ({ doLogout }) => {
 
     return (
         <div className={styles.headerContainer}>
-            <Row>
-                <Col xs={24} sm={10} md={10} lg={10} xl={10} xxl={10}>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                     <div className={styles.headerLeft}>
                         <Space>
                             <div className={styles.userAvatar}>
@@ -107,26 +104,26 @@ const HeaderMain = ({ doLogout }) => {
                         </Space>
                     </div>
                 </Col>
-                <Col xs={24} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
                     <div className={styles.headerRight}>
-                        <div className={`${styles.navbar} ${styles.navbarExpand}`}>
-                            <ul className={`${styles.navbarNav} ${styles.mlAuto}`}>
-                                <li>
+                        <div className={styles.navbarExpand}>
+                            <div className={styles.navbarNav}>
+                                <div className={styles.floatLeft}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
                                         <Badge pill size="small" count={11}>
                                             <FaRegBell size={20} />
                                         </Badge>
                                     </a>
-                                </li>
-                                <li>
+                                </div>
+                                <div className={styles.floatLeft}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
                                             OneStop <br></br> Help Desk
                                         </span>
                                     </a>
-                                </li>
-                                <li className={styles.welcomeUser}>
+                                </div>
+                                <div className={styles.welcomeUser}>
                                     <>
                                         <Space>
                                             <div className={styles.userAvatar}>
@@ -134,23 +131,26 @@ const HeaderMain = ({ doLogout }) => {
                                             </div>
                                             <div className={styles.userText}>
                                                 <div>John Smith</div>
-                                                <span className={styles.userServiceArea}>+91-9865443234</span>
-                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                    <a className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                        <Space>
-                                                            <DownOutlined />
-                                                        </Space>
-                                                    </a>
-                                                </Dropdown>
+                                                <span className={styles.userServiceArea}>
+                                                    +91-9865443234
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                        <a className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                            <Space>
+                                                                <DownOutlined />
+                                                            </Space>
+                                                        </a>
+                                                    </Dropdown>
+                                                </span>
                                             </div>
                                         </Space>
                                     </>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </Col>
             </Row>
+            <div style={{ clear: 'both' }}></div>
         </div>
     );
 };

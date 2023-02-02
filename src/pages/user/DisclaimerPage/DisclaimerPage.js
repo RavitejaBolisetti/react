@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Col, Row } from 'antd';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import styles from './ProfilePage.module.css';
+import styles from './DisclaimerPage.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -19,12 +19,12 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-const ProfilePageBase = (props) => {
+const DisclaimerPageBase = (props) => {
     return (
         <Row>
-            <Col>Coming Soon!</Col>
+            <Col>Coming Soon! </Col>
         </Row>
     );
 };
 
-export const ProfilePage = connect(mapStateToProps, null)(withLayoutMaster(ProfilePageBase));
+export const DisclaimerPage = connect(mapStateToProps, null)(withLayoutMaster(DisclaimerPageBase));
