@@ -1,21 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ConfigProvider } from 'antd';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import Login from 'components/Auth/Login/Login';
-import { ROUTING_DASHBOARD } from 'constants/routing';
+// import { ROUTING_HOME, ROUTING_DASHBOARD } from 'constants/routing';
 
 export const LoginPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if (userData) {
-            navigate(ROUTING_DASHBOARD);
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // useEffect(() => {
+    //     isLoggedIn ? navigate(ROUTING_DASHBOARD) : navigate(ROUTING_HOME);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isLoggedIn]);
 
     return (
         <>

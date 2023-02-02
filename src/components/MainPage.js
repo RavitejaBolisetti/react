@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { withSpinner } from './withSpinner';
@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 
 import { AuthenticatedUserPage } from 'pages/routing/AuthenticatedUserPage';
 import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';
+import { useNavigate } from 'react-router-dom';
+import { ROUTING_DASHBOARD, ROUTING_HOME, ROUTING_LOGIN } from 'constants/routing';
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
@@ -24,8 +26,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MainPageBase = ({ isLoggedIn, doLogout }) => {
-    const isLogged = false;
-    return <div style={{ height: '100%' }}>{isLogged ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // isLoggedIn ? navigate(ROUTING_DASHBOARD) : navigate(ROUTING_HOME);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoggedIn]);
+
+    return <div style={{ height: '100%' }}>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
 };
 
 const MainPageWithSpinner = withSpinner(MainPageBase);

@@ -2,6 +2,10 @@
     line-height: 50px;
 }
 
+:global .ant-layout .ant-layout-header {
+    height: auto;
+}
+
 .headerLeft {
     padding-left: 30px;
 }
@@ -12,7 +16,6 @@
 
 .userText {
     float: right;
-    /* margin: 10px 0 0 4px !important; */
     padding-top: 16px;
     color: #0B0B0C;
     line-height: 20px;
@@ -40,10 +43,6 @@
     color: #ea3434;
 }
 
-/* :global .ant-dropdown .ant-dropdown-menu {
-    margin-left: 50px;
-} */
-
 :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
     text-decoration: none;
 }
@@ -64,10 +63,6 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
 }
-
-/* .navbarExpand .navbarNav {
-    flex-direction: row;
-} */
 
 .navbarExpand .navbarNav .navLink {
     padding-left: 20px;
@@ -93,9 +88,48 @@
 
 .welcomeUser .navLink {
     color: #0B0B0C;
-    padding: 5px !important;
+    padding: 1px !important;
+    float: right;
+}
+
+.welcomeUser .userServiceArea {
+    float: right;
 }
 
 .welcomeUser .navLink:hover {
     color: #ea3434 !important;
+}
+
+.floatLeft {
+    float: inline-start;
+}
+
+@media (max-width: 576px) {
+    .headerLeft {
+        padding-left: 10px;
+    }
+
+    .userAvatar {
+        padding-top: 8px;
+    }
+
+    .userText {
+        float: right;
+        padding-top: 13px;
+        font-weight: 500;
+    }
+
+    .headerRight {
+        padding-right: 10px;
+        padding-top: 10px;
+        float: none;
+    }
+
+    .navbarNav {
+        justify-content: space-between;
+    }
+
+    .helpLineText {
+        display: none;
+    }
 }

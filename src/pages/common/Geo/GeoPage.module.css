@@ -1,56 +1,60 @@
 .container {
-    padding: 20px;
+  padding: 20px;
 }
 
 .headerContainer {
-    clear: both;
-    border-bottom: dashed 1px #a5b5c2;
-    margin-bottom: 30px;
+  clear: both;
+  border-bottom: dashed 1px #a5b5c2;
+  margin-bottom: 30px;
 }
+
 .headingGradient {
-    padding-bottom: 14px;
-    border-radius: 5px;
-    border: 0px;
-    border-bottom: 4px solid;
-    border-image: linear-gradient(to right, #efa3a3, #cac9ee);
-    border-image-slice: 1;
-    text-decoration: none;
-    margin-bottom: 30px;
-    color: #0b0b0c;
-    font-size: 20px;
+  padding-bottom: 14px;
+  border-radius: 5px;
+  border: 0px;
+  border-bottom: 4px solid;
+  border-image: linear-gradient(to right, #efa3a3, #cac9ee);
+  border-image-slice: 1;
+  text-decoration: none;
+  margin-bottom: 30px;
+  color: #0b0b0c;
+  font-size: 20px;
 }
+
 .pageHeaderNameSection {
-    border-bottom: 1px solid #dedede;
-    padding: 0px;
-    margin: 0 0 20px 0;
-}
-.mb10 {
-    margin-bottom: 20px;
+  border-bottom: 1px solid #dedede;
+  padding: 0px;
+  margin: 0 0 20px 0;
 }
 
 .mb10 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.mb10 {
+  margin-bottom: 20px;
 }
 
 .floatRight {
-    float: right;
+  float: right;
 }
+
 .btnOutline {
-    border: 1px solid #ff3e5b;
-    border-radius: 3px;
-    position: relative;
-    padding: 18px 36px;
-    margin: 4px 1px;
-    font-size: 12px;
-    color: #ff3e5b;
-    line-height: 2px;
-    background-color: #fff;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0;
-    will-change: box-shadow, transform;
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    float: right;
+  border: 1px solid #ff3e5b;
+  border-radius: 3px;
+  position: relative;
+  padding: 18px 36px;
+  margin: 4px 1px;
+  font-size: 12px;
+  color: #ff3e5b;
+  line-height: 2px;
+  background-color: #fff;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  float: right;
 }
 
 .btnOutline:hover,
@@ -59,90 +63,102 @@
 .btnOutline.active,
 .btnOutline:active:focus,
 .btnOutline.active:hover {
-    background-color: #ff3e5b;
-    color: #ffffff;
+  background-color: #ff3e5b;
+  color: #ffffff;
 }
 
 :global .ant-btn-default {
-    border-color: #d9d9d9;
+  border-color: #d9d9d9;
 }
 
 :global :where(.css-dev-only-do-not-override-aprs5d).ant-tree {
-    background: #f4f4f4;
+  background: #f4f4f4;
 }
+
 :global :where(.css-dev-only-do-not-override-aprs5d).ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 4px;
-    box-shadow: none;
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-radius: 4px;
+  box-shadow: none;
 }
+
 :global :where(.css-dev-only-do-not-override-aprs5d).ant-form-vertical .ant-form-item-label {
-    margin: 0;
-    padding: 0px;
+  margin: 0;
+  padding: 0px;
 }
+
 :global :where(.css-dev-only-do-not-override-aprs5d).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-    width: 100%;
-    height: 36px;
-    padding: 0 11px;
+  width: 100%;
+  height: 36px;
+  padding: 0 11px;
 }
+
 .inputBox {
-    border-radius: 4px;
-    height: 36px;
+  border-radius: 4px;
+  height: 36px;
 }
+
 .treemenu {
-    margin: 24px 0px;
-    padding-left: 25px;
-    padding-bottom: 0px;
-    line-height: 2em;
-    list-style: none;
-    background-color: transparent;
-    color: #342c2c;
+  margin: 24px 0px;
+  padding-left: 25px;
+  padding-bottom: 0px;
+  line-height: 2em;
+  list-style: none;
+  background-color: transparent;
+  color: #342c2c;
 }
 
 :global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
+  align-items: flex-start;
+  margin-bottom: 50px;
 }
+
 :global .ant-modal .ant-modal-content {
-    position: relative;
-    background-color: #ffffff;
-    background-clip: padding-box;
-    border: 0;
-    border-radius: 8px;
-    box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    pointer-events: auto;
-    padding: 20px 24px;
-    max-height: 300px;
-    overflow-y: scroll;
+  position: relative;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+  pointer-events: auto;
+  padding: 20px 24px;
+  max-height: 300px;
+  overflow-y: scroll;
 }
+
 .leftpanel {
-    padding: 0.8em 5.8em 0.8em 0.5em;
-    width: 99%;
-    background: #f4f4f4;
-    margin-left: 8px;
-    box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
-    border-radius: 10px;
-    margin-bottom: 100px;
-    height: 300px;
-    overflow-y: scroll;
-    white-space: nowrap;
-    margin-top: 30px;
+  padding: 0.8em 5.8em 0.8em 0.5em;
+  width: 99%;
+  background: #f4f4f4;
+  margin-left: 8px;
+  box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
+  border-radius: 10px;
+  margin-bottom: 100px;
+  height: 300px;
+  overflow-y: scroll;
+  white-space: nowrap;
+  margin-top: 30px;
 }
+
 .ant-input-group-wrapper {
-    vertical-align: inherit;
-    margin-top: 13px;
+  vertical-align: inherit;
+  margin-top: 13px;
 }
+
 .outer {
-    transition: max-width 1s;
+  transition: max-width 1s;
 }
+
 :global .ant-tree {
-    background: transparent;
+  background: transparent;
 }
+
 @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    :global .ant-input-group {
-        width: auto;
-    }
+
+  /* For mobile phones: */
+  :global .ant-input-group {
+    width: auto;
+  }
 }
