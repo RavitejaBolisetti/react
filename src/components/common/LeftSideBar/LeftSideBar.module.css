@@ -1,0 +1,191 @@
+:global .ant-layout .ant-layout-sider-trigger {
+  position: fixed;
+  width: 24px !important;
+  top: 3px;
+  z-index: 1;
+  height: 48px;
+  color: #ea2929;
+  line-height: 48px;
+  text-align: center;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.customSider {
+  overflow: 'auto';
+  height: '100vh';
+  position: 'fixed';
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: '#ffffff';
+}
+
+.logoContainer {
+  padding: 0px 10px;
+}
+
+:global .ant-input-group-wrapper {
+  vertical-align: inherit;
+}
+
+.brandLink {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  padding: 0.8125rem 0.5rem;
+  transition: width 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+.brandLink .brandImage {
+  /* float: left; */
+  line-height: .18;
+  margin-left: 6px;
+  margin-right: .5rem;
+  /* margin-top: -3px; */
+  /* margin-bottom: 15px; */
+  max-height: 44px;
+  width: auto;
+}
+
+:global .ant-layout .ant-layout-sider-trigger {
+  position: absolute;
+  width: 0px !important;
+  top: 25px;
+  z-index: 1;
+  /* height: 48px; */
+  color: #ea2929;
+  font-size: 20px;
+  /* line-height: 48px; */
+  text-align: center;
+  /* background: #f4f4f4; */
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* icon for collapse position when not collapsed */
+:global .ant-layout .ant-layout-sider-trigger .anticon-left {
+  position: absolute;
+  left: 208px;
+}
+
+/* icon for collapse position when collapsed */
+:global .ant-layout .ant-layout-sider-trigger .anticon-right {
+  position: absolute;
+  left: 55px;
+}
+
+/* background color of the menu list & sub-menu list */
+:global .ant-menu-light {
+  background-color: transparent;
+}
+
+:global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background-color: transparent;
+  padding-left: 17px !important;
+}
+
+/* changes on menu list items on hover */
+:global .ant-menu-submenu-title:hover {
+  background-color: transparent !important;
+  color: #ea2929 !important;
+}
+
+:global .ant-menu-item:not(.ant-menu-item-selected):hover {
+  background-color: #ffffff !important;
+  color: #ea2929 !important;
+}
+
+/* changes on menu list items on select/visited/focus */
+:global .ant-menu-light .ant-menu-item-selected {
+  background-color: #ffffff;
+}
+
+/* right border on menu list */
+:global .ant-menu-light.ant-menu-root.ant-menu-inline,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical {
+  border-inline-end: none;
+  overflow-y: scroll;
+  min-height: 74vh;
+}
+
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  background-color: #F4F4F4;
+}
+
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
+  width: 5px;
+  background-color: #F4F4F4;
+}
+
+:global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
+  background-color: #ea3434;
+  /* border: 2px solid ; */
+}
+
+:global .ant-menu-light.ant-menu-root.ant-menu-inline,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical {
+  border-inline-end: none;
+  overflow-y: scroll;
+  max-height: 74vh;
+}
+
+/* font-family & size for left-menu text */
+:global .ant-menu {
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+/* font-family & size for sub-menu in left-menu text */
+:global .ant-menu .ant-menu-sub {
+  font-family: sans-serif;
+  font-size: 14px;
+  padding-left: 8px !important;
+}
+
+/* font-size for icons in left-menu text */
+:global .ant-menu .ant-menu-submenu .ant-menu-item-icon,
+:global .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title .ant-menu-item-icon,
+:global .ant-menu .ant-menu-item .ant-menu-item-icon,
+:global .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title .ant-menu-item-icon {
+  font-size: 20px;
+}
+
+/* border color on input search in left-menu */
+:global .ant-input-affix-wrapper,
+:global .ant-btn-default {
+  border-color: #56606a;
+}
+
+:global .ant-btn.ant-btn-icon-only {
+  width: 40px;
+}
+
+:global :where(.css-dev-only-do-not-override-aprs5d).ant-input-search .ant-input:hover,
+:global :where(.css-dev-only-do-not-override-aprs5d).ant-input-search .ant-input:focus {
+  border-color: #0458f7;
+}
+
+.changeTheme {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 18px;
+  font-size: 16px;
+  bottom: 0;
+  position: absolute;
+  background-color: #DEDEDE;
+  color: #000;
+  width: 100%;
+  cursor: pointer;
+}
+
+.changeTheme:hover {
+  color: #ea2929 !important;
+}
