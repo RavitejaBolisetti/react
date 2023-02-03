@@ -18,3 +18,4 @@ export const ROUTING_USER_TERM = ROUTING_HOME.concat('term-of-Use');
 export const ROUTING_USER_ABOUT = ROUTING_HOME.concat('about-us');
 export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
 export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
+export const ROUTING_COMMON_HIERARCHY = ROUTING_COMMON.concat('hierarchy');

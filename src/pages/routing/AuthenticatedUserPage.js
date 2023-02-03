@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, ProductHierarchyPage } from 'pages/common';
+import { GeoPage, ProductHierarchyPage, HierarchyAttribute } from 'pages/common';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -20,6 +20,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
+
+            <Route path={routing.ROUTING_COMMON_HIERARCHY} element={<HierarchyAttribute />} exact />   
 
             <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />
