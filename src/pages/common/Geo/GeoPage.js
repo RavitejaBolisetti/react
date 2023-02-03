@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Select, Switch, Space } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -12,6 +12,7 @@ import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
 import { BsStar, BsStarFill } from 'react-icons/bs';
+import { createBrowserHistory } from 'history';
 
 const { Option } = Select;
 
@@ -30,6 +31,8 @@ const mapStateToProps = (state) => {
 };
 
 export const GeoPageBase = () => {
+    const history = createBrowserHistory();
+
     const [activate, setActivate] = useState({
         Attribute: '',
         Parent: '',
@@ -86,9 +89,18 @@ export const GeoPageBase = () => {
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
-                    <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
-                        Exit
-                    </Button>
+                    {/* <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
+                        
+                    </Button> */}
+                    <div className={styles.buttonContainer}>
+                        <Button
+                            danger
+                            onclick={() => history.back(-1)}
+                        >
+                            <FaLongArrowAltLeft className={styles.buttonIcon} />
+                            Exit
+                        </Button>
+                    </div>
                 </Col>
             </Row>
 
@@ -112,7 +124,7 @@ export const GeoPageBase = () => {
                         <Form layout="vertical">
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item name="Attribute Level" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                                    <Form.Item name="Attribute Level" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                                         <Select>
                                             <Option value="Continent">Continent</Option>
                                             <Option value="Country">Country</Option>
@@ -203,7 +215,7 @@ export const GeoPageBase = () => {
                             </Row>
 
                             <Row gutter={20}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={styles.buttonContainer}>
                                         <Button danger>
                                             <FaEdit className={styles.buttonIcon} />
@@ -216,43 +228,22 @@ export const GeoPageBase = () => {
                                         </Button>
 
                                         <Button danger>
-                                            <FaEdit className={styles.buttonIcon} />
+                                            <FaUserFriends className={styles.buttonIcon} />
                                             Add Sibling
                                         </Button>
 
                                         <Button danger>
-                                            <FaUserFriends className={styles.buttonIcon} />
+                                            <FaSave className={styles.buttonIcon} />
                                             Save
                                         </Button>
 
                                         <Button danger>
-                                            <FaUserFriends className={styles.buttonIcon} />
+                                            <FaUndo className={styles.buttonIcon} />
                                             Reset
                                         </Button>
                                     </div>
                                 </Col>
                             </Row>
-
-                            {/* <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaEdit className="fas fa-edit mrr5" />
-                                        Edit
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserPlus className="fa-solid fa-user-plus mrr5" />
-                                        Add Child
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                        Add Sibling
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                        Save
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                        Reset
-                                    </button> */}
                         </Form>
                     </div>
                 </Col>
