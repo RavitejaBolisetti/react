@@ -193,7 +193,6 @@
 :global .ant-select-selector {
   width: 100%;
   height: 36px;
-  padding: 0 11px;
 }
 
 :global .ant-tree .ant-tree-list-holder-inner {
