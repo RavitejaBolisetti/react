@@ -5,7 +5,7 @@
 .scrollTreeData {
     width: 100%;
     overflow: scroll;
-    height: 51vh;
+    height: 53vh;
 }
 .scrollTreeData::-webkit-scrollbar-track {
     background-color: #F4F4F4;
@@ -20,6 +20,17 @@
     border-radius: 10px;
 }
 
+/* .modalView{
+    border:solid 2px red;
+} */
+.modalView .scrollTreeData::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+.modalView .scrollTreeData::-webkit-scrollbar {
+    width: 5px;
+    height: 0px;
+    background-color: #fff;
+}
 :global .ant-tree .ant-tree-node-content-wrapper {
     line-height: 24px;
     -webkit-user-select: none;

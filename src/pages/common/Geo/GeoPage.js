@@ -111,7 +111,7 @@ export const GeoPageBase = () => {
                 </Col>
 
                 <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}>
-                    <div className="right col">
+                    <div className="right col" style={{ padding: '0' }}>
                         <Form layout="vertical">
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -127,7 +127,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                     <Form.Item
                                         label="Parent"
                                         name="Parent"
@@ -181,7 +181,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                     <Form.Item
                                         label="Name"
                                         name="Name"

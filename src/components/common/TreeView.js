@@ -126,7 +126,7 @@ const getParentKey = (key, tree) => {
     return parentKey;
 };
 
-const TreeView = () => {
+const TreeView = ({isOpenInModal}) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -187,10 +187,11 @@ const TreeView = () => {
         return loop(defaultData);
     }, [searchValue]);
     return (
-        <div >
+        <div className={isOpenInModal ? styles.modalView : ''}>
             <Search
                 style={{
-                    marginBottom: 8, 'width': '100%'
+                    marginBottom: 8,
+                    width: '100%',
                 }}
                 placeholder="Search"
                 onChange={onChange}
