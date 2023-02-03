@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
@@ -20,12 +20,13 @@ import { connect } from 'react-redux';
 
 import styles from './LeftSideBar.module.css';
 import { bindActionCreators } from 'redux';
-import { Link, useLocation } from 'react-router-dom';
 import * as routing from 'constants/routing';
 
 // import data from './LeftSideBar.module.css';
 import menuData from 'constants/menuSample.json';
 import customMenuLink from 'utils/customMenuLink';
+import { getMenuValue } from 'utils/menuKey';
+import { MenuConstant } from 'constants/MenuConstant';
 
 const { Search } = Input;
 const { Sider } = Layout;
@@ -64,46 +65,48 @@ function getItem(label, key, icon, children, type) {
     };
 }
 
-const items = [
-    getItem('Favorites', 'sub1', <BsFillStarFill fontSize={20} />, [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]),
-    getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
-        getItem('Product Master', '2'),
-        getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
-        getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
-        getItem('Role Management', '5'),
-        getItem('User Self Registration', '6'),
-        getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
-        getItem('Dealer Hirerachy', '8'),
-        getItem('Dealer & Product Mapping', '9'),
-        getItem('Terms & Conditions- Dealer', '10'),
-        getItem('Terms & Conditions- Manufacturer', '11'),
-        getItem('Document Type Master', '12'),
-        getItem('Manufacturer Hirerachy', '13'),
-        getItem('Document Search', '14'),
-        getItem('Branch & Dealer Mapping', '15'),
-        getItem('Vehicle Details', '16'),
-        getItem('Application Master', '17'),
-    ]),
-
-    getItem('DBP', 'sub4', <FaAddressBook />, [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
-
-    getItem('Financial Accounting', 'sub5', <BiRupee fontSize={20} />),
-    getItem('HR & MLES', 'sub6', <GrGroup fontSize={20} />),
-    getItem('Sales', 'sub7', <AiFillCar fontSize={20} />, [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-    getItem('Services', 'sub8', <FaWrench fontSize={20} />),
-];
-
-
 const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
+
+    const items = [];
+
+    // items.push(getItem(<Link to={getMenuValue(MenuConstant, menu.menuId, 'link')} menu.menuTitle, menu.menuId, getMenuValue(MenuConstant, menu.menuId, 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
+    items.push(getItem(getMenuValue(MenuConstant, 'FAVS', 'title'), 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
+
+    items.push(
+        getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
+            getItem('Product Master', '2'),
+            getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
+            getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
+            getItem('Role Management', '5'),
+            getItem('User Self Registration', '6'),
+            getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
+            getItem('Dealer Hirerachy', '8'),
+            getItem('Dealer & Product Mapping', '9'),
+            getItem('Terms & Conditions- Dealer', '10'),
+            getItem('Terms & Conditions- Manufacturer', '11'),
+            getItem('Document Type Master', '12'),
+            getItem('Manufacturer Hirerachy', '13'),
+            getItem('Document Search', '14'),
+            getItem('Branch & Dealer Mapping', '15'),
+            getItem('Vehicle Details', '16'),
+            getItem('Application Master', '17'),
+        ]),
+
+        getItem('DBP', 'sub4', <FaAddressBook />, [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+
+        getItem('Financial Accounting', 'sub5', <BiRupee fontSize={20} />),
+        getItem('HR & MLES', 'sub6', <GrGroup fontSize={20} />),
+        getItem('Sales', 'sub7', <AiFillCar fontSize={20} />, [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
+        getItem('Services', 'sub8', <FaWrench fontSize={20} />)
+    );
 
     // const items = [];
     // menuData?.data.map((menu) => {
     //     const subMenu = [];
     //     // if (menu.subMenu) {
     //     menu?.subMenu.map((menu) => {
-
 
     //         subMenu.push(
     //             customMenuLink({
@@ -114,7 +117,6 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     //                 children: subMenu,
     //             })
     //         );
-
 
     //         subMenu.push(
     //             customMenuLink({
@@ -166,7 +168,7 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
         <>
             <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%)' }}>
                 <div className={styles.logoContainer}>
-                    <Link to={ROUTING_DASHBOARD1}>
+                    <Link to={routing.ROUTING_DASHBOARD}>
                         <a href="javascripy::void" className={styles.brandLink}>
                             {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
                         </a>
@@ -176,7 +178,7 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
                     </Link>
                 </div>
 
-                <Menu mode="inline" inlineIndent={15} defaultSelectedKeys={[routing.ROUTING_COMMON_GEO]}   collapsed={collapsed.toString()} items={items} />
+                <Menu mode="inline" inlineIndent={15} defaultSelectedKeys={[routing.ROUTING_COMMON_GEO]} collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme}>
                     {theme === 'dark' ? (

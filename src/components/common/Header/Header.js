@@ -52,7 +52,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-    console.log('dss', token, userId);
+    // console.log('dss', token, userId);
 
     useEffect(() => {
         if (!isDataLoaded) {
