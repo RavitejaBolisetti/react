@@ -8,7 +8,7 @@ import TreeView from 'components/common/TreeView';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-
+import styles from './ProductMaster.module.css';
 
 const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -18,6 +18,7 @@ const onChange = (pagination, filters, sorter, extra) => {
 const { TextArea } = Input;
 const { Panel } = Collapse;
 export const ProductMasterPageBase = () => {
+    const [name,setName]=useState("name");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [attri, setAttri] = useState(false);
     const [bottom, setBottom] = useState('bottomLeft');
@@ -64,6 +65,7 @@ export const ProductMasterPageBase = () => {
             width: "10%",
         },
 
+
         {
             title: 'Attribute Name',
             dataIndex: 'AttributeName',
@@ -72,11 +74,16 @@ export const ProductMasterPageBase = () => {
         },
         {
             title: 'Attribute Value',
-            render: () => <Input placeholder="Dummy Place Holder" readonly="true" />,
+            render: (key) => <Form form={form}><Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
+                <Input placeholder={key} />
+            </Form.Item></Form>,
+            // dataIndex: 'AttributeValue',
             dataIndex: 'AttributeValue',
 
             width: "30%",
         },
+     
+
 
 
 
@@ -90,68 +97,69 @@ export const ProductMasterPageBase = () => {
         {
             Srl: "1.",
             AttributeName: "	Product Division",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeValue: "Enter Product Division"
+            
 
 
         },
         {
             Srl: "2.",
             AttributeName: "Model Group",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeValue: "Enter Model Group "
 
         },
         {
             Srl: "3.",
             AttributeName: "Sales Model Group",
-            AttributeValue: "Mahindra Scorpio",
+            AttributeValue: "Enter Sales Model Group",
 
         },
         {
             Srl: "4.",
             AttributeName: "Model Family",
-            AttributeValue: "Mahindra Scorpio",
+            AttributeValue: "Enter Model Family",
 
 
         },
         {
             Srl: "5.",
             AttributeName: "Vehicle Type",
-            AttributeValue: "Mahindra Scorpio",
+            AttributeValue: "Enter Vehicle Type",
 
 
         },
         {
             Srl: "6.",
             AttributeName: "Vehicle Category",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeValue: "Enter Vehicle Category"
 
 
         },
         {
             Srl: "7.",
             AttributeName: "Body Type",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeValue: "Enter Body Type"
 
 
         },
         {
             Srl: "8.",
-            AttributeName: "Vehicle Category",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeName: "Vehicle Category Type",
+            AttributeValue: "Enter Vehicle Category Type"
 
 
         },
         {
             Srl: "9.",
             AttributeName: "Seating Capacity",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeValue: "Enter Seating Capacity"
 
 
         },
         {
             Srl: "10.",
             AttributeName: "Trim Level",
-            AttributeValue: "Mahindra Scorpio"
+            AttributeValue: "Enter Trim Level"
 
 
         },
@@ -167,7 +175,9 @@ export const ProductMasterPageBase = () => {
 
 
     return (
+        
         <>
+        
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className="pageHeaderNameSection">
@@ -229,11 +239,11 @@ export const ProductMasterPageBase = () => {
 
                                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                                 <Space>
-                                                    <Form.Item name="Parent" label="Parent" rules={[validateRequiredInputField('Parent')]}>
+                                                    <Form.Item name="Parent" className={styles.parentInput} label="Parent" rules={[validateRequiredInputField('Parent')]}>
                                                         <Input placeholder="Parent" />
                                                     </Form.Item>
 
-                                                    <Form.Item >
+                                                    <Form.Item className={styles.parentIcon}>
                                                         <Button type="button" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={showModal}>
                                                             <FaSearch />
                                                         </Button>
@@ -318,18 +328,29 @@ export const ProductMasterPageBase = () => {
                                         columns={columns}
                                         dataSource={dataSource}
                                         onChange={onChange}
-                                        pagination={{
-                                            position: [bottom],
-                                            pageSize: 10,
-                                            total: 50
-                                        }}
+                                    pagination={false}
+                                    // {{
+                                    //     position: [bottom],
+                                    //     pageSize: 10,
+                                    //     total: 200
+
+
+                                    // }}
+
                                     // scroll={{
                                     //     x: 300,
                                     //     y: 300,
                                     // }}
                                     />
+                                     <Form><Form.Item> 
+                                        <button type="submit" style={{ marginRight: "right" }}className={"btn btn-outline rightbtn boxShdwNon mrl15"} onClick={onSubmit} expandIconPosition>
+                                        <FaSave className="fa fa-save mrr5"/> Save
+                                    </button> 
+                                     </Form.Item></Form> 
                                 </Panel>
+
                             </Collapse>
+
                         </Col>
                     </Row>
                 </Col>
