@@ -84,7 +84,7 @@ export const GeoPageBase = () => {
             onOk() {
                 navigate(-1) || navigate(ROUTING_DASHBOARD);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
     return (
@@ -145,7 +145,7 @@ export const GeoPageBase = () => {
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16}>
                     <div className="right col" style={{ padding: '0' }}>
                         <Form layout="vertical">
                             <Row gutter={20}>
