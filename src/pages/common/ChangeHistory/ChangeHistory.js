@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'antd';
+import styles from './ChangeHistory.module.css';
+
+import { Col, Row, Table } from 'antd';
+
 const columns = [
     {
-        title: 'Changed/Modified Date',
+        title: 'Changed/Modified Date ',
         dataIndex: 'ChangeDate',
+        ellipsis: false,
         filters: [
             {
                 text: '12/09/2023',
-                value: "12/09/2023",
+                value: '12/09/2023',
             },
-           
         ],
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.ChangeDate.startsWith(value),
-        width: '210px',
+        // sorter: (a, b) => new Date(a.ChangeDate).toLocaleString() - new Date(b.ChangeDate).toLocaleString(),
+        sorter: (a, b) => new Date(a.ChangeDate).valueOf() - new Date(b.ChangeDate),
     },
 
     {
@@ -30,11 +34,12 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeCode.startsWith(value),
-        width: '210px',
+        ellipsis: true,
     },
     {
         title: 'Employee Name',
         dataIndex: 'EmployeeName',
+        ellipsis: true,
         filters: [
             {
                 text: 'Vivek',
@@ -44,9 +49,17 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeName.startsWith(value),
-        width: '210px',
+        sorter: (a, b) => {
+            if (a.EmployeeName > b.EmployeeName) {
+                return 1;
+            } else if (a.EmployeeName < b.EmployeeName) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
+        sortDirections: ['descend', 'ascend'],
     },
-
 
     // {
     //     title: 'Attribute',
@@ -57,6 +70,7 @@ const columns = [
     {
         title: 'Attribute',
         dataIndex: 'Attribute',
+        ellipsis: true,
         filters: [
             {
                 text: 'Attribute 6',
@@ -66,11 +80,21 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Attribute.startsWith(value),
-        width: '210px',
+        sorter: (a, b) => {
+            if (a.Attribute > b.Attribute) {
+                return 1;
+            } else if (a.Attribute < b.Attribute) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
+        sortDirections: ['descend', 'ascend'],
     },
     {
         title: ' Code',
         dataIndex: 'Code',
+        ellipsis: true,
         filters: [
             {
                 text: 'UP',
@@ -80,12 +104,22 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Code.startsWith(value),
-        width: '210px',
+        sorter: (a, b) => {
+            if (a.Code > b.Code) {
+                return 1;
+            } else if (a.Code < b.Code) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
+        sortDirections: ['descend', 'ascend'],
     },
 
     {
         title: 'Parent',
         dataIndex: 'Parent',
+        ellipsis: true,
         filters: [
             {
                 text: 'India',
@@ -95,11 +129,11 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Parent.startsWith(value),
-        width: '210px',
     },
     {
         title: 'Short Description',
         dataIndex: 'ShortDescription',
+        ellipsis: true,
         filters: [
             {
                 text: 'SMT 7STR',
@@ -109,11 +143,21 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.ShortDescription.startsWith(value),
-        width: '210px',
+        sorter: (a, b) => {
+            if (a.ShortDescription > b.ShortDescription) {
+                return 1;
+            } else if (a.ShortDescription < b.ShortDescription) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
+        sortDirections: ['descend', 'ascend'],
     },
     {
         title: 'Long Description',
         dataIndex: 'LongDescription',
+        ellipsis: true,
         filters: [
             {
                 text: 'This Smt 7STR..',
@@ -123,11 +167,11 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.LongDescription.startsWith(value),
-        width: '210px',
     },
     {
         title: 'Status',
         dataIndex: 'Status',
+        ellipsis: true,
         filters: [
             {
                 text: 'Active',
@@ -141,69 +185,97 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Status.startsWith(value),
-        width: '210px',
     },
-    
-
 ];
 const data = [
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Inactive",
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek Aggarwal',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
     },
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Active",
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
     },
     {
-        ChangeDate:"12/09/2022",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Inactive",
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 6',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
     },
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Active",
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
     },
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19489",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Active",
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'IMG 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
     },
-    
-    
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
 ];
 const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
@@ -211,18 +283,27 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 export const ChangeHistory = () => {
     return (
-        <Table
-            columns={columns}
-            dataSource={data}
-            pagination={{
-                position: ['bottomLeft'],
-                total: 500,
-            }}
-            onChange={onChange}
-            scroll={{
-                x: 1300,
-                y: 300,
-              }}
-        />
+        <>
+            <Row gutter={40}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h5>Change History</h5>
+                </Col>
+            </Row>
+            <Row gutter={40}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Table
+                        columns={columns}
+                        dataSource={data}
+                        pagination={{
+                            position: ['bottomLeft'],
+                        }}
+                        onChange={onChange}
+                        scroll={{
+                            x: 'auto',
+                        }}
+                    />
+                </Col>
+            </Row>
+        </>
     );
 };
