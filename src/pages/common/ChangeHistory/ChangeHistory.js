@@ -8,7 +8,7 @@ const columns = [
     {
         title: 'Changed/Modified Date ',
         dataIndex: 'ChangeDate',
-        width: "200px",
+        ellipsis: false,
         filters: [
             {
                 text: '12/09/2023',
@@ -35,11 +35,12 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeCode.startsWith(value),
-        width: 100,
+        ellipsis: true,
     },
     {
         title: 'Employee Name',
         dataIndex: 'EmployeeName',
+        ellipsis: true,
         filters: [
             {
                 text: 'Vivek',
@@ -76,6 +77,7 @@ const columns = [
     {
         title: 'Attribute',
         dataIndex: 'Attribute',
+        ellipsis: true,
         filters: [
             {
                 text: 'Attribute 6',
@@ -105,6 +107,7 @@ const columns = [
     {
         title: ' Code',
         dataIndex: 'Code',
+        ellipsis: true,
         filters: [
             {
                 text: 'UP',
@@ -135,6 +138,7 @@ const columns = [
     {
         title: 'Parent',
         dataIndex: 'Parent',
+        ellipsis: true,
         filters: [
             {
                 text: 'India',
@@ -149,6 +153,7 @@ const columns = [
     {
         title: 'Short Description',
         dataIndex: 'ShortDescription',
+        ellipsis: true,
         filters: [
             {
                 text: 'SMT 7STR',
@@ -178,6 +183,7 @@ const columns = [
     {
         title: 'Long Description',
         dataIndex: 'LongDescription',
+        ellipsis: true,
         filters: [
             {
                 text: 'This Smt 7STR..',
@@ -193,6 +199,7 @@ const columns = [
     {
         title: 'Status',
         dataIndex: 'Status',
+        ellipsis: true,
         filters: [
             {
                 text: 'Active',
