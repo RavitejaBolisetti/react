@@ -82,10 +82,9 @@ export const GeoPageBase = () => {
             cancelText: 'No',
             cancelType: 'danger',
             onOk() {
-                navigate(-1) || navigate(ROUTING_DASHBOARD)
+                navigate(-1) || navigate(ROUTING_DASHBOARD);
             },
-            onCancel() {
-            },
+            onCancel() {},
         });
     };
     return (
@@ -121,28 +120,30 @@ export const GeoPageBase = () => {
 
             {/* <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    <div>
-                        <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
-                    </div>
+                    
                 </Col>
             </Row> */}
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={1} lg={1} xl={1} xxl={1}>
+                {/* <Col xs={24} sm={24} md={1} lg={1} xl={1} xxl={1}>
                     <div className={styles.treeCollapsibleButton}>
                         <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
                     </div>
-                </Col>
-                {isTreeViewVisible && (
-                    <Col xs={24} sm={24} md={11} lg={7} xl={7} xxl={7} className={styles.treeMenuLeft}>
-                        {isTreeViewVisible ? (
-                            <div className={styles.leftpanel}>
+                </Col> */}
+
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                    <div className={styles.leftpanel}>
+                        <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
+                            {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+                        </div>
+                        <div className={styles.treeViewContainer}>
+                            {isTreeViewVisible ? (
                                 <div className={styles.treemenu}>
                                     <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                 </div>
-                            </div>
-                        ) : undefined}
-                    </Col>
-                )}
+                            ) : undefined}
+                        </div>
+                    </div>
+                </Col>
 
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
                     <div className="right col" style={{ padding: '0' }}>

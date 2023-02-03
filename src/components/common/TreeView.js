@@ -1,5 +1,4 @@
-import { CarryOutOutlined, CheckOutlined, FormOutlined } from '@ant-design/icons';
-import { Select, Switch, Tree, Input } from 'antd';
+import { Tree, Input } from 'antd';
 import { useState, useMemo } from 'react';
 import styles from './TreeView.module.css';
 
@@ -11,11 +10,11 @@ const treeData = [
         key: '1-0',
         children: [
             {
-                title: 'Germany Germany Germany Germany ',
+                title: 'Germany',
                 key: '1-0-0-0',
                 children: [
                     {
-                        title: 'Berlin Berlin Berlin Berlin Berlin',
+                        title: 'Berlin',
                         key: '1-0-0-0-0',
                     },
                     {
