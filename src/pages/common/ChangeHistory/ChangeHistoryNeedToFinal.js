@@ -3,11 +3,86 @@ import React, { useState } from 'react';
 import styles from './ChangeHistory.module.css';
 
 import { Table } from 'antd';
+import moment from 'moment';
 
-const sortDateFn = (a, b) => new Date(a.ChangeDate).valueOf() - new Date(b.ChangeDate);
+
+const sortDateFn = (a, b) => moment(a.ChangeDate, "DD-MM-YYYY") - moment(b.ChangeDate, "DD-MM-YYYY");
+const generalsorter= (a,b) => 
+{
+    if(a.EmployeeName!==undefined)
+    {
+        if (a.EmployeeName > b.EmployeeName) 
+        {
+            return 1;
+        } 
+        else if (a.EmployeeName < b.EmployeeName) 
+        {
+            return -1;
+        } 
+        else {
+            return 0;
+        }
+    }
+    else if(a.Code!==undefined)
+    {
+        if (a.Code > b.Code) 
+        {
+            return 1;
+        } 
+        else if (a.Code < b.Code) 
+        {
+            return -1;
+        } 
+        else {
+            return 0;
+        }
+    }
+   else if(a.Attribute!==undefined)
+   {
+    if (a.Attribute > b.Attribute) 
+        {
+            return 1;
+        } 
+        else if (a.Attribute < b.Attribute) 
+        {
+            return -1;
+        } 
+        else {
+            return 0;
+        }
+   }
+   else if(a.ShortDescription!==undefined)
+   {
+    if (a.ShortDescription > b.ShortDescription) 
+        {
+            return 1;
+        } 
+        else if (a.Attribute < b.Attribute) 
+        {
+            return -1;
+        } 
+        else {
+            return 0;
+        }
+   }
+   else
+   {
+    if (a.LongDescription > b.LongDescription) 
+        {
+            return 1;
+        } 
+        else if (a.LongDescription < b.LongDescription) 
+        {
+            return -1;
+        } 
+        else {
+            return 0;
+        }
+   }
+}
 const onFilterFn = (value, record) => record.ChangeDate.startsWith(value);
 
-const tblPrepareColumns = ({ title, dataIndex, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = false, sortFn = undefined }) => {
+const tblPrepareColumns = ({ title, dataIndex, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined }) => {
     return {
         title,
         dataIndex,
@@ -32,6 +107,9 @@ tableColumn.push(
                 value: '12/09/2023',
             },
         ],
+        sortFn:sortDateFn,
+        onFilterFn:onFilterFn,
+
     })
 );
 
@@ -45,153 +123,117 @@ tableColumn.push(
                 value: '19489',
             },
         ],
+        onFilter:onFilterFn,
     })
 );
 
-tableColumn.push([
+tableColumn.push(
+    tblPrepareColumns(
     {
         title: 'Employee Name',
         dataIndex: 'EmployeeName',
-        ellipsis: true,
+        
         filters: [
             {
                 text: 'Vivek',
                 value: 'Vivek',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.EmployeeName.startsWith(value),
-        sorter: (a, b) => {
-            if (a.EmployeeName > b.EmployeeName) {
-                return 1;
-            } else if (a.EmployeeName < b.EmployeeName) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-        width: 100,
-    },
+        sortFn:generalsorter,
+        onFilter:onFilterFn,
+    })
+);
 
-    // {
-    //     title: 'Attribute',
-    //     dataIndex: 'Attribute',
-    //     sorter: (a, b) => a.age - b.age,
-    //     width: '30%',
-    // },
-    {
-        title: 'Attribute',
+tableColumn.push(
+    tblPrepareColumns(
+        {
+            title: 'Attribute',
         dataIndex: 'Attribute',
-        ellipsis: true,
         filters: [
             {
                 text: 'Attribute 6',
                 value: 'Attribute 6',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Attribute.startsWith(value),
-        sorter: (a, b) => {
-            if (a.Attribute > b.Attribute) {
-                return 1;
-            } else if (a.Attribute < b.Attribute) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-        width: 100,
-    },
-    {
-        title: ' Code',
-        dataIndex: 'Code',
-        ellipsis: true,
-        filters: [
-            {
-                text: 'UP',
-                value: 'UP',
-            },
-        ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Code.startsWith(value),
-        sorter: (a, b) => {
-            if (a.Code > b.Code) {
-                return 1;
-            } else if (a.Code < b.Code) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-        width: 100,
-    },
-
-    {
-        title: 'Parent',
+        sortFn:generalsorter,
+        onFilter:onFilterFn,
+        }
+    )
+);
+tableColumn.push(
+    tblPrepareColumns(
+        {
+            title: 'Code',
+            dataIndex: 'Code',
+           
+            filters: [
+                {
+                    text: 'UP',
+                    value: 'UP',
+                },
+            ],
+            sortFn:generalsorter,
+            onFilter:onFilterFn,
+        }
+    )
+);
+tableColumn.push(
+    tblPrepareColumns(
+        {
+            title: 'Parent',
         dataIndex: 'Parent',
-        ellipsis: true,
+      
         filters: [
             {
                 text: 'India',
                 value: 'India',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Parent.startsWith(value),
-        width: 100,
-    },
-    {
-        title: 'Short Description',
+        onFilter:onFilterFn,
+        }
+    )
+);
+tableColumn.push(
+    tblPrepareColumns(
+        {
+            title: 'Short Description',
         dataIndex: 'ShortDescription',
-        ellipsis: true,
+       
         filters: [
             {
                 text: 'SMT 7STR',
                 value: 'SMT 7STR',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.ShortDescription.startsWith(value),
-        sorter: (a, b) => {
-            if (a.ShortDescription > b.ShortDescription) {
-                return 1;
-            } else if (a.ShortDescription < b.ShortDescription) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-        width: 100,
-    },
-    {
-        title: 'Long Description',
+        sortFn:generalsorter,
+        onFilter:onFilterFn,
+        }
+    )
+);
+
+tableColumn.push(
+    tblPrepareColumns(
+        {
+            title: 'Long Description',
         dataIndex: 'LongDescription',
-        ellipsis: true,
+       
         filters: [
             {
                 text: 'This Smt 7STR..',
                 value: 'This Smt 7STR variant comes..',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.LongDescription.startsWith(value),
-
-        width: 100,
-    },
-    {
-        title: 'Status',
+        sortFn:generalsorter,
+        onFilter:onFilterFn,
+        }
+    )
+);
+tableColumn.push(
+    tblPrepareColumns(
+        {
+            title: 'Status',
         dataIndex: 'Status',
-        ellipsis: false,
+       
         filters: [
             {
                 text: 'Active',
@@ -202,18 +244,16 @@ tableColumn.push([
                 value: 'Inactive',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Status.startsWith(value),
-        width: 300,
-    },
-]);
+        }
+    )
+);
+
 const data = [
     {
         ChangeDate: '12/09/2023',
         EmployeeCode: '19489',
         EmployeeName: 'Vivek Aggarwal',
-        Attribute: 'Attribute 6',
+        Attribute: 'Attribute 5',
         Code: 'UP',
         Parent: 'India',
         ShortDescription: 'SMT 7STR',
@@ -224,7 +264,7 @@ const data = [
         ChangeDate: '11/09/2023',
         EmployeeCode: '19488',
         EmployeeName: 'vivek Sharma',
-        Attribute: 'Attribute 6',
+        Attribute: 'Attribute 3',
         Code: 'UP',
         Parent: 'India',
         ShortDescription: 'SMT 7STR',
@@ -235,7 +275,7 @@ const data = [
         ChangeDate: '14/09/2022',
         EmployeeCode: '19489',
         EmployeeName: 'Bishnoi Agasd',
-        Attribute: 'Attribute 6',
+        Attribute: 'Attribute 2',
         Code: 'MP',
         Parent: 'India',
         ShortDescription: 'SMT 7STR',

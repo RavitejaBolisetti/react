@@ -6,7 +6,7 @@ import { Table } from 'antd';
 
 const columns = [
     {
-        title: 'Changed/Modified Date ',
+        title: 'Changed/Modified Date',
         dataIndex: 'ChangeDate',
         ellipsis: false,
         filters: [
