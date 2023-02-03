@@ -167,6 +167,11 @@
   transition: max-width 1s;
 }
 
+:global .ant-form-item .ant-form-item-explain-error {
+  color: #ff4d4f;
+  margin-top: 7px;
+}
+
 :global .ant-btn-default {
   border-color: #d9d9d9;
 }

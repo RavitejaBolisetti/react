@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
@@ -15,21 +15,51 @@ import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
+import { headerDataActions } from 'store/actions/common/header';
 
 const { confirm } = Modal;
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+    const {
+        auth: { token, userId },
+        common: {
+            Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
+        },
+    } = state;
+
+    return {
+        loginUserData,
+        isDataLoaded,
+        token,
+        userId,
+        isLoading,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
             doLogout: doLogoutAPI,
+            fetchData: headerDataActions.fetchData,
+            listShowLoading: headerDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-const HeaderMain = ({ doLogout }) => {
+const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, token, userId }) => {
+    const { firstName = '', lastName = '', mobileNo, notificationCount } = loginUserData;
+
+    const fullName = firstName.concat(lastName ? ' ' + lastName : '');
+    const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
+  
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchData({ setIsLoading: listShowLoading, token, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
+
     const showConfirm = () => {
         confirm({
             title: 'Are you sure to logout?',
@@ -39,7 +69,7 @@ const HeaderMain = ({ doLogout }) => {
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                doLogout({ successAction: () => {} });
+                doLogout({ successAction: () => {}, userId: 'user1' });
             },
             onCancel() {
                 console.log('Cancel');
@@ -127,7 +157,7 @@ const HeaderMain = ({ doLogout }) => {
                             <div className={styles.navbarNav}>
                                 <div className={styles.floatLeft}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
-                                        <Badge pill size="small" count={11}>
+                                        <Badge pill size="small" count={notificationCount}>
                                             <FaRegBell size={20} />
                                         </Badge>
                                     </a>
@@ -144,14 +174,14 @@ const HeaderMain = ({ doLogout }) => {
                                     <>
                                         <Space>
                                             <div className={styles.userAvatar}>
-                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>JS</Avatar>
+                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
                                             </div>
                                             <div className={styles.userText}>
-                                                <div>John Smith</div>
+                                                <div>{fullName}</div>
                                                 <span className={styles.userServiceArea}>
-                                                    +91-9865443234
+                                                    {mobileNo}
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                        <a className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                        <a href="/" className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>
                                                                 <DownOutlined />
                                                             </Space>
