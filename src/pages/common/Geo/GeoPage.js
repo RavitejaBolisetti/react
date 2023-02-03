@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select, Switch, Space } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft,FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
+import { Button, Col, Input, Form, Row, Select, Switch, Space, Modal } from 'antd';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -12,9 +13,11 @@ import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
 import { BsStar, BsStarFill } from 'react-icons/bs';
-import { createBrowserHistory } from 'history';
+import { useNavigate } from 'react-router-dom';
+import { ROUTING_DASHBOARD } from 'constants/routing';
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -31,7 +34,7 @@ const mapStateToProps = (state) => {
 };
 
 export const GeoPageBase = () => {
-    const history = createBrowserHistory();
+    const navigate = useNavigate();
 
     const [activate, setActivate] = useState({
         Attribute: '',
@@ -47,6 +50,18 @@ export const GeoPageBase = () => {
         });
     };
 
+    const [form] = Form.useForm();
+    const [open, setOpen] = useState(false);
+    const [isFavourite, setFavourite] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(false);
+    const [antdForm, setAntdForm] = useState(false);
+    const [formContent, setFormContent] = useState({
+        Attribute: '',
+        Parent: '',
+        Code: '',
+        Name: '',
+    });
+
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -57,6 +72,22 @@ export const GeoPageBase = () => {
         editName: false,
     });
 
+    const showConfirm = () => {
+        confirm({
+            title: 'Are you sure to leave this page?',
+            icon: <ExclamationCircleFilled />,
+            content: 'If you leave this page, All unsaved data will be lost',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                navigate(-1) || navigate(ROUTING_DASHBOARD)
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
@@ -74,9 +105,7 @@ export const GeoPageBase = () => {
                         
                     </Button> */}
                     <div className={styles.buttonContainer}>
-                        <Button
-                            danger
-                        >
+                        <Button danger onClick={showConfirm}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
                         </Button>
