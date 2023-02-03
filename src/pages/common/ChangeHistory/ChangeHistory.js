@@ -65,7 +65,7 @@ const columns = [
         }
         },
         sortDirections: ['descend', 'ascend'],
-        width: 100,
+        
     },
 
     // {
@@ -102,7 +102,7 @@ const columns = [
         }
     },
         sortDirections: ['descend', 'ascend'],
-        width: 100,
+        
     },
     {
         title: ' Code',
@@ -132,7 +132,7 @@ const columns = [
         }
     },
         sortDirections: ['descend', 'ascend'],
-        width: 100,
+      
     },
 
     {
@@ -148,7 +148,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Parent.startsWith(value),
-        width: 100,
+      
     },
     {
         title: 'Short Description',
@@ -178,7 +178,7 @@ const columns = [
         }
     },
         sortDirections: ['descend', 'ascend'],
-        width: 100,
+       
     },
     {
         title: 'Long Description',
@@ -194,7 +194,7 @@ const columns = [
         filterSearch: true,
         onFilter: (value, record) => record.LongDescription.startsWith(value),
   
-        width: 100,
+        
     },
     {
         title: 'Status',
@@ -213,7 +213,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Status.startsWith(value),
-        width: 100,
+       
     },
 ];
 const data = [
