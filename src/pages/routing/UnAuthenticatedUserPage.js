@@ -17,6 +17,7 @@ import { DisclaimerPage } from 'pages/user/DisclaimerPage';
 import { ContactPage } from 'pages/user/ContactPage';
 import { BranchPage } from 'pages/user/BranchPage';
 import { FinancialPage } from 'pages/user/FinancialPage';
+import { GeoPage, ProductHierarchyPage } from 'pages/common';
 
 export const UnAuthenticatedUserPage = () => {
     return (
@@ -27,6 +28,7 @@ export const UnAuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
+            <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
             <Route path={routing.ROUTING_USER_MAHINDRA} element={<MahindraPage />} exact />

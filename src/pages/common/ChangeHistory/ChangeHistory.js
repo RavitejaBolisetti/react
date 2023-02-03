@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styles from './ChangeHistory.module.css';
 
@@ -6,8 +6,9 @@ import { Table } from 'antd';
 
 const columns = [
     {
-        title: 'Changed/Modified Date',
+        title: 'Changed/Modified Date ',
         dataIndex: 'ChangeDate',
+        width: "200px",
         filters: [
             {
                 text: '12/09/2023',
@@ -19,7 +20,7 @@ const columns = [
         onFilter: (value, record) => record.ChangeDate.startsWith(value),
         // sorter: (a, b) => new Date(a.ChangeDate).toLocaleString() - new Date(b.ChangeDate).toLocaleString(),
         sorter: (a, b) => new Date(a.ChangeDate).valueOf() - new Date(b.ChangeDate),
-        width: '210px',
+      
     },
 
     {
@@ -34,7 +35,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeCode.startsWith(value),
-        width: '210px',
+        width: 100,
     },
     {
         title: 'Employee Name',
@@ -48,9 +49,22 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeName.startsWith(value),
-        sorter: (a, b) => a.EmployeeName.length - b.EmployeeName.length,
+        sorter: (a, b) => {
+            if(a.EmployeeName > b.EmployeeName)
+        {
+            return 1;
+        }
+        else if(a.EmployeeName < b.EmployeeName)
+        {
+            return -1;
+         }
+         else
+        {
+            return 0;
+        }
+        },
         sortDirections: ['descend', 'ascend'],
-        width: '210px',
+        width: 100,
     },
 
     // {
@@ -71,9 +85,22 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Attribute.startsWith(value),
-        sorter: (a, b) => a.Attribute.length - b.Attribute.length,
+        sorter: (a, b) => {
+            if(a.Attribute > b.Attribute)
+        {
+            return 1;
+        }
+        else if(a.Attribute < b.Attribute)
+        {
+            return -1;
+         }
+         else
+        {
+            return 0;
+        }
+    },
         sortDirections: ['descend', 'ascend'],
-        width: '210px',
+        width: 100,
     },
     {
         title: ' Code',
@@ -87,9 +114,22 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Code.startsWith(value),
-        sorter: (a, b) => a.Code.length - b.Code.length,
+        sorter: (a, b) => {
+            if(a.Code > b.Code)
+        {
+            return 1;
+        }
+        else if(a.Code < b.Code)
+        {
+            return -1;
+         }
+         else
+        {
+            return 0;
+        }
+    },
         sortDirections: ['descend', 'ascend'],
-        width: '210px',
+        width: 100,
     },
 
     {
@@ -104,7 +144,7 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Parent.startsWith(value),
-        width: '210px',
+        width: 100,
     },
     {
         title: 'Short Description',
@@ -118,7 +158,22 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.ShortDescription.startsWith(value),
-        width: '210px',
+        sorter: (a, b) => {
+            if(a.ShortDescription > b.ShortDescription)
+        {
+            return 1;
+        }
+        else if(a.ShortDescription < b.ShortDescription)
+        {
+            return -1;
+         }
+         else
+        {
+            return 0;
+        }
+    },
+        sortDirections: ['descend', 'ascend'],
+        width: 100,
     },
     {
         title: 'Long Description',
@@ -133,7 +188,7 @@ const columns = [
         filterSearch: true,
         onFilter: (value, record) => record.LongDescription.startsWith(value),
   
-        width: '210px',
+        width: 100,
     },
     {
         title: 'Status',
@@ -151,14 +206,14 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Status.startsWith(value),
-        width: '210px',
+        width: 100,
     },
 ];
 const data = [
     {
         ChangeDate: '12/09/2023',
         EmployeeCode: '19489',
-        EmployeeName: 'Vivek',
+        EmployeeName: 'Vivek Aggarwal',
         Attribute: 'Attribute 6',
         Code: 'UP',
         Parent: 'India',
@@ -169,7 +224,7 @@ const data = [
     {
         ChangeDate:"11/09/2023",
         EmployeeCode:"19488",
-        EmployeeName:"Agarwal",
+        EmployeeName:"vivek Sharma",
         Attribute:"Attribute 6",
         Code:"UP",
         Parent:"India",
@@ -180,7 +235,7 @@ const data = [
     {
         ChangeDate:"14/09/2022",
         EmployeeCode:"19489",
-        EmployeeName:"Bishnoi",
+        EmployeeName:"Bishnoi Agasd",
         Attribute:"Attribute 6",
         Code:"MP",
         Parent:"India",
@@ -206,7 +261,7 @@ const data = [
         Attribute: 'Attribute 6',
         Code: 'UP',
         Parent: 'India',
-        ShortDescription: 'SMT 7STR',
+        ShortDescription: 'IMG 7STR',
         LongDescription: 'This Smt 7STR variant comes..',
         Status: 'Inactive',
     },
