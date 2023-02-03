@@ -9,6 +9,7 @@ import TreeView from 'components/common/TreeView';
 import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import styles from './ProductHierarchyPage.module.css';
 import { connect } from 'react-redux';
+import { ChangeHistoryNeedToFinal } from '../ChangeHistory/ChangeHistoryNeedToFinal';
 
 const { TextArea } = Input;
 
@@ -79,7 +80,7 @@ export const ProductHierarchyBase = () => {
                                 </div>
                             </div>
 
-                            <div className="leftbar">
+                            <div className="leftbar" style={{ display: 'none' }}>
                                 <div className="row">
                                     <div>
                                         {/* <button className="semicircle">
@@ -199,7 +200,8 @@ export const ProductHierarchyBase = () => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <ChangeHistory />
+                                    <ChangeHistoryNeedToFinal />
+                                    {/* <ChangeHistory /> */}
                                 </Col>
                             </Row>
                         </div>
