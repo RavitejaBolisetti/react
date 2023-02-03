@@ -90,7 +90,7 @@ export const ProductHierarchyBase = () => {
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
                     <div className={styles.buttonContainer}>
-                        <Button danger onClick={showConfirm} onClick={toggleHistory}>
+                        <Button danger  onClick={toggleHistory}>
                             <FaHistory className={styles.buttonIcon} />
                             Change History
                         </Button>

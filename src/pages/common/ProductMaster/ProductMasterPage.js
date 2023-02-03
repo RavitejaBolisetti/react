@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Table, Switch, Form, Select, Row, Col, Button, Modal, Input, Space, Collapse } from 'antd';
-import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 
 import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
-import TreeView from 'components/common/TreeView';
+import { FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft, FaHistory } from 'react-icons/fa';
+import { BsStar, BsStarFill } from 'react-icons/bs';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
+import TreeView from 'components/common/TreeView';
+import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
+
+import MetaTag from 'utils/MetaTag';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import styles from './ProductMaster.module.css';
+import styles from '../Common.module.css';
+import { ROUTING_DASHBOARD } from 'constants/routing';
+import ParentHierarchy from '../Geo/ParentHierarchy';
+
 
 const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
 };
 
-
+const { confirm } = Modal;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 export const ProductMasterPageBase = () => {
-    const [name,setName]=useState("name");
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [attri, setAttri] = useState(false);
     const [bottom, setBottom] = useState('bottomLeft');
     const [form] = Form.useForm();
+    const navigate = useNavigate();
+
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isFavourite, setFavourite] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const handleattri = () => {
         setAttri(!attri);
         console.log(attri);
     }
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    
     const onSubmit = (e) => {
 
         form.validateFields()
@@ -82,7 +88,7 @@ export const ProductMasterPageBase = () => {
 
             width: "30%",
         },
-     
+
 
 
 
@@ -98,7 +104,7 @@ export const ProductMasterPageBase = () => {
             Srl: "1.",
             AttributeName: "	Product Division",
             AttributeValue: "Enter Product Division"
-            
+
 
 
         },
@@ -173,50 +179,87 @@ export const ProductMasterPageBase = () => {
 
     };
 
+    const showConfirm = () => {
+        confirm({
+            title: 'Are you sure to leave this page?',
+            icon: <ExclamationCircleFilled />,
+            content: 'If you leave this page, All unsaved data will be lost',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            cancelType: 'danger',
+            onOk() {
+                navigate(-1) || navigate(ROUTING_DASHBOARD);
+            },
+            onCancel() {},
+        });
+    };
+    const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
+
+    const handleFavouriteClick = () => setFavourite(!isFavourite);
+    const toggleHistory = (e) => {
+        setChangeHistoryVisible(!isChangeHistoryVisible);
+    };
 
     return (
-        
+
         <>
-        
+
+            <MetaTag metaTitle={'Product Master'} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className="pageHeaderNameSection">
-                        <div className="row">
-                            <div className="col-md-6">
-                                <span
-                                    className="headingGradient mrl-15"
-                                // style="margin-left: -15px;"
-                                >
-                                    <span className="innerheading">Product Hierarchy</span>
-                                </span>
-                            </div>
-                            <div className="col-md-6">
-                                <button type="button" className="btn btn-outline mr0 mrl15 fr boxShdwNon">
-                                    Exit
-                                </button>
-                                <button type="button" className="btn btn-outline fr mr0 boxShdwNon">
-                                    {/* <i className="fa fa-history mrr5" aria-hidden="true"></i> */}
-                                    Change History
-                                </button>
-                            </div>
+                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                    <Space>
+                        <div>
+                            <span className={styles.headingGradient}>Product Master</span>
                         </div>
+                        <div className={styles.favIconHeading}>{isFavourite ? <BsStarFill color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsStar size={18} onClick={handleFavouriteClick} />}</div>
+                    </Space>
+                </Col>
+
+                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
+                    <div className={styles.buttonContainer}>
+                        <Button danger onClick={toggleHistory}>
+                            <FaHistory className={styles.buttonIcon} />
+                            Change History
+                        </Button>
+                        <Button danger onClick={showConfirm}>
+                            <FaLongArrowAltLeft className={styles.buttonIcon} />
+                            Exit
+                        </Button>
                     </div>
                 </Col>
             </Row>
             <Row gutter={20}>
+                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                    <div className={styles.pageHeaderNameSection}></div>
+                </Col>
+            </Row>
+            <Row gutter={20} style={{ marginTop: '-20px' }}>
+                <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
+                    {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+                </div>
+            </Row>
 
-                <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                    <div id="outer" className="leftpanel">
-                        <div id="Inner">
-                            <div className="treemenu mrt30">
-                                <TreeView />
+            <Row gutter={20}>
+                {isTreeViewVisible ? (
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <div className={styles.leftpanel}>
+                            <div className={styles.treeViewContainer}>
+                                <div className={styles.treemenu}>
+                                    <TreeView isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Col>
-                <Col xs={24} sm={16} md={16} lg={16} xl={16}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    </Col>
+                ) : undefined}
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
+                    {isChangeHistoryVisible ? (
+                        <ChangeHistory />
+                    ) : (
+
+                        <div className="right col" style={{ padding: '0' }}>
+                            {/* <Row gutter={20}>
+                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}> */}
                             <Collapse defaultActiveKey={['1']} expandIconPosition="end">
                                 <Panel header="Product Details" key="1">
 
@@ -244,10 +287,10 @@ export const ProductMasterPageBase = () => {
                                                     </Form.Item>
 
                                                     <Form.Item className={styles.parentIcon}>
-                                                        <Button type="button" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={showModal}>
+                                                        <Button type="button" className="btn btn-outline srchbtn mr0 boxShdwNon" >
                                                             <FaSearch />
                                                         </Button>
-                                                        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                                        <Modal title="Basic Modal" open={isModalOpen} >
                                                             <p>Some contents...</p>
                                                             <p>Some contents...</p>
                                                             <p>Some contents...</p>
@@ -309,18 +352,12 @@ export const ProductMasterPageBase = () => {
                                                 </button>
                                             </Col>
                                         </Row>
-                                        {/* <div className="pad7" id="productHierarchy">
-                                                <div className="col-md-12 mrt10"></div>
-                                            </div> */}
+
                                     </Form>
 
 
                                 </Panel>
                             </Collapse>
-                        </Col>
-                    </Row>
-                    <Row gutter={20} style={{ marginTop: '20px' }}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Collapse defaultActiveKey={['1']} expandIconPosition="end">
                                 <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2">
                                     <Table
@@ -328,7 +365,7 @@ export const ProductMasterPageBase = () => {
                                         columns={columns}
                                         dataSource={dataSource}
                                         onChange={onChange}
-                                    pagination={false}
+                                        pagination={false}
                                     // {{
                                     //     position: [bottom],
                                     //     pageSize: 10,
@@ -342,20 +379,19 @@ export const ProductMasterPageBase = () => {
                                     //     y: 300,
                                     // }}
                                     />
-                                     <Form><Form.Item> 
-                                        <button type="submit" style={{ marginRight: "right" }}className={"btn btn-outline rightbtn boxShdwNon mrl15"} onClick={onSubmit} expandIconPosition>
-                                        <FaSave className="fa fa-save mrr5"/> Save
-                                    </button> 
-                                     </Form.Item></Form> 
+                                    <Form><Form.Item>
+                                        <button type="submit" style={{ marginRight: "right" }} className={"btn btn-outline rightbtn boxShdwNon mrl15"} onClick={onSubmit} expandIconPosition>
+                                            <FaSave className="fa fa-save mrr5" /> Save
+                                        </button>
+                                    </Form.Item></Form>
                                 </Panel>
 
                             </Collapse>
-
-                        </Col>
-                    </Row>
+                        </div>
+                    )}
                 </Col>
             </Row>
-
+            <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };
