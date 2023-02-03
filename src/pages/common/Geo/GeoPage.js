@@ -76,6 +76,10 @@ export const GeoPageBase = () => {
     //             console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
     //         });
     // };
+    const handleExitClick = () =>{
+        console.log('Go Back')
+        // history./goBack();
+    }
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
@@ -95,7 +99,7 @@ export const GeoPageBase = () => {
                     <div className={styles.buttonContainer}>
                         <Button
                             danger
-                            onclick={() => history.back(-1)}
+                            onclick={handleExitClick}
                         >
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
