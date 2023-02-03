@@ -80,11 +80,11 @@ export const GeoPageBase = () => {
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
+            cancelType: 'danger',
             onOk() {
                 navigate(-1) || navigate(ROUTING_DASHBOARD)
             },
             onCancel() {
-                console.log('Cancel');
             },
         });
     };
