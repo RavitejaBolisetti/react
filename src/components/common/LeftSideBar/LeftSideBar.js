@@ -72,10 +72,10 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
     const items = [];
 
     // items.push(getItem(<Link to={getMenuValue(MenuConstant, menu.menuId, 'link')} menu.menuTitle, menu.menuId, getMenuValue(MenuConstant, menu.menuId, 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
-    items.push(getItem(getMenuValue(MenuConstant, 'FAVS', 'title'), 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
+    items.push(getItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
 
     items.push(
-        getItem('Common', 'sub2', <FaCreativeCommonsShare fontSize={20} />, [
+        getItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
             getItem('Product Master', '2'),
             getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
             getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
@@ -94,12 +94,12 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
             getItem('Application Master', '17'),
         ]),
 
-        getItem('DBP', 'sub4', <FaAddressBook />, [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+        getItem('DBP', 'DBP',  getMenuValue(MenuConstant, 'DBP', 'icon'), [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
 
-        getItem('Financial Accounting', 'sub5', <BiRupee fontSize={20} />),
-        getItem('HR & MLES', 'sub6', <GrGroup fontSize={20} />),
-        getItem('Sales', 'sub7', <AiFillCar fontSize={20} />, [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-        getItem('Services', 'sub8', <FaWrench fontSize={20} />)
+        getItem('Financial Accounting', 'FINA',  getMenuValue(MenuConstant, 'FINA', 'icon')),
+        getItem('HR & MLES', 'HRS',  getMenuValue(MenuConstant, 'HRS', 'icon')),
+        getItem('Sales', 'SALS',  getMenuValue(MenuConstant, 'SALS', 'icon'), [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
+        getItem('Services', 'SERS',  getMenuValue(MenuConstant, 'SERS', 'icon'))
     );
 
     // const items = [];
