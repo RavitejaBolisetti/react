@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Select, Switch, Space } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft,FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -47,16 +47,7 @@ export const GeoPageBase = () => {
         });
     };
 
-    const [form] = Form.useForm();
-    const [open, setOpen] = useState(false);
-    const [isFavourite, setFavourite] = useState(false);
-    const [antdForm, setAntdForm] = useState(false);
-    const [formContent, setFormContent] = useState({
-        Attribute: '',
-        Parent: '',
-        Code: '',
-        Name: '',
-    });
+    const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
     const [editableFormContent, setEditableFormContent] = useState({
@@ -66,20 +57,6 @@ export const GeoPageBase = () => {
         editName: false,
     });
 
-    // const onSubmit = (e) => {
-    //     console.log('djks');
-    //     form.validateFields()
-    //         .then((err, values) => {
-    //             console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-    //         })
-    //         .catch((errorInfo) => {
-    //             console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-    //         });
-    // };
-    const handleExitClick = () =>{
-        console.log('Go Back')
-        // history./goBack();
-    }
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
@@ -99,7 +76,6 @@ export const GeoPageBase = () => {
                     <div className={styles.buttonContainer}>
                         <Button
                             danger
-                            onclick={handleExitClick}
                         >
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
@@ -115,15 +91,24 @@ export const GeoPageBase = () => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
-                    <div className={styles.leftpanel}>
-                        <div className={styles.treemenu}>
-                            <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
-                        </div>
-                    </div>
+                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                    <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}</span>
                 </Col>
+            </Row>
+            <Row gutter={20}>
+                {isTreeViewVisible && (
+                    <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                        {isTreeViewVisible ? (
+                            <div className={styles.leftpanel}>
+                                <div className={styles.treemenu}>
+                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                </div>
+                            </div>
+                        ) : undefined}
+                    </Col>
+                )}
 
-                <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16}>
                     <div className="right col" style={{ padding: '0' }}>
                         <Form layout="vertical">
                             <Row gutter={20}>
