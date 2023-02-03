@@ -100,9 +100,6 @@ export const GeoPageBase = () => {
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
-                    {/* <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
-                        
-                    </Button> */}
                     <div className={styles.buttonContainer}>
                         <Button danger onClick={showConfirm}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
@@ -111,39 +108,28 @@ export const GeoPageBase = () => {
                     </div>
                 </Col>
             </Row>
-
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
-
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    
-                </Col>
-            </Row> */}
+            <Row gutter={20} style={{marginTop:'-20px'}}>
+                <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
+                    {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+                </div>
+            </Row>
             <Row gutter={20}>
-                {/* <Col xs={24} sm={24} md={1} lg={1} xl={1} xxl={1}>
-                    <div className={styles.treeCollapsibleButton}>
-                        <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
-                    </div>
-                </Col> */}
-
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                    <div className={styles.leftpanel}>
-                        <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
-                            {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
-                        </div>
-                        <div className={styles.treeViewContainer}>
-                            {isTreeViewVisible ? (
+                {isTreeViewVisible ? (
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <div className={styles.leftpanel}>
+                            <div className={styles.treeViewContainer}>
                                 <div className={styles.treemenu}>
                                     <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
                                 </div>
-                            ) : undefined}
+                            </div>
                         </div>
-                    </div>
-                </Col>
+                    </Col>
+                ) : undefined}
 
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
                     <div className="right col" style={{ padding: '0' }}>

@@ -20,7 +20,6 @@ const columns = [
         onFilter: (value, record) => record.ChangeDate.startsWith(value),
         // sorter: (a, b) => new Date(a.ChangeDate).toLocaleString() - new Date(b.ChangeDate).toLocaleString(),
         sorter: (a, b) => new Date(a.ChangeDate).valueOf() - new Date(b.ChangeDate),
-      
     },
 
     {
@@ -51,21 +50,15 @@ const columns = [
         filterSearch: true,
         onFilter: (value, record) => record.EmployeeName.startsWith(value),
         sorter: (a, b) => {
-            if(a.EmployeeName > b.EmployeeName)
-        {
-            return 1;
-        }
-        else if(a.EmployeeName < b.EmployeeName)
-        {
-            return -1;
-         }
-         else
-        {
-            return 0;
-        }
+            if (a.EmployeeName > b.EmployeeName) {
+                return 1;
+            } else if (a.EmployeeName < b.EmployeeName) {
+                return -1;
+            } else {
+                return 0;
+            }
         },
         sortDirections: ['descend', 'ascend'],
-        
     },
 
     // {
@@ -88,21 +81,15 @@ const columns = [
         filterSearch: true,
         onFilter: (value, record) => record.Attribute.startsWith(value),
         sorter: (a, b) => {
-            if(a.Attribute > b.Attribute)
-        {
-            return 1;
-        }
-        else if(a.Attribute < b.Attribute)
-        {
-            return -1;
-         }
-         else
-        {
-            return 0;
-        }
-    },
+            if (a.Attribute > b.Attribute) {
+                return 1;
+            } else if (a.Attribute < b.Attribute) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
         sortDirections: ['descend', 'ascend'],
-        
     },
     {
         title: ' Code',
@@ -118,21 +105,15 @@ const columns = [
         filterSearch: true,
         onFilter: (value, record) => record.Code.startsWith(value),
         sorter: (a, b) => {
-            if(a.Code > b.Code)
-        {
-            return 1;
-        }
-        else if(a.Code < b.Code)
-        {
-            return -1;
-         }
-         else
-        {
-            return 0;
-        }
-    },
+            if (a.Code > b.Code) {
+                return 1;
+            } else if (a.Code < b.Code) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
         sortDirections: ['descend', 'ascend'],
-      
     },
 
     {
@@ -148,7 +129,6 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Parent.startsWith(value),
-      
     },
     {
         title: 'Short Description',
@@ -164,21 +144,15 @@ const columns = [
         filterSearch: true,
         onFilter: (value, record) => record.ShortDescription.startsWith(value),
         sorter: (a, b) => {
-            if(a.ShortDescription > b.ShortDescription)
-        {
-            return 1;
-        }
-        else if(a.ShortDescription < b.ShortDescription)
-        {
-            return -1;
-         }
-         else
-        {
-            return 0;
-        }
-    },
+            if (a.ShortDescription > b.ShortDescription) {
+                return 1;
+            } else if (a.ShortDescription < b.ShortDescription) {
+                return -1;
+            } else {
+                return 0;
+            }
+        },
         sortDirections: ['descend', 'ascend'],
-       
     },
     {
         title: 'Long Description',
@@ -193,8 +167,6 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.LongDescription.startsWith(value),
-  
-        
     },
     {
         title: 'Status',
@@ -213,7 +185,6 @@ const columns = [
         filterMode: 'tree',
         filterSearch: true,
         onFilter: (value, record) => record.Status.startsWith(value),
-       
     },
 ];
 const data = [
@@ -229,26 +200,26 @@ const data = [
         Status: 'Inactive',
     },
     {
-        ChangeDate:"11/09/2023",
-        EmployeeCode:"19488",
-        EmployeeName:"vivek Sharma",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Active",
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
     },
     {
-        ChangeDate:"14/09/2022",
-        EmployeeCode:"19489",
-        EmployeeName:"Bishnoi Agasd",
-        Attribute:"Attribute 6",
-        Code:"MP",
-        Parent:"India",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Inactive",
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 6',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
     },
     {
         ChangeDate: '12/09/2023',
@@ -284,15 +255,15 @@ const data = [
         Status: 'Active',
     },
     {
-        ChangeDate:"12/09/2023",
-        EmployeeCode:"19484",
-        EmployeeName:"Vivek",
-        Attribute:"Attribute 6",
-        Code:"UP",
-        Parent:"Germany",
-        ShortDescription:"SMT 7STR",
-        LongDescription:"This Smt 7STR variant comes..",
-        Status:"Active",
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
     },
     {
         ChangeDate: '12/09/2023',
@@ -321,8 +292,8 @@ export const ChangeHistory = () => {
             }}
             onChange={onChange}
             scroll={{
-                x:"auto"
-              }}
+                x: 'auto',
+            }}
         />
     );
 };
