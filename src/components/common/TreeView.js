@@ -11,11 +11,11 @@ const treeData = [
         key: '1-0',
         children: [
             {
-                title: 'Germany',
+                title: 'Germany Germany Germany Germany ',
                 key: '1-0-0-0',
                 children: [
                     {
-                        title: 'Berlin',
+                        title: 'Berlin Berlin Berlin Berlin Berlin',
                         key: '1-0-0-0-0',
                     },
                     {
@@ -126,7 +126,7 @@ const getParentKey = (key, tree) => {
     return parentKey;
 };
 
-const TreeView = ({isOpenInModal}) => {
+const TreeView = ({ isOpenInModal }) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -188,14 +188,7 @@ const TreeView = ({isOpenInModal}) => {
     }, [searchValue]);
     return (
         <div className={isOpenInModal ? styles.modalView : ''}>
-            <Search
-                style={{
-                    marginBottom: 8,
-                    width: '100%',
-                }}
-                placeholder="Search"
-                onChange={onChange}
-            />
+            <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
             <div className={styles.scrollTreeData}>
                 <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
             </div>
