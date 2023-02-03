@@ -3,6 +3,7 @@ import { AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE_CLOSE, AUTH_LOGIN_ERROR_CLOSE, A
 const initialState = {
     isLoggedIn: false,
     token: null,
+    userId: undefined,
     isError: false,
     roleRight: {},
     message: '',
@@ -50,7 +51,7 @@ export const auth = (state = initialState, action) => {
             };
         case AUTH_LOGIN_FAILURE:
             return {
-                ...versionData,
+                ...state,
                 isUnauthenticated: false,
                 isLoading: false,
                 isError: false,
