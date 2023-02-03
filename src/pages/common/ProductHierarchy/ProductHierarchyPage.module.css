@@ -2,7 +2,57 @@
     width: 300px
 }
 
-.parentIcon{
-    margin-top:28px;
-    margin-left:-7.5px;
-   }
+.parentIcon {
+    margin-top: 28px;
+    margin-left: -7.5px;
+}
+
+/* Status toggle switch */
+:global .ant-switch {
+    height: 26px;
+    width: 44px;
+}
+
+:global .ant-switch .ant-switch-handle {
+    top: 3px;
+    inset-inline-start: 4px;
+    width: 20px;
+    height: 20px;
+}
+
+:global .ant-switch.ant-switch-checked .ant-switch-handle {
+    inset-inline-start: calc(100% - 24px);
+}
+
+:global .ant-switch .ant-switch-inner {
+    overflow: inherit;
+}
+
+:global .ant-switch-inner .ant-switch-inner-checked {
+    margin-inline-start: 30px;
+    margin-inline-end: -70px;
+}
+
+:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
+    margin-inline-start: 0px;
+    margin-inline-end: -85px;
+    color: #FF3E5B !important;
+}
+
+:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-inline-start: 0px;
+    margin-inline-end: -95px;
+    color: transparent !important;
+}
+
+:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-inline-start: 0px;
+    margin-inline-end: -95px;
+    color: #FF3E5B !important;
+}
+
+:global .ant-switch .ant-switch-inner .ant-switch-inner-checked {
+    margin-inline-start: 0px;
+    margin-inline-end: -85px;
+    color: transparent !important;
+}
