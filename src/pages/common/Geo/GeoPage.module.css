@@ -29,7 +29,6 @@
   cursor: pointer;
 }
 
-
 .pageHeaderNameSection {
   border-bottom: 1px solid #dedede;
   padding: 0px;
@@ -72,6 +71,32 @@
 .exitButton.active,
 .exitButton:active:focus,
 .exitButton.active:hover {
+  background-color: #ff3e5b;
+  color: #ffffff !important;
+}
+
+.treeCollapsibleButton {
+  border: 1px solid #ff3e5b;
+  border-radius: 3px;
+  position: relative;
+  z-index: 10;
+  padding: 5px;
+  margin-top: 5px;
+  color: #ff3e5b;
+  line-height: 2px;
+  background-color: #ffffff;
+  font-weight: 400;
+  cursor: pointer;
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.treeCollapsibleButton:hover,
+.treeCollapsibleButton:focus,
+.treeCollapsibleButton:active,
+.treeCollapsibleButton.active,
+.treeCollapsibleButton:active:focus,
+.treeCollapsibleButton.active:hover {
   background-color: #ff3e5b;
   color: #ffffff !important;
 }
@@ -151,14 +176,24 @@
   padding: 0.2em;
   width: 99%;
   background: #f4f4f4;
-  margin-left: 8px;
+  /* margin-left: 8px; */
   box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
   border-radius: 10px;
-  margin-bottom: 0px;
+  border-top-left-radius: 0;
+  /* margin-bottom: 0px; */
   height: 66vh;
   /* overflow-y: scroll; */
   white-space: nowrap;
   margin-top: 5px;
+}
+
+/* .paddingRightZero {
+  padding-right: 0 !important;
+} */
+
+.treeMenuLeft {
+  padding-left: 0 !important;
+  margin-left: -10px;
 }
 
 .ant-input-group-wrapper {

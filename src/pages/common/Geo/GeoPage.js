@@ -91,14 +91,21 @@ export const GeoPageBase = () => {
                 </Col>
             </Row>
 
-            <Row gutter={20}>
+            {/* <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}</span>
+                    <div>
+                        <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
+                    </div>
                 </Col>
-            </Row>
+            </Row> */}
             <Row gutter={20}>
+                <Col xs={24} sm={24} md={1} lg={1} xl={1} xxl={1}>
+                    <div className={styles.treeCollapsibleButton}>
+                        <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
+                    </div>
+                </Col>
                 {isTreeViewVisible && (
-                    <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={11} lg={7} xl={7} xxl={7} className={styles.treeMenuLeft}>
                         {isTreeViewVisible ? (
                             <div className={styles.leftpanel}>
                                 <div className={styles.treemenu}>
@@ -109,7 +116,7 @@ export const GeoPageBase = () => {
                     </Col>
                 )}
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
                     <div className="right col" style={{ padding: '0' }}>
                         <Form layout="vertical">
                             <Row gutter={20}>
