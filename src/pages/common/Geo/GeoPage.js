@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select, Switch, Space } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { Button, Col, Input, Form, Row, Select, Switch, Space, Modal } from 'antd';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -11,9 +12,12 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { BsStar } from 'react-icons/bs';
+import { BsStar, BsStarFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { ROUTING_DASHBOARD } from 'constants/routing';
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -30,6 +34,8 @@ const mapStateToProps = (state) => {
 };
 
 export const GeoPageBase = () => {
+    const navigate = useNavigate();
+
     const [activate, setActivate] = useState({
         Attribute: '',
         Parent: '',
@@ -46,6 +52,8 @@ export const GeoPageBase = () => {
 
     const [form] = Form.useForm();
     const [open, setOpen] = useState(false);
+    const [isFavourite, setFavourite] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(false);
     const [antdForm, setAntdForm] = useState(false);
     const [formContent, setFormContent] = useState({
         Attribute: '',
@@ -54,6 +62,9 @@ export const GeoPageBase = () => {
         Name: '',
     });
 
+    const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
+
+    const handleFavouriteClick = () => setFavourite(!isFavourite);
     const [editableFormContent, setEditableFormContent] = useState({
         editAttribute: false,
         editParent: false,
@@ -61,61 +72,85 @@ export const GeoPageBase = () => {
         editName: false,
     });
 
-    // const onSubmit = (e) => {
-    //     console.log('djks');
-    //     form.validateFields()
-    //         .then((err, values) => {
-    //             console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-    //         })
-    //         .catch((errorInfo) => {
-    //             console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-    //         });
-    // };
+    const showConfirm = () => {
+        confirm({
+            title: 'Are you sure to leave this page?',
+            icon: <ExclamationCircleFilled />,
+            content: 'If you leave this page, All unsaved data will be lost',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            cancelType: 'danger',
+            onOk() {
+                navigate(-1) || navigate(ROUTING_DASHBOARD);
+            },
+            onCancel() {},
+        });
+    };
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
-
             <Row gutter={20}>
                 <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>Geographical Hierarchy</span>
                         </div>
-                        <div className={styles.favIconHeading}>
-                            <BsStar size={18} />
-                        </div>
+                        <div className={styles.favIconHeading}>{isFavourite ? <BsStarFill color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsStar size={18} onClick={handleFavouriteClick} />}</div>
                     </Space>
                 </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} >
-                    <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
-                        Exit
-                    </Button>
+                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
+                    {/* <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
+                        
+                    </Button> */}
+                    <div className={styles.buttonContainer}>
+                        <Button danger onClick={showConfirm}>
+                            <FaLongArrowAltLeft className={styles.buttonIcon} />
+                            Exit
+                        </Button>
+                    </div>
                 </Col>
             </Row>
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
+
+            {/* <Row gutter={20}>
+                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                    
+                </Col>
+            </Row> */}
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                {/* <Col xs={24} sm={24} md={1} lg={1} xl={1} xxl={1}>
+                    <div className={styles.treeCollapsibleButton}>
+                        <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
+                    </div>
+                </Col> */}
+
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                     <div className={styles.leftpanel}>
-
-
-                        <div className={styles.treemenu}>
-                            <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                        <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
+                            {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
                         </div>
-
-
+                        <div className={styles.treeViewContainer}>
+                            {isTreeViewVisible ? (
+                                <div className={styles.treemenu}>
+                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                </div>
+                            ) : undefined}
+                        </div>
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}>
-                    <div className="right col">
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
+                    <div className="right col" style={{ padding: '0' }}>
                         <Form layout="vertical">
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item name="Attribute Level" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                                    <Form.Item name="Attribute Level" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                                         <Select>
                                             <Option value="Continent">Continent</Option>
                                             <Option value="Country">Country</Option>
@@ -127,7 +162,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                     <Form.Item
                                         label="Parent"
                                         name="Parent"
@@ -181,7 +216,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                     <Form.Item
                                         label="Name"
                                         name="Name"
@@ -197,31 +232,42 @@ export const GeoPageBase = () => {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item name="Active inactive button" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
                                     </Form.Item>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaEdit className="fas fa-edit mrr5" />
-                                        Edit
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserPlus className="fa-solid fa-user-plus mrr5" />
-                                        Add Child
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                        Add Sibling
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                        Save
-                                    </button>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                        <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                        Reset
-                                    </button>
+                                </Col>
+                            </Row>
+
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={styles.buttonContainer}>
+                                        <Button danger>
+                                            <FaEdit className={styles.buttonIcon} />
+                                            Edit
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaUserPlus className={styles.buttonIcon} />
+                                            Add Child
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaUserFriends className={styles.buttonIcon} />
+                                            Add Sibling
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaSave className={styles.buttonIcon} />
+                                            Save
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaUndo className={styles.buttonIcon} />
+                                            Reset
+                                        </Button>
+                                    </div>
                                 </Col>
                             </Row>
                         </Form>

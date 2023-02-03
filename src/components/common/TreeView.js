@@ -1,5 +1,4 @@
-import { CarryOutOutlined, CheckOutlined, FormOutlined } from '@ant-design/icons';
-import { Select, Switch, Tree, Input } from 'antd';
+import { Tree, Input } from 'antd';
 import { useState, useMemo } from 'react';
 import styles from './TreeView.module.css';
 
@@ -126,7 +125,7 @@ const getParentKey = (key, tree) => {
     return parentKey;
 };
 
-const TreeView = () => {
+const TreeView = ({ isOpenInModal }) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -187,14 +186,8 @@ const TreeView = () => {
         return loop(defaultData);
     }, [searchValue]);
     return (
-        <div >
-            <Search
-                style={{
-                    marginBottom: 8, 'width': '100%'
-                }}
-                placeholder="Search"
-                onChange={onChange}
-            />
+        <div className={isOpenInModal ? styles.modalView : ''}>
+            <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
             <div className={styles.scrollTreeData}>
                 <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
             </div>
