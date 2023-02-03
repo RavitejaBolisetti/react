@@ -5,19 +5,45 @@
 .scrollTreeData {
     width: 100%;
     overflow: scroll;
-    height: 51vh;
+    height: 53vh;
 }
+
 .scrollTreeData::-webkit-scrollbar-track {
     background-color: #F4F4F4;
 }
+
 .scrollTreeData::-webkit-scrollbar {
     width: 5px;
     height: 0px;
     background-color: #F4F4F4;
 }
+
 .scrollTreeData::-webkit-scrollbar-thumb {
     background-color: #ea3434;
     border-radius: 10px;
+}
+
+/* .modalView{
+    border:solid 2px red;
+} */
+.modalView .scrollTreeData::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+.modalView .scrollTreeData::-webkit-scrollbar {
+    width: 5px;
+    height: 0px;
+    background-color: #fff;
+}
+.searchField {
+    padding: 0 8px;
+    margin-bottom: 8px;
+    width: '100%';
+}
+
+:global .ant-form-item-required:before {
+    position: absolute;
+    right: -15px;
+    top: 3px;
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper {
@@ -31,18 +57,21 @@
     padding: 0px 14px;
     padding-bottom: 0px;
 }
+
 :global .ant-tree-show-line .ant-tree-switcher-line-icon {
     vertical-align: -0.28em;
 }
+
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
-:global .ant-tree .ant-tree-checkbox + span.ant-tree-node-selected {
+:global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
     background-color: #ff3e5b;
     color: #ffffff;
     border-radius: 4px;
     padding: 0px 14px;
 }
+
 :global .ant-tree .ant-tree-node-content-wrapper,
-:global .ant-tree .ant-tree-checkbox + span {
+:global .ant-tree .ant-tree-checkbox+span {
     position: relative;
     z-index: auto;
     min-height: 24px;
@@ -52,13 +81,15 @@
     line-height: 24px;
     cursor: pointer;
 }
+
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
-:global .ant-tree .ant-tree-checkbox + span:hover {
+:global .ant-tree .ant-tree-checkbox+span:hover {
     background-color: #ff3e5b;
     color: #ffffff;
     border-radius: 4px;
     padding: 0px 14px;
 }
+
 :global .ant-tree .ant-tree-treenode {
     display: flex;
     align-items: flex-start;
@@ -66,6 +97,7 @@
     outline: none;
     margin-left: 10px;
 }
+
 :global .ant-tree .ant-tree-switcher {
     position: relative;
     flex: none;
@@ -77,7 +109,8 @@
     cursor: pointer;
     user-select: none;
 }
+
 :global .ant-input-search .ant-input:hover,
-:global .ant-input-search .ant-input:focus{
+:global .ant-input-search .ant-input:focus {
     border-color: #e31837;
 }
