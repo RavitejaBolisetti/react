@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Select, Switch, Space } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -11,7 +11,7 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { BsStar } from 'react-icons/bs';
+import { BsStar, BsStarFill } from 'react-icons/bs';
 
 const { Option } = Select;
 
@@ -30,6 +30,18 @@ const mapStateToProps = (state) => {
 };
 
 export const GeoPageBase = () => {
+    const [form] = Form.useForm();
+    const [open, setOpen] = useState(false);
+    const [isFavourite, setFavourite] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [antdForm, setAntdForm] = useState(false);
+    const [formContent, setFormContent] = useState({
+        Attribute: '',
+        Parent: '',
+        Code: '',
+        Name: '',
+    });
+
     const [activate, setActivate] = useState({
         Attribute: '',
         Parent: '',
@@ -44,16 +56,9 @@ export const GeoPageBase = () => {
         });
     };
 
-    const [form] = Form.useForm();
-    const [open, setOpen] = useState(false);
-    const [antdForm, setAntdForm] = useState(false);
-    const [formContent, setFormContent] = useState({
-        Attribute: '',
-        Parent: '',
-        Code: '',
-        Name: '',
-    });
+    const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
+    const handleFavouriteClick = () => setFavourite(!isFavourite);
     const [editableFormContent, setEditableFormContent] = useState({
         editAttribute: false,
         editParent: false,
@@ -61,57 +66,51 @@ export const GeoPageBase = () => {
         editName: false,
     });
 
-    // const onSubmit = (e) => {
-    //     console.log('djks');
-    //     form.validateFields()
-    //         .then((err, values) => {
-    //             console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-    //         })
-    //         .catch((errorInfo) => {
-    //             console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-    //         });
-    // };
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
-
             <Row gutter={20}>
                 <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>Geographical Hierarchy</span>
                         </div>
-                        <div className={styles.favIconHeading}>
-                            <BsStar size={18} />
-                        </div>
+                        <div className={styles.favIconHeading}>{isFavourite ? <BsStarFill color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsStar size={18} onClick={handleFavouriteClick} />}</div>
                     </Space>
                 </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} >
+                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
                     <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
                         Exit
                     </Button>
                 </Col>
             </Row>
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
+
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
-                    <div className={styles.leftpanel}>
-
-
-                        <div className={styles.treemenu}>
-                            <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
-                        </div>
-
-
-                    </div>
+                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                    <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}</span>
                 </Col>
+            </Row>
+            <Row gutter={20}>
+                {isTreeViewVisible && (
+                    <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                        {isTreeViewVisible ? (
+                            <div className={styles.leftpanel}>
+                                <div className={styles.treemenu}>
+                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                </div>
+                            </div>
+                        ) : undefined}
+                    </Col>
+                )}
 
-                <Col xs={24} sm={24} md={16} lg={16} xl={16} xxl={16}>
-                    <div className="right col">
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16}>
+                    <div className="right col" style={{ padding: '0' }}>
                         <Form layout="vertical">
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -127,7 +126,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                     <Form.Item
                                         label="Parent"
                                         name="Parent"
@@ -181,7 +180,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                     <Form.Item
                                         label="Name"
                                         name="Name"
@@ -197,12 +196,46 @@ export const GeoPageBase = () => {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item name="Active inactive button" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
                                     </Form.Item>
-                                    <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
+                                </Col>
+                            </Row>
+
+                            <Row gutter={20}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <div className={styles.buttonContainer}>
+                                        <Button danger>
+                                            <FaEdit className={styles.buttonIcon} />
+                                            Edit
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaUserPlus className={styles.buttonIcon} />
+                                            Add Child
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaEdit className={styles.buttonIcon} />
+                                            Add Sibling
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaUserFriends className={styles.buttonIcon} />
+                                            Save
+                                        </Button>
+
+                                        <Button danger>
+                                            <FaUserFriends className={styles.buttonIcon} />
+                                            Reset
+                                        </Button>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            {/* <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
                                         <FaEdit className="fas fa-edit mrr5" />
                                         Edit
                                     </button>
@@ -221,9 +254,7 @@ export const GeoPageBase = () => {
                                     <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
                                         <FaUserFriends className="fa-solid fa-user-group mrr5" />
                                         Reset
-                                    </button>
-                                </Col>
-                            </Row>
+                                    </button> */}
                         </Form>
                     </div>
                 </Col>

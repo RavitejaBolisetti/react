@@ -24,7 +24,11 @@
 .favIconHeading {
   padding-left: 5px;
   margin-top: 5px;
+  line-height: 4px;
+  padding-top: 3px;
+  cursor: pointer;
 }
+
 
 .pageHeaderNameSection {
   border-bottom: 1px solid #dedede;
@@ -70,6 +74,15 @@
 .exitButton.active:hover {
   background-color: #ff3e5b;
   color: #ffffff !important;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonContainer .buttonIcon {
+  margin-right: 5px;
 }
 
 :global .ant-btn-default {
