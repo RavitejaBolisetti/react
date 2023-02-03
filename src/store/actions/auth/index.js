@@ -77,11 +77,11 @@ export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
     dispatch(logoutClearAllData());
 });
 
-export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) => (dispatch) => {
-    const { successAction } = params;
+export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispatch) => {
+    const { successAction, userId } = params;
     const url = BASE_URL_LOGOUT;
 
-const authPostLogout = () => {
+    const authPostLogout = () => {
         dispatch(logoutClearAllData());
     };
 
