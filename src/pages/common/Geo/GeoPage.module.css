@@ -72,6 +72,15 @@
   color: #ffffff !important;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonContainer .buttonIcon {
+  margin-right: 5px;
+}
+
 :global .ant-btn-default {
   border-color: #d9d9d9;
 }
