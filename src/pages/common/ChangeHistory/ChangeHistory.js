@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import styles from './ChangeHistory.module.css';
 
-import { Table } from 'antd';
+import { Col, Row, Table } from 'antd';
 
 const columns = [
     {
@@ -283,17 +283,27 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 export const ChangeHistory = () => {
     return (
-        <Table
-            columns={columns}
-            dataSource={data}
-            pagination={{
-                position: ['bottomLeft'],
-                total: 500,
-            }}
-            onChange={onChange}
-            scroll={{
-                x: 'auto',
-            }}
-        />
+        <>
+            <Row gutter={40}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h5>Change History</h5>
+                </Col>
+            </Row>
+            <Row gutter={40}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Table
+                        columns={columns}
+                        dataSource={data}
+                        pagination={{
+                            position: ['bottomLeft'],
+                        }}
+                        onChange={onChange}
+                        scroll={{
+                            x: 'auto',
+                        }}
+                    />
+                </Col>
+            </Row>
+        </>
     );
 };

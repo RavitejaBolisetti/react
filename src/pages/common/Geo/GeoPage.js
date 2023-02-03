@@ -51,7 +51,7 @@ export const GeoPageBase = () => {
     };
 
     const [form] = Form.useForm();
-    const [open, setOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(false);
     const [antdForm, setAntdForm] = useState(false);
@@ -87,6 +87,16 @@ export const GeoPageBase = () => {
             onCancel() {},
         });
     };
+
+    const onSubmit = (e) => {
+        form.validateFields()
+            .then((err, values) => {
+                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
+            })
+            .catch((errorInfo) => {
+                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
+            });
+    };
     return (
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
@@ -113,7 +123,7 @@ export const GeoPageBase = () => {
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
-            <Row gutter={20} style={{marginTop:'-20px'}}>
+            <Row gutter={20} style={{ marginTop: '-20px' }}>
                 <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
                     {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
                 </div>
@@ -124,7 +134,7 @@ export const GeoPageBase = () => {
                         <div className={styles.leftpanel}>
                             <div className={styles.treeViewContainer}>
                                 <div className={styles.treemenu}>
-                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                                 </div>
                             </div>
                         </div>
@@ -177,7 +187,7 @@ export const GeoPageBase = () => {
                                                 id="hierarchyChange"
                                                 className="btn btn-outline srchbtn mr0 boxShdwNon"
                                                 // disabled={props.editableFormContent.editParent}
-                                                onClick={() => setOpen(true)}
+                                                onClick={() => setIsModalOpen(true)}
                                             >
                                                 <FaSearch />
                                             </Button>
@@ -244,10 +254,14 @@ export const GeoPageBase = () => {
                                             Add Sibling
                                         </Button>
 
-                                        <Button danger>
+                                        <button type="submit" className="btn btn-outline rightbtn boxShdwNon mrl15" style={{ margin: '0px 0px 3px 0px;' }} onClick={onSubmit}>
+                                            <FaSave className={styles.buttonIcon} /> Save
+                                        </button>
+
+                                        {/* <Button danger>
                                             <FaSave className={styles.buttonIcon} />
                                             Save
-                                        </Button>
+                                        </Button> */}
 
                                         <Button danger>
                                             <FaUndo className={styles.buttonIcon} />
@@ -260,7 +274,7 @@ export const GeoPageBase = () => {
                     </div>
                 </Col>
             </Row>
-            <ParentHierarchy title={'Parent Hierarchy'} setOpen={setOpen} open={open} />
+            <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };
