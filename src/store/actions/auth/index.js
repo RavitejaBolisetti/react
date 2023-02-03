@@ -81,7 +81,7 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) =>
     const { successAction } = params;
     const url = BASE_URL_LOGOUT;
 
-    const authPostLogout = () => {
+const authPostLogout = () => {
         dispatch(logoutClearAllData());
     };
 
@@ -98,7 +98,7 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token, userId) =>
     };
 
     const apiCallParams = {
-        method: 'post',
+        method: 'get',
         url,
         token,
         userId,

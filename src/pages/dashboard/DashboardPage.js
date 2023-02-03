@@ -16,34 +16,35 @@ const mapStateToProps = (state) => {
     const {
         common: {
             LeftSideBar: { collapsed = false },
+            Header: { data: loginUserData = [] },
         },
     } = state;
 
-    let returnValue = {
+    return {
         collapsed,
+        firstName: loginUserData?.firstName,
     };
-
-    return returnValue;
 };
 
-const DashboardPageBase = (props) => {
+const DashboardPageBase = ({ props }) => {
+    const { firstName } = props;
     const onSearch = (value) => console.log(value);
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                   
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                            <div >
-                                <span className={styles.headingGradient}>Welcome back John! </span>
+                            <div>
+                                <span className={styles.headingGradient}>Welcome back {firstName}! </span>
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
                             <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
                         </Col>
                     </Row>
-                    <div className={styles.pageHeaderNameSection}></div> </Col>
+                    <div className={styles.pageHeaderNameSection}></div>{' '}
+                </Col>
             </Row>
 
             {/* <Row gutter={20}>
