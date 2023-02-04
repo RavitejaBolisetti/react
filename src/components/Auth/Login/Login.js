@@ -6,7 +6,7 @@ import { Form, Row, Col, Button } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
-import { doLogin, doCloseLoginError, doCloseLoginFailure, doCloseUnAuthenticatedError } from 'store/actions/auth';
+import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
 import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
@@ -45,13 +45,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     doLogin,
     doCloseLoginError,
-    doCloseLoginFailure,
     doCloseUnAuthenticatedError,
 };
-
-function hideError() {
-    document.getElementById('loginErrorDiv').style.display = 'none';
-}
 
 const Login = (props) => {
     const { doLogin, isError, message } = props;
@@ -67,8 +62,8 @@ const Login = (props) => {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
             doLogin(values, loginPageIsLoading);
-            navigate(ROUTING_DASHBOARD);
-            form.resetFields();
+            // navigate(ROUTING_DASHBOARD);
+            // form.resetFields();
 
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
@@ -183,7 +178,7 @@ const Login = (props) => {
                         </span>
                         {'Error'}
                         {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
-                        <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
+                        <span className="fr hide-btn loginErrorClose" onClick={() => doCloseLoginError()}>
                             <FaTimes size={18} />
                         </span>
                     </h5>
