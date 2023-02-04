@@ -47,15 +47,16 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, token, userId }) => {
-    const { firstName = '', lastName = '', mobileNo, notificationCount } = loginUserData;
+const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, userId }) => {
+    const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
+    const dealerAvatar = 'MA';
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, token, userId });
+            fetchData({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
@@ -136,12 +137,12 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                         <Space>
                             <div className={styles.userAvatar}>
                                 <Avatar shape="square" size="large" style={{ backgroundColor: '#808080', fontSize: '20px', lineHeight: '35px' }}>
-                                    MA
+                                    {dealerAvatar}
                                 </Avatar>
                             </div>
                             <div className={styles.userText}>
-                                <div className={styles.dealerName}>Mahindra Automotive</div>
-                                <span className={styles.userServiceArea}>Vikhroli (W) Mumbai</span>
+                                <div className={styles.dealerName}>{dealerName}</div>
+                                <span className={styles.userServiceArea}>{dealerLocation}</span>
                                 <Dropdown menu={{ items }} trigger={['click']}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
                                         <DownOutlined />

@@ -1,30 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
+import { Input, Menu, Layout } from 'antd';
+import { BsMoon } from 'react-icons/bs';
+import { IoIosDocument } from 'react-icons/io';
 
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 
-import { setCollapsed } from 'store/actions/common/leftsidebar';
-import { ROUTING_DASHBOARD1 } from 'constants/routing';
-
-import { FaCreativeCommonsShare, FaAddressBook, FaWrench } from 'react-icons/fa';
-import { BsFillStarFill, BsMoon } from 'react-icons/bs';
-import { AiFillCar } from 'react-icons/ai';
-import { IoIosDocument } from 'react-icons/io';
-import { BiRupee } from 'react-icons/bi';
-import { GrGroup } from 'react-icons/gr';
-import { MdDarkMode } from 'react-icons/md';
-
-import { Input, Menu, Layout } from 'antd';
-import { connect } from 'react-redux';
+import { menuDataActions } from 'store/actions/data/menu';
 
 import styles from './LeftSideBar.module.css';
-import { bindActionCreators } from 'redux';
 import * as routing from 'constants/routing';
 
-// import data from './LeftSideBar.module.css';
-import menuData from 'constants/menuSample.json';
-import customMenuLink from 'utils/customMenuLink';
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 
@@ -33,15 +22,19 @@ const { Sider } = Layout;
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
+        data: { isLoaded: isDataLoaded = false, data: menuData = [] },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
     let returnValue = {
+        userId,
+        isDataLoaded,
+        menuData,
         collapsed,
     };
-
     return returnValue;
 };
 
@@ -49,7 +42,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            setCollapsed,
+            fetchData: menuDataActions.fetchData,
+            listShowLoading: menuDataActions.listShowLoading,
         },
         dispatch
     ),
@@ -65,7 +59,15 @@ function getItem(label, key, icon, children, type) {
     };
 }
 
-const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, userId, collapsed, setCollapsed }) => {
+    console.log('🚀 ~ file: LeftSideBar.js:63 ~ menuData', menuData);
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchData({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
+
     const location = useLocation();
     const pagePath = location.pathname;
 
@@ -94,12 +96,12 @@ const LeftSideBarMain = ({ collapsed, setCollapsed }) => {
             getItem('Application Master', '17'),
         ]),
 
-        getItem('DBP', 'DBP',  getMenuValue(MenuConstant, 'DBP', 'icon'), [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+        getItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
 
-        getItem('Financial Accounting', 'FINA',  getMenuValue(MenuConstant, 'FINA', 'icon')),
-        getItem('HR & MLES', 'HRS',  getMenuValue(MenuConstant, 'HRS', 'icon')),
-        getItem('Sales', 'SALS',  getMenuValue(MenuConstant, 'SALS', 'icon'), [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-        getItem('Services', 'SERS',  getMenuValue(MenuConstant, 'SERS', 'icon'))
+        getItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
+        getItem('HR & MLES', 'HRS', getMenuValue(MenuConstant, 'HRS', 'icon')),
+        getItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
+        getItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
     );
 
     // const items = [];
