@@ -26,13 +26,15 @@ const onChange = (pagination, filters, sorter, extra) => {
 const { confirm } = Modal;
 const { TextArea } = Input;
 const { Panel } = Collapse;
+
+
 export const ProductMasterPageBase = () => {
     const [attri, setAttri] = useState(false);
     const [bottom, setBottom] = useState('bottomLeft');
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
-    
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -41,7 +43,11 @@ export const ProductMasterPageBase = () => {
         setAttri(!attri);
         console.log(attri);
     }
-    
+    const rendFn = (key) => {
+        return (<Form form={form}><Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
+            <Input placeholder={key} />
+        </Form.Item></Form>)
+    }
     const onSubmit = (e) => {
 
         form.validateFields()
@@ -53,131 +59,70 @@ export const ProductMasterPageBase = () => {
             })
     }
 
-    function getItem(label, key, icon, children, type) {
+
+    const tblPrepareColumns = ({ title, dataIndex }) => {
         return {
-            key,
-            icon,
-            children,
-            label,
-            type,
-        };
+            title,
+            dataIndex,
+            // render:rendFn,
+        }
     }
 
-    const columns = [
+    const tableColumn = [];
+    tableColumn.push(tblPrepareColumns(
         {
             title: 'Srl.',
             dataIndex: 'Srl',
 
-            width: "10%",
-        },
 
 
+        }));
+    tableColumn.push(tblPrepareColumns(
         {
             title: 'Attribute Name',
             dataIndex: 'AttributeName',
 
-            width: "30%",
-        },
+        }));
+    tableColumn.push(tblPrepareColumns(
         {
             title: 'Attribute Value',
-            render: (key) => <Form form={form}><Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
-                <Input placeholder={key} />
-            </Form.Item></Form>,
-            // dataIndex: 'AttributeValue',
             dataIndex: 'AttributeValue',
 
-            width: "30%",
+
+
+        }));
+
+    const dataSource = [
+        {
+            Srl: "1",
+            AttributeName: "Sample",
+            AttributeValue: rendFn('Sample')
+
+
         },
+        {
+            Srl: "2",
+            AttributeName: "Sample",
+            AttributeValue: rendFn('Sample2')
 
 
+        },
+        {
+            Srl: "3",
+            AttributeName: "Sample",
+            AttributeValue: rendFn('Sample3')
 
 
+        },
+        {
+            Srl: "4",
+            AttributeName: "Sample",
+            AttributeValue: rendFn('Sample4')
 
 
-
-
-
+        }
     ];
 
-    const [dataSource, setDataSource] = useState([
-        {
-            Srl: "1.",
-            AttributeName: "	Product Division",
-            AttributeValue: "Enter Product Division"
-
-
-
-        },
-        {
-            Srl: "2.",
-            AttributeName: "Model Group",
-            AttributeValue: "Enter Model Group "
-
-        },
-        {
-            Srl: "3.",
-            AttributeName: "Sales Model Group",
-            AttributeValue: "Enter Sales Model Group",
-
-        },
-        {
-            Srl: "4.",
-            AttributeName: "Model Family",
-            AttributeValue: "Enter Model Family",
-
-
-        },
-        {
-            Srl: "5.",
-            AttributeName: "Vehicle Type",
-            AttributeValue: "Enter Vehicle Type",
-
-
-        },
-        {
-            Srl: "6.",
-            AttributeName: "Vehicle Category",
-            AttributeValue: "Enter Vehicle Category"
-
-
-        },
-        {
-            Srl: "7.",
-            AttributeName: "Body Type",
-            AttributeValue: "Enter Body Type"
-
-
-        },
-        {
-            Srl: "8.",
-            AttributeName: "Vehicle Category Type",
-            AttributeValue: "Enter Vehicle Category Type"
-
-
-        },
-        {
-            Srl: "9.",
-            AttributeName: "Seating Capacity",
-            AttributeValue: "Enter Seating Capacity"
-
-
-        },
-        {
-            Srl: "10.",
-            AttributeName: "Trim Level",
-            AttributeValue: "Enter Trim Level"
-
-
-        },
-
-
-
-    ])
-    const handleDelete = (key) => {
-        const newData = dataSource.filter((item) => item.key !== key);
-        setDataSource(newData);
-
-    };
 
     const showConfirm = () => {
         confirm({
@@ -191,7 +136,7 @@ export const ProductMasterPageBase = () => {
             onOk() {
                 navigate(-1) || navigate(ROUTING_DASHBOARD);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
@@ -280,23 +225,43 @@ export const ProductMasterPageBase = () => {
                                                 </Form.Item>
                                             </Col>
 
-                                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                                <Space>
-                                                    <Form.Item name="Parent" className={styles.parentInput} label="Parent" rules={[validateRequiredInputField('Parent')]}>
-                                                        <Input placeholder="Parent" />
-                                                    </Form.Item>
 
-                                                    <Form.Item className={styles.parentIcon}>
-                                                        <Button type="button" className="btn btn-outline srchbtn mr0 boxShdwNon" >
+
+                                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
+                                                <Form.Item
+                                                    label="Parent"
+                                                    name="Parent"
+                                                    className="control-label-blk"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: 'Please Select a parent !',
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input.Group compact>
+                                                        <Input
+                                                            style={{
+                                                                width: 'calc(100% - 48px)',
+                                                            }}
+                                                            //  readOnly={props.editableFormContent.editParent}
+                                                            name="Parent"
+
+                                                            placeholder="Parent"
+                                                            className={styles.inputBox}
+                                                        />
+
+                                                        <Button
+                                                            type="primary"
+                                                            id="hierarchyChange"
+                                                            className="btn btn-outline srchbtn mr0 boxShdwNon"
+                                                            // disabled={props.editableFormContent.editParent}
+                                                            onClick={() => setIsModalOpen(true)}
+                                                        >
                                                             <FaSearch />
                                                         </Button>
-                                                        <Modal title="Basic Modal" open={isModalOpen} >
-                                                            <p>Some contents...</p>
-                                                            <p>Some contents...</p>
-                                                            <p>Some contents...</p>
-                                                        </Modal>
-                                                    </Form.Item>
-                                                </Space>
+                                                    </Input.Group>
+                                                </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
@@ -362,7 +327,7 @@ export const ProductMasterPageBase = () => {
                                 <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2">
                                     <Table
                                         style={{ fontSize: '40px' }}
-                                        columns={columns}
+                                        columns={tableColumn}
                                         dataSource={dataSource}
                                         onChange={onChange}
                                         pagination={false}
