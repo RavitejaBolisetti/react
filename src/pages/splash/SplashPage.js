@@ -27,7 +27,6 @@ const SplashPageBase = ({ isLoggedIn }) => {
         <>
             {isLoading ? (
                 <div>
-                    <MetaTag metaTitle="Splash" metaDescription="splash" />
                     <Splash />
                 </div>
             ) : (

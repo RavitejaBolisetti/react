@@ -11,7 +11,6 @@ import TreeView from 'components/common/TreeView';
 import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import styles from '../Common.module.css';
 import { connect } from 'react-redux';
-import MetaTag from 'utils/MetaTag';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
@@ -78,7 +77,6 @@ export const ProductHierarchyBase = () => {
 
     return (
         <>
-            <MetaTag metaTitle={'Product Hierarchy'} />
             <Row gutter={20}>
                 <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
                     <Space>

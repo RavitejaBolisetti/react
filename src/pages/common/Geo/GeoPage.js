@@ -6,7 +6,6 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredSelectField } from 'utils/validation';
-import MetaTag from 'utils/MetaTag';
 
 import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
@@ -100,7 +99,6 @@ export const GeoPageBase = () => {
     };
     return (
         <>
-            <MetaTag metaTitle={'Geographical Hierarchy'} />
             <Row gutter={20}>
                 <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
                     <Space>

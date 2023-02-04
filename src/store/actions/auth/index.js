@@ -28,8 +28,9 @@ export const authLoginSucess = (token, userName, userId) => ({
     isLoggedIn: true,
 });
 
-export const authLoggingError = (message) => ({
+export const authLoggingError = (title, message) => ({
     type: AUTH_LOGIN_ERROR,
+    title,
     message,
 });
 
@@ -130,7 +131,7 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
         );
     };
 
-    const loginError = (message) => dispatch(authLoggingError(message));
+    const loginError = (title, message) => dispatch(authLoggingError(title, message));
 
     if (showFormLoading) {
         dispatch(showFormLoading(true));
@@ -151,7 +152,7 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
         url,
         data: requestData,
         onSuccess,
-        onError: () => loginError('There was an error, Please try again'),
+        onError: loginError,
         onWarning,
         onTimeout: () => loginError('Request timed out, Please try again'),
         postRequest: hideLoading,
