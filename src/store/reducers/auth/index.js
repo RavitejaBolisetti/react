@@ -36,6 +36,7 @@ export const auth = (state = initialState, action) => {
                 isError: true,
                 isLoggedIn: false,
                 loginFailure: false,
+                title: action.title,
                 message: action.message,
             };
         case AUTH_LOGIN_ERROR_CLOSE:

@@ -39,7 +39,7 @@ headerDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) =>
         method: 'get',
         url: baseURLPath,
         token,
-        userId:'user1',
+        userId,
         onSuccess,
         onError,
         onTimeout: () => errorAction('Request timed out, Please try again'),

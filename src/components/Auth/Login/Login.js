@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
     };
 
     if (isError || returnValue.isUnauthenticated) {
-        returnValue = { ...returnValue, message: authApiCall.message };
+        returnValue = { ...returnValue, errorTitle: authApiCall.title, errorMessage: authApiCall.message };
     }
 
     return returnValue;
@@ -49,7 +49,7 @@ const mapDispatchToProps = {
 };
 
 const Login = (props) => {
-    const { doLogin, isError, message } = props;
+    const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
     const [showPassword, setShowPassword] = useState(false);
     const [captcha, setCaptcha] = useState(false);
@@ -61,9 +61,9 @@ const Login = (props) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
-            doLogin(values, loginPageIsLoading);
-            // navigate(ROUTING_DASHBOARD);
-            // form.resetFields();
+            
+            doLogin(values, loginPageIsLoading, () => navigate(ROUTING_DASHBOARD));
+            form.resetFields();
 
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
@@ -176,14 +176,14 @@ const Login = (props) => {
                         <span className="icon">
                             <FaExclamationTriangle size={18} />
                         </span>
-                        {'Error'}
+                        {errorTitle}
                         {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
                         <span className="fr hide-btn loginErrorClose" onClick={() => doCloseLoginError()}>
                             <FaTimes size={18} />
                         </span>
                     </h5>
                     <div className="form_card">
-                        <p>{message}</p>
+                        <p>{errorMessage}</p>
                     </div>
                 </div>
             )}

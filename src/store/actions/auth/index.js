@@ -6,6 +6,7 @@ import { axiosAPICall } from 'utils//axiosAPICall';
 import { withAuthToken, withAuthTokenAndUserId } from 'utils//withAuthToken';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
+import { useNavigate } from 'react-router-dom';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_ERROR = 'AUTH_LOGIN_ERROR';
@@ -76,12 +77,9 @@ const authPostLoginActions =
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_TOKEN, authToken);
         }
 
-        // const { username: userName, username: userId } = jwtDecode(authToken);
-        const { username } = jwtDecode(authToken);
+        const { username: userName, username: userId } = jwtDecode(authToken);
 
-        let userName1 = username || 'user1';
-
-        dispatch(authLoginSucess(authToken, userName1, userName1));
+        dispatch(authLoginSucess(authToken, userName, userId));
     };
 
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
@@ -90,11 +88,12 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
         if (!authToken) {
             dispatch(authDoLogout());
         } else {
-            const { exp } = jwtDecode(authToken);
+            const { exp, userId } = jwtDecode(authToken);
             if (moment(exp * 1000).isAfter()) {
                 dispatch(
                     authPostLoginActions({
                         authToken,
+                        userId,
                     })
                 );
             } else {
@@ -114,7 +113,7 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
     dispatch(authLoginUnAuthenticatedErrorClose());
 };
 
-export const doLogin = (requestData, showFormLoading) => (dispatch) => {
+export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => {
     const url = BASE_URL_LOGIN;
 
     const hideLoading = () => {
@@ -123,15 +122,16 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
         }
     };
 
-    const authPostLogin = (token) => {
+    const authPostLogin = (data) => {
         dispatch(
             authPostLoginActions({
-                authToken: token,
+                userId: data?.userId,
+                authToken: data?.accessToken,
             })
         );
     };
 
-    const loginError = (title, message) => dispatch(authLoggingError(title, message));
+    const loginError = ({ title = 'Information', message }) => dispatch(authLoggingError(title, message));
 
     if (showFormLoading) {
         dispatch(showFormLoading(true));
@@ -139,9 +139,9 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
 
     const onWarning = (errorMessage) => loginError(errorMessage);
     const onSuccess = (res) => {
-        console.log(res, res?.data?.data?.accessToken, jwtDecode(res?.data?.data?.accessToken));
-        if (res?.data?.data?.accessToken) {
-            authPostLogin(res?.data?.data?.accessToken);
+        if (res?.data?.data) {
+            authPostLogin(res?.data?.data);
+            onLogin();
         } else {
             loginError('There was an error, Please try again');
         }
@@ -150,6 +150,7 @@ export const doLogin = (requestData, showFormLoading) => (dispatch) => {
     const apiCallParams = {
         method: 'post',
         url,
+        displayErrorTitle: true,
         data: requestData,
         onSuccess,
         onError: loginError,

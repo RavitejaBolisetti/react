@@ -70,7 +70,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                doLogout({ successAction: () => {}, userId: 'user1' });
+                doLogout({ successAction: () => {}, userId });
             },
             onCancel() {
                 console.log('Cancel');
