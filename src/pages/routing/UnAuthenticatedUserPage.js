@@ -13,6 +13,6 @@ export const UnAuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_LOGOUT} element={<LogoutPage />} exact />
             <Route path={routing.ROUTING_FORGOT_PASSWORD} element={<ForgotPasswordPage />} exact />
             <Route path="*" exact />
-        </Routes>
+        </Routes> 
     );
 };
