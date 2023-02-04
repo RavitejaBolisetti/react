@@ -12,9 +12,10 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { BsStar, BsStarFill } from 'react-icons/bs';
+import { BsFillHeartFill, BsStar, BsStarFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
+import { BiHeart } from 'react-icons/bi';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -51,7 +52,7 @@ export const GeoPageBase = () => {
     };
 
     const [form] = Form.useForm();
-    const [open, setOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(false);
     const [antdForm, setAntdForm] = useState(false);
@@ -84,8 +85,18 @@ export const GeoPageBase = () => {
             onOk() {
                 navigate(-1) || navigate(ROUTING_DASHBOARD);
             },
-            onCancel() { },
+            onCancel() {},
         });
+    };
+
+    const onSubmit = (e) => {
+        form.validateFields()
+            .then((err, values) => {
+                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
+            })
+            .catch((errorInfo) => {
+                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
+            });
     };
     return (
         <>
@@ -96,13 +107,10 @@ export const GeoPageBase = () => {
                         <div>
                             <span className={styles.headingGradient}>Geographical Hierarchy</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? <BsStarFill color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsStar size={18} onClick={handleFavouriteClick} />}</div>
+                        <div className={styles.favIconHeading}>{isFavourite ? <BiHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsFillHeartFill size={14} onClick={handleFavouriteClick} />}</div>
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
-                    {/* <Button danger onclick="window.location.href='#'" className={styles.exitButton}>
-                        
-                    </Button> */}
                     <div className={styles.buttonContainer}>
                         <Button danger onClick={showConfirm}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
@@ -117,36 +125,26 @@ export const GeoPageBase = () => {
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
-
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    
-                </Col>
-            </Row> */}
+            <Row gutter={20} style={{ marginTop: '-20px' }}>
+                <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
+                    {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+                </div>
+            </Row>
             <Row gutter={20}>
-                {/* <Col xs={24} sm={24} md={1} lg={1} xl={1} xxl={1}>
-                    <div className={styles.treeCollapsibleButton}>
-                        <span onClick={handleTreeViewVisibleClink}>{isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}</span>
-                    </div>
-                </Col> */}
-
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                    <div className={styles.leftpanel}>
-                        <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
-                            {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
-                        </div>
-                        <div className={styles.treeViewContainer}>
-                            {isTreeViewVisible ? (
+                {isTreeViewVisible ? (
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <div className={styles.leftpanel}>
+                            <div className={styles.treeViewContainer}>
                                 <div className={styles.treemenu}>
-                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} open={open} setOpen={setOpen} />
+                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                                 </div>
-                            ) : undefined}
+                            </div>
                         </div>
-                    </div>
-                </Col>
+                    </Col>
+                ) : undefined}
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16}>
-                    <div className="right col" style={{ padding: '0' }}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
+                    <div className={styles.formContainer}>
                         <Form layout="vertical">
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -191,7 +189,7 @@ export const GeoPageBase = () => {
                                                 id="hierarchyChange"
                                                 className="btn btn-outline srchbtn mr0 boxShdwNon"
                                                 // disabled={props.editableFormContent.editParent}
-                                                onClick={() => setOpen(true)}
+                                                onClick={() => setIsModalOpen(true)}
                                             >
                                                 <FaSearch />
                                             </Button>
@@ -241,40 +239,38 @@ export const GeoPageBase = () => {
                             </Row>
 
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={styles.buttonContainer}>
-                                        <Button danger>
-                                            <FaEdit className={styles.buttonIcon} />
-                                            Edit
-                                        </Button>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                    <Button danger>
+                                        <FaEdit className={styles.buttonIcon} />
+                                        Edit
+                                    </Button>
 
-                                        <Button danger>
-                                            <FaUserPlus className={styles.buttonIcon} />
-                                            Add Child
-                                        </Button>
+                                    <Button danger>
+                                        <FaUserPlus className={styles.buttonIcon} />
+                                        Add Child
+                                    </Button>
 
-                                        <Button danger>
-                                            <FaUserFriends className={styles.buttonIcon} />
-                                            Add Sibling
-                                        </Button>
+                                    <Button danger>
+                                        <FaUserFriends className={styles.buttonIcon} />
+                                        Add Sibling
+                                    </Button>
 
-                                        <Button danger>
-                                            <FaSave className={styles.buttonIcon} />
-                                            Save
-                                        </Button>
+                                    <Button htmlType="submit" danger onClick={onSubmit}>
+                                        <FaSave className={styles.buttonIcon} />
+                                        Save
+                                    </Button>
 
-                                        <Button danger>
-                                            <FaUndo className={styles.buttonIcon} />
-                                            Reset
-                                        </Button>
-                                    </div>
+                                    <Button danger>
+                                        <FaUndo className={styles.buttonIcon} />
+                                        Reset
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form>
                     </div>
                 </Col>
             </Row>
-            <ParentHierarchy title={'Parent Hierarchy'} setOpen={setOpen} open={open} />
+            <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };
