@@ -14,9 +14,9 @@ const Logout = (props) => {
                 <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
             </div>
             <div className={styles.center}>
-                <div className={styles.loginlogoSection}>
+                <div className={styles.loginLogoSection}>
                     <img src={IMAGES.RL_LOGO} alt="" />
-                    <div className={styles.logotext}>Dealer Management System</div>
+                    <div className={styles.logoText}>Dealer Management System</div>
                 </div>
                 <div className={styles.loginWrap}>
                     <Row>
@@ -24,10 +24,10 @@ const Logout = (props) => {
                             <div className={styles.loginHtml}>
                                 <div className={styles.center}>
                                     <div className={styles.loginForm}>
-                                        <div className={styles.loginHeading}>
+                                        <div className={styles.logOutHeading}>
                                             <h4>Thank You!</h4>
-                                            <div className={styles.loginsubHeading}>You are successfully logged out.</div>
-                                            <div className={styles.loginsubHeading}>Please <strong>Close</strong> the browser to
+                                            <div className={styles.logOutSubHeading}>You are successfully logged out.</div>
+                                            <div className={styles.logOutSubHeading}>Please <strong>Close</strong> the browser to
                                                 <strong>&nbsp;Exit</strong> or click the <strong>Login</strong> button to
                                                 <strong>&nbsp;Login</strong> again.</div>
                                         </div>
@@ -41,7 +41,7 @@ const Logout = (props) => {
                     </Row>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

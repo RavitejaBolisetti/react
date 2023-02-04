@@ -1,18 +1,18 @@
-:global .ant-form-item {
+/* :global .ant-form-item {
     margin-bottom: 5px !important;
+} */
+
+body {
+    overflow: hidden;
 }
 
 :global .ant-form-item-explain-error {
     font-size: 11px;
 }
 
-:global .ant-form-item .ant-form-item-control-input-content {
+/* :global .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
-}
-
-:global .ant-form-item {
-    margin-bottom: 25px !important;
-}
+} */
 
 p {
     margin-bottom: 0px !important;
@@ -46,29 +46,27 @@ p {
 }
 
 .loginSection .loginMnMlogo {
-    float: right;
     position: absolute;
-    padding: 10px 10px 10px 0;
-    width: 100%;
+    padding: 20px 20px 10px 0;
+    width: 98%;
     text-align: right;
     margin-right: 10px;
 }
 
-.loginSection .loginlogoSection {
+.loginSection .center .loginLogoSection {
     text-align: center;
     margin-top: 10px;
     color: #fff;
 }
 
-.loginSection .loginlogoSection .logotext {
-    padding: 10px 0px 0px 0;
-    text-transform: uppercase;
+.loginSection .center .loginLogoSection .logoText {
+    padding: 1px 0px 0px 0;
+    font-size: 22px;
 }
 
 .loginSection .loginWrap {
     margin: 20px;
-    background: #28272C;
-    opacity: 0.8;
+    background: rgba(40, 39, 44, .8);
     box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
     border-radius: 19px;
     -moz-border-radius: 19px;
@@ -77,22 +75,73 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml {
-    padding: 30px;
+    padding: 0 30px;
+    height: 420px;
+    width: 444px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm {
     padding: 20px auto;
     position: relative;
+    width: 100%;
     perspective: 1000px;
     transform-style: preserve-3d;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .loginHeading {
-    padding: 0;
+/* .loginSection .loginWrap .loginHtml .loginForm .inputBox {
+    margin-top: 10px;
+} */
+
+.loginSection .loginWrap .loginHtml .loginForm .inputBox input {
+    background: none;
+    color: #ffffff;
+}
+
+.loginSection .loginWrap .loginHtml .loginForm .inputBox input::placeholder {
+    color: #6c757d;
+}
+
+:global .ant-input-affix-wrapper>input.ant-input {
+    padding: 5px;
+}
+
+:global .ant-input-affix-wrapper {
+    background: none;
+    border-style: none none solid none;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+:global .ant-input-affix-wrapper .ant-input-prefix::placeholder {
+    color: #ffffff;
+    font-size: 18px;
+}
+
+:global .ant-input-affix-wrapper .ant-input-prefix {
+    margin-inline-end: 15px;
+}
+
+:global .ant-input-affix-wrapper:hover,
+:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: #ffffff;
+}
+
+:global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
+    color: #ffffff;
+    font-size: 18px;
+}
+
+:global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
+    color: #ffffff;
+}
+
+.loginSection .loginWrap .loginHtml .loginForm .logOutHeading {
+    color: #ffffff;
     text-align: center;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .loginHeading h4 {
+.loginSection .loginWrap .loginHtml .loginForm .loginHeading h4,
+.loginSection .loginWrap .loginHtml .loginForm .logOutHeading h4 {
     font-size: 26px;
     color: #fff;
     text-align: center;
@@ -100,10 +149,12 @@ p {
     margin: 4px 0;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginsubHeading {
+.loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
+.loginSection .loginWrap .loginHtml .loginForm .logOutHeading .logOutSubHeading {
     font-size: 14px;
     color: #fff;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
     text-align: center;
     font-weight: normal;
 }
@@ -195,6 +246,10 @@ p {
     font-weight: normal;
 }
 
+.loginSection .loginWrap .loginHtml .loginForm .loginFooter a:hover {
+    text-decoration: underline;
+}
+
 .loginSection .loginWrap .loginHtml .loginForm .forgotOTPSec {
     display: none;
 }
@@ -278,4 +333,10 @@ select.form-control:focus::-ms-value {
 :global .g-recaptcha>div>div {
     /* transform:scale(1.77);    -webkit-transform:scale(1.77);    transform-origin:0 0;    -webkit-transform-origin:0 0; */
     margin: 0px auto;
+}
+
+
+/* New css */
+.ant-form-item .ant-form-item-control-input-content {
+    margin-bottom: -10px !important;
 }
