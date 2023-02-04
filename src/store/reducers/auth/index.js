@@ -1,34 +1,19 @@
-import { AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAILURE_CLOSE, AUTH_LOGIN_ERROR_CLOSE, AUTH_LOGIN_FAILURE, AUTH_LOGIN_ERROR, AUTH_LOGOUT, USER_UNAUTHENTICATED, AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE, AUTH_ROLE_RIGHTS, APP_VERSION } from '../../actions/auth';
+import { AUTH_LOGIN_SUCCESS, AUTH_LOGIN_ERROR_CLOSE, AUTH_LOGIN_ERROR, AUTH_LOGOUT, USER_UNAUTHENTICATED, AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE } from '../../actions/auth';
 
 const initialState = {
     isLoggedIn: false,
     token: null,
     userId: undefined,
     isError: false,
-    roleRight: {},
     message: '',
     isUnauthenticated: false,
-    nciId: undefined,
 };
 
 export const auth = (state = initialState, action) => {
-    const versionData = {
-        isAppVersionLoaded: state.isAppVersionLoaded,
-        appVersionData: state.appVersionData,
-    };
     switch (action.type) {
         case AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE:
             return { ...state, isUnauthenticated: false };
-        case AUTH_LOGIN_ERROR_CLOSE:
-            return {
-                ...state,
-                isError: false,
-            };
-        case AUTH_LOGIN_FAILURE_CLOSE:
-            return {
-                ...state,
-                loginFailure: false,
-            };
+
         case AUTH_LOGIN_SUCCESS:
             const { token, userName, userId, exp, clientId } = action;
             return {
@@ -44,33 +29,23 @@ export const auth = (state = initialState, action) => {
                 exp,
                 clientId,
             };
-        case AUTH_ROLE_RIGHTS:
-            return {
-                ...state,
-                roleRight: action.roleRight,
-            };
-        case AUTH_LOGIN_FAILURE:
-            return {
-                ...state,
-                isUnauthenticated: false,
-                isLoading: false,
-                isError: false,
-                isLoggedIn: false,
-                loginFailure: true,
-            };
         case AUTH_LOGIN_ERROR:
             return {
-                ...versionData,
                 isUnauthenticated: false,
                 isLoading: false,
                 isError: true,
                 isLoggedIn: false,
                 loginFailure: false,
+                title: action.title,
                 message: action.message,
+            };
+        case AUTH_LOGIN_ERROR_CLOSE:
+            return {
+                ...state,
+                isError: false,
             };
         case AUTH_LOGOUT:
             return {
-                ...versionData,
                 isUnauthenticated: false,
                 isLoading: false,
                 isError: false,
@@ -80,19 +55,12 @@ export const auth = (state = initialState, action) => {
             };
         case USER_UNAUTHENTICATED:
             return {
-                ...versionData,
                 isUnauthenticated: true,
                 isLoading: false,
                 isError: false,
                 isLoggedIn: false,
                 loginFailure: false,
                 message: action.message,
-            };
-        case APP_VERSION:
-            return {
-                ...state,
-                isAppVersionLoaded: true,
-                appVersionData: action.data,
             };
         default:
             return { ...state };

@@ -1,6 +1,6 @@
 {
-    "name": "mnm-frontend-app",
-    "version": "0.1.1",
+    "name": "dms-ui-application",
+    "version": "0.0.1",
     "private": true,
     "proxy": "https://2lebbk509d.execute-api.ap-south-1.amazonaws.com/dev/",
     "dependencies": {

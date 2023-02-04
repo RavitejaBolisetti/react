@@ -11,7 +11,6 @@ import TreeView from 'components/common/TreeView';
 import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import styles from '../Common.module.css';
 import { connect } from 'react-redux';
-import MetaTag from 'utils/MetaTag';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
@@ -42,7 +41,7 @@ export const ProductHierarchyBase = () => {
     const [isTreeViewVisible, setTreeViewVisible] = useState(false);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
-    const toggleHistory = (e) => {
+    const showToggleHistory = (e) => {
         setChangeHistoryVisible(!isChangeHistoryVisible);
     };
 
@@ -78,7 +77,6 @@ export const ProductHierarchyBase = () => {
 
     return (
         <>
-            <MetaTag metaTitle={'Product Hierarchy'} />
             <Row gutter={20}>
                 <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
                     <Space>
@@ -90,7 +88,7 @@ export const ProductHierarchyBase = () => {
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
                     <div className={styles.buttonContainer}>
-                        <Button danger onClick={showConfirm} onClick={toggleHistory}>
+                        <Button danger onClick={showToggleHistory}>
                             <FaHistory className={styles.buttonIcon} />
                             Change History
                         </Button>

@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { Col, Row } from 'antd';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import styles from './TrainingPage.module.css';
 
 const mapStateToProps = (state) => {
     const {

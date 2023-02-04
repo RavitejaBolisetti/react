@@ -1,27 +1,27 @@
-import { BASE_URL_HEADER_DETAIL } from 'constants/routingApi';
+import { BASE_URL_MENU } from 'constants/routingApi';
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 
-export const HEADER_USER_DATA_LOADED = 'HEADER_USER_DATA_LOADED';
-export const HEADER_USER_DATA_SHOW_LOADING = 'HEADER_USER_DATA_SHOW_LOADING';
+export const MENU_DATA_LOADED = 'MENU_DATA_LOADED';
+export const MENU_DATA_SHOW_LOADING = 'MENU_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
-    type: HEADER_USER_DATA_LOADED,
+    type: MENU_DATA_LOADED,
     isLoaded: true,
     data,
 });
 
-const headerDataActions = {};
+const menuDataActions = {};
 
-const baseURLPath = BASE_URL_HEADER_DETAIL;
+const baseURLPath = BASE_URL_MENU;
 
-headerDataActions.listShowLoading = (isLoading) => ({
-    type: HEADER_USER_DATA_SHOW_LOADING,
+menuDataActions.listShowLoading = (isLoading) => ({
+    type: MENU_DATA_SHOW_LOADING,
     isLoading,
 });
 
-headerDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) => {
+menuDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, errorAction, data, userId } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
@@ -51,4 +51,4 @@ headerDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) =>
     axiosAPICall(apiCallParams);
 });
 
-export { headerDataActions };
+export { menuDataActions };

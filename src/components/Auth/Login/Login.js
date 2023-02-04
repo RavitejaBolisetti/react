@@ -6,7 +6,7 @@ import { Form, Row, Col, Button, Input } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
-import { doLogin, doCloseLoginError, doCloseLoginFailure, doCloseUnAuthenticatedError } from 'store/actions/auth';
+import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
 import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
     };
 
     if (isError || returnValue.isUnauthenticated) {
-        returnValue = { ...returnValue, message: authApiCall.message };
+        returnValue = { ...returnValue, errorTitle: authApiCall.title, errorMessage: authApiCall.message };
     }
 
     return returnValue;
@@ -42,16 +42,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     doLogin,
     doCloseLoginError,
-    doCloseLoginFailure,
     doCloseUnAuthenticatedError,
 };
 
-function hideError() {
-    document.getElementById('loginErrorDiv').style.display = 'none';
-}
-
 const Login = (props) => {
-    const { doLogin, isError, message } = props;
+    const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
     const [showPassword, setShowPassword] = useState(false);
     const [captcha, setCaptcha] = useState(false);
@@ -63,8 +58,8 @@ const Login = (props) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
-            doLogin(values, loginPageIsLoading);
-            navigate(ROUTING_DASHBOARD);
+
+            doLogin(values, loginPageIsLoading, () => navigate(ROUTING_DASHBOARD));
             form.resetFields();
 
             // localStorage.setItem('userData', JSON.stringify(response.data));

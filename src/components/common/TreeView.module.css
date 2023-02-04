@@ -37,6 +37,7 @@
 .searchField {
     padding: 0 8px;
     margin-bottom: 8px;
+    margin-top: 12px;
     width: '100%';
 }
 
@@ -113,4 +114,15 @@
 :global .ant-input-search .ant-input:hover,
 :global .ant-input-search .ant-input:focus {
     border-color: #e31837;
+}
+@media (max-width: 576px) {
+.scrollTreeData {
+    width: 100%;
+    overflow: scroll;
+    height: 12vh;
+}
+
+:global .ant-input {
+   
+    padding: 4px 27px;}
 }
