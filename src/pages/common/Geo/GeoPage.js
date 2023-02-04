@@ -12,9 +12,10 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { BsStar, BsStarFill } from 'react-icons/bs';
+import { BsFillHeartFill, BsStar, BsStarFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
+import { BiHeart } from 'react-icons/bi';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -106,7 +107,7 @@ export const GeoPageBase = () => {
                         <div>
                             <span className={styles.headingGradient}>Geographical Hierarchy</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? <BsStarFill color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsStar size={18} onClick={handleFavouriteClick} />}</div>
+                        <div className={styles.favIconHeading}>{isFavourite ? <BiHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsFillHeartFill size={14} onClick={handleFavouriteClick} />}</div>
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
@@ -141,8 +142,8 @@ export const GeoPageBase = () => {
                     </Col>
                 ) : undefined}
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
-                    <div className="right col" style={{ padding: '0' }}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
+                    <div className={styles.formContainer}>
                         <Form layout="vertical">
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -237,37 +238,31 @@ export const GeoPageBase = () => {
                             </Row>
 
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={styles.buttonContainer}>
-                                        <Button danger>
-                                            <FaEdit className={styles.buttonIcon} />
-                                            Edit
-                                        </Button>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                    <Button danger>
+                                        <FaEdit className={styles.buttonIcon} />
+                                        Edit
+                                    </Button>
 
-                                        <Button danger>
-                                            <FaUserPlus className={styles.buttonIcon} />
-                                            Add Child
-                                        </Button>
+                                    <Button danger>
+                                        <FaUserPlus className={styles.buttonIcon} />
+                                        Add Child
+                                    </Button>
 
-                                        <Button danger>
-                                            <FaUserFriends className={styles.buttonIcon} />
-                                            Add Sibling
-                                        </Button>
+                                    <Button danger>
+                                        <FaUserFriends className={styles.buttonIcon} />
+                                        Add Sibling
+                                    </Button>
 
-                                        <button type="submit" className="btn btn-outline rightbtn boxShdwNon mrl15" style={{ margin: '0px 0px 3px 0px;' }} onClick={onSubmit}>
-                                            <FaSave className={styles.buttonIcon} /> Save
-                                        </button>
+                                    <Button htmlType="submit" danger onClick={onSubmit}>
+                                        <FaSave className={styles.buttonIcon} />
+                                        Save
+                                    </Button>
 
-                                        {/* <Button danger>
-                                            <FaSave className={styles.buttonIcon} />
-                                            Save
-                                        </Button> */}
-
-                                        <Button danger>
-                                            <FaUndo className={styles.buttonIcon} />
-                                            Reset
-                                        </Button>
-                                    </div>
+                                    <Button danger>
+                                        <FaUndo className={styles.buttonIcon} />
+                                        Reset
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form>

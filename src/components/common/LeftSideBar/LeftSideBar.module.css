@@ -154,7 +154,8 @@
 /* border color on input search in left-menu */
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
-  border-color: #56606a;
+  /* border-color: #56606a; */
+  border-color: #d9d9d9;
 }
 
 :global .ant-btn.ant-btn-icon-only {
