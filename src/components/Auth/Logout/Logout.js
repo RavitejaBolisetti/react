@@ -6,48 +6,42 @@ import { ROUTING_LOGIN } from 'constants/routing';
 import * as IMAGES from 'assets';
 
 import styles from '../Auth.module.css';
-import 'assets/style/new_robin.css';
-import 'assets/style/new_robin.scss';
 
 const Logout = (props) => {
     return (
-        <div className="loginSection">
-            <div className="loginMMlogo">
+        <div className={styles.loginSection}>
+            <div className={styles.loginMnMlogo}>
                 <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
             </div>
-            <div className="loginlogoSection">
-                <img src={IMAGES.RL_LOGO} alt="" />
-                <div className="logotext">Dealer Management System</div>
-            </div>
-            <Row>
-                <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
-                    <div className="login-wrap">
-                        <Row>
-                            <Col span={24}>
-                                <div className="login-html">
-                                    <div className="login-form">
-                                        <div>
-                                            <div className="loginHeading">
-                                                <h4>Welcome!</h4>
-                                                <div className="loginsubHeading">Please enter your credentials to login</div>
-                                            </div>
-
-                                            <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mrt10}>
-                                                    <Button className={styles.button} type="primary" htmlType="link" href={ROUTING_LOGIN}>
-                                                        Login
-                                                    </Button>
-                                                </Col>
-                                            </Row>
+            <div className={styles.center}>
+                <div className={styles.loginlogoSection}>
+                    <img src={IMAGES.RL_LOGO} alt="" />
+                    <div className={styles.logotext}>Dealer Management System</div>
+                </div>
+                <div className={styles.loginWrap}>
+                    <Row>
+                        <Col span={24}>
+                            <div className={styles.loginHtml}>
+                                <div className={styles.center}>
+                                    <div className={styles.loginForm}>
+                                        <div className={styles.loginHeading}>
+                                            <h4>Thank You!</h4>
+                                            <div className={styles.loginsubHeading}>You are successfully logged out.</div>
+                                            <div className={styles.loginsubHeading}>Please <strong>Close</strong> the browser to
+                                                <strong>&nbsp;Exit</strong> or click the <strong>Login</strong> button to
+                                                <strong>&nbsp;Login</strong> again.</div>
                                         </div>
+                                        <Button className={styles.button} type="primary" htmlType="link" href={ROUTING_LOGIN}>
+                                            Login
+                                        </Button>
                                     </div>
                                 </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
-        </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+        </div >
     );
 };
 
