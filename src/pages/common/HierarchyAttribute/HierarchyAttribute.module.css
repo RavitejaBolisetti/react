@@ -20,7 +20,10 @@
     color: #0b0b0c;
     font-size: 20px;
 }
-
+/* .buttonContainer {
+    float: right;
+    padding: 0px;
+} */
 .pageHeaderNameSection {
     border-bottom: 1px solid #dedede;
     padding: 0px;
@@ -98,4 +101,40 @@
 .inputBox {
     border-radius: 4px;
     height: 36px;
+}
+
+.parentInput {
+    width: 300px;
+}
+
+.parentIcon {
+    margin-top: 28px;
+    margin-left: -7.5px;
+}
+
+/* Status toggle switch */
+:global .ant-switch {
+    height: 30px;
+    width: 80px;
+    line-height: 28px;
+}
+
+:global .ant-switch .ant-switch-handle {
+    top: 4px;
+    inset-inline-start: 4px;
+    width: 22px;
+    height: 22px;
+}
+
+:global .ant-switch.ant-switch-checked .ant-switch-handle {
+    inset-inline-start: calc(100% - 26px);
+}
+
+:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-top: -28px;
+    margin-inline-start: 30px;
+}
+
+:global .ant-table-wrapper .ant-table:not(.ant-table-bordered) .ant-table-tbody > tr:last-child > td {
+    text-align: center;
 }
