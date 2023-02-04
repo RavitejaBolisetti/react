@@ -31,7 +31,5 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
 
     return <div>{true ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
 };
-
 const MainPageWithSpinner = withSpinner(MainPageBase);
-
 export const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageWithSpinner);
