@@ -11,7 +11,7 @@ import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
 import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
-import styles from './Login.module.css';
+import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 
