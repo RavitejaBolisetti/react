@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { message } from 'antd';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
@@ -34,9 +34,14 @@ const baseAPICall = (params) => {
             .request(axiosConfig)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log(res);
                     if (res?.data?.status) {
-                        console.log('Kuldep');
+                        console.log('Kuldep', res?.data);
+                        if (res?.data?.statusCode === 200) {
+                            onSuccess();
+                        } else if (res?.data?.statusCode === 404) {
+                            message.error(res.data.responseMessage);
+                            // onError(AXIOS_ERROR_WITH_RESPONSE, res.data.responseMessage);
+                        }
                     }
                 }
             })
