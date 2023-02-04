@@ -12,7 +12,7 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { BsFillHeartFill, BsStar, BsStarFill } from 'react-icons/bs';
+import { BsFillHeartFill} from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import { BiHeart } from 'react-icons/bi';

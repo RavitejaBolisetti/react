@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
+import { useNavigate } from 'react-router-dom';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -48,11 +49,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, token, userId }) => {
+    const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, notificationCount } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-  
+
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, token, userId });
@@ -69,10 +71,12 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                doLogout({ successAction: () => {}, userId: 'user1' });
-            },
-            onCancel() {
-                console.log('Cancel');
+                doLogout({
+                    successAction: () => {
+                        navigate(routing.ROUTING_LOGOUT);
+                    },
+                    userId: 'user1',
+                });
             },
         });
     };
