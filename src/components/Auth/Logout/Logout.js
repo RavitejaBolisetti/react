@@ -14,9 +14,9 @@ const Logout = (props) => {
                 <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
             </div>
             <div className={styles.center}>
-                <div className={styles.loginlogoSection}>
+                <div className={styles.loginLogoSection}>
                     <img src={IMAGES.RL_LOGO} alt="" />
-                    <div className={styles.logotext}>Dealer Management System</div>
+                    <div className={styles.logoText}>Dealer Management System</div>
                 </div>
                 <div className={styles.loginWrap}>
                     <Row>

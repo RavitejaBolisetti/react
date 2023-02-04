@@ -79,7 +79,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onReCAPTCHAChange = async (captchaCode) => {
@@ -92,107 +92,142 @@ const Login = (props) => {
         }
     };
     return (
-        <div className="loginSection">
-            <div className="loginMMlogo">
-                <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
-            </div>
-            <div className="loginlogoSection">
-                <img src={IMAGES.RL_LOGO} alt="" />
-                <div className="logotext">Dealer Management System</div>
-            </div>
-            <Row>
-                <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
-                    <div className="login-wrap">
-                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
-                            <Row>
-                                <Col span={24}>
-                                    <div className="login-html">
-                                        <div className="login-form">
-                                            <div>
-                                                <div className="loginHeading">
-                                                    <h4>Welcome!</h4>
-                                                    <div className="loginsubHeading">Please enter your credentials to login</div>
-                                                </div>
-                                                <Form.Item name="userId" rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
-                                                    <div className="input-group mb-3">
-                                                        <div className="input-group-prepend">
-                                                            <span className="input-group-text login_input-group-text">
-                                                                <AiOutlineMail size={18} />
-                                                            </span>
-                                                        </div>
-                                                        <input type="text" className="form-control input loginTextfield" placeholder="User ID(MILE ID.Parent ID)" />
+        <>
+            <div className={styles.loginSection}>
+                <div className={styles.loginMnMlogo}>
+                    <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
+                </div>
+                <div className={styles.center}>
+                    <div className={styles.loginLogoSection}>
+                        <img src={IMAGES.RL_LOGO} alt="" />
+                        <div className={styles.logoText}>Dealer Management System</div>
+                    </div>
+                    <div className={styles.loginWrap}>
+                        <Row>
+                            <Col span={24}>
+                                <div className={styles.loginHtml}>
+                                    <div className={styles.center}>
+                                        <div className={styles.loginForm}>
+                                            <div className={styles.loginHeading}>
+                                                <h4>Thank You!</h4>
+                                                <div className={styles.loginsubHeading}>You are successfully logged out.</div>
+                                                <div className={styles.loginsubHeading}>Please <strong>Close</strong> the browser to
+                                                    <strong>&nbsp;Exit</strong> or click the <strong>Login</strong> button to
+                                                    <strong>&nbsp;Login</strong> again.</div>
+                                            </div>
+                                            <Button className={styles.button} type="primary" htmlType="link">
+                                                Login
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+            </div >
+            <div className="loginSection">
+                <div className="loginMMlogo">
+                    <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
+                </div>
+                <div className="loginlogoSection">
+                    <img src={IMAGES.RL_LOGO} alt="" />
+                    <div className="logotext">Dealer Management System</div>
+                </div>
+                <Row>
+                    <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
+                        <div className="login-wrap">
+                            <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
+                                <Row>
+                                    <Col span={24}>
+                                        <div className="login-html">
+                                            <div className="login-form">
+                                                <div>
+                                                    <div className="loginHeading">
+                                                        <h4>Welcome!</h4>
+                                                        <div className="loginsubHeading">Please enter your credentials to login</div>
                                                     </div>
-                                                </Form.Item>
-                                                <Form.Item name="password" rules={[validateRequiredInputField('password')]}>
+                                                    <Form.Item name="userId" rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
+                                                        <div className="input-group mb-3">
+                                                            <div className="input-group-prepend">
+                                                                <span className="input-group-text login_input-group-text">
+                                                                    <AiOutlineMail size={18} />
+                                                                </span>
+                                                            </div>
+                                                            <input type="text" className="form-control input loginTextfield" placeholder="User ID(MILE ID.Parent ID)" />
+                                                        </div>
+                                                    </Form.Item>
+                                                    <Form.Item name="password" rules={[validateRequiredInputField('password')]}>
+                                                        <Row gutter={20}>
+                                                            <Col span={24}>
+                                                                <div className="input-group mb-3">
+                                                                    {' '}
+                                                                    <div className="input-group-prepend">
+                                                                        <span className="input-group-text login_input-group-text">
+                                                                            <AiOutlineLock size={18} />
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type={showPassword ? 'text' : 'password'} id="password" className="form-control input loginTextfield" placeholder="Password" />
+                                                                    <div className="input-group-prepend">
+                                                                        <span className="input-group-text login_input-group-text fr" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
+                                                                            {!showPassword ? <AiOutlineEyeInvisible className="text-[#DEDEDE]" size={18} /> : <AiOutlineEye className="text-white" size={18} />}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+                                                    </Form.Item>
+
                                                     <Row gutter={20}>
                                                         <Col span={24}>
-                                                            <div className="input-group mb-3">
-                                                                {' '}
-                                                                <div className="input-group-prepend">
-                                                                    <span className="input-group-text login_input-group-text">
-                                                                        <AiOutlineLock size={18} />
-                                                                    </span>
-                                                                </div>
-                                                                <input type={showPassword ? 'text' : 'password'} id="password" className="form-control input loginTextfield" placeholder="Password" />
-                                                                <div className="input-group-prepend">
-                                                                    <span className="input-group-text login_input-group-text fr" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
-                                                                        {!showPassword ? <AiOutlineEyeInvisible className="text-[#DEDEDE]" size={18} /> : <AiOutlineEye className="text-white" size={18} />}
-                                                                    </span>
-                                                                </div>
+                                                            <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
+                                                        </Col>
+                                                    </Row>
+
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mrt10}>
+                                                            <Button className={styles.button} type="primary" htmlType="submit">
+                                                                Login
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                                    <div className="hr"></div>
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <div className="loginFooter" type="radio">
+                                                                <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
                                                             </div>
                                                         </Col>
                                                     </Row>
-                                                </Form.Item>
-
-                                                <Row gutter={20}>
-                                                    <Col span={24}>
-                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
-                                                    </Col>
-                                                </Row>
-
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mrt10}>
-                                                        <Button className={styles.button} type="primary" htmlType="submit">
-                                                            Login
-                                                        </Button>
-                                                    </Col>
-                                                </Row>
-                                                <div className="hr"></div>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="loginFooter" type="radio">
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Form>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </div>
+                    </Col>
+                </Row>
+                {isError && (
+                    <div className="errorLoginPoP" id="loginErrorDiv">
+                        <h5>
+                            <span className="icon">
+                                <FaExclamationTriangle size={18} />
+                            </span>
+                            {'Error'}
+                            {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
+                            <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
+                                <FaTimes size={18} />
+                            </span>
+                        </h5>
+                        <div className="form_card">
+                            <p>{message}</p>
+                        </div>
                     </div>
-                </Col>
-            </Row>
-            {isError && (
-                <div className="errorLoginPoP" id="loginErrorDiv">
-                    <h5>
-                        <span className="icon">
-                            <FaExclamationTriangle size={18} />
-                        </span>
-                        {'Error'}
-                        {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
-                        <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
-                            <FaTimes size={18} />
-                        </span>
-                    </h5>
-                    <div className="form_card">
-                        <p>{message}</p>
-                    </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </>
     );
 };
 
