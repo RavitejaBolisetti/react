@@ -1,4 +1,4 @@
-/* :global .ant-form-item {
+/* .loginSection :global .ant-form-item {
     margin-bottom: 5px !important;
 } */
 
@@ -6,11 +6,11 @@ body {
     overflow: hidden;
 }
 
-:global .ant-form-item-explain-error {
+.loginSection :global .ant-form-item-explain-error {
     font-size: 11px;
 }
 
-/* :global .ant-form-item .ant-form-item-control-input-content {
+/* .loginSection :global .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
 } */
 
@@ -101,37 +101,37 @@ p {
     color: #6c757d;
 }
 
-:global .ant-input-affix-wrapper>input.ant-input {
+.loginSection :global .ant-input-affix-wrapper>input.ant-input {
     padding: 5px;
 }
 
-:global .ant-input-affix-wrapper {
+.loginSection :global .ant-input-affix-wrapper {
     background: none;
     border-style: none none solid none;
     color: #ffffff;
     font-size: 18px;
 }
 
-:global .ant-input-affix-wrapper .ant-input-prefix::placeholder {
+.loginSection :global .ant-input-affix-wrapper .ant-input-prefix::placeholder {
     color: #ffffff;
     font-size: 18px;
 }
 
-:global .ant-input-affix-wrapper .ant-input-prefix {
+.loginSection :global .ant-input-affix-wrapper .ant-input-prefix {
     margin-inline-end: 15px;
 }
 
-:global .ant-input-affix-wrapper:hover,
-:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+.loginSection :global .ant-input-affix-wrapper:hover,
+.loginSection :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-color: #ffffff;
 }
 
-:global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
+.loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
     color: #ffffff;
     font-size: 18px;
 }
 
-:global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
+.loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
     color: #ffffff;
 }
 
@@ -234,7 +234,7 @@ p {
     margin-top: 10px;
 }
 
-:global :where(.css-dev-only-do-not-override-169n7e2).ant-form-item .ant-form-item-explain-error {
+.loginSection :global :where(.css-dev-only-do-not-override-169n7e2).ant-form-item .ant-form-item-explain-error {
     color: #FF3E5B;
     font-size: 12px;
 }
@@ -321,16 +321,53 @@ select.form-control:focus::-ms-value {
     margin-left: 5px;
     padding-left: 5px;
 }
- 
-/* :global .Login_mrt10__7HwTM {
+
+.errorBoxContainer {
+    width: 25%;
+    max-height: 90%;
+    margin: 3% auto;
+    padding: 15px;
+    background: #242424;
+    color: #dedede;
+    font-size: 16px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 2px solid #ea3434;
+    overflow: auto;
+    position: fixed;
+    top: 10%;
+    right: 0;
+}
+
+.errorBoxContainer h5 {
+    margin: 0 0 5px 0;
+    padding: 0px;
+    border-bottom: 1px solid #ea3434;
+    font-size: 16px;
+    color: #fff;
+    padding-bottom: 5px;
+}
+
+.errorBoxContainer h5 .icon {
+    color: #ea3434;
+    padding-bottom: 5px;
+}
+
+.errorBoxContainer h5 .loginErrorClose {
+    float: right;
+    cursor: pointer;
+}
+
+/* .loginSection :global .Login_mrt10__7HwTM {
     padding-right: 0px !important;
 } */
 
-:global :where(.css-dev-only-do-not-override-169n7e2).ant-col {
+.loginSection :global :where(.css-dev-only-do-not-override-169n7e2).ant-col {
     padding-right: 0px !important;
 }
 
-:global .g-recaptcha>div>div {
+.loginSection :global .g-recaptcha>div>div {
     /* transform:scale(1.77);    -webkit-transform:scale(1.77);    transform-origin:0 0;    -webkit-transform-origin:0 0; */
     margin: 0px auto;
 }

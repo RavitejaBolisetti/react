@@ -10,7 +10,8 @@ import { validateRequiredSelectField } from 'utils/validation';
 import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
-import styles from './GeoPage.module.css';
+import styles from '../Common.module.css';
+// import styles from './GeoPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 
@@ -102,7 +103,7 @@ export const GeoPageBase = () => {
                         <div>
                             <span className={styles.headingGradient}>Geographical Hierarchy</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? < FaHeart  color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <FaRegHeart size={18} onClick={handleFavouriteClick} />}</div>
+                        <div className={styles.favIconHeading}>{isFavourite ? <FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <FaRegHeart size={18} onClick={handleFavouriteClick} />}</div>
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.padRight0}>
@@ -124,9 +125,9 @@ export const GeoPageBase = () => {
                 <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
                     {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
                 </div>
-            </Row>			
+            </Row>
             <Row gutter={20}>
-                              {isTreeViewVisible ? (
+                {isTreeViewVisible ? (
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <div className={styles.leftpanel}>
                             <div className={styles.treeViewContainer}>
@@ -139,130 +140,128 @@ export const GeoPageBase = () => {
                 ) : undefined}
 
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
-                   
-                        <Form layout="vertical">
-                            <Row gutter={20}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0} >
-                                    <Form.Item name="Attribute Level" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
-                                        <Select>
-                                            <Option value="Continent">Continent</Option>
-                                            <Option value="Country">Country</Option>
-                                            <Option value="State">State</Option>
-                                            <Option value="City">District/City</Option>
-                                            <Option value="Tashil">Tashil</Option>
-                                            <Option value="Pincode">Pincode</Option>
-                                        </Select>
-                                    </Form.Item>
-                                </Col>
+                    <Form layout="vertical">
+                        <Row gutter={20}>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
+                                <Form.Item name="Attribute Level" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                                    <Select>
+                                        <Option value="Continent">Continent</Option>
+                                        <Option value="Country">Country</Option>
+                                        <Option value="State">State</Option>
+                                        <Option value="City">District/City</Option>
+                                        <Option value="Tashil">Tashil</Option>
+                                        <Option value="Pincode">Pincode</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}  style={{ padding: '0' }} className={styles.padLeft10}>
-                                    <Form.Item
-                                        label="Parent"
-                                        name="Parent"
-                                        className="control-label-blk"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please Select a parent !',
-                                            },
-                                        ]}
-                                    >
-                                        <Input.Group compact>
-                                            <Input
-                                                style={{
-                                                    width: 'calc(100% - 48px)',
-                                                }}
-                                                //  readOnly={props.editableFormContent.editParent}
-                                                name="Parent"
-                                                onChange={handle}
-                                                placeholder="Parent"
-                                                className={styles.inputBox}
-                                            />
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
+                                <Form.Item
+                                    label="Parent"
+                                    name="Parent"
+                                    className="control-label-blk"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please Select a parent !',
+                                        },
+                                    ]}
+                                >
+                                    <Input.Group compact>
+                                        <Input
+                                            style={{
+                                                width: 'calc(100% - 48px)',
+                                            }}
+                                            //  readOnly={props.editableFormContent.editParent}
+                                            name="Parent"
+                                            onChange={handle}
+                                            placeholder="Parent"
+                                            className={styles.inputBox}
+                                        />
 
-                                            <Button
-                                                type="primary"
-                                                id="hierarchyChange"
-                                                className="btn btn-outline srchbtn mr0 boxShdwNon"
-                                                // disabled={props.editableFormContent.editParent}
-                                                onClick={() => setIsModalOpen(true)}
-                                            >
-                                                <FaSearch />
-                                            </Button>
-                                        </Input.Group>
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                                        <Button
+                                            type="primary"
+                                            id="hierarchyChange"
+                                            className="btn btn-outline srchbtn mr0 boxShdwNon"
+                                            // disabled={props.editableFormContent.editParent}
+                                            onClick={() => setIsModalOpen(true)}
+                                        >
+                                            <FaSearch />
+                                        </Button>
+                                    </Input.Group>
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
-                            <Row gutter={20}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
-                                    <Form.Item
-                                        label="Code"
-                                        name="Code"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please Enter the Code !',
-                                            },
-                                        ]}
-                                    >
-                                        <Input name="Code" onChange={handle} placeholder="Code" className={styles.inputBox} />
-                                    </Form.Item>
-                                </Col>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
+                                <Form.Item
+                                    label="Code"
+                                    name="Code"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please Enter the Code !',
+                                        },
+                                    ]}
+                                >
+                                    <Input name="Code" onChange={handle} placeholder="Code" className={styles.inputBox} />
+                                </Form.Item>
+                            </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
-                                    <Form.Item
-                                        label="Name"
-                                        name="Name"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input the name!',
-                                            },
-                                        ]}
-                                    >
-                                        <Input name="Name" onChange={handle} placeholder="Name" className={styles.inputBox} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
+                                <Form.Item
+                                    label="Name"
+                                    name="Name"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input the name!',
+                                        },
+                                    ]}
+                                >
+                                    <Input name="Name" onChange={handle} placeholder="Name" className={styles.inputBox} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                                    <Form.Item name="Active inactive button" label="Status">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                                <Form.Item name="Active inactive button" label="Status">
+                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                    <Button danger>
-                                        <FaEdit className={styles.buttonIcon} />
-                                        Edit
-                                    </Button>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                <Button danger>
+                                    <FaEdit className={styles.buttonIcon} />
+                                    Edit
+                                </Button>
 
-                                    <Button danger>
-                                        <FaUserPlus className={styles.buttonIcon} />
-                                        Add Child
-                                    </Button>
+                                <Button danger>
+                                    <FaUserPlus className={styles.buttonIcon} />
+                                    Add Child
+                                </Button>
 
-                                    <Button danger>
-                                        <FaUserFriends className={styles.buttonIcon} />
-                                        Add Sibling
-                                    </Button>
+                                <Button danger>
+                                    <FaUserFriends className={styles.buttonIcon} />
+                                    Add Sibling
+                                </Button>
 
-                                    <Button htmlType="submit" danger onClick={onSubmit}>
-                                        <FaSave className={styles.buttonIcon} />
-                                        Save
-                                    </Button>
+                                <Button htmlType="submit" danger onClick={onSubmit}>
+                                    <FaSave className={styles.buttonIcon} />
+                                    Save
+                                </Button>
 
-                                    <Button danger>
-                                        <FaUndo className={styles.buttonIcon} />
-                                        Reset
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Form>
-                    
+                                <Button danger>
+                                    <FaUndo className={styles.buttonIcon} />
+                                    Reset
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
                 </Col>
             </Row>
             <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />

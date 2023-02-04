@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { Form, Row, Col, Button, Input } from 'antd';
+import { Form, Row, Col, Button, Input, message } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
@@ -102,7 +102,6 @@ const Login = (props) => {
                     </div>
                     <div className={styles.loginWrap}>
                         <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -153,25 +152,25 @@ const Login = (props) => {
                                 </Col>
                             </Row>
                         </Form>
+                        {isError && (
+                            <div className={styles.errorBoxContainer}>
+                                <h5>
+                                    <span className={styles.icon}>
+                                        <FaExclamationTriangle size={18} />
+                                    </span>
+                                    <span className={styles.errorTitle}>{errorTitle}</span>
+                                    <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
+                                        <FaTimes size={18} />
+                                    </span>
+                                </h5>
+                                <div className="form_card">
+                                    <p>{errorMessage}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-            {isError && (
-                <div className="errorLoginPoP" id="loginErrorDiv">
-                    <h5>
-                        <span className="icon">
-                            <FaExclamationTriangle size={18} />
-                        </span>
-                        <span className={styles.errorTitle}>{errorTitle}</span>
-                        <span className="fr hide-btn loginErrorClose" onClick={() => doCloseLoginError()}>
-                            <FaTimes size={18} />
-                        </span>
-                    </h5>
-                    <div className="form_card">
-                        <p>{errorMessage}</p>
-                    </div>
-                </div>
-            )}
         </>
     );
 };
