@@ -6,7 +6,6 @@ import { axiosAPICall } from 'utils//axiosAPICall';
 import { withAuthToken, withAuthTokenAndUserId } from 'utils//withAuthToken';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
-import { useNavigate } from 'react-router-dom';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_ERROR = 'AUTH_LOGIN_ERROR';

@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-import styles from './ChangeHistory.module.css';
+import React from 'react';
 
 import { Col, Row, Table } from 'antd';
 

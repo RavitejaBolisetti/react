@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Input, Menu, Layout } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { IoIosDocument } from 'react-icons/io';
@@ -62,7 +62,6 @@ function getItem(label, key, icon, children, type) {
 }
 
 const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, userId, collapsed, setCollapsed }) => {
-    console.log('🚀 ~ file: LeftSideBar.js:63 ~ menuData', menuData);
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
@@ -70,12 +69,11 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, u
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    const location = useLocation();
-    const pagePath = location.pathname;
+    // const location = useLocation();
+    // const pagePath = location.pathname;
 
     const items = [];
 
-    // items.push(getItem(<Link to={getMenuValue(MenuConstant, menu.menuId, 'link')} menu.menuTitle, menu.menuId, getMenuValue(MenuConstant, menu.menuId, 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
     items.push(getItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
 
     items.push(
@@ -145,30 +143,12 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, u
     //     return undefined;
     // });
 
-    const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
-    const [openKeys, setOpenKeys] = useState(['sub1']);
     const [theme, setTheme] = useState('dark');
-    //const [theme, setTheme] = useState('light');
-    const onOpenChange = (keys) => {
-        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKeys(keys);
-        } else {
-            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-        }
-    };
-
     const onSearch = (value) => console.log(value);
 
     const onSubmit = (value) => {
-        console.log('🚀 ~ file: LeftSideBar.js:96 ~ onSubmit ~ value', value);
-
         setCollapsed(value);
     };
-
-    // const theme = 'light';
-    const handleTheme = () => {};
-    const defaultOpenKey = pagePath?.indexOf('dashboard') ? 'sub1' : pagePath?.indexOf('common') ? 'sub2' : '';
 
     return (
         <>
@@ -188,9 +168,9 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, u
 
                 <div className={styles.changeTheme} onClick={setTheme}>
                     {theme === 'dark' ? (
-                        <BsMoon size={18} backgroundColor='#dedede' />
+                        <BsMoon size={18} backgroundColor="#dedede" />
                     ) : (
-                        <BsSun size={18} backgroundColor='#dedede'/>
+                        <BsSun size={18} backgroundColor="#dedede" />
                         // <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 20" fill="none">
                         //     <path
                         //         fillRule="evenodd"

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { Splash } from 'components/Splash';
 import { LoginPage } from 'pages/auth/Login';
-import MetaTag from 'utils/MetaTag';
 import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
 
 const mapStateToProps = (state) => ({

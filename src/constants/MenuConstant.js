@@ -1,7 +1,7 @@
 import { AiFillCar } from 'react-icons/ai';
-import { BsFillStarFill, BsMoon } from 'react-icons/bs';
+import { BsFillStarFill } from 'react-icons/bs';
 import { BiRupee } from 'react-icons/bi';
-import { FaAddressBook ,FaCreativeCommonsShare,FaWrench} from 'react-icons/fa';
+import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { GrGroup } from 'react-icons/gr';
 
 import { getMenyKey } from 'utils/menuKey';
@@ -9,7 +9,7 @@ import { getMenyKey } from 'utils/menuKey';
 export const MenuConstant = {
     [getMenyKey('FAVS')]: {
         link: undefined,
-        icon: <BsFillStarFill fontSize={20}/>,
+        icon: <BsFillStarFill fontSize={20} />,
         parentMenuId: 'WEB',
     },
 
@@ -83,7 +83,6 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-11',
     },
-    
 
     [getMenyKey('DBP')]: {
         link: undefined,
@@ -93,7 +92,7 @@ export const MenuConstant = {
 
     [getMenyKey('FINA')]: {
         link: undefined,
-        icon:<BiRupee fontSize={20} />,
+        icon: <BiRupee fontSize={20} />,
         parentMenuId: 'WEB',
     },
 

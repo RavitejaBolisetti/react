@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, token, userId }) => {
+const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, dealerAvatar, dealerName, dealerLocation, userId }) => {
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, notificationCount } = loginUserData;
 
