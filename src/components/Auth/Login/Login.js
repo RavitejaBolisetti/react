@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { Form, Row, Col, Button } from 'antd';
+import { Form, Row, Col, Button, Input } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
 import { doLogin, doCloseLoginError, doCloseLoginFailure, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
@@ -106,7 +106,7 @@ const Login = (props) => {
                         <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
                             <Row>
-                                <Col span={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className="login-html">
                                         <div className="login-form">
                                             <div>
@@ -114,39 +114,23 @@ const Login = (props) => {
                                                     <h4>Welcome!</h4>
                                                     <div className="loginsubHeading">Please enter your credentials to login</div>
                                                 </div>
-                                                <Form.Item name="userId" rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
-                                                    <div className="input-group mb-3">
-                                                        <div className="input-group-prepend">
-                                                            <span className="input-group-text login_input-group-text">
-                                                                <AiOutlineMail size={18} />
-                                                            </span>
-                                                        </div>
-                                                        <input type="text" className="form-control input loginTextfield" placeholder="User ID(MILE ID.Parent ID)" />
-                                                    </div>
-                                                </Form.Item>
-                                                <Form.Item name="password" rules={[validateRequiredInputField('password')]}>
-                                                    <Row gutter={20}>
-                                                        <Col span={24}>
-                                                            <div className="input-group mb-3">
-                                                                {' '}
-                                                                <div className="input-group-prepend">
-                                                                    <span className="input-group-text login_input-group-text">
-                                                                        <AiOutlineLock size={18} />
-                                                                    </span>
-                                                                </div>
-                                                                <input type={showPassword ? 'text' : 'password'} id="password" className="form-control input loginTextfield" placeholder="Password" />
-                                                                <div className="input-group-prepend">
-                                                                    <span className="input-group-text login_input-group-text fr" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
-                                                                        {!showPassword ? <AiOutlineEyeInvisible className="text-[#DEDEDE]" size={18} /> : <AiOutlineEye className="text-white" size={18} />}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                </Form.Item>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
+                                                            <Input prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID(MILE ID.Parent ID)" />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <Form.Item name="password" rules={[validateRequiredInputField('password')]}>
+                                                            <Input.Password prefix={<AiOutlineLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
 
                                                 <Row gutter={20}>
-                                                    <Col span={24}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
                                                     </Col>
                                                 </Row>
