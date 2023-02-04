@@ -10,6 +10,7 @@ import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 
 import { menuDataActions } from 'store/actions/data/menu';
+import { setCollapsed } from 'store/actions/common/leftsidebar';
 
 import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            setCollapsed,
             fetchData: menuDataActions.fetchData,
             listShowLoading: menuDataActions.listShowLoading,
         },
