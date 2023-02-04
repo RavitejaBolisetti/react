@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Col, Row } from 'antd';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import styles from './FaqPage.module.css';
 
 const mapStateToProps = (state) => {
     const {
