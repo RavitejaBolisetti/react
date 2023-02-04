@@ -24,7 +24,9 @@ const { Sider } = Layout;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        data: { isLoaded: isDataLoaded = false, data: menuData = [] },
+        data: {
+            Menu: { isLoaded: isDataLoaded = false, data: menuData = [] },
+        },
         common: {
             LeftSideBar: { collapsed = false },
         },
@@ -62,6 +64,7 @@ function getItem(label, key, icon, children, type) {
 }
 
 const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, userId, collapsed, setCollapsed }) => {
+    console.log('🚀 ~ file: LeftSideBar.js:65 ~ menuData', menuData);
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
@@ -73,76 +76,67 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, u
     // const pagePath = location.pathname;
 
     const items = [];
+    const menuDefault = false;
 
-    items.push(getItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(<Link to={routing.ROUTING_DASHBOARD}>{'Dashboard'}</Link>, routing.ROUTING_DASHBOARD)]));
+    const prepareLink = (title, link = undefined) => (link ? <Link to={link}>{title}</Link> : title);
 
-    items.push(
-        getItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
-            getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Master'}</Link>),
-            getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
-            getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
-            getItem('Role Management', '5'),
-            getItem('User Self Registration', '6'),
-            getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
-            getItem('Dealer Hirerachy', '8'),
-            getItem('Dealer & Product Mapping', '9'),
-            getItem('Terms & Conditions- Dealer', '10'),
-            getItem('Terms & Conditions- Manufacturer', '11'),
-            getItem('Document Type Master', '12'),
-            getItem('Manufacturer Hirerachy', '13'),
-            getItem('Document Search', '14'),
-            getItem('Branch & Dealer Mapping', '15'),
-            getItem('Vehicle Details', '16'),
-            getItem('Application Master', '17'),
-        ]),
+    items.push(getItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))), getItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))), getItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link')))]));
 
-        getItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+    if (menuDefault) {
+        items.push(
+            getItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
+                getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Master'}</Link>),
+                getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
+                getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
+                getItem('Role Management', '5'),
+                getItem('User Self Registration', '6'),
+                getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
+                getItem('Dealer Hirerachy', '8'),
+                getItem('Dealer & Product Mapping', '9'),
+                getItem('Terms & Conditions- Dealer', '10'),
+                getItem('Terms & Conditions- Manufacturer', '11'),
+                getItem('Document Type Master', '12'),
+                getItem('Manufacturer Hirerachy', '13'),
+                getItem('Document Search', '14'),
+                getItem('Branch & Dealer Mapping', '15'),
+                getItem('Vehicle Details', '16'),
+                getItem('Application Master', '17'),
+            ]),
 
-        getItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
-        getItem('HR & MLES', 'HRS', getMenuValue(MenuConstant, 'HRS', 'icon')),
-        getItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-        getItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
-    );
+            getItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
 
-    // const items = [];
-    // menuData?.data.map((menu) => {
-    //     const subMenu = [];
-    //     // if (menu.subMenu) {
-    //     menu?.subMenu.map((menu) => {
+            getItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
+            getItem('HR & MLES', 'HR', getMenuValue(MenuConstant, 'HR', 'icon')),
+            getItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
+            getItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
+        );
+    } else {
+        if (menuData && menuData.length > 0) {
+            for (let index = 0; index < menuData.length; index++) {
+                const element = menuData[index];
 
-    //         subMenu.push(
-    //             customMenuLink({
-    //                 key: '1.1.' + menu.menuId,
-    //                 id: menu.menuId,
-    //                 title: menu.menuTitle,
-    //                 icon: menu.menuIconUrl,
-    //                 children: subMenu,
-    //             })
-    //         );
+                const childMenuData = [];
+                const childMenu = element['subMenu'];
+                if (childMenu && childMenu.length > 0) {
+                    const grandMenuData = [];
+                    for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
+                        const childElement = childMenu[childIndex];
 
-    //         subMenu.push(
-    //             customMenuLink({
-    //                 title: menu.menuTitle,
-    //                 key: menu.menuId,
-    //                 id: menu.menuId,
-    //                 icon: menu.menuIconUrl,
-    //             })
-    //         );
-    //         return undefined;
-    //     });
+                        const grandMenu = childElement['subMenu'];
+                        if (grandMenu && grandMenu.length > 0) {
+                            for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
+                                const grandElement = grandMenu[grandIndex];
+                                grandMenuData.push(getItem(grandElement.menuTitle, grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
+                            }
+                        }
+                        grandMenuData && grandMenuData.length > 0 ? childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData)) : childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
+                    }
+                }
 
-    //     items.push(
-    //         customMenuLink({
-    //             key: '1.1.' + menu.menuId,
-    //             id: menu.menuId,
-    //             title: menu.menuTitle,
-    //             icon: menu.menuIconUrl,
-    //             children: subMenu,
-    //         })
-    //     );
-    //     return undefined;
-    // });
-
+                childMenuData && childMenuData.length > 0 ? items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData)) : items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
+            }
+        }
+    }
     const [theme, setTheme] = useState('dark');
     const onSearch = (value) => console.log(value);
 

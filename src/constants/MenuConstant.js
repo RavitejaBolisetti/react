@@ -1,16 +1,34 @@
 import { AiFillCar } from 'react-icons/ai';
-import { BsFillStarFill } from 'react-icons/bs';
+import { FaHeart } from 'react-icons/fa';
 import { BiRupee } from 'react-icons/bi';
 import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { GrGroup } from 'react-icons/gr';
 
 import { getMenyKey } from 'utils/menuKey';
 
+import * as routing from './routing';
+
 export const MenuConstant = {
     [getMenyKey('FAVS')]: {
         link: undefined,
-        icon: <BsFillStarFill fontSize={20} />,
-        parentMenuId: 'WEB',
+        icon: <FaHeart fontSize={20} />,
+        parentMenuId: 'FAVS',
+    },
+    [getMenyKey('DASH')]: {
+        link: routing.ROUTING_DASHBOARD,
+        icon: undefined,
+        parentMenuId: 'FAVS',
+    },
+    [getMenyKey('GEO')]: {
+        link: routing.ROUTING_COMMON_GEO,
+        icon: undefined,
+        parentMenuId: 'FAVS',
+    },
+
+    [getMenyKey('PHI')]: {
+        link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
+        icon: undefined,
+        parentMenuId: 'FAVS',
     },
 
     [getMenyKey('COMN')]: {
@@ -96,7 +114,7 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('HRS')]: {
+    [getMenyKey('HR')]: {
         link: undefined,
         icon: <GrGroup fontSize={20} />,
         parentMenuId: 'WEB',
