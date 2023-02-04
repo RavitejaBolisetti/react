@@ -1,4 +1,5 @@
-import { LoginPage } from "./Login";
-import { ForgotPasswordPage } from "./ForgotPassword";
+import { LoginPage } from './Login';
+import { LogoutPage } from './Logout';
+import { ForgotPasswordPage } from './ForgotPassword';
 
-export { LoginPage, ForgotPasswordPage };
+export { LoginPage, LogoutPage, ForgotPasswordPage };

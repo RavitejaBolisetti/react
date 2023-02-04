@@ -12,10 +12,8 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-// import { FaHeart, FaRegHeart} from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
-import { BiHeart } from 'react-icons/bi';
 
 const { Option } = Select;
 const { confirm } = Modal;

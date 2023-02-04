@@ -18,9 +18,18 @@ p {
     margin-bottom: 0px !important;
 }
 
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: stretch;
+}
+
 .button {
     width: 100%;
     padding: 10px;
+    margin-top: 30px;
     text-transform: uppercase;
     height: auto;
     background-color: #ff3e5b;
@@ -34,11 +43,11 @@ p {
     background: url(assets/img/login_splash.png) no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
-    padding: 10px 0 0 0;
 }
 
-.loginSection .loginMMlogo {
+.loginSection .loginMnMlogo {
     float: right;
+    position: absolute;
     padding: 10px 10px 10px 0;
     width: 100%;
     text-align: right;
@@ -56,11 +65,8 @@ p {
     text-transform: uppercase;
 }
 
-.loginSection .login-wrap {
-    width: 32%;
-    /* height:98%; */
-    margin: 10px auto 10px;
-    padding: 0px 7px;
+.loginSection .loginWrap {
+    margin: 20px;
     background: #28272C;
     opacity: 0.8;
     box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
@@ -70,26 +76,23 @@ p {
     border: 0px solid #000000;
 }
 
-.loginSection .login-wrap .login-html {
-    width: 100%;
-    height: 100%;
-    padding: 10px 20px;
+.loginSection .loginWrap .loginHtml {
+    padding: 30px;
 }
 
-.loginSection .login-wrap .login-html .login-form {
-    min-height: 345px;
+.loginSection .loginWrap .loginHtml .loginForm {
+    padding: 20px auto;
     position: relative;
     perspective: 1000px;
     transform-style: preserve-3d;
 }
 
-.loginSection .login-wrap .login-html .login-form .loginHeading {
-    margin: 5px 0 16px;
+.loginSection .loginWrap .loginHtml .loginForm .loginHeading {
     padding: 0;
     text-align: center;
 }
 
-.loginSection .login-wrap .login-html .login-form .loginHeading h4 {
+.loginSection .loginWrap .loginHtml .loginForm .loginHeading h4 {
     font-size: 26px;
     color: #fff;
     text-align: center;
@@ -97,38 +100,39 @@ p {
     margin: 4px 0;
 }
 
-.loginSection .login-wrap .login-html .login-form .loginHeading .loginsubHeading {
+.loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginsubHeading {
     font-size: 14px;
     color: #fff;
+    margin-top: 10px;
     text-align: center;
     font-weight: normal;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group {
+.loginSection .loginWrap .loginHtml .loginForm .input-group {
     width: 100%;
     margin-bottom: 15px;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .input-group-prepend {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend {
     margin-right: -1px;
     display: flex;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .input-group-prepend .input-group-text {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {
     background: none;
     color: #fff;
     border: none;
     border-bottom: 1px solid #fff;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .input-group-prepend .input-group-text i {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text i {
     color: #fff;
     text-decoration: none;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .input,
-.loginSection .login-wrap .login-html .login-form .input-group .input:focus,
-.loginSection .login-wrap .login-html .login-form .input-group .input:active {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .input,
+.loginSection .loginWrap .loginHtml .loginForm .input-group .input:focus,
+.loginSection .loginWrap .loginHtml .loginForm .input-group .input:active {
     background: none;
     border: none;
     border-bottom: 1px solid #fff;
@@ -136,12 +140,12 @@ p {
     color: #fff;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .label,
-.loginSection .login-wrap .login-html .login-form .input-group .button {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .label,
+.loginSection .loginWrap .loginHtml .loginForm .input-group .button {
     text-transform: uppercase;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .button {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .button {
     width: 100%;
     color: #fff;
     display: block;
@@ -152,13 +156,13 @@ p {
     padding: 10px;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .logininputLabel {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .logininputLabel {
     color: #fff;
     font-size: 16px !important;
     margin: 4px 0 0 10px;
 }
 
-.loginSection .login-wrap .login-html .login-form .input-group .inputOTP {
+.loginSection .loginWrap .loginHtml .loginForm .input-group .inputOTP {
     width: 13%;
     color: #fff;
     display: block;
@@ -171,7 +175,7 @@ p {
     margin: 0 3px;
 }
 
-.loginSection .login-wrap .login-html .login-form .loginFooter {
+.loginSection .loginWrap .loginHtml .loginForm .loginFooter {
     color: #fff;
     text-align: center;
     font-weight: normal;
@@ -184,17 +188,16 @@ p {
     font-size: 12px;
 }
 
-.loginSection .login-wrap .login-html .login-form .loginFooter a {
+.loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
     font-size: 16px;
     color: #fff;
     text-align: center;
     font-weight: normal;
 }
 
-.loginSection .login-wrap .login-html .login-form .forgotOTPSec {
+.loginSection .loginWrap .loginHtml .loginForm .forgotOTPSec {
     display: none;
 }
-
 
 .form-control {
     display: block;
@@ -259,13 +262,9 @@ select.form-control:focus::-ms-value {
     width: 100%;
 }
 
-.mrt10 {
-    margin-top: 10px;
-}
-
-:global .Login_mrt10__7HwTM {
+/* :global .Login_mrt10__7HwTM {
     padding-right: 0px !important;
-}
+} */
 
 :global :where(.css-dev-only-do-not-override-169n7e2).ant-col {
     padding-right: 0px !important;
