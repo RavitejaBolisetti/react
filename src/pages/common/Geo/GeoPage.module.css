@@ -27,12 +27,13 @@
     line-height: 4px;
     padding-top: 3px;
     cursor: pointer;
+    color: #ff3e5b;
 }
 
 .pageHeaderNameSection {
     border-bottom: 1px solid #dedede;
     padding: 0px;
-    margin: 0 0 20px 0;
+    margin: 0 0 36px 0 !important;
 }
 
 .mb10 {
@@ -76,22 +77,26 @@
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     float: right;
 }
-
 .exitButton:hover,
 .exitButton:focus,
 .exitButton:active,
-.exitButton.active,
 .exitButton:active:focus,
 .exitButton.active:hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
 }
 
+.treeViewContainer {
+    clear: both;
+    margin-bottom: 10px;
+}
 .treeCollapsibleButton {
     border: 1px solid #ff3e5b;
     border-radius: 3px;
-    position: relative;
+    position: absolute;
     z-index: 10;
+    top: 136px;
+    /* left:266px; */
     padding: 5px;
     color: #ff3e5b;
     line-height: 2px;
@@ -99,16 +104,13 @@
     font-weight: 400;
     cursor: pointer;
     width: 30px;
-    margin: 10px auto 10px 10px;
+    margin: 10px auto 10px 15px;
     float: left;
     will-change: box-shadow, transform;
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.treeViewContainer {
-    clear: both;
-    margin-bottom: 10px;
-}
+
 
 .treeCollapsibleButton:hover,
 .treeCollapsibleButton:focus,
@@ -142,7 +144,7 @@
     box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
     border-radius: 10px;
     border-top-left-radius: 0;
-    /* margin-bottom: 0px; */
+    margin-bottom: 20px;
     height: 66vh;
     /* overflow-y: scroll; */
     white-space: nowrap;
@@ -162,10 +164,23 @@
 .outer {
     transition: max-width 1s;
 }
+.ant-row {
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 0;
+    /* margin-right: 0px !important; */
+}
 
 .formContainer {
     padding: 0px;
 }
+.pad10 {
+    padding: 0px;
+}
+:global .ant-form {
+     margin: 0px 0px 0px 46px;
+}
+
 :global .ant-btn-default {
     border-color: #d9d9d9;
 }
@@ -230,19 +245,21 @@
 
     .headingGradient {
         padding-bottom: 10px;
-        border-bottom: 4px solid;
-        border-image: linear-gradient(to right, #efa3a3, #cac9ee);
-        border-image-slice: 1;
+        border-bottom: 0px;      
         font-size: 15px;
+        font-weight: 600;
     }
-
-    .pageHeaderNameSection {
-        /* border-bottom: 1px solid #DEDEDE; */
-        border-bottom: 0px;
+        .pageHeaderNameSection {
+        border-bottom: 1px solid #DEDEDE;
+        /* border-bottom: 0px; */
         padding: 0px;
         margin: 0 0 10px 0;
-    }
-
+        width:71vw;
+     }
+     .leftpanel { 
+        height: auto;
+    }   
+    
     .buttonContainer {
         margin-top: 4px;
     }
@@ -254,7 +271,35 @@
         font-size: 12px;
         line-height: 2px;
     }
+    .formContainer {
+        padding: 10px;
+    }    
+       .pad10 {
+        padding: 10px;
+    }
+    .padLeft10{
+        padding-left: 10px !important;
+        padding-right: 0px !important;
+    }
+    .padRight0{
+        padding-right: 0px !important;
+    }
+    .gap{
+        gap: 8px;
+    }
+
+    .treeCollapsibleButton {
+        top: 184px;         
+    }
     :global .ant-input-group {
         width: auto;
+       
+    }
+    .TreeView_searchField__jn\+nY {
+        padding: 0 8px;
+        margin-bottom: 8px;
+        margin-top: 12px;
+        width: '100%';
     }
 }
+

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Select, Switch, Space, Modal } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft, FaHeart, FaRegHeart } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -12,7 +12,7 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from './GeoPage.module.css';
-import { BsFillHeartFill, BsStar, BsStarFill } from 'react-icons/bs';
+// import { FaHeart, FaRegHeart} from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import { BiHeart } from 'react-icons/bi';
@@ -30,7 +30,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
     };
-
     return returnValue;
 };
 
@@ -102,15 +101,15 @@ export const GeoPageBase = () => {
         <>
             <MetaTag metaTitle={'Geographical Hierarchy'} />
             <Row gutter={20}>
-                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18} className={styles.padRight0}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>Geographical Hierarchy</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? <BiHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsFillHeartFill size={14} onClick={handleFavouriteClick} />}</div>
+                        <div className={styles.favIconHeading}>{isFavourite ? < FaHeart  color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <FaRegHeart size={18} onClick={handleFavouriteClick} />}</div>
                     </Space>
                 </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
+                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.padRight0}>
                     <div className={styles.buttonContainer}>
                         <Button danger onClick={showConfirm}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
@@ -129,9 +128,9 @@ export const GeoPageBase = () => {
                 <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
                     {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
                 </div>
-            </Row>
+            </Row>			
             <Row gutter={20}>
-                {isTreeViewVisible ? (
+                              {isTreeViewVisible ? (
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <div className={styles.leftpanel}>
                             <div className={styles.treeViewContainer}>
@@ -143,11 +142,11 @@ export const GeoPageBase = () => {
                     </Col>
                 ) : undefined}
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
-                    <div className={styles.formContainer}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                   
                         <Form layout="vertical">
                             <Row gutter={20}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0} >
                                     <Form.Item name="Attribute Level" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                                         <Select>
                                             <Option value="Continent">Continent</Option>
@@ -160,7 +159,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}  style={{ padding: '0' }} className={styles.padLeft10}>
                                     <Form.Item
                                         label="Parent"
                                         name="Parent"
@@ -199,7 +198,7 @@ export const GeoPageBase = () => {
                             </Row>
 
                             <Row gutter={20}>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
                                     <Form.Item
                                         label="Code"
                                         name="Code"
@@ -214,7 +213,7 @@ export const GeoPageBase = () => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
                                     <Form.Item
                                         label="Name"
                                         name="Name"
@@ -231,7 +230,7 @@ export const GeoPageBase = () => {
                             </Row>
 
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                                     <Form.Item name="Active inactive button" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
                                     </Form.Item>
@@ -267,7 +266,7 @@ export const GeoPageBase = () => {
                                 </Col>
                             </Row>
                         </Form>
-                    </div>
+                    
                 </Col>
             </Row>
             <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
