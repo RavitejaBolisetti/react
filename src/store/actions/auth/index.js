@@ -138,11 +138,12 @@ export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => 
 
     const onWarning = (errorMessage) => loginError(errorMessage);
     const onSuccess = (res) => {
-        if (res?.data?.data) {
-            authPostLogin(res?.data?.data);
+        if (res?.data) {
+            authPostLogin(res?.data);
+            res?.responseMessage && message.info(res?.responseMessage);
             onLogin();
         } else {
-            loginError('There was an error, Please try again');
+            loginError({ message: 'There was an error, Please try again' });
         }
     };
 
@@ -154,7 +155,7 @@ export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => 
         onSuccess,
         onError: loginError,
         onWarning,
-        onTimeout: () => loginError('Request timed out, Please try again'),
+        onTimeout: () => loginError({ message: 'Request timed out, Please try again' }),
         postRequest: hideLoading,
         onUnAuthenticated: loginError,
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
@@ -173,8 +174,8 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
     const logoutError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
-        if (res?.data?.statusCode) {
-            message.info(res?.data?.responseMessage);
+        if (res) {
+            res?.responseMessage && message.info(res?.responseMessage);
             successAction && successAction();
             authPostLogout();
         } else {

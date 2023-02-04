@@ -37,9 +37,10 @@ const baseAPICall = (params) => {
             .request(axiosConfig)
             .then((response) => {
                 if (response.status === 200) {
+                    console.log('response', response);
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
-                            onSuccess();
+                            onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 404) {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage });
                         } else {

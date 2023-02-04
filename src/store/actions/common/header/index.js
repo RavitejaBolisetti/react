@@ -27,8 +27,8 @@ headerDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) =>
     const onError = () => errorAction('Internal Error, Please try again');
 
     const onSuccess = (res) => {
-        if (res?.data?.statusCode === 200) {
-            dispatch(receiveHeaderData(res?.data?.data));
+        if (res?.data) {
+            dispatch(receiveHeaderData(res?.data));
         } else {
             onError();
         }

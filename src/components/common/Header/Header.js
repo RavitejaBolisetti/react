@@ -48,12 +48,14 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, dealerAvatar, dealerName, dealerLocation, userId }) => {
+const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, userId }) => {
     const navigate = useNavigate();
-    const { firstName = '', lastName = '', mobileNo, notificationCount } = loginUserData;
+    const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
+    const delarAvtarData = dealerName?.split(' ');
+    const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
     useEffect(() => {
         if (!isDataLoaded) {

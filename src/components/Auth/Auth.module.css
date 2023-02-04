@@ -262,6 +262,11 @@ select.form-control:focus::-ms-value {
     width: 100%;
 }
 
+.errorTitle {
+    margin-left: 5px;
+    padding-left: 5px;
+}
+ 
 /* :global .Login_mrt10__7HwTM {
     padding-right: 0px !important;
 } */

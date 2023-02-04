@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { Form, Row, Col, Button } from 'antd';
+import { Form, Row, Col, Button, message } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
@@ -54,6 +54,11 @@ const Login = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [captcha, setCaptcha] = useState(false);
 
+    useEffect(() => {
+        doCloseLoginError();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const navigate = useNavigate();
     const recaptchaRef = React.useRef(null);
 
@@ -61,15 +66,16 @@ const Login = (props) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
-            
             doLogin(values, loginPageIsLoading, () => navigate(ROUTING_DASHBOARD));
             form.resetFields();
-
+            setCaptcha('');
+            recaptchaRef.current.reset();
             // localStorage.setItem('userData', JSON.stringify(response.data));
             // message.info(response.data.responseMessage);
             // setPost(response.data);
             // recaptchaRef.current.reset();
-            // setCaptcha('');
+        } else {
+            message.error('Please select capcha');
         }
     };
 
@@ -176,8 +182,7 @@ const Login = (props) => {
                         <span className="icon">
                             <FaExclamationTriangle size={18} />
                         </span>
-                        {errorTitle}
-                        {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
+                        <span className={styles.errorTitle}>{errorTitle}</span>
                         <span className="fr hide-btn loginErrorClose" onClick={() => doCloseLoginError()}>
                             <FaTimes size={18} />
                         </span>
