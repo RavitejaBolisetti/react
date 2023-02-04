@@ -15,9 +15,6 @@ import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 
-import 'assets/style/new_robin.css';
-import 'assets/style/new_robin.scss';
-
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
 
@@ -92,90 +89,87 @@ const Login = (props) => {
         }
     };
     return (
-        <div className="loginSection">
-            <div className="loginMMlogo">
+        <div className={styles.loginSection}>
+            <div className={styles.loginMnMlogo}>
                 <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
             </div>
-            <div className="loginlogoSection">
-                <img src={IMAGES.RL_LOGO} alt="" />
-                <div className="logotext">Dealer Management System</div>
-            </div>
-            <Row>
-                <Col xs={20} sm={18} md={14} lg={12} xl={8} style={{ margin: '23px auto 0' }}>
-                    <div className="login-wrap">
-                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className="login-html">
-                                        <div className="login-form">
-                                            <div>
-                                                <div className="loginHeading">
-                                                    <h4>Welcome!</h4>
-                                                    <div className="loginsubHeading">Please enter your credentials to login</div>
-                                                </div>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID(MILE ID.Parent ID)')]}>
-                                                            <Input prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID(MILE ID.Parent ID)" />
-                                                        </Form.Item>
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="password" rules={[validateRequiredInputField('password')]}>
-                                                            <Input.Password prefix={<AiOutlineLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
-                                                        </Form.Item>
-                                                    </Col>
-                                                </Row>
-
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
-                                                    </Col>
-                                                </Row>
-
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mrt10}>
-                                                        <Button className={styles.button} type="primary" htmlType="submit">
-                                                            Login
-                                                        </Button>
-                                                    </Col>
-                                                </Row>
-                                                <div className="hr"></div>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="loginFooter" type="radio">
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
+            <div className={styles.center}>
+                <div className={styles.loginLogoSection}>
+                    <img src={IMAGES.RL_LOGO} alt="" />
+                    <div className={styles.logoText}>Dealer Management System</div>
+                </div>
+                <div className={styles.loginWrap}>
+                    <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        {/* <Form form={form} name="login_from" onSubmit={handleSubmit}> */}
+                        <Row>
+                            <Col span={24}>
+                                <div className={styles.loginHtml}>
+                                    <div className={styles.center}>
+                                        <div className={styles.loginForm}>
+                                            <div className={styles.loginHeading}>
+                                                <h4>Welcome!</h4>
+                                                <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                             </div>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
+                                                        {<Input prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
+                                                        {/* As discussed with Rahul */}
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
+                                                        <Input.Password prefix={<AiOutlineLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit">
+                                                        Login
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                            {/* <div className="hr"></div> */}
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <div className={styles.loginFooter} type="radio">
+                                                        <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                    </div>
+                                                </Col>
+                                            </Row>
                                         </div>
                                     </div>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </div>
-                </Col>
-            </Row>
-            {isError && (
-                <div className="errorLoginPoP" id="loginErrorDiv">
-                    <h5>
-                        <span className="icon">
-                            <FaExclamationTriangle size={18} />
-                        </span>
-                        {'Error'}
-                        {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
-                        <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
-                            <FaTimes size={18} />
-                        </span>
-                    </h5>
-                    <div className="form_card">
-                        <p>{message}</p>
-                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Form>
+                    {isError && (
+                        <div className="errorLoginPoP" id="loginErrorDiv">
+                            <h5>
+                                <span className="icon">
+                                    <FaExclamationTriangle size={18} />
+                                </span>
+                                {'Error'}
+                                {/* <span className="fr hide-btn loginErrorClose" onClick={() => {}}> */}
+                                <span className="fr hide-btn loginErrorClose" onClick={() => hideError()}>
+                                    <FaTimes size={18} />
+                                </span>
+                            </h5>
+                            <div className="form_card">
+                                <p>{message}</p>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
