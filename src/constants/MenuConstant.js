@@ -108,7 +108,7 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('FINA')]: {
+    [getMenyKey('Finac')]: {
         link: undefined,
         icon: <BiRupee fontSize={20} />,
         parentMenuId: 'WEB',
@@ -120,18 +120,30 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('SALS')]: {
+    [getMenyKey('Sales')]: {
         link: undefined,
         icon: <AiFillCar fontSize={20} />,
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('SERS')]: {
+    [getMenyKey('SERV')]: {
         link: undefined,
         icon: <FaWrench fontSize={20} />,
         parentMenuId: 'WEB',
     },
+   
     [getMenyKey('ADMN')]: {
+        link: undefined,
+        icon: <FaUserTie fontSize={18} />,
+        parentMenuId: 'WEB',
+    },
+
+    [getMenyKey('SPR')]: {
+        link: undefined,
+        icon: <FaUserTie fontSize={18} />,
+        parentMenuId: 'WEB',
+    },
+    [getMenyKey('CRM')]: {
         link: undefined,
         icon: <FaUserTie fontSize={18} />,
         parentMenuId: 'WEB',
