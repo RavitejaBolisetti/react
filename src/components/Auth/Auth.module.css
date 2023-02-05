@@ -2,9 +2,7 @@
     margin-bottom: 5px !important;
 } */
 
-body {
-    overflow: hidden;
-}
+
 
 .loginSection :global .ant-form-item-explain-error {
     font-size: 11px;
