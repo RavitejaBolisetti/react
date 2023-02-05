@@ -1,3 +1,20 @@
+
+body::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  background-color: #F4F4F4;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #F4F4F4;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ea3434;
+  border-radius: 10px;
+  /* border: 2px solid ; */
+}
 .splashContainer {
   height: 100vh;
   width: 100%;
