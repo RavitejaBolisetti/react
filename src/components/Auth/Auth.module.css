@@ -110,6 +110,7 @@ p {
     border-style: none none solid none;
     color: #ffffff;
     font-size: 18px;
+    border-radius: 0;
 }
 
 .loginSection :global .ant-input-affix-wrapper .ant-input-prefix::placeholder {
@@ -133,6 +134,11 @@ p {
 
 .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
     color: #ffffff;
+}
+
+.loginSection :global .ant-input-affix-wrapper:focus, 
+.loginSection :global .ant-input-affix-wrapper-focused{
+    box-shadow: none;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .logOutHeading {
