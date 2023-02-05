@@ -1,3 +1,43 @@
+
+.dashboardContainer :global .ant-card .ant-card-head-title {
+  font-size: 1.1rem;
+  float: left;
+  font-weight: 500;
+}
+
+
+/* .dashboardContainer :global .ant-card.ant-card-body {
+  padding: 12px;
+} */
+
+
+.dashboardContainer :global .ant-carousel .slick-dots li button::after {
+  background-color: #EA3434;
+  /* margin: 5px; */
+  inset: 0.5em;
+}
+
+.dashboardContainer :global .ant-carousel .slick-dots li button {
+  margin: 10px 30px 0px 2px;
+  /* top: 46px; */
+  padding: 0px 10px;
+}
+
+.dashboardContainer :global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
+  padding: 24px 5px;
+  border-radius: 0 0 8px 8px;
+  height: 250px;
+}
+
+.dashboardContainer :global .ant-row {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 0;
+  margin-right: 0px !important;
+}
+/* .dashboardContainer :global .ant-carousel .slick-dots-bottom{
+  bottom: 47px;
+} */
 .container {
   padding: 20px;
 }
@@ -8,29 +48,6 @@
   margin-bottom: 30px;
 }
 
-.dashboardContainer :global .ant-card .ant-card-head-title {
-  font-size: 1.1rem;
-  float: left;
-  font-weight: 500;
-}
-
-
-.dashboardContainer :global .ant-card.ant-card-body {
-  padding: 12px;
-}
-
-
-.dashboardContainer :global .ant-carousel .slick-dots li button::after {
-  background-color: #EA3434;
-  /* margin: 5px; */
-  inset: 0.5em;
-}
-
-.dashboardContainer :global .ant-carousel .slick-dots li button {
-  margin: 0px 30px 0px 2px;
-  top: 46px;
-  padding: 0px 10px;
-}
 
 
 .mb10 {
@@ -68,21 +85,155 @@
   /* overflow: auto; --
   padding: 10px;
 } */
-
-.dashboardContainer :global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
-  padding: 24px;
-  border-radius: 0 0 8px 8px;
-  height: 250px;
+.dashboardGraph{
+  /* border:1px solid red; */
 }
 
-.dashboardContainer :global .ant-row {
-  display: flex;
-  flex-flow: row wrap;
-  min-width: 0;
-  margin-right: 0px !important;
+.dashboardGraph .dashboardGraphBox {
+  width: 100%;
+  overflow: hidden;
 }
 
-@media only screen and (max-width: 768px) {
+.dashboardGraph .dashboardGraphBox .graphBoxfirstSec,
+.dashboardGraph .dashboardGraphBox .graphBoxSecoundSec,
+.dashboardGraph .dashboardGraphBox .graphBoxthirdSec,
+.dashboardGraph .dashboardGraphBox .graphBoxforthSec {
+  width: 50%;
+  height: 85px;
+  float: left;
+  overflow: hidden;
+  border: 1px solid #F4F4F4;
+  text-align: center;
+  font-size: 45px;
+  padding: 11px 0;
+}
+
+.dashboardGraph .dashboardGraphBox .graphBoxfirstSec {
+  border-left: 0px solid #F4F4F4;
+  border-top: 0px solid #F4F4F4;
+  color: #007bff;
+}
+
+.dashboardGraph .dashboardGraphBox .graphBoxSecoundSec {
+  border-right: 0px solid #F4F4F4;
+  border-top: 0px solid #F4F4F4;
+  color: #ea3434;
+}
+
+.dashboardGraph .dashboardGraphBox .graphBoxthirdSec {
+  border-left: 0px solid #F4F4F4;
+  border-bottom: 0px solid #F4F4F4;
+  color: #ffc107
+}
+
+.dashboardGraph .dashboardGraphBox .graphBoxforthSec {
+  border-right: 0px solid #F4F4F4;
+  border-bottom: 0px solid #F4F4F4;
+  color: #28a745;
+}
+.buttonHolder {
+  text-align: center;
+  width: 100%;
+}
+
+.dashboardList {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  width: 100%
+}
+
+.dashboardList li {
+  margin: 5px 0px;
+  padding: 0px;
+  list-style: none;
+  width: 100%
+}
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+.badgedanger {
+  color: #fff;
+  background-color: #dc3545;
+}
+.scrollbar {
+  margin: 0px;
+  float: left;
+  height: 220px;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+  background-color: #fff;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  background-color: #fff;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3); */
+  background-color: #dc3545;
+}
+
+.newsCarsulalContaner {
+  margin: 0px;
+  padding: 20px;
+}
+
+.newsCarsulalContaner h4 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #ea3434;
+}
+
+.newsCarsulalContaner .textContaner {
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.9rem;
+  color: #343a40;
+  height: 130px;
+}
+.birthContaner {
+  min-height: 200px;  
+  
+}
+.birthContaner .birthdayImgcontaner {
+  margin: 0 10px;
+  width:25%;
+  float:left;
+}
+.birthContaner .birthdayTxtcontaner {
+  margin: 0 10px;
+  width:60%;
+  float:left;
+}
+
+.birthdayTxtcontaner .birthdayName {
+  color: #ea3434;
+  font-size: 14px;
+}
+
+.birthdayTxtcontaner .birthdayCal {
+  color: #343a40;
+  font-size: 16px;
+}
+
+@media onlxy screen and (max-width: 768px) {
 
   /* For mobile phones: */
   [class*="col-"] {

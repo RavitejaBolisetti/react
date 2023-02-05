@@ -70,23 +70,23 @@ const DashboardPageBase = ({ props }) => {
                         className={styles.mb10}
                     >
                         <div>
-                            <div className="direct-chat-messages">
-                                <div className="dashboardGraphBox">
-                                    <div className="graphBoxfirstSec">
+                            <div className={styles.dashboardGraph}>
+                                <div className={styles.dashboardGraphBox}>
+                                    <div className={styles.graphBoxfirstSec}>
                                         <BsFillBarChartFill />
                                     </div>
-                                    <div className="graphBoxSecoundSec">
+                                    <div  className={styles.graphBoxSecoundSec}>
                                         <FaChartPie />
                                     </div>
-                                    <div className="graphBoxthirdSec">
+                                    <div className={styles.graphBoxthirdSec}>
                                         <BiLineChart />
                                     </div>
-                                    <div className="graphBoxforthSec">
+                                    <div className={styles.graphBoxforthSec}>
                                         <FaChartArea />
                                     </div>
                                 </div>
 
-                                <div className="buttonHolder">
+                                <div className={styles.buttonHolder}>
                                     <Button onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15" danger>
                                         View Dashboard
                                     </Button>
@@ -105,32 +105,41 @@ const DashboardPageBase = ({ props }) => {
                         className={styles.mb10}
                     >
                         <div className={styles.directChatMessages}>
-                            <div className="scrollbar" id="scrollHBar">
+                            <div className={styles.scrollbar}>
                                 <div className="force-overflow">
-                                    <ul className="dashboardList">
+                                    <ul className={styles.dashboardList}>
                                         <li>
-                                            Enquiries to be followed up <span className="badge badge-danger right">6</span>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
                                         <li>
-                                            Pending POs to be released <span className="badge badge-danger right">12</span>
+                                            Pending POs to be released <span className={`${styles.badge} ${styles.badgedanger}`}>12</span>
                                         </li>
                                         <li>
-                                            Vehicles to be delivered <span className="badge badge-danger right">10</span>
+                                            Vehicles to be delivered <span className={`${styles.badge} ${styles.badgedanger}`}>10</span>
                                         </li>
                                         <li>
-                                            Enquiries to be followed up <span className="badge badge-danger right">6</span>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
                                         <li>
-                                            Enquiries to be followed up <span className="badge badge-danger right">6</span>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
                                         <li>
-                                            Enquiries to be followed up <span className="badge badge-danger right">6</span>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
                                         <li>
-                                            Enquiries to be followed up <span className="badge badge-danger right">6</span>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
                                         <li>
-                                            Enquiries to be followed up <span className="badge badge-danger right">6</span>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
+                                        </li>
+                                        <li>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
+                                        </li>
+                                        <li>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
+                                        </li>
+                                        <li>
+                                            Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -148,30 +157,30 @@ const DashboardPageBase = ({ props }) => {
                         className={styles.mb10}
                     >
                         <Carousel autoplay>
-                            <div>
-                                <h4>Lorem Ipsum is simply dummy text.</h4>
-                                <div className="textContaner">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled </div>
-                                <div className="buttonHolder">
+                            <div className={styles.newsCarsulalContaner}>
+                                <h4>Anand Mahindra Highlights Car Price Hikes Over 50 Years Ago</h4>
+                                <div className="textContaner">Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago. </div>
+                                <div className={styles.buttonHolder}>
                                     <Button danger onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
                                     </Button>
                                 </div>
                             </div>
 
-                            <div>
-                                <h4>Lorem Ipsum is simply dummy text.</h4>
-                                <div className="textContaner">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled </div>
-                                <div className="buttonHolder">
+                            <div className={styles.newsCarsulalContaner}>
+                                <h4>What to expect from Mahindra's Born Electric concept SUVs</h4>
+                                <div className="textContaner">Homegrown SUV specialist Mahindra revealed five concept electric SUVs at the brand's European design studio in August last year. </div>
+                                <div className={styles.buttonHolder}>
                                     <Button danger onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
                                     </Button>
                                 </div>
                             </div>
 
-                            <div>
-                                <h4>Lorem Ipsum is simply dummy text.</h4>
-                                <div className="textContaner">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled </div>
-                                <div className="buttonHolder">
+                            <div className={styles.newsCarsulalContaner}>
+                                <h4>Mahindra SUV sales up 66% </h4>
+                                <div className="textContaner">Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.</div>
+                                <div className={styles.buttonHolder}>
                                     <Button danger onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
                                     </Button>
@@ -205,35 +214,35 @@ const DashboardPageBase = ({ props }) => {
                         className={styles.mb10}
                     >
                         <Carousel autoplay>
-                            <div>
+                            <div className={styles.birthContaner}>
                                 <div className="row ">
-                                    <div className="col-md-3">
+                                    <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>
-                                    <div className="col-md-8 birthdayTxtcontaner">
-                                        <div className="birthdayName">First Name, Last Name</div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
                                         <div>Today - 22 Nov.</div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <div className="row ">
-                                    <div className="col-md-3">
+                            <div className={styles.birthContaner}>
+                                 <div className="row ">
+                                    <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>
-                                    <div className="col-md-8 birthdayTxtcontaner">
-                                        <div className="birthdayName">First Name1, Last Name1</div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
                                         <div>Today - 22 Nov.</div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div className={styles.birthContaner}>
                                 <div className="row ">
-                                    <div className="col-md-3">
+                                    <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>
-                                    <div className="col-md-8 birthdayTxtcontaner">
-                                        <div className="birthdayName">First Name2, Last Name2</div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
                                         <div>Today - 22 Nov.</div>
                                     </div>
                                 </div>
