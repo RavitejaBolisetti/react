@@ -1,26 +1,96 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Col, Row, Table } from 'antd';
+import styles from './ChangeHistory.module.css';
 
-const columns = [
-    {
+import { Table } from 'antd';
+import moment from 'moment';
+
+const sortDateFn = (a, b) => moment(a.ChangeDate, 'DD-MM-YYYY') - moment(b.ChangeDate, 'DD-MM-YYYY');
+const generalsorter = (a, b) => {
+    if (a.EmployeeName !== undefined) {
+        if (a.EmployeeName > b.EmployeeName) {
+            return 1;
+        } else if (a.EmployeeName < b.EmployeeName) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else if (a.Code !== undefined) {
+        if (a.Code > b.Code) {
+            return 1;
+        } else if (a.Code < b.Code) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else if (a.Attribute !== undefined) {
+        if (a.Attribute > b.Attribute) {
+            return 1;
+        } else if (a.Attribute < b.Attribute) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else if (a.ShortDescription !== undefined) {
+        if (a.ShortDescription > b.ShortDescription) {
+            return 1;
+        } else if (a.Attribute < b.Attribute) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else {
+        if (a.LongDescription > b.LongDescription) {
+            return 1;
+        } else if (a.LongDescription < b.LongDescription) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+};
+const onFilterFn = (value, record) => {
+    if (record.ChangeDate !== undefined) {
+        return record.ChangeDate.startsWith(value);
+    } else if (record.EmployeeCode !== undefined) {
+        return record.EmployeeCode.startsWith(value);
+    } else if (record.EmployeeName !== undefined) {
+        return record.EmployeeName.startsWith(value);
+    }
+};
+
+const tblPrepareColumns = ({ title, dataIndex, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined }) => {
+    return {
+        title,
+        dataIndex,
+        ellipsis,
+        filters,
+        filterMode,
+        filterSearch,
+        onFilter: onFilterFn,
+        sorter: sortFn,
+    };
+};
+
+const tableColumn = [];
+
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Changed/Modified Date ',
         dataIndex: 'ChangeDate',
-        ellipsis: false,
         filters: [
             {
                 text: '12/09/2023',
                 value: '12/09/2023',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.ChangeDate.startsWith(value),
-        // sorter: (a, b) => new Date(a.ChangeDate).toLocaleString() - new Date(b.ChangeDate).toLocaleString(),
-        sorter: (a, b) => new Date(a.ChangeDate).valueOf() - new Date(b.ChangeDate),
-    },
+        sortFn: sortDateFn,
+        onFilterFn: onFilterFn,
+    })
+);
 
-    {
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Employee Code',
         dataIndex: 'EmployeeCode',
         filters: [
@@ -29,147 +99,105 @@ const columns = [
                 value: '19489',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.EmployeeCode.startsWith(value),
-        ellipsis: true,
-    },
-    {
+        onFilter: onFilterFn,
+    })
+);
+
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Employee Name',
         dataIndex: 'EmployeeName',
-        ellipsis: true,
+
         filters: [
             {
                 text: 'Vivek',
                 value: 'Vivek',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.EmployeeName.startsWith(value),
-        sorter: (a, b) => {
-            if (a.EmployeeName > b.EmployeeName) {
-                return 1;
-            } else if (a.EmployeeName < b.EmployeeName) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
+        sortFn: generalsorter,
+        onFilter: onFilterFn,
+    })
+);
 
-    // {
-    //     title: 'Attribute',
-    //     dataIndex: 'Attribute',
-    //     sorter: (a, b) => a.age - b.age,
-    //     width: '30%',
-    // },
-    {
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Attribute',
         dataIndex: 'Attribute',
-        ellipsis: true,
         filters: [
             {
                 text: 'Attribute 6',
                 value: 'Attribute 6',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Attribute.startsWith(value),
-        sorter: (a, b) => {
-            if (a.Attribute > b.Attribute) {
-                return 1;
-            } else if (a.Attribute < b.Attribute) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
-        title: ' Code',
+        sortFn: generalsorter,
+        onFilter: onFilterFn,
+    })
+);
+tableColumn.push(
+    tblPrepareColumns({
+        title: 'Code',
         dataIndex: 'Code',
-        ellipsis: true,
+
         filters: [
             {
                 text: 'UP',
                 value: 'UP',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Code.startsWith(value),
-        sorter: (a, b) => {
-            if (a.Code > b.Code) {
-                return 1;
-            } else if (a.Code < b.Code) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-
-    {
+        sortFn: generalsorter,
+        onFilter: onFilterFn,
+    })
+);
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Parent',
         dataIndex: 'Parent',
-        ellipsis: true,
+
         filters: [
             {
                 text: 'India',
                 value: 'India',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Parent.startsWith(value),
-    },
-    {
+        onFilter: onFilterFn,
+    })
+);
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Short Description',
         dataIndex: 'ShortDescription',
-        ellipsis: true,
+
         filters: [
             {
                 text: 'SMT 7STR',
                 value: 'SMT 7STR',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.ShortDescription.startsWith(value),
-        sorter: (a, b) => {
-            if (a.ShortDescription > b.ShortDescription) {
-                return 1;
-            } else if (a.ShortDescription < b.ShortDescription) {
-                return -1;
-            } else {
-                return 0;
-            }
-        },
-        sortDirections: ['descend', 'ascend'],
-    },
-    {
+        sortFn: generalsorter,
+        onFilter: onFilterFn,
+    })
+);
+
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Long Description',
         dataIndex: 'LongDescription',
-        ellipsis: true,
+
         filters: [
             {
                 text: 'This Smt 7STR..',
                 value: 'This Smt 7STR variant comes..',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.LongDescription.startsWith(value),
-    },
-    {
+        sortFn: generalsorter,
+        onFilter: onFilterFn,
+    })
+);
+tableColumn.push(
+    tblPrepareColumns({
         title: 'Status',
         dataIndex: 'Status',
-        ellipsis: true,
+
         filters: [
             {
                 text: 'Active',
@@ -180,12 +208,454 @@ const columns = [
                 value: 'Inactive',
             },
         ],
-        filterMode: 'tree',
-        filterSearch: true,
-        onFilter: (value, record) => record.Status.startsWith(value),
-    },
-];
+    })
+);
+
 const data = [
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek Aggarwal',
+        Attribute: 'Attribute 5',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 3',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 2',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'IMG 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek Aggarwal',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 6',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'IMG 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek Aggarwal',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 6',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'IMG 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek Aggarwal',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 6',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'IMG 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek Aggarwal',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '11/09/2023',
+        EmployeeCode: '19488',
+        EmployeeName: 'vivek Sharma',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '14/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Bishnoi Agasd',
+        Attribute: 'Attribute 6',
+        Code: 'MP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2022',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'IMG 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Inactive',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19484',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'Germany',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+    {
+        ChangeDate: '12/09/2023',
+        EmployeeCode: '19489',
+        EmployeeName: 'Vivek',
+        Attribute: 'Attribute 6',
+        Code: 'UP',
+        Parent: 'India',
+        ShortDescription: 'SMT 7STR',
+        LongDescription: 'This Smt 7STR variant comes..',
+        Status: 'Active',
+    },
+
     {
         ChangeDate: '12/09/2023',
         EmployeeCode: '19489',
@@ -275,33 +745,23 @@ const data = [
         Status: 'Active',
     },
 ];
+
 const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
 };
 
 export const ChangeHistory = () => {
     return (
-        <>
-            <Row gutter={40}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h5>Change History</h5>
-                </Col>
-            </Row>
-            <Row gutter={40}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Table
-                        columns={columns}
-                        dataSource={data}
-                        pagination={{
-                            position: ['bottomLeft'],
-                        }}
-                        onChange={onChange}
-                        scroll={{
-                            x: 'auto',
-                        }}
-                    />
-                </Col>
-            </Row>
-        </>
+        <Table
+            columns={tableColumn}
+            dataSource={data}
+            pagination={{
+                position: ['bottomLeft'],
+            }}
+            onChange={onChange}
+            scroll={{
+                x: 'auto',
+            }}
+        />
     );
 };

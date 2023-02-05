@@ -8,13 +8,13 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import TreeView from 'components/common/TreeView';
-import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import styles from '../Common.module.css';
 import { connect } from 'react-redux';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
 import { PageHeader } from 'pages/common/PageHeader';
 import { addToolTip } from 'utils/customMenuLink';
+import { ChangeHistory } from '../ChangeHistory';
 
 const { confirm } = Modal;
 const { TextArea } = Input;
@@ -111,7 +111,7 @@ export const ProductHierarchyBase = () => {
                     </Col>
                 ) : undefined}
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.paddingRightZero}>
+                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
                     {isChangeHistoryVisible ? (
                         <ChangeHistory />
                     ) : (
