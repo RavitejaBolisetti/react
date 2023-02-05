@@ -125,7 +125,7 @@ const getParentKey = (key, tree) => {
     return parentKey;
 };
 
-const TreeView = ({ isOpenInModal }) => {
+const TreeView = ({ dataList, isOpenInModal }) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -136,7 +136,6 @@ const TreeView = ({ isOpenInModal }) => {
 
     const onChange = (e) => {
         const { value } = e.target;
-        // console.log('Kuldeep', dataList, value);
         const newExpandedKeys = dataList
             .map((item) => {
                 if (item.title.indexOf(value) > -1) {
@@ -189,7 +188,7 @@ const TreeView = ({ isOpenInModal }) => {
         <div className={isOpenInModal ? styles.modalView : ''}>
             <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
             <div className={styles.scrollTreeData}>
-                <Tree showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={treeData} />
+                <Tree fieldNames={{ title: 'geoName', key: 'geoCode', children: 'subGeo' }} showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={dataList} />
             </div>
         </div>
     );

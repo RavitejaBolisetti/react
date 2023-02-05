@@ -64,7 +64,6 @@ function getItem(label, key, icon, children, type) {
 }
 
 const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, userId, collapsed, setCollapsed }) => {
-    console.log('🚀 ~ file: LeftSideBar.js:65 ~ menuData', menuData);
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
@@ -115,25 +114,28 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, u
             for (let index = 0; index < menuData.length; index++) {
                 const element = menuData[index];
 
-                const childMenuData = [];
                 const childMenu = element['subMenu'];
                 if (childMenu && childMenu.length > 0) {
-                    const grandMenuData = [];
+                    const childMenuData = [];
                     for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
                         const childElement = childMenu[childIndex];
 
                         const grandMenu = childElement['subMenu'];
                         if (grandMenu && grandMenu.length > 0) {
+                            const grandMenuData = [];
                             for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
                                 const grandElement = grandMenu[grandIndex];
                                 grandMenuData.push(getItem(grandElement.menuTitle, grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
                             }
+                            childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
+                        } else {
+                            childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                         }
-                        grandMenuData && grandMenuData.length > 0 ? childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData)) : childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                     }
+                    items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
+                } else {
+                    items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                 }
-
-                childMenuData && childMenuData.length > 0 ? items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData)) : items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
             }
         }
     }

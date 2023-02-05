@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Form, Row, Col, Input, Select, Switch, Button, Modal, Space } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft, FaHistory } from 'react-icons/fa';
+import { Form, Row, Col, Input, Select, Switch, Button, Modal } from 'antd';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -11,7 +11,6 @@ import TreeView from 'components/common/TreeView';
 import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import styles from '../Common.module.css';
 import { connect } from 'react-redux';
-import { BsStar, BsStarFill } from 'react-icons/bs';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
 import { PageHeader } from '../PageHeader';

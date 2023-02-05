@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select, Switch, Space, Modal } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaLongArrowAltLeft, FaAngleDoubleRight, FaAngleDoubleLeft, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { bindActionCreators } from 'redux';
+import { useNavigate } from 'react-router-dom';
+import { Button, Col, Input, Form, Row, Select, Switch, Modal } from 'antd';
+import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -11,10 +13,9 @@ import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
 
 import styles from '../Common.module.css';
-// import styles from './GeoPage.module.css';
-import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
+import { geoDataActions } from 'store/actions/data/geo';
 import { PageHeader } from '../PageHeader';
 
 const { Option } = Select;
@@ -22,19 +23,45 @@ const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
+        data: {
+            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+        },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
     let returnValue = {
+        userId,
+        isDataLoaded,
+        geoData,
         collapsed,
     };
     return returnValue;
 };
 
-export const GeoPageBase = () => {
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: geoDataActions.fetchList,
+            listShowLoading: geoDataActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShowLoading }) => {
+    console.log('🚀 ~ file: GeoPage.js:56 ~ GeoPageBase ~ geoData', geoData);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded]);
 
     const [activate, setActivate] = useState({
         Attribute: '',
@@ -123,7 +150,7 @@ export const GeoPageBase = () => {
                         <div className={styles.leftpanel}>
                             <div className={styles.treeViewContainer}>
                                 <div className={styles.treemenu}>
-                                    <TreeView editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                                    <TreeView dataList={geoData} editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                                 </div>
                             </div>
                         </div>
@@ -255,9 +282,9 @@ export const GeoPageBase = () => {
                     </Form>
                 </Col>
             </Row>
-            <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+            <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };
 
-export const GeoPage = connect(mapStateToProps, null)(withLayoutMaster(GeoPageBase));
+export const GeoPage = withLayoutMaster(connect(mapStateToProps, mapDispatchToProps)(GeoPageBase));
