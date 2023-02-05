@@ -9,7 +9,7 @@ import { TbFileReport } from 'react-icons/tb';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import * as routing from 'constants/routing';
-import customMenuLink from 'utils/customMenuLink';
+import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
@@ -164,7 +164,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                                 <div className={styles.floatLeft}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
                                         <Badge pill size="small" count={notificationCount}>
-                                            <FaRegBell size={20} />
+                                            {addToolTip('Notification')(<FaRegBell size={20} />)}
                                         </Badge>
                                     </a>
                                 </div>

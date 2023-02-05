@@ -14,6 +14,8 @@ import styles from '../Common.module.css';
 // import styles from './GeoPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ROUTING_DASHBOARD } from 'constants/routing';
+import { addToolTip } from 'utils/customMenuLink';
+import { PageHeader } from '../PageHeader';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -51,7 +53,7 @@ export const GeoPageBase = () => {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
-    const [isTreeViewVisible, setTreeViewVisible] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [antdForm, setAntdForm] = useState(false);
     const [formContent, setFormContent] = useState({
         Attribute: '',
@@ -70,7 +72,7 @@ export const GeoPageBase = () => {
         editName: false,
     });
 
-    const showConfirm = () => {
+    const handleBack = () => {
         confirm({
             title: 'Are you sure to leave this page?',
             icon: <ExclamationCircleFilled />,
@@ -95,35 +97,24 @@ export const GeoPageBase = () => {
                 console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
             });
     };
+
+    const pageTitle = 'Geographical Hierarchy';
+    const pageHeaderData = {
+        pageTitle,
+        showChangeHisoty: true,
+        handleBack,
+        isFavourite,
+        setFavourite,
+        handleFavouriteClick,
+        visibleChangeHistory: false,
+    };
+
     return (
         <>
+            <PageHeader {...pageHeaderData} />
             <Row gutter={20}>
-                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18} className={styles.padRight0}>
-                    <Space>
-                        <div>
-                            <span className={styles.headingGradient}>Geographical Hierarchy</span>
-                        </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? <FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <FaRegHeart size={18} onClick={handleFavouriteClick} />}</div>
-                    </Space>
-                </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.padRight0}>
-                    <div className={styles.buttonContainer}>
-                        <Button danger onClick={showConfirm}>
-                            <FaLongArrowAltLeft className={styles.buttonIcon} />
-                            Exit
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
-
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    <div className={styles.pageHeaderNameSection}></div>
-                </Col>
-            </Row>
-            <Row gutter={20} style={{ marginTop: '-20px' }}>
-                <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
-                    {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+                <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisibleClink}>
+                    {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
                 </div>
             </Row>
             <Row gutter={20}>

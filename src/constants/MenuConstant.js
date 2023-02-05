@@ -1,5 +1,5 @@
 import { AiFillCar } from 'react-icons/ai';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaUserTie } from 'react-icons/fa';
 import { BiRupee } from 'react-icons/bi';
 import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { GrGroup } from 'react-icons/gr';
@@ -129,6 +129,11 @@ export const MenuConstant = {
     [getMenyKey('SERS')]: {
         link: undefined,
         icon: <FaWrench fontSize={20} />,
+        parentMenuId: 'WEB',
+    },
+    [getMenyKey('ADMN')]: {
+        link: undefined,
+        icon: <FaUserTie fontSize={18} />,
         parentMenuId: 'WEB',
     },
 };

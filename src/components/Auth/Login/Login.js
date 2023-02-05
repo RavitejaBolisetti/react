@@ -48,28 +48,25 @@ const mapDispatchToProps = {
 const Login = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
+    const recaptchaRef = React.useRef(null);
     const [captcha, setCaptcha] = useState(false);
 
+    const navigate = useNavigate();
     useEffect(() => {
         doCloseLoginError();
+
+        form.resetFields();
+        setCaptcha('');
+        recaptchaRef.current.reset();
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const navigate = useNavigate();
-    const recaptchaRef = React.useRef(null);
 
     const onFinish = (values) => {
         if (captcha) {
             // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             // values.timeZone = timeZone;
             doLogin(values, loginPageIsLoading, () => navigate(ROUTING_DASHBOARD));
-            form.resetFields();
-            setCaptcha('');
-            recaptchaRef.current.reset();
-            // localStorage.setItem('userData', JSON.stringify(response.data));
-            // message.info(response.data.responseMessage);
-            // setPost(response.data);
-            // recaptchaRef.current.reset();
         } else {
             message.error('Please select capcha');
         }

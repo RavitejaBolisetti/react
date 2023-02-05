@@ -8,32 +8,6 @@
   margin-bottom: 30px;
 }
 
-.headingGradient {
-  padding-bottom: 8px;
-  border-radius: 5px;
-  border: 0px;
-  border-bottom: 4px solid;
-  border-image: linear-gradient(to right, #efa3a3, #cac9ee);
-  border-image-slice: 1;
-  text-decoration: none;
-  margin-bottom: 28px;
-  color: #0b0b0c;
-  font-size: 20px;
-}
-
-.favIconHeading {
-  padding-left: 5px;
-  margin-top: 5px;
-  line-height: 4px;
-  padding-top: 3px;
-  cursor: pointer;
-}
-
-.pageHeaderNameSection {
-  border-bottom: 1px solid #dedede;
-  padding: 0px;
-  margin: 0 0 20px 0;
-}
 
 .mb10 {
   margin-bottom: 20px;
@@ -54,7 +28,6 @@
   background-color: transparent;
   color: #342c2c;
 }
-
 
 .floatRight {
   float: right;
@@ -81,18 +54,24 @@
 .exitButton:hover,
 .exitButton:focus,
 .exitButton:active,
-.exitButton.active,
 .exitButton:active:focus,
 .exitButton.active:hover {
   background-color: #ff3e5b;
   color: #ffffff !important;
 }
 
+.treeViewContainer {
+  clear: both;
+  margin-bottom: 10px;
+}
+
 .treeCollapsibleButton {
   border: 1px solid #ff3e5b;
   border-radius: 3px;
-  position: relative;
+  position: absolute;
   z-index: 10;
+  top: 136px;
+  /* left:266px; */
   padding: 5px;
   color: #ff3e5b;
   line-height: 2px;
@@ -100,16 +79,13 @@
   font-weight: 400;
   cursor: pointer;
   width: 30px;
-  margin: 10px auto 10px 10px;
+  margin: 10px auto 10px 15px;
   float: left;
   will-change: box-shadow, transform;
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.treeViewContainer {
-  clear: both;
-  margin-bottom: 10px;
-}
+
 
 .treeCollapsibleButton:hover,
 .treeCollapsibleButton:focus,
@@ -122,11 +98,12 @@
 }
 
 .buttonContainer {
-  float: right;
+  text-align: right;
+  padding: 0px !important;
 }
 
 .buttonContainer button {
-  margin-left: 14px
+  margin-left: 14px;
 }
 
 .buttonContainer .buttonIcon {
@@ -142,16 +119,12 @@
   box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
   border-radius: 10px;
   border-top-left-radius: 0;
-  /* margin-bottom: 0px; */
+  margin-bottom: 20px;
   height: 66vh;
   /* overflow-y: scroll; */
   white-space: nowrap;
   margin-top: 5px;
 }
-
-/* .paddingRightZero {
-  padding-right: 0 !important;
-} */
 
 .treeMenuLeft {
   padding-left: 0 !important;
@@ -167,9 +140,23 @@
   transition: max-width 1s;
 }
 
-:global .ant-form-item .ant-form-item-explain-error {
-  color: #ff4d4f;
-  margin-top: 7px;
+.ant-row {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 0;
+  /* margin-right: 0px !important; */
+}
+
+.formContainer {
+  padding: 0px;
+}
+
+.pad10 {
+  padding: 0px;
+}
+
+.padLeft10 :global .ant-form {
+  margin: 0px 0px 0px 46px;
 }
 
 :global .ant-btn-default {
@@ -218,11 +205,9 @@
   /* overflow-y: scroll; */
 }
 
-
 :global .ant-tree {
   background: transparent;
 }
-
 
 :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
   background-color: #ff3e5b;
@@ -234,26 +219,15 @@
 }
 
 @media (max-width: 576px) {
-
   /* For mobile phones: */
-  :global .ant-input-group {
-    width: auto;
+
+
+  .leftpanel {
+    height: auto;
   }
 
-  .headingGradient {
-    padding-bottom: 10px;
-    border-bottom: 4px solid;
-    border-image: linear-gradient(to right, #efa3a3, #cac9ee);
-    border-image-slice: 1;
-    /* margin-bottom: 20px; */
-    font-size: 16px;
-  }
-
-  .pageHeaderNameSection {
-    /* border-bottom: 1px solid #DEDEDE; */
-    border-bottom: 0px;
-    padding: 0px;
-    margin: 0 0 10px 0;
+  .buttonContainer {
+    margin-top: 4px;
   }
 
   .exitButton {
@@ -262,5 +236,42 @@
     margin-top: 4px;
     font-size: 12px;
     line-height: 2px;
+  }
+
+  .formContainer {
+    padding: 10px;
+  }
+
+  .pad10 {
+    padding: 10px;
+  }
+
+  .padLeft10 {
+    padding-left: 10px !important;
+    padding-right: 0px !important;
+  }
+
+  .padRight0 {
+    padding-right: 0px !important;
+  }
+
+  .gap {
+    gap: 8px;
+  }
+
+  .treeCollapsibleButton {
+    top: 184px;
+  }
+
+  :global .ant-input-group {
+    width: auto;
+
+  }
+
+  .TreeView_searchField__jn\+nY {
+    padding: 0 8px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+    width: '100%';
   }
 }

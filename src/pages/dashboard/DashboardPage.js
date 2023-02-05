@@ -30,7 +30,7 @@ const DashboardPageBase = ({ props }) => {
     const { firstName } = props;
     const onSearch = (value) => console.log(value);
     return (
-        <>
+        <div className={styles.dashboardContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
@@ -256,7 +256,7 @@ const DashboardPageBase = ({ props }) => {
                     </Card>
                 </Col>
             </Row>
-        </>
+        </div>
     );
 };
 

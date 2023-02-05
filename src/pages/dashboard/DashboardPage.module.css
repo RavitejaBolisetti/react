@@ -8,25 +8,25 @@
   margin-bottom: 30px;
 }
 
-:global .ant-card .ant-card-head-title {
+.dashboardContainer :global .ant-card .ant-card-head-title {
   font-size: 1.1rem;
   float: left;
   font-weight: 500;
 }
 
 
-:global .ant-card.ant-card-body {
+.dashboardContainer :global .ant-card.ant-card-body {
   padding: 12px;
 }
 
 
-:global .ant-carousel .slick-dots li button::after {
+.dashboardContainer :global .ant-carousel .slick-dots li button::after {
   background-color: #EA3434;
   /* margin: 5px; */
   inset: 0.5em;
 }
 
-:global .ant-carousel .slick-dots li button {
+.dashboardContainer :global .ant-carousel .slick-dots li button {
   margin: 0px 30px 0px 2px;
   top: 46px;
   padding: 0px 10px;
@@ -69,13 +69,13 @@
   padding: 10px;
 } */
 
-:global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
+.dashboardContainer :global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
   padding: 24px;
   border-radius: 0 0 8px 8px;
   height: 250px;
 }
 
-:global .ant-row {
+.dashboardContainer :global .ant-row {
   display: flex;
   flex-flow: row wrap;
   min-width: 0;

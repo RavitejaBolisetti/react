@@ -58,8 +58,8 @@ export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
 const logoutClearAllData = () => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
     dispatch(authDoLogout(message));
-    window.location.href = '/login';
 };
+
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
     dispatch(unAuthenticate(errorMessage));
     dispatch(logoutClearAllData());
@@ -175,7 +175,7 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
 
     const onSuccess = (res) => {
         if (res) {
-            res?.responseMessage && message.info(res?.responseMessage);
+            // res?.responseMessage && message.info(res?.responseMessage);
             successAction && successAction();
             authPostLogout();
         } else {

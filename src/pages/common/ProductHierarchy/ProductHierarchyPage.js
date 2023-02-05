@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
+import { PageHeader } from '../PageHeader';
+import { addToolTip } from 'utils/customMenuLink';
 
 const { confirm } = Modal;
 const { TextArea } = Input;
@@ -38,10 +40,10 @@ export const ProductHierarchyBase = () => {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
-    const [isTreeViewVisible, setTreeViewVisible] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
-    const showToggleHistory = (e) => {
+    const handleChangeHistoryClick = (e) => {
         setChangeHistoryVisible(!isChangeHistoryVisible);
     };
 
@@ -55,7 +57,7 @@ export const ProductHierarchyBase = () => {
             });
     };
 
-    const showConfirm = () => {
+    const handleBack = () => {
         confirm({
             title: 'Are you sure to leave this page?',
             icon: <ExclamationCircleFilled />,
@@ -75,40 +77,25 @@ export const ProductHierarchyBase = () => {
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
 
+    const pageTitle = 'Product Hierarchy';
+    const pageHeaderData = {
+        pageTitle,
+        showChangeHisoty: true,
+        handleBack,
+        isFavourite,
+        setFavourite,
+        handleFavouriteClick,
+        visibleChangeHistory: true,
+        handleChangeHistoryClick,
+        isChangeHistoryVisible,
+    };
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                    <Space>
-                        <div>
-                            <span className={styles.headingGradient}>Product Hierarchy</span>
-                        </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? <BsStarFill color="#ff3e5b" size={18} onClick={handleFavouriteClick} /> : <BsStar size={18} onClick={handleFavouriteClick} />}</div>
-                    </Space>
-                </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
-                    <div className={styles.buttonContainer}>
-                        <Button danger onClick={showToggleHistory}>
-                            <FaHistory className={styles.buttonIcon} />
-                            Change History
-                        </Button>
-                        <Button danger onClick={showConfirm}>
-                            <FaLongArrowAltLeft className={styles.buttonIcon} />
-                            Exit
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
+            <PageHeader {...pageHeaderData} />
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    <div className={styles.pageHeaderNameSection}></div>
-                </Col>
-            </Row>
-
-            <Row gutter={20} style={{ marginTop: '-20px' }}>
-                <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisibleClink}>
-                    {isTreeViewVisible ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+                <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisibleClink}>
+                    {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
                 </div>
             </Row>
 
@@ -211,14 +198,10 @@ export const ProductHierarchyBase = () => {
                                                 Add Sibling
                                             </Button>
 
-                                            <button type="submit" className="btn btn-outline rightbtn boxShdwNon mrl15" onClick={onSubmit}>
-                                                <FaSave className={styles.buttonIcon} /> Save
-                                            </button>
-
-                                            {/* <Button danger onClick={onSubmit} type="submit">
+                                            <Button htmlType="submit" danger onClick={onSubmit}>
                                                 <FaSave className={styles.buttonIcon} />
                                                 Save
-                                            </Button> */}
+                                            </Button>
 
                                             <Button danger>
                                                 <FaUndo className={styles.buttonIcon} />
