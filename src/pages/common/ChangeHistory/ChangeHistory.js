@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-
-import styles from './ChangeHistory.module.css';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Table } from 'antd';
 import moment from 'moment';
-import { bindActionCreators } from 'redux';
+
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { connect } from 'react-redux';
+import { convertDateTime } from 'utils/formatDateTime';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 
 const sortDateFn = (a, b) => moment(a.ChangeDate, 'DD-MM-YYYY') - moment(b.ChangeDate, 'DD-MM-YYYY');
 const generalsorter = (a, b) => {
@@ -52,155 +52,65 @@ const generalsorter = (a, b) => {
         }
     }
 };
-const onFilterFn = (value, record) => {
-    if (record.ChangeDate !== undefined) {
-        return record.ChangeDate.startsWith(value);
-    } else if (record.EmployeeCode !== undefined) {
-        return record.EmployeeCode.startsWith(value);
-    } else if (record.EmployeeName !== undefined) {
-        return record.EmployeeName.startsWith(value);
-    }
-};
-
-const tblPrepareColumns = ({ title, dataIndex, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined }) => {
-    return {
-        title,
-        dataIndex,
-        ellipsis,
-        filters,
-        filterMode,
-        filterSearch,
-        onFilter: onFilterFn,
-        sorter: sortFn,
-    };
-};
 
 const tableColumn = [];
 
 tableColumn.push(
     tblPrepareColumns({
         title: 'Changed/Modified Date ',
-        dataIndex: 'ChangeDate',
-        filters: [
-            {
-                text: '12/09/2023',
-                value: '12/09/2023',
-            },
-        ],
+        dataIndex: 'changedDate',
+        render: (text) => convertDateTime(text),
         sortFn: sortDateFn,
-        onFilterFn: onFilterFn,
     })
 );
 
 tableColumn.push(
     tblPrepareColumns({
-        title: 'Employee Code',
-        dataIndex: 'EmployeeCode',
-        filters: [
-            {
-                text: '19489',
-                value: '19489',
-            },
-        ],
-        onFilter: onFilterFn,
-    })
-);
-
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Employee Name',
-        dataIndex: 'EmployeeName',
-
-        filters: [
-            {
-                text: 'Vivek',
-                value: 'Vivek',
-            },
-        ],
-        sortFn: generalsorter,
-        onFilter: onFilterFn,
+        title: 'Changed By',
+        dataIndex: 'changedBy',
     })
 );
 
 tableColumn.push(
     tblPrepareColumns({
         title: 'Attribute',
-        dataIndex: 'Attribute',
-        filters: [
-            {
-                text: 'Attribute 6',
-                value: 'Attribute 6',
-            },
-        ],
+        dataIndex: 'parentAttributeName',
         sortFn: generalsorter,
-        onFilter: onFilterFn,
     })
 );
 tableColumn.push(
     tblPrepareColumns({
         title: 'Code',
-        dataIndex: 'Code',
-
-        filters: [
-            {
-                text: 'UP',
-                value: 'UP',
-            },
-        ],
+        dataIndex: 'prodctCode',
         sortFn: generalsorter,
-        onFilter: onFilterFn,
     })
 );
 tableColumn.push(
     tblPrepareColumns({
         title: 'Parent',
-        dataIndex: 'Parent',
-
-        filters: [
-            {
-                text: 'India',
-                value: 'India',
-            },
-        ],
-        onFilter: onFilterFn,
+        dataIndex: 'parntHeirarchyCode',
     })
 );
 tableColumn.push(
     tblPrepareColumns({
         title: 'Short Description',
-        dataIndex: 'ShortDescription',
-
-        filters: [
-            {
-                text: 'SMT 7STR',
-                value: 'SMT 7STR',
-            },
-        ],
+        dataIndex: 'prodctShrtDescription',
         sortFn: generalsorter,
-        onFilter: onFilterFn,
     })
 );
 
 tableColumn.push(
     tblPrepareColumns({
         title: 'Long Description',
-        dataIndex: 'LongDescription',
-
-        filters: [
-            {
-                text: 'This Smt 7STR..',
-                value: 'This Smt 7STR variant comes..',
-            },
-        ],
+        dataIndex: 'prodctLongDiscription',
         sortFn: generalsorter,
-        onFilter: onFilterFn,
     })
 );
+
 tableColumn.push(
     tblPrepareColumns({
         title: 'Status',
-        dataIndex: 'Status',
-
+        dataIndex: 'status',
         filters: [
             {
                 text: 'Active',
@@ -211,6 +121,8 @@ tableColumn.push(
                 value: 'Inactive',
             },
         ],
+        render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
+        sortFn: generalsorter,
     })
 );
 
@@ -228,6 +140,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
+        isLoading,
         isDataLoaded,
         changeHistoryData,
     };
@@ -246,7 +159,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeHistoryMain = ({ fetchList, listShowLoading, isLoading, userId, isDataLoaded, changeHistoryData }) => {
-    console.log("🚀 ~ file: ChangeHistory.js:249 ~ ChangeHistoryMain ~ changeHistoryData", changeHistoryData)
+    console.log('🚀 ~ file: ChangeHistory.js:249 ~ ChangeHistoryMain ~ changeHistoryData', changeHistoryData);
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -255,6 +168,7 @@ const ChangeHistoryMain = ({ fetchList, listShowLoading, isLoading, userId, isDa
     }, [isDataLoaded]);
     return (
         <Table
+            loading={isLoading}
             columns={tableColumn}
             dataSource={changeHistoryData}
             pagination={{
