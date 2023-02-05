@@ -16,7 +16,7 @@ import styles from '../Common.module.css';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
-import { PageHeader } from '../PageHeader';
+import { PageHeader } from 'pages/common/PageHeader';
 
 const { Option } = Select;
 const { confirm } = Modal;

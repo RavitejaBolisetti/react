@@ -13,7 +13,7 @@ import styles from '../Common.module.css';
 import { connect } from 'react-redux';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
-import { PageHeader } from '../PageHeader';
+import { PageHeader } from 'pages/common/PageHeader';
 import { addToolTip } from 'utils/customMenuLink';
 
 const { confirm } = Modal;
