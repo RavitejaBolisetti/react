@@ -53,18 +53,9 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
 });
 
 geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId } = params;
+    const { setIsLoading, errorAction, data, userId, onSuccess } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            console.log(res?.data);
-            // dispatch(receiveHeaderData(res?.data));
-        } else {
-            onError();
-        }
-    };
+    // const onError = errorAction('Internal Error, Please try again');
 
     const apiCallParams = {
         data,
@@ -73,7 +64,7 @@ geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
         token,
         userId,
         onSuccess,
-        onError,
+        onError: errorAction,
         onTimeout: () => errorAction('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),

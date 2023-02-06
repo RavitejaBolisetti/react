@@ -38,7 +38,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) =>
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath,
+        url: baseURLPath + '?type=Geographical',
         token,
         userId,
         onSuccess,
@@ -60,6 +60,7 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => 
     const onSuccess = (res) => {
         if (res?.data) {
             console.log(res?.data);
+            setIsLoading();
             // dispatch(receiveHeaderData(res?.data));
         } else {
             onError();
