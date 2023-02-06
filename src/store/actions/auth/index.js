@@ -19,6 +19,7 @@ export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
 export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
 
 const LOCAL_STORAGE_KEY_AUTH_TOKEN = 'authToken';
+const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
 
 export const authLoginSucess = (token, userName, userId) => ({
     type: AUTH_LOGIN_SUCCESS,
@@ -57,6 +58,7 @@ export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
 
 const logoutClearAllData = () => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
     dispatch(authDoLogout(message));
 };
 
@@ -67,6 +69,7 @@ export const unAuthenticateUser = (errorMessage) => (dispatch) => {
 
 export const clearAllAuthentication = (message) => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
 };
 
 const authPostLoginActions =
@@ -74,6 +77,7 @@ const authPostLoginActions =
     (dispatch) => {
         if (saveTokenAndRoleRights) {
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_TOKEN, authToken);
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_USER_ID, userId);
         }
 
         const { username: userName } = jwtDecode(authToken);
@@ -84,10 +88,11 @@ const authPostLoginActions =
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
     try {
         const authToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
+        const userId = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
         if (!authToken) {
             dispatch(authDoLogout());
         } else {
-            const { exp, userId } = jwtDecode(authToken);
+            const { exp } = jwtDecode(authToken);
             if (moment(exp * 1000).isAfter()) {
                 dispatch(
                     authPostLoginActions({

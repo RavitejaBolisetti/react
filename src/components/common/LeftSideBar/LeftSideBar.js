@@ -77,13 +77,15 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     const menuDefault = false;
     const prepareLink = (title, link = undefined) => (link ? <Link to={link}>{title}</Link> : title);
 
-    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), 
-    [getMenuItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))),
-     getMenuItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))), 
-     getMenuItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link'))),
-     getMenuItem(prepareLink('Product Master', getMenuValue(MenuConstant, 'PMA', 'link'))),
-     getMenuItem(prepareLink('Hierarchy Attribute Master', getMenuValue(MenuConstant, 'HAM', 'link'))),
-    ]));
+    items.push(
+        getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [
+            getMenuItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))),
+            getMenuItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))),
+            getMenuItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link'))),
+            //  getMenuItem(prepareLink ('Product Master', getMenuValue(MenuConstant, 'PMA', 'link'))),
+            getMenuItem(prepareLink('Hierarchy Attribute Master', getMenuValue(MenuConstant, 'HAM', 'link'))),
+        ])
+    );
     if (menuDefault) {
         items.push(
             getMenuItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
@@ -163,7 +165,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
         setCurrent(e.key);
     };
 
-    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY].includes(pagePath) ? 'FAVS' : '';
+    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FAVS' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     return (
@@ -183,11 +185,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
                 <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme} onClick={setTheme}>
-                    {theme === 'dark' ? (
-                        <BsMoon size={18} backgroundColor="#dedede" />
-                    ) : (
-                        <BsSun size={18} backgroundColor="#dedede" />                     
-                    )}
+                    {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
                     {!collapsed && 'Change Theme'}
                 </div>
             </Sider>

@@ -90,7 +90,7 @@ export const ProductHierarchyBase = () => {
         visibleChangeHistory: true,
         handleChangeHistoryClick,
         isChangeHistoryVisible,
-        visibleSampleBtn: true,
+        visibleSampleBtn: false,
         handleSample: () => setAttributeVisible(!isAttributeVisible),
     };
     return (
