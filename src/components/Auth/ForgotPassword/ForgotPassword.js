@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import OTPInput, { ResendOTP } from 'otp-input-react';
+
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { Form, Row, Col, Button, Input } from 'antd';
+import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
-import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
+import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from './ForgotPassword.module.css';
 
@@ -48,6 +49,8 @@ const mapDispatchToProps = {
 const ForgotPassword = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
+    const [showFields, setShowFields] = useState(false);
+    const [OTP, setOTP] = useState(false);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -68,13 +71,11 @@ const ForgotPassword = (props) => {
         form.validateFields().then((values) => {});
     };
 
-    const onReCAPTCHAChange = async (captchaCode) => {
-        // If the reCAPTCHA code is null or undefined indicating that
-        // the reCAPTCHA was expired then return early
-        if (!captchaCode) {
-            return;
-        }
-    };
+    const handleSendOtp = () => {
+        setOTP(true)
+        setShowFields(false)
+    }
+
     return (
         <>
             <div className={styles.loginSection}>
@@ -94,41 +95,51 @@ const ForgotPassword = (props) => {
                                         <div className={styles.center}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h4>Welcome!</h4>
-                                                    <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
+                                                    <h4>Forgot Your Password!</h4>
+                                                    <div className={styles.loginSubHeading}>Please enter your user details.</div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            {<Input prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
+                                                            <Input onBlur ={() => setShowFields(!showFields)} prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />
                                                             {/* As discussed with Rahul */}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
+                                                {showFields ? (
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Checkbox  className={styles.checkColor} defaultChecked="true">
+                                                                Mobile Number - <span>99****1234</span>
+                                                            </Checkbox>
+                                                        </Col>
+                                                    </Row>
+                                                ) : null}
+                                                {showFields ? (
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+                                                            <Checkbox className={styles.checkColor} defaultChecked="true">Email ID - abcdef@mahindra.com</Checkbox>
+                                                        </Col>
+                                                    </Row>
+                                                ) : null}
+                                               {OTP? (
+                                                <>
+                                               <OTPInput value={OTP} onChange={setOTP} autoFocus OTPLength={4} otpType="number" disabled={false} secure />
+                                                <ResendOTP handelResendClick={() => console.log('Resend clicked')}/>
+                                                </> )
+                                                : null } 
+
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<AiOutlineLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
-                                                        </Form.Item>
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit">
-                                                            Login
+                                                        <Button onClick={handleSendOtp} className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit">
+                                                            SEND OTP
                                                         </Button>
                                                     </Col>
                                                 </Row>
-                                                {/* <div className="hr"></div> */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                            <Link to={ROUTING_LOGIN}>Back To Login Page</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
