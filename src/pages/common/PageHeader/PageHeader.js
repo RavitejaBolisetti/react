@@ -54,10 +54,14 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                                 </Button>
                             ))}
 
-                        <Button danger onClick={handleBack}>
+                        <Button danger onClick={handleBack} className="btn btn-outline srchbtn mr0 boxShdwNon">
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
                         </Button>
+
+
+                       
+
                     </div>
                 </Col>
             </Row>
