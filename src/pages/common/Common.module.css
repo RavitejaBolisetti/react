@@ -1,4 +1,3 @@
-
 /* .geoSection :global .ant-btn-default {
   /* border-color: #ff3e5b; 
 } */
@@ -44,13 +43,17 @@
   max-height: 300vh;
   /* overflow-y: scroll; */
 }
+.geoSection :global .ant-form-item {
+  margin-bottom: 4px;
 
+}
 .geoSection :global .ant-tree {
   background: transparent;
 }
 
 .geoSection :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
   background-color: #ff3e5b;
+  border-color: #ff3e5b; 
   color: #ffffff !important;
 }
 
@@ -58,11 +61,16 @@
   margin-bottom: 8px;
 }
 
+.geoSection :global .ant-btn {
+
+  line-height: 1.5;
+  color:#ff3e5b;
+}
 
 
-.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child, 
+.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
 .geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input, 
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
 .geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
   border-inline-end-width: 1px;
   border-start-end-radius: 4px;
@@ -70,6 +78,15 @@
   height: 36px;
 }
 
+.geoSection :global .ant-form-item .ant-form-item-label >label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: 32px;
+  color: #0B0B0C;
+  font-size: 14px;
+}
 .container {
   padding: 20px;
 }
@@ -80,9 +97,10 @@
   margin-bottom: 30px;
 }
 
-.geoSection .padRight10{
+.geoSection .padRight10 {
   padding-right: 10px;
 }
+
 .mb10 {
   margin-bottom: 20px;
 }
@@ -100,7 +118,7 @@
   line-height: 2em;
   list-style: none;
   background-color: transparent;
-  color: #342c2c;
+  color: #0B0B0C;
 }
 
 .floatRight {
@@ -231,12 +249,64 @@
 }
 
 .padRight18 {
- padding-right: 18px;
- }
+  padding-right: 18px;
+}
+
 .padLeft10 :global .ant-form {
   margin: 0px 0px 0px 46px;
- }
+}
 
+:global .ant-btn-default {
+  border-color: #d9d9d9;
+}
+
+:global .ant-tree {
+  background: #f4f4f4;
+}
+
+:global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+:global .ant-form-vertical .ant-form-item-label {
+  margin: 0;
+  padding: 0px;
+}
+
+:global .ant-select-single:not(.ant-select-customize-input),
+:global .ant-select-selector {
+  width: 100%;
+  height: 36px !important;
+}
+
+:global .ant-tree .ant-tree-list-holder-inner {
+  align-items: flex-start;
+  margin-bottom: 50px;
+}
+
+:global .ant-modal .ant-modal-content {
+  padding: 20px;
+  max-height: 300vh;
+  /* overflow-y: scroll; */
+}
+
+:global .ant-tree {
+  background: transparent;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+  background-color: #ff3e5b;
+  color: #ffffff !important;
+}
+
+:global .ant-btn-default.ant-btn-dangerous {
+  margin-bottom: 8px;
+}
 
 @media (max-width: 576px) {
   /* For mobile phones: */
@@ -295,4 +365,3 @@
     width: '100%';
   }
 }
-

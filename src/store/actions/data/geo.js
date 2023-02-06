@@ -53,7 +53,7 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
 });
 
 geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId, onSuccess } = params;
+    const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
     // const onError = errorAction('Internal Error, Please try again');
 
@@ -64,8 +64,8 @@ geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
         token,
         userId,
         onSuccess,
-        onError: errorAction,
-        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

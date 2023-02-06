@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Space, Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart, FaInfoCircle } from 'react-icons/fa';
 
 import { addToolTip } from 'utils/customMenuLink';
 import { ROUTING_DASHBOARD } from 'constants/routing';
@@ -14,39 +13,41 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
-            title: 'Are you sure to leave this page?',
-            icon: <ExclamationCircleFilled />,
-            content: 'If you leave this page, All unsaved data will be lost',
+            title: 'Alert',
+            icon: <FaInfoCircle size={22} className={styles.alertIcon} />,
+            content: 'This will take you to Homepage. If you leave this page, all unsaved data will be lost. Would you like to proceed?',
+            closable: true,
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
             cancelType: 'danger',
+            width: 350,
             onOk() {
                 navigate(-1) || navigate(ROUTING_DASHBOARD);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
 
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={16} sm={24} md={12} lg={16} xl={16} xxl={16} className={styles.padRight0}>
+            <Row gutter={20} className={styles.pageHeader}>
+                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Mark as unfavourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>
+                        <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>
                     </Space>
                 </Col>
-                <Col xs={8} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
+                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
                     <div className={styles.buttonContainer}>
-                        {visibleSampleBtn && (
+                        {/* {visibleSampleBtn && (
                             <Button danger onClick={handleSample}>
                                 <FaHistory className={styles.buttonIcon} />
                                 View Product Detail
                             </Button>
-                        )}
+                        )} */}
                         {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
@@ -60,14 +61,10 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                                 </Button>
                             ))}
 
-                        <Button danger onClick={handleBack} className="btn btn-outline srchbtn mr0 boxShdwNon">
+                        <Button danger onClick={handleBack}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
                         </Button>
-
-
-                       
-
                     </div>
                 </Col>
             </Row>

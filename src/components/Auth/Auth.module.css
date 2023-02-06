@@ -134,9 +134,23 @@ p {
     color: #ffffff;
 }
 
-.loginSection :global .ant-input-affix-wrapper:focus, 
-.loginSection :global .ant-input-affix-wrapper-focused{
-    box-shadow: none;
+.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
+}
+
+
+.loginSection :global .ant-input-affix-wrapper:focus,
+.loginSection :global .ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
+}
+
+.loginSection input:-webkit-autofill,
+.loginSection input:-webkit-autofill:hover,
+.loginSection input:-webkit-autofill:focus,
+.loginSection input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #fff !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .logOutHeading {
@@ -367,9 +381,9 @@ select.form-control:focus::-ms-value {
     padding-right: 0px !important;
 } */
 
-.loginSection :global :where(.css-dev-only-do-not-override-169n7e2).ant-col {
+/* .loginSection :global :where(.css-dev-only-do-not-override-169n7e2).ant-col {
     padding-right: 0px !important;
-}
+} */
 
 .loginSection :global .g-recaptcha>div>div {
     /* transform:scale(1.77);    -webkit-transform:scale(1.77);    transform-origin:0 0;    -webkit-transform-origin:0 0; */

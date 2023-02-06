@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { useNavigate } from 'react-router-dom';
-import { Button, Col, Input, Form, Row, Select, Switch, Modal, message } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaCross } from 'react-icons/fa';
+import { Button, Col, Form, Row, Modal } from 'antd';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaCross } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import TreeView from 'components/common/TreeView';
 
 import styles from 'pages/common/Common.module.css';
-import { ROUTING_DASHBOARD } from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import ParentHierarchy from 'pages/common/Geo/ParentHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 
-const { Option } = Select;
-const { confirm } = Modal;
-
+const { success: successModel, error: errorModel } = Modal;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -61,14 +55,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
-    const navigate = useNavigate();
-
-    console.log('isDataAttributeLoaded', isDataAttributeLoaded, attributeData, 'geoData', geoData);
-
     const finalGeoData = geoData?.map((i) => {
-        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey == a.hierarchyAttribueId) };
+        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
-    console.log('🚀 isDataAttributeLoaded ~ file: Geo.js:68 ~ finalGeoData ~ finalGeoData', finalGeoData);
+    // console.log('🚀 isDataAttributeLoaded ~ file: Geo.js:68 ~ finalGeoData ~ finalGeoData', finalGeoData);
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -84,19 +74,34 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [parentCodeValue, setParentCodeValue] = useState('');
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    console.log('🚀 ~ file: Geo.js:86 ~ GeoMain ~ parentCodeValue', parentCodeValue);
 
     const [isFormVisible, setFormVisible] = useState(false);
 
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
+    const showSuccessModel = ({ title, message }) => {
+        successModel({
+            title: title,
+            icon: <ExclamationCircleFilled />,
+            content: message,
+        });
+    };
+
+    const onError = (message) => {
+        errorModel({
+            title: 'ERROR',
+            icon: <ExclamationCircleFilled />,
+            content: message,
+        });
+    };
+
     const onFinish = (values) => {
-        const errorAction = (errorMessage) => message.error(errorMessage);
         const onSuccess = (res) => {
-            message.info(res?.responseMessage);
+            form.resetFields();
+            showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };
-        saveData({ data: [{ ...values, id: '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue }], setIsLoading: listShowLoading, userId, errorAction, onSuccess });
+        saveData({ data: [{ ...values, id: '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue }], setIsLoading: listShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -123,9 +128,9 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
     const handleSelectClick = (keys) => {
         setSelectedTreeKey(keys);
-        console.log('🚀 ~ file: GeoPage.js:134 ~ handleSelectClick ~ keys', keys);
+        // console.log('🚀 ~ file: GeoPage.js:134 ~ handleSelectClick ~ keys', keys);
         const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
-        console.log('🚀 ~ file: GeoPage.js:136 ~ handleSelectClick ~ SelectedParentNode', SelectedParentNode, 'flatternData', flatternData);
+        // console.log('🚀 ~ file: GeoPage.js:136 ~ handleSelectClick ~ SelectedParentNode', SelectedParentNode, 'flatternData', flatternData);
         setFieldValue('geoParentCode', SelectedParentNode);
     };
 
@@ -142,7 +147,6 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
     const handleParentCode = (e) => {
         setParentCodeValue(e.target.value);
-        // setFieldValue('geoParentCode', parentCodeValue);
     };
     return (
         <>

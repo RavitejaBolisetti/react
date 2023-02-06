@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Input, Form, Row, Select, Switch, Modal } from 'antd';
+import { Button, Col, Input, Form, Row, Select, Switch } from 'antd';
 import { FaSearch } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -15,7 +15,9 @@ const AddEditFormMain = ({ isDataAttributeLoaded, attributeData, setIsModalOpen,
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Geographical Attribute Level">
-                            {attributeData?.map((item) => console.log('attributeKey', item) || <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>)}
+                            {attributeData?.map((item) => (
+                                <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
+                            ))}
                         </Select>
                     </Form.Item>
                 </Col>

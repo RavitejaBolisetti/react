@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Form, Row, Col, Input, Select, Switch, Button, Modal } from 'antd';
-import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
+import { Row, Col, Modal } from 'antd';
+import { FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import TreeView from 'components/common/TreeView';
 import styles from '../Common.module.css';
 import { connect } from 'react-redux';
@@ -19,7 +18,6 @@ import { ProductMaster } from './ProductMaster';
 import AddEditForm from './AddEditForm';
 
 const { confirm } = Modal;
-const { TextArea } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -38,7 +36,6 @@ const mapStateToProps = (state) => {
 export const ProductHierarchyBase = () => {
     const navigate = useNavigate();
 
-    const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAttributeVisible, setAttributeVisible] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
@@ -47,16 +44,6 @@ export const ProductHierarchyBase = () => {
 
     const handleChangeHistoryClick = (e) => {
         setChangeHistoryVisible(!isChangeHistoryVisible);
-    };
-
-    const onSubmit = (e) => {
-        form.validateFields()
-            .then((err, values) => {
-                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-            })
-            .catch((errorInfo) => {
-                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-            });
     };
 
     const handleBack = () => {

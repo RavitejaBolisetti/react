@@ -1,4 +1,3 @@
-import { message } from 'antd';
 import axios from 'axios';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
@@ -31,17 +30,15 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        (onError && (displayErrorTitle ? onError({ title: errorTitle, message: errorMessage }) : onError(errorMessage))) || message.error(errorMessage);
+        (onError && (displayErrorTitle ? onError({ title: errorTitle, message: errorMessage }) : onError(errorMessage)));
     };
     try {
         axios
             .request(axiosConfig)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log('response', response?.data);
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
-                            console.log('Kuldeep = ',response)
                             onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 404) {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
@@ -62,7 +59,6 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
-                console.log('🚀 ~ file: axiosAPICall.js:59 ~ baseAPICall ~ error', error);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
