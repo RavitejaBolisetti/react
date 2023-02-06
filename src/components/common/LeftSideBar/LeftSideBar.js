@@ -77,7 +77,12 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     const menuDefault = false;
     const prepareLink = (title, link = undefined) => (link ? <Link to={link}>{title}</Link> : title);
 
-    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))), getMenuItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))), getMenuItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link')))]));
+    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), 
+    [getMenuItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))),
+     getMenuItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))), 
+     getMenuItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link'))),
+     getMenuItem(prepareLink('Hierarchy Attribute Master', getMenuValue(MenuConstant, 'HAM', 'link'))),
+    ]));
     if (menuDefault) {
         items.push(
             getMenuItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [

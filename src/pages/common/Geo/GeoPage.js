@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 
 export const GeoPageBase = (props) => {
     const [isFavourite, setFavourite] = useState(false);
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
+    const handleFavouriteClick = () => setFavourite(!isFavourite); 
 
     const pageTitle = 'Geographical Hierarchy';
     const pageHeaderData = {

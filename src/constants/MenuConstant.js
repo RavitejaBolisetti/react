@@ -36,6 +36,13 @@ export const MenuConstant = {
         parentMenuId: 'FAVS',
     },
 
+    [getMenyKey('HAM')]: {
+        key: 'HAM',
+        link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
+        icon: undefined,
+        parentMenuId: 'FAVS',
+    },
+
     [getMenyKey('COMN')]: {
         link: undefined,
         icon: <FaCreativeCommonsShare fontSize={20} />,
