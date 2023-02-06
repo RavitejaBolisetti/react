@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { Geo } from 'components/common';
+import { Geo } from 'components/common/Geo';
 
 const mapStateToProps = (state) => {
     const {
@@ -19,9 +19,8 @@ const mapStateToProps = (state) => {
 };
 
 export const GeoPageBase = (props) => {
-
     const [isFavourite, setFavourite] = useState(false);
-    const handleFavouriteClick = () => setFavourite(!isFavourite); 
+    const handleFavouriteClick = () => setFavourite(!isFavourite);
 
     const pageTitle = 'Geographical Hierarchy';
     const pageHeaderData = {
