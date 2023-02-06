@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, Col, Input, Form, Row, Select, Switch, Modal, message } from 'antd';
+import { Button, Col, Input, Form, Row, Select, Switch, Modal } from 'antd';
 import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
@@ -15,6 +15,7 @@ import { ROUTING_DASHBOARD } from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import ParentHierarchy from 'pages/common/Geo/ParentHierarchy';
+import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -46,17 +47,22 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: geoDataActions.fetchList,
             saveData: geoDataActions.saveData,
             listShowLoading: geoDataActions.listShowLoading,
+
+            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading }) => {
+export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
+            hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);

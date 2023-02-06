@@ -1,5 +1,5 @@
 :global .ant-layout .ant-layout-footer {
-    padding: 5px !important;
+    padding: 7px !important;
     background-color: #342C2C;
 }
 
@@ -35,6 +35,7 @@
 
 .footerBottomText a:hover {
     color: #ea3434;
+    text-decoration: underline;
 }
 
 @media (max-width: 576px) {
