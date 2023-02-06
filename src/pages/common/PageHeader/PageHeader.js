@@ -10,7 +10,7 @@ import styles from './PageHeader.module.css';
 
 const { confirm } = Modal;
 
-export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
@@ -43,6 +43,12 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
                     <div className={styles.buttonContainer}>
+                        {visibleSampleBtn && (
+                            <Button danger onClick={handleSample}>
+                                <FaHistory className={styles.buttonIcon} />
+                                View Product Detail
+                            </Button>
+                        )}
                         {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
@@ -56,10 +62,14 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                                 </Button>
                             ))}
 
-                        <Button danger onClick={handleBack}>
+                        <Button danger onClick={handleBack} className="btn btn-outline srchbtn mr0 boxShdwNon">
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
                         </Button>
+
+
+
+
                     </div>
                 </Col>
             </Row>

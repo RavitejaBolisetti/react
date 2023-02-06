@@ -167,18 +167,23 @@ const ChangeHistoryMain = ({ fetchList, listShowLoading, isLoading, userId, isDa
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
     return (
-        <Table
-            loading={isLoading}
-            columns={tableColumn}
-            dataSource={changeHistoryData}
-            pagination={{
-                position: ['bottomLeft'],
-            }}
-            onChange={onChange}
-            scroll={{
-                x: 'auto',
-            }}
-        />
+        <>
+            <div>
+                <h3>Change History</h3>
+            </div>
+            <Table
+                loading={isLoading}
+                columns={tableColumn}
+                dataSource={changeHistoryData}
+                pagination={{
+                    position: ['bottomLeft'],
+                }}
+                onChange={onChange}
+                scroll={{
+                    x: 'auto',
+                }}
+            />
+        </>
     );
 };
 

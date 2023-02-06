@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
 };
 
 export const GeoPageBase = (props) => {
-
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite); 
 
