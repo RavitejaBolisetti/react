@@ -31,14 +31,11 @@
 
 .pageHeaderNameSection {
     border-bottom: 1px solid #dedede;
-    padding: 4px;
     margin: 0 0 38px 0 !important;
 }
 
 .pageHeader .buttonContainer {
     text-align: right;
-    padding: 0px !important;
-    margin-right: 10px;
 }
 
 .pageHeader .buttonContainer button {

@@ -43,12 +43,12 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
                     <div className={styles.buttonContainer}>
-                        {visibleSampleBtn && (
+                        {/* {visibleSampleBtn && (
                             <Button danger onClick={handleSample}>
                                 <FaHistory className={styles.buttonIcon} />
                                 View Product Detail
                             </Button>
-                        )}
+                        )} */}
                         {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
@@ -62,14 +62,10 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                                 </Button>
                             ))}
 
-                        <Button danger onClick={handleBack} className="btn btn-outline srchbtn mr0 boxShdwNon">
+                        <Button danger onClick={handleBack}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
                         </Button>
-
-
-
-
                     </div>
                 </Col>
             </Row>
