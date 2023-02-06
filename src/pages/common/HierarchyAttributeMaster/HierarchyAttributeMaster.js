@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
@@ -16,6 +16,8 @@ import { validateRequiredSelectField } from 'utils/validation';
 import MetaTag from 'utils/MetaTag';
 
 import styles from '../Common.module.css';
+import { PageHeader } from '../PageHeader';
+import { useForm } from 'antd/es/form/Form';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -113,60 +115,57 @@ const mapStateToProps = (state) => {
 
     return returnValue;
 };
+
 export const HierarchyAttributeMasterBase = () => {
+    const [form] = Form.useForm();
+    const [isFavourite, setFavourite] = useState(false);
+    const handleFavouriteClick = () => setFavourite(!isFavourite);
+
+    const pageTitle = 'Hierarchy Attribute Master';
+    const pageHeaderData = {
+        pageTitle,
+        showChangeHisoty: true,
+        isFavourite,
+        setFavourite,
+        handleFavouriteClick,
+        visibleChangeHistory: false,
+    };
+
+    const onFinish = (values) => {
+        // saveData({ data: values, setIsLoading: listShowLoading, userId });
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => {});
+    };
+
     return (
         <>
-            <MetaTag metaTitle={'Hierarchy Attribute'} />
-
+            <PageHeader {...pageHeaderData} />
+            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Hierarchy Attribute Type" name="Hierarchy Attribute" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
+                            <Select>
+                                <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
+                                <Option value="Manufacturer Administration">Manufacturer Administration</Option>
+                                <Option value="Product">Product</Option>
+                                <Option value="Geographical">Geographical</Option>
+                                <Option value="Dealer">Dealer</Option>
+                                <Option value="Employee">Employee</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Table columns={columns} dataSource={data} pagination={false} />
+                    </Col>
+                </Row>
+            </Form>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                            <div>
-                                <span className={styles.headingGradient}>Hierarchy Attribute Master</span>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.buttonContainer}>
-                            {/* <button type="button" className="btn btn-outline rightbtn boxShdwNon mrl15">
-                                <FaUserFriends className="fa-solid fa-user-group mrr5" />
-                                Exit
-                            </button> */}
-                            <Button danger className={styles.exitButton}>
-                                <FaUserPlus className={styles.buttonIcon} />
-                                Exit
-                            </Button>
-                        </Col>
-                    </Row>
-                    <div className={styles.pageHeaderNameSection}></div>
-                </Col>
-            </Row>
-
-            <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <div>
-                        <h7>Hierarchy Attribute Type</h7>
-                    </div>
-                    <Form.Item name=" Hierarchy Attribute " rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
-                        <Select>
-                            <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
-                            <Option value="Manufacturer Administration">Manufacturer Administration</Option>
-                            <Option value="Product">Product</Option>
-                            <Option value="Geographical">Geographical</Option>
-                            <Option value="Dealer">Dealer</Option>
-                            <Option value="Employee">Employee</Option>
-                        </Select>
-                    </Form.Item>
-                </Col>
-                {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
-            </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table columns={columns} dataSource={data} pagination={false} />
-                </Col>
-            </Row>
-
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonContainer}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                     <Button danger>
                         <FaUserPlus className={styles.buttonIcon} />
                         Add Row
@@ -174,8 +173,8 @@ export const HierarchyAttributeMasterBase = () => {
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonContainer}>
-                    <Button danger>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                    <Button htmlType="submit" danger>
                         <FaSave className={styles.buttonIcon} />
                         Save
                     </Button>

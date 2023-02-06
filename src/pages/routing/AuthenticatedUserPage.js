@@ -17,7 +17,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
             <Route path={routing.ROUTING_COMMON_GEO} element={<GeoPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
-            <Route path={routing.ROUTING_COMMON_HIERARCHY} element={<HierarchyAttributeMasterPage />} exact />
+            <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
