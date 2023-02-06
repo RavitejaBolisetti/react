@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { Geo } from 'components/common';
+import { Geo } from 'components/common/Geo';
 
 const mapStateToProps = (state) => {
     const {
