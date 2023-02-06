@@ -70,13 +70,13 @@ export const clearAllAuthentication = (message) => (dispatch) => {
 };
 
 const authPostLoginActions =
-    ({ authToken, saveTokenAndRoleRights = true }) =>
+    ({ authToken, userId, saveTokenAndRoleRights = true }) =>
     (dispatch) => {
         if (saveTokenAndRoleRights) {
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_TOKEN, authToken);
         }
 
-        const { username: userName, username: userId } = jwtDecode(authToken);
+        const { username: userName } = jwtDecode(authToken);
 
         dispatch(authLoginSucess(authToken, userName, userId));
     };
@@ -125,7 +125,7 @@ export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => 
         dispatch(
             authPostLoginActions({
                 userId: data?.userId,
-                authToken: data?.accessToken,
+                authToken: data?.idToken,
             })
         );
     };
