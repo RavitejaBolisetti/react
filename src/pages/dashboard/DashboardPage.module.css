@@ -30,7 +30,6 @@
   display: flex;
   flex-flow: row wrap;
   min-width: 0;
-  margin-right: 0px !important;
 }
 
 /* .dashboardContainer :global .ant-carousel .slick-dots-bottom{
@@ -52,7 +51,6 @@
 
 .floatRight {
   float: right;
-  padding-right: 0 !important;
 }
 
 .headingGradient {
@@ -70,8 +68,9 @@
 
 .pageHeaderNameSection {
   border-bottom: 1px solid #DEDEDE;
-  padding: 0px;
-  margin: 0 0 20px 0;
+  /* padding: 0px;
+  padding-right: 0; */
+  margin-bottom: 20px;
 }
 
 /* .directChatMessages {

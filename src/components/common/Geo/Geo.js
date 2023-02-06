@@ -18,7 +18,7 @@ import ParentHierarchy from 'pages/common/Geo/ParentHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 const { Option } = Select;
-const { confirm } = Modal;
+const { success } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -77,19 +77,15 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
 
-    const handleBack = () => {
-        confirm({
-            title: 'Are you sure to leave this page?',
+    const onSuccess = () => {
+        success({
+            title: 'Success',
             icon: <ExclamationCircleFilled />,
-            content: 'If you leave this page, All unsaved data will be lost',
+            content: 'The transaction is successful.',
             okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            cancelType: 'danger',
             onOk() {
                 navigate(-1) || navigate(ROUTING_DASHBOARD);
             },
-            onCancel() {},
         });
     };
 
@@ -98,7 +94,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const dataList = [];
@@ -128,124 +124,122 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     return (
         <>
             <div className={styles.geoSection}>
-            <Row gutter={20}>
-                <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisibleClink}>
-                    {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                </div>
-            </Row>
-            <Row gutter={20}>
-                {isTreeViewVisible ? (
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <div className={styles.leftpanel}>
-                            <div className={styles.treeViewContainer}>
-                                <div className={styles.treemenu}>
-                                    <TreeView handleSelectClick={handleSelectClick} dataList={geoData} />
+                <Row gutter={20}>
+                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisibleClink}>
+                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
+                    </div>
+                </Row>
+                <Row gutter={20}>
+                    {isTreeViewVisible ? (
+                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                            <div className={styles.leftpanel}>
+                                <div className={styles.treeViewContainer}>
+                                    <div className={styles.treemenu}>
+                                        <TreeView handleSelectClick={handleSelectClick} dataList={geoData} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Col>
-                ) : undefined}
+                        </Col>
+                    ) : undefined}
 
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
-                    <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} >
-                                <Form.Item name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                                    <Select>
-                                        <Option value="Continent">Continent</Option>
-                                        <Option value="Country">Country</Option>
-                                        <Option value="State">State</Option>
-                                        <Option value="City">District/City</Option>
-                                        <Option value="Tashil">Tashil</Option>
-                                        <Option value="Pincode">Pincode</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} >
+                                    <Form.Item name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
+                                        <Select>
+                                            <Option value="Continent">Continent</Option>
+                                            <Option value="Country">Country</Option>
+                                            <Option value="State">State</Option>
+                                            <Option value="City">District/City</Option>
+                                            <Option value="Tashil">Tashil</Option>
+                                            <Option value="Pincode">Pincode</Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
 
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                                <Form.Item label="Parent" name="geoParentCode" className="control-label-blk">
-                                    <Input.Group compact>
-                                        <Input
-                                            style={{
-                                                width: 'calc(100% - 46px)',
-                                            }}
-                                            disabled
-                                            placeholder="Parent"
-                                            className={styles.inputBox}
-                                        />
-                                                <Button danger                                                
-                                                id="hierarchyChange"                                    
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                                    <Form.Item label="Parent" name="geoParentCode" className="control-label-blk">
+                                        <Input.Group compact>
+                                            <Input
+                                                style={{
+                                                    width: 'calc(100% - 46px)',
+                                                }}
+                                                disabled
+                                                placeholder="Parent"
+                                                className={styles.inputBox}
+                                            />
+                                            <Button danger
+                                                id="hierarchyChange"
                                                 // disabled={props.editableFormContent.editParent}
                                                 onClick={() => setIsModalOpen(true)}
                                             >
                                                 <FaSearch />
                                             </Button>
 
-                                     
-                                    </Input.Group>
-                                </Form.Item>
-                            </Col>
-                        </Row>
 
-                        <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Code" name="geoCode" rules={[validateRequiredInputField('Code')]}>
-                                    <Input placeholder="Code" className={styles.inputBox} />
-                                </Form.Item>
-                            </Col>
+                                        </Input.Group>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                                <Form.Item label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
-                                    <Input placeholder="Name" className={styles.inputBox} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label="Code" name="geoCode" rules={[validateRequiredInputField('Code')]}>
+                                        <Input placeholder="Code" className={styles.inputBox} />
+                                    </Form.Item>
+                                </Col>
 
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                                <Form.Item label="Status" name="status" initialValue={true}>
-                                    <Switch value={1} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                                    <Form.Item label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
+                                        <Input placeholder="Name" className={styles.inputBox} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                <Button danger>
-                                    <FaEdit className={styles.buttonIcon} />
-                                    Edit
-                                </Button>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                                    <Form.Item label="Status" name="status" initialValue={true}>
+                                        <Switch value={1} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                                <Button danger>
-                                    <FaUserPlus className={styles.buttonIcon} />
-                                    Add Child
-                                </Button>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                    <Button danger>
+                                        <FaEdit className={styles.buttonIcon} />
+                                        Edit
+                                    </Button>
 
-                                <Button danger>
-                                    <FaUserFriends className={styles.buttonIcon} />
-                                    Add Sibling
-                                </Button>
+                                    <Button danger>
+                                        <FaUserPlus className={styles.buttonIcon} />
+                                        Add Child
+                                    </Button>
 
-                                <Button htmlType="submit" danger>
-                                    <FaSave className={styles.buttonIcon} />
-                                    Save
-                                </Button>
+                                    <Button danger>
+                                        <FaUserFriends className={styles.buttonIcon} />
+                                        Add Sibling
+                                    </Button>
 
-                                <Button danger>
-                                    <FaUndo className={styles.buttonIcon} />
-                                    Reset
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </Col>
-            </Row>
-           
-            <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
-            
+                                    <Button htmlType="submit" danger onClick={onSuccess}>
+                                        <FaSave className={styles.buttonIcon} />
+                                        Save
+                                    </Button>
+
+                                    <Button danger>
+                                        <FaUndo className={styles.buttonIcon} />
+                                        Reset
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Col>
+                </Row>
+
+                <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+
             </div>
-            
-
         </>
     );
 };
