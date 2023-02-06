@@ -10,7 +10,7 @@ import styles from './PageHeader.module.css';
 
 const { confirm } = Modal;
 
-export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
@@ -31,7 +31,7 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
     return (
         <>
             <Row gutter={20}>
-                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18} className={styles.padRight0}>
+                <Col xs={16} sm={24} md={12} lg={16} xl={16} xxl={16} className={styles.padRight0}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
@@ -39,8 +39,14 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                         <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Mark as unfavourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>
                     </Space>
                 </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.padRight0}>
+                <Col xs={8} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
                     <div className={styles.buttonContainer}>
+                        {visibleSampleBtn && (
+                            <Button danger onClick={handleSample}>
+                                <FaHistory className={styles.buttonIcon} />
+                                View Product Detail
+                            </Button>
+                        )}
                         {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>

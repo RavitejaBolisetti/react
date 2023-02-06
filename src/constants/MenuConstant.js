@@ -43,6 +43,13 @@ export const MenuConstant = {
         parentMenuId: 'FAVS',
     },
 
+    [getMenyKey('PMA')]: {
+        key: 'PMA',
+        link: routing.ROUTING_COMMON_PRODUCT_MASTER,
+        icon: undefined,
+        parentMenuId: 'FAVS',
+    },
+
     [getMenyKey('COMN')]: {
         link: undefined,
         icon: <FaCreativeCommonsShare fontSize={20} />,
