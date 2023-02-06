@@ -28,7 +28,6 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
         });
     };
 
-    handleChangeHistoryClick
     return (
         <>
             <Row gutter={20}>
