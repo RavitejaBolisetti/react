@@ -175,7 +175,6 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
 
     const onSuccess = (res) => {
         if (res) {
-            // res?.responseMessage && message.info(res?.responseMessage);
             successAction && successAction();
             authPostLogout();
         } else {
