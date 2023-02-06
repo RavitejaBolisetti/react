@@ -177,6 +177,7 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
         if (res) {
             successAction && successAction();
             authPostLogout();
+            
         } else {
             logoutError('There was an error, Please try again');
         }
