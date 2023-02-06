@@ -129,7 +129,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         customMenuLink({
             key: '6',
             title: 'Logout',
-            onlick: showConfirm,
+            onClick: showConfirm,
             icon: <FiLogOut />,
         }),
     ];
