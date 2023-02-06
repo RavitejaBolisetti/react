@@ -14,7 +14,7 @@ import { ROUTING_DASHBOARD } from 'constants/routing';
 import ParentHierarchy from '../Geo/ParentHierarchy';
 import { PageHeader } from 'pages/common/PageHeader';
 import { addToolTip } from 'utils/customMenuLink';
-import { ChangeHistory } from '../ChangeHistory';
+import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 
 const { confirm } = Modal;
 const { TextArea } = Input;

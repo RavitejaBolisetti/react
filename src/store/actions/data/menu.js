@@ -4,6 +4,7 @@ import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 
 export const MENU_DATA_LOADED = 'MENU_DATA_LOADED';
+export const MENU_DATA_FILTER = 'MENU_DATA_FILTER';
 export const MENU_DATA_SHOW_LOADING = 'MENU_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
@@ -12,6 +13,7 @@ const receiveHeaderData = (data) => ({
     data,
 });
 
+
 const menuDataActions = {};
 
 const baseURLPath = BASE_URL_MENU;
@@ -19,6 +21,11 @@ const baseURLPath = BASE_URL_MENU;
 menuDataActions.listShowLoading = (isLoading) => ({
     type: MENU_DATA_SHOW_LOADING,
     isLoading,
+});
+
+menuDataActions.setFilter = (filter) => ({
+    type: MENU_DATA_FILTER,
+    filter,
 });
 
 menuDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) => {

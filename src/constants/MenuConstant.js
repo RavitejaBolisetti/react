@@ -10,22 +10,27 @@ import * as routing from './routing';
 
 export const MenuConstant = {
     [getMenyKey('FAVS')]: {
+        key: 'FAVS',
         link: undefined,
         icon: <FaHeart fontSize={20} />,
         parentMenuId: 'FAVS',
     },
+
     [getMenyKey('DASH')]: {
+        key: 'DASH',
         link: routing.ROUTING_DASHBOARD,
         icon: undefined,
         parentMenuId: 'FAVS',
     },
     [getMenyKey('GEO')]: {
+        key: 'GEO',
         link: routing.ROUTING_COMMON_GEO,
         icon: undefined,
         parentMenuId: 'FAVS',
     },
 
     [getMenyKey('PHI')]: {
+        key: 'PHI',
         link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
         icon: undefined,
         parentMenuId: 'FAVS',
@@ -35,71 +40,6 @@ export const MenuConstant = {
         link: undefined,
         icon: <FaCreativeCommonsShare fontSize={20} />,
         parentMenuId: 'WEB',
-    },
-    [getMenyKey('COMN-10')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN',
-    },
-    [getMenyKey('COMN-10.01a')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10',
-    },
-    [getMenyKey('COMN-10.b')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10',
-    },
-    [getMenyKey('COMN-10.01')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10',
-    },
-    [getMenyKey('COMN-10.02')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10',
-    },
-    [getMenyKey('COMN-10.a')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10',
-    },
-    [getMenyKey('COMN-10.03')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10.a',
-    },
-    [getMenyKey('COMN-10.04')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-10.a',
-    },
-    [getMenyKey('COMN-11')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN',
-    },
-    [getMenyKey('COMN-11.04')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-11',
-    },
-    [getMenyKey('COMN-11.05')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-11',
-    },
-    [getMenyKey('COMN-11.02')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-11',
-    },
-    [getMenyKey('COMN-11.01')]: {
-        link: undefined,
-        icon: undefined,
-        parentMenuId: 'COMN-11',
     },
 
     [getMenyKey('DBP')]: {
@@ -131,7 +71,7 @@ export const MenuConstant = {
         icon: <FaWrench fontSize={20} />,
         parentMenuId: 'WEB',
     },
-   
+
     [getMenyKey('ADMN')]: {
         link: undefined,
         icon: <FaUserTie fontSize={18} />,

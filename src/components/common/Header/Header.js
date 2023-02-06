@@ -129,7 +129,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         customMenuLink({
             key: '6',
             title: 'Logout',
-            onclick: showConfirm,
+            onlick: showConfirm,
             icon: <FiLogOut />,
         }),
     ];
@@ -163,7 +163,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                             <div className={styles.navbarNav}>
                                 <div className={styles.floatLeft}>
                                     <a className={styles.navLink} data-toggle="dropdown" href="/">
-                                        <Badge pill size="small" count={notificationCount}>
+                                        <Badge size="small" count={notificationCount}>
                                             {addToolTip('Notification')(<FaRegBell size={20} />)}
                                         </Badge>
                                     </a>

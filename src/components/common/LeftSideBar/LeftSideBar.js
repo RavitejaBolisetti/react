@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Input, Menu, Layout } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { IoIosDocument } from 'react-icons/io';
@@ -11,21 +11,27 @@ import IMG_LOGO from 'assets/img/logo.png';
 
 import { menuDataActions } from 'store/actions/data/menu';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
+import { escapeRegExp } from 'utils/escapeRegExp';
 
 import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
+import { getMenuItem } from 'utils/getMenuItem';
 
 const { Search } = Input;
 const { Sider } = Layout;
+
+const filterFunction = (filterString) => (menuTitle) => {
+    return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
+};
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, data: menuData = [] },
+            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -35,6 +41,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
+        filter,
         menuData,
         collapsed,
     };
@@ -47,104 +54,111 @@ const mapDispatchToProps = (dispatch) => ({
         {
             setCollapsed,
             fetchData: menuDataActions.fetchData,
+            setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-function getItem(label, key, icon, children, type) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-        type,
-    };
-}
-
-const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, userId, collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
         }
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    // const location = useLocation();
-    // const pagePath = location.pathname;
+    const location = useLocation();
+    const pagePath = location.pathname;
 
     const items = [];
     const menuDefault = false;
-
     const prepareLink = (title, link = undefined) => (link ? <Link to={link}>{title}</Link> : title);
 
-    items.push(getItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))), getItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))), getItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link')))]));
-
+    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Dashboard', getMenuValue(MenuConstant, 'DASH', 'link'))), getMenuItem(prepareLink('Geographical Hierarchy', getMenuValue(MenuConstant, 'GEO', 'link'))), getMenuItem(prepareLink('Product Hirarachy', getMenuValue(MenuConstant, 'PHI', 'link')))]));
     if (menuDefault) {
         items.push(
-            getItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
-                getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Master'}</Link>),
-                getItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
-                getItem('Hierarchy Attribute Master', '31', '', [getItem('Product Master', '32'), getItem('Product Hirarachy', '33'), getItem('Hierarchy Attribute Master', '34')]),
-                getItem('Role Management', '5'),
-                getItem('User Self Registration', '6'),
-                getItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
-                getItem('Dealer Hirerachy', '8'),
-                getItem('Dealer & Product Mapping', '9'),
-                getItem('Terms & Conditions- Dealer', '10'),
-                getItem('Terms & Conditions- Manufacturer', '11'),
-                getItem('Document Type Master', '12'),
-                getItem('Manufacturer Hirerachy', '13'),
-                getItem('Document Search', '14'),
-                getItem('Branch & Dealer Mapping', '15'),
-                getItem('Vehicle Details', '16'),
-                getItem('Application Master', '17'),
+            getMenuItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
+                getMenuItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Master'}</Link>),
+                getMenuItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hirarachy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
+                getMenuItem('Hierarchy Attribute Master', '31', '', [getMenuItem('Product Master', '32'), getMenuItem('Product Hirarachy', '33'), getMenuItem('Hierarchy Attribute Master', '34')]),
+                getMenuItem('Role Management', '5'),
+                getMenuItem('User Self Registration', '6'),
+                getMenuItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
+                getMenuItem('Dealer Hirerachy', '8'),
+                getMenuItem('Dealer & Product Mapping', '9'),
+                getMenuItem('Terms & Conditions- Dealer', '10'),
+                getMenuItem('Terms & Conditions- Manufacturer', '11'),
+                getMenuItem('Document Type Master', '12'),
+                getMenuItem('Manufacturer Hirerachy', '13'),
+                getMenuItem('Document Search', '14'),
+                getMenuItem('Branch & Dealer Mapping', '15'),
+                getMenuItem('Vehicle Details', '16'),
+                getMenuItem('Application Master', '17'),
             ]),
 
-            getItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getItem('Role Managment', '18'), getItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+            getMenuItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getMenuItem('Role Managment', '18'), getMenuItem('Document', '19', <IoIosDocument fontSize={20} />)]),
 
-            getItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
-            getItem('HR & MLES', 'HR', getMenuValue(MenuConstant, 'HR', 'icon')),
-            getItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getItem('Role Managment', '20'), getItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-            getItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
+            getMenuItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
+            getMenuItem('HR & MLES', 'HR', getMenuValue(MenuConstant, 'HR', 'icon')),
+            getMenuItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getMenuItem('Role Managment', '20'), getMenuItem('Document', '21', <IoIosDocument fontSize={20} />)]),
+            getMenuItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
         );
     } else {
-        if (menuData && menuData.length > 0) {
+        const checkData = (dataList) => (filter ? dataList.filter((data) => filterFunction(filter)(data?.menuTitle))?.length > 0 : true);
+
+        if (menuData && menuData.length > 0 && checkData(menuData)) {
             for (let index = 0; index < menuData.length; index++) {
                 const element = menuData[index];
+                const menuTitle = element?.menuTitle;
 
-                const childMenu = element['subMenu'];
-                if (childMenu && childMenu.length > 0) {
-                    const childMenuData = [];
-                    for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
-                        const childElement = childMenu[childIndex];
+                if (filter ? filterFunction(filter)(menuTitle) : true) {
+                    const childMenu = element['subMenu'];
+                    if (childMenu && childMenu.length > 0) {
+                        const childMenuData = [];
+                        for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
+                            const childElement = childMenu[childIndex];
 
-                        const grandMenu = childElement['subMenu'];
-                        if (grandMenu && grandMenu.length > 0) {
-                            const grandMenuData = [];
-                            for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
-                                const grandElement = grandMenu[grandIndex];
-                                grandMenuData.push(getItem(grandElement.menuTitle, grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
+                            const grandMenu = childElement['subMenu'];
+                            if (grandMenu && grandMenu.length > 0) {
+                                const grandMenuData = [];
+                                for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
+                                    const grandElement = grandMenu[grandIndex];
+                                    grandMenuData.push(getMenuItem(grandElement.menuTitle, grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
+                                }
+                                childMenuData.push(getMenuItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
+                            } else {
+                                childMenuData.push(getMenuItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                             }
-                            childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
-                        } else {
-                            childMenuData.push(getItem(childElement.menuTitle, childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                         }
+                        items.push(getMenuItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
+                    } else {
+                        items.push(getMenuItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                     }
-                    items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
-                } else {
-                    items.push(getItem(element.menuTitle, element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                 }
             }
         }
     }
     const [theme, setTheme] = useState('dark');
-    const onSearch = (value) => console.log(value);
+
+    const onSearch = (value) => {
+        setFilter(value);
+    };
 
     const onSubmit = (value) => {
         setCollapsed(value);
     };
+
+    const [current, setCurrent] = useState('mail');
+
+    const onClick = (e) => {
+        setCurrent(e.key);
+    };
+
+    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY].includes(pagePath) ? 'FAVS' : '';
+    const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     return (
         <>
@@ -160,7 +174,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, u
                     </Link>
                 </div>
 
-                <Menu mode="inline" inlineIndent={15} defaultSelectedKeys={[routing.ROUTING_COMMON_GEO]} collapsed={collapsed.toString()} items={items} />
+                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
 
                 <div className={styles.changeTheme} onClick={setTheme}>
                     {theme === 'dark' ? (

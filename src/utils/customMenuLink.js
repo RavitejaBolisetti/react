@@ -10,7 +10,7 @@ export const addToolTip = (title) => (inputComponent) =>
         title
     );
 
-const customMenuLink = ({ key = Math.random() * 1000, title, link, icon, children = undefined, onclick = () => {}, collapsed = false }) => {
+const customMenuLink = ({ key = Math.random() * 1000, title, link, icon, children = undefined, onClick = () => {}, collapsed = false }) => {
     return {
         key: key,
         label: link ? (
@@ -19,7 +19,7 @@ const customMenuLink = ({ key = Math.random() * 1000, title, link, icon, childre
                 {title && ' ' + title}
             </Link>
         ) : (
-            <span onClick={onclick}>
+            <span onClick={onClick}>
                 {icon ? icon : undefined}
                 {title && ' ' + title}
             </span>

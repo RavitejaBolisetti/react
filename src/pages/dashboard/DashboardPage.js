@@ -75,7 +75,7 @@ const DashboardPageBase = ({ props }) => {
                                     <div className={styles.graphBoxfirstSec}>
                                         <BsFillBarChartFill />
                                     </div>
-                                    <div  className={styles.graphBoxSecoundSec}>
+                                    <div className={styles.graphBoxSecoundSec}>
                                         <FaChartPie />
                                     </div>
                                     <div className={styles.graphBoxthirdSec}>
@@ -87,7 +87,7 @@ const DashboardPageBase = ({ props }) => {
                                 </div>
 
                                 <div className={styles.buttonHolder}>
-                                    <Button onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15" danger>
+                                    <Button  className="btn btn-outline centerbtn boxShdwNon mrl15" danger>
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -161,7 +161,7 @@ const DashboardPageBase = ({ props }) => {
                                 <h4>Anand Mahindra Highlights Car Price Hikes Over 50 Years Ago</h4>
                                 <div className="textContaner">Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago. </div>
                                 <div className={styles.buttonHolder}>
-                                    <Button danger onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                    <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -171,7 +171,7 @@ const DashboardPageBase = ({ props }) => {
                                 <h4>What to expect from Mahindra's Born Electric concept SUVs</h4>
                                 <div className="textContaner">Homegrown SUV specialist Mahindra revealed five concept electric SUVs at the brand's European design studio in August last year. </div>
                                 <div className={styles.buttonHolder}>
-                                    <Button danger onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                    <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -181,7 +181,7 @@ const DashboardPageBase = ({ props }) => {
                                 <h4>Mahindra SUV sales up 66% </h4>
                                 <div className="textContaner">Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.</div>
                                 <div className={styles.buttonHolder}>
-                                    <Button danger onclick="window.location.href='dasboard.html'" className="btn btn-outline centerbtn boxShdwNon mrl15">
+                                    <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -226,7 +226,7 @@ const DashboardPageBase = ({ props }) => {
                                 </div>
                             </div>
                             <div className={styles.birthContaner}>
-                                 <div className="row ">
+                                <div className="row ">
                                     <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>

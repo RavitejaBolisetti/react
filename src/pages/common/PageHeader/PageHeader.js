@@ -1,11 +1,33 @@
 import React from 'react';
-import { Row, Col, Space, Button } from 'antd';
+import { Row, Col, Space, Button, Modal } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
 
-import styles from './PageHeader.module.css';
 import { addToolTip } from 'utils/customMenuLink';
+import { ROUTING_DASHBOARD } from 'constants/routing';
+import styles from './PageHeader.module.css';
 
-export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, handleBack, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+const { confirm } = Modal;
+
+export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+    const navigate = useNavigate();
+    const handleBack = () => {
+        confirm({
+            title: 'Are you sure to leave this page?',
+            icon: <ExclamationCircleFilled />,
+            content: 'If you leave this page, All unsaved data will be lost',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            cancelType: 'danger',
+            onOk() {
+                navigate(-1) || navigate(ROUTING_DASHBOARD);
+            },
+            onCancel() {},
+        });
+    };
+
     return (
         <>
             <Row gutter={20}>
