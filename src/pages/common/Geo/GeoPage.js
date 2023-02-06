@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, Col, Input, Form, Row, Select, Switch, Modal } from 'antd';
+import { Button, Col, Input, Form, Row, Select, Switch, Modal, message } from 'antd';
 import { FaSearch, FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import TreeView from 'components/common/TreeView';
 import ParentHierarchy from './ParentHierarchy';
@@ -33,10 +33,10 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
+        collapsed,
         userId,
         isDataLoaded,
         geoData,
-        collapsed,
     };
     return returnValue;
 };
@@ -46,58 +46,32 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: geoDataActions.fetchList,
+            saveData: geoDataActions.saveData,
             listShowLoading: geoDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShowLoading }) => {
-    console.log('🚀 ~ file: GeoPage.js:56 ~ GeoPageBase ~ geoData', geoData);
+export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    const [activate, setActivate] = useState({
-        Attribute: '',
-        Parent: '',
-        Code: '',
-        Name: '',
-    });
-
-    const handle = (event) => {
-        setActivate({
-            ...activate,
-            [event.target.name]: event.target.value,
-        });
-    };
-
     const [form] = Form.useForm();
+    const { setFieldValue } = form;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavourite, setFavourite] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [antdForm, setAntdForm] = useState(false);
-    const [formContent, setFormContent] = useState({
-        Attribute: '',
-        Parent: '',
-        Code: '',
-        Name: '',
-    });
 
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
-    const [editableFormContent, setEditableFormContent] = useState({
-        editAttribute: false,
-        editParent: false,
-        editCode: false,
-        editName: false,
-    });
 
     const handleBack = () => {
         confirm({
@@ -115,14 +89,16 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
         });
     };
 
-    const onSubmit = (e) => {
-        form.validateFields()
-            .then((err, values) => {
-                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-            })
-            .catch((errorInfo) => {
-                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-            });
+    const onFinish = (values) => {
+        console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values);
+
+        const onSuccess = () => {};
+
+        saveData({ data: values, setIsLoading: listShowLoading, userId });
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => {});
     };
 
     const pageTitle = 'Geographical Hierarchy';
@@ -136,6 +112,29 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
         visibleChangeHistory: false,
     };
 
+    const dataList = [];
+    const generateList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const node = data[i];
+            const { geoCode: key } = node;
+            dataList.push({
+                key,
+                data: node,
+            });
+            if (node.subGeo) {
+                generateList(node.subGeo);
+            }
+        }
+        return dataList;
+    };
+
+    const flatternData = generateList(geoData);
+    const handleSelectClick = (keys) => {
+        console.log('🚀 ~ file: GeoPage.js:134 ~ handleSelectClick ~ keys', keys);
+        const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
+        console.log('🚀 ~ file: GeoPage.js:136 ~ handleSelectClick ~ SelectedParentNode', SelectedParentNode);
+        setFieldValue('geoParentCode', SelectedParentNode?.title);
+    };
     return (
         <>
             <PageHeader {...pageHeaderData} />
@@ -150,7 +149,7 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
                         <div className={styles.leftpanel}>
                             <div className={styles.treeViewContainer}>
                                 <div className={styles.treemenu}>
-                                    <TreeView dataList={geoData} editableFormContent={editableFormContent} setEditableFormContent={setEditableFormContent} antdForm={antdForm} setAntdForm={setAntdForm} setFormContent={setFormContent} formContent={formContent} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                                    <TreeView handleSelectClick={handleSelectClick} dataList={geoData} />
                                 </div>
                             </div>
                         </div>
@@ -158,10 +157,10 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
                 ) : undefined}
 
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
-                    <Form layout="vertical">
+                    <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
-                                <Form.Item name="Attribute Level" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                                <Form.Item name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
                                     <Select>
                                         <Option value="Continent">Continent</Option>
                                         <Option value="Country">Country</Option>
@@ -174,36 +173,17 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
                             </Col>
 
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
-                                <Form.Item
-                                    label="Parent"
-                                    name="Parent"
-                                    className="control-label-blk"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please Select a parent !',
-                                        },
-                                    ]}
-                                >
+                                <Form.Item label="Parent" name="geoParentCode" className="control-label-blk">
                                     <Input.Group compact>
                                         <Input
                                             style={{
                                                 width: 'calc(100% - 48px)',
                                             }}
-                                            //  readOnly={props.editableFormContent.editParent}
-                                            name="Parent"
-                                            onChange={handle}
+                                            disabled
                                             placeholder="Parent"
                                             className={styles.inputBox}
                                         />
-
-                                        <Button
-                                            type="primary"
-                                            id="hierarchyChange"
-                                            className="btn btn-outline srchbtn mr0 boxShdwNon"
-                                            // disabled={props.editableFormContent.editParent}
-                                            onClick={() => setIsModalOpen(true)}
-                                        >
+                                        <Button type="primary" id="hierarchyChange" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={() => setIsModalOpen(true)}>
                                             <FaSearch />
                                         </Button>
                                     </Input.Group>
@@ -213,40 +193,22 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
 
                         <Row gutter={20}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
-                                <Form.Item
-                                    label="Code"
-                                    name="Code"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please Enter the Code !',
-                                        },
-                                    ]}
-                                >
-                                    <Input name="Code" onChange={handle} placeholder="Code" className={styles.inputBox} />
+                                <Form.Item label="Code" name="geoCode" rules={[validateRequiredInputField('Code')]}>
+                                    <Input placeholder="Code" className={styles.inputBox} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
-                                <Form.Item
-                                    label="Name"
-                                    name="Name"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input the name!',
-                                        },
-                                    ]}
-                                >
-                                    <Input name="Name" onChange={handle} placeholder="Name" className={styles.inputBox} />
+                                <Form.Item label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
+                                    <Input placeholder="Name" className={styles.inputBox} />
                                 </Form.Item>
                             </Col>
                         </Row>
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                                <Form.Item name="Active inactive button" label="Status">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
+                                <Form.Item label="Status" name="status" initialValue={true}>
+                                    <Switch value={1} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -268,7 +230,7 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
                                     Add Sibling
                                 </Button>
 
-                                <Button htmlType="submit" danger onClick={onSubmit}>
+                                <Button htmlType="submit" danger>
                                     <FaSave className={styles.buttonIcon} />
                                     Save
                                 </Button>
@@ -287,4 +249,4 @@ export const GeoPageBase = ({ userId, isDataLoaded, geoData, fetchList, listShow
     );
 };
 
-export const GeoPage = withLayoutMaster(connect(mapStateToProps, mapDispatchToProps)(GeoPageBase));
+export const GeoPage = connect(mapStateToProps, mapDispatchToProps)(withLayoutMaster(GeoPageBase));
