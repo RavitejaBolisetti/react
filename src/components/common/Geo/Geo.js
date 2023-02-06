@@ -127,6 +127,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     };
     return (
         <>
+            <div className={styles.geoSection}>
             <Row gutter={20}>
                 <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisibleClink}>
                     {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
@@ -148,7 +149,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                     <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} >
                                 <Form.Item name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
                                     <Select>
                                         <Option value="Continent">Continent</Option>
@@ -161,33 +162,39 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                                 <Form.Item label="Parent" name="geoParentCode" className="control-label-blk">
                                     <Input.Group compact>
                                         <Input
                                             style={{
-                                                width: 'calc(100% - 48px)',
+                                                width: 'calc(100% - 46px)',
                                             }}
                                             disabled
                                             placeholder="Parent"
                                             className={styles.inputBox}
                                         />
-                                        <Button type="primary" id="hierarchyChange" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={() => setIsModalOpen(true)}>
-                                            <FaSearch />
-                                        </Button>
+                                                <Button danger                                                
+                                                id="hierarchyChange"                                    
+                                                // disabled={props.editableFormContent.editParent}
+                                                onClick={() => setIsModalOpen(true)}
+                                            >
+                                                <FaSearch />
+                                            </Button>
+
+                                     
                                     </Input.Group>
                                 </Form.Item>
                             </Col>
                         </Row>
 
                         <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight0}>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="Code" name="geoCode" rules={[validateRequiredInputField('Code')]}>
                                     <Input placeholder="Code" className={styles.inputBox} />
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }} className={styles.padLeft10}>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                                 <Form.Item label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
                                     <Input placeholder="Name" className={styles.inputBox} />
                                 </Form.Item>
@@ -233,7 +240,12 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                     </Form>
                 </Col>
             </Row>
+           
             <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+            
+            </div>
+            
+
         </>
     );
 };
