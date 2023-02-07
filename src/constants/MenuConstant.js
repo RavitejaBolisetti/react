@@ -22,21 +22,22 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'FAVS',
     },
-    [getMenyKey('GEO')]: {
-        key: 'GEO',
+
+    [getMenyKey('COMN-07.01')]: {
+        key: 'COMN-07.01',
         link: routing.ROUTING_COMMON_GEO,
         icon: undefined,
         parentMenuId: 'FAVS',
     },
 
-    [getMenyKey('PHI')]: {
-        key: 'PHI',
+    [getMenyKey('COMN-06.01')]: {
+        key: 'COMN-06.01',
         link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
         icon: undefined,
         parentMenuId: 'FAVS',
     },
 
-    [getMenyKey('HAM')]: {
+    [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
         link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
         icon: undefined,
@@ -97,6 +98,7 @@ export const MenuConstant = {
         icon: <FaUserTie fontSize={18} />,
         parentMenuId: 'WEB',
     },
+
     [getMenyKey('CRM')]: {
         link: undefined,
         icon: <FaUserTie fontSize={18} />,
