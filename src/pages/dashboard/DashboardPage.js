@@ -107,7 +107,7 @@ const DashboardPageBase = ({ props }) => {
                         <div className={styles.directChatMessages}>
                             <div className={styles.scrollbar}>
                                 <div className="force-overflow">
-                                    <ul className={styles.dashboardList}>
+                                    <ul className={styles.dashboardList} >
                                         <li>
                                             Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
@@ -158,8 +158,10 @@ const DashboardPageBase = ({ props }) => {
                     >
                         <Carousel autoplay>
                             <div className={styles.newsCarsulalContaner}>
+                                <div className={styles.dashboardboxContHeight}>
                                 <h4>Anand Mahindra Highlights Car Price Hikes Over 50 Years Ago</h4>
                                 <div className="textContaner">Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago. </div>
+                                </div>
                                 <div className={styles.buttonHolder}>
                                     <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
@@ -168,8 +170,10 @@ const DashboardPageBase = ({ props }) => {
                             </div>
 
                             <div className={styles.newsCarsulalContaner}>
+                                <div className={styles.dashboardboxContHeight}>
                                 <h4>What to expect from Mahindra's Born Electric concept SUVs</h4>
                                 <div className="textContaner">Homegrown SUV specialist Mahindra revealed five concept electric SUVs at the brand's European design studio in August last year. </div>
+                                </div>
                                 <div className={styles.buttonHolder}>
                                     <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
@@ -178,8 +182,10 @@ const DashboardPageBase = ({ props }) => {
                             </div>
 
                             <div className={styles.newsCarsulalContaner}>
+                                <div className={styles.dashboardboxContHeight}>
                                 <h4>Mahindra SUV sales up 66% </h4>
                                 <div className="textContaner">Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.</div>
+                                </div>
                                 <div className={styles.buttonHolder}>
                                     <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
                                         View Dashboard
