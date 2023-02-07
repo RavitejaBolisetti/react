@@ -10,9 +10,9 @@ import TreeView from 'components/common/TreeView';
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
-import ParentHierarchy from 'pages/common/Geo/ParentHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
+import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 
 const { success: successModel, error: errorModel } = Modal;
 const mapStateToProps = (state) => {
