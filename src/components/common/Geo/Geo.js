@@ -66,10 +66,14 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
+
+    useEffect(() => {
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const finalGeoData = geoData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
@@ -78,35 +82,35 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
     const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data?.length; i++) {
-            const node = data[i];
-            const { geoCode: key } = node;
-            dataList.push({
-                key,
-                data: node,
-            });
-            if (node.subGeo) {
-                generateList(node.subGeo);
-            }
-        }
-        return dataList;
-    };
+    // const generateList = (data) => {
+    //     for (let i = 0; i < data?.length; i++) {
+    //         const node = data[i];
+    //         const { geoCode: key } = node;
+    //         dataList.push({
+    //             key,
+    //             data: node,
+    //         });
+    //         if (node.subGeo) {
+    //             generateList(node.subGeo);
+    //         }
+    //     }
+    //     return dataList;
+    // };
 
-    const flatternData = generateList(finalGeoData);
+    // const flatternData = generateList(finalGeoData);
 
     const handleSelectClick = (keys) => {
-        setSelectedTreeKey(keys);
-        const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
-        setFieldValue('geoParentCode', SelectedParentNode);
+        // setSelectedTreeKey(keys);
+        // const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
+        // setFieldValue('geoParentCode', SelectedParentNode);
     };
 
     const handleFormVisiblity = (status) => {
         setFormVisible(status);
     };
 
-    const handleParentCode = (e) => {
-        setParentCodeValue(e.target.value);
+    const handleParentCode = (value) => {
+        setParentCodeValue(value);
     };
 
     const onFinish = (values) => {
@@ -138,7 +142,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     const onReset = () => {
         form.resetFields();
     };
-
+    console.log('parentCodeValue', parentCodeValue);
     const fieldNames = { title: 'geoName', key: 'geoCode', children: 'subGeo' };
     const isChildAdd = selectedTreeKey && selectedTreeKey.length >= 0;
     const isSublingAdd = selectedTreeKey && selectedTreeKey.length > 0;

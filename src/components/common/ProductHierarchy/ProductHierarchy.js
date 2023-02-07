@@ -91,10 +91,14 @@ export const ProductHierarchyBase = (props) => {
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
-            hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId, type: 'Product Hierarchy' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
+
+    useEffect(() => {
+        hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId, type: 'Product Hierarchy' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -129,7 +133,7 @@ export const ProductHierarchyBase = (props) => {
                         <div className={styles.leftpanel}>
                             <div className={styles.treeViewContainer}>
                                 <div className={styles.treemenu}>
-                                    <TreeView  fieldNames={fieldNames} dataList={productHierarchyData} handleSelectClick={handleSelectClick} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                                    <TreeView fieldNames={fieldNames} dataList={productHierarchyData} handleSelectClick={handleSelectClick} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                                 </div>
                             </div>
                         </div>

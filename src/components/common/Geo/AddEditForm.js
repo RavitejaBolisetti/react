@@ -9,7 +9,7 @@ import styles from 'pages/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = ({ selectedTreeKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleParentCode, geoData }) => {
-    const fieldNames = { label: 'geoName', value: 'geoCode', children: 'subGe' };
+    const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
     return (
         <>
             <Row gutter={20}>
@@ -27,6 +27,7 @@ const AddEditFormMain = ({ selectedTreeKey, isDataAttributeLoaded, attributeData
                     <Form.Item label="Parent" name="geoParentName" className="control-label-blk">
                         <Input.Group compact>
                             <TreeSelect
+                                onChange={handleParentCode}
                                 defaultValue={selectedTreeKey && selectedTreeKey[0]}
                                 showSearch
                                 style={{
