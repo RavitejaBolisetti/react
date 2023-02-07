@@ -97,7 +97,7 @@ export const ProductHierarchyBase = (props) => {
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProduct' };
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
 
     const finalGeoData = productHierarchyData?.map((i) => {
         return { ...i, productParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
