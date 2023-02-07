@@ -10,7 +10,6 @@ import { Table } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import styles from '../Common.module.css';
-import { PageHeader } from '../PageHeader';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 const { Option } = Select;
@@ -43,7 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeMasterBase = (userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading) => {
+export const HierarchyAttributeBase = (userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading) => {
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
@@ -239,4 +238,4 @@ export const HierarchyAttributeMasterBase = (userId, isDataLoaded, fetchList, hi
     );
 };
 
-export const HierarchyAttributeMaster = connect(mapStateToProps, mapDispatchToProps)(HierarchyAttributeMasterBase);
+export const HierarchyAttribute = connect(mapStateToProps, mapDispatchToProps)(HierarchyAttributeBase);
