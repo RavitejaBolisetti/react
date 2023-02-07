@@ -150,8 +150,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             width: 100,
             key: 'address 1',
             render: () => (
-                <Form.Item name="duplicateAllowedAtAttributerLevelInd" initialValue={true}>
-                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                <Form.Item name="duplicateAllowedAtAttributerLevelInd" initialValue={'Y'}>
+                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
                 </Form.Item>
             ),
         },
@@ -162,8 +162,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             width: 200,
 
             render: () => (
-                <Form.Item name="duplicateAllowedAtOtherParent" initialValue={true}>
-                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                <Form.Item name="duplicateAllowedAtOtherParent" initialValue={'Y'}>
+                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
                 </Form.Item>
             ),
         },
@@ -172,21 +172,29 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             dataIndex: 'isChildAllowed?',
             key: 'isChildAllowed',
             render: () => (
-                <Form.Item name="isChildAllowed" initialValue={true}>
-                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />
+                <Form.Item name="isChildAllowed" initialValue={'Y'}>
+                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />
                 </Form.Item>
             ),
         },
         {
             title: 'Status',
-            dataIndex: 'Status',
-            key: 'status',
+            dataIndex: 'active',
+            key: 'active',
             render: () => (
-                <Form.Item name="status" initialValue={true}>
-                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                <Form.Item name="active" initialValue={'Y'}>
+                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
                 </Form.Item>
             ),
         },
+       {
+        title: '',
+        dataIndex: '',
+        key: 'hierarchyAttribueId',
+        width: 0,
+        render: () => ''
+           
+       },
         {
             title: '',
             dataIndex: '',
@@ -207,7 +215,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             form.resetFields();
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
         };
-        saveData({ data: [values], setIsLoading: listShowLoading, userId, onError, onSuccess });
+        saveData({ data: [values ], setIsLoading: listShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -219,7 +227,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="parentHierarchyAttribueId" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
+                        <Form.Item name="hierarchyAttribueType" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
                             <Select loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item}>{item}</Option>
