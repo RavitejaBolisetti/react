@@ -1,4 +1,3 @@
-
 body::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
   background-color: #F4F4F4;
@@ -15,6 +14,7 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
   /* border: 2px solid ; */
 }
+
 .splashContainer {
   height: 100vh;
   width: 100%;
@@ -36,8 +36,8 @@ body::-webkit-scrollbar-thumb {
   align-items: center;
   justify-content: center;
   margin-top: 25px;
-  opacity: 1;
-  /* animation: slideDown 1s ease-out 2500ms; */
+  opacity: 0.01;
+  animation: slideDown 1500ms ease-out 2500ms;
 }
 
 .splashImg {
