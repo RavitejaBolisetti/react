@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Input, Form, Row, Select, Switch } from 'antd';
+import { Button, Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 import { FaSearch } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -8,13 +8,14 @@ import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleParentCode }) => {
+const AddEditFormMain = ({ selectedTreeKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleParentCode, geoData }) => {
+    const fieldNames = { label: 'geoName', value: 'geoCode', children: 'subGe' };
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder="Geographical Attribute Level">
+                        <Select loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
                             ))}
@@ -25,14 +26,21 @@ const AddEditFormMain = ({ isDataAttributeLoaded, attributeData, setIsModalOpen,
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item label="Parent" name="geoParentName" className="control-label-blk">
                         <Input.Group compact>
-                            <Input
-                                onChange={handleParentCode}
+                            <TreeSelect
+                                defaultValue={selectedTreeKey && selectedTreeKey[0]}
+                                showSearch
                                 style={{
-                                    width: 'calc(100% - 46px)',
+                                    width: 'calc(100% - 48px)',
                                 }}
-                                placeholder="Parent"
-                                className={styles.inputBox}
+                                dropdownStyle={{
+                                    maxHeight: 400,
+                                    overflow: 'auto',
+                                }}
+                                placeholder="Select"
                                 allowClear
+                                treeDefaultExpandAll
+                                fieldNames={fieldNames}
+                                treeData={geoData}
                             />
                             <Button danger id="hierarchyChange" onClick={() => setIsModalOpen(true)}>
                                 <FaSearch />

@@ -134,7 +134,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isLoaded: isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
         },
     } = state;
 

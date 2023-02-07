@@ -59,6 +59,8 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
+                console.log("🚀 ~ file: axiosAPICall.js:62 ~ baseAPICall ~ error", error)
+                
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {

@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY } from 'constants/routingApi';
+import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE } from 'constants/routingApi';
 
 export const PRODUCT_HIERARCHY_DATA_LOADED = 'PRODUCT_HIERARCHY_DATA_LOADED';
 export const PRODUCT_HIERARCHY_DATA_SHOW_LOADING = 'PRODUCT_HIERARCHY_DATA_SHOW_LOADING';
@@ -21,8 +21,6 @@ const receiveChangeHistoryData = (data) => ({
 });
 
 const productHierarchyDataActions = {};
-
-const baseURLPath = BASE_URL_PRODUCT_HIERARCHY;
 
 productHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
@@ -50,7 +48,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => (token) => (di
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY,
+        url: BASE_URL_PRODUCT_HIERARCHY,
         token,
         userId,
         onSuccess,
@@ -79,7 +77,7 @@ productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath,
+        url: BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY,
         token,
         userId,
         onSuccess,
@@ -101,7 +99,7 @@ productHierarchyDataActions.saveData = withAuthToken((params) => (token) => (dis
     const apiCallParams = {
         data,
         method: 'post',
-        url: baseURLPath,
+        url: BASE_URL_PRODUCT_HIERARCHY_SAVE,
         token,
         userId,
         onSuccess,

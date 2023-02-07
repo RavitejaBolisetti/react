@@ -23,7 +23,7 @@ hierarchyAttributeMasterActions.listShowLoading = (isLoading) => ({
 });
 
 hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, data, userId } = params;
+    const { setIsLoading, data, userId, type = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -38,7 +38,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) =>
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + '?type=Geographical',
+        url: baseURLPath + (type ? '?type=' + type : ''),
         token,
         userId,
         onSuccess,

@@ -19,7 +19,7 @@ const getParentKey = (key, tree) => {
     return parentKey;
 };
 
-const TreeView = ({ dataList, handleSelectClick, isOpenInModal }) => {
+const TreeView = ({ fieldNames, dataList, handleSelectClick, isOpenInModal }) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -78,12 +78,11 @@ const TreeView = ({ dataList, handleSelectClick, isOpenInModal }) => {
     //     // console.log(defaultData, 'defaultData', loop);
     //     return loop(dataList);
     // }, [searchValue]);
-
     return (
         <div className={isOpenInModal ? styles.modalView : ''}>
             <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
             <div className={styles.scrollTreeData}>
-                <Tree onSelect={handleSelectClick} fieldNames={{ title: 'geoName', key: 'geoCode', children: 'subGeo' }} showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={dataList} />
+                <Tree onSelect={handleSelectClick} fieldNames={fieldNames} showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={dataList} />
             </div>
         </div>
     );
