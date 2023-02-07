@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 import styles from '../Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { geoDataActions } from 'store/actions/data/geo';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -18,6 +19,11 @@ const { success: successModel, error: errorModel } = Modal;
 
 const mapStateToProps = (state) => {
     const {
+        auth: { userId },
+        data: {
+            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+        },
         common: {
             LeftSideBar: { collapsed = false },
         },
@@ -25,6 +31,11 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         collapsed,
+        userId,
+        isDataLoaded,
+        geoData,
+        isDataAttributeLoaded,
+        attributeData: attributeData?.filter((i) => i),
     };
 
     return returnValue;
@@ -34,15 +45,28 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: hierarchyAttributeMasterActions.fetchList,
-            saveData: hierarchyAttributeMasterActions.saveData,
-            listShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            fetchList: geoDataActions.fetchList,
+            saveData: geoDataActions.saveData,
+            listShowLoading: geoDataActions.listShowLoading,
+
+            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const HierarchyAttributeBase = (userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading) => {
+export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData }) => {
+    console.log('🚀 ~ file: HierarchyAttribute.js:46 ~ HierarchyAttributeBase ~ saveData', hierarchyAttributeSaveData);
+
+    useEffect(() => {
+        if (!isDataLoaded) {
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, isDataAttributeLoaded]);
+
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
@@ -122,7 +146,7 @@ export const HierarchyAttributeBase = (userId, isDataLoaded, fetchList, hierarch
         },
         {
             title: 'Duplicate Allowed?',
-            dataIndex: 'duplicateAllowedAtAttributerLevelInd?',
+            dataIndex: 'duplicateAllowedAtAttributerLevelInd',
             width: 100,
             key: 'address 1',
             render: () => (
@@ -133,8 +157,8 @@ export const HierarchyAttributeBase = (userId, isDataLoaded, fetchList, hierarch
         },
         {
             title: 'Duplicate Allowed under different Parent?',
-            dataIndex: 'duplicateAllowedAtOtherParent?',
-            key: 'address 2',
+            dataIndex: 'duplicateAllowedAtOtherParent',
+            key: 'duplicateAllowedAtOtherParent',
             width: 200,
 
             render: () => (
@@ -146,9 +170,9 @@ export const HierarchyAttributeBase = (userId, isDataLoaded, fetchList, hierarch
         {
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed?',
-            key: 'address 3',
+            key: 'isChildAllowed',
             render: () => (
-                <Form.Item name="ischildallowed" initialValue={true}>
+                <Form.Item name="isChildAllowed" initialValue={true}>
                     <Switch value="1" checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />
                 </Form.Item>
             ),
@@ -195,14 +219,11 @@ export const HierarchyAttributeBase = (userId, isDataLoaded, fetchList, hierarch
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Hierarchy Attribute Type" name="parentHierarchyAttribueId" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
-                            <Select placeholder={'Hierarchy Attribute Type'} allowClear>
-                                <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
-                                <Option value="Manufacturer Administration">Manufacturer Administration</Option>
-                                <Option value="Product">Product</Option>
-                                <Option value="Geographical">Geographical</Option>
-                                <Option value="Dealer">Dealer</Option>
-                                <Option value="Employee">Employee</Option>
+                        <Form.Item name="parentHierarchyAttribueId" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
+                            <Select loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                {attributeData?.map((item) => (
+                                    <Option value={item}>{item}</Option>
+                                ))}
                             </Select>
                         </Form.Item>
                     </Col>
