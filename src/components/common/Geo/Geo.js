@@ -100,7 +100,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     // const flatternData = generateList(finalGeoData);
 
     const handleSelectClick = (keys) => {
-        // setSelectedTreeKey(keys);
+        setSelectedTreeKey(keys);
         // const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
         // setFieldValue('geoParentCode', SelectedParentNode);
     };
@@ -143,7 +143,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         form.resetFields();
     };
     console.log('parentCodeValue', parentCodeValue);
-    const fieldNames = { title: 'geoName', key: 'geoCode', children: 'subGeo' };
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
     const isChildAdd = selectedTreeKey && selectedTreeKey.length >= 0;
     const isSublingAdd = selectedTreeKey && selectedTreeKey.length > 0;
     const isUpdate = false;
@@ -170,7 +170,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {isFormVisible && <AddEditForm geoData={geoData} handleParentCode={handleParentCode} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                            {isFormVisible && <AddEditForm selectedTreeKey={selectedTreeKey} geoData={geoData} handleParentCode={handleParentCode} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                     {isUpdate && (

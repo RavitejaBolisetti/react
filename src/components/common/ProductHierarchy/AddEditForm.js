@@ -51,11 +51,14 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
     const isChildAdd = selectedTreeKey && selectedTreeKey.length >= 0;
     const isSublingAdd = selectedTreeKey && selectedTreeKey.length > 0;
     const isUpdate = false;
-    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProd' };
+
+    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProdct' };
 
     // useEffect(() => {
     //     form.setFieldValue(selectedTreeKey && selectedTreeKey[0]);
     // }, [selectedTreeKey && selectedTreeKey[0]]);
+
+    console.log('productHierarchyData', productHierarchyData);
     return (
         <div>
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -74,27 +77,26 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
 
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                 <Form.Item label="Parent" name="parentCode" className="control-label-blk">
-                                    <Input.Group compact>
-                                        <TreeSelect
-                                            defaultValue={selectedTreeKey && selectedTreeKey[0]}
-                                            showSearch
-                                            style={{
-                                                width: 'calc(100% - 48px)',
-                                            }}
-                                            dropdownStyle={{
-                                                maxHeight: 400,
-                                                overflow: 'auto',
-                                            }}
-                                            placeholder="Select"
-                                            allowClear
-                                            treeDefaultExpandAll
-                                            fieldNames={fieldNames}
-                                            treeData={productHierarchyData}
-                                        />
-                                        <Button type="primary" id="hierarchyChange" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={() => setIsModalOpen(true)}>
+                                    {/* <Input.Group compact> */}
+                                    <TreeSelect
+                                        treeLine={true}
+                                        treeIcon={true}
+                                        showSearch
+                                        dropdownStyle={{
+                                            maxHeight: 400,
+                                            overflow: 'auto',
+                                        }}
+                                        placeholder="Please select"
+                                        dropdownMatchSelectWidth={false}
+                                        allowClear
+                                        treeDefaultExpandAll
+                                        treeData={productHierarchyData}
+                                        fieldNames={fieldNames}
+                                    />
+                                    {/* <Button type="primary" id="hierarchyChange" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={() => setIsModalOpen(true)}>
                                             <FaSearch />
-                                        </Button>
-                                    </Input.Group>
+                                        </Button> */}
+                                    {/* </Input.Group> */}
                                 </Form.Item>
                             </Col>
                         </Row>

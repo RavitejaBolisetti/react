@@ -38,11 +38,12 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    
     let returnValue = {
         userId,
         isDataLoaded,
         filter,
-        menuData,
+        menuData:menuData?.menuList,
         collapsed,
     };
     return returnValue;
@@ -73,70 +74,40 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     const location = useLocation();
     const pagePath = location.pathname;
 
-    const items = [];
-    const menuDefault = false;
     const prepareLink = (title, id) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{title}</Link> : title);
 
-    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Geographical Hierarchy', 'COMN-07.01')), getMenuItem(prepareLink('Product Hierarchy', 'COMN-06.01')), getMenuItem(prepareLink('Hierarchy Attribute Master', 'COMN-03.08'))]));
-    if (menuDefault) {
-        items.push(
-            getMenuItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
-                getMenuItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Master'}</Link>),
-                getMenuItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hierarchy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
-                getMenuItem('Hierarchy Attribute Master', '31', '', [getMenuItem('Product Master', '32'), getMenuItem('Product Hierarchy', '33'), getMenuItem('Hierarchy Attribute Master', '34')]),
-                getMenuItem('Role Management', '5'),
-                getMenuItem('User Self Registration', '6'),
-                getMenuItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
-                getMenuItem('Dealer Hierarchy', '8'),
-                getMenuItem('Dealer & Product Mapping', '9'),
-                getMenuItem('Terms & Conditions- Dealer', '10'),
-                getMenuItem('Terms & Conditions- Manufacturer', '11'),
-                getMenuItem('Document Type Master', '12'),
-                getMenuItem('Manufacturer Hierarchy', '13'),
-                getMenuItem('Document Search', '14'),
-                getMenuItem('Branch & Dealer Mapping', '15'),
-                getMenuItem('Vehicle Details', '16'),
-                getMenuItem('Application Master', '17'),
-            ]),
+    const items = [];
+    const checkData = (dataList) => (filter ? dataList.filter((data) => filterFunction(filter)(data?.menuTitle))?.length > 0 : true);
 
-            getMenuItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getMenuItem('Role Managment', '18'), getMenuItem('Document', '19', <IoIosDocument fontSize={20} />)]),
+    if (menuData && menuData.length > 0 && checkData(menuData)) {
+        items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Geographical Hierarchy', 'COMN-07.01')), getMenuItem(prepareLink('Product Hierarchy', 'COMN-06.01')), getMenuItem(prepareLink('Hierarchy Attribute Master', 'COMN-03.08'))]));
 
-            getMenuItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
-            getMenuItem('HR & MLES', 'HR', getMenuValue(MenuConstant, 'HR', 'icon')),
-            getMenuItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getMenuItem('Role Managment', '20'), getMenuItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-            getMenuItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
-        );
-    } else {
-        const checkData = (dataList) => (filter ? dataList.filter((data) => filterFunction(filter)(data?.menuTitle))?.length > 0 : true);
+        for (let index = 0; index < menuData.length; index++) {
+            const element = menuData[index];
+            const menuTitle = element?.menuTitle;
 
-        if (menuData && menuData.length > 0 && checkData(menuData)) {
-            for (let index = 0; index < menuData.length; index++) {
-                const element = menuData[index];
-                const menuTitle = element?.menuTitle;
+            if (filter ? filterFunction(filter)(menuTitle) : true) {
+                const childMenu = element['subMenu'];
+                if (childMenu && childMenu.length > 0) {
+                    const childMenuData = [];
+                    for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
+                        const childElement = childMenu[childIndex];
 
-                if (filter ? filterFunction(filter)(menuTitle) : true) {
-                    const childMenu = element['subMenu'];
-                    if (childMenu && childMenu.length > 0) {
-                        const childMenuData = [];
-                        for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
-                            const childElement = childMenu[childIndex];
-
-                            const grandMenu = childElement['subMenu'];
-                            if (grandMenu && grandMenu.length > 0) {
-                                const grandMenuData = [];
-                                for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
-                                    const grandElement = grandMenu[grandIndex];
-                                    grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
-                                }
-                                childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
-                            } else {
-                                childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
+                        const grandMenu = childElement['subMenu'];
+                        if (grandMenu && grandMenu.length > 0) {
+                            const grandMenuData = [];
+                            for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
+                                const grandElement = grandMenu[grandIndex];
+                                grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
                             }
+                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
+                        } else {
+                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                         }
-                        items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
-                    } else {
-                        items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                     }
+                    items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
+                } else {
+                    items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                 }
             }
         }

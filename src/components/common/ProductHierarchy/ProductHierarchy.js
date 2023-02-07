@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { Row, Col, Form } from 'antd';
+import { Row, Col, TreeSelect } from 'antd';
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
@@ -58,17 +58,17 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const dataList = [];
 const generateList = (data) => {
+    const dataList = [];
     for (let i = 0; i < data?.length; i++) {
         const node = data[i];
-        const { geoCode: key } = node;
+        const { prodctCode: key } = node;
         dataList.push({
             key,
             data: node,
         });
-        if (node.subGeo) {
-            generateList(node.subGeo);
+        if (node.subProdct) {
+            generateList(node.subProdct);
         }
     }
     return dataList;
@@ -101,12 +101,12 @@ export const ProductHierarchyBase = (props) => {
     }, []);
 
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
 
-    const finalGeoData = productHierarchyData?.map((i) => {
-        return { ...i, productParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
-    });
-    const flatternData = generateList(finalGeoData);
+    // const finalGeoData = productHierarchyData?.map((i) => {
+    //     return { ...i, productParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
+    // });
+    const flatternData = generateList(productHierarchyData);
+    console.log('🚀 ~ file: ProductHierarchy.js:109 ~ ProductHierarchyBase ~ flatternData', flatternData);
 
     const handleSelectClick = (keys) => {
         setSelectedTreeKey(keys);
@@ -119,6 +119,8 @@ export const ProductHierarchyBase = (props) => {
     };
 
     const myProps = { ...props, selectedTreeKey, handleParentCode, isDataAttributeLoaded, attributeData, setIsModalOpen };
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+
     return (
         <>
             <Row gutter={20}>
@@ -151,7 +153,7 @@ export const ProductHierarchyBase = (props) => {
                 </Col>
             </Row>
 
-            <ParentHierarchy title={'Parent Hierarchy'} fieldNames={fieldNames} dataList={productHierarchyData} handleSelectClick={handleSelectClick} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+            <ParentHierarchy title={'Parent Hierarchy'} dataList={productHierarchyData} handleSelectClick={handleSelectClick} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };

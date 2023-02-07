@@ -24,29 +24,29 @@ const AddEditFormMain = ({ selectedTreeKey, isDataAttributeLoaded, attributeData
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item label="Parent" name="geoParentName" className="control-label-blk">
-                        <Input.Group compact>
-                            <TreeSelect
-                                onChange={handleParentCode}
-                                defaultValue={selectedTreeKey && selectedTreeKey[0]}
-                                showSearch
-                                style={{
-                                    width: 'calc(100% - 48px)',
-                                }}
-                                dropdownStyle={{
-                                    maxHeight: 400,
-                                    overflow: 'auto',
-                                }}
-                                placeholder="Select"
-                                allowClear
-                                treeDefaultExpandAll
-                                fieldNames={fieldNames}
-                                treeData={geoData}
-                            />
-                            <Button danger id="hierarchyChange" onClick={() => setIsModalOpen(true)}>
+                    <Form.Item label="Parent" name="geoParentName">{selectedTreeKey}
+                        {/* <Input.Group compact> */}
+                        <TreeSelect
+                            onChange={handleParentCode}
+                            defaultValue={selectedTreeKey && selectedTreeKey[0]}
+                            showSearch
+                            // style={{
+                            //     width: 'calc(100% - 48px)',
+                            // }}
+                            dropdownStyle={{
+                                maxHeight: 400,
+                                overflow: 'auto',
+                            }}
+                            placeholder="Select"
+                            allowClear
+                            treeDefaultExpandAll
+                            fieldNames={fieldNames}
+                            treeData={geoData}
+                        />
+                        {/* <Button danger id="hierarchyChange" onClick={() => setIsModalOpen(true)}>
                                 <FaSearch />
-                            </Button>
-                        </Input.Group>
+                            </Button> */}
+                        {/* </Input.Group> */}
                     </Form.Item>
                 </Col>
             </Row>
