@@ -1,7 +1,8 @@
 import { AiFillCar } from 'react-icons/ai';
-import { FaHeart, FaUserTie } from 'react-icons/fa';
+import { FaHeart, FaUserTie, FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { BiRupee } from 'react-icons/bi';
-import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
+import { MdWeb } from 'react-icons/md';
+import { BsFillGearFill } from 'react-icons/bs';
 import { GrGroup } from 'react-icons/gr';
 
 import { getMenyKey } from 'utils/menuKey';
@@ -95,13 +96,13 @@ export const MenuConstant = {
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <FaUserTie fontSize={18} />,
+        icon: <BsFillGearFill fontSize={18} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('CRM')]: {
         link: undefined,
-        icon: <FaUserTie fontSize={18} />,
+        icon: <MdWeb fontSize={18} />,
         parentMenuId: 'WEB',
     },
 };

@@ -3,6 +3,7 @@ import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell, FaInfoCircle } from 'react-icons/fa';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
@@ -73,7 +74,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
     const showConfirm = () => {
         confirm({
             title: 'Confirmation',
-            icon: <FaInfoCircle size={22} className={styles.alertIcon} />,
+            icon: <AiOutlineInfoCircle size={22} className={styles.alertIcon} />,
             content: 'Are you sure you want to logout?',
             okText: 'Yes',
             okType: 'danger',

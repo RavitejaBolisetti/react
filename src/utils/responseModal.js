@@ -1,12 +1,13 @@
 import { Modal } from 'antd';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { FaRegCheckCircle } from 'react-icons/fa';
+import { TiInfoOutline } from 'react-icons/ti';
 
 const { success, error } = Modal;
 
 export const handleSuccessModal = ({ title, message }) => {
     success({
         title: title,
-        icon: <ExclamationCircleFilled />,
+        icon: <FaRegCheckCircle size={22} />,
         content: message,
     });
 };
@@ -14,7 +15,7 @@ export const handleSuccessModal = ({ title, message }) => {
 export const handleErrorModal = (message) => {
     error({
         title: 'ERROR',
-        icon: <ExclamationCircleFilled />,
+        icon: <TiInfoOutline size={22} />,
         content: message,
     });
 };
