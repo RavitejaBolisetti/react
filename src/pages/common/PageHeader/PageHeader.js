@@ -23,9 +23,9 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
             cancelType: 'danger',
             width: 350,
             onOk() {
-                navigate(-1) || navigate(ROUTING_DASHBOARD);
+                navigate(ROUTING_DASHBOARD);
             },
-            onCancel() { },
+            onCancel() {},
         });
     };
 
