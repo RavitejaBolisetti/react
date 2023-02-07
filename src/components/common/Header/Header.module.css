@@ -104,11 +104,10 @@
     float: inline-start;
 }
 
-.alertIcon {
+.modalIconAlert {
     color: #FF7A00;
     padding-right: 8px;
 }
-
 @media (max-width: 576px) {
     .headerLeft {
         padding-left: 20px;

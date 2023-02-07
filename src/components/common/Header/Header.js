@@ -74,7 +74,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
     const showConfirm = () => {
         confirm({
             title: 'Confirmation',
-            icon: <AiOutlineInfoCircle size={22} className={styles.alertIcon} />,
+            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
             content: 'Are you sure you want to logout?',
             okText: 'Yes',
             okType: 'danger',
