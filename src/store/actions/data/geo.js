@@ -54,8 +54,8 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
 
 geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
+
     setIsLoading(true);
-    // const onError = errorAction('Internal Error, Please try again');
 
     const apiCallParams = {
         data,

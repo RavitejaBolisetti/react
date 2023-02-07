@@ -134,14 +134,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: changeHistoryData = [] },
+            ProductHierarchy: { isHistoryLoading, isLoaded: isHistoryLoaded = false, historyData: changeHistoryData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isLoading,
-        isDataLoaded,
+        isHistoryLoading,
+        isHistoryLoaded,
         changeHistoryData,
     };
     return returnValue;
@@ -151,20 +151,20 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: productHierarchyDataActions.fetchList,
-            listShowLoading: productHierarchyDataActions.listShowLoading,
+            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryMain = ({ fetchList, listShowLoading, isLoading, userId, isDataLoaded, changeHistoryData }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+        if (!isHistoryLoaded) {
+            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isHistoryLoaded]);
     return (
         <>
             <div>
