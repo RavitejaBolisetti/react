@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
-        auth: { token, userId },
+        auth: { token, isLoggedIn, userId },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
         },
@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
         loginUserData,
         isDataLoaded,
         token,
+        isLoggedIn,
         userId,
         isLoading,
     };
@@ -48,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, userId }) => {
+const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount } = loginUserData;
 
@@ -61,8 +62,15 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
+
+    useEffect(() => {
+        console.log('isLoggedIn', isLoggedIn);
+        !isLoggedIn && navigate(routing.ROUTING_LOGIN);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoggedIn]);
 
     const showConfirm = () => {
         confirm({
@@ -77,7 +85,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                     successAction: () => {
                         navigate(routing.ROUTING_LOGOUT);
                     },
-                    userId: 'user1',
+                    userId,
                 });
             },
         });
