@@ -11,7 +11,7 @@ import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { Table } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import MetaTag from 'utils/MetaTag';
 
@@ -21,86 +21,6 @@ import { useForm } from 'antd/es/form/Form';
 
 const { Option } = Select;
 const { confirm } = Modal;
-
-const showConfirm = () => {
-    confirm({
-        title: 'Do you Want to delete these items?',
-        icon: <ExclamationCircleFilled />,
-        content: 'Some descriptions',
-        onOk() {
-            console.log('OK');
-        },
-        onCancel() {
-            console.log('Cancel');
-        },
-    });
-};
-
-const columns = [
-    {
-        title: 'Code',
-        dataIndex: 'code',
-        key: 'code',
-        render: () => <Input placeholder="MT0001" />,
-        width: 150,
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <Input placeholder="Name" />,
-        width: 400,
-    },
-    {
-        title: 'Duplicate Allowed?',
-        dataIndex: 'DuplicateAllowed?',
-        width: 100,
-        key: 'address 1',
-        render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
-    },
-    {
-        title: 'Duplicate Allowed under different Parent?',
-        dataIndex: 'Duplicate Allowed under different Parent?',
-        key: 'address 2',
-        width: 200,
-
-        render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
-    },
-    {
-        title: 'Child Allowed?',
-        dataIndex: 'Child Allowed?',
-        key: 'address 3',
-        render: () => <Switch checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />,
-    },
-    {
-        title: 'Status',
-        dataIndex: 'Status',
-        key: 'address 4',
-        render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
-    },
-    {
-        title: '',
-        dataIndex: '',
-        width: 100,
-        render: () => [
-            <Space wrap>
-                <EditOutlined />
-
-                <DeleteOutlined onClick={showConfirm} />
-            </Space>,
-        ],
-    },
-];
-const data = [
-    {
-        key: '1',
-        name: '',
-    },
-    {
-        key: '2',
-        name: '',
-    },
-];
 
 const mapStateToProps = (state) => {
     const {
@@ -117,8 +37,116 @@ const mapStateToProps = (state) => {
 };
 
 export const HierarchyAttributeMasterBase = () => {
+    const showConfirm = () => {
+        confirm({
+            title: 'Do you Want to delete these items?',
+            icon: <ExclamationCircleFilled />,
+            content: 'Some descriptions',
+            onOk() {
+                deleteTableRows(data.key);
+
+                console.log('OK');
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
+    const [count, setCount] = useState(2);
+    const [data, setRowsData] = useState([
+        {
+            key: '0',
+            name: '',
+        },
+        {
+            key: '1',
+            name: '',
+        },
+    ]);
+    const handleAdd = () => {
+        const newData = [
+            {
+                key: count,
+                name: '',
+            },
+        ];
+        setRowsData([...data, newData]);
+        setCount(count + 1);
+    };
+
+    const deleteTableRows = (index) => {
+        const rows = [...data];
+        rows.splice(index, 1);
+        setRowsData(rows);
+    };
+
+    const columns = [
+        {
+            title: 'Code',
+            dataIndex: 'code',
+            key: 'code',
+            render: () => (
+                <Form.Item style={{ paddingTop: '20px' }} name={'code'} rules={[validateRequiredInputField('Code')]}>
+                    <Input placeholder="MT0001" />
+                </Form.Item>
+            ),
+            width: 200,
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            render: () => (
+                <Form.Item style={{ paddingTop: '20px' }} name={'name[]'} rules={[validateRequiredInputField('Name')]}>
+                    <Input placeholder="MT0001" />
+                </Form.Item>
+            ),
+
+            width: 400,
+        },
+        {
+            title: 'Duplicate Allowed?',
+            dataIndex: 'DuplicateAllowed?',
+            width: 100,
+            key: 'address 1',
+            render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
+        },
+        {
+            title: 'Duplicate Allowed under different Parent?',
+            dataIndex: 'DuplicateAllowedunderdifferentParent?',
+            key: 'address 2',
+            width: 200,
+
+            render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
+        },
+        {
+            title: 'Child Allowed?',
+            dataIndex: 'ChildAllowed?',
+            key: 'address 3',
+            render: () => <Switch checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />,
+        },
+        {
+            title: 'Status',
+            dataIndex: 'Status',
+            key: 'address 4',
+            render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
+        },
+        {
+            title: '',
+            dataIndex: '',
+            width: 100,
+            render: () => [
+                <Space wrap>
+                    <EditOutlined />
+
+                    <DeleteOutlined onClick={showConfirm} />
+                </Space>,
+            ],
+        },
+    ];
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
+
     const handleFavouriteClick = () => setFavourite(!isFavourite);
 
     const pageTitle = 'Hierarchy Attribute Master';
@@ -132,7 +160,8 @@ export const HierarchyAttributeMasterBase = () => {
     };
 
     const onFinish = (values) => {
-        // saveData({ data: values, setIsLoading: listShowLoading, userId });
+        console.log('values', values);
+        //saveData({ data: values, setIsLoading: listShowLoading, userId });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -146,7 +175,7 @@ export const HierarchyAttributeMasterBase = () => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Hierarchy Attribute Type" name="Hierarchy Attribute" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
-                            <Select>
+                            <Select placeholder={'Hierarchy Attribute Type'} allowClear>
                                 <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
                                 <Option value="Manufacturer Administration">Manufacturer Administration</Option>
                                 <Option value="Product">Product</Option>
@@ -158,33 +187,35 @@ export const HierarchyAttributeMasterBase = () => {
                     </Col>
                     {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
                 </Row>
+                
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Table columns={columns} dataSource={data} pagination={false} />
                     </Col>
                 </Row>
-            </Form>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                    <Button danger>
-                        <FaUserPlus className={styles.buttonIcon} />
-                        Add Row
-                    </Button>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                    <Button htmlType="submit" danger>
-                        <FaSave className={styles.buttonIcon} />
-                        Save
-                    </Button>
 
-                    <Button danger>
-                        <FaUndo className={styles.buttonIcon} />
-                        Reset
-                    </Button>
-                </Col>
-            </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                        <Button danger onClick={handleAdd}>
+                            <FaUserPlus className={styles.buttonIcon} />
+                            Add Row
+                        </Button>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                        <Button htmlType="submit" danger>
+                            <FaSave className={styles.buttonIcon} />
+                            Save
+                        </Button>
+
+                        <Button danger>
+                            <FaUndo className={styles.buttonIcon} />
+                            Reset
+                        </Button>
+                    </Col>
+                </Row>
+            </Form>
         </>
     );
 };
