@@ -77,7 +77,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     const menuDefault = false;
     const prepareLink = (title, id) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{title}</Link> : title);
 
-    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Dashboard')), getMenuItem(prepareLink('Geographical Hierarchy', 'COMN-07.01')), getMenuItem(prepareLink('Product Hierarchy', 'COMN-06.01')), getMenuItem(prepareLink('Hierarchy Attribute Master', 'COMN-03.08'))]));
+    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Geographical Hierarchy', 'COMN-07.01')), getMenuItem(prepareLink('Product Hierarchy', 'COMN-06.01')), getMenuItem(prepareLink('Hierarchy Attribute Master', 'COMN-03.08'))]));
     if (menuDefault) {
         items.push(
             getMenuItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
