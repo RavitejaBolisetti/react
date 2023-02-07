@@ -127,7 +127,7 @@ tableColumn.push(
 );
 
 const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
+    // console.log('params', pagination, filters, sorter, extra);
 };
 
 const mapStateToProps = (state) => {
@@ -159,7 +159,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeHistoryMain = ({ fetchList, listShowLoading, isLoading, userId, isDataLoaded, changeHistoryData }) => {
-    console.log('🚀 ~ file: ChangeHistory.js:249 ~ ChangeHistoryMain ~ changeHistoryData', changeHistoryData);
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });

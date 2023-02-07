@@ -1,28 +1,28 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_GEO_GRAPHY } from 'constants/routingApi';
+import { BASE_URL_ATTRIBUTE_MASTER } from 'constants/routingApi';
 import { message } from 'antd';
 
-export const GEO_DATA_LOADED = 'GEO_DATA_LOADED';
-export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
+export const HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED';
+export const HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
-    type: GEO_DATA_LOADED,
+    type: HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED,
     isLoaded: true,
     data,
 });
 
-const geoDataActions = {};
+const hierarchyAttributeMasterActions = {};
 
-const baseURLPath = BASE_URL_GEO_GRAPHY;
+const baseURLPath = BASE_URL_ATTRIBUTE_MASTER;
 
-geoDataActions.listShowLoading = (isLoading) => ({
-    type: GEO_DATA_SHOW_LOADING,
+hierarchyAttributeMasterActions.listShowLoading = (isLoading) => ({
+    type: HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING,
     isLoading,
 });
 
-geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
+hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -38,7 +38,7 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath,
+        url: baseURLPath + '?type=Geographical',
         token,
         userId,
         onSuccess,
@@ -52,10 +52,20 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     axiosAPICall(apiCallParams);
 });
 
-geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+    const { setIsLoading, errorAction, data, userId } = params;
     setIsLoading(true);
-    // const onError = errorAction('Internal Error, Please try again');
+    const onError = () => errorAction('Internal Error, Please try again');
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            console.log(res?.data);
+            setIsLoading();
+            // dispatch(receiveHeaderData(res?.data));
+        } else {
+            onError();
+        }
+    };
 
     const apiCallParams = {
         data,
@@ -65,7 +75,7 @@ geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
         userId,
         onSuccess,
         onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
+        onTimeout: () => errorAction('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),
@@ -74,4 +84,4 @@ geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
     axiosAPICall(apiCallParams);
 });
 
-export { geoDataActions };
+export { hierarchyAttributeMasterActions };
