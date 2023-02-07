@@ -55,13 +55,19 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
-    const { setFieldValue } = form;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [parentCodeValue, setParentCodeValue] = useState('');
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [formData, setFormData] = useState([]);
 
     const [isFormVisible, setFormVisible] = useState(false);
+    const [isReadOnly, setReadOnly] = useState(false);
+    const [canEditData, setCanEditData] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, childBtn: true, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -82,31 +88,32 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
 
     const dataList = [];
-    // const generateList = (data) => {
-    //     for (let i = 0; i < data?.length; i++) {
-    //         const node = data[i];
-    //         const { geoCode: key } = node;
-    //         dataList.push({
-    //             key,
-    //             data: node,
-    //         });
-    //         if (node.subGeo) {
-    //             generateList(node.subGeo);
-    //         }
-    //     }
-    //     return dataList;
-    // };
-
-    // const flatternData = generateList(finalGeoData);
-
-    const handleSelectClick = (keys) => {
-        setSelectedTreeKey(keys);
-        // const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
-        // setFieldValue('geoParentCode', SelectedParentNode);
+    const generateList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const node = data[i];
+            const { id: key } = node;
+            dataList.push({
+                key,
+                data: node,
+            });
+            if (node.subGeo) {
+                generateList(node.subGeo);
+            }
+        }
+        return dataList;
     };
 
-    const handleFormVisiblity = (status) => {
-        setFormVisible(status);
+    const flatternData = generateList(finalGeoData);
+
+    const handleSelectClick = (keys) => {
+        setButtonData({ ...defaultBtnVisiblity });
+        setSelectedTreeKey(keys);
+        const formData = flatternData.find((i) => keys.includes(i.key));
+        setFormData(formData?.data);
+        setFormVisible(!!keys);
+        setReadOnly(true);
+
+        setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
     };
 
     const handleParentCode = (value) => {
@@ -125,7 +132,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         };
 
         const requestData = {
-            data: [{ ...values, id: '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue }],
+            data: [{ ...values, id: formData?.id || '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue }],
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -139,14 +146,45 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         form.validateFields().then((values) => {});
     };
 
-    const onReset = () => {
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+
+    const handleEditBtn = () => {
+        setCanEditData(true);
+        setReadOnly(false);
+
+        setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true });
+    };
+
+    const handleChildBtn = () => {
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleSiblingBtn = () => {
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleResetBtn = () => {
         form.resetFields();
     };
-    console.log('parentCodeValue', parentCodeValue);
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
-    const isChildAdd = selectedTreeKey && selectedTreeKey.length >= 0;
-    const isSublingAdd = selectedTreeKey && selectedTreeKey.length > 0;
-    const isUpdate = false;
+
+    const handleBack = () => {
+        setReadOnly(true);
+        setCanEditData(false);
+        if (selectedTreeKey && selectedTreeKey.length > 0) {
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+        } else {
+            setFormVisible(false);
+            setButtonData({ ...defaultBtnVisiblity });
+        }
+    };
     return (
         <>
             <div className={styles.geoSection}>
@@ -170,46 +208,52 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {isFormVisible && <AddEditForm selectedTreeKey={selectedTreeKey} geoData={geoData} handleParentCode={handleParentCode} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                            {isFormVisible && <AddEditForm isReadOnly={isReadOnly} formData={formData} selectedTreeKey={selectedTreeKey} geoData={geoData} handleParentCode={handleParentCode} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                    {isUpdate && (
-                                        <Button danger>
+                                    {buttonData?.editBtn && (
+                                        <Button danger onClick={() => handleEditBtn()}>
                                             <FaEdit className={styles.buttonIcon} />
                                             Edit
                                         </Button>
                                     )}
 
-                                    {isChildAdd && !isFormVisible && (
-                                        <Button danger onClick={() => handleFormVisiblity(true)}>
+                                    {buttonData?.childBtn && (
+                                        <Button danger onClick={() => handleChildBtn()}>
                                             <FaUserPlus className={styles.buttonIcon} />
                                             Add Child
                                         </Button>
                                     )}
 
-                                    {isSublingAdd && !isFormVisible && (
-                                        <Button danger onClick={() => handleFormVisiblity(true)}>
+                                    {buttonData?.siblingBtn && (
+                                        <Button danger onClick={() => handleSiblingBtn()}>
                                             <FaUserFriends className={styles.buttonIcon} />
                                             Add Sibling
                                         </Button>
                                     )}
 
-                                    {(isUpdate || isFormVisible) && (
+                                    {isFormVisible && (
                                         <>
-                                            <Button htmlType="submit" danger>
-                                                <FaSave className={styles.buttonIcon} />
-                                                Save
-                                            </Button>
+                                            {buttonData?.saveBtn && (
+                                                <Button htmlType="submit" danger>
+                                                    <FaSave className={styles.buttonIcon} />
+                                                    Save
+                                                </Button>
+                                            )}
 
-                                            <Button danger onClick={onReset}>
-                                                <FaUndo className={styles.buttonIcon} />
-                                                Reset
-                                            </Button>
+                                            {buttonData?.resetBtn && (
+                                                <Button danger onClick={handleResetBtn}>
+                                                    <FaUndo className={styles.buttonIcon} />
+                                                    Reset
+                                                </Button>
+                                            )}
 
-                                            <Button danger onClick={() => handleFormVisiblity(false)}>
-                                                <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                Cancel
-                                            </Button>
+                                            {buttonData?.cancelBtn && (
+                                                <Button danger onClick={() => handleBack()}>
+                                                    <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                    Cancel
+                                                </Button>
+                                            )}
                                         </>
                                     )}
                                 </Col>

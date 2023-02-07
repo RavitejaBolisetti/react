@@ -12,7 +12,7 @@ import { ParentHierarchy } from 'components/common/parentHierarchy/ParentHierarc
 import styles from '../Common.module.css';
 
 const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
+    // console.log('params', pagination, filters, sorter, extra);
 };
 
 const { TextArea } = Input;

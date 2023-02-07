@@ -19,6 +19,7 @@ import * as routing from 'constants/routing';
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { getMenuItem } from 'utils/getMenuItem';
+import { withSpinner } from 'components/withSpinner';
 
 const { Search } = Input;
 const { Sider } = Layout;
@@ -38,14 +39,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    
-    let returnValue = {
-        userId,
-        isDataLoaded,
-        filter,
-        menuData:menuData?.menuList,
-        collapsed,
-    };
+    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, collapsed };
     return returnValue;
 };
 
@@ -80,8 +74,6 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     const checkData = (dataList) => (filter ? dataList.filter((data) => filterFunction(filter)(data?.menuTitle))?.length > 0 : true);
 
     if (menuData && menuData.length > 0 && checkData(menuData)) {
-        items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Geographical Hierarchy', 'COMN-07.01')), getMenuItem(prepareLink('Product Hierarchy', 'COMN-06.01')), getMenuItem(prepareLink('Hierarchy Attribute Master', 'COMN-03.08'))]));
-
         for (let index = 0; index < menuData.length; index++) {
             const element = menuData[index];
             const menuTitle = element?.menuTitle;
@@ -128,7 +120,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
         setCurrent(e.key);
     };
 
-    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FAVS' : '';
+    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     return (
@@ -156,4 +148,4 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     );
 };
 
-export const LeftSideBar = connect(mapStateToProps, mapDispatchToProps)(LeftSideBarMain);
+export const LeftSideBar = connect(mapStateToProps, mapDispatchToProps)(withSpinner(LeftSideBarMain));

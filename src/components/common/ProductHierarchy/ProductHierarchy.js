@@ -81,12 +81,19 @@ export const ProductHierarchyBase = (props) => {
 
     const { isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList } = props;
 
-    console.log('productHierarchyData', productHierarchyData, 'attributeData', attributeData);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [parentCodeValue, setParentCodeValue] = useState('');
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [formData, setFormData] = useState([]);
+
+
+    const defaultBtnVisiblity = { editBtn: false, childBtn: true, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const [isFormVisible, setFormVisible] = useState(false);
+    const [isReadOnly, setReadOnly] = useState(false);
+    const [canEditData, setCanEditData] = useState(false);
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -106,21 +113,24 @@ export const ProductHierarchyBase = (props) => {
     //     return { ...i, productParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     // });
     const flatternData = generateList(productHierarchyData);
-    console.log('🚀 ~ file: ProductHierarchy.js:109 ~ ProductHierarchyBase ~ flatternData', flatternData);
 
     const handleSelectClick = (keys) => {
+        setButtonData({ ...defaultBtnVisiblity });
         setSelectedTreeKey(keys);
-        const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
-        console.log('SelectedParentNode', SelectedParentNode);
+        const formData = flatternData.find((i) => keys.includes(i.key));
+        setFormData(formData?.data);
+        setFormVisible(!!keys);
+        setReadOnly(true);
+
+        setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
     };
 
     const handleParentCode = (e) => {
         setParentCodeValue(e.target.value);
     };
 
-    const myProps = { ...props, selectedTreeKey, handleParentCode, isDataAttributeLoaded, attributeData, setIsModalOpen };
+    const myProps = { ...props, selectedTreeKey, handleParentCode, isDataAttributeLoaded, attributeData, setIsModalOpen, flatternData };
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
-
     return (
         <>
             <Row gutter={20}>

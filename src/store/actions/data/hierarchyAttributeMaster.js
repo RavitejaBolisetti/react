@@ -59,7 +59,6 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => 
 
     const onSuccess = (res) => {
         if (res?.data) {
-            console.log(res?.data);
             setIsLoading();
             // dispatch(receiveHeaderData(res?.data));
         } else {
