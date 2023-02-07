@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import OTPInput, { ResendOTP } from 'otp-input-react';
+import OTPInput from 'otp-input-react';
 
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { AiOutlineMail } from 'react-icons/ai';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
@@ -51,6 +52,9 @@ const ForgotPassword = (props) => {
     const [form] = Form.useForm();
     const [showFields, setShowFields] = useState(false);
     const [OTP, setOTP] = useState(false);
+    const [value, setValue] = useState('');
+    const [submit, setSubmit] = useState(false);
+    const [showtimer, setShowTimer] = useState(true);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -72,10 +76,13 @@ const ForgotPassword = (props) => {
     };
 
     const handleSendOtp = () => {
-        setOTP(true)
-        setShowFields(false)
-    }
-
+        setOTP(true);
+       
+        setSubmit(true);
+    };
+    const handleChange = (event) => {
+        setValue(event);
+    };
     return (
         <>
             <div className={styles.loginSection}>
@@ -101,7 +108,7 @@ const ForgotPassword = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            <Input onBlur ={() => setShowFields(!showFields)} prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />
+                                                            <Input onBlur={() => setShowFields(!showFields)} prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />
                                                             {/* As discussed with Rahul */}
                                                         </Form.Item>
                                                     </Col>
@@ -109,31 +116,75 @@ const ForgotPassword = (props) => {
                                                 {showFields ? (
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Checkbox  className={styles.checkColor} defaultChecked="true">
+                                                            <Checkbox className={styles.checkColor} defaultChecked="true">
                                                                 Mobile Number - <span>99****1234</span>
                                                             </Checkbox>
                                                         </Col>
                                                     </Row>
                                                 ) : null}
+                                               
                                                 {showFields ? (
                                                     <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} >
-                                                            <Checkbox className={styles.checkColor} defaultChecked="true">Email ID - abcdef@mahindra.com</Checkbox>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Checkbox className={styles.checkColor} defaultChecked="true">
+                                                                Email ID - abcdef@mahindra.com
+                                                            </Checkbox>
                                                         </Col>
                                                     </Row>
                                                 ) : null}
-                                               {OTP? (
-                                                <>
-                                               <OTPInput value={OTP} onChange={setOTP} autoFocus OTPLength={4} otpType="number" disabled={false} secure />
-                                                <ResendOTP handelResendClick={() => console.log('Resend clicked')}/>
-                                                </> )
-                                                : null } 
+                                                <br/>
+                                                {OTP ? (
+                                                    <>
+                                                        <Row>
+                                                            <Col span={4}>
+                                                                <OTPInput value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false} />
+                                                            </Col>
+                                                            <Col span={4} offset={15}>
+                                                                {showtimer ? (
+                                                                    <>
+                                                                        <CountdownCircleTimer
+                                                                            size={100}
+                                                                            isPlaying
+                                                                            duration={5}
+                                                                            colors={['#FF3E5B']}
+                                                                            onComplete={() => {
+                                                                                setShowTimer(false);
+                                                                            }}
+                                                                        >
+                                                                            {({ remainingTime }) => {
+                                                                                return <div className={styles.clock}>{remainingTime} Seconds</div>;
+                                                                            }}
+                                                                        </CountdownCircleTimer>{' '}
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        {' '}
+                                                                        <Button onClick={handleSendOtp} className={styles.buttonResend}  type="primary" htmlType="submit">
+                                                                            RE-SEND OTP
+                                                                        </Button>
+                                                                    </>
+                                                                )}
+                                                            </Col>
+                                                        </Row>
+                                                        {/* <Row>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <ResendOTP handelResendClick={() => console.log('Resend clicked')} />
+                                                            </Col>
+                                                        </Row> */}
+                                                    </>
+                                                ) : null}
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button onClick={handleSendOtp} className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit">
-                                                            SEND OTP
-                                                        </Button>
+                                                        {submit ? (
+                                                            <Button onClick={handleSendOtp} className={styles.button}  type="primary" htmlType="submit">
+                                                                Submit
+                                                            </Button>
+                                                        ) : (
+                                                            <Button onClick={handleSendOtp} className={styles.button}  type="primary" htmlType="submit">
+                                                                SEND OTP
+                                                            </Button>
+                                                        )}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
