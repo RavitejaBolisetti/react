@@ -94,7 +94,10 @@ p {
     background: none;
     color: #ffffff;
 }
-
+.loginSection .loginWrap .loginHtml .loginForm .inputBox input::-ms-reveal,
+.loginSection .loginWrap .loginHtml .loginForm .inputBox input input::-ms-clear {
+        display: none;
+      }
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::placeholder {
     color: #6c757d;
 }
@@ -395,3 +398,4 @@ select.form-control:focus::-ms-value {
 .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
 }
+/* #login_from_password{} */
