@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col, Space, Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart, FaInfoCircle } from 'react-icons/fa';
-
+import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import styles from './PageHeader.module.css';
@@ -14,7 +14,7 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
     const handleBack = () => {
         confirm({
             title: 'Alert',
-            icon: <FaInfoCircle size={22} className={styles.alertIcon} />,
+            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
             content: 'This will take you to Homepage. If you leave this page, all unsaved data will be lost. Would you like to proceed?',
             closable: true,
             okText: 'Yes',

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Modal } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaCross } from 'react-icons/fa';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaCross, FaRegCheckCircle } from 'react-icons/fa';
+import { TiInfoOutline } from 'react-icons/ti';
 
 import TreeView from 'components/common/TreeView';
 
@@ -82,7 +82,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
-            icon: <ExclamationCircleFilled />,
+            icon: <FaRegCheckCircle size={22} className={styles.modalIconSuccess} />,
             content: message,
         });
     };
@@ -90,7 +90,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     const onError = (message) => {
         errorModel({
             title: 'ERROR',
-            icon: <ExclamationCircleFilled />,
+            icon: <TiInfoOutline size={22} className={styles.modalIconError} />,
             content: message,
         });
     };
@@ -105,7 +105,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const dataList = [];
