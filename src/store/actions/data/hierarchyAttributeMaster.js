@@ -53,19 +53,8 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) =>
 });
 
 hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId } = params;
+    const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            console.log(res?.data);
-            setIsLoading();
-            // dispatch(receiveHeaderData(res?.data));
-        } else {
-            onError();
-        }
-    };
 
     const apiCallParams = {
         data,
@@ -75,7 +64,7 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => 
         userId,
         onSuccess,
         onError,
-        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

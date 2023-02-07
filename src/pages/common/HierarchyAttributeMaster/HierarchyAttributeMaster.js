@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-
+import { bindActionCreators } from 'redux';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 
 // import TreeView from 'components/common/TreeView';
@@ -17,10 +17,12 @@ import MetaTag from 'utils/MetaTag';
 
 import styles from '../Common.module.css';
 import { PageHeader } from '../PageHeader';
+import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { useForm } from 'antd/es/form/Form';
 
 const { Option } = Select;
 const { confirm } = Modal;
+const { success: successModel, error: errorModel } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +38,35 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const HierarchyAttributeMasterBase = () => {
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: hierarchyAttributeMasterActions.fetchList,
+            saveData: hierarchyAttributeMasterActions.saveData,
+            listShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+export const HierarchyAttributeMasterBase = (userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading) => {
+    const showSuccessModel = ({ title, message }) => {
+        successModel({
+            title: title,
+            icon: <ExclamationCircleFilled />,
+            content: message,
+        });
+    };
+
+    const onError = (message) => {
+        errorModel({
+            title: 'ERROR',
+            icon: <ExclamationCircleFilled />,
+            content: message,
+        });
+    };
+
     const showConfirm = () => {
         confirm({
             title: 'Do you Want to delete these items?',
@@ -56,10 +86,6 @@ export const HierarchyAttributeMasterBase = () => {
     const [data, setRowsData] = useState([
         {
             key: '0',
-            name: '',
-        },
-        {
-            key: '1',
             name: '',
         },
     ]);
@@ -83,10 +109,10 @@ export const HierarchyAttributeMasterBase = () => {
     const columns = [
         {
             title: 'Code',
-            dataIndex: 'code',
-            key: 'code',
+            dataIndex: 'hierarchyAttribueCode',
+            key: 'hierarchyAttribueCode',
             render: () => (
-                <Form.Item style={{ paddingTop: '20px' }} name={'code'} rules={[validateRequiredInputField('Code')]}>
+                <Form.Item style={{ paddingTop: '20px' }} name={'hierarchyAttribueCode'} rules={[validateRequiredInputField('Code')]}>
                     <Input placeholder="MT0001" />
                 </Form.Item>
             ),
@@ -94,10 +120,10 @@ export const HierarchyAttributeMasterBase = () => {
         },
         {
             title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'hierarchyAttribueName',
+            key: 'hierarchyAttribueName',
             render: () => (
-                <Form.Item style={{ paddingTop: '20px' }} name={'name[]'} rules={[validateRequiredInputField('Name')]}>
+                <Form.Item style={{ paddingTop: '20px' }} name={'hierarchyAttribueName'} rules={[validateRequiredInputField('Name')]}>
                     <Input placeholder="MT0001" />
                 </Form.Item>
             ),
@@ -106,30 +132,46 @@ export const HierarchyAttributeMasterBase = () => {
         },
         {
             title: 'Duplicate Allowed?',
-            dataIndex: 'DuplicateAllowed?',
+            dataIndex: 'duplicateAllowedAtAttributerLevelInd?',
             width: 100,
             key: 'address 1',
-            render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
+            render: () => (
+                <Form.Item name="duplicateAllowedAtAttributerLevelInd" initialValue={true}>
+                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                </Form.Item>
+            ),
         },
         {
             title: 'Duplicate Allowed under different Parent?',
-            dataIndex: 'DuplicateAllowedunderdifferentParent?',
+            dataIndex: 'duplicateAllowedAtOtherParent?',
             key: 'address 2',
             width: 200,
 
-            render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
+            render: () => (
+                <Form.Item name="duplicateAllowedAtOtherParent" initialValue={true}>
+                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                </Form.Item>
+            ),
         },
         {
             title: 'Child Allowed?',
-            dataIndex: 'ChildAllowed?',
+            dataIndex: 'isChildAllowed?',
             key: 'address 3',
-            render: () => <Switch checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />,
+            render: () => (
+                <Form.Item name="ischildallowed" initialValue={true}>
+                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />
+                </Form.Item>
+            ),
         },
         {
             title: 'Status',
             dataIndex: 'Status',
-            key: 'address 4',
-            render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
+            key: 'status',
+            render: () => (
+                <Form.Item name="status" initialValue={true}>
+                    <Switch value="1" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                </Form.Item>
+            ),
         },
         {
             title: '',
@@ -160,8 +202,11 @@ export const HierarchyAttributeMasterBase = () => {
     };
 
     const onFinish = (values) => {
-        console.log('values', values);
-        //saveData({ data: values, setIsLoading: listShowLoading, userId });
+        const onSuccess = (res) => {
+            form.resetFields();
+            showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
+        };
+        saveData({ data: [values], setIsLoading: listShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -174,7 +219,7 @@ export const HierarchyAttributeMasterBase = () => {
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Hierarchy Attribute Type" name="Hierarchy Attribute" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
+                        <Form.Item label="Hierarchy Attribute Type" name="parentHierarchyAttribueId" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
                             <Select placeholder={'Hierarchy Attribute Type'} allowClear>
                                 <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
                                 <Option value="Manufacturer Administration">Manufacturer Administration</Option>
@@ -187,23 +232,21 @@ export const HierarchyAttributeMasterBase = () => {
                     </Col>
                     {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
                 </Row>
-                
+
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Table columns={columns} dataSource={data} pagination={false} />
                     </Col>
                 </Row>
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                <Row gutter={20} style={{ marginTop: '20px' }}>
+                    <Col xs={24} sm={16} md={14} lg={12} xl={12}>
                         <Button danger onClick={handleAdd}>
                             <FaUserPlus className={styles.buttonIcon} />
                             Add Row
                         </Button>
                     </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                    <Col xs={24} sm={16} md={14} lg={12} xl={12} className={styles.buttonContainer}>
                         <Button htmlType="submit" danger>
                             <FaSave className={styles.buttonIcon} />
                             Save
@@ -220,4 +263,4 @@ export const HierarchyAttributeMasterBase = () => {
     );
 };
 
-export const HierarchyAttributeMaster = connect(mapStateToProps, null)(withLayoutMaster(HierarchyAttributeMasterBase));
+export const HierarchyAttributeMaster = connect(mapStateToProps, mapDispatchToProps)(HierarchyAttributeMasterBase);
