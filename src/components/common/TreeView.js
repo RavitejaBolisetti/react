@@ -27,7 +27,7 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
         setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(false);
     };
-    
+
     console.log(searchValue, expandedKeys);
 
     const onChange = (e) => {
@@ -55,7 +55,7 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
                 {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
                 <br />
                 {JSON.stringify(fieldNames)} */}
-                <Tree expandedKeys={selectedTreeKey} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} fieldNames={fieldNames} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={dataList} />
+                <Tree selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} fieldNames={fieldNames} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={dataList} />
             </div>
         </div>
     );
