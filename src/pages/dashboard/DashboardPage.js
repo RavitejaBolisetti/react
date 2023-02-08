@@ -7,9 +7,11 @@ import { BsFillBarChartFill } from 'react-icons/bs';
 import { BiLineChart } from 'react-icons/bi';
 import { RiFileShield2Line } from 'react-icons/ri';
 import { FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
+import { convertDateTime } from 'utils/formatDateTime';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import styles from './DashboardPage.module.css';
+import moment from 'moment';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -43,22 +45,9 @@ const DashboardPageBase = ({ props }) => {
                             <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
                         </Col>
                     </Row>
-                    <div className={styles.pageHeaderNameSection}></div>{' '}
+                    <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
-
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                    <div className={styles.headingGradient}>
-                        <span className="innerheading">Welcome back John! </span>
-                    </div>
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
-                    <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
-                </Col>
-                
-            </Row>
-            */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
                     <Card
@@ -87,7 +76,7 @@ const DashboardPageBase = ({ props }) => {
                                 </div>
 
                                 <div className={styles.buttonHolder}>
-                                    <Button  className="btn btn-outline centerbtn boxShdwNon mrl15" danger>
+                                    <Button className="btn btn-outline centerbtn boxShdwNon mrl15" danger>
                                         View Dashboard
                                     </Button>
                                 </div>
@@ -107,7 +96,7 @@ const DashboardPageBase = ({ props }) => {
                         <div className={styles.directChatMessages}>
                             <div className={styles.scrollbar}>
                                 <div className="force-overflow">
-                                    <ul className={styles.dashboardList} >
+                                    <ul className={styles.dashboardList}>
                                         <li>
                                             Enquiries to be followed up <span className={`${styles.badge} ${styles.badgedanger}`}>6</span>
                                         </li>
@@ -159,8 +148,8 @@ const DashboardPageBase = ({ props }) => {
                         <Carousel autoplay>
                             <div className={styles.newsCarsulalContaner}>
                                 <div className={styles.dashboardboxContHeight}>
-                                <h4>Anand Mahindra Highlights Car Price Hikes Over 50 Years Ago</h4>
-                                <div className="textContaner">Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago. </div>
+                                    <h4>Anand Mahindra Highlights Car Price Hikes Over 50 Years Ago</h4>
+                                    <div className="textContaner">Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago. </div>
                                 </div>
                                 <div className={styles.buttonHolder}>
                                     <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
@@ -171,8 +160,8 @@ const DashboardPageBase = ({ props }) => {
 
                             <div className={styles.newsCarsulalContaner}>
                                 <div className={styles.dashboardboxContHeight}>
-                                <h4>What to expect from Mahindra's Born Electric concept SUVs</h4>
-                                <div className="textContaner">Homegrown SUV specialist Mahindra revealed five concept electric SUVs at the brand's European design studio in August last year. </div>
+                                    <h4>What to expect from Mahindra's Born Electric concept SUVs</h4>
+                                    <div className="textContaner">Homegrown SUV specialist Mahindra revealed five concept electric SUVs at the brand's European design studio in August last year. </div>
                                 </div>
                                 <div className={styles.buttonHolder}>
                                     <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
@@ -183,8 +172,8 @@ const DashboardPageBase = ({ props }) => {
 
                             <div className={styles.newsCarsulalContaner}>
                                 <div className={styles.dashboardboxContHeight}>
-                                <h4>Mahindra SUV sales up 66% </h4>
-                                <div className="textContaner">Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.</div>
+                                    <h4>Mahindra SUV sales up 66% </h4>
+                                    <div className="textContaner">Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.</div>
                                 </div>
                                 <div className={styles.buttonHolder}>
                                     <Button danger className="btn btn-outline centerbtn boxShdwNon mrl15">
@@ -227,7 +216,7 @@ const DashboardPageBase = ({ props }) => {
                                     </div>
                                     <div className={styles.birthdayTxtcontaner}>
                                         <div className={styles.birthdayName}>First Name, Last Name</div>
-                                        <div>Today - 22 Nov.</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +227,7 @@ const DashboardPageBase = ({ props }) => {
                                     </div>
                                     <div className={styles.birthdayTxtcontaner}>
                                         <div className={styles.birthdayName}>First Name, Last Name</div>
-                                        <div>Today - 22 Nov.</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +238,7 @@ const DashboardPageBase = ({ props }) => {
                                     </div>
                                     <div className={styles.birthdayTxtcontaner}>
                                         <div className={styles.birthdayName}>First Name, Last Name</div>
-                                        <div>Today - 22 Nov.</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
                                     </div>
                                 </div>
                             </div>

@@ -3,7 +3,8 @@
   float: left;
   font-weight: 500;
 }
-.dashboardContainer :global .ant-card .ant-card-head{
+
+.dashboardContainer :global .ant-card .ant-card-head {
   min-height: 50px;
 }
 
@@ -35,11 +36,12 @@
   min-width: 0;
 }
 
-.dashboardContainer :global .ant-card-bordered{
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.08);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.08);
-  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.08);
+.dashboardContainer :global .ant-card-bordered {
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
 }
+
 /* .dashboardContainer :global .ant-carousel .slick-dots-bottom{
   bottom: 47px;
 } */
@@ -91,12 +93,14 @@
 /* .dashboardGraph {
   border:1px solid red;
 } */
-.dashboardboxContHeight{ height:175px;}
+.dashboardboxContHeight {
+  height: 175px;
+}
 
 .dashboardGraph .dashboardGraphBox {
   width: 100%;
   overflow: hidden;
-  height:200px;
+  height: 200px;
 }
 
 
@@ -146,15 +150,14 @@
 .dashboardList {
   margin: 0px;
   padding: 0px;
-  list-style: none;
-  width: 100%
+  list-style: decimal-leading-zero;
+  width: 90%
 }
 
 .dashboardList li {
-  margin: 5px 0px;
-  padding: 0px;
-  list-style: none;
-  width: 100%
+  margin: 0 40px;
+  padding: 5px 0px 5px 0px;
+  width: 90%
 }
 
 .badge {
@@ -221,7 +224,7 @@
 
 .birthContaner {
   min-height: 200px;
-
+  padding: 20px 0;
 }
 
 .birthContaner .birthdayImgcontaner {

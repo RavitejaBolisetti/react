@@ -68,10 +68,15 @@ const Login = (props) => {
         navigate(ROUTING_DASHBOARD);
     };
 
+    const onError = () => {
+        setIsLoading(false);
+        navigate(ROUTING_DASHBOARD);
+    };
+
     const onFinish = (values) => {
         setIsLoading(true);
         if (captcha) {
-            doLogin(values, loginPageIsLoading, onSuccess);
+            doLogin(values, loginPageIsLoading, onSuccess, onError);
         } else {
             setIsLoading(false);
             message.error('Please select captcha');
