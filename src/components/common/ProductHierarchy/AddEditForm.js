@@ -119,8 +119,8 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
                                 <Form.Item label="Parent" name="parentCode" initialValue={formSelectedData?.prodctCode} className="control-label-blk">
                                     {/* <Input.Group compact> */}
                                     {/* {defaultSelectedKeys} === {selectedTreeKey} */}
-                                    <br />
-                                    {JSON.stringify(fieldNames)}
+                                    {/* <br />
+                                    {JSON.stringify(fieldNames)} */}
                                     <TreeSelect
                                         treeLine={true}
                                         treeIcon={true}
