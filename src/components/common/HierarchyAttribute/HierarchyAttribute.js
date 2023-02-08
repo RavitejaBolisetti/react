@@ -124,10 +124,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         {
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
-            key: 'hierarchyAttribueCode',
-            render: () => (
-                <Form.Item style={{ paddingTop: '20px' }} name={'hierarchyAttribueCode'} rules={[validateRequiredInputField('Code')]}>
-                    <Input placeholder="MT0001" />
+            key: 1,
+            render: (key) => (
+                <Form.Item style={{ paddingTop: '20px' }} name={key} rules={[validateRequiredInputField('Code')]}>
+                    <Input  placeholder="MT0001" />
                 </Form.Item>
             ),
             width: 200,
@@ -135,10 +135,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         {
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
-            key: 'hierarchyAttribueName',
-            render: () => (
-                <Form.Item style={{ paddingTop: '20px' }} name={'hierarchyAttribueName'} rules={[validateRequiredInputField('Name')]}>
-                    <Input placeholder="MT0001" />
+            key: 2,
+            render: (key) => (
+                <Form.Item style={{ paddingTop: '20px' }} name={key} rules={[validateRequiredInputField('Name')]}>
+                    <Input  placeholder="MT0002" />
                 </Form.Item>
             ),
 
