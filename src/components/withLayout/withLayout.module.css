@@ -2,7 +2,8 @@
     margin: 10px 20px 10px 30px;
     overflow: initial;
     background: #ffffff;
-    min-height: 80vh !important;
+    /* min-height: 77vh !important; */
+    min-height: calc(100vh - 134px);
 }
 
 @media (max-width: 576px) {
