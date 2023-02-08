@@ -81,6 +81,11 @@
   background-color: #F4F4F4;
 }
 
+:global .ant-menu-light.ant-menu-root.ant-menu-inline:hover::-webkit-scrollbar,
+:global .ant-menu-light.ant-menu-root.ant-menu-vertical:hover::-webkit-scrollbar {
+  width: 10px !important;
+}
+
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
   background-color: #ea3434;
@@ -133,26 +138,34 @@
   border-color: #0458f7;
 }
 
-:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-track{
+:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
   background-color: #F4F4F4;
 }
-:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar{
+
+:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
   background-color: #F4F4F4;
-  width:5px;
+  width: 5px;
 }
-:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-thumb{
+
+:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active']):hover::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+:global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-thumb {
   background-color: #ea3434;
   border-radius: 10px;
   /* border: 2px solid ; */
 }
-:global .ant-menu-light .ant-menu-item a:hover{
+
+:global .ant-menu-light .ant-menu-item a:hover {
   text-decoration: none;
-  color:#000000;
+  color: #000000;
 }
+
 :global .ant-menu-submenu-popup,
-:global .ant-menu-light.ant-menu-submenu>.ant-menu{
+:global .ant-menu-light.ant-menu-submenu>.ant-menu {
   border-radius: 0;
 }
 
@@ -212,7 +225,7 @@
   color: #000 !important;
 }
 
-.changeTheme svg{
+.changeTheme svg {
   background: #fff;
   width: 30px;
   height: 30px;

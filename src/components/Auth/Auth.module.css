@@ -432,6 +432,7 @@ select.form-control:focus::-ms-value {
 
     .loginSection .loginWrap .loginHtml {
         height: 350px;
+        width: auto;
         padding: 0px 15px;
     }
 

@@ -273,10 +273,6 @@
   border-color: #d9d9d9;
 }
 
-:global .ant-tree {
-  background: #f4f4f4;
-}
-
 :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   position: relative;
   background-color: #ffffff;
@@ -306,10 +302,6 @@
   padding: 20px;
   max-height: 300vh;
   /* overflow-y: scroll; */
-}
-
-:global .ant-tree {
-  background: transparent;
 }
 
 :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {

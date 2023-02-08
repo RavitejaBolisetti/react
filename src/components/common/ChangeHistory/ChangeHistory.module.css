@@ -43,6 +43,10 @@
     background-color: #F4F4F4;
 }
 
+:global .ant-table-content:hover::-webkit-scrollbar {
+    height: 10px;
+}
+
 :global .ant-table-content::-webkit-scrollbar-thumb {
     background-color: #ea3434;
     border-radius: 10px;
