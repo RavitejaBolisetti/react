@@ -118,7 +118,9 @@
     color: #FF7A00;
     padding-right: 8px;
 }
-
+.mrt6{
+    margin-top: 6px;
+}
 @media (max-width: 576px) {
     .headerLeft {
         padding-left: 20px;

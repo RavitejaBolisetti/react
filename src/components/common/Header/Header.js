@@ -168,7 +168,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                     <div className={styles.headerRight}>
                         <div className={styles.navbarExpand}>
                             <div className={styles.navbarNav}>
-                                <div className={styles.floatLeft}>
+                                <div className={`${styles.floatLeft} ${styles.mrt6}`}>
                                     <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                         <Badge size="small" count={notificationCount}>
                                             {addToolTip('Notification')(<FaRegBell size={20} />)}
