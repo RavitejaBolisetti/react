@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import { Form, Row, Col, Input, Select, Switch, Button, TreeSelect } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaSearch, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import styles from '../Common.module.css';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { BiArrowBack } from 'react-icons/bi';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -97,7 +95,7 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
         }
     };
 
-    const fieldNames = { label: 'prodctShrtName', value: 'prodctCode', children: 'subProdct' };
+    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProdct' };
 
     return (
         <div>
@@ -124,6 +122,8 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
                                         treeLine={true}
                                         treeIcon={true}
                                         showSearch
+                                        selectedKeys={selectedTreeKey}
+                                        onChange={handleSelectTreeClick}
                                         dropdownStyle={{
                                             maxHeight: 400,
                                             overflow: 'auto',

@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
 import { Input, Menu, Layout } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
-import { IoIosDocument } from 'react-icons/io';
-
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 

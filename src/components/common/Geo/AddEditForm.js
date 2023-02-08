@@ -10,7 +10,6 @@ const { Option } = Select;
 const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
     const disabledProps = { disabled: isReadOnly };
-    console.log('formData - inner', formData);
     return (
         <>
             <Row gutter={20}>
@@ -31,13 +30,12 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSe
                         {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
                         <br />
                         {JSON.stringify(fieldNames)} */}
-                        {/* {JSON.stringify(formData)}  */}
                         {/* <Input.Group compact> */}
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
-                            selectedKeys={selectedTreeKey}
                             onChange={handleSelectTreeClick}
+                            defaultValue={selectedTreeKey}
                             showSearch
                             // style={{
                             //     width: 'calc(100% - 48px)',

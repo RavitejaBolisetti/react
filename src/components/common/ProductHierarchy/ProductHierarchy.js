@@ -130,7 +130,7 @@ export const ProductHierarchyBase = (props) => {
     };
 
     const myProps = { ...props, selectedTreeKey, handleParentCode, isDataAttributeLoaded, attributeData, setIsModalOpen, flatternData };
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
     return (
         <>
             <Row gutter={20}>
