@@ -25,15 +25,7 @@ const mapStateToProps = (state) => {
 export const CMSPageMain = () => {
     const location = useLocation();
     const pagePath = location.pathname;
-    const pageTitle = pagePath === routing?.ROUTING_USER_CONTACT 
-                         ? 'Contact Us' 
-                         : pagePath === routing?.ROUTING_USER_TERM 
-                         ? 'Terms Of Use' 
-                         : pagePath === routing?.ROUTING_USER_DISCLAIMER 
-                         ? 'Disclaimer' 
-                         : pagePath === routing?.ROUTING_USER_ABOUT 
-                         ? 'About Us' 
-                         : '';
+    const pageTitle = pagePath === routing?.ROUTING_USER_CONTACT ? 'Contact Us' : pagePath === routing?.ROUTING_USER_TERM ? 'Terms Of Use' : pagePath === routing?.ROUTING_USER_DISCLAIMER ? 'Disclaimer' : pagePath === routing?.ROUTING_USER_ABOUT ? 'About Us' : '';
     const pageHeaderData = {
         pageTitle,
         showChangeHisoty: true,
@@ -43,7 +35,7 @@ export const CMSPageMain = () => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <div className={styles.wrapper}>
+            <div className={styles.cmsContainer}>
                 <h1>
                     <img src={CMS} alt="Coming Soon" />
                 </h1>
