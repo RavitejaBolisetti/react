@@ -123,7 +123,7 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
                                         treeIcon={true}
                                         showSearch
                                         selectedKeys={selectedTreeKey}
-                                        onChange={handleSelectTreeClick}
+                                        // onChange={handleSelectTreeClick}
                                         dropdownStyle={{
                                             maxHeight: 400,
                                             overflow: 'auto',
