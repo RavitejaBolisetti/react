@@ -25,7 +25,7 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSe
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={formData?.geoParentCode} label="Parent" name="geoParentCode">
+                    <Form.Item initialValue={formData?.parntProdctId || ''} label="Parent" name="parentCode">
                         {/* {`selectedTreeKey ${selectedTreeKey}`}
                         <br />
                         {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
@@ -36,7 +36,8 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSe
                             treeLine={true}
                             treeIcon={true}
                             onChange={handleSelectTreeClick}
-                            defaultValue={selectedTreeKey}
+                            defaultValue={formData?.parntProdctId || ''}
+                            // defaultValue={selectedTreeKey}
                             showSearch
                             // style={{
                             //     width: 'calc(100% - 48px)',
