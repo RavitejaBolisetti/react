@@ -77,7 +77,7 @@ const ForgotPassword = (props) => {
 
     const handleSendOtp = () => {
         setOTP(true);
-       
+        setShowTimer(true);
         setSubmit(true);
     };
     const handleChange = (event) => {
@@ -122,7 +122,7 @@ const ForgotPassword = (props) => {
                                                         </Col>
                                                     </Row>
                                                 ) : null}
-                                               
+
                                                 {showFields ? (
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -132,12 +132,12 @@ const ForgotPassword = (props) => {
                                                         </Col>
                                                     </Row>
                                                 ) : null}
-                                                <br/>
+                                                <br />
                                                 {OTP ? (
                                                     <>
                                                         <Row>
                                                             <Col span={4}>
-                                                                <OTPInput value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false} />
+                                                                <OTPInput className={styles.changer} value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false} />
                                                             </Col>
                                                             <Col span={4} offset={15}>
                                                                 {showtimer ? (
@@ -159,8 +159,8 @@ const ForgotPassword = (props) => {
                                                                 ) : (
                                                                     <>
                                                                         {' '}
-                                                                        <Button onClick={handleSendOtp} className={styles.buttonResend}  type="primary" htmlType="submit">
-                                                                            RE-SEND OTP
+                                                                        <Button onClick={handleSendOtp} className={styles.buttonResend} type="primary" htmlType="submit">
+                                                                            RE-SEND <br></br> OTP
                                                                         </Button>
                                                                     </>
                                                                 )}
@@ -177,11 +177,11 @@ const ForgotPassword = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         {submit ? (
-                                                            <Button onClick={handleSendOtp} className={styles.button}  type="primary" htmlType="submit">
+                                                            <Button onClick={handleSendOtp} className={styles.button} type="primary" htmlType="submit">
                                                                 Submit
                                                             </Button>
                                                         ) : (
-                                                            <Button onClick={handleSendOtp} className={styles.button}  type="primary" htmlType="submit">
+                                                            <Button onClick={handleSendOtp} className={styles.button} type="primary" htmlType="submit">
                                                                 SEND OTP
                                                             </Button>
                                                         )}
