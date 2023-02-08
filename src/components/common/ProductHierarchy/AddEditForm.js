@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 // import { FaSearch } from 'react-icons/fa';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import styles from 'pages/common/Common.module.css';
 
@@ -63,8 +63,8 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSe
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code')]}>
-                        <Input placeholder="Code" className={styles.inputBox} {...disabledProps} />
+                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
 
