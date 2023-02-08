@@ -37,18 +37,21 @@ const baseAPICall = (params) => {
             .request(axiosConfig)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log('response', response);
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
                             onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 404) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
+                        } else if (response?.data?.statusCode === 409) {
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
                         } else {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
                         }
                     } else if (response?.statusCode === 401) {
                         onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
+                        onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
+                    } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
                     } else {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.responseMessage });
@@ -59,7 +62,7 @@ const baseAPICall = (params) => {
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    console.log('AXIOS Catch');
+                    console.log('We are facing server issue!!');
                 } else if (error.code) {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
@@ -81,7 +84,7 @@ const baseAPICall = (params) => {
                 postRequest();
             });
     } catch (err) {
-        console.log('Catch - err', err);
+        console.log('We are facing server issue!!');
     }
 };
 

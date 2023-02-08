@@ -20,7 +20,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the dist folder
-      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a4663bf2bc4dd421bad82b6cdb2056f7-256513795.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_e9f3fac66666f6b0ba0ce0905584ccce1fc5308d
+      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a4663bf2bc4dd421bad82b6cdb2056f7-256513795.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_71955ae11ae22f9521915a60787628c0a143fbf3
   post_build:
     commands:
       - echo Build completed on `date`
@@ -29,3 +29,6 @@ artifacts:
   files:
     - '**/*'
   base-directory: 'build'
+cache:
+  paths:
+    - 'node_modules/**/*'

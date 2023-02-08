@@ -3,10 +3,10 @@ import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
-import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import * as routing from 'constants/routing';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -67,16 +67,15 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
     }, [isDataLoaded]);
 
     useEffect(() => {
-        console.log('isLoggedIn', isLoggedIn);
         !isLoggedIn && navigate(routing.ROUTING_LOGIN);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
     const showConfirm = () => {
         confirm({
-            title: 'Are you sure to logout?',
-            icon: <ExclamationCircleFilled />,
-            // content: 'Some descriptions',
+            title: 'Confirmation',
+            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
+            content: 'Are you sure you want to logout?',
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
@@ -170,41 +169,39 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                         <div className={styles.navbarExpand}>
                             <div className={styles.navbarNav}>
                                 <div className={styles.floatLeft}>
-                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                    <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                         <Badge size="small" count={notificationCount}>
                                             {addToolTip('Notification')(<FaRegBell size={20} />)}
                                         </Badge>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className={styles.floatLeft}>
-                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                    <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
                                             OneStop <br></br> Help Desk
                                         </span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className={styles.welcomeUser}>
-                                    <>
-                                        <Space>
-                                            <div className={styles.userAvatar}>
-                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
-                                            </div>
-                                            <div className={styles.userText}>
-                                                <div>{fullName}</div>
-                                                <span className={styles.userServiceArea}>
-                                                    {mobileNo}
-                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                        <a href="/" className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                            <Space>
-                                                                <DownOutlined />
-                                                            </Space>
-                                                        </a>
-                                                    </Dropdown>
-                                                </span>
-                                            </div>
-                                        </Space>
-                                    </>
+                                    <Space>
+                                        <div className={styles.userAvatar}>
+                                            <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
+                                        </div>
+                                        <div className={styles.userText}>
+                                            <div>{fullName}</div>
+                                            <span className={styles.userServiceArea}>
+                                                {mobileNo}
+                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                    <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <DownOutlined />
+                                                        </Space>
+                                                    </Link>
+                                                </Dropdown>
+                                            </span>
+                                        </div>
+                                    </Space>
                                 </div>
                             </div>
                         </div>

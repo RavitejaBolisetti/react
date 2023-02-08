@@ -1,7 +1,8 @@
 import { AiFillCar } from 'react-icons/ai';
-import { FaHeart, FaUserTie } from 'react-icons/fa';
+import { FaHeart, FaUserTie, FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { BiRupee } from 'react-icons/bi';
-import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
+import { MdWeb } from 'react-icons/md';
+import { BsFillGearFill } from 'react-icons/bs';
 import { GrGroup } from 'react-icons/gr';
 
 import { getMenyKey } from 'utils/menuKey';
@@ -9,45 +10,46 @@ import { getMenyKey } from 'utils/menuKey';
 import * as routing from './routing';
 
 export const MenuConstant = {
-    [getMenyKey('FAVS')]: {
-        key: 'FAVS',
+    [getMenyKey('FEV')]: {
+        key: 'FEV',
         link: undefined,
         icon: <FaHeart fontSize={20} />,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('DASH')]: {
         key: 'DASH',
         link: routing.ROUTING_DASHBOARD,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
-    [getMenyKey('GEO')]: {
-        key: 'GEO',
+
+    [getMenyKey('COMN-07.01')]: {
+        key: 'COMN-07.01',
         link: routing.ROUTING_COMMON_GEO,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
-    [getMenyKey('PHI')]: {
-        key: 'PHI',
+    [getMenyKey('COMN-06.01')]: {
+        key: 'COMN-06.01',
         link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
-    [getMenyKey('HAM')]: {
+    [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
         link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('PMA')]: {
         key: 'PMA',
         link: routing.ROUTING_COMMON_PRODUCT_MASTER,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('COMN')]: {
@@ -94,12 +96,13 @@ export const MenuConstant = {
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <FaUserTie fontSize={18} />,
+        icon: <BsFillGearFill fontSize={18} />,
         parentMenuId: 'WEB',
     },
+
     [getMenyKey('CRM')]: {
         link: undefined,
-        icon: <FaUserTie fontSize={18} />,
+        icon: <MdWeb fontSize={18} />,
         parentMenuId: 'WEB',
     },
 };

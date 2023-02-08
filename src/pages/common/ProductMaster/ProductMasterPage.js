@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table, Switch, Form, Select, Row, Col, Button, Modal, Input, Space, Collapse } from 'antd';
+import { Table, Switch, Form, Select, Row, Col, Button,  Input,  Collapse } from 'antd';
 import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
-import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
-import ParentHierarchy from '../Geo/ParentHierarchy';
-import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
+import { ChangeHistory } from 'components/common/ChangeHistory';
+import { ParentHierarchy } from 'components/common/parentHierarchy/ParentHierarchy';
 
 import styles from '../Common.module.css';
 
 const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
+    // console.log('params', pagination, filters, sorter, extra);
 };
 
-const { confirm } = Modal;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 export const ProductMasterPageBase = () => {
     const [form] = Form.useForm();
-    const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isFavourite, setFavourite] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
@@ -100,33 +95,11 @@ export const ProductMasterPageBase = () => {
         },
     ];
 
-    const showConfirm = () => {
-        confirm({
-            title: 'Are you sure to leave this page?',
-            icon: <ExclamationCircleFilled />,
-            content: 'If you leave this page, All unsaved data will be lost',
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            cancelType: 'danger',
-            onOk() {
-                navigate(-1) || navigate(ROUTING_DASHBOARD);
-            },
-            onCancel() {},
-        });
-    };
-    const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
-
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
-    const toggleHistory = (e) => {
-        setChangeHistoryVisible(!isChangeHistoryVisible);
-    };
-
-    return (
+      return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
-                                     {isChangeHistoryVisible ? (
+                    {isChangeHistoryVisible ? (
                         <ChangeHistory />
                     ) : (
                         <div className="right col" style={{ padding: '0' }}>
