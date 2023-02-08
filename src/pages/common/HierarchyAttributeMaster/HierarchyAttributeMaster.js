@@ -13,11 +13,8 @@ import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'ant
 import { Table } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 
-import MetaTag from 'utils/MetaTag';
-
 import styles from '../Common.module.css';
 import { PageHeader } from '../PageHeader';
-import { useForm } from 'antd/es/form/Form';
 
 const { Option } = Select;
 const { confirm } = Modal;

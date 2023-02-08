@@ -167,7 +167,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
     return (
-        <>
+        <div className={styles.changeHistoryContainer}>
             <div>
                 <h3>Change History</h3>
             </div>
@@ -183,7 +183,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
                     x: 'auto',
                 }}
             />
-        </>
+        </div>
     );
 };
 

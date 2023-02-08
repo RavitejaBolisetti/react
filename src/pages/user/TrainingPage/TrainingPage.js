@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { Col, Row } from 'antd';
 
 import CMS from 'assets/images/comingsoon.svg';
 import { PageHeader } from 'pages/common/PageHeader';

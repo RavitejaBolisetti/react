@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Col, Row } from 'antd';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import CMS from 'assets/images/comingsoon.svg';
