@@ -27,7 +27,7 @@
 .dashboardContainer :global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
   padding: 0px 5px;
   border-radius: 0 0 8px 8px;
-  height: 250px;
+  height: 270px;
 }
 
 .dashboardContainer :global .ant-row {
@@ -100,7 +100,7 @@
 .dashboardGraph .dashboardGraphBox {
   width: 100%;
   overflow: hidden;
-  height: 200px;
+  height:196px;
 }
 
 
