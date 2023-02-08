@@ -1,13 +1,13 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 // import { FaSearch } from 'react-icons/fa';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
+const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
     const disabledProps = { disabled: isReadOnly };
     return (
@@ -31,11 +31,13 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSe
                         <br />
                         {JSON.stringify(fieldNames)} */}
                         {/* <Input.Group compact> */}
+                        {/* {'Kuldeep' + parentCodeValue} */}
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
                             onChange={handleSelectTreeClick}
-                            defaultValue={selectedTreeKey}
+                            defaultValue={formData?.geoParentCode}
+                            // defaultValue={selectedTreeKey}
                             showSearch
                             // style={{
                             //     width: 'calc(100% - 48px)',
@@ -61,8 +63,8 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSe
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.geoCode} label="Code" name="geoCode" rules={[validateRequiredInputField('Code')]}>
-                        <Input placeholder="Code" maxLength={5} className={styles.inputBox} {...disabledProps} />
+                    <Form.Item initialValue={formData?.geoCode} label="Code" name="geoCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
 

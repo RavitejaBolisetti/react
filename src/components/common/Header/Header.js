@@ -168,7 +168,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                     <div className={styles.headerRight}>
                         <div className={styles.navbarExpand}>
                             <div className={styles.navbarNav}>
-                                <div className={styles.floatLeft}>
+                                <div className={`${styles.floatLeft} ${styles.mrt6}`}>
                                     <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                         <Badge size="small" count={notificationCount}>
                                             {addToolTip('Notification')(<FaRegBell size={20} />)}
@@ -179,9 +179,9 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                                     <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
-                                            OneStop <br></br> Help Desk
+                                            OneStop  Help Desk
                                             <br />
-                                            7208982320
+                                            <span>7208982320</span>
                                         </span>
                                     </Link>
                                 </div>

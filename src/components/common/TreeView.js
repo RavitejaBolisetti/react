@@ -27,8 +27,6 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
         setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(false);
     };
-    
-    console.log(searchValue, expandedKeys);
 
     const onChange = (e) => {
         const { value } = e.target;
@@ -46,6 +44,7 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
         setAutoExpandParent(true);
     };
 
+    console.log('dataList', dataList);
     return (
         <div className={isOpenInModal ? styles.modalView : ''}>
             <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
