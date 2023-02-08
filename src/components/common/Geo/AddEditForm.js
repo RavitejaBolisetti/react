@@ -7,9 +7,10 @@ import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleParentCode, geoData }) => {
+const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
-    const disabledProps = { disabled: isReadOnly };
+    const disabledProps = { disabled: false };
+    console.log('formData - inner', formData);
     return (
         <>
             <Row gutter={20}>
@@ -25,11 +26,18 @@ const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, isDataAttribut
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={formData?.geoParentCode} label="Parent" name="geoParentCode">
-                        {/* {selectedTreeKey} */}
+                        {/* {`selectedTreeKey ${selectedTreeKey}`}
+                        <br />
+                        {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
+                        <br />
+                        {JSON.stringify(fieldNames)} */}
+                        {/* {JSON.stringify(formData)}  */}
                         {/* <Input.Group compact> */}
                         <TreeSelect
-                            onChange={handleParentCode}
-                            defaultValue={selectedTreeKey}
+                            treeLine={true}
+                            treeIcon={true}
+                            selectedKeys={selectedTreeKey}
+                            onChange={handleSelectTreeClick}
                             showSearch
                             // style={{
                             //     width: 'calc(100% - 48px)',

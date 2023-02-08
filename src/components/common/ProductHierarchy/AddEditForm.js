@@ -98,7 +98,7 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
     };
 
     const fieldNames = { label: 'prodctShrtName', value: 'prodctCode', children: 'subProdct' };
-    
+
     return (
         <div>
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -118,6 +118,9 @@ export default function AddEditForm({ fetchList, saveData, listShowLoading, user
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
                                 <Form.Item label="Parent" name="parentCode" initialValue={formSelectedData?.prodctCode} className="control-label-blk">
                                     {/* <Input.Group compact> */}
+                                    {defaultSelectedKeys} === {selectedTreeKey}
+                                    <br />
+                                    {JSON.stringify(fieldNames)}
                                     <TreeSelect
                                         treeLine={true}
                                         treeIcon={true}
