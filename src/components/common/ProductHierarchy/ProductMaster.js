@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Table, Switch, Form, Select, Row, Col, Button, Input, Collapse } from 'antd';
-import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { Table, Form, Row, Col, Button, Input, Collapse } from 'antd';
+import { FaSave } from 'react-icons/fa';
+import { validateRequiredInputField } from 'utils/validation';
 
 import styles from '../Common.module.css';
 import AddEditForm from './AddEditForm';
 
-const { TextArea } = Input;
 const { Panel } = Collapse;
 
 export const ProductMaster = () => {

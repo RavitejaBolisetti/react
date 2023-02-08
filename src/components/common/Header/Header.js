@@ -176,10 +176,12 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                                     </Link>
                                 </div>
                                 <div className={styles.floatLeft}>
-                                    <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
+                                    <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
                                             OneStop <br></br> Help Desk
+                                            <br />
+                                            7208982320
                                         </span>
                                     </Link>
                                 </div>

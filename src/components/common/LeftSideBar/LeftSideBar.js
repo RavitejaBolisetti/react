@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
 import { Input, Menu, Layout } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
-import { IoIosDocument } from 'react-icons/io';
-
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 
@@ -127,14 +125,11 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
         <>
             <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
                 <div className={styles.logoContainer}>
-                    <Link to={routing.ROUTING_DASHBOARD}>
-                        <a href="javascripy::void" className={styles.brandLink}>
-                            {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
-                        </a>
-
+                    <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
+                        {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
                         <div className="cls"></div>
-                        {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                     </Link>
+                    {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                 </div>
 
                 <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
