@@ -30,7 +30,7 @@ const TrainingPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <div className={styles.wrapper}>
+            <div className={styles.cmsContainer}>
                 <h1>
                     <img src={CMS} alt="Coming Soon" />
                 </h1>
