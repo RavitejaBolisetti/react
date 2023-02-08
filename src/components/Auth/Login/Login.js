@@ -74,7 +74,7 @@ const Login = (props) => {
             doLogin(values, loginPageIsLoading, onSuccess);
         } else {
             setIsLoading(false);
-            message.error('Please select capcha');
+            message.error('Please select captcha');
         }
     };
 

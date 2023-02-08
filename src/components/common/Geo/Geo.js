@@ -120,9 +120,9 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setFormVisible(true);
             forceUpdate();
-            // setReadOnly(true);
+            setReadOnly(true);
         } else {
-            // setReadOnly(false);
+            setReadOnly(false);
         }
         setSelectedTreeKey(keys);
     };
@@ -147,7 +147,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         };
 
         const requestData = {
-            data: [{ ...values, id: formData?.id || '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue }],
+            data: [{ ...values, id: formData?.id || '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue || '' }],
             setIsLoading: listShowLoading,
             userId,
             onError,

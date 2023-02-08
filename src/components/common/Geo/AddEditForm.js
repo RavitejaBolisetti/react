@@ -9,7 +9,7 @@ const { Option } = Select;
 
 const AddEditFormMain = ({ isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
-    const disabledProps = { disabled: false };
+    const disabledProps = { disabled: isReadOnly };
     console.log('formData - inner', formData);
     return (
         <>
