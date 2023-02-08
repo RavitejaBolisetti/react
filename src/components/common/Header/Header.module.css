@@ -1,9 +1,9 @@
 :global .ant-layout .ant-layout-header {
-    line-height: 50px;
+    line-height: 40px;
 }
 
 :global .ant-layout .ant-layout-header {
-    height: auto;
+    height: 64px;
 }
 
 .headerLeft {
@@ -108,6 +108,7 @@
     color: #FF7A00;
     padding-right: 8px;
 }
+
 @media (max-width: 576px) {
     .headerLeft {
         padding-left: 20px;

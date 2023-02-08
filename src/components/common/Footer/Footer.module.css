@@ -1,5 +1,6 @@
 :global .ant-layout .ant-layout-footer {
     padding: 7px !important;
+    height: 50px;
     background-color: #342C2C;
 }
 
