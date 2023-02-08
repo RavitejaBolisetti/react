@@ -117,6 +117,8 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             const formData = flatternData.find((i) => keys[0] === i.key);
             formData && setFormData(formData?.data);
 
+            setParentCodeValue(formData?.data?.geoParentCode);
+
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setFormVisible(true);
             forceUpdate();
@@ -153,7 +155,6 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             onError,
             onSuccess,
         };
-
         saveData(requestData);
     };
 
@@ -170,6 +171,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         setFormVisible(true);
         setReadOnly(false);
         setFormData([]);
+        setSelectedTreeKey([]);
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
     };
@@ -178,7 +180,9 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         setFormVisible(true);
         setReadOnly(false);
         setFormData([]);
+        // setSelectedTreeKey([]);
         form.resetFields();
+        setParentCodeValue();
         setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
     };
 

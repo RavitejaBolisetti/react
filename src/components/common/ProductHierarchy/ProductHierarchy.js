@@ -100,8 +100,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node.subProdct) {
+                generateList(node.subProdct);
             }
         }
         return dataList;
@@ -118,6 +118,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i.key);
             formData && setFormData(formData?.data);
+
+            setParentCodeValue(formData?.data?.parentCode);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setFormVisible(true);
@@ -149,7 +151,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         };
 
         const requestData = {
-            data: { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: parentCodeValue || '', otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' },
+            data: { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: values?.parentCode || '', otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' },
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -172,6 +174,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setFormVisible(true);
         setReadOnly(false);
         setFormData([]);
+        setSelectedTreeKey([]);
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
     };
@@ -181,6 +184,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
+        setParentCodeValue();
         setButtonData({ ...defaultBtnVisiblity, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
     };
 
