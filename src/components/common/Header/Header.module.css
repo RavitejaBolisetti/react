@@ -84,12 +84,11 @@
     font-weight: 700;
 }
 .helpLineText span{
-    color: #6c757d;
+    /* color: #6c757d; */
     font-size: 12px;
+    font-weight: 300;
 }
-.helpLineText span:hover{
-    color: #ea3434;
-}
+
 
 .welcomeUser {
     padding-left: 10px;
