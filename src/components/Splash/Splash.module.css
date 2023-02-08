@@ -9,14 +9,15 @@ html::-webkit-scrollbar {
   background-color: #F4F4F4;
 }
 
-html:hover::-webkit-scrollbar {
+/* html:hover::-webkit-scrollbar {
   width: 10px !important;
-}
+} */
 
 html::-webkit-scrollbar-thumb {
   background-color: #ea3434;
   border-radius: 10px;
 }
+
 /* border: 2px solid ; */
 
 .splashContainer {
