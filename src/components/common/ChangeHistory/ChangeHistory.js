@@ -9,7 +9,7 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 
-const sortDateFn = (a, b) => moment(a.ChangeDate, 'DD-MM-YYYY') - moment(b.ChangeDate, 'DD-MM-YYYY');
+const sortDateFn = (a, b) => moment(a.ChangeDate, 'YYYY-MM-DD HH:mm:ss') - moment(b.ChangeDate, 'YYYY-MM-DD HH:mm:ss');
 const generalsorter = (a, b) => {
     if (a.EmployeeName !== undefined) {
         if (a.EmployeeName > b.EmployeeName) {
@@ -54,79 +54,6 @@ const generalsorter = (a, b) => {
     }
 };
 
-const tableColumn = [];
-
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Changed/Modified Date ',
-        dataIndex: 'changedDate',
-        render: (text) => convertDateTime(text),
-        sortFn: sortDateFn,
-    })
-);
-
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Changed By',
-        dataIndex: 'changedBy',
-    })
-);
-
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Attribute',
-        dataIndex: 'parentAttributeName',
-        sortFn: generalsorter,
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Code',
-        dataIndex: 'prodctCode',
-        sortFn: generalsorter,
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Parent',
-        dataIndex: 'parntHeirarchyCode',
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Short Description',
-        dataIndex: 'prodctShrtDescription',
-        sortFn: generalsorter,
-    })
-);
-
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Long Description',
-        dataIndex: 'prodctLongDiscription',
-        sortFn: generalsorter,
-    })
-);
-
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Status',
-        dataIndex: 'status',
-        filters: [
-            {
-                text: 'Active',
-                value: 'Active',
-            },
-            {
-                text: 'Inactive',
-                value: 'Inactive',
-            },
-        ],
-        render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
-        sortFn: generalsorter,
-    })
-);
-
 const onChange = (pagination, filters, sorter, extra) => {
     // console.log('params', pagination, filters, sorter, extra);
 };
@@ -166,6 +93,80 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
+
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Changed/Modified Date ',
+            dataIndex: 'changedDate',
+            render: (text) => convertDateTime(text),
+            sortFn: sortDateFn,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Changed By',
+            dataIndex: 'changedBy',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Attribute',
+            dataIndex: 'parentAttributeName',
+            sortFn: generalsorter,
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Code',
+            dataIndex: 'prodctCode',
+            sortFn: generalsorter,
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Parent',
+            dataIndex: 'parntHeirarchyCode',
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Short Description',
+            dataIndex: 'prodctShrtDescription',
+            sortFn: generalsorter,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Long Description',
+            dataIndex: 'prodctLongDiscription',
+            sortFn: generalsorter,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Status',
+            dataIndex: 'status',
+            filters: [
+                {
+                    text: 'Active',
+                    value: 'Active',
+                },
+                {
+                    text: 'Inactive',
+                    value: 'Inactive',
+                },
+            ],
+            render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
+            sortFn: generalsorter,
+        })
+    );
+
     return (
         <div className={styles.changeHistoryContainer}>
             <div>
@@ -174,11 +175,11 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             <Table
                 loading={isLoading}
                 columns={tableColumn}
+                onChange={onChange}
                 dataSource={changeHistoryData}
                 pagination={{
                     position: ['bottomLeft'],
                 }}
-                onChange={onChange}
                 scroll={{
                     x: 'auto',
                 }}

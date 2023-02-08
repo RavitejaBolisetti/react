@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
             Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [] },
         },
         common: {
-            LeftSideBar: { collapsed = false },
+            LeftSideBar: { collapsed = true },
         },
     } = state;
 
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            setCollapsed,
+            // setCollapsed,
             fetchData: menuDataActions.fetchData,
             setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
