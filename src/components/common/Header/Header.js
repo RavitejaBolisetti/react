@@ -179,9 +179,9 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                                     <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
-                                            OneStop <br></br> Help Desk
+                                            OneStop  Help Desk
                                             <br />
-                                            7208982320
+                                            <span>7208982320</span>
                                         </span>
                                     </Link>
                                 </div>
