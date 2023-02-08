@@ -134,8 +134,8 @@ p {
     color: #ffffff;
 }
 
-.loginSection :global .ant-input-affix-wrapper:focus, 
-.loginSection :global .ant-input-affix-wrapper-focused{
+.loginSection :global .ant-input-affix-wrapper:focus,
+.loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none;
 }
 
@@ -380,4 +380,35 @@ select.form-control:focus::-ms-value {
 /* New css */
 .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
+}
+
+
+.checkColor {
+    color: #fff;
+}
+
+.clock {
+    font-size: 13px;
+    color: #fff;
+}
+
+.buttonResend {
+    font-size: 11px;
+    height: 45px;
+    width: 95px;
+    /* padding: 4px 15px; */
+    border-radius: 5px
+}
+
+.changer input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    margin-right: 0px;
+    color: white;
+}
+
+.changer>input:focus-visible {
+    outline: none;
+    margin-right: 10px;
 }

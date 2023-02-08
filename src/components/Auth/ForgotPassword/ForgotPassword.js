@@ -1,54 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
 
-import { connect } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
-import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineMail } from 'react-icons/ai';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
-import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
-import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
-
-import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
+import { ROUTING_LOGIN } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
-import styles from './ForgotPassword.module.css';
+import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
-
-const mapStateToProps = (state) => {
-    let authApiCall = state.auth || {};
-
-    const isError = authApiCall.isError || false;
-    const loginFailure = authApiCall.loginFailure;
-
-    let returnValue = {
-        isUnauthenticated: authApiCall.isUnauthenticated,
-        isLoggedIn: authApiCall.isLoggedIn,
-        isLoading: state.authPages.LoginPage.isLoading,
-        data: authApiCall.data,
-        authData: authApiCall.authData,
-        isError,
-        loginFailure,
-        message: '',
-    };
-
-    if (isError || returnValue.isUnauthenticated) {
-        returnValue = { ...returnValue, errorTitle: authApiCall.title, errorMessage: authApiCall.message };
-    }
-
-    return returnValue;
-};
-
-const mapDispatchToProps = {
-    doLogin,
-    doCloseLoginError,
-    doCloseUnAuthenticatedError,
-};
+import { Link } from 'react-router-dom';
 
 const ForgotPassword = (props) => {
-    const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
     const [showFields, setShowFields] = useState(false);
     const [OTP, setOTP] = useState(false);
@@ -56,24 +20,10 @@ const ForgotPassword = (props) => {
     const [submit, setSubmit] = useState(false);
     const [showtimer, setShowTimer] = useState(true);
 
-    const navigate = useNavigate();
     useEffect(() => {
-        doCloseLoginError();
-
         form.resetFields();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const onFinish = (values) => {
-        // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        // values.timeZone = timeZone;
-        doLogin(values, loginPageIsLoading, () => navigate(ROUTING_DASHBOARD));
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
 
     const handleSendOtp = () => {
         setOTP(true);
@@ -95,7 +45,7 @@ const ForgotPassword = (props) => {
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="login_from" autoComplete="false">
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -108,7 +58,7 @@ const ForgotPassword = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            <Input onBlur={() => setShowFields(!showFields)} prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />
+                                                            <Input onBlur={() => setShowFields(true)} prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />
                                                             {/* As discussed with Rahul */}
                                                         </Form.Item>
                                                     </Col>
@@ -166,11 +116,6 @@ const ForgotPassword = (props) => {
                                                                 )}
                                                             </Col>
                                                         </Row>
-                                                        {/* <Row>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <ResendOTP handelResendClick={() => console.log('Resend clicked')} />
-                                                            </Col>
-                                                        </Row> */}
                                                     </>
                                                 ) : null}
 
@@ -200,22 +145,6 @@ const ForgotPassword = (props) => {
                                 </Col>
                             </Row>
                         </Form>
-                        {isError && (
-                            <div className={styles.errorBoxContainer}>
-                                <h5>
-                                    <span className={styles.icon}>
-                                        <FaExclamationTriangle size={18} />
-                                    </span>
-                                    <span className={styles.errorTitle}>{errorTitle}</span>
-                                    <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
-                                        <FaTimes size={18} />
-                                    </span>
-                                </h5>
-                                <div className="form_card">
-                                    <p>{errorMessage}</p>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
@@ -223,4 +152,4 @@ const ForgotPassword = (props) => {
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
+export default ForgotPassword;
