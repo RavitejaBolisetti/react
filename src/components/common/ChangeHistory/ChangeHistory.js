@@ -7,6 +7,7 @@ import moment from 'moment';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import styles from './ChangeHistory.module.css';
 
 const sortDateFn = (a, b) => moment(a.ChangeDate, 'DD-MM-YYYY') - moment(b.ChangeDate, 'DD-MM-YYYY');
 const generalsorter = (a, b) => {
@@ -134,14 +135,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: changeHistoryData = [] },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
         },
     } = state;
 
     let returnValue = {
         userId,
-        isLoading,
-        isDataLoaded,
+        isHistoryLoading,
+        isHistoryLoaded,
         changeHistoryData,
     };
     return returnValue;
@@ -151,20 +152,20 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: productHierarchyDataActions.fetchList,
-            listShowLoading: productHierarchyDataActions.listShowLoading,
+            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryMain = ({ fetchList, listShowLoading, isLoading, userId, isDataLoaded, changeHistoryData }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+        if (!isHistoryLoaded) {
+            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isHistoryLoaded]);
     return (
         <>
             <div>

@@ -9,7 +9,7 @@ import styles from './PageHeader.module.css';
 
 const { confirm } = Modal;
 
-export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+export const PageHeader = ({ pageTitle, canMarkFavourite = true, isFavourite = false, handleFavouriteClick = () => {}, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
@@ -23,9 +23,9 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
             cancelType: 'danger',
             width: 350,
             onOk() {
-                navigate(-1) || navigate(ROUTING_DASHBOARD);
+                navigate(ROUTING_DASHBOARD);
             },
-            onCancel() { },
+            onCancel() {},
         });
     };
 
@@ -37,7 +37,7 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>
+                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>}
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>

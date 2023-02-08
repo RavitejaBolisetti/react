@@ -28,10 +28,10 @@ const showConfirm = () => {
         icon: <ExclamationCircleFilled />,
         content: 'Some descriptions',
         onOk() {
-            console.log('OK');
+            // console.log('OK');
         },
         onCancel() {
-            console.log('Cancel');
+            // console.log('Cancel');
         },
     });
 };

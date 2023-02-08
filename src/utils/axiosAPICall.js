@@ -30,7 +30,7 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        (onError && (displayErrorTitle ? onError({ title: errorTitle, message: errorMessage }) : onError(errorMessage)));
+        onError && (displayErrorTitle ? onError({ title: errorTitle, message: errorMessage }) : onError(errorMessage));
     };
     try {
         axios
@@ -62,7 +62,7 @@ const baseAPICall = (params) => {
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    console.log('AXIOS Catch');
+                    console.log('We are facing server issue!!');
                 } else if (error.code) {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
@@ -84,7 +84,7 @@ const baseAPICall = (params) => {
                 postRequest();
             });
     } catch (err) {
-        console.log('Catch - err', err);
+        console.log('We are facing server issue!!');
     }
 };
 

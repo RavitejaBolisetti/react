@@ -1,5 +1,5 @@
 import { Tree, Input } from 'antd';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import styles from './TreeView.module.css';
 
 const { Search } = Input;
@@ -19,7 +19,7 @@ const getParentKey = (key, tree) => {
     return parentKey;
 };
 
-const TreeView = ({ dataList, handleSelectClick, isOpenInModal }) => {
+const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList, handleTreeViewClick, isOpenInModal }) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -27,6 +27,8 @@ const TreeView = ({ dataList, handleSelectClick, isOpenInModal }) => {
         setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(false);
     };
+    
+    console.log(searchValue, expandedKeys);
 
     const onChange = (e) => {
         const { value } = e.target;
@@ -38,52 +40,22 @@ const TreeView = ({ dataList, handleSelectClick, isOpenInModal }) => {
                 return null;
             })
             .filter((item, i, self) => item && self.indexOf(item) === i);
-
-        // console.log('newExpandedKeys', newExpandedKeys);
-
         setExpandedKeys(newExpandedKeys);
         setSearchValue(value);
         setAutoExpandParent(true);
     };
 
-    // const treeData = useMemo(() => {
-    //     const loop = (data) =>
-    //         data.map((item) => {
-    //             const strTitle = item.title;
-    //             const index = strTitle.indexOf(searchValue);
-    //             const beforeStr = strTitle.substring(0, index);
-    //             const afterStr = strTitle.slice(index + searchValue.length);
-    //             const title =
-    //                 index > -1 ? (
-    //                     <span>
-    //                         {beforeStr}
-    //                         <span className="site-tree-search-value">{searchValue}</span>
-    //                         {afterStr}
-    //                     </span>
-    //                 ) : (
-    //                     <span>{strTitle}</span>
-    //                 );
-    //             if (item.children) {
-    //                 return {
-    //                     title,
-    //                     key: item.key,
-    //                     children: loop(item.children),
-    //                 };
-    //             }
-    //             return {
-    //                 title,
-    //                 key: item.key,
-    //             };
-    //         });
-    //     // console.log(defaultData, 'defaultData', loop);
-    //     return loop(dataList);
-    // }, [searchValue]);
-
     return (
         <div className={isOpenInModal ? styles.modalView : ''}>
             <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
+
             <div className={styles.scrollTreeData}>
-                <Tree onSelect={handleSelectClick} fieldNames={{ title: 'geoName', key: 'geoCode', children: 'subGeo' }} showLine={true} showIcon={true} onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} treeData={dataList} />
+                {/* {`selectedTreeKey ${selectedTreeKey}`}
+                <br />
+                {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
+                <br />
+                {JSON.stringify(fieldNames)} */}
+                <Tree expandedKeys={selectedTreeKey} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} fieldNames={fieldNames} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={dataList} />
             </div>
         </div>
     );
