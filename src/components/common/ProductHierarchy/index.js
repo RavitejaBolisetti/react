@@ -1,3 +1,2 @@
-import { ProductHierarchy } from "./ProductHierarchy";
-
+import { ProductHierarchy } from './ProductHierarchy';
 export { ProductHierarchy };

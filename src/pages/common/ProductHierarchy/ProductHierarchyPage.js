@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { connect } from 'react-redux';
-import { ProductHierarchy } from 'components/common/ProductHierarchy';
+import { ProductHierarchy } from 'components/common/ProductHierarchy/ProductHierarchy';
 import { PageHeader } from '../PageHeader';
 
 const mapStateToProps = (state) => {
