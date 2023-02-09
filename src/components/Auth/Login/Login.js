@@ -70,7 +70,6 @@ const Login = (props) => {
 
     const onError = () => {
         setIsLoading(false);
-        navigate(ROUTING_DASHBOARD);
     };
 
     const onFinish = (values) => {
@@ -83,7 +82,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onReCAPTCHAChange = async (captchaCode) => {
