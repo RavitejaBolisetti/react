@@ -6,6 +6,7 @@ import { message } from 'antd';
 
 export const GEO_DATA_LOADED = 'GEO_DATA_LOADED';
 export const GEO_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
+export const GEO_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
 export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
@@ -23,12 +24,16 @@ geoDataActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-geoDataActions.setFormData = (formData) =>
-    console.log(formData, 'Ajay') || {
-        type: GEO_SET_FORM_DATA,
-        isFormDataLoaded: true,
-        formData,
-    };
+geoDataActions.setFormData = (formData) => ({
+    type: GEO_SET_FORM_DATA,
+    isFormDataLoaded: true,
+    formData,
+});
+
+geoDataActions.setFormVisible = (isFormVisible) => ({
+    type: GEO_SET_FORM_IS_VISIBLE,
+    isFormVisible,
+});
 
 geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
