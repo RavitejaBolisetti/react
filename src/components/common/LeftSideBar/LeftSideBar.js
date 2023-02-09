@@ -1,8 +1,8 @@
-import React, { useEffect,  useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout } from 'antd';
+import { Input, Menu, Layout, Tooltip } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
@@ -26,7 +26,14 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
-const prepareLink = (title, id) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{title}</Link> : title);
+const prepareLink = (title, id, tooltip = true) =>
+    id && getMenuValue(MenuConstant, id, 'link') ? (
+        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
+            {title}
+        </Link>
+    ) : (
+        <div title={tooltip ? title : ''}>{title}</div>
+    );
 
 const mapStateToProps = (state) => {
     const {
@@ -101,11 +108,11 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
                             const grandMenuData = [];
                             for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
                                 const grandElement = grandMenu[grandIndex];
-                                grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
+                                grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId, true), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
                             }
-                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
+                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
                         } else {
-                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
+                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                         }
                     }
                     items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
@@ -131,7 +138,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
         setCurrent(e.key);
     };
 
-    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
+    const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     return (

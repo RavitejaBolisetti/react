@@ -5,6 +5,7 @@ import { BASE_URL_GEO_GRAPHY } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const GEO_DATA_LOADED = 'GEO_DATA_LOADED';
+export const GEO_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
 export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
@@ -21,6 +22,13 @@ geoDataActions.listShowLoading = (isLoading) => ({
     type: GEO_DATA_SHOW_LOADING,
     isLoading,
 });
+
+geoDataActions.setFormData = (formData) =>
+    console.log(formData, 'Ajay') || {
+        type: GEO_SET_FORM_DATA,
+        isFormDataLoaded: true,
+        formData,
+    };
 
 geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
