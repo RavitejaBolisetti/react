@@ -44,7 +44,7 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
         setAutoExpandParent(true);
     };
 
-    console.log('dataList', dataList);
+    // console.log('dataList', dataList);
     return (
         <div className={isOpenInModal ? styles.modalView : ''}>
             <Search placeholder="Search" onChange={onChange} className={styles.searchField} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -26,18 +26,20 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
+const prepareLink = (title, id) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{title}</Link> : title);
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [] },
+            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], flatternData },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
-    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, collapsed };
+    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, flatternData, collapsed };
     return returnValue;
 };
 
@@ -46,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             setCollapsed,
-            fetchData: menuDataActions.fetchData,
+            fetchList: menuDataActions.fetchList,
             setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
         },
@@ -54,35 +56,46 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+    const location = useLocation();
+    const pagePath = location.pathname;
+    const [filterMenuList, setFilterMenuList] = useState();
+
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId });
         }
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    const location = useLocation();
-    const pagePath = location.pathname;
+    useEffect(() => {
+        if (filter) {
+            const filterDataItem = flatternData?.filter((item) => filterFunction(filter)(item?.menuTitle));
+            // console.log('🚀 ~ file: LeftSideBar.js:79 ~ useEffect ~ filterDataItem', filterDataItem);
+            filterDataItem &&
+                setFilterMenuList(
+                    filterDataItem?.map((item) => {
+                        return item.menuId;
+                    }) || []
+                );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filter]);
 
-    const prepareLink = (title, id) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{title}</Link> : title);
-
+    const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
     const items = [];
-    const checkData = (dataList) => (filter ? dataList.filter((data) => filterFunction(filter)(data?.menuTitle))?.length > 0 : true);
-
-    if (menuData && menuData.length > 0 && checkData(menuData)) {
+    if (menuData && menuData.length > 0) {
         for (let index = 0; index < menuData.length; index++) {
             const element = menuData[index];
-            const menuTitle = element?.menuTitle;
+            const menuId = element?.menuId;
 
-            if (filter ? filterFunction(filter)(menuTitle) : true) {
+            if (filter ? checkData(menuId) : true) {
                 const childMenu = element['subMenu'];
                 if (childMenu && childMenu.length > 0) {
                     const childMenuData = [];
                     for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
                         const childElement = childMenu[childIndex];
-
                         const grandMenu = childElement['subMenu'];
                         if (grandMenu && grandMenu.length > 0) {
                             const grandMenuData = [];
