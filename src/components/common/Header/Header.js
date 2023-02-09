@@ -144,7 +144,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
     return (
         <div className={styles.headerContainer}>
             <Row gutter={0}>
-                <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
+                <Col xs={24} sm={24} md={10} lg={12} xl={12} xxl={12}>
                     <div className={styles.headerLeft}>
                         <Space>
                             <div className={styles.userAvatar}>
@@ -164,7 +164,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                         </Space>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
+                <Col xs={24} sm={24} md={14} lg={12} xl={12} xxl={12}>
                     <div className={styles.headerRight}>
                         <div className={styles.navbarExpand}>
                             <div className={styles.navbarNav}>

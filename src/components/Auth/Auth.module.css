@@ -404,7 +404,7 @@ select.form-control:focus::-ms-value {
 }
 
 .changer {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .changer input {
@@ -427,6 +427,122 @@ select.form-control:focus::-ms-value {
 }
 
 /* #login_from_password{} */
+
+@media (min-width: 997px) and (max-width: 1280px) {
+
+    .loginSection .loginMnMlogo img {
+        width: 150px;
+    }
+
+    .loginSection .loginWrap .logOutHtml {
+        height: 300px;
+    }
+
+    .loginSection .loginWrap .loginHtml {
+        height: 350px;
+    }
+
+    .loginSection .center .loginLogoSection img {
+        width: 240px;
+    }
+
+    .loginSection .center .loginLogoSection .logoText {
+        font-size: 20px;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .loginHeading h4 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .loginHeading h4,
+    .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h4 {
+        font-size: 24px;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading {
+        margin-bottom: 4px;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
+    .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .loginSection .loginWrap .logOutHtml .loginForm .button {
+        padding: 5px;
+    }
+
+    /* Login page input */
+    .loginSection .loginWrap .loginHtml .loginForm .inputBox input::placeholder {
+        font-size: 14px;
+    }
+
+    .loginSection :global .ant-input-affix-wrapper {
+        padding: 2px 10px 0;
+    }
+
+    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
+        padding: 2px 5px 3px 5px;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .button {
+        padding: 5px;
+        margin-top: 20px !important;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
+        margin-top: 3px;
+    }
+
+    .loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
+        font-size: 13px;
+    }
+
+    /* Error modal on LogIn */
+    .errorBoxContainer {
+        width: 80%;
+        margin: 5%;
+        font-size: 12px;
+        top: 30%;
+    }
+
+    .errorBoxContainer h5 {
+        font-size: 14px;
+    }
+
+    .clock {
+        font-size: 11px;
+        margin-top: -25px;
+        margin-left: -20px;
+    }
+
+    :global .ant-col-offset-15 {
+        width: 69px;
+        height: 69px;
+    }
+
+    :global .ant-col-offset-15 svg {
+        width: 80%;
+        height: 80%;
+    }
+
+    .buttonResend {
+        font-size: 10px;
+        line-height: 12px;
+        height: 35px;
+        margin-top: 20px;
+        /* padding: 4px 11px; */
+        margin-left: 14px;
+    }
+
+    .changer input {
+        height: 24px !important;
+        /* width: 24px !important; */
+        font-size: 16px;
+    }
+}
 
 @media (min-width: 768px) and (max-width: 997px) {}
 

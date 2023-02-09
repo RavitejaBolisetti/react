@@ -36,12 +36,12 @@ const DashboardPageBase = ({ props }) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                        <Col xs={24} sm={24} md={12} lg={16} xl={16} xxl={16}>
                             <div>
                                 <span className={styles.headingGradient}>Welcome back {firstName}! </span>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
+                        <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.floatRight}>
                             <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
                         </Col>
                     </Row>
@@ -49,7 +49,7 @@ const DashboardPageBase = ({ props }) => {
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={8}>
                     <Card
                         title={
                             <>
@@ -84,7 +84,7 @@ const DashboardPageBase = ({ props }) => {
                         </div>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={8}>
                     <Card
                         title={
                             <>
@@ -136,7 +136,7 @@ const DashboardPageBase = ({ props }) => {
                         </div>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={8}>
                     <Card
                         title={
                             <>
@@ -184,7 +184,7 @@ const DashboardPageBase = ({ props }) => {
                         </Carousel>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={8}>
                     <Card
                         title={
                             <>
@@ -198,7 +198,7 @@ const DashboardPageBase = ({ props }) => {
                         </div>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={8}>
                     <Card
                         title={
                             <>
@@ -245,7 +245,7 @@ const DashboardPageBase = ({ props }) => {
                         </Carousel>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={8}>
                     <Card
                         title={
                             <>

@@ -83,7 +83,8 @@
     text-align: left;
     font-weight: 700;
 }
-.helpLineText span{
+
+.helpLineText span {
     /* color: #6c757d; */
     font-size: 12px;
     font-weight: 300;
@@ -117,10 +118,40 @@
     color: #FF7A00;
     padding-right: 8px;
 }
-.mrt6{
+
+.mrt6 {
     margin-top: 6px;
 }
-@media (max-width: 576px) {
+
+@media (min-width: 997px) and (max-width: 1280px) {
+    .headerLeft {
+        padding-left: 20px;
+    }
+
+    .userAvatar {
+        padding-top: 12px;
+    }
+
+    .dealerName {
+        font-size: 18px;
+    }
+
+    .headerRight {
+        padding: 20px;
+    }
+
+    .navbarExpand .navbarNav .navLink {
+        padding-left: 15px;
+        padding-right: 5px;
+    }
+
+    .helpLineText {
+        line-height: 15px;
+        font-weight: 500;
+    }
+}
+
+@media (max-width: 768px) {
     .headerLeft {
         padding-left: 20px;
     }
