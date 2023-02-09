@@ -36,10 +36,10 @@ export const ProductMasterPageBase = () => {
     const onSubmit = (e) => {
         form.validateFields()
             .then((err, values) => {
-                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
+                // console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
             })
             .catch((errorInfo) => {
-                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
+                // console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
             });
     };
 

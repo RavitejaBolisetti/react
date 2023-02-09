@@ -20,7 +20,6 @@ const mapStateToProps = (state) => {
 };
 
 export const ProductHierarchyBase = () => {
-    const [isFavourite, setFavourite] = useState(false);
     const [isAttributeVisible, setAttributeVisible] = useState(false);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
@@ -28,15 +27,12 @@ export const ProductHierarchyBase = () => {
         setChangeHistoryVisible(!isChangeHistoryVisible);
     };
 
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
 
     const pageTitle = 'Product Hierarchy';
     const pageHeaderData = {
         pageTitle,
-        showChangeHisoty: true,
-        isFavourite,
-        setFavourite,
-        handleFavouriteClick,
+        canMarkFavourite: true,
+        showChangeHisoty: true,      
         visibleChangeHistory: true,
         handleChangeHistoryClick,
         isChangeHistoryVisible,
