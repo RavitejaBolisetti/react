@@ -26,7 +26,14 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
-const prepareLink = (title, id, tooltip = true) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{tooltip ? <Tooltip title={title}>{title}</Tooltip> : title}</Link> : title);
+const prepareLink = (title, id, tooltip = true) =>
+    id && getMenuValue(MenuConstant, id, 'link') ? (
+        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
+            {title}
+        </Link>
+    ) : (
+        <div title={tooltip ? title : ''}>{title}</div>
+    );
 
 const mapStateToProps = (state) => {
     const {
