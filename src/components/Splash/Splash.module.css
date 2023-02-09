@@ -9,6 +9,25 @@ html::-webkit-scrollbar {
   background-color: #F4F4F4;
 }
 
+:global .ant-select-tree-list-holder{
+  overflow-y: scroll!important;
+}
+
+:global .ant-select-tree-list-holder::-webkit-scrollbar-track{
+  background-color: #FFF;
+}
+:global .ant-select-tree-list-holder::-webkit-scrollbar{
+  width: 5px;
+  background-color: #FFF;
+}
+:global .ant-select-tree-list-holder::-webkit-scrollbar-thumb{
+  background-color: #ea3434;
+  border-radius: 10px;
+}
+:global .ant-select-tree-list-scrollbar-thumb{
+  background: rgba(0, 0, 0, 0) !important;
+}
+
 /* html:hover::-webkit-scrollbar {
   width: 10px !important;
 } */
