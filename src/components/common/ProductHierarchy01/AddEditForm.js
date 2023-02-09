@@ -19,7 +19,7 @@ export default function AddEditForm({ formData, setFormData, fetchList, saveData
     const defaultBtnVisiblity = { editBtn: false, childBtn: true, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    console.log('formData', formData);
+    // console.log('formData', formData);
 
     useEffect(() => {
         setButtonData({ ...defaultBtnVisiblity });
@@ -28,7 +28,7 @@ export default function AddEditForm({ formData, setFormData, fetchList, saveData
         // setFormData(selectedGeoData?.data);
 
         if (selectedTreeKey && selectedTreeKey.length > 0) {
-            console.log(selectedTreeKey, 'selectedTreeKey', formData);
+            // console.log(selectedTreeKey, 'selectedTreeKey', formData);
             setFormVisible(true);
             // setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
