@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const navigate = useNavigate();
-    const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount } = loginUserData;
+    const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
@@ -96,10 +96,13 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
             link: routing.ROUTING_HOME,
             children: [
                 customMenuLink({
-                    title: 'Mahindra Randhawa Motors',
+                    title: 'Gurgaon',
                 }),
                 customMenuLink({
-                    title: 'MG Motor India',
+                    title: 'Lajpat Nagar',
+                }),
+                customMenuLink({
+                    title: 'Nodia',
                 }),
             ],
         }),
@@ -121,18 +124,18 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
             link: routing.ROUTING_USER_SETTING,
             icon: <AiFillSetting />,
         }),
-        customMenuLink({
-            key: '3',
-            title: 'FAQ',
-            link: routing.ROUTING_USER_FAQ,
-            icon: <TbFileReport />,
-        }),
-        customMenuLink({
-            key: '4',
-            title: 'Training/Help',
-            link: routing.ROUTING_USER_TRAINING,
-            icon: <FaUserMd />,
-        }),
+        // customMenuLink({
+        //     key: '3',
+        //     title: 'FAQ',
+        //     link: routing.ROUTING_USER_FAQ,
+        //     icon: <TbFileReport />,
+        // }),
+        // customMenuLink({
+        //     key: '4',
+        //     title: 'Training/Help',
+        //     link: routing.ROUTING_USER_TRAINING,
+        //     icon: <FaUserMd />,
+        // }),
         customMenuLink({
             key: '6',
             title: 'Logout',
@@ -155,11 +158,13 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                             <div className={styles.userText}>
                                 <div className={styles.dealerName}>{dealerName}</div>
                                 <span className={styles.userServiceArea}>{dealerLocation}</span>
-                                <Dropdown menu={{ items }} trigger={['click']}>
-                                    <a className={styles.navLink} data-toggle="dropdown" href="/">
-                                        <DownOutlined />
-                                    </a>
-                                </Dropdown>
+                                {userType === 'DLR' && (
+                                    <Dropdown menu={{ items }} trigger={['click']}>
+                                        <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                            <DownOutlined />
+                                        </a>
+                                    </Dropdown>
+                                )}
                             </div>
                         </Space>
                     </div>
@@ -176,12 +181,10 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                                     </Link>
                                 </div>
                                 <div className={styles.floatLeft}>
-                                    <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
+                                    <Link className={styles.navLink} data-toggle="dropdown" to={process.env.REACT_APP_SUPPORT_URL}>
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
-                                            OneStop  Help Desk
-                                            <br />
-                                            <span>7208982320</span>
+                                            OneStop <br></br> Help Desk
                                         </span>
                                     </Link>
                                 </div>

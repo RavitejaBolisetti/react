@@ -148,7 +148,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     const onSuccess = (res) => {
         if (res?.data) {
             authPostLogin(res?.data);
-            res?.responseMessage && message.info(res?.responseMessage);
+            // res?.responseMessage && message.info(res?.responseMessage);
             onLogin();
         } else {
             loginError({ message: 'There was an error, Please try again' });

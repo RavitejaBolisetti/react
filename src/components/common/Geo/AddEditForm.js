@@ -7,11 +7,31 @@ import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
+const AddEditFormMain = ({ formMode, buttonData, parentCodeValue, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
-    const disabledProps = { disabled: isReadOnly };
+    const disabledProps = { disabled: formMode === 'view' && isReadOnly };
+
     return (
         <>
+            {JSON.stringify(formMode)}
+            <br />
+            <br />
+            {JSON.stringify(formData)}
+            <br />
+            <br />
+            {JSON.stringify(buttonData)}
+            <br />
+            <br />
+            <Row gutter={20}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    {`selectedTreeKey ${selectedTreeKey}`}
+                    {/* {JSON.stringify(fieldNames)} */}
+                </Col>
+
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
+                </Col>
+            </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
@@ -25,19 +45,14 @@ const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKe
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={formData?.geoParentCode} label="Parent" name="geoParentCode">
-                        {/* {`selectedTreeKey ${selectedTreeKey}`}
-                        <br />
-                        {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
-                        <br />
-                        {JSON.stringify(fieldNames)} */}
                         {/* <Input.Group compact> */}
                         {/* {'Kuldeep' + parentCodeValue} */}
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
                             onChange={handleSelectTreeClick}
-                            defaultValue={formData?.geoParentCode}
-                            // defaultValue={selectedTreeKey}
+                            // defaultValue={formData?.geoParentCode}
+                            defaultValue={selectedTreeKey}
                             showSearch
                             // style={{
                             //     width: 'calc(100% - 48px)',
