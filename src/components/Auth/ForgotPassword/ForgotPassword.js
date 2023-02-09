@@ -82,7 +82,7 @@ const ForgotPassword = (props) => {
                                                         </Col>
                                                     </Row>
                                                 ) : null}
-                                                <br />
+                                                {/* <br /> */}
                                                 {OTP ? (
                                                     <>
                                                         <Row>
@@ -95,14 +95,14 @@ const ForgotPassword = (props) => {
                                                                         <CountdownCircleTimer
                                                                             size={100}
                                                                             isPlaying
-                                                                            duration={5}
+                                                                            duration={10}
                                                                             colors={['#FF3E5B']}
                                                                             onComplete={() => {
                                                                                 setShowTimer(false);
                                                                             }}
                                                                         >
                                                                             {({ remainingTime }) => {
-                                                                                return <div className={styles.clock}>{remainingTime} Seconds</div>;
+                                                                                return <div className={styles.clock}>{remainingTime} <br></br>Seconds</div>;
                                                                             }}
                                                                         </CountdownCircleTimer>{' '}
                                                                     </>

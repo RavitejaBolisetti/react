@@ -78,13 +78,12 @@ const Login = (props) => {
         if (captcha) {
             doLogin(values, loginPageIsLoading, onSuccess, onError);
         } else {
-            setIsLoading(false);
-            message.error('Please select captcha');
+            message.error('Please select Captcha');
         }
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onReCAPTCHAChange = async (captchaCode) => {

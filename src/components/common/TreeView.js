@@ -37,6 +37,7 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
                 }
                 return null;
             })
+
             .filter((item, i, self) => item && self.indexOf(item) === i);
         setExpandedKeys(newExpandedKeys);
         setSearchValue(value);

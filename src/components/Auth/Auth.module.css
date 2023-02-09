@@ -17,7 +17,7 @@ p {
 .button {
     width: 100%;
     padding: 10px;
-    margin-top: 30px;
+    margin-top: 25px;
     text-transform: uppercase;
     height: auto;
     background-color: #ff3e5b;
@@ -246,7 +246,7 @@ p {
     text-align: center;
     font-weight: normal;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
@@ -379,12 +379,10 @@ select.form-control:focus::-ms-value {
     margin: 0px auto;
 }
 
-
 /* New css */
 .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
 }
-
 
 .checkColor {
     color: #fff;
@@ -393,27 +391,39 @@ select.form-control:focus::-ms-value {
 .clock {
     font-size: 13px;
     color: #fff;
+    text-align: center;
 }
 
 .buttonResend {
-    font-size: 11px;
+    font-size: 12px;
+    line-height: 16px;
     height: 45px;
-    width: 95px;
-    /* padding: 4px 15px; */
-    border-radius: 5px
+    margin-top: 10px;
+    padding: 4px 21.5px;
+    margin-left: 7px;
+}
+
+.changer {
+    margin-top: 20px;
 }
 
 .changer input {
     background: transparent;
     border: none;
     border-bottom: 1px solid white;
-    margin-right: 0px;
+    margin-right: 10px;
+    padding: 2px;
+    font-size: 20px;
     color: white;
 }
 
 .changer>input:focus-visible {
     outline: none;
     margin-right: 10px;
+}
+
+:global .ant-col-offset-15 {
+    margin-inline-start: 61%;
 }
 
 /* #login_from_password{} */
@@ -483,7 +493,7 @@ select.form-control:focus::-ms-value {
 
     .loginSection .loginWrap .loginHtml .loginForm .button {
         padding: 5px;
-        margin-top: 10px !important;
+        margin-top: 15px !important;
     }
 
     .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
@@ -506,4 +516,40 @@ select.form-control:focus::-ms-value {
         font-size: 14px;
     }
 
+    /* Forgot Password */
+    .checkColor {
+        margin-bottom: 10px;
+    }
+
+    .clock {
+        font-size: 10px;
+        margin-top: -32px;
+        margin-left: -30px;
+    }
+
+    :global .ant-col-offset-15 {
+        width: 69px;
+        height: 69px;
+    }
+
+    :global .ant-col-offset-15 svg {
+        width: 69%;
+        height: 69%;
+    }
+
+    .buttonResend {
+        font-size: 10px;
+        line-height: 12px;
+        height: 35px;
+        margin-top: 15px;
+        padding: 4px 11px;
+        margin-left: 0px;
+    }
+
+    .changer input {
+        height: 18px !important;
+        width: 18px !important;
+        margin-right: 15px !important;
+        font-size: 14px;
+    }
 }
