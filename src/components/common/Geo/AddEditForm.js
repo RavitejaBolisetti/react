@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 // import { FaSearch } from 'react-icons/fa';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -7,15 +7,36 @@ import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
     const disabledProps = { disabled: isReadOnly };
+
+    let treeCodeId = '';
+    let treeCodeReadOnly = false;
+    if (formActionType === 'edit' || formActionType === 'view') {
+        treeCodeId = formData?.geoParentCode;
+    } else if (formActionType === 'child') {
+        treeCodeId = selectedTreeKey;
+        treeCodeReadOnly = true;
+    } else if (formActionType === 'sibling') {
+        treeCodeReadOnly = true;
+        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+    }
+
+    useEffect(() => {
+        if (formActionType === 'sibling') {
+            setSelectedTreeKey([treeCodeId]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} allowClear>
+                        <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
                             ))}
@@ -24,24 +45,13 @@ const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKe
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={formData?.geoParentCode} label="Parent" name="geoParentCode">
-                        {/* {`selectedTreeKey ${selectedTreeKey}`}
-                        <br />
-                        {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
-                        <br />
-                        {JSON.stringify(fieldNames)} */}
-                        {/* <Input.Group compact> */}
-                        {/* {'Kuldeep' + parentCodeValue} */}
+                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="geoParentCode">
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
                             onChange={handleSelectTreeClick}
-                            defaultValue={formData?.geoParentCode}
-                            // defaultValue={selectedTreeKey}
+                            defaultValue={treeCodeId}
                             showSearch
-                            // style={{
-                            //     width: 'calc(100% - 48px)',
-                            // }}
                             dropdownStyle={{
                                 maxHeight: 400,
                                 overflow: 'auto',
@@ -51,12 +61,8 @@ const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKe
                             treeDefaultExpandAll
                             fieldNames={fieldNames}
                             treeData={geoData}
-                            {...disabledProps}
+                            disabled={treeCodeReadOnly || isReadOnly}
                         />
-                        {/* <Button danger id="hierarchyChange" onClick={() => setIsModalOpen(true)}>
-                                <FaSearch />
-                            </Button> */}
-                        {/* </Input.Group> */}
                     </Form.Item>
                 </Col>
             </Row>
@@ -64,7 +70,7 @@ const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKe
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.geoCode} label="Code" name="geoCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} {...disabledProps} />
+                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
@@ -77,8 +83,8 @@ const AddEditFormMain = ({ parentCodeValue, isReadOnly, formData, selectedTreeKe
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                    <Form.Item initialValue={formData?.isActive === 'Y' ? 1 : 0} label="Status" name="isActive">
-                        <Switch value={formData?.isActive === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                    <Form.Item label="Status" name="isActive">
+                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
