@@ -132,6 +132,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             forceUpdate();
             setReadOnly(true);
         } else {
+            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
             setReadOnly(false);
         }
         setSelectedTreeKey(keys);
@@ -147,6 +148,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
 
         const data = { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const formUpdatedData = { ...data, parntProdctId: codeToBeSaved, prodctShrtName: values?.shortName, prodctLongName: values?.longName };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -154,7 +156,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
-            formData && setFormData(data);
+            formData && setFormData(formUpdatedData);
 
             if (selectedTreeKey && selectedTreeKey.length > 0) {
                 !recordId && setSelectedTreeKey(codeToBeSaved);
@@ -272,7 +274,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                             <ChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (

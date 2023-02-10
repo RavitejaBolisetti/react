@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 // import { FaSearch } from 'react-icons/fa';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -8,7 +8,7 @@ import styles from 'pages/common/Common.module.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
     const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProdct' };
     const disabledProps = { disabled: isReadOnly };
 
@@ -25,6 +25,13 @@ const AddEditFormMain = ({ isChecked, setIsChecked, flatternData, formActionType
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
     }
+
+    useEffect(() => {
+        if (formActionType === 'sibling') {
+            setSelectedTreeKey([treeCodeId]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
 
     return (
         <>
@@ -70,7 +77,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, flatternData, formActionType
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Short Description')]}>
+                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
                         <Input className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
