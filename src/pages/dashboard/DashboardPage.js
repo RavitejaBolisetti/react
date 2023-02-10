@@ -193,7 +193,7 @@ const DashboardPageBase = ({ props }) => {
                         }
                         className={styles.mb10}
                     >
-                        <div>
+                        <div style={{ height: '270px' }}>
                             <div className="direct-chat-messages"></div>
                         </div>
                     </Card>
@@ -254,7 +254,7 @@ const DashboardPageBase = ({ props }) => {
                         }
                         className={styles.mb10}
                     >
-                        <div className="card-body">
+                        <div className="card-body" style={{ height: '270px' }}>
                             <div className="direct-chat-messages"></div>
                         </div>
                     </Card>
