@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
+import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell, FaBars } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
@@ -175,12 +175,17 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                             <div className={styles.navbarNav}>
                                 <div className={`${styles.floatLeft} ${styles.mrt6}`}>
                                     <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
+                                        {addToolTip('Menu')(<FaBars size={20} />)}
+                                    </Link>
+                                </div>
+                                <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                    <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                         <Badge size="small" count={notificationCount}>
                                             {addToolTip('Notification')(<FaRegBell size={20} />)}
                                         </Badge>
                                     </Link>
                                 </div>
-                                <div className={styles.floatLeft}>
+                                <div className={`${styles.floatLeft} ${styles.mrt6}`}>
                                     <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                         <FaHeadset size={20} />
                                         <span className={styles.helpLineText}>
@@ -192,6 +197,15 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                                     <Space>
                                         <div className={styles.userAvatar}>
                                             <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
+                                            <span className={styles.displayNone}>
+                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                    <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <DownOutlined />
+                                                        </Space>
+                                                    </Link>
+                                                </Dropdown>
+                                            </span>
                                         </div>
                                         <div className={styles.userText}>
                                             <div>{fullName}</div>

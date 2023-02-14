@@ -71,7 +71,7 @@
   border-image: linear-gradient(to right, #EFA3A3, #CAC9EE);
   border-image-slice: 1;
   text-decoration: none;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   color: #0B0B0C;
   font-size: 20px;
 }
@@ -253,17 +253,24 @@
 
 @media (max-width: 768px) {
 
-  /* For mobile phones: */
-  [class*="col-"] {
-    width: 100%;
-    /* margin-top:18px; */
+  .headingGradient {
+    padding-bottom: 2px;
+    border-bottom: 2px solid;
+    border-image-slice: 1;
+    font-size: 14px;
   }
+
+  /* For mobile phones: */
+  /* [class*="col-"] { */
+  /* width: 100%; */
+  /* margin-top:18px; */
+  /* } */
 
   .pageHeaderNameSection {
     /* border-bottom: 1px solid #DEDEDE; */
     border-bottom: 0px;
     padding: 0px;
-    margin: 0 0 20px 0;
+    margin: 0 0 5px 0;
   }
 
 }

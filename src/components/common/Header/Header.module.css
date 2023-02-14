@@ -123,6 +123,10 @@
     margin-top: 6px;
 }
 
+.displayNone {
+    display: none;
+}
+
 @media (min-width: 997px) and (max-width: 1280px) {
     .headerLeft {
         padding-left: 20px;
@@ -157,17 +161,44 @@
     }
 
     .userAvatar {
-        padding-top: 8px;
+        padding-top: 6px;
+    }
+
+    .welcomeUser .userAvatar {
+        padding-top: 12px;
+    }
+
+    .displayNone {
+        display: inline;
+        padding-left: 5px;
+    }
+
+    .dealerName {
+        font-size: 12px;
+        padding-bottom: 0;
+    }
+
+    .userServiceArea {
+        font-size: 10px;
+    }
+
+    .welcomeUser .userServiceArea {
+        display: none;
     }
 
     .userText {
         float: right;
         padding-top: 13px;
+        font-size: 12px;
         font-weight: 500;
     }
 
+    .welcomeUser .userText {
+        display: none;
+    }
+
     .headerRight {
-        padding: 10px;
+        padding: 10px 20px 10px 10px;
         float: none;
     }
 
@@ -177,5 +208,9 @@
 
     .helpLineText {
         display: none;
+    }
+
+    .welcomeUser {
+        margin-top: -10px;
     }
 }

@@ -313,7 +313,7 @@
   margin-bottom: 8px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   /* For mobile phones: */
 
 
@@ -360,7 +360,8 @@
   }
 
   :global .ant-input-group {
-    width: auto;
+    /* width: auto; */
+    margin-top: 20px;
   }
 
   .TreeView_searchField__jn\+nY {
