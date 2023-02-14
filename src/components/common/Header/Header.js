@@ -26,6 +26,7 @@ const mapStateToProps = (state) => {
         auth: { token, isLoggedIn, userId },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
+            LeftSideBar: { collapsed = false },
         },
     } = state;
 
@@ -36,6 +37,7 @@ const mapStateToProps = (state) => {
         isLoggedIn,
         userId,
         isLoading,
+        collapsed,
     };
 };
 
@@ -43,7 +45,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-
             setCollapsed,
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
@@ -53,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isDataLoaded, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
@@ -147,6 +148,9 @@ const HeaderMain = ({ isDataLoaded, setCollapsed, loginUserData, doLogout, fetch
             icon: <FiLogOut />,
         }),
     ];
+    const handleCollapse = () =>{
+        setCollapsed(!collapsed);
+    }
 
     return (
         <div className={styles.headerContainer}>
@@ -177,8 +181,8 @@ const HeaderMain = ({ isDataLoaded, setCollapsed, loginUserData, doLogout, fetch
                     <div className={styles.headerRight}>
                         <div className={styles.navbarExpand}>
                             <div className={styles.navbarNav}>
-                                <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={setCollapsed}>
-                                    {addToolTip('Menu')(<img width={20} src={IMG_ICON} alt="" className={styles.brandImage} />)}
+                                <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
+                                    <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} />{' '}
                                 </div>
                                 <div className={`${styles.floatLeft} ${styles.mrt6}`}>
                                     <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
