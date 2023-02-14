@@ -1,4 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
@@ -7,6 +9,7 @@ import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, 
 import TreeView from 'components/common/TreeView';
 
 import styles from 'pages/common/Common.module.css';
+import {ROUTING_COMMON_PRODUCT_MASTER} from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -295,6 +298,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                             <Button danger onClick={() => handleChildBtn()}>
                                                 <FaUserPlus className={styles.buttonIcon} />
                                                 Add Child
+                                                <Link to={ROUTING_COMMON_PRODUCT_MASTER}></Link>
                                             </Button>
                                         )}
 
