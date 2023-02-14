@@ -123,7 +123,8 @@
     margin-top: 6px;
 }
 
-.displayNone {
+.displayNone,
+.menuIcon {
     display: none;
 }
 
@@ -156,8 +157,12 @@
 }
 
 @media (max-width: 768px) {
+    .columnInterchange {
+        flex-direction: column-reverse;
+    }
+
     .headerLeft {
-        padding-left: 20px;
+        padding-left: 10px;
     }
 
     .userAvatar {
@@ -171,6 +176,17 @@
     .displayNone {
         display: inline;
         padding-left: 5px;
+    }
+
+    .menuIcon {
+        display: inline;
+        position: absolute;
+        left: 0;
+    }
+
+    .navbarExpand .navbarNav .navLink {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .dealerName {
@@ -198,12 +214,13 @@
     }
 
     .headerRight {
-        padding: 10px 20px 10px 10px;
+        padding: 10px 10px 0px 10px;
         float: none;
     }
 
     .navbarNav {
-        justify-content: space-between;
+        /* justify-content: space-between; */
+        justify-content: flex-end;
     }
 
     .helpLineText {

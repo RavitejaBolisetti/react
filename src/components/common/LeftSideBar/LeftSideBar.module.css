@@ -32,6 +32,7 @@
   width: 95px !important;
 } */
 
+
 :global .ant-menu-item-only-child {
   padding-left: 25px !important;
 }
@@ -251,4 +252,10 @@
   -webkit-border-radius: 100px;
   border: 0px solid #000000;
   margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .leftMenuBox {
+    width: 100%;
+  }
 }

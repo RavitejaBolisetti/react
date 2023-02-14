@@ -9,6 +9,7 @@ import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
 
 import * as routing from 'constants/routing';
+import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 
 import styles from './Header.module.css';
@@ -17,6 +18,7 @@ import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
+import IMG_ICON from 'assets/img/icon.png';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -41,6 +43,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+
+            setCollapsed,
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
@@ -49,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isDataLoaded, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
@@ -146,7 +150,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
 
     return (
         <div className={styles.headerContainer}>
-            <Row gutter={0}>
+            <Row gutter={0} className={styles.columnInterchange}>
                 <Col xs={24} sm={24} md={10} lg={12} xl={12} xxl={12}>
                     <div className={styles.headerLeft}>
                         <Space>
@@ -173,10 +177,8 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                     <div className={styles.headerRight}>
                         <div className={styles.navbarExpand}>
                             <div className={styles.navbarNav}>
-                                <div className={`${styles.floatLeft} ${styles.mrt6}`}>
-                                    <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
-                                        {addToolTip('Menu')(<FaBars size={20} />)}
-                                    </Link>
+                                <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={setCollapsed}>
+                                    {addToolTip('Menu')(<img width={20} src={IMG_ICON} alt="" className={styles.brandImage} />)}
                                 </div>
                                 <div className={`${styles.floatLeft} ${styles.mrt6}`}>
                                     <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
