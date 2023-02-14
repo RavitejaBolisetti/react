@@ -1,4 +1,4 @@
-:global .ant-layout .ant-layout-sider-trigger {
+.leftMenuBox :global .ant-layout .ant-layout-sider-trigger {
   position: fixed;
   width: 24px !important;
   top: 3px;
@@ -12,9 +12,6 @@
   transition: all 0.2s;
 }
 
-.leftMenuBox {
-  margin: 0px;
-}
 
 /* .leftMenuBox:global.ant-layout-sider-trigger {
   flex: 0 0 250px !important;
@@ -34,6 +31,10 @@
 /* .leftMenuBox:global.ant-layout-sider-collapsed .ant-layout-sider-trigger {
   width: 95px !important;
 } */
+
+:global .ant-menu-item-only-child {
+  padding-left: 25px !important;
+}
 
 :global .ant-input-group-wrapper {
   vertical-align: inherit;
