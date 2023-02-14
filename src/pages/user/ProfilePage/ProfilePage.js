@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import CMS from 'assets/images/comingsoon.svg';
 import { PageHeader } from 'pages/common/PageHeader';
 
@@ -7,23 +6,9 @@ import styles from 'pages/cms/CMSPage.module.css';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
-
 const ProfilePageBase = (props) => {
     const pageHeaderData = {
-        pageTitle:'My Profile',
+        pageTitle: 'My Profile',
         showChangeHisoty: true,
         canMarkFavourite: false,
         visibleChangeHistory: false,
@@ -41,4 +26,4 @@ const ProfilePageBase = (props) => {
     );
 };
 
-export const ProfilePage = connect(mapStateToProps, null)(withLayoutMaster(ProfilePageBase));
+export const ProfilePage = withLayoutMaster(ProfilePageBase);

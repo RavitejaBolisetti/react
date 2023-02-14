@@ -1,25 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import CMS from 'assets/images/comingsoon.svg';
 import { PageHeader } from 'pages/common/PageHeader';
 
 import styles from 'pages/cms/CMSPage.module.css';
-
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
 
 const FaqPageBase = (props) => {
     const pageHeaderData = {
@@ -41,4 +25,4 @@ const FaqPageBase = (props) => {
     );
 };
 
-export const FaqPage = connect(mapStateToProps, null)(withLayoutMaster(FaqPageBase));
+export const FaqPage = withLayoutMaster(FaqPageBase);

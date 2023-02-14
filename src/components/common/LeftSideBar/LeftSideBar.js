@@ -142,25 +142,23 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     return (
-        <>
-            <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
-                <div className={styles.logoContainer}>
-                    <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
-                        {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
-                        <div className="cls"></div>
-                    </Link>
-                    {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
-                </div>
+        <Sider width={collapsed ? 95 : 250} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', width: '250px', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
+            <div className={styles.logoContainer}>
+                <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
+                    {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
+                    <div className="cls"></div>
+                </Link>
+                {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
+            </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
+            <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
 
-                <div className={styles.changeTheme} onClick={setTheme}>
-                    {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
-                    {!collapsed && 'Change Theme'}
-                </div>
-            </Sider>
-        </>
+            <div className={styles.changeTheme} onClick={setTheme}>
+                {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
+                {!collapsed && 'Change Theme'}
+            </div>
+        </Sider>
     );
 };
 
-export const LeftSideBar = connect(mapStateToProps, mapDispatchToProps)(withSpinner(LeftSideBarMain));
+export const LeftSideBar = connect(mapStateToProps, mapDispatchToProps)(LeftSideBarMain);

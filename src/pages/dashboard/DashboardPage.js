@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import imdimg from 'assets/img/img_md.png';
 import { Carousel, Card, Button, Row, Col, Input } from 'antd';
 import { AiFillDashboard } from 'react-icons/ai';
@@ -13,20 +12,6 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import styles from './DashboardPage.module.css';
 import moment from 'moment';
 const { Search } = Input;
-
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-            Header: { data: loginUserData = [] },
-        },
-    } = state;
-
-    return {
-        collapsed,
-        firstName: loginUserData?.firstName,
-    };
-};
 
 const DashboardPageBase = ({ props }) => {
     const { firstName } = props;
@@ -264,4 +249,4 @@ const DashboardPageBase = ({ props }) => {
     );
 };
 
-export const DashboardPage = connect(mapStateToProps, null)(withLayoutMaster(DashboardPageBase));
+export const DashboardPage = withLayoutMaster(DashboardPageBase);
