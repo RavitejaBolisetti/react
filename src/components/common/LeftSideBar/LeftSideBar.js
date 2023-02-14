@@ -72,7 +72,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -143,7 +143,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
 
     return (
         <>
-            {collapsed && <Sider width={collapsed ? '100vw' : '100vw'} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ maxHeight: '100vh', width: '100vw', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
+            <Sider width={collapsed ? '90px' : '250px'} collapsible className={styles.leftMenuBox1} collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
                 <div className={styles.logoContainer}>
                     <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
                         {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
@@ -158,7 +158,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
                     {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
                     {!collapsed && 'Change Theme'}
                 </div>
-            </Sider>}
+            </Sider>
         </>
     );
 };
