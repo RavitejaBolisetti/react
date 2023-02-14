@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout, Tooltip } from 'antd';
+import { Input, Menu, Layout, Row, Col } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
+import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 
 import { menuDataActions } from 'store/actions/data/menu';
-import { setCollapsed } from 'store/actions/common/leftsidebar';
+import { setCollapsed, setIsMobile } from 'store/actions/common/leftsidebar';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
 import styles from './LeftSideBar.module.css';
@@ -42,11 +43,11 @@ const mapStateToProps = (state) => {
             Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], flatternData },
         },
         common: {
-            LeftSideBar: { collapsed = false },
+            LeftSideBar: { collapsed = false, isMobile = false },
         },
     } = state;
 
-    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, flatternData, collapsed };
+    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
     return returnValue;
 };
 
@@ -55,6 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             setCollapsed,
+            setIsMobile,
             fetchList: menuDataActions.fetchList,
             setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
@@ -63,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
     const [filterMenuList, setFilterMenuList] = useState();
@@ -128,7 +130,7 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
         setFilter(value);
     };
 
-    const onSubmit = (value) => {
+    const onSubmit = (value, type) => {
         setCollapsed(value);
     };
 
@@ -141,14 +143,27 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, list
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
+    const onBreakPoint = (broken) => {
+        setIsMobile(broken);
+    };
+
     return (
         <>
-            <Sider width={collapsed ? 10 : 250} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ position: 'fixed', zIndex: '999', width: '100vw', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
+            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : '250px'} collapsible className={styles.leftMenuBox1} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)} style={{ zIndex: '99999999', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
+                {/* <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', zIndex:'999', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow:  isMobile ? 'none' : '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}> */}
                 <div className={styles.logoContainer}>
-                    <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
-                        {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
-                        <div className="cls"></div>
-                    </Link>
+                    <Row>
+                        <Col xs={22} sm={22} md={24} lg={24} xl={24}>
+                            <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
+                                {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
+                                <div className="cls"></div>
+                            </Link>
+                        </Col>
+                        <Col xs={2} sm={2} md={0} lg={0} xl={0}>
+                            <RxCross2 onClick={setCollapsed} />
+                        </Col>
+                    </Row>
+
                     {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                 </div>
 
