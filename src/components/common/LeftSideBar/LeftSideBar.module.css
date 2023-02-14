@@ -1,4 +1,4 @@
-:global .ant-layout .ant-layout-sider-trigger {
+.leftMenuBox :global .ant-layout .ant-layout-sider-trigger {
   position: fixed;
   width: 24px !important;
   top: 3px;
@@ -10,6 +10,30 @@
   background: #ffffff;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+
+/* .leftMenuBox:global.ant-layout-sider-trigger {
+  flex: 0 0 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  width: 250px !important;
+}
+
+
+.leftMenuBox:global.ant-layout-sider-collapsed {
+  flex: 0 0 95px !important;
+  max-width: 95px !important;
+  min-width: 95px !important;
+  width: 95px !important;
+} */
+
+/* .leftMenuBox:global.ant-layout-sider-collapsed .ant-layout-sider-trigger {
+  width: 95px !important;
+} */
+
+:global .ant-menu-item-only-child {
+  padding-left: 25px !important;
 }
 
 :global .ant-input-group-wrapper {
@@ -153,11 +177,6 @@
   width: 5px !important;
 }
 
-/* :global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-thumb {
-  background-color: #ea3434;
-  border-radius: 10px;
-} */
-
 :global .ant-menu-light .ant-menu-item a:hover {
   text-decoration: none;
   color: #000000;
@@ -183,7 +202,6 @@
 }
 
 
-
 .brandLink {
   display: block;
   font-size: 1.25rem;
@@ -203,7 +221,6 @@
   max-height: 44px;
   width: auto;
 }
-
 
 
 .changeTheme {

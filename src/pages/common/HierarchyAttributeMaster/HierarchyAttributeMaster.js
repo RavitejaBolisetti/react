@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
-
-// import TreeView from 'components/common/TreeView';
-// import { GeoTree as TreeView } from './Sample/GeoTree';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
@@ -99,19 +94,7 @@ const data = [
     },
 ];
 
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
 
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
 
 export const HierarchyAttributeMasterBase = () => {
     const [form] = Form.useForm();
@@ -186,4 +169,4 @@ export const HierarchyAttributeMasterBase = () => {
     );
 };
 
-export const HierarchyAttributeMaster = connect(mapStateToProps, null)(withLayoutMaster(HierarchyAttributeMasterBase));
+export const HierarchyAttributeMaster = withLayoutMaster(HierarchyAttributeMasterBase);
