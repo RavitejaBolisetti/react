@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -73,6 +73,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
+    const navigate = useNavigate();
+
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -215,6 +217,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setFormVisible(true);
         setReadOnly(false);
         setFormData([]);
+        navigate(ROUTING_COMMON_PRODUCT_MASTER);
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
     };
@@ -297,8 +300,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                         {buttonData?.childBtn && (
                                             <Button danger onClick={() => handleChildBtn()}>
                                                 <FaUserPlus className={styles.buttonIcon} />
-                                                Add Child
-                                                <Link to={ROUTING_COMMON_PRODUCT_MASTER}></Link>
+                                                Add Childs
                                             </Button>
                                         )}
 

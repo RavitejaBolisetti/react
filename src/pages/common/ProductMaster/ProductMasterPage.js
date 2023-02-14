@@ -40,10 +40,33 @@ const onChange = (pagination, filters, sorter, extra) => {
     // console.log('params', pagination, filters, sorter, extra);
 };
 
+
+
+const dataList = [];
+
+const generateList = (data) => {
+    for (let i = 0; i < data?.length; i++) {
+        const node = data[i];
+        const { id: key } = node;
+        dataList.push({
+            key,
+            data: node,
+        });
+        if (node.subProdct) {
+            generateList(node.subProdct);
+        }
+    }
+    return dataList;
+};
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 export const ProductMasterPageBase = ({productHierarchyData, attributeData}) => {
+
+    const finalGeoData = productHierarchyData?.map((i) => {
+        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
+    });
+    
     const [form] = Form.useForm();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,31 +84,7 @@ export const ProductMasterPageBase = ({productHierarchyData, attributeData}) => 
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
-    const finalGeoData = productHierarchyData?.map((i) => {
-        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
-    });
-    const dataList = [];
-
-    const generateList = (data) => {
-        for (let i = 0; i < data?.length; i++) {
-            const node = data[i];
-            const { id: key } = node;
-            dataList.push({
-                key,
-                data: node,
-            });
-            if (node.subProdct) {
-                generateList(node.subProdct);
-            }
-        }
-        return dataList;
-    };
-
-
-
-
-
-
+   
     const rendFn = (key) => {
         return (
             <Form form={form}>
