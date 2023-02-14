@@ -117,7 +117,7 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
     dispatch(authLoginUnAuthenticatedErrorClose());
 };
 
-export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => {
+export const doLogin = (requestData, showFormLoading, onLogin, onError) => (dispatch) => {
     const url = BASE_URL_LOGIN;
 
     const hideLoading = () => {
@@ -135,7 +135,10 @@ export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => 
         );
     };
 
-    const loginError = ({ title = 'Information', message }) => dispatch(authLoggingError(title, message));
+    const loginError = ({ title = 'Information', message }) => {
+        onError();
+        dispatch(authLoggingError(title, message));
+    };
 
     if (showFormLoading) {
         dispatch(showFormLoading(true));
@@ -145,7 +148,7 @@ export const doLogin = (requestData, showFormLoading, onLogin) => (dispatch) => 
     const onSuccess = (res) => {
         if (res?.data) {
             authPostLogin(res?.data);
-            res?.responseMessage && message.info(res?.responseMessage);
+            // res?.responseMessage && message.info(res?.responseMessage);
             onLogin();
         } else {
             loginError({ message: 'There was an error, Please try again' });
@@ -182,7 +185,6 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
         if (res) {
             successAction && successAction();
             authPostLogout();
-            
         } else {
             logoutError('There was an error, Please try again');
         }

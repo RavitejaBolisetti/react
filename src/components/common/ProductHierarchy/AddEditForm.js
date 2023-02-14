@@ -1,177 +1,101 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
+// import { FaSearch } from 'react-icons/fa';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
-import { Form, Row, Col, Input, Select, Switch, Button, TreeSelect } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaSearch } from 'react-icons/fa';
+import styles from 'pages/common/Common.module.css';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import styles from '../Common.module.css';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-
-const { TextArea } = Input;
 const { Option } = Select;
+const { TextArea } = Input;
 
-export default function AddEditForm({ fetchList, saveData, listShowLoading, userId, selectedTreeKey, isDataAttributeLoaded, attributeData, productHierarchyData, setIsModalOpen, setFieldValue, handleParentCode, showAttributeDetail }) {
-    const [form] = Form.useForm();
-    const [isFormVisible, setFormVisible] = useState(false);
+const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProdct' };
+    const disabledProps = { disabled: isReadOnly };
 
-    const handleFormVisiblity = (status) => {
-        setFormVisible(status);
-    };
+    let treeCodeId = '';
+    let treeCodeReadOnly = false;
 
-    const onFinish = (values) => {
-        const onSuccess = (res) => {
-            form.resetFields();
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
-        };
+    if (formActionType === 'edit' || formActionType === 'view') {
+        treeCodeId = formData?.parntProdctId;
+    } else if (formActionType === 'child') {
+        treeCodeId = selectedTreeKey;
+        treeCodeReadOnly = true;
+    } else if (formActionType === 'sibling') {
+        treeCodeReadOnly = true;
+        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+    }
 
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
+    useEffect(() => {
+        if (formActionType === 'sibling') {
+            setSelectedTreeKey([treeCodeId]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
 
-        const requestData = {
-            data: { ...values, id: '', active: values?.active ? 'Y' : 'N', otfAmndmntAlwdInd: '', adAmHirchyAttrbtMstSk: '', parntProdctSk: '' },
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
-    const onReset = () => {
-        form.resetFields();
-    };
-
-    const isChildAdd = selectedTreeKey && selectedTreeKey.length >= 0;
-    const isSublingAdd = selectedTreeKey && selectedTreeKey.length > 0;
-    const isUpdate = false;
-    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProd' };
-
-    // useEffect(() => {
-    //     form.setFieldValue(selectedTreeKey && selectedTreeKey[0]);
-    // }, [selectedTreeKey && selectedTreeKey[0]]);
     return (
-        <div>
-            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                {isFormVisible && (
-                    <>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
-                                    <Select loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
-                                        {attributeData?.map((item) => (
-                                            <Option value={item?.hierarchyAttribueCode}>{item?.hierarchyAttribueName}</Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
+                        <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
+                            {attributeData?.map((item) => (
+                                <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
 
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
-                                <Form.Item label="Parent" name="parentCode" className="control-label-blk">
-                                    <Input.Group compact>
-                                        <TreeSelect
-                                            defaultValue={selectedTreeKey && selectedTreeKey[0]}
-                                            showSearch
-                                            style={{
-                                                width: 'calc(100% - 48px)',
-                                            }}
-                                            dropdownStyle={{
-                                                maxHeight: 400,
-                                                overflow: 'auto',
-                                            }}
-                                            placeholder="Select"
-                                            allowClear
-                                            treeDefaultExpandAll
-                                            fieldNames={fieldNames}
-                                            treeData={productHierarchyData}
-                                        />
-                                        <Button type="primary" id="hierarchyChange" className="btn btn-outline srchbtn mr0 boxShdwNon" onClick={() => setIsModalOpen(true)}>
-                                            <FaSearch />
-                                        </Button>
-                                    </Input.Group>
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                    <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
+                        <TreeSelect
+                            treeLine={true}
+                            treeIcon={true}
+                            onChange={handleSelectTreeClick}
+                            defaultValue={treeCodeId}
+                            showSearch
+                            dropdownStyle={{
+                                maxHeight: 400,
+                                overflow: 'auto',
+                            }}
+                            placeholder="Select"
+                            allowClear
+                            treeDefaultExpandAll
+                            fieldNames={fieldNames}
+                            treeData={productHierarchyData}
+                            disabled={treeCodeReadOnly || isReadOnly}
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                        <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="Code" name="code" rules={[validateRequiredInputField('Code')]}>
-                                    <Input name="Code" placeholder="Code" className={styles.inputBox} />
-                                </Form.Item>
-                            </Col>
+            <Row gutter={20}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                    </Form.Item>
+                </Col>
 
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
-                                <Form.Item name="shortName" label="Short Description" rules={[validateRequiredInputField('Short Description')]}>
-                                    <Input className={styles.inputBox} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item name="longName" label="Long Description" rules={[validateRequiredInputField('Long Description')]}>
-                                    <TextArea rows={1} placeholder="Type here" />
-                                </Form.Item>
-                            </Col>
-
-                            <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ padding: '0' }}>
-                                <Form.Item name="active" label="Status" initialValue={true}>
-                                    <Switch value={1} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </>
-                )}
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                        {isUpdate && (
-                            <Button danger>
-                                <FaEdit className={styles.buttonIcon} />
-                                Edit
-                            </Button>
-                        )}
-
-                        {isChildAdd && !isFormVisible && (
-                            <Button danger onClick={() => handleFormVisiblity(true)}>
-                                <FaUserPlus className={styles.buttonIcon} />
-                                Add Child
-                            </Button>
-                        )}
-
-                        {isSublingAdd && !isFormVisible && (
-                            <Button danger onClick={() => handleFormVisiblity(true)}>
-                                <FaUserFriends className={styles.buttonIcon} />
-                                Add Sibling
-                            </Button>
-                        )}
-
-                        {(isUpdate || isFormVisible) && (
-                            <>
-                                <Button htmlType="submit" danger>
-                                    <FaSave className={styles.buttonIcon} />
-                                    Save
-                                </Button>
-
-                                <Button danger onClick={onReset}>
-                                    <FaUndo className={styles.buttonIcon} />
-                                    Reset
-                                </Button>
-
-                                <Button danger onClick={() => handleFormVisiblity(false)}>
-                                    <AiOutlineCloseCircle className={styles.buttonIcon} />
-                                    Cancel
-                                </Button>
-                            </>
-                        )}
-                    </Col>
-                </Row>
-            </Form>
-        </div>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
+                        <Input className={styles.inputBox} {...disabledProps} />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item name="longName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
+                        <TextArea rows={1} placeholder="Type here" {...disabledProps} />
+                    </Form.Item>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+                    <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
+                        <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                    </Form.Item>
+                </Col>
+            </Row>
+        </>
     );
-}
+};
+
+export const AddEditForm = AddEditFormMain;

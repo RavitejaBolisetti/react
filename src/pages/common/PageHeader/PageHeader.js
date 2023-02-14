@@ -1,15 +1,47 @@
 import React from 'react';
 import { Row, Col, Space, Button, Modal } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import styles from './PageHeader.module.css';
+import { bindActionCreators } from 'redux';
+import { menuDataActions } from 'store/actions/data/menu';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import * as routing from 'constants/routing';
+import { connect } from 'react-redux';
 
 const { confirm } = Modal;
 
-export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], favouriteMenu = [] },
+        },
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, favouriteMenu, collapsed };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: menuDataActions.fetchList,
+            markFavourite: menuDataActions.markFavourite,
+            listShowLoading: menuDataActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavourite, listShowLoading, canMarkFavourite = false, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
@@ -29,6 +61,33 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
         });
     };
 
+    const location = useLocation();
+    const pagePath = location.pathname;
+
+    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : '';
+
+    const checkFev = (data) => data.find((item) => item.menuId === menuId);
+    const isFavourite = checkFev(favouriteMenu);
+
+    const handleFavouriteClick = () => {
+        const onSuccess = (res) => {
+            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
+        };
+
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+        const requestData = {
+            data: { menuId: menuId, addOrRemove: isFavourite ? 'remove' : 'add' },
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        markFavourite(requestData);
+    };
+
     return (
         <>
             <Row gutter={20} className={styles.pageHeader}>
@@ -37,7 +96,7 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
                         </div>
-                        <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>
+                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>}
                     </Space>
                 </Col>
                 <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
@@ -77,3 +136,5 @@ export const PageHeader = ({ pageTitle, isFavourite, handleFavouriteClick, visib
         </>
     );
 };
+
+export const PageHeader = connect(mapStateToProps, mapDispatchToProps)(PageHeaderMain);

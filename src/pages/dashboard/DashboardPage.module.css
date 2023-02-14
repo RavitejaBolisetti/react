@@ -1,7 +1,11 @@
 .dashboardContainer :global .ant-card .ant-card-head-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   float: left;
   font-weight: 500;
+}
+
+.dashboardContainer :global .ant-card .ant-card-head {
+  min-height: 50px;
 }
 
 /* .dashboardContainer :global .ant-card.ant-card-body {
@@ -21,15 +25,21 @@
 }
 
 .dashboardContainer :global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
-  padding: 24px 5px;
+  padding: 0px 5px;
   border-radius: 0 0 8px 8px;
-  height: 250px;
+  height: 270px;
 }
 
 .dashboardContainer :global .ant-row {
   display: flex;
   flex-flow: row wrap;
   min-width: 0;
+}
+
+.dashboardContainer :global .ant-card-bordered {
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.08);
 }
 
 /* .dashboardContainer :global .ant-carousel .slick-dots-bottom{
@@ -83,11 +93,16 @@
 /* .dashboardGraph {
   border:1px solid red;
 } */
+.dashboardboxContHeight {
+  height: 175px;
+}
 
 .dashboardGraph .dashboardGraphBox {
   width: 100%;
   overflow: hidden;
+  height:196px;
 }
+
 
 .dashboardGraph .dashboardGraphBox .graphBoxfirstSec,
 .dashboardGraph .dashboardGraphBox .graphBoxSecoundSec,
@@ -135,15 +150,14 @@
 .dashboardList {
   margin: 0px;
   padding: 0px;
-  list-style: none;
-  width: 100%
+  list-style: decimal-leading-zero;
+  width: 90%
 }
 
 .dashboardList li {
-  margin: 5px 0px;
-  padding: 0px;
-  list-style: none;
-  width: 100%
+  margin: 0 40px;
+  padding: 5px 0px 5px 0px;
+  width: 90%
 }
 
 .badge {
@@ -166,7 +180,7 @@
 .scrollbar {
   margin: 0px;
   float: left;
-  height: 220px;
+  height: 250px;
   width: 100%;
   overflow-y: scroll;
 }
@@ -210,7 +224,7 @@
 
 .birthContaner {
   min-height: 200px;
-
+  padding: 20px 0;
 }
 
 .birthContaner .birthdayImgcontaner {

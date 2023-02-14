@@ -21,7 +21,7 @@ const Logout = (props) => {
                 <div className={styles.loginWrap}>
                     <Row>
                         <Col span={24}>
-                            <div className={styles.loginHtml}>
+                            <div className={styles.logOutHtml}>
                                 <div className={styles.center}>
                                     <div className={styles.loginForm}>
                                         <div className={styles.logOutHeading}>

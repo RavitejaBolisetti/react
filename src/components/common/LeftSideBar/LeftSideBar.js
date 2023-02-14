@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout } from 'antd';
+import { Input, Menu, Layout, Tooltip } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
-import { IoIosDocument } from 'react-icons/io';
-
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/img/logo.png';
 
@@ -19,6 +17,7 @@ import * as routing from 'constants/routing';
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { getMenuItem } from 'utils/getMenuItem';
+import { withSpinner } from 'components/withSpinner';
 
 const { Search } = Input;
 const { Sider } = Layout;
@@ -27,24 +26,27 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
+const prepareLink = (title, id, tooltip = true) =>
+    id && getMenuValue(MenuConstant, id, 'link') ? (
+        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
+            {title}
+        </Link>
+    ) : (
+        <div title={tooltip ? title : ''}>{title}</div>
+    );
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [] },
+            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], flatternData },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
-    let returnValue = {
-        userId,
-        isDataLoaded,
-        filter,
-        menuData,
-        collapsed,
-    };
+    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, flatternData, collapsed };
     return returnValue;
 };
 
@@ -53,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             setCollapsed,
-            fetchData: menuDataActions.fetchData,
+            fetchList: menuDataActions.fetchList,
             setFilter: menuDataActions.setFilter,
             listShowLoading: menuDataActions.listShowLoading,
         },
@@ -61,82 +63,61 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+    const location = useLocation();
+    const pagePath = location.pathname;
+    const [filterMenuList, setFilterMenuList] = useState();
+
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId });
         }
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    const location = useLocation();
-    const pagePath = location.pathname;
+    useEffect(() => {
+        if (filter) {
+            const filterDataItem = flatternData?.filter((item) => filterFunction(filter)(item?.menuTitle));
+            // console.log('🚀 ~ file: LeftSideBar.js:79 ~ useEffect ~ filterDataItem', filterDataItem);
+            filterDataItem &&
+                setFilterMenuList(
+                    filterDataItem?.map((item) => {
+                        return item.menuId;
+                    }) || []
+                );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filter]);
 
+    const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
     const items = [];
-    const menuDefault = false;
-    const prepareLink = (title, id) => (id && getMenuValue(MenuConstant, id, 'link') ? <Link to={getMenuValue(MenuConstant, id, 'link')}>{title}</Link> : title);
+    if (menuData && menuData.length > 0) {
+        for (let index = 0; index < menuData.length; index++) {
+            const element = menuData[index];
+            const menuId = element?.menuId;
 
-    items.push(getMenuItem('Favourties', 'FAVS', getMenuValue(MenuConstant, 'FAVS', 'icon'), [getMenuItem(prepareLink('Dashboard')), getMenuItem(prepareLink('Geographical Hierarchy', 'COMN-07.01')), getMenuItem(prepareLink('Product Hierarchy', 'COMN-06.01')), getMenuItem(prepareLink('Hierarchy Attribute Master', 'COMN-03.08'))]));
-    if (menuDefault) {
-        items.push(
-            getMenuItem('Common', 'sub2', getMenuValue(MenuConstant, 'COMN', 'icon'), [
-                getMenuItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Master'}</Link>),
-                getMenuItem(<Link to={routing.ROUTING_COMMON_PRODUCT_HIERARCHY}>{'Product Hierarchy'}</Link>, routing.ROUTING_COMMON_PRODUCT_HIERARCHY),
-                getMenuItem('Hierarchy Attribute Master', '31', '', [getMenuItem('Product Master', '32'), getMenuItem('Product Hierarchy', '33'), getMenuItem('Hierarchy Attribute Master', '34')]),
-                getMenuItem('Role Management', '5'),
-                getMenuItem('User Self Registration', '6'),
-                getMenuItem(<Link to={routing.ROUTING_COMMON_GEO}>{'Geographical Hierarchy'}</Link>, routing.ROUTING_COMMON_GEO),
-                getMenuItem('Dealer Hierarchy', '8'),
-                getMenuItem('Dealer & Product Mapping', '9'),
-                getMenuItem('Terms & Conditions- Dealer', '10'),
-                getMenuItem('Terms & Conditions- Manufacturer', '11'),
-                getMenuItem('Document Type Master', '12'),
-                getMenuItem('Manufacturer Hierarchy', '13'),
-                getMenuItem('Document Search', '14'),
-                getMenuItem('Branch & Dealer Mapping', '15'),
-                getMenuItem('Vehicle Details', '16'),
-                getMenuItem('Application Master', '17'),
-            ]),
-
-            getMenuItem('DBP', 'DBP', getMenuValue(MenuConstant, 'DBP', 'icon'), [getMenuItem('Role Managment', '18'), getMenuItem('Document', '19', <IoIosDocument fontSize={20} />)]),
-
-            getMenuItem('Financial Accounting', 'FINA', getMenuValue(MenuConstant, 'FINA', 'icon')),
-            getMenuItem('HR & MLES', 'HR', getMenuValue(MenuConstant, 'HR', 'icon')),
-            getMenuItem('Sales', 'SALS', getMenuValue(MenuConstant, 'SALS', 'icon'), [getMenuItem('Role Managment', '20'), getMenuItem('Document', '21', <IoIosDocument fontSize={20} />)]),
-            getMenuItem('Services', 'SERS', getMenuValue(MenuConstant, 'SERS', 'icon'))
-        );
-    } else {
-        const checkData = (dataList) => (filter ? dataList.filter((data) => filterFunction(filter)(data?.menuTitle))?.length > 0 : true);
-
-        if (menuData && menuData.length > 0 && checkData(menuData)) {
-            for (let index = 0; index < menuData.length; index++) {
-                const element = menuData[index];
-                const menuTitle = element?.menuTitle;
-
-                if (filter ? filterFunction(filter)(menuTitle) : true) {
-                    const childMenu = element['subMenu'];
-                    if (childMenu && childMenu.length > 0) {
-                        const childMenuData = [];
-                        for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
-                            const childElement = childMenu[childIndex];
-
-                            const grandMenu = childElement['subMenu'];
-                            if (grandMenu && grandMenu.length > 0) {
-                                const grandMenuData = [];
-                                for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
-                                    const grandElement = grandMenu[grandIndex];
-                                    grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
-                                }
-                                childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
-                            } else {
-                                childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
+            if (filter ? checkData(menuId) : true) {
+                const childMenu = element['subMenu'];
+                if (childMenu && childMenu.length > 0) {
+                    const childMenuData = [];
+                    for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
+                        const childElement = childMenu[childIndex];
+                        const grandMenu = childElement['subMenu'];
+                        if (grandMenu && grandMenu.length > 0) {
+                            const grandMenuData = [];
+                            for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
+                                const grandElement = grandMenu[grandIndex];
+                                grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId, true), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
                             }
+                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
+                        } else {
+                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
                         }
-                        items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
-                    } else {
-                        items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                     }
+                    items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
+                } else {
+                    items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
                 }
             }
         }
@@ -157,21 +138,18 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
         setCurrent(e.key);
     };
 
-    const defaultSelectedKeys = [routing.ROUTING_DASHBOARD, routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FAVS' : '';
+    const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     return (
         <>
             <Sider width={collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
                 <div className={styles.logoContainer}>
-                    <Link to={routing.ROUTING_DASHBOARD}>
-                        <a href="javascripy::void" className={styles.brandLink}>
-                            {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
-                        </a>
-
+                    <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
+                        {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
                         <div className="cls"></div>
-                        {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                     </Link>
+                    {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                 </div>
 
                 <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
@@ -185,4 +163,4 @@ const LeftSideBarMain = ({ isDataLoaded, menuData, fetchData, listShowLoading, f
     );
 };
 
-export const LeftSideBar = connect(mapStateToProps, mapDispatchToProps)(LeftSideBarMain);
+export const LeftSideBar = connect(mapStateToProps, mapDispatchToProps)(withSpinner(LeftSideBarMain));

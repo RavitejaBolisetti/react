@@ -50,6 +50,7 @@ const Login = (props) => {
     const [form] = Form.useForm();
     const recaptchaRef = React.useRef(null);
     const [captcha, setCaptcha] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -62,13 +63,22 @@ const Login = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const onSuccess = () => {
+        setIsLoading(false);
+        navigate(ROUTING_DASHBOARD);
+    };
+
+    const onError = () => {
+        setIsLoading(false);
+    };
+
     const onFinish = (values) => {
+        setIsLoading(true);
         if (captcha) {
-            // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            // values.timeZone = timeZone;
-            doLogin(values, loginPageIsLoading, () => navigate(ROUTING_DASHBOARD));
+            doLogin(values, loginPageIsLoading, onSuccess, onError);
         } else {
-            message.error('Please select capcha');
+            message.error('Please select Captcha');
+            setIsLoading(false);
         }
     };
 
@@ -129,7 +139,7 @@ const Login = (props) => {
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit">
+                                                        <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
                                                     </Col>

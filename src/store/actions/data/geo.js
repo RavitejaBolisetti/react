@@ -5,6 +5,8 @@ import { BASE_URL_GEO_GRAPHY } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const GEO_DATA_LOADED = 'GEO_DATA_LOADED';
+export const GEO_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
+export const GEO_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
 export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
@@ -20,6 +22,17 @@ const baseURLPath = BASE_URL_GEO_GRAPHY;
 geoDataActions.listShowLoading = (isLoading) => ({
     type: GEO_DATA_SHOW_LOADING,
     isLoading,
+});
+
+geoDataActions.setFormData = (formData) => ({
+    type: GEO_SET_FORM_DATA,
+    isFormDataLoaded: true,
+    formData,
+});
+
+geoDataActions.setFormVisible = (isFormVisible) => ({
+    type: GEO_SET_FORM_IS_VISIBLE,
+    isFormVisible,
 });
 
 geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {

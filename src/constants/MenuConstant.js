@@ -10,46 +10,46 @@ import { getMenyKey } from 'utils/menuKey';
 import * as routing from './routing';
 
 export const MenuConstant = {
-    [getMenyKey('FAVS')]: {
-        key: 'FAVS',
+    [getMenyKey('FEV')]: {
+        key: 'FEV',
         link: undefined,
         icon: <FaHeart fontSize={20} />,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('DASH')]: {
         key: 'DASH',
         link: routing.ROUTING_DASHBOARD,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('COMN-07.01')]: {
         key: 'COMN-07.01',
         link: routing.ROUTING_COMMON_GEO,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('COMN-06.01')]: {
         key: 'COMN-06.01',
         link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
         link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('PMA')]: {
         key: 'PMA',
         link: routing.ROUTING_COMMON_PRODUCT_MASTER,
         icon: undefined,
-        parentMenuId: 'FAVS',
+        parentMenuId: 'FEV',
     },
 
     [getMenyKey('COMN')]: {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Table, Switch, Form, Select, Row, Col, Button,  Input,  Collapse } from 'antd';
 import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
 
@@ -12,7 +11,7 @@ import { ParentHierarchy } from 'components/common/parentHierarchy/ParentHierarc
 import styles from '../Common.module.css';
 
 const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
+    // console.log('params', pagination, filters, sorter, extra);
 };
 
 const { TextArea } = Input;
@@ -37,10 +36,10 @@ export const ProductMasterPageBase = () => {
     const onSubmit = (e) => {
         form.validateFields()
             .then((err, values) => {
-                console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
+                // console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
             })
             .catch((errorInfo) => {
-                console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
+                // console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
             });
     };
 

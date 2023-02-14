@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
@@ -55,13 +55,23 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
-    const { setFieldValue } = form;
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [parentCodeValue, setParentCodeValue] = useState('');
+
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
+    const [formActionType, setFormActionType] = useState('');
+
+    const [formData, setFormData] = useState([]);
+    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
     const [isFormVisible, setFormVisible] = useState(false);
+    const [isReadOnly, setReadOnly] = useState(false);
+    const [forceFormReset, setForceFormReset] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -75,47 +85,80 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        form.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [forceFormReset]);
+
     const finalGeoData = geoData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
-    const handleTreeViewVisibleClink = () => setTreeViewVisible(!isTreeViewVisible);
+    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const dataList = [];
-    // const generateList = (data) => {
-    //     for (let i = 0; i < data?.length; i++) {
-    //         const node = data[i];
-    //         const { geoCode: key } = node;
-    //         dataList.push({
-    //             key,
-    //             data: node,
-    //         });
-    //         if (node.subGeo) {
-    //             generateList(node.subGeo);
-    //         }
-    //     }
-    //     return dataList;
-    // };
-
-    // const flatternData = generateList(finalGeoData);
-
-    const handleSelectClick = (keys) => {
-        // setSelectedTreeKey(keys);
-        // const SelectedParentNode = flatternData.find((i) => keys.includes(i.key));
-        // setFieldValue('geoParentCode', SelectedParentNode);
+    const generateList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const node = data[i];
+            const { id: key } = node;
+            dataList.push({
+                key,
+                data: node,
+            });
+            if (node.subGeo) {
+                generateList(node.subGeo);
+            }
+        }
+        return dataList;
     };
 
-    const handleFormVisiblity = (status) => {
-        setFormVisible(status);
+    const flatternData = generateList(finalGeoData);
+
+    const handleTreeViewClick = (keys) => {
+        setForceFormReset(Math.random() * 10000);
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
+        form.resetFields();
+        setFormVisible(false);
+        setFormData([]);
+
+        if (keys && keys.length > 0) {
+            setFormActionType('view');
+            const formData = flatternData.find((i) => keys[0] === i.key);
+            formData && setFormData(formData?.data);
+
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+            setFormVisible(true);
+            forceUpdate();
+            setReadOnly(true);
+        } else {
+            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
+            setReadOnly(false);
+        }
+        setSelectedTreeKey(keys);
     };
 
-    const handleParentCode = (value) => {
-        setParentCodeValue(value);
+    const handleSelectTreeClick = (value) => {
+        // setSelectedTreeKey([value]);
+        setSelectedTreeSelectKey(value);
     };
 
     const onFinish = (values) => {
+        const recordId = formData?.id || '';
+        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
+            setForceFormReset(Math.random() * 10000);
+
+            setReadOnly(true);
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+            setFormVisible(true);
+            formData && setFormData(data);
+
+            if (selectedTreeKey && selectedTreeKey.length > 0) {
+                !recordId && setSelectedTreeKey(codeToBeSaved);
+                setFormActionType('view');
+            }
             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };
@@ -125,7 +168,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         };
 
         const requestData = {
-            data: [{ ...values, id: '', isActive: values?.isActive ? 'Y' : 'N', geoParentCode: parentCodeValue }],
+            data: [data],
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -139,19 +182,73 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         form.validateFields().then((values) => {});
     };
 
-    const onReset = () => {
+    const handleEditBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+
+        const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        formData && setFormData(formData?.data);
+        setFormActionType('edit');
+
+        setReadOnly(false);
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true });
+    };
+
+    const handleRootChildBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+        setFormActionType('rootChild');
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleChildBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+        setFormActionType('child');
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleSiblingBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+
+        setFormActionType('sibling');
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleResetBtn = () => {
+        setForceFormReset(Math.random() * 10000);
         form.resetFields();
     };
-    console.log('parentCodeValue', parentCodeValue);
-    const fieldNames = { title: 'geoName', key: 'geoCode', children: 'subGeo' };
-    const isChildAdd = selectedTreeKey && selectedTreeKey.length >= 0;
-    const isSublingAdd = selectedTreeKey && selectedTreeKey.length > 0;
-    const isUpdate = false;
+
+    const handleBack = () => {
+        setReadOnly(true);
+        setForceFormReset(Math.random() * 10000);
+        if (selectedTreeKey && selectedTreeKey.length > 0) {
+            const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+            formData && setFormData(formData?.data);
+            setFormActionType('view');
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+        } else {
+            setFormActionType('');
+            setFormVisible(false);
+            setButtonData({ ...defaultBtnVisiblity });
+        }
+    };
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
     return (
         <>
             <div className={styles.geoSection}>
                 <Row gutter={20}>
-                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisibleClink}>
+                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
                         {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
                     </div>
                 </Row>
@@ -161,7 +258,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                             <div className={styles.leftpanel}>
                                 <div className={styles.treeViewContainer}>
                                     <div className={styles.treemenu}>
-                                        <TreeView fieldNames={fieldNames} handleSelectClick={handleSelectClick} dataList={geoData} />
+                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={geoData} />
                                     </div>
                                 </div>
                             </div>
@@ -170,46 +267,59 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {isFormVisible && <AddEditForm geoData={geoData} handleParentCode={handleParentCode} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={geoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                    {isUpdate && (
-                                        <Button danger>
+                                    {buttonData?.editBtn && (
+                                        <Button danger onClick={() => handleEditBtn()}>
                                             <FaEdit className={styles.buttonIcon} />
                                             Edit
                                         </Button>
                                     )}
 
-                                    {isChildAdd && !isFormVisible && (
-                                        <Button danger onClick={() => handleFormVisiblity(true)}>
+                                    {buttonData?.rootChildBtn && (
+                                        <Button danger onClick={() => handleRootChildBtn()}>
                                             <FaUserPlus className={styles.buttonIcon} />
                                             Add Child
                                         </Button>
                                     )}
 
-                                    {isSublingAdd && !isFormVisible && (
-                                        <Button danger onClick={() => handleFormVisiblity(true)}>
+                                    {buttonData?.childBtn && (
+                                        <Button danger onClick={() => handleChildBtn()}>
+                                            <FaUserPlus className={styles.buttonIcon} />
+                                            Add Child
+                                        </Button>
+                                    )}
+
+                                    {buttonData?.siblingBtn && (
+                                        <Button danger onClick={() => handleSiblingBtn()}>
                                             <FaUserFriends className={styles.buttonIcon} />
                                             Add Sibling
                                         </Button>
                                     )}
 
-                                    {(isUpdate || isFormVisible) && (
+                                    {isFormVisible && (
                                         <>
-                                            <Button htmlType="submit" danger>
-                                                <FaSave className={styles.buttonIcon} />
-                                                Save
-                                            </Button>
+                                            {buttonData?.saveBtn && (
+                                                <Button htmlType="submit" danger>
+                                                    <FaSave className={styles.buttonIcon} />
+                                                    Save
+                                                </Button>
+                                            )}
 
-                                            <Button danger onClick={onReset}>
-                                                <FaUndo className={styles.buttonIcon} />
-                                                Reset
-                                            </Button>
+                                            {buttonData?.resetBtn && (
+                                                <Button danger onClick={handleResetBtn}>
+                                                    <FaUndo className={styles.buttonIcon} />
+                                                    Reset
+                                                </Button>
+                                            )}
 
-                                            <Button danger onClick={() => handleFormVisiblity(false)}>
-                                                <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                Cancel
-                                            </Button>
+                                            {buttonData?.cancelBtn && (
+                                                <Button danger onClick={() => handleBack()}>
+                                                    <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                    Cancel
+                                                </Button>
+                                            )}
                                         </>
                                     )}
                                 </Col>
