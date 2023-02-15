@@ -159,7 +159,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                                 <div className="cls"></div>
                             </Link>
                         </Col>
-                        <Col xs={2} sm={2} md={0} lg={0} xl={0}>
+                        <Col xs={2} sm={2} md={0} lg={0} xl={0} className={styles.closeButton}>
                             <RxCross2 onClick={setCollapsed} />
                         </Col>
                     </Row>
@@ -167,7 +167,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
                 </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
+                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items}/>
 
                 <div className={styles.changeTheme} onClick={setTheme}>
                     {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
