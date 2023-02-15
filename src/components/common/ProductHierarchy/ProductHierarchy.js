@@ -1,21 +1,25 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row } from 'antd';
+import { Button, Col, Form, Row, Collapse, Table, Input } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
 import TreeView from 'components/common/TreeView';
 
 import styles from 'pages/common/Common.module.css';
-import {ROUTING_COMMON_PRODUCT_MASTER} from 'constants/routing';
+import { ROUTING_COMMON_PRODUCT_MASTER } from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
+import { ProductMasterPage } from 'pages/common/ProductMaster/ProductMasterPage';
+import { ProductMaster } from 'pages/common/ProductHierarchy/ProductMaster';
+import { validateRequiredInputField } from 'utils/validation';
+const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
     const {
@@ -59,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
+    const [collapsable, setCollapsable] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -74,10 +79,67 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const navigate = useNavigate();
+    const [isProductMaster, setProductMaster] = useState(false);
 
-
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false ,enable:false};
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const rendFn = (key) => {
+        return (
+            <Form form={form}>
+                <Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
+                    <Input placeholder={key} />
+                </Form.Item>
+            </Form>
+        );
+    };
+    const tblPrepareColumns = ({ title, dataIndex }) => {
+        return {
+            title,
+            dataIndex,
+        };
+    };
+    const dataSource = [
+        {
+            Srl: '1',
+            AttributeName: 'Sample',
+            AttributeValue: rendFn('Sample'),
+        },
+        {
+            Srl: '2',
+            AttributeName: 'Sample',
+            AttributeValue: rendFn('Sample2'),
+        },
+        {
+            Srl: '3',
+            AttributeName: 'Sample',
+            AttributeValue: rendFn('Sample3'),
+        },
+        {
+            Srl: '4',
+            AttributeName: 'Sample',
+            AttributeValue: rendFn('Sample4'),
+        },
+    ];
+    const tableColumn = [];
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'Srl',
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Attribute Name',
+            dataIndex: 'AttributeName',
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Attribute Value',
+            dataIndex: 'AttributeValue',
+        })
+    );
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -198,7 +260,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setFormActionType('edit');
 
         setReadOnly(false);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true , enable:false});
     };
 
     const handleRootChildBtn = () => {
@@ -208,7 +270,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true,enable: false });
     };
 
     const handleChildBtn = () => {
@@ -217,9 +279,9 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setFormVisible(true);
         setReadOnly(false);
         setFormData([]);
-        navigate(ROUTING_COMMON_PRODUCT_MASTER);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true ,enable: true});
+        setCollapsable(!collapsable);
     };
 
     const handleSiblingBtn = () => {
@@ -230,7 +292,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true,enable:false });
     };
 
     const handleResetBtn = () => {
@@ -278,6 +340,78 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
                             <ChangeHistory />
+                        ) : collapsable ? (
+                            <>
+                                {' '}
+                                <Collapse defaultActiveKey={['1']} expandIconPosition="end">
+                                    <Panel header="Product Details" key="1">
+                                        {/* <AddEditForm showAttributeDetail={true} /> */}
+                                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen}/>}
+                                       
+                                        <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    { (
+                                            <>
+                                                { (
+                                                    <Button htmlType="submit" danger>
+                                                        <FaSave className={styles.buttonIcon} />
+                                                        Save
+                                                    </Button>
+                                                )}
+                                                {(
+                                                    <Button danger onClick={() => handleEditBtn()}>
+                                                        <FaEdit className={styles.buttonIcon} />
+                                                            Edit
+                                                    </Button>
+                                                )}
+                                                 
+                                                { (
+                                                    <Button danger onClick={()=>handleResetBtn()}>
+                                                        <FaUndo className={styles.buttonIcon} />
+                                                        Reset
+                                                    </Button>
+                                                )}
+
+                                                { (
+                                                    <Button danger onClick={() => handleRootChildBtn()}>
+                                                        <FaUserPlus className={styles.buttonIcon} />
+                                                            Add Child
+                                                    </Button>
+                                                )}
+                                                <Button danger >
+                                                        <FaUndo className={styles.buttonIcon} />
+                                                        View Attribute Detail
+                                                    </Button>
+                                            </>
+                                        )}
+                                        </Col>
+                                        </Row>
+                                 </Form>
+                                    </Panel>
+                                    
+                                </Collapse>
+                                <Collapse defaultActiveKey={['1']} expandIconPosition="end" >
+                                    <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" >
+                                        <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
+                                        <Form>
+                                            <Form.Item>
+                                                <Row>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <div className={styles.buttonContainer}>
+                                                            <Button danger>
+                                                                <FaSave className={styles.buttonIcon} />
+                                                                Save
+                                                            </Button>
+                                                        </div>
+                                                        
+                                                    </Col>
+                                                </Row>
+                                            </Form.Item>
+                                        </Form>
+                                    </Panel>
+                                </Collapse>
+                            </>
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                 {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
@@ -311,30 +445,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                             </Button>
                                         )}
 
-                                        {isFormVisible && (
-                                            <>
-                                                {buttonData?.saveBtn && (
-                                                    <Button htmlType="submit" danger>
-                                                        <FaSave className={styles.buttonIcon} />
-                                                        Save
-                                                    </Button>
-                                                )}
-
-                                                {buttonData?.resetBtn && (
-                                                    <Button danger onClick={handleResetBtn}>
-                                                        <FaUndo className={styles.buttonIcon} />
-                                                        Reset
-                                                    </Button>
-                                                )}
-
-                                                {buttonData?.cancelBtn && (
-                                                    <Button danger onClick={() => handleBack()}>
-                                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                        Cancel
-                                                    </Button>
-                                                )}
-                                            </>
-                                        )}
+                                       
                                     </Col>
                                 </Row>
                             </Form>

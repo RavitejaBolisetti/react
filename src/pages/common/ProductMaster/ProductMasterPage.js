@@ -1,90 +1,29 @@
-import React, { useState, useReducer} from 'react';
+import React, { useState } from 'react';
 import { Table, Switch, Form, Select, Row, Col, Button,  Input,  Collapse } from 'antd';
-import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch,FaAngleDoubleLeft,FaAngleDoubleRight } from 'react-icons/fa';
+import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { ChangeHistory } from 'components/common/ChangeHistory';
 import { ParentHierarchy } from 'components/common/parentHierarchy/ParentHierarchy';
-import { addToolTip } from 'utils/customMenuLink';
-import TreeView from 'components/common/TreeView';
-
 
 import styles from '../Common.module.css';
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        isLoading,
-        collapsed,
-        userId,
-        isDataLoaded,
-        productHierarchyData,
-        isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
-    };
-    return returnValue;
-};
 
 const onChange = (pagination, filters, sorter, extra) => {
     // console.log('params', pagination, filters, sorter, extra);
 };
 
-
-
-const dataList = [];
-
-const generateList = (data) => {
-    for (let i = 0; i < data?.length; i++) {
-        const node = data[i];
-        const { id: key } = node;
-        dataList.push({
-            key,
-            data: node,
-        });
-        if (node.subProdct) {
-            generateList(node.subProdct);
-        }
-    }
-    return dataList;
-};
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
-export const ProductMasterPageBase = ({productHierarchyData, attributeData}) => {
-
-    const finalGeoData = productHierarchyData?.map((i) => {
-        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
-    });
-    
+export const ProductMasterPageBase = () => {
     const [form] = Form.useForm();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
-    const [forceFormReset, setForceFormReset] = useState(false);
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [isFormVisible, setFormVisible] = useState(false);
-    const [formData, setFormData] = useState([]);
-    const [formActionType, setFormActionType] = useState('');
-    const flatternData = generateList(finalGeoData);
-    const [isReadOnly, setReadOnly] = useState(false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
-   
     const rendFn = (key) => {
         return (
             <Form form={form}>
@@ -102,29 +41,6 @@ export const ProductMasterPageBase = ({productHierarchyData, attributeData}) => 
             .catch((errorInfo) => {
                 // console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
             });
-    };
-    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
-    const handleTreeViewClick = (keys) => {
-        setForceFormReset(Math.random() * 10000);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
-        form.resetFields();
-        setFormVisible(false);
-        setFormData([]);
-
-        if (keys && keys.length > 0) {
-            setFormActionType('view');
-            const formData = flatternData.find((i) => keys[0] === i.key);
-            formData && setFormData(formData?.data);
-
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            forceUpdate();
-            setReadOnly(true);
-        } else {
-            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
-            setReadOnly(false);
-        }
-        setSelectedTreeKey(keys);
     };
 
     const tblPrepareColumns = ({ title, dataIndex }) => {
@@ -177,29 +93,10 @@ export const ProductMasterPageBase = ({productHierarchyData, attributeData}) => 
             AttributeValue: rendFn('Sample4'),
         },
     ];
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
       return (
         <>
-        <Row gutter={20}>
-                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
-                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                    </div>
-                </Row>
-                <Row gutter={20}>
-                    {isTreeViewVisible ? (
-                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                            <div className={styles.leftpanel}>
-                                <div className={styles.treeViewContainer}>
-                                    <div className={styles.treemenu}>
-                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={productHierarchyData} />
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    ) : undefined}
-                   
-       
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
                     {isChangeHistoryVisible ? (
                         <ChangeHistory />
