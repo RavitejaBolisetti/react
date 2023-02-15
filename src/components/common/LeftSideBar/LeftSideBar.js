@@ -149,7 +149,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     return (
         <>
-            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : '250px'} collapsible className={styles.leftMenuBox1} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)} style={{ zIndex: '99999999', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow: '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}>
+            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : '250px'} collapsible className={styles.leftMenuBox1} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 {/* <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', zIndex:'999', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow:  isMobile ? 'none' : '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}> */}
                 <div className={styles.logoContainer}>
                     <Row>

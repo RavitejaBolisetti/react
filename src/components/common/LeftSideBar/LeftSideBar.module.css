@@ -16,6 +16,18 @@
   display: none !important;
 }
 
+.leftMenuBox1{
+  height: 100vh;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important;
+  background-color: #f4f4f4 !important;
+  z-index: 9 !important;
+  left: 0;
+  top: 0;
+}
+
 /* .leftMenuBox:global.ant-layout-sider-trigger {
   flex: 0 0 250px !important;
   max-width: 250px !important;
@@ -260,5 +272,9 @@
 @media (max-width: 768px) {
   .leftMenuBox {
     width: 100%;
+  }
+  .leftMenuBox1{
+    position: fixed !important;
+    height: 100vh !important;
   }
 }
