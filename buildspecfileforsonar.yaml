@@ -20,7 +20,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the dist folder
-      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a4663bf2bc4dd421bad82b6cdb2056f7-256513795.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_bb91cee9a437ea2bbfbabed3e8b24b2d2ef8e4a5
+      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_ce84b6a33262e80b5b49f2af999416fec7de0927
       #- npm run sonar
   post_build:
     commands:
