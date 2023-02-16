@@ -74,7 +74,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-    const [Visible, setVisible] = useState(false);
+    const [Visible, setVisible] = useState(true);
     
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
@@ -396,7 +396,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                     </Panel>
                                     
                                 </Collapse>
-                                <Collapse  expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{margin:'10px 0 0 0'}}>
+                                <Collapse Visible={true} expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{margin:'10px 0 0 0'}}>
                                     <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" className={style.producthierarchy}>
                                    
                                         <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
@@ -438,9 +438,9 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                         )}
 
                                         {buttonData?.childBtn && (
-                                            <Button danger onClick={() =>{ handleChildBtn(); setVisible(!Visible)}}>
+                                            <Button danger onClick={() => {handleChildBtn();setClosePanels(['1'])}}>
                                                 <FaUserPlus className={styles.buttonIcon} />
-                                                Add Childs
+                                                Add Child
                                             </Button>
                                         )}
 
