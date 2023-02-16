@@ -12,6 +12,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import styles from '../Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { geoDataActions } from 'store/actions/data/geo';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -96,20 +97,40 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             },
         });
     };
-    const [count, setCount] = useState(2);
+
+    // set count of rows
+    const [count, setCount] = useState(1);
     const [data, setRowsData] = useState([
         {
-            key: '0',
-            name: '',
+            hierarchyAttribueId: '1q',
+            hierarchyAttribueCode: '1234',
+            hierarchyAttribueName: 'Dev attribute',
+            duplicateAllowedAtAttributerLevelInd: false,
+            duplicateAllowedAtDifferentParent: true,
+            isChildAllowed: false,
+            status: true,
+        },
+        {
+            hierarchyAttribueId: '2q',
+            hierarchyAttribueCode: '3445',
+            hierarchyAttribueName: 'dummy attribute',
+            duplicateAllowedAtAttributerLevelInd: true,
+            duplicateAllowedAtDifferentParent: false,
+            isChildAllowed: true,
+            status: true,
         },
     ]);
     const handleAdd = () => {
-        const newData = [
-            {
+        const newData = {
                 key: count,
-                name: '',
-            },
-        ];
+                hierarchyAttribueId: '',
+                hierarchyAttribueCode: '',
+                hierarchyAttribueName: '',
+                duplicateAllowedAtAttributerLevelInd: false,
+                duplicateAllowedAtDifferentParent: false,
+                isChildAllowed: false,
+                status: false,
+            };
         setRowsData([...data, newData]);
         setCount(count + 1);
     };
@@ -120,97 +141,103 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         setRowsData(rows);
     };
 
-    const columns = [
-        {
+// table column
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
-            key: 1,
-            render: (key) => (
-                <Form.Item style={{ paddingTop: '20px' }} name={key} rules={[validateRequiredInputField('Code')]}>
+            render: (text,record, index ) => (
+                <Form.Item style={{ paddingTop: '20px' }} key={index} name='hierarchyAttribueCode' rules={[validateRequiredInputField('hierarchyAttribueCode')]}>
                     <Input  placeholder="MT0001" />
                 </Form.Item>
             ),
-            width: 200,
-        },
-        {
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
-            key: 2,
             render: (key) => (
-                <Form.Item style={{ paddingTop: '20px' }} name={key} rules={[validateRequiredInputField('Name')]}>
-                    <Input  placeholder="MT0002" />
+                <Form.Item style={{ paddingTop: '20px' }} name='hierarchyAttribueName' rules={[validateRequiredInputField('hierarchyAttribueName')]}>
+                    <Input  placeholder="Enter name" />
                 </Form.Item>
             ),
+        })
+    );
 
-            width: 400,
-        },
-        {
+    tableColumn.push(
+        tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            width: 100,
-            key: 'address 1',
             render: () => (
                 <Form.Item name="duplicateAllowedAtAttributerLevelInd" initialValue={'Y'}>
                     <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
                 </Form.Item>
             ),
-        },
-        {
-            title: 'Duplicate Allowed under different Parent?',
-            dataIndex: 'duplicateAllowedAtOtherParent',
-            key: 'duplicateAllowedAtOtherParent',
-            width: 200,
+        })
+    );
 
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Duplicate Allowed under different Parent?',
+            dataIndex: 'duplicateAllowedAtDifferentParent',
             render: () => (
                 <Form.Item name="duplicateAllowedAtOtherParent" initialValue={'Y'}>
                     <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
                 </Form.Item>
             ),
-        },
-        {
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
             title: 'Child Allowed?',
-            dataIndex: 'isChildAllowed?',
-            key: 'isChildAllowed',
-            render: () => (
-                <Form.Item name="isChildAllowed" initialValue={'Y'}>
-                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="N0" defaultChecked />
+            dataIndex: 'isChildAllowed',
+            render: (text, record, index) =>(
+                <Form.Item name="isChildAllowed" initialValue={text}>
+                    <Switch  checkedChildren="Yes" unCheckedChildren="N0" defaultChecked={text} />
                 </Form.Item>
             ),
-        },
-        {
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'active',
-            key: 'active',
-            render: () => (
-                <Form.Item name="active" initialValue={'Y'}>
-                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
-                </Form.Item>
-            ),
-        },
-       {
-        title: '',
-        dataIndex: '',
-        key: 'hierarchyAttribueId',
-        width: 0,
-        render: () => ''
-           
-       },
-        {
-            title: '',
-            dataIndex: '',
-            width: 100,
-            render: () => [
+            dataIndex: 'status',
+            render: (text, record, index) => <Form.Item name="status" initialValue={'Y'}>
+            <Switch value={text} checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+        </Form.Item>,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Action',
+            dataIndex: 'action',
+            render: (text, record, index) => <Form.Item >
                 <Space wrap>
                     <EditOutlined />
 
                     <DeleteOutlined onClick={showConfirm} />
                 </Space>,
-            ],
-        },
-    ];
+        </Form.Item>,
+        })
+    );
+
+
+
+
     const [form] = Form.useForm();
 
+
+    // on Save table data
     const onFinish = (values) => {
+
+
         const onSuccess = (res) => {
             form.resetFields();
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
@@ -239,7 +266,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table columns={columns} dataSource={data} pagination={false} />
+                        <Table columns={tableColumn} dataSource={data} pagination={false} />
                     </Col>
                 </Row>
 
