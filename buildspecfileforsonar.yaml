@@ -11,7 +11,7 @@ phases:
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
       - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
       - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-      - echo -e "sonar.host.url=http://a4663bf2bc4dd421bad82b6cdb2056f7-256513795.ap-south-1.elb.amazonaws.com/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+      - echo -e "sonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
       - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
       - source /etc/profile.d/sonar-scanner.sh
       - pwd
@@ -20,7 +20,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the dist folder
-      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a4663bf2bc4dd421bad82b6cdb2056f7-256513795.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_71955ae11ae22f9521915a60787628c0a143fbf3
+      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_b771cabb9d2dad50b07ac617a850534527cf7fc7
+      #- npm run sonar
   post_build:
     commands:
       - echo Build completed on `date`
