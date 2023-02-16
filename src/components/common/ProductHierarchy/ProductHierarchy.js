@@ -11,6 +11,7 @@ import TreeView from 'components/common/TreeView';
 import styles from 'pages/common/Common.module.css';
 import { ROUTING_COMMON_PRODUCT_MASTER } from 'constants/routing';
 import { addToolTip } from 'utils/customMenuLink';
+import style from '../ProductHierarchy/producthierarchy.module.css'
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
@@ -67,7 +68,9 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [openPanels, setOpenPanels] = React.useState([]);
 
+    const [closePanels, setClosePanels] = React.useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
@@ -343,8 +346,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                         ) : collapsable ? (
                             <>
                                 {' '}
-                                <Collapse defaultActiveKey={['1']} expandIconPosition="end">
-                                    <Panel header="Product Details" key="1">
+                                <Collapse defaultActiveKey={['1']} expandIconPosition="end" activeKey={closePanels} onChange={setClosePanels}>
+                                    <Panel header="Product Details" key="1" className={style.producthierarchy}>
                                         {/* <AddEditForm showAttributeDetail={true} /> */}
                                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                         {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen}/>}
@@ -379,7 +382,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                                             Add Child
                                                     </Button>
                                                 )}
-                                                <Button danger >
+                                                <Button danger  onClick={() => {setOpenPanels(['2']);setClosePanels([])}}>
                                                         <FaUndo className={styles.buttonIcon} />
                                                         View Attribute Detail
                                                     </Button>
@@ -391,8 +394,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                     </Panel>
                                     
                                 </Collapse>
-                                <Collapse defaultActiveKey={['1']} expandIconPosition="end" >
-                                    <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" >
+                                <Collapse defaultActiveKey={['1']} expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{margin:'10px 0 0 0'}}>
+                                    <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" className={style.producthierarchy}>
                                         <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
                                         <Form>
                                             <Form.Item>

@@ -61,6 +61,9 @@
 
 .geoSection :global .ant-btn-default.ant-btn-dangerous {
   margin-bottom: 8px;
+  margin-left: 10px;
+    margin-top: 20px;
+    float: right
 }
 
 .geoSection :global .ant-btn {
