@@ -74,7 +74,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-
+    const [Visible, setVisible] = useState(false);
+    
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
@@ -90,7 +91,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const rendFn = (key) => {
         return (
             <Form form={form}>
-                <Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
+                <Form.Item name={key} >
                     <Input placeholder={key} />
                 </Form.Item>
             </Form>
@@ -214,6 +215,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     };
 
     const onFinish = (values) => {
+        console.log(values)
         const recordId = formData?.id || '';
         const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
 
@@ -252,7 +254,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        //form.validateFields().then((values) => {});
     };
 
     const handleEditBtn = () => {
@@ -346,7 +348,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                         ) : collapsable ? (
                             <>
                                 {' '}
-                                <Collapse defaultActiveKey={['1']} expandIconPosition="end" activeKey={closePanels} onChange={setClosePanels}>
+                                <Collapse  defaultActiveKey={'1'} expandIconPosition="end" activeKey={closePanels} onChange={setClosePanels} >
                                     <Panel header="Product Details" key="1" className={style.producthierarchy}>
                                         {/* <AddEditForm showAttributeDetail={true} /> */}
                                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -394,10 +396,11 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                     </Panel>
                                     
                                 </Collapse>
-                                <Collapse defaultActiveKey={['1']} expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{margin:'10px 0 0 0'}}>
+                                <Collapse  expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{margin:'10px 0 0 0'}}>
                                     <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" className={style.producthierarchy}>
+                                   
                                         <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
-                                        <Form>
+                                        
                                             <Form.Item>
                                                 <Row>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -411,7 +414,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                                     </Col>
                                                 </Row>
                                             </Form.Item>
-                                        </Form>
+                                    
                                     </Panel>
                                 </Collapse>
                             </>
@@ -435,7 +438,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                         )}
 
                                         {buttonData?.childBtn && (
-                                            <Button danger onClick={() => handleChildBtn()}>
+                                            <Button danger onClick={() =>{ handleChildBtn(); setVisible(!Visible)}}>
                                                 <FaUserPlus className={styles.buttonIcon} />
                                                 Add Childs
                                             </Button>
