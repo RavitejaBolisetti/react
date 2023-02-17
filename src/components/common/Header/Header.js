@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input, Typography } from 'antd';
 
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
+
 import { AiFillSetting } from 'react-icons/ai';
 import { TbFileReport } from 'react-icons/tb';
 
@@ -17,6 +18,7 @@ import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
+import { ChangePassword } from '../ChangePassword';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -90,6 +92,25 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         });
     };
 
+    const onshowConfirm = () => {
+        confirm({
+            title: 'Update Your Password',
+            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
+            content: <ChangePassword />,
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                doLogout({
+                    successAction: () => {
+                        navigate(routing.ROUTING_LOGIN);
+                    },
+                    userId,
+                });
+            },
+        });
+    };
+
     const items = [
         customMenuLink({
             title: 'Branch Location',
@@ -136,6 +157,14 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         //     link: routing.ROUTING_USER_TRAINING,
         //     icon: <FaUserMd />,
         // }),
+
+        customMenuLink({
+            key: '5',
+            title: 'Change Password',
+            onClick: onshowConfirm,
+            // icon: <FiLogOut />,
+        }),
+
         customMenuLink({
             key: '6',
             title: 'Logout',
@@ -219,3 +248,5 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
 };
 
 export const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderMain);
+
+//<
