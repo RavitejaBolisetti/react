@@ -14,6 +14,12 @@
     padding-top: 12px;
 }
 
+.headerLeft .userAvatar .userAvatarInside {
+    background-color: #808080;
+    font-size: 20px;
+    line-height: 35px;
+}
+
 .userText {
     float: right;
     padding-top: 16px;
@@ -96,6 +102,12 @@
     margin-top: -20px;
 }
 
+.welcomeUser .userAvatar .userAvatarInside {
+    background-color: #808080;
+    font-size: 16px;
+    line-height: 30px;
+}
+
 .welcomeUser .navLink {
     color: #0B0B0C;
     padding: 1px !important;
@@ -166,11 +178,26 @@
     }
 
     .userAvatar {
-        padding-top: 6px;
+        padding-top: 8px;
+    }
+
+    .headerLeft .userAvatar .userAvatarInside {
+        font-size: 16px;
+        line-height: 25px;
+        height: 30px;
+        width: 30px;
+        margin-right: -3px;
     }
 
     .welcomeUser .userAvatar {
-        padding-top: 12px;
+        padding-top: 10px;
+    }
+
+    .welcomeUser .userAvatar .userAvatarInside {
+        font-size: 12px;
+        width: 26px;
+        height: 26px;
+        line-height: 22px;
     }
 
     .displayNone {
@@ -190,8 +217,9 @@
     }
 
     .dealerName {
-        font-size: 12px;
+        font-size: 14px;
         padding-bottom: 0;
+        margin-bottom: -5px;
     }
 
     .userServiceArea {

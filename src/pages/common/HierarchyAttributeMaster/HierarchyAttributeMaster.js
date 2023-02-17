@@ -116,7 +116,7 @@ export const HierarchyAttributeMasterBase = () => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     return (
@@ -124,7 +124,7 @@ export const HierarchyAttributeMasterBase = () => {
             <PageHeader {...pageHeaderData} />
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Hierarchy Attribute Type" name="Hierarchy Attribute" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
                             <Select>
                                 <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
