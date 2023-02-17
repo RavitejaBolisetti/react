@@ -161,8 +161,8 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         customMenuLink({
             key: '5',
             title: 'Change Password',
+            icon: <AiFillSetting />,
             onClick: onshowConfirm,
-            // icon: <FiLogOut />,
         }),
 
         customMenuLink({

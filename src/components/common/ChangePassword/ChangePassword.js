@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Typography } from 'antd';
+import { Col, Form, Input, Row, Typography } from 'antd';
 
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { validateRequiredInputField } from 'utils/validation';
@@ -9,7 +9,7 @@ export const ChangePassword = () => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
+                    <Form.Item name="password" rules={[validateRequiredInputField('Password')]}>
                         <Input.Password type="text" placeholder="Password" visibilityToggle={true} />
                     </Form.Item>
                 </Col>
