@@ -224,7 +224,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 .splashBottomLogo {
-  animation: splashBottomLogo 2s ease-out;
+  /* animation: splashBottomLogo 2s ease-out; */
   height: 67px;
   width: 100%;
   margin-top: auto;
