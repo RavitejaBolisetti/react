@@ -8,7 +8,7 @@ const onFilterFn = (value, record) => {
     }
 };
 
-export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined }) => {
+export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, editable=false }) => {
     return {
         title,
         dataIndex,
@@ -19,5 +19,6 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
         filterSearch,
         onFilter: onFilterFn,
         sorter: sortFn,
+        editable,
     };
 };

@@ -5,7 +5,7 @@ import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-desi
 import { bindActionCreators } from 'redux';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, InputNumber, Typography, Popconfirm } from 'antd';
 import { Table } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
@@ -58,12 +58,79 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
+
+const EditableCell = ({
+    editing,
+    dataIndex,
+    title,
+    inputType,
+    record,
+    index,
+    children,
+    ...restProps
+  }) => {
+
+    const inputNodeOnEditing = ["hierarchyAttribueCode", "hierarchyAttribueName"].includes(dataIndex) ? <Input /> : !dataIndex ? children :  <Switch defaultChecked={record[dataIndex]} checkedChildren="Yes" unCheckedChildren="No"  />;
+    const inputNode = ["hierarchyAttribueCode", "hierarchyAttribueName"].includes(dataIndex) ? <Input value={record[dataIndex]}  />  : !dataIndex ? children :  <Switch defaultChecked={record[dataIndex]}  checkedChildren="Yes" unCheckedChildren="No"  />;
+
+    return (
+      <td {...restProps}>
+        {editing ? (
+          <Form.Item
+            name={dataIndex}
+            style={{
+              margin: 0,
+            }}
+            rules={[
+              {
+                required: true,
+                message: `Please Input ${title}!`,
+              },
+            ]}
+          >
+            {inputNodeOnEditing}
+            {/* {dataIndex === "action" || !dataIndex  ? children :  inputNode} */}
+          </Form.Item>
+        ) : (
+        //   children
+        inputNode
+        //   dataIndex === "action" || !dataIndex ? children :  inputNodedisabled
+        )}
+      </td>
+    );
+  };
+
+  const initialData = [
+    {
+        key: "0",
+        hierarchyAttribueId: '1q',
+        hierarchyAttribueCode: '1234',
+        hierarchyAttribueName: 'Dev attribute',
+        duplicateAllowedAtAttributerLevelInd: false,
+        duplicateAllowedAtDifferentParent: true,
+        isChildAllowed: false,
+        status: true,
+    },
+    {
+        key: "1",
+        hierarchyAttribueId: '2q',
+        hierarchyAttribueCode: '3445',
+        hierarchyAttribueName: 'dummy attribute',
+        duplicateAllowedAtAttributerLevelInd: true,
+        duplicateAllowedAtDifferentParent: false,
+        isChildAllowed: true,
+        status: true,
+    },
+];
+
+
 export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData }) => {
     console.log('🚀 ~ file: HierarchyAttribute.js:46 ~ HierarchyAttributeBase ~ saveData', hierarchyAttributeSaveData);
 
     useEffect(() => {
         if (!isDataLoaded) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
+            // fetchList({ setIsLoading: listShowLoading, userId, type: 'Geographicals'})
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
@@ -84,13 +151,13 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         });
     };
 
-    const showConfirm = () => {
+    const showConfirm = (key) => {
         confirm({
             title: 'Do you Want to delete these items?',
             icon: <ExclamationCircleFilled />,
             content: 'Some descriptions',
             onOk() {
-                deleteTableRows(data.key);
+                deleteTableRows(key);
             },
             onCancel() {
                 console.log('Cancel');
@@ -99,30 +166,16 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     };
 
     // set count of rows
-    const [count, setCount] = useState(1);
-    const [data, setRowsData] = useState([
-        {
-            hierarchyAttribueId: '1q',
-            hierarchyAttribueCode: '1234',
-            hierarchyAttribueName: 'Dev attribute',
-            duplicateAllowedAtAttributerLevelInd: false,
-            duplicateAllowedAtDifferentParent: true,
-            isChildAllowed: false,
-            status: true,
-        },
-        {
-            hierarchyAttribueId: '2q',
-            hierarchyAttribueCode: '3445',
-            hierarchyAttribueName: 'dummy attribute',
-            duplicateAllowedAtAttributerLevelInd: true,
-            duplicateAllowedAtDifferentParent: false,
-            isChildAllowed: true,
-            status: true,
-        },
-    ]);
+   
+    const [editingKey, setEditingKey] = useState('');
+    const [data, setRowsData] = useState(initialData);
+    const [count, setCount] = useState(data.length || 0);
+
+    console.log("count", count, "data",data)
+
     const handleAdd = () => {
         const newData = {
-                key: count,
+                key: String(count),
                 hierarchyAttribueId: '',
                 hierarchyAttribueCode: '',
                 hierarchyAttribueName: '',
@@ -137,22 +190,18 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     const deleteTableRows = (index) => {
         const rows = [...data];
-        rows.splice(index, 1);
+        rows.splice(Number(index), 1);
         setRowsData(rows);
     };
 
-// table column
+// table columns
     const tableColumn = [];
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
-            render: (text,record, index ) => (
-                <Form.Item style={{ paddingTop: '20px' }} key={index} name='hierarchyAttribueCode' rules={[validateRequiredInputField('hierarchyAttribueCode')]}>
-                    <Input  placeholder="MT0001" />
-                </Form.Item>
-            ),
+            editable: true,
         })
     );
 
@@ -160,11 +209,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
-            render: (key) => (
-                <Form.Item style={{ paddingTop: '20px' }} name='hierarchyAttribueName' rules={[validateRequiredInputField('hierarchyAttribueName')]}>
-                    <Input  placeholder="Enter name" />
-                </Form.Item>
-            ),
+            editable: true,
         })
     );
 
@@ -172,11 +217,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: () => (
-                <Form.Item name="duplicateAllowedAtAttributerLevelInd" initialValue={'Y'}>
-                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
-                </Form.Item>
-            ),
+            editable: true,
         })
     );
 
@@ -184,11 +225,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtDifferentParent',
-            render: () => (
-                <Form.Item name="duplicateAllowedAtOtherParent" initialValue={'Y'}>
-                    <Switch value="Y" checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
-                </Form.Item>
-            ),
+            editable: true,
         })
     );
 
@@ -196,11 +233,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
-            render: (text, record, index) =>(
-                <Form.Item name="isChildAllowed" initialValue={text}>
-                    <Switch  checkedChildren="Yes" unCheckedChildren="N0" defaultChecked={text} />
-                </Form.Item>
-            ),
+             editable: true,
         })
     );
 
@@ -208,9 +241,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record, index) => <Form.Item name="status" initialValue={'Y'}>
-            <Switch value={text} checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
-        </Form.Item>,
+            editable: true,
         })
     );
 
@@ -218,16 +249,70 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
-            render: (text, record, index) => <Form.Item >
-                <Space wrap>
-                    <EditOutlined />
-
-                    <DeleteOutlined onClick={showConfirm} />
-                </Space>,
-        </Form.Item>,
+            editable:false,
+            render:(_, record) => {
+                return <Space wrap>
+                    { <EditOutlined disabled={editingKey !== ''} onClick={() => edit(record)}/>}
+                    {!record?.hierarchyAttribueId &&<DeleteOutlined onClick={()=> showConfirm(record.key)} />}
+                </Space>
+            },
         })
     );
 
+
+    const isEditing = (record) => record.key === editingKey ;
+
+    const edit = (record) => {
+      form.setFieldsValue({
+        hierarchyAttribueId: "",
+        hierarchyAttribueCode: "",
+        hierarchyAttribueName: "",
+        duplicateAllowedAtAttributerLevelInd: "",
+        duplicateAllowedAtDifferentParent: "",
+        isChildAllowed: "",
+        status: "",
+        ...record,
+      });
+      setEditingKey(record.key);
+    };
+    
+    const save = async (key) => {
+
+      try {
+        const row = await form.validateFields();
+        const newData = [...data];
+        const index = newData.findIndex((item) => key === item.key);
+        if (index > -1) {
+          const item = newData[index];
+          newData.splice(index, 1, {
+            ...item,
+            ...row,
+          });
+          setRowsData(newData);
+          setEditingKey('');
+        } 
+      } catch (errInfo) {
+        console.log('Validate Failed:', errInfo);
+      }
+    };  
+
+
+    const mergedColumns = tableColumn.map((col) => {
+
+        if (!col.editable) {
+          return col;
+        }
+        return {
+          ...col,
+          onCell: (record) => ({
+            record,
+            inputType: col.dataIndex,
+            dataIndex: col.dataIndex,
+            title: col.title,
+            editing: isEditing(record),
+          }),
+        };
+    });
 
 
 
@@ -242,7 +327,27 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             form.resetFields();
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
         };
-        saveData({ data: [values ], setIsLoading: listShowLoading, userId, onError, onSuccess });
+
+        // console.log("DATA ON SAVE", data,"form.getFieldValue('hierarchyAttribueType')", form.getFieldValue('hierarchyAttribueType') )
+
+        const reqData = {
+            data: {
+            hierarchyAttributeId: (form.getFieldValue('hierarchyAttribueType')),
+            hierarchyAttribute: [...data],
+            setIsLoading: listShowLoading,
+            userId:userId, 
+            onError:onError,
+            onSuccess:onSuccess,
+        }}
+
+        console.log("DATA ON SAVE",reqData)
+
+        
+        return
+        
+        // saveData({ data: [values ], setIsLoading: listShowLoading, userId, onError, onSuccess });
+
+        saveData(reqData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -266,7 +371,42 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table columns={tableColumn} dataSource={data} pagination={false} />
+                        <Table
+                            // columns={tableColumn} 
+                            onRow={(record, rowIndex) => {
+                                return {
+                                    // onClick: (e) => {
+                                    //     if(String(rowIndex) !== editingKey){
+                                    //         edit(record)
+                                    //     }},
+                                        onMouseOver: (e) => {
+                                            if(String(rowIndex) !== editingKey){
+                                                edit(record)
+                                            }
+                                        },
+                                    // save(editingKey);
+                                    // },
+                                    // onBlur: (e) => {
+                                    //     save(editingKey);
+                                    // }
+                                    onMouseLeave: (e) => {
+                                        // if(String(rowIndex) !== editingKey){
+                                            save(editingKey);
+
+                                        // }
+                                    },
+                                }
+                            }}
+                            dataSource={data} 
+                            pagination={false} 
+                            components={{
+                            body: {
+                                cell: EditableCell,
+                            },
+                            }}
+                            columns={mergedColumns}
+                            bordered
+                        />
                     </Col>
                 </Row>
 
