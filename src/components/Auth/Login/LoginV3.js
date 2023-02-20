@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { Form, Row, Col, Button, Input, message } from 'antd';
 import { FaUser, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
@@ -14,6 +13,8 @@ import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
+import { Captcha } from './Captcha';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -48,7 +49,6 @@ const mapDispatchToProps = {
 const Login = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
-    const recaptchaRef = React.useRef(null);
     const [captcha, setCaptcha] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -58,7 +58,6 @@ const Login = (props) => {
 
         form.resetFields();
         setCaptcha('');
-        recaptchaRef.current.reset();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -134,7 +133,10 @@ const Login = (props) => {
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITE_KEY} onChange={onReCAPTCHAChange} />
+                                                        <GoogleReCaptchaProvider reCaptchaKey="6LfOeYYkAAAAANjXUTNE7eQ35AE7makpguZ6RiM7">
+                                                            <Captcha />
+                                                        </GoogleReCaptchaProvider>
+                                                        {/* <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITE_KEY} onChange={onReCAPTCHAChange} /> */}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>

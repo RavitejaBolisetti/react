@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input, Typography } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
-import { DownOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell } from 'react-icons/fa';
+import { DownOutlined } from '@ant-design/icons';
+import { FaRegIdBadge, FaHeadset, FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
 import { AiFillSetting } from 'react-icons/ai';
-import { TbFileReport } from 'react-icons/tb';
 
 import * as routing from 'constants/routing';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
@@ -18,6 +17,7 @@ import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
+import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 
 const { confirm } = Modal;
@@ -51,8 +51,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
+
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
@@ -174,9 +175,10 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
         }),
     ];
 
+    const theme = 'light';
     return (
-        <>
-            <div className={styles.headerContainer}>
+        <div className={styles.headerContainer}>
+            {!isLoading ? (
                 <Row gutter={0}>
                     <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                         <div className={styles.headerLeft}>
@@ -244,10 +246,13 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
                         </div>
                     </Col>
                 </Row>
-                <div style={{ clear: 'both' }}></div>
-            </div>
-            <ChangePassword isOpen={isChangePasswordModalOpen} />
-        </>
+            ) : (
+                <HeaderSkeleton />
+            )}
+
+            <div style={{ clear: 'both' }}></div>
+            <ChangePassword title="Change Password" discreption="You have not updated your password from 90days. please change it" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)}/>
+        </div>
     );
 };
 

@@ -21,6 +21,7 @@
         "react-countdown-circle-timer": "^3.1.0",
         "react-dom": "^18.2.0",
         "react-google-recaptcha": "^2.1.0",
+        "react-google-recaptcha-v3": "^1.10.1",
         "react-helmet": "^6.1.0",
         "react-icons": "^4.7.1",
         "react-loading-skeleton": "^3.1.0",
