@@ -1,31 +1,45 @@
 import React from 'react';
-import { Col, Form, Input, Row, Typography } from 'antd';
+import { Col, Form, Input, Modal, Row } from 'antd';
 
-import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { validateRequiredInputField } from 'utils/validation';
 
-export const ChangePassword = () => {
+export const ChangePassword = ({ isOpen = false }) => {
+    const [form] = Form.useForm();
+    const onFinish = (values) => {
+        console.log('🚀 ~ file: ChangePassword.js:8 ~ onFinish ~ values', values);
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('🚀 ~ file: ChangePassword.js:12 ~ onFinishFailed ~ errorInfo', errorInfo);
+    };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item name="password" rules={[validateRequiredInputField('Password')]}>
-                        <Input.Password type="text" placeholder="Password" visibilityToggle={true} />
-                    </Form.Item>
-                </Col>
-            </Row>
-            {/* <div>
-                <Typography>Old Password</Typography>
-                <Input.Password placeholder="Enter Old Password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-            </div>
-            <div style={{ margin: '10px 0' }}>
-                <Typography>New Password</Typography>
-                <Input.Password placeholder="Enter Old Password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-            </div>
-            <div style={{ margin: '10px 0' }}>
-                <Typography>Confirm Password</Typography>
-                <Input.Password placeholder="Enter Confirm Password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-            </div> */}
+            <Modal open={isOpen} okText="Submit" okType="primary" onOk={() => {}} onCancel={() => {}}>
+                <Form form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>
+                                <Input.Password type="text" placeholder="Enter Old Password" visibilityToggle={true} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('New Password')]}>
+                                <Input.Password type="text" placeholder="Enter New Password" visibilityToggle={true} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item label="Confirm Password" name="confirmPassword" rules={[validateRequiredInputField('Confirm Password')]}>
+                                <Input.Password type="text" placeholder="Enter Confirm Password" visibilityToggle={true} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
+            </Modal>
         </>
     );
 };

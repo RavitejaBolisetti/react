@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input, Typography } from 'antd';
 
 import { DownOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
@@ -52,6 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+    const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
@@ -162,7 +163,7 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
             key: '5',
             title: 'Change Password',
             icon: <AiFillSetting />,
-            onClick: onshowConfirm,
+            onClick: () => setChangePasswordModalOpen(true),
         }),
 
         customMenuLink({
@@ -174,76 +175,79 @@ const HeaderMain = ({ isDataLoaded, loginUserData, doLogout, fetchData, listShow
     ];
 
     return (
-        <div className={styles.headerContainer}>
-            <Row gutter={0}>
-                <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                    <div className={styles.headerLeft}>
-                        <Space>
-                            <div className={styles.userAvatar}>
-                                <Avatar shape="square" size="large" style={{ backgroundColor: '#808080', fontSize: '20px', lineHeight: '35px' }}>
-                                    {dealerAvatar}
-                                </Avatar>
-                            </div>
-                            <div className={styles.userText}>
-                                <div className={styles.dealerName}>{dealerName}</div>
-                                <span className={styles.userServiceArea}>{dealerLocation}</span>
-                                {userType === 'DLR' && (
-                                    <Dropdown menu={{ items }} trigger={['click']}>
-                                        <a className={styles.navLink} data-toggle="dropdown" href="/">
-                                            <DownOutlined />
-                                        </a>
-                                    </Dropdown>
-                                )}
-                            </div>
-                        </Space>
-                    </div>
-                </Col>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                    <div className={styles.headerRight}>
-                        <div className={styles.navbarExpand}>
-                            <div className={styles.navbarNav}>
-                                <div className={`${styles.floatLeft} ${styles.mrt6}`}>
-                                    <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
-                                        <Badge size="small" count={notificationCount}>
-                                            {addToolTip('Notification')(<FaRegBell size={20} />)}
-                                        </Badge>
-                                    </Link>
+        <>
+            <div className={styles.headerContainer}>
+                <Row gutter={0}>
+                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
+                        <div className={styles.headerLeft}>
+                            <Space>
+                                <div className={styles.userAvatar}>
+                                    <Avatar shape="square" size="large" style={{ backgroundColor: '#808080', fontSize: '20px', lineHeight: '35px' }}>
+                                        {dealerAvatar}
+                                    </Avatar>
                                 </div>
-                                <div className={styles.floatLeft}>
-                                    <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
-                                        <FaHeadset size={20} />
-                                        <span className={styles.helpLineText}>
-                                            OneStop <br></br> Help Desk
-                                        </span>
-                                    </Link>
+                                <div className={styles.userText}>
+                                    <div className={styles.dealerName}>{dealerName}</div>
+                                    <span className={styles.userServiceArea}>{dealerLocation}</span>
+                                    {userType === 'DLR' && (
+                                        <Dropdown menu={{ items }} trigger={['click']}>
+                                            <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                                <DownOutlined />
+                                            </a>
+                                        </Dropdown>
+                                    )}
                                 </div>
-                                <div className={styles.welcomeUser}>
-                                    <Space>
-                                        <div className={styles.userAvatar}>
-                                            <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
-                                        </div>
-                                        <div className={styles.userText}>
-                                            <div>{fullName}</div>
-                                            <span className={styles.userServiceArea}>
-                                                {mobileNo}
-                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                    <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                        <Space>
-                                                            <DownOutlined />
-                                                        </Space>
-                                                    </Link>
-                                                </Dropdown>
+                            </Space>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
+                        <div className={styles.headerRight}>
+                            <div className={styles.navbarExpand}>
+                                <div className={styles.navbarNav}>
+                                    <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                        <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
+                                            <Badge size="small" count={notificationCount}>
+                                                {addToolTip('Notification')(<FaRegBell size={20} />)}
+                                            </Badge>
+                                        </Link>
+                                    </div>
+                                    <div className={styles.floatLeft}>
+                                        <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
+                                            <FaHeadset size={20} />
+                                            <span className={styles.helpLineText}>
+                                                OneStop <br></br> Help Desk
                                             </span>
-                                        </div>
-                                    </Space>
+                                        </Link>
+                                    </div>
+                                    <div className={styles.welcomeUser}>
+                                        <Space>
+                                            <div className={styles.userAvatar}>
+                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
+                                            </div>
+                                            <div className={styles.userText}>
+                                                <div>{fullName}</div>
+                                                <span className={styles.userServiceArea}>
+                                                    {mobileNo}
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                        <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                            <Space>
+                                                                <DownOutlined />
+                                                            </Space>
+                                                        </Link>
+                                                    </Dropdown>
+                                                </span>
+                                            </div>
+                                        </Space>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </Col>
-            </Row>
-            <div style={{ clear: 'both' }}></div>
-        </div>
+                    </Col>
+                </Row>
+                <div style={{ clear: 'both' }}></div>
+            </div>
+            <ChangePassword isOpen={isChangePasswordModalOpen} />
+        </>
     );
 };
 
