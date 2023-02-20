@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Form, Input, Modal, Row } from 'antd';
+import { Button, Col, Form, Input, Modal, Row } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 
@@ -15,7 +15,7 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
 
     return (
         <>
-            <Modal open={isOpen} title={title} okText="Submit" okType="primary" onOk={onFinish}  onCancel={onCancel}>
+            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" onOk={onFinish} onCancel={onCancel}>
                 {discreption ? (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -45,6 +45,18 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
                             <Form.Item label="Confirm Password" name="confirmPassword" rules={[validateRequiredInputField('Confirm Password')]}>
                                 <Input.Password type="text" placeholder="Enter Confirm Password" visibilityToggle={true} />
                             </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Button style={{ marginTop: '20px' }} >
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{textAlign:'right'}}>
+                            <Button  style={{ marginTop: '20px' }} type="primary" htmlType="submit">
+                                Submit
+                            </Button>
                         </Col>
                     </Row>
                 </Form>

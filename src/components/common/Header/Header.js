@@ -53,6 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
+    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);    
 
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
@@ -169,6 +170,13 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
 
         customMenuLink({
             key: '6',
+            title: 'Update Your Password',
+            icon: <AiFillSetting />,
+            onClick: () => setUpdatePasswordModalOpen(true),
+        }),
+
+        customMenuLink({
+            key: '7',
             title: 'Logout',
             onClick: showConfirm,
             icon: <FiLogOut />,
@@ -251,7 +259,8 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
             )}
 
             <div style={{ clear: 'both' }}></div>
-            <ChangePassword title="Change Password" discreption="You have not updated your password from 90days. please change it" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)}/>
+            <ChangePassword title="Change Your Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
+            <ChangePassword title="Update Your Password" discreption="You have not updated your password from 90 days. Please change your password" isOpen={iUpdatePasswordModalOpen} onOk={() => setUpdatePasswordModalOpen(false)} onCancel={() => setUpdatePasswordModalOpen(false)} />
         </div>
     );
 };
