@@ -83,12 +83,20 @@
     text-align: left;
     font-weight: 700;
 }
-.helpLineText span{
+
+.helpLineText span {
     /* color: #6c757d; */
     font-size: 12px;
     font-weight: 300;
 }
 
+.mt10 {
+    margin-top: 10px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
 
 .welcomeUser {
     padding-left: 10px;
@@ -117,9 +125,11 @@
     color: #FF7A00;
     padding-right: 8px;
 }
-.mrt6{
+
+.mrt6 {
     margin-top: 6px;
 }
+
 @media (max-width: 576px) {
     .headerLeft {
         padding-left: 20px;

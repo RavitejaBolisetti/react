@@ -1,12 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { Layout } from 'antd';
 
 import styles from './Footer.module.css';
-import { Link } from 'react-router-dom';
 import { ROUTING_DASHBOARD, ROUTING_USER_ABOUT } from 'constants/routing';
 import { ROUTING_USER_CONTACT } from 'constants/routing';
 import { ROUTING_USER_TERM } from 'constants/routing';
 import { ROUTING_USER_DISCLAIMER } from 'constants/routing';
+import { convertDateTime } from 'utils/formatDateTime';
 
 const { Footer: FooterLayout } = Layout;
 
@@ -20,7 +22,7 @@ export const Footer = () => {
                 <Link to={ROUTING_USER_CONTACT}>Contact Us</Link>
             </div>
             <div className={styles.footerBottomText}>
-                Copyright &copy; 2022-2023 <Link to={ROUTING_DASHBOARD}>ROBIN</Link>. All rights reserved.
+                Copyright &copy; {convertDateTime(moment(), 'Y')} <Link to={ROUTING_DASHBOARD}>ROBIN</Link>. All rights reserved.
             </div>
         </FooterLayout>
     );

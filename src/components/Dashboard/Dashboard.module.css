@@ -56,11 +56,19 @@
 }
 
 .mb10 {
+  margin-bottom: 10px;
+}
+
+.mb20 {
   margin-bottom: 20px;
 }
 
 .floatRight {
   float: right;
+}
+
+.textRightAlign {
+  text-align: right;
 }
 
 .headingGradient {
