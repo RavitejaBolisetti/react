@@ -72,6 +72,11 @@ export const clearAllAuthentication = (message) => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
 };
 
+export const clearAllLocalStorage = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
+};
+
 const authPostLoginActions =
     ({ authToken, userId, saveTokenAndRoleRights = true }) =>
     (dispatch) => {

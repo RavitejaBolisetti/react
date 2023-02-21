@@ -29,13 +29,15 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
-const prepareLink = (title, id, tooltip = true) =>
+const prepareLink = (title, id, tooltip = true, icon = true) =>
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
-            {title}
+            {icon && getMenuValue(MenuConstant, id, 'icon')} {title}
         </Link>
     ) : (
-        <div title={tooltip ? title : ''}>{title}</div>
+        <div title={tooltip ? title : ''}>
+            {icon && getMenuValue(MenuConstant, id, 'icon')} {title}
+        </div>
     );
 
 const mapStateToProps = (state) => {
@@ -70,20 +72,21 @@ const mapDispatchToProps = (dispatch) => ({
 const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
+    const [theme, setTheme] = useState('dark');
+    const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
     useEffect(() => {
         if (filter) {
             const filterDataItem = flatternData?.filter((item) => filterFunction(filter)(item?.menuTitle));
-            // console.log('🚀 ~ file: LeftSideBar.js:79 ~ useEffect ~ filterDataItem', filterDataItem);
             filterDataItem &&
                 setFilterMenuList(
                     filterDataItem?.map((item) => {
@@ -94,62 +97,17 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    const recursiveMenu = (data) => {
-        return data.map(({ menuTitle,menuId,menuIconUrl,subMenu = [] }) => {
-          //console.log({ menuTitle,menuId, subMenu });
-          if (!subMenu?.length) {
-            return <Item key={menuId} >{menuTitle}</Item>;
-          }
-          return (
-            <SubMenu key={menuId} title={menuTitle} >
-              {recursiveMenu(subMenu)}
-            </SubMenu>
-          );
+    const prepareMenuItem = (data) => {
+        return data.map(({ menuTitle, menuId, subMenu = [] }) => {
+            return subMenu?.length ? (
+                <SubMenu key={menuId} title={prepareLink(menuTitle, menuId, true)}>
+                    {prepareMenuItem(subMenu)}
+                </SubMenu>
+            ) : (
+                <Item key={menuId}>{prepareLink(menuTitle, menuId, true)}</Item>
+            );
         });
-      };
-
-      console.log(menuData,'menuData');
-
-    // for(let index = 0; index < menuData.length; index++ ){
-    //     dynamicFun(menuData);
-    // }
-
-//     const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
-//     console.log(menuData,'17FEBBBBB')
-//    // const items = [];
-//     if (menuData && menuData.length > 0) {
-//         for (let index = 0; index < menuData.length; index++) { 
-//             const element = menuData[index];
-//             const menuId = element?.menuId;
-
-//             if (filter ? checkData(menuId) : true) {
-//                 const childMenu = element['subMenu'];
-//                 if (childMenu && childMenu.length > 0) {
-//                     const childMenuData = [];
-//                     for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
-//                         const childElement = childMenu[childIndex];
-//                         const grandMenu = childElement['subMenu'];
-//                         if (grandMenu && grandMenu.length > 0) {
-//                             const grandMenuData = [];
-//                             for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
-//                                 const grandElement = grandMenu[grandIndex];
-//                                 grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId, true), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
-//                             }
-//                             childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
-//                         } else {
-//                             childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
-//                         }
-//                     }
-//                     items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
-//                 } else {
-//                     items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
-//                 }
-//             }
-//         }
-//     }
-
-
-    const [theme, setTheme] = useState('dark');
+    };
 
     const onSearch = (value) => {
         setFilter(value);
@@ -158,8 +116,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     const onSubmit = (value, type) => {
         setCollapsed(value);
     };
-
-    const [current, setCurrent] = useState('mail');
 
     const onClick = (e) => {
         setCurrent(e.key);
@@ -174,31 +130,42 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     return (
         <>
-            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : '250px'} collapsible className={styles.leftMenuBox1} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
-                {/* <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100%' : collapsed ? 95 : 250} collapsible className="light-bg" collapsed={collapsed} onCollapse={(value) => onSubmit(value)} style={{ height: '100vh', position: 'fixed', zIndex:'999', left: 0, top: 0, bottom: 0, backgroundColor: '#f4f4f4', boxShadow:  isMobile ? 'none' : '-10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%)' }}> */}
+            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100vw' : '250px'} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 <div className={styles.logoContainer}>
                     <Row>
-                        <Col xs={22} sm={22} md={24} lg={24} xl={24}>
+                        <Col xs={21} sm={21} md={24} lg={24} xl={24}>
                             <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
                                 {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
                                 <div className="cls"></div>
                             </Link>
                         </Col>
-                        <Col xs={2} sm={2} md={0} lg={0} xl={0} className={styles.closeButton}>
+                        <Col xs={3} sm={3} md={0} lg={0} xl={0} className={styles.closeButton}>
                             <RxCross2 onClick={setCollapsed} />
                         </Col>
                     </Row>
-
                     {!collapsed && <Input placeholder="Search" allowClear onChange={onSearch} />}
                 </div>
 
-                {/* {console.log(items,'177777FEBBb')} */}
-                <Menu  mode="inline" inlineIndent={15}  >
-                    {recursiveMenu(menuData)}
+                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()}>
+                    {prepareMenuItem(menuData)}
                 </Menu>
-                {/* onClick={onClick} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={_tempArr} */}
 
-                <div className={styles.changeTheme} onClick={setTheme}>
+                <div
+                    className={styles.changeTheme}
+                    onClick={setTheme}
+                    style={{
+                        paddingLeft: isMobile ? (collapsed ? '0px' : '20px') : '20px',
+                        position: isMobile
+                            ? collapsed
+                                ? setTimeout(() => {
+                                      return 'relative';
+                                  }, 500)
+                                : setTimeout(() => {
+                                      return 'absolute';
+                                  }, 1000)
+                            : 'absolute',
+                    }}
+                >
                     {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
                     {!collapsed && 'Change Theme'}
                 </div>
