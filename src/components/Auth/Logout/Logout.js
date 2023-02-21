@@ -6,6 +6,7 @@ import { ROUTING_LOGIN } from 'constants/routing';
 import * as IMAGES from 'assets';
 
 import styles from '../Auth.module.css';
+import { Link } from 'react-router-dom';
 
 const Logout = (props) => {
     return (
@@ -27,13 +28,17 @@ const Logout = (props) => {
                                         <div className={styles.logOutHeading}>
                                             <h4>Thank You!</h4>
                                             <div className={styles.logOutSubHeading}>You are successfully logged out.</div>
-                                            <div className={styles.logOutSubHeading}>Please <strong>Close</strong> the browser to
+                                            <div className={styles.logOutSubHeading}>
+                                                Please <strong>Close</strong> the browser to
                                                 <strong>&nbsp;Exit</strong> or click the <strong>Login</strong> button to
-                                                <strong>&nbsp;Login</strong> again.</div>
+                                                <strong>&nbsp;Login</strong> again.
+                                            </div>
                                         </div>
-                                        <Button className={styles.button} type="primary" htmlType="link" href={ROUTING_LOGIN}>
-                                            Login
-                                        </Button>
+                                        <Link to={ROUTING_LOGIN}>
+                                            <Button className={styles.button} type="primary" htmlType="link">
+                                                Login
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);    
+    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
@@ -87,7 +87,8 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
             onOk() {
                 doLogout({
                     successAction: () => {
-                        navigate(routing.ROUTING_LOGOUT);
+                        window.location.href = routing.ROUTING_LOGOUT;
+                        // navigate(routing.ROUTING_LOGOUT);
                     },
                     userId,
                 });
@@ -126,12 +127,12 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
                     title: 'Lajpat Nagar',
                 }),
                 customMenuLink({
-                    title: 'Nodia',
+                    title: 'Noida',
                 }),
             ],
         }),
         customMenuLink({
-            title: 'Finacial Year',
+            title: 'Financial Year',
         }),
     ];
 

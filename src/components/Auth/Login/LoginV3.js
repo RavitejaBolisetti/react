@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message } from 'antd';
 import { FaUser, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { AiOutlineLock } from 'react-icons/ai';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
@@ -13,8 +13,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
-import { Captcha } from './Captcha';
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import ReactRecaptcha3 from 'react-google-recaptcha3';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -52,18 +51,26 @@ const Login = (props) => {
     const [captcha, setCaptcha] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const navigate = useNavigate();
     useEffect(() => {
-        doCloseLoginError();
+        ReactRecaptcha3.init('6LedAJEUAAAAAPttxeFNp6ZtAvKGI8D9gESE-hl3').then((status) => {
+            console.log(status, 'status');
+        });
 
-        form.resetFields();
-        setCaptcha('');
+        return () => {
+            ReactRecaptcha3.destroy();
+            form.resetFields();
+            doCloseLoginError();
+            setCaptcha('');
+        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const navigate = useNavigate();
+
     const onSuccess = () => {
         setIsLoading(false);
+        ReactRecaptcha3.destroy();
         navigate(ROUTING_DASHBOARD);
     };
 
@@ -73,27 +80,22 @@ const Login = (props) => {
 
     const onFinish = (values) => {
         setIsLoading(true);
-        if (captcha) {
-            doLogin(values, loginPageIsLoading, onSuccess, onError);
-        } else {
-            message.error('Please select Captcha');
-            setIsLoading(false);
-        }
+        ReactRecaptcha3.getToken().then(
+            (captchaCode) => {
+                setCaptcha(captchaCode);
+                if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
+            },
+            (error) => {
+                message.error(error || 'Please select Captcha');
+                setIsLoading(false);
+            }
+        );
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
 
-    const onReCAPTCHAChange = async (captchaCode) => {
-        // If the reCAPTCHA code is null or undefined indicating that
-        // the reCAPTCHA was expired then return early
-        if (!captchaCode) {
-            return;
-        } else {
-            setCaptcha(captchaCode);
-        }
-    };
     return (
         <>
             <div className={styles.loginSection}>
@@ -131,14 +133,7 @@ const Login = (props) => {
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <GoogleReCaptchaProvider reCaptchaKey="6LfOeYYkAAAAANjXUTNE7eQ35AE7makpguZ6RiM7">
-                                                            <Captcha />
-                                                        </GoogleReCaptchaProvider>
-                                                        {/* <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITE_KEY} onChange={onReCAPTCHAChange} /> */}
-                                                    </Col>
-                                                </Row>
+
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit" loading={isLoading}>
@@ -146,7 +141,6 @@ const Login = (props) => {
                                                         </Button>
                                                     </Col>
                                                 </Row>
-                                                {/* <div className="hr"></div> */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
