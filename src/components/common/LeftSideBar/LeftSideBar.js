@@ -104,6 +104,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
+                // items.push(getMenuItem(prepareLink(menuTitle, menuId, true), menuId, getMenuValue(MenuConstant, menuId, 'icon')))
                 <Item key={menuId}>{prepareLink(menuTitle, menuId, true)}</Item>
             );
         });
@@ -155,15 +156,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     onClick={setTheme}
                     style={{
                         paddingLeft: isMobile ? (collapsed ? '0px' : '20px') : '20px',
-                        position: isMobile
-                            ? collapsed
-                                ? setTimeout(() => {
-                                      return 'relative';
-                                  }, 500)
-                                : setTimeout(() => {
-                                      return 'absolute';
-                                  }, 1000)
-                            : 'absolute',
+                        // position: isMobile
+                        //     ? collapsed
+                        //         ? setTimeout(() => {
+                        //               return 'relative';
+                        //           }, 500)
+                        //         : setTimeout(() => {
+                        //               return 'absolute';
+                        //           }, 1000)
+                        //     : 'absolute',
                     }}
                 >
                     {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
