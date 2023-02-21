@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
@@ -92,19 +91,7 @@ const data = [
     },
 ];
 
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
 
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
 
 export const HierarchyAttributeMasterBase = (props) => {
     const [isFavourite, setFavourite] = useState(false);
@@ -129,4 +116,4 @@ export const HierarchyAttributeMasterBase = (props) => {
     );
 };
 
-export const HierarchyAttributeMaster = connect(mapStateToProps, null)(withLayoutMaster(HierarchyAttributeMasterBase));
+export const HierarchyAttributeMaster = withLayoutMaster(HierarchyAttributeMasterBase);
