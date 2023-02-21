@@ -143,6 +143,10 @@
 }
 
 
+.displayNone,
+.menuIcon {
+    display: none;
+}
 
 @media (min-width: 997px) and (max-width: 1280px) {
     .headerLeft {
@@ -261,13 +265,5 @@
 
     .welcomeUser {
         margin-top: -10px;
-    }
-}
-
-@media (max-width: 576px) {
-
-    .displayNone,
-    .menuIcon {
-        display: none;
     }
 }
