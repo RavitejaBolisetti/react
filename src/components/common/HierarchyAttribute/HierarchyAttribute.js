@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
-import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
+import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
+import { AiOutlineDelete, } from 'react-icons/ai';
 
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { Table } from 'antd';
@@ -62,7 +63,19 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
     let inputField = '';
     switch (inputType) {
         case 'switch':
-            inputField = <Switch defaultChecked={record[dataIndex]} readOnly={record?.readOnly} disabled={record?.readOnly} checkedChildren="Yes" unCheckedChildren="No" />;
+            inputField = (
+                <Form.Item
+                    style={{
+                        margin: 0,
+                    }}
+                    name={dataIndex+index}
+                    // name={dataIndex[index]}
+                    rules={[validateRequiredInputField(`${title}`)]}
+                    initialValue={record[dataIndex]}
+                >
+                    <Switch defaultChecked={record[dataIndex]} readOnly={record?.readOnly} disabled={record?.readOnly} checkedChildren="Yes" unCheckedChildren="No" />
+                </Form.Item>
+            );
             break;
         default:
             inputField = (
@@ -70,7 +83,8 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
                     style={{
                         margin: 0,
                     }}
-                    name={dataIndex[index]}
+                    name={dataIndex+index}
+                    // name={dataIndex[index]}
                     rules={[validateRequiredInputField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
@@ -157,7 +171,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     const handleAdd = () => {
         const newData = {
-            id: Math.random(0, 1000) * 100,
+            id: Math.random() * 1000,
             hierarchyAttribueId: '',
             hierarchyAttribueCode: '',
             hierarchyAttribueName: '',
@@ -177,10 +191,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         setRowsData(updatedDataItem);
     };
 
-    const deleteTableRows = (index) => {
-        console.log('🚀 ~ file: HierarchyAttribute.js:183 ~ deleteTableRows ~ index:', index, data);
-        const updatedDataItem = data && data.filter((item) => console.log('item', item.id, 'index', index) || +item.id !== +index);
-        setRowsData(updatedDataItem);
+    const deleteTableRows = (id) => {
+        const updatedData = [...data];
+        const index = updatedData.findIndex(el => el.id === id)
+        updatedData.splice(Number(index), 1);
+        setRowsData([...updatedData]);
     };
 
     const tableColumn = [];
@@ -253,9 +268,9 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {<EditOutlined disabled={editingKey !== ''} onClick={() => edit(record)} />}
-                        {!record?.hierarchyAttribueId && <DeleteOutlined onClick={() => deleteTableRows(record?.id)} />}
-                        {/* {!record?.hierarchyAttribueId && <DeleteOutlined onClick={() => showConfirm(index)} />} */}
+                        {<FaEdit disabled={editingKey !== ''} onClick={() => edit(record)} />}
+                        {/* {!record?.hierarchyAttribueId && <DeleteOutlined onClick={() => deleteTableRows(record?.id)} />} */}
+                        {!record?.hierarchyAttribueId && <FaTrashAlt onClick={() => showConfirm(record?.id)} />}
                     </Space>
                 );
             },
@@ -283,6 +298,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     // on Save table data
     const onFinish = (values) => {
+        console.log("287 values form  onFinish", values)
+
+
+        return;
+
         const onSuccess = (res) => {
             form.resetFields();
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
@@ -301,7 +321,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
         console.log('DATA ON SAVE', reqData);
 
-        return;
 
         // saveData({ data: [values ], setIsLoading: listShowLoading, userId, onError, onSuccess });
 
