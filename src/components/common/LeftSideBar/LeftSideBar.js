@@ -23,6 +23,8 @@ import { withSpinner } from 'components/withSpinner';
 const { Search } = Input;
 const { Sider } = Layout;
 
+const { SubMenu, Item } = Menu;
+
 const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
@@ -92,38 +94,61 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
-    const items = [];
-    if (menuData && menuData.length > 0) {
-        for (let index = 0; index < menuData.length; index++) {
-            const element = menuData[index];
-            const menuId = element?.menuId;
+    const recursiveMenu = (data) => {
+        return data.map(({ menuTitle,menuId,menuIconUrl,subMenu = [] }) => {
+          //console.log({ menuTitle,menuId, subMenu });
+          if (!subMenu?.length) {
+            return <Item key={menuId} >{menuTitle}</Item>;
+          }
+          return (
+            <SubMenu key={menuId} title={menuTitle} >
+              {recursiveMenu(subMenu)}
+            </SubMenu>
+          );
+        });
+      };
 
-            if (filter ? checkData(menuId) : true) {
-                const childMenu = element['subMenu'];
-                if (childMenu && childMenu.length > 0) {
-                    const childMenuData = [];
-                    for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
-                        const childElement = childMenu[childIndex];
-                        const grandMenu = childElement['subMenu'];
-                        if (grandMenu && grandMenu.length > 0) {
-                            const grandMenuData = [];
-                            for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
-                                const grandElement = grandMenu[grandIndex];
-                                grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId, true), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
-                            }
-                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
-                        } else {
-                            childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
-                        }
-                    }
-                    items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
-                } else {
-                    items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
-                }
-            }
-        }
-    }
+      console.log(menuData,'menuData');
+
+    // for(let index = 0; index < menuData.length; index++ ){
+    //     dynamicFun(menuData);
+    // }
+
+//     const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
+//     console.log(menuData,'17FEBBBBB')
+//    // const items = [];
+//     if (menuData && menuData.length > 0) {
+//         for (let index = 0; index < menuData.length; index++) { 
+//             const element = menuData[index];
+//             const menuId = element?.menuId;
+
+//             if (filter ? checkData(menuId) : true) {
+//                 const childMenu = element['subMenu'];
+//                 if (childMenu && childMenu.length > 0) {
+//                     const childMenuData = [];
+//                     for (let childIndex = 0; childIndex < childMenu.length; childIndex++) {
+//                         const childElement = childMenu[childIndex];
+//                         const grandMenu = childElement['subMenu'];
+//                         if (grandMenu && grandMenu.length > 0) {
+//                             const grandMenuData = [];
+//                             for (let grandIndex = 0; grandIndex < grandMenu.length; grandIndex++) {
+//                                 const grandElement = grandMenu[grandIndex];
+//                                 grandMenuData.push(getMenuItem(prepareLink(grandElement.menuTitle, grandElement.menuId, true), grandElement.menuId, getMenuValue(MenuConstant, grandElement.menuId, 'icon')));
+//                             }
+//                             childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon'), grandMenuData));
+//                         } else {
+//                             childMenuData.push(getMenuItem(prepareLink(childElement.menuTitle, childElement.menuId, true), childElement.menuId, getMenuValue(MenuConstant, childElement.menuId, 'icon')));
+//                         }
+//                     }
+//                     items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon'), childMenuData));
+//                 } else {
+//                     items.push(getMenuItem(prepareLink(element.menuTitle, element.menuId), element.menuId, getMenuValue(MenuConstant, element.menuId, 'icon')));
+//                 }
+//             }
+//         }
+//     }
+
+
     const [theme, setTheme] = useState('dark');
 
     const onSearch = (value) => {
@@ -164,10 +189,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                         </Col>
                     </Row>
 
-                    {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
+                    {!collapsed && <Input placeholder="Search" allowClear onChange={onSearch} />}
                 </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items}/>
+                {/* {console.log(items,'177777FEBBb')} */}
+                <Menu  mode="inline" inlineIndent={15}  >
+                    {recursiveMenu(menuData)}
+                </Menu>
+                {/* onClick={onClick} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={_tempArr} */}
 
                 <div className={styles.changeTheme} onClick={setTheme}>
                     {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
