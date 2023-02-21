@@ -31,7 +31,7 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
     const pagePath = location.pathname;
 
     useEffect(() => {
-        !isLoggedIn && pagePath === ROUTING_LOGOUT ? navigate(ROUTING_LOGOUT) : !isLoggedIn ? navigate(ROUTING_LOGIN) : navigate(ROUTING_DASHBOARD);
+        // !isLoggedIn && pagePath === ROUTING_LOGOUT ? navigate(ROUTING_LOGOUT) : !isLoggedIn ? navigate(ROUTING_LOGIN) : navigate(ROUTING_DASHBOARD);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
