@@ -7,6 +7,7 @@ import * as IMAGES from 'assets';
 
 import styles from '../Auth.module.css';
 import { Link } from 'react-router-dom';
+import Footer from '../Footer';
 
 const Logout = (props) => {
     return (
@@ -48,23 +49,7 @@ const Logout = (props) => {
                     </Row>
                 </div>
             </div>
-            <div className={styles.logOutFooter}>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <div>
-                            <a>Terms of use</a>
-                            <a>About us</a>
-                            <a>Disclaimer</a>
-                            <a>Contact us</a>
-                        </div>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <div className={styles.floatRight}>
-                            <span>&copy; 2023 ROBIN. All Rights Reserved.</span>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+            <Footer />
         </div>
     );
 };

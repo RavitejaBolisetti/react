@@ -12,6 +12,7 @@ import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import { Link } from 'react-router-dom';
+import Footer from '../Footer';
 
 const ForgotPassword = (props) => {
     const [form] = Form.useForm();
@@ -84,11 +85,15 @@ const ForgotPassword = (props) => {
                                                             <h1>Congratulations!</h1>
                                                             <h3>Password changed successfully.</h3>
                                                             {/* <div className={styles.logOutSubHeading}>Password changed successfully.</div> */}
-                                                            <div className={styles.logOutSubHeading}>Please click the <strong>Login</strong> button to <br></br> <strong>&nbsp;Login</strong> again.</div>
+                                                            <div className={styles.logOutSubHeading}>
+                                                                Please click the <strong>Login</strong> button to <br></br> <strong>&nbsp;Login</strong> again.
+                                                            </div>
                                                         </div>
-                                                        <Button className={styles.button} type="primary" htmlType="link" href={ROUTING_LOGIN}>
-                                                            Login
-                                                        </Button>
+                                                        <Link to={ROUTING_LOGIN}>
+                                                            <Button className={styles.button} type="primary" htmlType="link">
+                                                                Login
+                                                            </Button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,7 +163,11 @@ const ForgotPassword = (props) => {
                                                                                     }}
                                                                                 >
                                                                                     {({ remainingTime }) => {
-                                                                                        return <div className={styles.clock}>{remainingTime} <br></br>Seconds</div>;
+                                                                                        return (
+                                                                                            <div className={styles.clock}>
+                                                                                                {remainingTime} <br></br>Seconds
+                                                                                            </div>
+                                                                                        );
                                                                                     }}
                                                                                 </CountdownCircleTimer>{' '}
                                                                             </>
@@ -200,16 +209,14 @@ const ForgotPassword = (props) => {
                                                                     <Button onClick={handleChangedPassword} className={styles.button} type="primary" htmlType="submit">
                                                                         Submit
                                                                     </Button>
+                                                                ) : validate ? (
+                                                                    <Button onClick={handleNewPassword} className={styles.button} type="primary" htmlType="submit">
+                                                                        Validate OTP
+                                                                    </Button>
                                                                 ) : (
-                                                                    validate ? (
-                                                                        <Button onClick={handleNewPassword} className={styles.button} type="primary" htmlType="submit">
-                                                                            Validate OTP
-                                                                        </Button>
-                                                                    ) : (
-                                                                        <Button onClick={handleSendOtp} className={styles.button} type="primary" htmlType="submit">
-                                                                            Generate OTP
-                                                                        </Button>
-                                                                    )
+                                                                    <Button onClick={handleSendOtp} className={styles.button} type="primary" htmlType="submit">
+                                                                        Generate OTP
+                                                                    </Button>
                                                                 )}
                                                             </Col>
                                                         </Row>
@@ -230,46 +237,28 @@ const ForgotPassword = (props) => {
                         </Form>
                     </div>
                 </div>
-                {
-                    OTPsent && (
-                        <div className={styles.errorBoxContainer}>
-                            <h5>
-                                <span className={styles.infoIcon}>
-                                    <FaInfoCircle size={18} />
-                                </span>
-                                <span className={styles.errorTitle}>
-                                    {/* {errorTitle} */}
-                                    Notification
-                                </span>
-                                <span className={styles.loginErrorClose}>
-                                    <FaTimes size={18} />
-                                </span>
-                            </h5>
-                            <div className="form_card">
-                                {/* <p>{errorMessage}</p> */}
-                                <p>OTP sent to your registered mobile number and/or email ID</p>
-                            </div>
+                {OTPsent && (
+                    <div className={styles.errorBoxContainer}>
+                        <h5>
+                            <span className={styles.infoIcon}>
+                                <FaInfoCircle size={18} />
+                            </span>
+                            <span className={styles.errorTitle}>
+                                {/* {errorTitle} */}
+                                Notification
+                            </span>
+                            <span className={styles.loginErrorClose}>
+                                <FaTimes size={18} />
+                            </span>
+                        </h5>
+                        <div className="form_card">
+                            {/* <p>{errorMessage}</p> */}
+                            <p>OTP sent to your registered mobile number and/or email ID</p>
                         </div>
-                    )
-                }
-                <div className={styles.loginMainFooter}>
-                    <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <div>
-                                <a>Terms of use</a>
-                                <a>About us</a>
-                                <a>Disclaimer</a>
-                                <a>Contact us</a>
-                            </div>
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <div className={styles.floatRight}>
-                                <span>&copy; 2023 ROBIN. All Rights Reserved.</span>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            </div >
+                    </div>
+                )}
+                <Footer />
+            </div>
         </>
     );
 };

@@ -15,6 +15,7 @@ import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
+import Footer from '../Footer';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -99,7 +100,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     return (
@@ -131,9 +132,9 @@ const Login = (props) => {
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
                                                             {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
                                                             {/* As discussed with Rahul */}
-                                                        </Form.Item >
-                                                    </Col >
-                                                </Row >
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
@@ -155,13 +156,13 @@ const Login = (props) => {
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
                                                         </div>
                                                     </Col>
-                                                </Row >
-                                            </div >
-                                        </div >
-                                    </div >
-                                </Col >
-                            </Row >
-                        </Form >
+                                                </Row>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Form>
                         {isError && (
                             <div className={styles.errorBoxContainer}>
                                 <h5>
@@ -178,26 +179,10 @@ const Login = (props) => {
                                 </div>
                             </div>
                         )}
-                    </div >
-                </div >
-                <div className={styles.loginMainFooter}>
-                    <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <div>
-                                <a>Terms of use</a>
-                                <a>About us</a>
-                                <a>Disclaimer</a>
-                                <a>Contact us</a>
-                            </div>
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <div className={styles.floatRight}>
-                                <span>&copy; 2023 ROBIN. All Rights Reserved.</span>
-                            </div>
-                        </Col>
-                    </Row>
+                    </div>
                 </div>
-            </div >
+                <Footer />
+            </div>
         </>
     );
 };

@@ -17,6 +17,10 @@ p {
     float: right;
 }
 
+.textCenter {
+    text-align: center
+}
+
 .loginSection .center {
     display: flex;
     flex-direction: column;
