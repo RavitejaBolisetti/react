@@ -94,7 +94,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             onOk() {
                 doLogout({
                     successAction: () => {
-                        navigate(routing.ROUTING_LOGOUT);
+                        window.location.href = routing.ROUTING_LOGOUT;
+                        // navigate(routing.ROUTING_LOGOUT);
                     },
                     userId,
                 });
@@ -133,12 +134,12 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                     title: 'Lajpat Nagar',
                 }),
                 customMenuLink({
-                    title: 'Nodia',
+                    title: 'Noida',
                 }),
             ],
         }),
         customMenuLink({
-            title: 'Finacial Year',
+            title: 'Financial Year',
         }),
     ];
 
