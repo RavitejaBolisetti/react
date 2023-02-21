@@ -33,7 +33,11 @@ const mapStateToProps = (state) => {
     };
 
     if (isError || returnValue.isUnauthenticated) {
-        returnValue = { ...returnValue, errorTitle: authApiCall.title, errorMessage: authApiCall.message };
+        returnValue = {
+            ...returnValue,
+            errorTitle: authApiCall.title,
+            errorMessage: authApiCall.message,
+        };
     }
 
     return returnValue;
@@ -139,7 +143,15 @@ const Login = (props) => {
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit" loading={isLoading}>
+                                                        <Button
+                                                            className={styles.button}
+                                                            style={{
+                                                                marginTop: '20px',
+                                                            }}
+                                                            type="primary"
+                                                            htmlType="submit"
+                                                            loading={isLoading}
+                                                        >
                                                             Login
                                                         </Button>
                                                     </Col>
