@@ -1,23 +1,7 @@
 import React, { useState } from 'react';
-
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { connect } from 'react-redux';
 import { ProductHierarchy } from 'components/common/ProductHierarchy/ProductHierarchy';
 import { PageHeader } from '../PageHeader';
-
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
 
 export const ProductHierarchyBase = () => {
     const [isAttributeVisible, setAttributeVisible] = useState(false);
@@ -47,4 +31,4 @@ export const ProductHierarchyBase = () => {
     );
 };
 
-export const ProductHierarchyPage = connect(mapStateToProps, null)(withLayoutMaster(ProductHierarchyBase));
+export const ProductHierarchyPage = withLayoutMaster(ProductHierarchyBase);

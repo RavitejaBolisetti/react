@@ -33,4 +33,4 @@ const DashboardPageBase = ({ props }) => {
     return isLoading ? <DashboardSkelton /> : <Dashboard {...props} />;
 };
 
-export const DashboardPage = connect(mapStateToProps, null)(withLayoutMaster(DashboardPageBase));
+export const DashboardPage = withLayoutMaster(DashboardPageBase);
