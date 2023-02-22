@@ -107,7 +107,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                                 View Product Detail
                             </Button>
                         )} */}
-                        {visibleChangeHistory &&
+                        {/* {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
                                     <FaHistory className={styles.buttonIcon} />
@@ -118,7 +118,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                                     <FaHistory className={styles.buttonIcon} />
                                     Change History
                                 </Button>
-                            ))}
+                            ))} */}
 
                         <Button danger onClick={handleBack}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
