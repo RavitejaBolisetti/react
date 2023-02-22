@@ -29,14 +29,14 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
-const prepareLink = (title, id, tooltip = true, icon = true) =>
+const prepareLink = (title, id, tooltip = true, icon = true, showTitle = true) =>
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
-            {icon && getMenuValue(MenuConstant, id, 'icon')} {title}
+            <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span> <span className={styles.menuTitle}>{showTitle && title}</span>
         </Link>
     ) : (
         <div title={tooltip ? title : ''}>
-            {icon && getMenuValue(MenuConstant, id, 'icon')} {title}
+            <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span> <span className={styles.menuTitle}>{showTitle && title}</span>
         </div>
     );
 
