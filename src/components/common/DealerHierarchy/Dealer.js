@@ -13,6 +13,7 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 const mapStateToProps = (state) => {
     const {
@@ -81,7 +82,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Dealer Hierarchy' });
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES.DEALER_HIERARCHY.KEY });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
