@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 };
 
 export const CriticalityGroupPageBase = (props) => {
-    const pageTitle = 'Criticality Group';
+    const pageTitle = 'Application Criticality Group Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
