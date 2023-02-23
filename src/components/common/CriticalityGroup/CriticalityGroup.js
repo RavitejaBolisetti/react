@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table } from 'antd';
-import { validateRequiredInputField,validateRequiredSelectField } from 'utils/validation';
+import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, Empty } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
-import { FaSave,FaUserPlus, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled, HistoryOutlined } from '@ant-design/icons';
-
-
+import { FaSave, FaUserPlus, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AllowTimingsForm } from './AllowTimingsForm';
 import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-
+import DrawerUtil from './DrawerUtil';
 
 const { Option } = Select;
 const { confirm } = Modal;
 const { success: successModel, error: errorModel } = Modal;
+const { Search } = Input;
 
 const showConfirm = () => {
     confirm({
@@ -33,29 +33,6 @@ const showConfirm = () => {
         },
     });
 };
-
-const initialData = [
-    {
-        id: '1',
-        hierarchyAttribueId: '1q',
-        hierarchyAttribueCode: '1234',
-        hierarchyAttribueName: 'Dev attribute',
-        duplicateAllowedAtAttributerLevelInd: 'N',
-        duplicateAllowedAtDifferentParent: 'Y',
-        isChildAllowed: 'Y',
-        status: 'Y',
-    },
-    {
-        id: '2',
-        hierarchyAttribueId: '2q',
-        hierarchyAttribueCode: '3445',
-        hierarchyAttribueName: 'dummy attribute',
-        duplicateAllowedAtAttributerLevelInd: true,
-        duplicateAllowedAtDifferentParent: false,
-        isChildAllowed: true,
-        status: true,
-    },
-];
 
 // const mapStateToProps = (state) => {
 //     const {
@@ -97,7 +74,6 @@ const initialData = [
 // });
 
 export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {
-
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
@@ -128,23 +104,10 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         });
     };
 
-
-    const [data, setRowsData] = useState(initialData);
-    const [count, setCount] = useState(data.length || 0);
-
+    const [data, setRowsData] = useState();
+    const [drawer, setDrawer] = useState(false);
     const handleAdd = () => {
-        const newData = {
-            // id: Math.random() * 1000,
-            hierarchyAttribueId: '',
-            hierarchyAttribueCode: '',
-            hierarchyAttribueName: '',
-            duplicateAllowedAtAttributerLevelInd: 'N',
-            duplicateAllowedAtDifferentParent: 'N',
-            isChildAllowed: 'N',
-            status: 'N',
-        };
-        setRowsData([...data, {...newData, id: 'td-'+count}]);
-        setCount(count + 1);
+        setDrawer(true);
     };
 
     const edit = (record) => {
@@ -165,7 +128,6 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'Srl',
-           
         })
     );
 
@@ -173,7 +135,6 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupId',
-           
         })
     );
 
@@ -181,7 +142,6 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
-            
         })
     );
 
@@ -189,17 +149,15 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         tblPrepareColumns({
             title: 'Default Group?',
             dataIndex: 'defaultGroup',
-           
+            render: () => <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />,
         })
     );
-
- 
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            
+            render: () => <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />,
         })
     );
 
@@ -219,7 +177,7 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
 
     // on Save table data
     const onFinish = (values) => {
-      console.log('heloo')
+        console.log('heloo');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -230,35 +188,30 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         console.log('reset called');
         form.resetFields();
     };
- 
+
     return (
         <>
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                
-
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table dataSource={data} pagination={false} columns={tableColumn} bordered />
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                        <Search
+                            placeholder="Search"
+                            style={{
+                                width: 200,
+                            }}
+                        />
+                    </Col>
+                    <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
+                        <Button danger onClick={handleAdd}>
+                            <AiOutlinePlus className={styles.buttonIcon} />
+                            Add Group
+                        </Button>
                     </Col>
                 </Row>
-
-                <Row gutter={20} style={{ marginTop: '20px' }}>
-                    <Col xs={24} sm={16} md={14} lg={12} xl={12}>
-                        <Button danger onClick={handleAdd}>
-                            <FaUserPlus className={styles.buttonIcon} />
-                            Add Row
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={16} md={14} lg={12} xl={12} className={styles.buttonContainer}>
-                        <Button htmlType="submit" danger>
-                            <FaSave className={styles.buttonIcon} />
-                            Save
-                        </Button>
-
-                        <Button danger onClick={handleReset}>
-                            <FaUndo className={styles.buttonIcon} />
-                            Reset
-                        </Button>
+                <DrawerUtil open={drawer} />
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn} bordered />
                     </Col>
                 </Row>
             </Form>
