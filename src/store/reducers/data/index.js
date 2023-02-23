@@ -3,10 +3,12 @@ import { Menu } from './menu';
 import { Geo } from './geo';
 import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
+import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 
 export const data = combineReducers({
     Menu,
     Geo,
     ProductHierarchy,
     HierarchyAttributeMaster,
+    ManufacturerOrgHierarchy,
 });

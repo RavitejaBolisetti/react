@@ -10,6 +10,7 @@ export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo');
 export const ROUTING_COMMON_PRODUCT_MASTER = ROUTING_COMMON.concat('product-master');
 export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('product-hierarchy');
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
+export const ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY = ROUTING_COMMON.concat('manufacturer-organization-hierarchy');
 
 export const ROUTING_USER = '/user/';
 export const ROUTING_USER_PROFILE = ROUTING_USER.concat('profile');
