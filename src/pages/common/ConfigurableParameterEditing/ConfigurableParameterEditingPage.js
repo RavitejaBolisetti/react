@@ -1,9 +1,9 @@
 import React from 'react';
-import {ConfigParamEditMasterPage} from 'components/common/Configurable Parameter Editing'
+import { ConfigParamEditMasterPage } from 'components/common/ConfigurableParameterEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
-export const ConfigParamEdit = (props) => {
+export const ConfigurableParameterEditingBase = (props) => {
     const pageTitle = 'Configurable Parameter Editing';
     const pageHeaderData = {
         pageTitle,
@@ -20,4 +20,4 @@ export const ConfigParamEdit = (props) => {
     );
 };
 
-export const ConfigParamEditPage = withLayoutMaster(ConfigParamEdit);
+export const ConfigurableParameterEditingPage = withLayoutMaster(ConfigurableParameterEditingBase);
