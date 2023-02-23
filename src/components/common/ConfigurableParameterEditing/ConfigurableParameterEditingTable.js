@@ -8,7 +8,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 const { RangePicker } = DatePicker;
 let type;
-export const ConfigParamEditMasterPage = () => {
+export const ConfigurableParameterEditingTable = () => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -117,7 +117,6 @@ export const ConfigParamEditMasterPage = () => {
             render: () => [
                 <Space wrap>
                     <EditOutlined />
-
                     <DeleteOutlined onClick={showConfirm} />
                 </Space>,
             ],
@@ -134,6 +133,7 @@ export const ConfigParamEditMasterPage = () => {
                         <Input placeholder="Enter Data" />
                     </Form.Item>
                 );
+                break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY:
                 fieldType = (
                     <Form.Item name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
@@ -152,6 +152,8 @@ export const ConfigParamEditMasterPage = () => {
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
                 fieldType = (
                     <Select
+                        name="ConfigParamValues"
+                        rules={[validateRequiredSelectField('ConfigParamValues')]}
                         placeholder="Select"
                         options={[
                             { value: 'Y', label: 'Yes' },
@@ -175,16 +177,15 @@ export const ConfigParamEditMasterPage = () => {
             <Form onFinishFailed={onFinishFailed}>
                 <Table bordered dataSource={data} columns={defaultColumns} pagination={false} />
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                <Row gutter={20} className={styles.btnContainer}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.btnLeft}>
                         <Button danger onClick={handleAdd}>
                             <FaUserPlus className={styles.buttonIcon} />
                             Add Row
                         </Button>
                     </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.btnRight}>
                         <Button htmlType="submit" danger>
                             <FaSave className={styles.buttonIcon} />
                             Save

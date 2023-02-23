@@ -7,7 +7,7 @@ import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 const { RangePicker } = DatePicker;
 let type;
-export const ConfigParamEditMasterPage = () => {
+export const ConfigurableParameterEditing = () => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -68,7 +68,9 @@ export const ConfigParamEditMasterPage = () => {
             title: 'Control ID',
             dataIndex: 'ControlID',
             key: 'ControlID',
-
+           render:()=> (<Form.Item name="ControlID" rules={[validateRequiredInputField('ControlID')]}>
+            <Input placeholder="Enter Data" />
+            </Form.Item>),
             width: 200,
         },
         {
@@ -110,6 +112,22 @@ export const ConfigParamEditMasterPage = () => {
             key: 'ConfigParamValues',
             render: () => ConfigParamValue(),
             width: 200,
+        },
+        {
+            title: 'Role Group',
+            dataIndex: 'rolegroup',
+            key: 'rolegroup',
+            render:() => <><Form.Item name="rolegroup" rules={[validateRequiredSelectField('rolegroup')]}>
+            <Select
+            placeholder="Select"
+            options={[
+                { value: '1', label: 'Parameter Type 1' },
+                { value: '2', label: 'Parameter Type 2' },
+                { value: '3', label: 'Parameter Type 3' },
+                { value: '4', label: 'Parameter Type 4' },
+
+                ]}
+                /> </Form.Item></>
         },
         {
             title: 'Action',
@@ -175,50 +193,102 @@ export const ConfigParamEditMasterPage = () => {
         form.validateFields().then((values) => {});
     };
 
+    
     return (
         <>
-            <Button type="primary" onClick={showDrawer}>
-                Open
+            <Button danger onClick={showDrawer}>
+                        <FaUserPlus className={styles.buttonIcon} />
+                        Add Row
             </Button>
+            <Table bordered dataSource={data} columns={defaultColumns} pagination={false} />
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
                 onClose={onClose}
                 open={open}
                 width={500}
-                // extra={
-                //     <Space>
-                //         <Button onClick={onFinishFailed} htmlType="submit" danger>
-                //             <FaSave className={styles.buttonIcon} />
-                //             Save
-                //         </Button>
+                extra={
+                    <Space>
+                        <Button onClick={onFinishFailed} htmlType="submit" danger>
+                            <FaSave className={styles.buttonIcon} />
+                            Save
+                        </Button>
 
-                //         <Button danger>
-                //             <FaUndo className={styles.buttonIcon} />
-                //             Reset
-                //         </Button>
-                //     </Space>
-                // }
+                        <Button danger>
+                            <FaUndo className={styles.buttonIcon} />
+                            Reset
+                        </Button>
+                    </Space>
+                }
             >
-                <Form layout="vertical">
+                <Form layout="vertical" onClick={onFinishFailed}>
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item name="ControlID" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
                                 <Input placeholder="Enter Data" />
                             </Form.Item>
                         </Col>
+                        <Col span={12}>
+                            <Form.Item name="ControlDescription" label="Control Description" rules={[validateRequiredInputField('ControlDescription')]}>
+                                <Input placeholder="Enter Data" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                        <Form.Item name="ConfigParamType" label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                        <Select
+                            placeholder="Select Parameter Type"
+                            options={[
+                                { value: 'N', label: 'Number Range' },
+                                { value: 'T', label: 'Text' },
+                                { value: 'D', label: 'Date Range' },
+                                { value: 'B', label: 'Boolean' },
+                            ]}
+                            onChange={changeSelectOptionHandler}
+                        />
+                        </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="ConfigParamValues" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]} >
+                                {selected=='T'? (      
+                                     <Input placeholder="Enter Data" />                                  
+                                ):(selected == 'N'?(
+                                    <>
+                                    <InputNumber min={1} max={100} defaultValue={1} />
+                                    <InputNumber min={1} max={100} defaultValue={100} />
+                                    </>
+                                ):(selected == 'B' ?(
+                                    <Select
+                            placeholder="Select"
+                            options={[
+                                { value: 'Y', label: 'Yes' },
+                                { value: 'N', label: 'No' },
+                                ]}
+                                />
+                                ):(
+                                    <RangePicker /> 
+                                )))                                 
+                                }
+                            </Form.Item>
+                        </Col>
                     </Row>
 
-                    {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                    <Button danger onClick={handleAdd}>
-                        <FaUserPlus className={styles.buttonIcon} />
-                        Add Row
-                    </Button>
-                </Col>
-            </Row> */}
+                    
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}></Col>
+                        <Col span={12}>
+                        <Form.Item name="rolegroup" label="role group" rules={[validateRequiredSelectField('rolegroup')]}>
+                        <Select
+                            placeholder="Select"
+                            options={[
+                                { value: '1', label: 'Parameter Type 1' },
+                                { value: '2', label: 'Parameter Type 2' },
+                                { value: '3', label: 'Parameter Type 3' },
+                                { value: '4', label: 'Parameter Type 4' },
+
+                                ]}
+                                /> </Form.Item>
+                        </Col>
                     </Row>
                 </Form>
             </Drawer>

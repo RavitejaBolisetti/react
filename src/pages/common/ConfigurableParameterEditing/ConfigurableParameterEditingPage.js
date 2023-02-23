@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigParamEditMasterPage } from 'components/common/ConfigurableParameterEditing';
+import { ConfigurableParameterEditing, ConfigurableParameterEditingTable } from 'components/common/ConfigurableParameterEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
@@ -15,7 +15,8 @@ export const ConfigurableParameterEditingBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <ConfigParamEditMasterPage />
+            <ConfigurableParameterEditing />
+            {/* <ConfigurableParameterEditingTable /> */}
         </>
     );
 };

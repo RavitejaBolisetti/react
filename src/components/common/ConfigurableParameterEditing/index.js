@@ -1,3 +1,4 @@
-import { ConfigParamEditMasterPage } from './ConfigParamEditing';
+import { ConfigurableParameterEditing } from './ConfigurableParameterEditing';
+import { ConfigurableParameterEditingTable } from './ConfigurableParameterEditingTable';
 
-export { ConfigParamEditMasterPage };
+export { ConfigurableParameterEditing, ConfigurableParameterEditingTable };
