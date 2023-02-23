@@ -14,6 +14,12 @@
     padding-top: 12px;
 }
 
+.headerLeft .userAvatar .userAvatarInside {
+    background-color: #808080;
+    font-size: 20px;
+    line-height: 35px;
+}
+
 .userText {
     float: right;
     padding-top: 16px;
@@ -103,6 +109,12 @@
     margin-top: -20px;
 }
 
+.welcomeUser .userAvatar .userAvatarInside {
+    background-color: #808080;
+    font-size: 16px;
+    line-height: 30px;
+}
+
 .welcomeUser .navLink {
     color: #0B0B0C;
     padding: 1px !important;
@@ -130,31 +142,128 @@
     margin-top: 6px;
 }
 
-@media (max-width: 576px) {
+
+.displayNone,
+.menuIcon {
+    display: none;
+}
+
+@media (min-width: 997px) and (max-width: 1280px) {
     .headerLeft {
         padding-left: 20px;
+    }
+
+    .userAvatar {
+        padding-top: 12px;
+    }
+
+    .dealerName {
+        font-size: 18px;
+    }
+
+    .headerRight {
+        padding: 20px;
+    }
+
+    .navbarExpand .navbarNav .navLink {
+        padding-left: 15px;
+        padding-right: 5px;
+    }
+
+    .helpLineText {
+        line-height: 15px;
+        font-weight: 500;
+    }
+}
+
+@media (max-width: 768px) {
+    .columnInterchange {
+        flex-direction: column-reverse;
+    }
+
+    .headerLeft {
+        padding-left: 10px;
     }
 
     .userAvatar {
         padding-top: 8px;
     }
 
+    .headerLeft .userAvatar .userAvatarInside {
+        font-size: 16px;
+        line-height: 25px;
+        height: 30px;
+        width: 30px;
+        margin-right: -3px;
+    }
+
+    .welcomeUser .userAvatar {
+        padding-top: 10px;
+    }
+
+    .welcomeUser .userAvatar .userAvatarInside {
+        font-size: 12px;
+        width: 26px;
+        height: 26px;
+        line-height: 22px;
+    }
+
+    .displayNone {
+        display: inline;
+        padding-left: 5px;
+    }
+
+    .menuIcon {
+        display: inline;
+        position: absolute;
+        left: 0;
+    }
+
+    .navbarExpand .navbarNav .navLink {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .dealerName {
+        font-size: 14px;
+        padding-bottom: 0;
+        margin-bottom: -5px;
+    }
+
+    .userServiceArea {
+        font-size: 10px;
+    }
+
+    .welcomeUser .userServiceArea {
+        display: none;
+    }
+
     .userText {
         float: right;
         padding-top: 13px;
+        font-size: 12px;
         font-weight: 500;
     }
 
+    .welcomeUser .userText {
+        display: none;
+    }
+
     .headerRight {
-        padding: 10px;
+        padding: 10px 10px 0px 10px;
         float: none;
     }
 
     .navbarNav {
-        justify-content: space-between;
+        /* justify-content: space-between; */
+        justify-content: flex-end;
     }
 
     .helpLineText {
         display: none;
+    }
+
+    .welcomeUser {
+        margin-top: -10px;
     }
 }

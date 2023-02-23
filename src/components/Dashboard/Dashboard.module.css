@@ -24,8 +24,8 @@
   padding: 0px 10px;
 }
 
-.dashboardContainer :global :where(.css-dev-only-do-not-override-aprs5d).ant-card .ant-card-body {
-  padding: 0px 5px;
+.dashboardContainer :global .ant-card .ant-card-body {
+  padding: 10px 5px;
   border-radius: 0 0 8px 8px;
   height: 270px;
 }
@@ -79,7 +79,7 @@
   border-image: linear-gradient(to right, #EFA3A3, #CAC9EE);
   border-image-slice: 1;
   text-decoration: none;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   color: #0B0B0C;
   font-size: 20px;
 }
@@ -108,7 +108,7 @@
 .dashboardGraph .dashboardGraphBox {
   width: 100%;
   overflow: hidden;
-  height:196px;
+  height: 196px;
 }
 
 
@@ -257,19 +257,28 @@
   font-size: 16px;
 }
 
+@media (min-width: 997px) and (max-width: 1280px) {}
+
 @media (max-width: 768px) {
 
-  /* For mobile phones: */
-  [class*="col-"] {
-    width: 100%;
-    /* margin-top:18px; */
+  .headingGradient {
+    padding-bottom: 2px;
+    border-bottom: 2px solid;
+    border-image-slice: 1;
+    font-size: 14px;
   }
+
+  /* For mobile phones: */
+  /* [class*="col-"] { */
+  /* width: 100%; */
+  /* margin-top:18px; */
+  /* } */
 
   .pageHeaderNameSection {
     /* border-bottom: 1px solid #DEDEDE; */
     border-bottom: 0px;
     padding: 0px;
-    margin: 0 0 20px 0;
+    margin: 0 0 5px 0;
   }
 
 }

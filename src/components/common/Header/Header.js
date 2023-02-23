@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 
 import { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaHeadset, FaRegBell } from 'react-icons/fa';
+import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell, FaBars } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
 import { AiFillSetting } from 'react-icons/ai';
 
 import * as routing from 'constants/routing';
+import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 
 import styles from './Header.module.css';
@@ -19,6 +20,9 @@ import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
+import IMG_ICON from 'assets/img/icon.png';
+
+import { RxCross2 } from 'react-icons/rx';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -26,6 +30,7 @@ const mapStateToProps = (state) => {
         auth: { token, isLoggedIn, userId },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
+            LeftSideBar: { collapsed = false },
         },
     } = state;
 
@@ -36,6 +41,7 @@ const mapStateToProps = (state) => {
         isLoggedIn,
         userId,
         isLoading,
+        collapsed,
     };
 };
 
@@ -43,6 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            setCollapsed,
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
@@ -51,9 +58,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);    
+    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
@@ -87,7 +94,8 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
             onOk() {
                 doLogout({
                     successAction: () => {
-                        navigate(routing.ROUTING_LOGOUT);
+                        window.location.href = routing.ROUTING_LOGOUT;
+                        // navigate(routing.ROUTING_LOGOUT);
                     },
                     userId,
                 });
@@ -126,12 +134,12 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
                     title: 'Lajpat Nagar',
                 }),
                 customMenuLink({
-                    title: 'Nodia',
+                    title: 'Noida',
                 }),
             ],
         }),
         customMenuLink({
-            title: 'Finacial Year',
+            title: 'Financial Year',
         }),
     ];
 
@@ -182,78 +190,99 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
             icon: <FiLogOut />,
         }),
     ];
+    const handleCollapse = () => {
+        setCollapsed(!collapsed);
+    };
 
     const theme = 'light';
     return (
-        <div className={styles.headerContainer}>
+        <>
             {!isLoading ? (
-                <Row gutter={0}>
-                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                        <div className={styles.headerLeft}>
-                            <Space>
-                                <div className={styles.userAvatar}>
-                                    <Avatar shape="square" size="large" style={{ backgroundColor: '#808080', fontSize: '20px', lineHeight: '35px' }}>
-                                        {dealerAvatar}
-                                    </Avatar>
-                                </div>
-                                <div className={styles.userText}>
-                                    <div className={styles.dealerName}>{dealerName}</div>
-                                    <span className={styles.userServiceArea}>{dealerLocation}</span>
-                                    {userType === 'DLR' && (
-                                        <Dropdown menu={{ items }} trigger={['click']}>
-                                            <a className={styles.navLink} data-toggle="dropdown" href="/">
-                                                <DownOutlined />
-                                            </a>
-                                        </Dropdown>
-                                    )}
-                                </div>
-                            </Space>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                        <div className={styles.headerRight}>
-                            <div className={styles.navbarExpand}>
-                                <div className={styles.navbarNav}>
-                                    <div className={`${styles.floatLeft} ${styles.mrt6}`}>
-                                        <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
-                                            <Badge size="small" count={notificationCount}>
-                                                {addToolTip('Notification')(<FaRegBell size={20} />)}
-                                            </Badge>
-                                        </Link>
+                <div className={styles.headerContainer}>
+                    <Row gutter={0} className={styles.columnInterchange}>
+                        <Col xs={24} sm={24} md={10} lg={12} xl={12} xxl={12}>
+                            <div className={styles.headerLeft}>
+                                <Space>
+                                    <div className={styles.userAvatar}>
+                                        <Avatar shape="square" size="large" className={styles.userAvatarInside}>
+                                            {dealerAvatar}
+                                        </Avatar>
                                     </div>
-                                    <div className={styles.floatLeft}>
-                                        <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
-                                            <FaHeadset size={20} />
-                                            <span className={styles.helpLineText}>
-                                                OneStop <br></br> Help Desk
-                                            </span>
-                                        </Link>
+                                    <div className={styles.userText}>
+                                        <div className={styles.dealerName}>{dealerName}</div>
+                                        <span className={styles.userServiceArea}>{dealerLocation}</span>
+                                        {userType === 'DLR' && (
+                                            <Dropdown menu={{ items }} trigger={['click']}>
+                                                <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                                    <DownOutlined />
+                                                </a>
+                                            </Dropdown>
+                                        )}
                                     </div>
-                                    <div className={styles.welcomeUser}>
-                                        <Space>
-                                            <div className={styles.userAvatar}>
-                                                <Avatar style={{ backgroundColor: '#808080', fontSize: '16px', lineHeight: '30px' }}>{userAvatar}</Avatar>
-                                            </div>
-                                            <div className={styles.userText}>
-                                                <div>{fullName}</div>
-                                                <span className={styles.userServiceArea}>
-                                                    {mobileNo}
-                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                        <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                            <Space>
-                                                                <DownOutlined />
-                                                            </Space>
-                                                        </Link>
-                                                    </Dropdown>
+                                </Space>
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={14} lg={12} xl={12} xxl={12}>
+                            <div className={styles.headerRight}>
+                                <div className={styles.navbarExpand}>
+                                    <div className={styles.navbarNav}>
+                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
+                                            <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} />{' '}
+                                            <svg viewBox="64 64 896 896" focusable="false" data-icon="right" width="1em" height="1em" fill="red" style={{ margin: '0 0 0.6rem -0.2rem', fontSize: '0.9rem' }} aria-hidden="true">
+                                                <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"></path>
+                                            </svg>
+                                        </div>
+
+                                        <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                            <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
+                                                <Badge size="small" count={notificationCount}>
+                                                    {addToolTip('Notification')(<FaRegBell size={20} />)}
+                                                </Badge>
+                                            </Link>
+                                        </div>
+                                        <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                            <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
+                                                <FaHeadset size={20} />
+                                                <span className={styles.helpLineText}>
+                                                    OneStop <br></br> Help Desk
                                                 </span>
-                                            </div>
-                                        </Space>
+                                            </Link>
+                                        </div>
+                                        <div className={styles.welcomeUser}>
+                                            <Space>
+                                                <div className={styles.userAvatar}>
+                                                    <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
+                                                    <span className={styles.displayNone}>
+                                                        <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                            <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                                <Space>
+                                                                    <DownOutlined />
+                                                                </Space>
+                                                            </Link>
+                                                        </Dropdown>
+                                                    </span>
+                                                </div>
+                                                <div className={styles.userText}>
+                                                    <div>{fullName}</div>
+                                                    <span className={styles.userServiceArea}>
+                                                        {mobileNo}
+                                                        <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                            <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                                <Space>
+                                                                    <DownOutlined />
+                                                                </Space>
+                                                            </Link>
+                                                        </Dropdown>
+                                                    </span>
+                                                </div>
+                                            </Space>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
+                </div>
             ) : (
                 <HeaderSkeleton />
             )}
@@ -261,7 +290,7 @@ const HeaderMain = ({ isLoading, isDataLoaded, loginUserData, doLogout, fetchDat
             <div style={{ clear: 'both' }}></div>
             <ChangePassword title="Change Your Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
             <ChangePassword title="Update Your Password" discreption="You have not updated your password from 90 days. Please change your password" isOpen={iUpdatePasswordModalOpen} onOk={() => setUpdatePasswordModalOpen(false)} onCancel={() => setUpdatePasswordModalOpen(false)} />
-        </div>
+        </>
     );
 };
 

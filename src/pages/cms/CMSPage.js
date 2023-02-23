@@ -1,26 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-// import { RL_LOGO } from 'assets';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import CMS from 'assets/images/comingsoon.svg';
 import styles from './CMSPage.module.css';
 import { PageHeader } from 'pages/common/PageHeader';
 import { useLocation } from 'react-router-dom';
 import * as routing from 'constants/routing';
-
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
 
 export const CMSPageMain = () => {
     const location = useLocation();
@@ -45,4 +29,4 @@ export const CMSPageMain = () => {
     );
 };
 
-export const CMSPage = connect(mapStateToProps, null)(withLayoutMaster(CMSPageMain));
+export const CMSPage = withLayoutMaster(CMSPageMain);

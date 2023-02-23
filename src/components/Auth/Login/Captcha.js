@@ -1,25 +1,42 @@
-import react, { useCallback, useEffect } from 'react';
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import ReactRecaptcha3 from 'react-google-recaptcha3';
+import React, { useEffect, useState } from 'react';
 
-export const Captcha = () => {
-    const { executeRecaptcha } = useGoogleReCaptcha();
-
-    // Create an event handler so you can call the verification on button click event or form submit
-    const handleReCaptchaVerify = useCallback(async () => {
-        if (!executeRecaptcha) {
-            console.log('Execute recaptcha not yet available');
-            return;
-        }
-
-        const token = await executeRecaptcha('yourAction');
-        console.log("🚀 ~ file: Captcha.js:15 ~ handleReCaptchaVerify ~ token", token)
-        // Do whatever you want with the token
-    }, [executeRecaptcha]);
-
-    // You can use useEffect to trigger the verification as soon as the component being loaded
+function Captcha() {
+    const [token, setToken] = useState('');
+    const [name, setName] = useState('');
     useEffect(() => {
-        handleReCaptchaVerify();
-    }, [handleReCaptchaVerify]);
+        ReactRecaptcha3.init('6LedAJEUAAAAAPttxeFNp6ZtAvKGI8D9gESE-hl3').then((status) => {
+            console.log(status);
+        });
+    }, []);
 
-    return <button onClick={handleReCaptchaVerify}>Verify recaptcha</button>;
-};
+    const submit = () => {
+        ReactRecaptcha3.getToken().then(
+            (resp) => {
+                console.log(resp);
+                setToken(resp);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    };
+    return (
+        <div className="App">
+            <div>
+                <p>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    <button onClick={submit}>Submit</button>
+                </p>
+                <div>
+                    <p>
+                        Token is <b>{token}</b>
+                    </p>
+                    <p>name: {name}</p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Captcha;
