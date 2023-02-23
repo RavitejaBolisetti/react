@@ -6,9 +6,16 @@ import { message } from 'antd';
 
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED';
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING';
+export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED';
 
 const receiveHeaderData = (data) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+
+const receiveHeaderDetailData = (data) => ({
+    type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED,
     isLoaded: true,
     data,
 });
@@ -52,7 +59,37 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) =>
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData1 = withAuthToken((params) => (token) => (dispatch) => {
+hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (token) => (dispatch) => {
+    const { setIsLoading, data, userId, type = '' } = params;
+    setIsLoading(true);
+    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveHeaderDetailData(res?.data));
+        } else {
+            onError('Internal Error, Please try again');
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: baseURLPath + (type ? '?type=' + type : ''),
+        token,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
 
