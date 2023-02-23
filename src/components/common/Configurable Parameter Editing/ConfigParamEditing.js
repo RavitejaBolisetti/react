@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DeleteOutlined, EditOutlined ,ExclamationCircleFilled} from '@ant-design/icons';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch,Table ,DatePicker,InputNumber} from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch,Table ,DatePicker,InputNumber, Drawer} from 'antd';
 import styles from '../Common.module.css';
 import { validateRequiredSelectField,validateRequiredInputField } from 'utils/validation';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
@@ -154,6 +154,7 @@ const changeSelectOptionHandler = (event) => {
      
     return (
         <>
+       
             <Form onFinishFailed={onFinishFailed}>
                 <Table
                 bordered
