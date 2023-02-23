@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DeleteOutlined, EditOutlined ,ExclamationCircleFilled} from '@ant-design/icons';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch,Table ,DatePicker,InputNumber} from 'antd';
 import styles from '../Common.module.css';
+import { validateRequiredSelectField,validateRequiredInputField } from 'utils/validation';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 const { RangePicker } = DatePicker;
@@ -15,7 +16,6 @@ export const ConfigParamEditMasterPage = () => {
 
 const changeSelectOptionHandler = (event) => {
       setSelected(event);
-      console.log(selected)
     };
     const [count, setCount] = useState(2);
     const [data, setRowsData] = useState([
@@ -57,15 +57,16 @@ const changeSelectOptionHandler = (event) => {
         // saveData({ data: values, setIsLoading: listShowLoading, userId });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
-    };
+    
     const defaultColumns = [
         {
           title: 'Control ID',
           dataIndex: 'ControlID',
           key: 'ControlID',
-          render: () => <Input placeholder="Enter Data" />,
+          render: () =>
+          <Form.Item name={key}  rules={[validateRequiredInputField('ControlID')]}>
+           <Input placeholder="Enter Data" />
+           </Form.Item>,
           width: 200,
 
         },
@@ -73,20 +74,26 @@ const changeSelectOptionHandler = (event) => {
           title: 'Control Description',
           dataIndex: 'ControlDescription',
           key:'ControlDescription',
-          render: () => <Input placeholder="Enter Data" />,
+          render: () =>
+          <Form.Item name={key}  rules={[validateRequiredInputField('ControlDescription')]}>
+          <Input placeholder="Enter Data" />
+          </Form.Item>,
           width: 200,
         },
         {
           title: 'Configurable Parameter Type',
           dataIndex: 'ConfigParamType',
           key: 'ConfigParamType',
-          render: () => <Select placeholder="Select Parameter Type"
+          render: () => <>
+          <Form.Item name={key}  rules={[validateRequiredSelectField('ConfigParamType')]}>
+          <Select placeholder="Select Parameter Type"
           options={[
             { value: 'N', label: 'Number Range' },
             { value: 'T', label: 'Text' },
             { value: 'D', label: 'Date Range' },
             { value: 'B', label: 'Boolean' },  
-        ]} onChange={changeSelectOptionHandler}/>,
+        ]} onChange={changeSelectOptionHandler}/>
+        </Form.Item></>,
           width: 300,
         },
         {
@@ -104,7 +111,7 @@ const changeSelectOptionHandler = (event) => {
             <Space wrap>
                 <EditOutlined />
 
-                <DeleteOutlined onChange={showConfirm}/>
+                <DeleteOutlined onClick={showConfirm}/>
             </Space>,
         ],
         },
@@ -113,36 +120,47 @@ const changeSelectOptionHandler = (event) => {
      const ConfigParamValue= () =>
      {
         if(selected=='T'){
-         return(<Input placeholder="Enter Data" /> )
+         return(
+            <>  <Form.Item  name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
+         <Input placeholder="Enter Data" />
+         </Form.Item> </>)
         }
         else if(selected=='D'){
-        return(<RangePicker/>)
+        return(
+            <>  <Form.Item  name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
+        <RangePicker/></Form.Item></>)
         }
         else if(selected=='B'){
-           return(<Select placeholder="Select" 
+           return(
+            <>  <Form.Item  name="ConfigParamValues" rules={[validateRequiredSelectField('ConfigParamValues')]}>
+           <Select placeholder="Select" 
            options={[
             {value:'Y', label:'Yes'},
             {value:'N', label:'No'}
-           ]}/>)
+           ]}/></Form.Item></>)
         }
         else if(selected=='N'){
             
             return(
-            <> <InputNumber min={1} max={100} defaultValue={1} />
+            <>  <Form.Item  name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
+            <InputNumber min={1} max={100} defaultValue={1} />
             <InputNumber min={1} max={100} defaultValue={100} />
-            </>)
+            </Form.Item></>)
         }
      }
+     const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => { });
+    };
      
     return (
         <>
-            <Form>
+            <Form onFinishFailed={onFinishFailed}>
                 <Table
                 bordered
                 dataSource={data}
                 columns={defaultColumns}
                 pagination={false} />
-            </Form>
+           
         
             
             <Row gutter={20}>
@@ -166,7 +184,7 @@ const changeSelectOptionHandler = (event) => {
                     </Button>
                 </Col>
             </Row>
-            
+            </Form>
         </>
     );
 };
