@@ -5,7 +5,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { RoleManagement } from 'components/common/RoleManagement';
 
 export const RoleManagementPageBase = (props) => {
-    const pageTitle = 'RoleManagementPage';
+    const pageTitle = 'Role Management ';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
