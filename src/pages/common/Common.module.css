@@ -61,6 +61,9 @@
 
 .geoSection :global .ant-btn-default.ant-btn-dangerous {
   margin-bottom: 8px;
+  margin-left: 10px;
+  margin-top: 8px;
+  float: right
 }
 
 .geoSection :global .ant-btn {
@@ -196,6 +199,7 @@
   text-align: right;
   /* padding: 0px !important; */
   padding-right: 18px;
+  margin-top: 8px;
 }
 
 .buttonContainer button {
@@ -313,7 +317,7 @@
   margin-bottom: 8px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   /* For mobile phones: */
 
 
@@ -347,20 +351,21 @@
     padding-right: 0px !important;
   }
 
-  .padRight0 {
+  /* .padRight0 {
     padding-right: 0px !important;
-  }
+  } */
 
   .gap {
     gap: 8px;
   }
 
   .treeCollapsibleButton {
-    top: 184px;
+    top: 174px;
   }
 
   :global .ant-input-group {
-    width: auto;
+    /* width: auto; */
+    margin-top: 20px;
   }
 
   .TreeView_searchField__jn\+nY {

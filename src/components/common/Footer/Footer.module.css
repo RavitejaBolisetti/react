@@ -7,7 +7,7 @@
 .footerLink {
     font-size: 12px;
     color: #fff;
-    padding: 1px 15px;
+    padding: 10px 15px;
     text-align: center;
     text-transform: uppercase;
 }
@@ -37,6 +37,15 @@
 .footerBottomText a:hover {
     color: #ea3434;
     text-decoration: underline;
+}
+
+.textLeft {
+    text-align: left;
+}
+
+
+.textRight {
+    text-align: right;
 }
 
 @media (max-width: 576px) {

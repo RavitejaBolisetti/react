@@ -11,7 +11,7 @@ export const withLayout = (HeaderComponent, LeftMenuComponent, FooterComponent, 
         <>
             <Layout hasSider style={{ backgroundColor: '#ffffff' }} theme="dark">
                 <LeftMenuComponent />
-                <Layout className="site-layout" style={{ marginLeft: props.collapsed ? 80 : 250, backgroundColor: '#ffffff' }}>
+                <Layout className="site-layout" style={{ backgroundColor: '#ffffff' }}>
                     <Header style={{ padding: 0, background: colorBgContainer }}>
                         <HeaderComponent />
                     </Header>

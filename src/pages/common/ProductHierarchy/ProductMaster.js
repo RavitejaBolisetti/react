@@ -5,7 +5,7 @@ import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'rea
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import styles from '../Common.module.css';
-import AddEditForm from './AddEditForm';
+import {AddEditForm} from 'components/common/ProductHierarchy/AddEditForm';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;

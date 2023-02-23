@@ -90,24 +90,38 @@
     padding-right: 8px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
 
     .pageHeader .headingGradient {
-        padding-bottom: 10px;
-        border-bottom: 0px;
-        font-size: 15px;
+        padding-bottom: 5px;
+        /* border-bottom: 0px; */
+        font-size: 14px;
         font-weight: 600;
     }
 
     .pageHeaderNameSection {
-        border-bottom: 1px solid #DEDEDE;
+        border-bottom: 0;
         padding: 0px;
         margin: 0 0 10px 0;
-        width: 68vw;
+        /* width: 68vw; */
     }
 
     .pageHeader .buttonContainer {
-        margin-top: 4px;
+        margin-top: 6px;
+    }
+
+    .pageHeader .buttonContainer button {
+        margin-left: 5px;
+    }
+
+    .pageHeader .buttonContainer :global .ant-btn {
+        font-size: 12px;
+        height: 24px;
+        padding: 2px 6px;
+    }
+
+    .pageHeader .buttonContainer .buttonIcon {
+        margin-right: 2px;
     }
 
     .buttonContainer button {
