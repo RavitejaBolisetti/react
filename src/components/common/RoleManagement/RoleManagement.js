@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Space } from 'antd';
+import { Button, Col, Form, Row, Input, Space, Table, Drawer, Switch, Collapse, Checkbox } from 'antd';
+
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
 import TreeView from 'components/common/TreeView';
@@ -10,9 +11,12 @@ import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 // import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import './RoleManagement.module.css';
+const { Panel } = Collapse;
 
 const { Search } = Input;
 
@@ -55,7 +59,75 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
+const tableColumn = [];
+
+tableColumn.push(
+    tblPrepareColumns({
+        title: 'Srl ',
+        dataIndex: 'srl',
+    })
+);
+
+tableColumn.push(
+    tblPrepareColumns({
+        title: 'Role Id',
+        dataIndex: 'roleid',
+    })
+);
+
+tableColumn.push(
+    tblPrepareColumns({
+        title: 'Role Name',
+        dataIndex: 'rolename',
+    })
+);
+tableColumn.push(
+    tblPrepareColumns({
+        title: 'Role Description',
+        dataIndex: 'roledesc',
+    })
+);
+
+tableColumn.push(
+    tblPrepareColumns({
+        title: 'Status',
+        dataIndex: 'status',
+        filters: [
+            {
+                text: 'Active',
+                value: 'Active',
+            },
+            {
+                text: 'Inactive',
+                value: 'Inactive',
+            },
+        ],
+    })
+);
+
 export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+    const [data, setData] = useState([
+        {
+            srl: 'asdasd',
+            roleid: 'asdasd',
+            rolename: 'asdasd',
+            roledesc: 'asdsad',
+            status: 'ads',
+        },
+    ]);
+
+    const CheckboxData = [
+        {
+            add: true,
+            view: true,
+            delete: true,
+            edit: true,
+            upload: true,
+            download: true,
+        },
+    ];
+    const [open, setOpen] = useState(false);
+
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,15 +147,22 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -162,7 +241,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 setFormActionType('view');
             }
             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
@@ -340,18 +419,195 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             </>
         );
     };
+    const Actions = () => {
+        return (
+            <>
+                <Row>
+                    <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} offset={2}>
+                        <Checkbox>Check All Actions</Checkbox>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
+                        <Checkbox>Add</Checkbox>
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Checkbox>View</Checkbox>
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Checkbox>delete</Checkbox>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
+                        <Checkbox>Edit</Checkbox>
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Checkbox>Upload</Checkbox>
+                    </Col>
+                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                        <Checkbox>Download</Checkbox>
+                    </Col>
+                </Row>
+            </>
+        );
+    };
+    const [Checkboxcheck, setCheckboxCheck] = useState(true);
+    const FormitemsRoleDrawer = () => {
+    
+        return (
+            <>
+                <Space
+                    direction="vertical"
+                    size="small"
+                    style={{
+                        display: 'flex',
+                    }}
+                >
+                    <div>
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item
+                                    name="roleid"
+                                    label="Role Id"
+                                    rules={[
+                                        {
+                                            required: true,
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item
+                                    name="rolename"
+                                    label="Role Name"
+                                    rules={[
+                                        {
+                                            required: true,
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item
+                                    name="roledesc"
+                                    label="Role Description"
+                                    rules={[
+                                        {
+                                            required: true,
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item initialValue={'Y'} label="Status" name="active">
+                                    <Switch defaultChecked={true} checkedChildren="Active" unCheckedChildren="Inactive" />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </div>
+
+                    {/*Below The Fomrs*/}
+                    <Row>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <h4 className="myh4">Application Mapping</h4>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Search
+                                placeholder="Search Application"
+                                style={{
+                                    width: 230,
+                                }}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col></Col>
+                    </Row>
+                    <h4>Applications</h4>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Collapse defaultActiveKey={['1']}>
+                                <Panel header="Common" key="1">
+                                    <Form.Item label="" name="applicationmaster" valuePropName="">
+                                        <Checkbox>Application Master</Checkbox>
+                                    </Form.Item>
+                                    <Form.Item label="" name="applicationcriticalitygroup" valuePropName="asdasdasdasd">
+                                        <Checkbox checked={Checkboxcheck} onChange={(e) => setCheckboxCheck(e.target.checked)}>
+                                            Application Criticality group
+                                        </Checkbox>
+                                        {Checkboxcheck ? <Actions /> : ''}
+                                    </Form.Item>
+                                    <Form.Item label="" name="producthierarchy" valuePropName="">
+                                        <Checkbox>Product Hierarchy</Checkbox>
+                                    </Form.Item>
+                                    <Form.Item label="" name="geographical" valuePropName="">
+                                        <Checkbox>Geographical Hierarchy</Checkbox>
+                                    </Form.Item>
+                                </Panel>
+                                <Panel header="DBP" key="2"></Panel>
+                                <Panel header="Financial Accounting" key="3"></Panel>
+                            </Collapse>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}></Col>
+                    </Row>
+                </Space>
+            </>
+        );
+    };
+    const OpenRoleDrawer = () => {
+        return (
+            <>
+                <Drawer
+                    title="Add Role Details"
+                    width={600}
+                    onClose={onClose}
+                    open={open}
+                    closable={false}
+                    extra={
+                        <Space>
+                            <Button onClick={onClose}>Cancel</Button>
+                            <Button type="primary" onClick={onClose}>
+                                OK
+                            </Button>
+                        </Space>
+                    }
+                >
+                    <Form layout="vertical" form={form} name="control-role">
+                        <FormitemsRoleDrawer />
+                    </Form>
+                </Drawer>
+            </>
+        );
+    };
     const RoleDrawer = () => {
         return (
             <>
-                <Button danger onClick={() => handleEditBtn()}>
+                <Button danger onClick={showDrawer}>
                     + Add Role
                 </Button>
             </>
         );
     };
+
+    const TableRender = () => {
+        return (
+            <>
+                <Table pagination={false} dataSource={data} columns={tableColumn} />
+            </>
+        );
+    };
     return (
         <>
-            <div >
+            <div>
                 {/* <Row gutter={20}>
                     <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
                         {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
@@ -359,18 +615,31 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 </Row> */}
                 {/* <Treemenu/> */}
                 {/* <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} /> */}
-
-                <Row gutter={20}  justify="space-between">
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <RoleSearch />
-                    </Col>
-                    <Col xs={3} sm={3} md={3} lg={3} xl={3} xxl={3} >
-                        <RoleDrawer />
-                    </Col>
-                </Row>
+                <Space
+                    direction="vertical"
+                    size="middle"
+                    style={{
+                        display: 'flex',
+                    }}
+                >
+                    <Row gutter={20} justify="space-between">
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <RoleSearch />
+                        </Col>
+                        <Col xs={3} sm={3} md={3} lg={3} xl={3} xxl={3}>
+                            <RoleDrawer />
+                            <OpenRoleDrawer />
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={23} md={24} lg={24} xl={24} xxl={24}>
+                            <TableRender />
+                        </Col>
+                    </Row>
+                </Space>
             </div>
         </>
     );
 };
 
-export const RoleManagement = connect(mapStateToProps, mapDispatchToProps)(RoleManagementMain);
+export const RoleManagement = connect(null, null)(RoleManagementMain);
