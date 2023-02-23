@@ -8,11 +8,10 @@ import { bindActionCreators } from 'redux';
 
 import { AuthenticatedUserPage } from 'pages/routing/AuthenticatedUserPage';
 import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';
-import { ROUTING_DASHBOARD, ROUTING_LOGIN, ROUTING_LOGOUT } from 'constants/routing';
+import { ROUTING_DASHBOARD, ROUTING_FORGOT_PASSWORD, ROUTING_LOGIN, ROUTING_LOGOUT } from 'constants/routing';
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
-    // isLoading: state.global.isLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -31,8 +30,13 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
     const pagePath = location.pathname;
 
     useEffect(() => {
-        // !isLoggedIn && pagePath === ROUTING_LOGOUT ? navigate(ROUTING_LOGOUT) : !isLoggedIn ? navigate(ROUTING_LOGIN) : navigate(ROUTING_DASHBOARD);
-
+        if (!isLoggedIn && pagePath === ROUTING_LOGIN) {
+            navigate(ROUTING_LOGIN);
+        } else if (!isLoggedIn && pagePath === ROUTING_LOGOUT) {
+            navigate(ROUTING_LOGOUT);
+        } else if (isLoggedIn && (pagePath === ROUTING_LOGIN || pagePath === ROUTING_FORGOT_PASSWORD || pagePath === ROUTING_LOGOUT)) {
+            navigate(ROUTING_DASHBOARD);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 

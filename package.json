@@ -38,7 +38,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
         "extends": [
@@ -60,6 +61,7 @@
     },
     "devDependencies": {
         "react-app-rewired": "^2.2.1",
-        "redux-devtools-extension": "^2.13.9"
+        "redux-devtools-extension": "^2.13.9",
+        "sonarqube-scanner": "^3.0.1"
     }
 }
