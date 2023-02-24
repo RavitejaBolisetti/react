@@ -74,7 +74,7 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
                     // rules={[validateRequiredInputField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
-                    <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={record?.hierarchyAttribueId && !record?.readOnly} disabled={record?.hierarchyAttribueId && !record?.readOnly} checkedChildren="Yes" unCheckedChildren="No" />
+                    <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={!record?.id && !record?.readOnly} disabled={!record?.id && !record?.readOnly} checkedChildren="Yes" unCheckedChildren="No" />
                 </Form.Item>
             );
             break;
@@ -84,7 +84,7 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
                     style={{
                         margin: 0,
                     }}
-                    name={[index, dataIndex]}
+                    name={[record[dataIndex], index, dataIndex]}
                     rules={[validateRequiredInputField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
@@ -96,29 +96,6 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
     return <td>{inputField}</td>;
 };
 
-// const initialData = [
-//     {
-//         id: '1',
-//         hierarchyAttribueId: '1q',
-//         hierarchyAttribueCode: '1234',
-//         hierarchyAttribueName: 'Dev attribute',
-//         duplicateAllowedAtAttributerLevelInd: 'N',
-//         duplicateAllowedAtDifferentParent: 'Y',
-//         isChildAllowed: 'Y',
-//         status: 'Y',
-//     },
-//     {
-//         id: '2',
-//         hierarchyAttribueId: '2q',
-//         hierarchyAttribueCode: '3445',
-//         hierarchyAttribueName: 'dummy attribute',
-//         duplicateAllowedAtAttributerLevelInd: "N",
-//         duplicateAllowedAtDifferentParent: "Y",
-//         isChildAllowed: "N",
-//         status: "Y",
-//     },
-// ];
-
 export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
 
     const [form] = Form.useForm();
@@ -128,6 +105,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [forceFormReset, setForceFormReset] = useState(false);
 
     useEffect(() => {
+        // setRowsData([...detailData?.hierarchyAttribute])
         // form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
@@ -175,6 +153,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
 
     const handleAdd = () => {
+        setForceFormReset(Math.random() * 10000);
         const newData = {
             id: Math.random() * 1000,
             hierarchyAttribueId: '',
@@ -185,7 +164,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             isChildAllowed: 'N',
             status: 'N',
         };
-        setRowsData([...data, newData]);
+        setRowsData(prev => [...prev, newData]);
         setCount(count + 1);
     };
 
@@ -198,8 +177,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         const updatedData = [...data];
         const index = updatedData.findIndex((el) => el.id === id);
         updatedData.splice(Number(index), 1);
-        // console.log(form.getFieldsValue(), index);
-
+        setRowsData(()=>[...updatedData]);
         // const formData = form.getFieldsValue();
 
         // let obj = {};
@@ -223,7 +201,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
              
         // };
 
-
         // console.log("obj", obj)
         // delete(formData[index])
         // formData[String(index)] = { hierarchyAttribueId: '',
@@ -235,12 +212,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         //     status: 'N',
         // };
         // form.setFieldsValue({...obj}) 
-        setRowsData(()=>[...updatedData]);
+       
         setForceFormReset(Math.random() * 10000);
 
     };
 
-    console.log("formData"+ "form.getFieldsValue()", form.getFieldsValue())
 
     const tableColumn = [];
 
@@ -324,11 +300,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const onFinish = (values) => {
         const selectedHierarchyAttribue = values['hierarchyAttribueType'];
 
-            let formData = Object.entries(values).filter(([key]) => key !== "hierarchyAttribueType" ).map(([key, value]) =>  value)
+        let formData = Object.entries(values).filter(([key]) => key !== "hierarchyAttribueType" ).map(([key, value]) =>  value)
 
         console.log('formData', formData);
 
-        return;
+        // return;
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -355,6 +331,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     };
 
     const handleReset = () => {
+        console.log("Reset form")
         form.resetFields();
     };
     const handleChange = (attributeType) => {
