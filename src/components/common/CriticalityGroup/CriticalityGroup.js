@@ -72,8 +72,24 @@ const showConfirm = () => {
 //         dispatch
 //     ),
 // });
+const initialTableData =[
+    {
+        Srl : '1',
+        criticalityGroupId : 'hsdgd',
+        criticalityGroupName : 'gh',
+        defaultGroup : 'Y',
+        status : false
+    }
+]
 
 export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {
+    const [formActionType, setFormActionType] = useState('');
+    const [isReadOnly, setReadOnly] = useState(false);
+    const [data, setRowsData] = useState(initialTableData);
+    const [drawer, setDrawer] = useState(false);
+    const [formData, setFormData] = useState([]);
+    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
@@ -103,13 +119,17 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
             },
         });
     };
-
-    const [data, setRowsData] = useState();
-    const [drawer, setDrawer] = useState(false);
     const handleAdd = () => {
         setDrawer(true);
     };
 
+    const handleUpdate = () => {
+        setDrawer(true);
+    };
+
+    const handleView = () => {
+        setDrawer(true);
+    };
     const edit = (record) => {
         const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
         setRowsData(updatedDataItem);
@@ -123,6 +143,7 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
     };
 
     const tableColumn = [];
+
 
     tableColumn.push(
         tblPrepareColumns({
@@ -167,8 +188,8 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {record?.hierarchyAttribueId && <FaEdit onClick={() => edit(record)} />}
-                        {!record?.hierarchyAttribueId && <FaTrashAlt onClick={() => showConfirm(record?.id)} />}
+                        {<FaEdit onClick={handleUpdate} />}
+                        {<FaTrashAlt onClick={handleView} />}
                     </Space>
                 );
             },
@@ -208,7 +229,7 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
                         </Button>
                     </Col>
                 </Row>
-                <DrawerUtil open={drawer} />
+                <DrawerUtil open={drawer} setDrawer={setDrawer} isChecked={isChecked} setIsChecked={setIsChecked} />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn} bordered />
