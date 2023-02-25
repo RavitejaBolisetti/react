@@ -1,0 +1,6 @@
+projectKey=dms-ui-application-local
+serverUrl=http://localhost:8084
+serverVersion=9.9.0.65466
+dashboardUrl=http://localhost:8084/dashboard?id=dms-ui-application-local
+ceTaskId=AYZ_0Lq9srskwvBpZMc7
+ceTaskUrl=http://localhost:8084/api/ce/task?id=AYZ_0Lq9srskwvBpZMc7
