@@ -74,7 +74,7 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
                     // rules={[validateRequiredInputField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
-                    <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={!record?.id && !record?.readOnly} disabled={!record?.id && !record?.readOnly} checkedChildren="Yes" unCheckedChildren="No" />
+                    <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={!record?.id && !record?.isEditable} disabled={!record?.id && !record?.isEditable} checkedChildren="Yes" unCheckedChildren="No" />
                 </Form.Item>
             );
             break;
@@ -84,11 +84,11 @@ const EditableCell = ({ editing, dataIndex, title, inputType, record, index, chi
                     style={{
                         margin: 0,
                     }}
-                    name={[record[dataIndex], index, dataIndex]}
+                    name={[index, dataIndex]}
                     rules={[validateRequiredInputField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
-                    <Input readOnly={record?.hierarchyAttribueId && !record?.readOnly} disabled={record?.hierarchyAttribueId && !record?.readOnly} />
+                    <Input readOnly={!record?.id && !record?.isEditable} disabled={!record?.id && !record?.isEditable} />
                 </Form.Item>
             );
             break;
@@ -164,55 +164,22 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             isChildAllowed: 'N',
             status: 'N',
         };
-        setRowsData(prev => [...prev, newData]);
+        setRowsData(prev => [...prev.map(el => ({...el})), newData]);
         setCount(count + 1);
     };
 
     const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => ((+item?.id === +record?.id) || (+item?.hierarchyAttribueId === +record?.hierarchyAttribueId) ? { ...item, readOnly: true } : item));
+        const updatedDataItem = data && data.map((item) => ((+item?.id === +record?.id) || (item?.hierarchyAttribueId === record?.hierarchyAttribueId) ? { ...item, isEditable: true } : item));
         setRowsData(updatedDataItem);
     };
 
     const deleteTableRows = (id) => {
+        // form.resetFields();
         const updatedData = [...data];
-        const index = updatedData.findIndex((el) => el.id === id);
+        const index = updatedData.findIndex((el) => +el.id === +id);
         updatedData.splice(Number(index), 1);
-        setRowsData(()=>[...updatedData]);
-        // const formData = form.getFieldsValue();
-
-        // let obj = {};
-        // let watch = updatedData.length;
-
-        // console.log("watch",watch)
-        // for (const key in formData) {
-        //     console.log(typeof(key))
-        //     while(watch >= 0){
-        //         if(Number(key) === Number(index)){
-        //             watch--;
-        //             continue;
-        //         }else if(Number(key) > Number(index)){ 
-        //             obj[String(+key-1)] = formData[key]
-        //             watch--
-        //         }else{
-        //             obj[String(key)] = formData[key]
-        //             watch--;
-        //         }
-        //     }
-             
-        // };
-
-        // console.log("obj", obj)
-        // delete(formData[index])
-        // formData[String(index)] = { hierarchyAttribueId: '',
-        //     hierarchyAttribueCode: '',
-        //     hierarchyAttribueName: '',
-        //     duplicateAllowedAtAttributerLevelInd: 'N',
-        //     duplicateAllowedAtDifferentParent: 'N',
-        //     isChildAllowed: 'N',
-        //     status: 'N',
-        // };
-        // form.setFieldsValue({...obj}) 
-       
+        setRowsData([...updatedData.map(el =>  ({...el}))]);
+ 
         setForceFormReset(Math.random() * 10000);
 
     };
@@ -304,7 +271,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
         console.log('formData', formData);
 
-        // return;
+        return;
 
         const onSuccess = (res) => {
             form.resetFields();
