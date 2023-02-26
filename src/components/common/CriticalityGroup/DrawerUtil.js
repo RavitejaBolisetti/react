@@ -8,44 +8,55 @@ import dayjs from 'dayjs';
 
 const format = 'HH:mm';
 
-const DrawerUtil = ({ open, setDrawer,isChecked, setIsChecked, formActionType, isReadOnly, formData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData  }) => {
+const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const [form] = Form.useForm();
-
+    const disabledProps = { disabled: isReadOnly };
     const onClose = () => {
         setDrawer(false);
     };
     const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        const recordId = formData?.id || '';
+        const data = { ...values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' };
+        setFormData(data);
+        console.log(formData, 'hell', data, 'o', values, 'koko', recordId);
     };
 
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => {});
+    };
+    let drawerTitle = '';
+    if (formActionType === 'add') {
+        drawerTitle = 'Add Application Criticality Group Details';
+    } else if (formActionType === 'update') {
+        drawerTitle = 'Update Application Criticality Group Details';
+    } else if (formActionType === 'view') {
+        drawerTitle = 'View Application Criticality Group Details';
+    }
+
     return (
-        <Drawer title={formActionType === 'add'?'Add Application Criticality Group Details':'Edit'} placement="right" onClose={onClose} open={open}>
+        <Drawer title={drawerTitle} placement="right" onClose={onClose} open={open}>
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="Criticality Group Id" label="Criticality Group Id">
-                            <Input />
-                            
+                        <Form.Item initialValue={formData?.criticalityGroupId} name="Criticality Group Id" label="Criticality Group Id">
+                            <Input {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="Criticality Group Name" label="Criticality Group Name">
-                            <Input />
+                        <Form.Item initialValue={formData?.criticalityGroupName} name="Criticality Group Name" label="Criticality Group Name">
+                            <Input {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="Default Group?" label="Default Group?">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} defaultChecked />
+                        <Form.Item name="defaultGroup" label="Default Group?">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.defaultGroup === 'Y' ? 1 : 0) || isChecked} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="Status" label="Status">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} defaultChecked />
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.Status === 'Y' ? 1 : 0) || isChecked} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -77,7 +88,7 @@ const DrawerUtil = ({ open, setDrawer,isChecked, setIsChecked, formActionType, i
                                                 },
                                             ]}
                                         >
-                                            <TimePicker initialValue={dayjs('12:00', format)} format={format} />
+                                            <TimePicker initialValue={dayjs('12:00', format)} format={format} {...disabledProps} />
                                         </Form.Item>
                                         <Form.Item
                                             {...restField}
@@ -90,7 +101,7 @@ const DrawerUtil = ({ open, setDrawer,isChecked, setIsChecked, formActionType, i
                                                 },
                                             ]}
                                         >
-                                            <TimePicker initialValue={dayjs('12:00', format)} format={format} />
+                                            <TimePicker initialValue={dayjs('12:00', format)} format={format} {...disabledProps} />
                                         </Form.Item>
                                         <AiOutlineClose onClick={() => remove(name)} />
                                     </Space>

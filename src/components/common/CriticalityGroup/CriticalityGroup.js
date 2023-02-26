@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, Empty } from 'antd';
@@ -9,9 +9,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { AllowTimingsForm } from './AllowTimingsForm';
-import { geoDataActions } from 'store/actions/data/geo';
+import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 
@@ -34,61 +32,57 @@ const showConfirm = () => {
     });
 };
 
-// const mapStateToProps = (state) => {
-//     const {
-//         auth: { userId },
-//         data: {
-//             Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
-//             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-//         },
-//         common: {
-//             LeftSideBar: { collapsed = false },
-//         },
-//     } = state;
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            criticalityGroup: { isLoaded: isDataLoaded = false, data: criticalityGroupData = [] },
+        },
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
 
-//     let returnValue = {
-//         collapsed,
-//         userId,
-//         isDataLoaded,
-//         geoData,
-//         isDataAttributeLoaded,
-//         attributeData: attributeData?.filter((i) => i),
-//     };
-//     return returnValue;
-// };
+    let returnValue = {
+        collapsed,
+        userId,
+        isDataLoaded,
+        criticalityGroupData,
+    };
+    return returnValue;
+};
 
-// const mapDispatchToProps = (dispatch) => ({
-//     dispatch,
-//     ...bindActionCreators(
-//         {
-//             fetchList: geoDataActions.fetchList,
-//             saveData: geoDataActions.saveData,
-//             listShowLoading: geoDataActions.listShowLoading,
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchData: criticalityDataActions.fetchList,
+            saveData: criticalityDataActions.saveData,
+            listShowLoading: criticalityDataActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
 
-//             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-//             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-//             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-//         },
-//         dispatch
-//     ),
-// });
-const initialTableData =[
+const initialTableData = [
     {
-        Srl : '1',
-        criticalityGroupId : 'hsdgd',
-        criticalityGroupName : 'gh',
-        defaultGroup : 'Y',
-        status : false
-    }
-]
+        Srl: '1',
+        criticalityGroupId: 'hsdgd',
+        criticalityGroupName: 'gh',
+        defaultGroup: 'Y',
+        status: false,
+    },
+];
 
 export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {
     const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setReadOnly] = useState(false);
+    const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setRowsData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [forceFormReset, setForceFormReset] = useState(false);
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -120,16 +114,36 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         });
     };
     const handleAdd = () => {
+        setForceFormReset(Math.random() * 10000);
+
         setDrawer(true);
+        setFormActionType('add');
+        setIsReadOnly(false);
     };
 
     const handleUpdate = () => {
+        setForceFormReset(Math.random() * 10000);
+
         setDrawer(true);
+        setFormActionType('update');
+        setIsReadOnly(false);
+        formData && setFormData(formData?.data);
     };
 
     const handleView = () => {
+        setForceFormReset(Math.random() * 10000);
+
         setDrawer(true);
+        setFormActionType('view');
+        setIsReadOnly(true);
+        formData && setFormData(formData?.data);
     };
+
+    const handleReset = () => {
+        console.log('reset called');
+        form.resetFields();
+    };
+
     const edit = (record) => {
         const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
         setRowsData(updatedDataItem);
@@ -143,7 +157,6 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
     };
 
     const tableColumn = [];
-
 
     tableColumn.push(
         tblPrepareColumns({
@@ -196,46 +209,30 @@ export const CriticalityGroupMain = ({ editing, dataIndex, title, inputType, rec
         })
     );
 
-    // on Save table data
-    const onFinish = (values) => {
-        console.log('heloo');
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-
-    const handleReset = () => {
-        console.log('reset called');
-        form.resetFields();
-    };
-
     return (
         <>
-            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Search
-                            placeholder="Search"
-                            style={{
-                                width: 200,
-                            }}
-                        />
-                    </Col>
-                    <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
-                        <Button danger onClick={handleAdd}>
-                            <AiOutlinePlus className={styles.buttonIcon} />
-                            Add Group
-                        </Button>
-                    </Col>
-                </Row>
-                <DrawerUtil open={drawer} setDrawer={setDrawer} isChecked={isChecked} setIsChecked={setIsChecked} />
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn} bordered />
-                    </Col>
-                </Row>
-            </Form>
+            <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                    <Search
+                        placeholder="Search"
+                        style={{
+                            width: 200,
+                        }}
+                    />
+                </Col>
+                <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
+                    <Button danger onClick={handleAdd}>
+                        <AiOutlinePlus className={styles.buttonIcon} />
+                        Add Group
+                    </Button>
+                </Col>
+            </Row>
+            <DrawerUtil open={drawer} setDrawer={setDrawer} isChecked={isChecked} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn} bordered />
+                </Col>
+            </Row>
         </>
     );
 };
