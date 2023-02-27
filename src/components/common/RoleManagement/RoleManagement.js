@@ -55,67 +55,107 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const Roledataset = ['Designation Sales', 'UI/UX', 'Product Manager'];
+const Roledataset = [];
 export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [validatetrees, setValidatetrees] = useState(false);
 
     const [formData, setFormData] = useState([]);
+
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const [Checkboxdata, setCheckBoxData] = useState({
-        All: 'unchecked',
-        Add: 'unchecked',
-        View: 'unchecked',
-        Delete: 'unchecked',
-        Edit: 'unchecked',
-        Upload: 'unchecked',
-        Download: 'unchecked',
+        All: true,
+        Add: false,
+        View: false,
+        Delete: false,
+        Edit: false,
+        Upload: false,
+        Download: false,
     });
-
+    const Onselectall = (e) => {
+        if (e.target.checked == true) {
+            const newvals = {
+                All: true,
+                Add: true,
+                View: true,
+                Delete: true,
+                Edit: true,
+                Upload: true,
+                Download: true,
+            };
+            setCheckBoxData(newvals);
+        } else {
+            const newvals = {
+                All: false,
+                Add: false,
+                View: false,
+                Delete: false,
+                Edit: false,
+                Upload: false,
+                Download: false,
+            };
+            setCheckBoxData(newvals);
+        }
+    };
     const Actions = () => {
         return (
             <>
                 <Row>
                     <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} offset={2}>
                         <Form.Item name="All" valuePropName="checked">
-                            <Checkbox>Select All</Checkbox>
+                            <Checkbox name="All" checked={Checkboxdata.All} onChange={Onselectall}>
+                                Select All
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
                         <Form.Item name="Add" valuePropName="checked">
-                            <Checkbox>Add</Checkbox>
+                            <Checkbox name="Add" checked={Checkboxdata.Add}>
+                                Add
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="View" valuePropName="checked">
-                            <Checkbox>View</Checkbox>
+                            <Checkbox name="View" checked={Checkboxdata.View}>
+                                View
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="Delete" valuePropName="checked">
-                            <Checkbox>Delete</Checkbox>
+                            <Checkbox name="Delete" checked={Checkboxdata.Delete}>
+                                Delete
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
                         <Form.Item name="Edit" valuePropName="checked">
-                            <Checkbox>Edit</Checkbox>
+                            <Checkbox name="Edit" checked={Checkboxdata.Edit}>
+                                Edit
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="Upload" valuePropName="checked">
-                            <Checkbox>Upload</Checkbox>
+                            <Checkbox name="Upload" checked={Checkboxdata.Upload}>
+                                Upload
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="Download" valuePropName="checked">
-                            <Checkbox>Download</Checkbox>
+                            <Checkbox name="Download" checked={Checkboxdata.Download}>
+                                Download
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -136,6 +176,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 <Col span={12}>
                     <Card title="Access Applications" bordered={true}>
                         <Trees />
+                        {validatetrees ? 'Please Select a access Application' : null}
                     </Card>
                 </Col>
                 <Col span={12}>
@@ -197,19 +238,37 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             </Row>
         );
     };
+    const onReset = () => {
+        form.resetFields();
+    };
     const onFinisher = (values) => {
-        console.log(values);
-        {
+        console.log(values, checkvals.length);
+        if (checkvals.length === 0) {
+            setValidatetrees(true);
+        } else {
             let end = checkvals.length;
             Object.keys(values).map((keyName, i) => {
                 if (keyName === 'Treedata') {
                     values[keyName] = checkvals[end - 1];
                 }
+
+                if (keyName === 'rolename') {
+                    Roledataset.push(values[keyName]);
+                }
             });
+            setAddchild(!addchilds);
+            form.resetFields();
+            setValidatetrees(false);
         }
         console.log(checkvals);
-        setAddchild(!addchilds);
-        form.resetFields();
+    };
+    const RoleList = () => {
+        Object.keys(formData).map((keyName, i) => {
+            if (keyName === 'rolename') {
+                Roledataset.push(formData[keyName]);
+            }
+        });
+        console.log(Roledataset);
     };
     const Handlebuttons = () => {
         return (
@@ -227,7 +286,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     </Button>
                 </Col>
                 <Col>
-                    <Button danger>
+                    <Button danger onClick={onReset}>
                         <FaUndo className={styles.buttonIcon} />
                         Reset
                     </Button>
