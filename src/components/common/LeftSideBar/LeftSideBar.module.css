@@ -21,7 +21,8 @@
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
-  box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important;
+  /* box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important; */
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 3px rgba(0, 0, 0, .2) !important;
   background-color: #f4f4f4 !important;
   z-index: 99 !important;
 }
@@ -41,7 +42,7 @@
 :global .ant-layout .ant-layout-sider-trigger {
   position: absolute;
   width: 0px !important;
-  top: 20px;
+  top: 23px;
   z-index: 1;
   /* height: 48px; */
   color: #ea2929;
@@ -56,7 +57,7 @@
 /* icon for collapse position when not collapsed */
 :global .ant-layout .ant-layout-sider-trigger .anticon-left {
   position: absolute;
-  left: 210px;
+  left: 208px;
 }
 
 /* icon for collapse position when collapsed */
@@ -206,7 +207,7 @@
 /* border color on input search in left-menu */
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
-  height: 34px;
+  height: 34px !important;
   border-radius: 4px;
   border-color: #DEDEDE;
   padding: 6px 12px;
@@ -267,7 +268,7 @@
 
 .brandLink {
   display: block;
-  padding: 16px 0 12px;
+  padding: 19px 0 11px;
   /* padding-left: 4px !important; */
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
