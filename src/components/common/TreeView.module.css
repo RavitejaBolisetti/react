@@ -1,3 +1,63 @@
+/* Tree panel CSS */
+.leftpanel {
+    /* padding: 0.2em; */
+    /* padding: 4px; */
+    width: 100%;
+    border-radius: 3px;
+    /* border-top-left-radius: 0; */
+    margin-bottom: 20px;
+    white-space: nowrap;
+    margin-top: 10px;
+}
+
+.panelVisible {
+    background: #f4f4f4;
+    box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
+    min-height: 66vh;
+}
+
+.panelHidden {
+    background: none;
+    /* box-shadow: none; */
+}
+
+.treeViewContainer {
+    clear: both;
+    margin-bottom: 10px;
+}
+
+.treemenu {
+    margin: 24px 0px;
+    /* padding-left: 25px; */
+    padding-left: 0px;
+    padding-bottom: 0px;
+    line-height: 2em;
+    list-style: none;
+    background-color: transparent;
+    color: #0B0B0C;
+}
+
+.treeCollapsibleButton {
+    /* border: 1px solid #ff3e5b; */
+    border-radius: 3px;
+    /* position: absolute; */
+    /* z-index: 10; */
+    /* top: 136px; */
+    /* left:266px; */
+    padding: 5px;
+    padding-left: 8px;
+    color: #ff3e5b;
+    line-height: 2px;
+    background-color: #f4f4f4;
+    font-weight: 400;
+    cursor: pointer;
+    /* width: 30px; */
+    /* margin: 8px auto 0px 8px; */
+    float: left;
+    will-change: box-shadow, transform;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .bigblue {
     color: red;
 }
@@ -130,7 +190,6 @@
     }
 
     :global .ant-input {
-
         padding: 4px 27px;
     }
 }
