@@ -110,7 +110,7 @@ export default function AddEditForm({ formData, setFormData, fetchList, saveData
                                 <Form.Item name="attributeKey" label="Attribute Level" initialValue={formData?.id} rules={[validateRequiredSelectField('Attribute Level')]}>
                                     <Select loading={!isDataAttributeLoaded} placeholder="Select" allowClear {...disabledProps}>
                                         {attributeData?.map((item) => (
-                                            <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
+                                            <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                         ))}
                                     </Select>
                                 </Form.Item>

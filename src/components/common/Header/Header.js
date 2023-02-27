@@ -176,12 +176,12 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             onClick: () => setChangePasswordModalOpen(true),
         }),
 
-        customMenuLink({
-            key: '6',
-            title: 'Update Your Password',
-            icon: <AiFillSetting />,
-            onClick: () => setUpdatePasswordModalOpen(true),
-        }),
+        // customMenuLink({
+        //     key: '6',
+        //     title: 'Update Your Password',
+        //     icon: <AiFillSetting />,
+        //     onClick: () => setUpdatePasswordModalOpen(true),
+        // }),
 
         customMenuLink({
             key: '7',
@@ -233,14 +233,14 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                             </svg>
                                         </div>
 
-                                        <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                        <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                                 <Badge size="small" count={notificationCount}>
                                                     {addToolTip('Notification')(<FaRegBell size={20} />)}
                                                 </Badge>
                                             </Link>
                                         </div>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                        <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                                 <FaHeadset size={20} />
                                                 <span className={styles.helpLineText}>
