@@ -60,7 +60,7 @@ const LeftPanel = (props) => {
                         <div className={styles.treeViewContainer}>
                             <div className={styles.treemenu}>
                                 <div className={isOpenInModal ? styles.modalView : ''}>
-                                    <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
+                                    <Search placeholder="Search" onChange={onChange} allowClear className={styles.searchField} />
                                     <div className={styles.scrollTreeData}>
                                         <Tree selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} fieldNames={fieldNames} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={dataList} />
                                     </div>
