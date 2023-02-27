@@ -13,7 +13,8 @@ export const BASE_URL_GEO_GRAPHY = BASE_URL + 'geography';
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
-export const BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'manufacturerorganizationhierarchy/manufacorgHiechangehistory';
+export const BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'manufacturerorganizationhierarchy/manufacorgHiechangehistory';
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 export const BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY = BASE_URL + 'manufacturerorganizationhierarchy';
+export const BASE_URL_MANUFACTURER_ORG_HIERARCHY_SAVE = BASE_URL + 'manufacturerorganizationhierarchy';

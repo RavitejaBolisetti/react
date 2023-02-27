@@ -1,4 +1,4 @@
-import { MANUFACTURER_ORG_HIERARCHY_DATA_LOADED, MANUFACTURER_ORG_HIERARCHY_SET_FORM_IS_VISIBLE, MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA, MANUFACTURER_ORG_HIERARCHY_DATA_SHOW_LOADING } from 'store/actions/data/manufacturerOrgHierarchy';
+import { MANUFACTURER_ORG_HIERARCHY_DATA_LOADED, MANUFACTURER_ORG_HIERARCHY_SET_FORM_IS_VISIBLE, MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA, MANUFACTURER_ORG_HIERARCHY_DATA_SHOW_LOADING, MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING  } from 'store/actions/data/manufacturerOrgHierarchy';
 
 const initialState = {
     isLoaded: false,
@@ -19,6 +19,10 @@ export const ManufacturerOrgHierarchy = (state = initialState, action) => {
             return { ...state, isFormVisible: true };
         case MANUFACTURER_ORG_HIERARCHY_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
+        case MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED:
+            return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
+        case MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING:
+            return { ...state, isHistoryLoading: action.isLoading };
         default:
             return { ...state };
     }

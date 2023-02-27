@@ -13,8 +13,8 @@ import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufact
 import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-// import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
-import { ChangeHistory } from '../ChangeHistory';
+import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
+// import { ChangeHistory } from '../ChangeHistory';
 
 const mapStateToProps = (state) => {
     const {
@@ -274,7 +274,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
 
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                     {isChangeHistoryVisible ? (
-                            <ChangeHistory />
+                            <ManufacturerOrgHierarchyChangeHistory />
                         ) : (
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerOrgHierarchyData={manufacturerOrgHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
