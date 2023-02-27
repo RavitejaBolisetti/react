@@ -95,10 +95,10 @@ export const ConfigurableParameterEditings = (userId, fetchList ,listShowLoading
         });
     };
    
-    useEffect(() => {
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // useEffect(() => {
+    //     fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
 
 
     const onFinish = (values) => {
