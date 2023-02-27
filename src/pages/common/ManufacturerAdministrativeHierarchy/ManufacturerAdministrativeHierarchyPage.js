@@ -37,13 +37,12 @@ export const ManufacturerAdministrativeHierarchyPageBase = () => {
         visibleChangeHistory: true,
         handleChangeHistoryClick,
         isChangeHistoryVisible,
-        visibleSampleBtn: true,
-        handleSample: () => setAttributeVisible(!isAttributeVisible),
+        isUploadVisible:true,
     };
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <ManufacturerAdminstrativeHierarchy isAttributeVisible={isAttributeVisible} isChangeHistoryVisible={isChangeHistoryVisible} />
+            <ManufacturerAdminstrativeHierarchy isChangeHistoryVisible={isChangeHistoryVisible} />
         </>
     );
 };

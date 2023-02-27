@@ -8,18 +8,20 @@ import TreeView from 'components/common/TreeView';
 
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
-import { geoDataActions } from 'store/actions/data/geo';
+import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+//import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
-import { ChangeHistory } from '../ChangeHistory';
+//import { ChangeHistory } from '../ChangeHistory';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            ManufacturerAdminstrativeHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -31,7 +33,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -42,9 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: manufacturerAdminHierarchyDataActions.fetchList,
+            saveData: manufacturerAdminHierarchyDataActions.saveData,
+            listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -54,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,7 +84,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -91,7 +93,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
-    const finalGeoData = geoData?.map((i) => {
+    const finalManufacturerAdministrativeHirarchyData = manufacturerAdminHierarchyData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
@@ -113,7 +115,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
@@ -145,8 +147,8 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
+        const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
+        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', manufacturerAdminHierarchyParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -259,7 +261,13 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                             <div className={styles.leftpanel}>
                                 <div className={styles.treeViewContainer}>
                                     <div className={styles.treemenu}>
-                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={geoData} />
+                                        <TreeView
+                                        //selectedTreeKey={selectedTreeKey}
+                                        //selectedTreeSelectKey={selectedTreeSelectKey}
+                                        //fieldNames={fieldNames}
+                                        //handleTreeViewClick={handleTreeViewClick}
+                                        //dataList={manufacturerAdminHierarchyData}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -271,72 +279,76 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                     </Col> */}
 
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
-                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={geoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                    {buttonData?.editBtn && (
-                                        <Button danger onClick={() => handleEditBtn()}>
-                                            <FaEdit className={styles.buttonIcon} />
-                                            Edit
-                                        </Button>
-                                    )}
+                        {isChangeHistoryVisible ? (
+                            <ManufacturerAdminHierarchyChangeHistory />
+                        ) : (
+                            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerAdminHierarchyData={manufacturerAdminHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                        {buttonData?.editBtn && (
+                                            <Button danger onClick={() => handleEditBtn()}>
+                                                <FaEdit className={styles.buttonIcon} />
+                                                Edit
+                                            </Button>
+                                        )}
 
-                                    {buttonData?.rootChildBtn && (
-                                        <Button danger onClick={() => handleRootChildBtn()}>
-                                            <FaUserPlus className={styles.buttonIcon} />
-                                            Add Child
-                                        </Button>
-                                    )}
+                                        {buttonData?.rootChildBtn && (
+                                            <Button danger onClick={() => handleRootChildBtn()}>
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        )}
 
-                                    {buttonData?.childBtn && (
-                                        <Button danger onClick={() => handleChildBtn()}>
-                                            <FaUserPlus className={styles.buttonIcon} />
-                                            Add Child
-                                        </Button>
-                                    )}
+                                        {buttonData?.childBtn && (
+                                            <Button danger onClick={() => handleChildBtn()}>
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        )}
 
-                                    {buttonData?.siblingBtn && (
-                                        <Button danger onClick={() => handleSiblingBtn()}>
-                                            <FaUserFriends className={styles.buttonIcon} />
-                                            Add Sibling
-                                        </Button>
-                                    )}
+                                        {buttonData?.siblingBtn && (
+                                            <Button danger onClick={() => handleSiblingBtn()}>
+                                                <FaUserFriends className={styles.buttonIcon} />
+                                                Add Sibling
+                                            </Button>
+                                        )}
 
-                                    {isFormVisible && (
-                                        <>
-                                            {buttonData?.saveBtn && (
-                                                <Button htmlType="submit" danger>
-                                                    <FaSave className={styles.buttonIcon} />
-                                                    Save
-                                                </Button>
-                                            )}
+                                        {isFormVisible && (
+                                            <>
+                                                {buttonData?.saveBtn && (
+                                                    <Button htmlType="submit" danger>
+                                                        <FaSave className={styles.buttonIcon} />
+                                                        Save
+                                                    </Button>
+                                                )}
 
-                                            {buttonData?.resetBtn && (
-                                                <Button danger onClick={handleResetBtn}>
-                                                    <FaUndo className={styles.buttonIcon} />
-                                                    Reset
-                                                </Button>
-                                            )}
+                                                {buttonData?.resetBtn && (
+                                                    <Button danger onClick={handleResetBtn}>
+                                                        <FaUndo className={styles.buttonIcon} />
+                                                        Reset
+                                                    </Button>
+                                                )}
 
-                                            {buttonData?.cancelBtn && (
-                                                <Button danger onClick={() => handleBack()}>
-                                                    <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                    Cancel
-                                                </Button>
-                                            )}
-                                        </>
-                                    )}
-                                </Col>
-                            </Row>
-                        </Form>
+                                                {buttonData?.cancelBtn && (
+                                                    <Button danger onClick={() => handleBack()}>
+                                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                        Cancel
+                                                    </Button>
+                                                )}
+                                            </>
+                                        )}
+                                    </Col>
+                                </Row>
+                            </Form>
+                        )}
                     </Col>
                 </Row>
 
-                <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+                <ParentHierarchy title={'Parent Hierarchy'} dataList={manufacturerAdminHierarchyData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );
 };
 
-export const ManufacturerAdminstrativeHierarchy = connect(mapStateToProps, mapDispatchToProps)(GeoMain);
+export const ManufacturerAdminstrativeHierarchy = connect(mapStateToProps, mapDispatchToProps)(ManufacturerAdminstrativeHierarchyMain);

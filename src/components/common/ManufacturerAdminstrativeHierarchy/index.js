@@ -1,2 +1,3 @@
 import { ManufacturerAdminstrativeHierarchy } from './ManufacturerAdminstrativeHierarchy';
-export { ManufacturerAdminstrativeHierarchy };
+import { ManufacturerAdminHierarchyChangeHistory } from './ManufacturerAdminHierarchyChangeHistory';
+export { ManufacturerAdminstrativeHierarchy, ManufacturerAdminHierarchyChangeHistory };

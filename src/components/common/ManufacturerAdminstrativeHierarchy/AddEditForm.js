@@ -48,20 +48,20 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="geoParentCode">
                         <TreeSelect
-                            treeLine={true}
-                            treeIcon={true}
-                            onChange={handleSelectTreeClick}
-                            defaultValue={treeCodeId}
-                            showSearch
-                            dropdownStyle={{
-                                maxHeight: 400,
-                                overflow: 'auto',
-                            }}
+                            // treeLine={true}
+                            // treeIcon={true}
+                            // onChange={handleSelectTreeClick}
+                            // defaultValue={treeCodeId}
+                            // showSearch
+                            // dropdownStyle={{
+                            //     maxHeight: 400,
+                            //     overflow: 'auto',
+                            // }}
                             placeholder="Select"
                             allowClear
                             treeDefaultExpandAll
-                            fieldNames={fieldNames}
-                            treeData={geoData}
+                            // fieldNames={fieldNames}
+                            // treeData={geoData}
                             disabled={treeCodeReadOnly || isReadOnly}
                         />
                     </Form.Item>
