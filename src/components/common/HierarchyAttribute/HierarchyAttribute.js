@@ -13,6 +13,7 @@ import styles from '../Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { EditableCell } from 'utils/EditableCell';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -60,66 +61,25 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const EditableCell = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {
-    let inputField = '';
-    switch (inputType) {
-        case 'switch':
-            inputField = (
-                <Form.Item
-                    normalize={(a, b) =>  a ? 'Y' : 'N'}
-                    style={{
-                        margin: 0,
-                    }}
-                    name={[index, dataIndex]}
-                    // rules={[validateRequiredInputField(`${title}`)]}
-                    initialValue={record[dataIndex]}
-                >
-                    <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={!record?.id && !record?.isEditable} disabled={!record?.id && !record?.isEditable} checkedChildren="Yes" unCheckedChildren="No" />
-                </Form.Item>
-            );
-            break;
-        default:
-            inputField = (
-                <Form.Item
-                    style={{
-                        margin: 0,
-                    }}
-                    name={[index, dataIndex]}
-                    rules={[validateRequiredInputField(`${title}`)]}
-                    initialValue={record[dataIndex]}
-                >
-                    <Input readOnly={!record?.id && !record?.isEditable} disabled={!record?.id && !record?.isEditable} />
-                </Form.Item>
-            );
-            break;
-    }
-    return <td>{inputField}</td>;
-};
+
 
 export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
 
     const [form] = Form.useForm();
-
     const [data, setRowsData] = useState([]);
-    const [count, setCount] = useState(data.length || 0);
-    const [forceFormReset, setForceFormReset] = useState(false);
-
-    useEffect(() => {
-        // setRowsData([...detailData?.hierarchyAttribute])
-        // form.resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
 
     useEffect(() => {
         if (!isDataLoaded ) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
         }
         if(detailData?.hierarchyAttribute){
-            setRowsData(detailData?.hierarchyAttribute)
-        } 
-        
+            setRowsData(detailData?.hierarchyAttribute.map(el => (
+                { ...el, id: Math.random()*1000, key: Math.random()*1000, isEditable: false })
+                ));
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, detailData?.hierarchyAttribute]);
+
+    }, [isDataLoaded, isDataAttributeLoaded, detailData?.hierarchyAttribute, hierarchyAttributeFetchList]);
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -137,13 +97,13 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         });
     };
 
-    const showConfirm = (key) => {
+    const showConfirm = ( record, index ) => {
         confirm({
             title: 'Do you Want to delete these items?',
             icon: <ExclamationCircleFilled />,
             content: 'Are you sure you want to delete?',
             onOk() {
-                deleteTableRows(key);
+                deleteTableRows( record, index );
             },
             onCancel() {
                 console.log('Cancel');
@@ -153,9 +113,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
 
     const handleAdd = () => {
-        setForceFormReset(Math.random() * 10000);
+        const currentlyFormDataObj = form.getFieldsValue();
+
         const newData = {
             id: Math.random() * 1000,
+            key: Math.random() * 1000,
             hierarchyAttribueId: '',
             hierarchyAttribueCode: '',
             hierarchyAttribueName: '',
@@ -163,25 +125,22 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             duplicateAllowedAtDifferentParent: 'N',
             isChildAllowed: 'N',
             status: 'N',
+            deletable: true,
         };
-        setRowsData(prev => [...prev.map(el => ({...el})), newData]);
-        setCount(count + 1);
+
+        const newlyAddedRow = Object.entries(currentlyFormDataObj).map(([key , value]) => (key !== "hierarchyAttribueType" && value)).filter( v => !!v);
+        setRowsData([...newlyAddedRow,  { ...newData } ]);
     };
 
     const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => ((+item?.id === +record?.id) || (item?.hierarchyAttribueId === record?.hierarchyAttribueId) ? { ...item, isEditable: true } : item));
+        const updatedDataItem = data && data.map((item) => ((+item?.id === +record?.id) ? { ...item, isEditable: true } : item));
         setRowsData(updatedDataItem);
     };
 
-    const deleteTableRows = (id) => {
-        // form.resetFields();
-        const updatedData = [...data];
-        const index = updatedData.findIndex((el) => +el.id === +id);
-        updatedData.splice(Number(index), 1);
-        setRowsData([...updatedData.map(el =>  ({...el}))]);
- 
-        setForceFormReset(Math.random() * 10000);
-
+    const deleteTableRows = ( record, index ) => {
+        const currentRows = form.getFieldsValue();        
+        const updatedRows = Object.entries(currentRows).map(([key, value]) => ( key !== "hierarchyAttribueType" && value )).filter(v => !!v).filter(el => ( el?.id !== record?.id ));
+        setRowsData([...updatedRows]);
     };
 
 
@@ -242,7 +201,25 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Status',
             dataIndex: 'status',
             render: (text, record, index) => {
-                return <Space wrap>{EditableCell({ index, record, title: 'Status', dataIndex: 'status', inputType: 'switch', form })}</Space>;
+                return <Space wrap>
+                    {EditableCell({ index, record, title: 'Status', dataIndex: 'status', inputType: 'switch', form })}
+
+                    <Form.Item hidden initialValue={record.key} name={[index, 'key']}>
+                        <Input  />
+                    </Form.Item>
+
+                    <Form.Item hidden initialValue={record.id} name={[index, 'id']}>
+                        <Input  />
+                    </Form.Item>
+                    <Form.Item hidden initialValue={record.deletable} name={[index, 'deletable']}>
+                        <Input  />
+                    </Form.Item>
+                    <Form.Item hidden initialValue={record.isEditable} name={[index, 'isEditable']}>
+                        <Input  />
+                    </Form.Item>
+                    
+                    
+                </Space>;
             },
         })
     );
@@ -255,8 +232,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {!record?.id && <FaEdit onClick={() => edit(record)} />}
-                        {record?.id && <FaTrashAlt onClick={() => showConfirm(record?.id)} />}
+                        {!record?.deletable && <FaEdit onClick={() => edit( record )} />}
+                        {record?.deletable && <FaTrashAlt onClick={() => showConfirm( record, index )} />}
                     </Space>
                 );
             },
@@ -267,36 +244,30 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const onFinish = (values) => {
         const selectedHierarchyAttribue = values['hierarchyAttribueType'];
 
-        let formData = Object.entries(values).filter(([key]) => key !== "hierarchyAttribueType" ).map(([key, value]) =>  value)
-
-        console.log('formData', formData);
-
-        return;
-
+        let formData = Object.entries(values).filter(([key]) => key !== "hierarchyAttribueType" ).map(([keys, {id, key, deletable, ...value}]) =>  ({...value, hierarchyAttribueType: selectedHierarchyAttribue }))
         const onSuccess = (res) => {
             form.resetFields();
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
         };
-
         const reqData = {
             data: {
-                hierarchyAttributeId: form.getFieldValue('hierarchyAttribueType'),
-                hierarchyAttribute: values,
+                hierarchyAttributeId: selectedHierarchyAttribue,
+                hierarchyAttribute: formData,
             },
-            setIsLoading: listShowLoading,
+            setIsLoading: hierarchyAttributeListShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
-        // saveData({ data: [values ], setIsLoading: listShowLoading, userId, onError, onSuccess });
-        hierarchyAttributeSaveData(reqData);
+        hierarchyAttributeSaveData([reqData]);
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
+
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-
     const handleReset = () => {
         console.log("Reset form")
         form.resetFields();
@@ -306,7 +277,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     };
     return (
         <>
-            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form preserve={false} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item name="hierarchyAttribueType" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
@@ -318,32 +289,37 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                         </Form.Item>
                     </Col>
                 </Row>
+                
+                {
+                    detailData?.hierarchyAttribueId &&
+                    <>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Table  loading={!isDataAttributeLoaded} dataSource={[...data]} pagination={false} columns={tableColumn} bordered />
+                            </Col>
+                        </Row>
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table  loading={!isDataAttributeLoaded} dataSource={data} pagination={false} columns={tableColumn} bordered />
-                    </Col>
-                </Row>
+                        <Row gutter={20} style={{ marginTop: '20px' }}>
+                            <Col xs={24} sm={16} md={14} lg={12} xl={12}>
+                                <Button danger onClick={handleAdd}>
+                                    <FaUserPlus className={styles.buttonIcon} />
+                                    Add Row
+                                </Button>
+                            </Col>
+                            <Col xs={24} sm={16} md={14} lg={12} xl={12} className={styles.buttonContainer}>
+                                <Button htmlType="submit" danger>
+                                    <FaSave className={styles.buttonIcon} />
+                                    Save
+                                </Button>
 
-                <Row gutter={20} style={{ marginTop: '20px' }}>
-                    <Col xs={24} sm={16} md={14} lg={12} xl={12}>
-                        <Button danger onClick={handleAdd}>
-                            <FaUserPlus className={styles.buttonIcon} />
-                            Add Row
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={16} md={14} lg={12} xl={12} className={styles.buttonContainer}>
-                        <Button htmlType="submit" danger>
-                            <FaSave className={styles.buttonIcon} />
-                            Save
-                        </Button>
-
-                        <Button danger onClick={handleReset}>
-                            <FaUndo className={styles.buttonIcon} />
-                            Reset
-                        </Button>
-                    </Col>
-                </Row>
+                                <Button danger onClick={handleReset}>
+                                    <FaUndo className={styles.buttonIcon} />
+                                    Reset
+                                </Button>
+                            </Col>
+                        </Row>
+                    </>
+                }
             </Form>
         </>
     );
