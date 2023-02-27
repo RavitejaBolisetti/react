@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { Dealer } from 'components/common/DealerHierarchy';
@@ -21,4 +20,4 @@ export const DealerHierarchyBase = (props) => {
     );
 };
 
-export const DealerHierarchy = withLayoutMaster(DealerHierarchyBase);
+export const DealerHierarchyPage = withLayoutMaster(DealerHierarchyBase);

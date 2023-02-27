@@ -1,3 +1,3 @@
-import { DealerHierarchy } from "./DealerHierarchy";
+import { DealerHierarchyPage } from "./DealerHierarchyPage";
 
-export { DealerHierarchy };
+export { DealerHierarchyPage };

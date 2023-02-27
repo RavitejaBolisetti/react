@@ -144,43 +144,49 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
-        const onSuccess = (res) => {
-            form.resetFields();
-            setForceFormReset(Math.random() * 10000);
+        console.log("🚀 ~ file: Dealer.js:147 ~ onFinish ~ values:", values);
 
-            setReadOnly(true);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            formData && setFormData(data);
+        // const recordId = formData?.id || '';
+        // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        // const data = {}
+        //    cont values.attributeId === "PARNT"
+        //         ? data = { attributeId: '', "parentGroup": { ...values }, "companyGroup": null, "gstinGroup": null, "branchGroup": null }
+        //         : null;
+        //     console.log(data, 'console');
+        // const onSuccess = (res) => {
+        //     form.resetFields();
+        //     setForceFormReset(Math.random() * 10000);
 
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
-                setFormActionType('view');
-            }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
-        };
+        //     setReadOnly(true);
+        //     setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+        //     setFormVisible(true);
+        //     formData && setFormData(data);
 
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
+        //     if (selectedTreeKey && selectedTreeKey.length > 0) {
+        //         !recordId && setSelectedTreeKey(codeToBeSaved);
+        //         setFormActionType('view');
+        //     }
+        //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+        //     fetchList({ setIsLoading: listShowLoading, userId });
+        // };
 
-        const requestData = {
-            data: [data],
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        // const onError = (message) => {
+        //     handleErrorModal(message);
+        // };
 
-        saveData(requestData);
+        // const requestData = {
+        //     data: [data],
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
+
+        // saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleEditBtn = () => {
