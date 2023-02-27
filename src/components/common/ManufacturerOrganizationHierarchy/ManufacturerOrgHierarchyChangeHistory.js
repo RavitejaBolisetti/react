@@ -128,12 +128,12 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
             sortFn: generalsorter,
         })
     );
-    // tableColumn.push(
-    //     tblPrepareColumns({
-    //         title: 'Parent',
-    //         dataIndex: 'parntHeirarchyCode',
-    //     })
-    // );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Parent',
+            dataIndex: 'parntHeirarchyCode',
+        })
+    );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
