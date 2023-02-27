@@ -21,10 +21,11 @@
         "react-countdown-circle-timer": "^3.1.0",
         "react-dom": "^18.2.0",
         "react-google-recaptcha": "^2.1.0",
-        "react-google-recaptcha-v3": "^1.10.1",
+        "react-google-recaptcha3": "^1.0.4",
         "react-helmet": "^6.1.0",
         "react-icons": "^4.7.1",
         "react-loading-skeleton": "^3.1.0",
+        "react-recaptcha": "^2.3.10",
         "react-redux": "^8.0.5",
         "react-router-dom": "^6.7.0",
         "react-scripts": "5.0.1",
@@ -37,7 +38,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
         "extends": [
@@ -59,6 +61,7 @@
     },
     "devDependencies": {
         "react-app-rewired": "^2.2.1",
-        "redux-devtools-extension": "^2.13.9"
+        "redux-devtools-extension": "^2.13.9",
+        "sonarqube-scanner": "^3.0.1"
     }
 }

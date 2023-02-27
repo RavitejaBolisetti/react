@@ -16,7 +16,7 @@ import LINE from './images/Line.png';
 import LOGO from './images/logo.png';
 
 import MAH_WHITE_LOGO from './img/mahindra_Wh_login.png';
-import RL_LOGO from './img/login_robin.png';
+import RL_LOGO from './images/RobinDark_theme.svg';
 
 export {
   R_IMG,

@@ -24,7 +24,7 @@ export const Splash = () => {
             <div className={styles.splashContainer} style={{ backgroundImage: `url(${IMAGES.BG_IMG})` }}>
                 <div className={styles.splashInner}>
                     <div className={styles.splashLogo}>
-                        <img src={IMAGES.LOGO_IMG} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1000} ${styles.splashImg}`} alt="logo-images" />
+                        <img src={IMAGES.LOGO_IMG} className={`${styles.splashImg}`} alt="logo-images" />
                     </div>
                     <div className={styles.splashMainAnimation}>
                         <div className={styles.splashAnimationInner}>
@@ -48,8 +48,8 @@ export const Splash = () => {
                     </div>
                     {/* bottom logo */}
                     <div className={styles.splashBottom}>
-                        <span className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1400} ${styles.splashBottomText}`}>Powered by</span>
-                        <img src={IMAGES.ADC} className={`${isLoading ? styles.opacity1 : styles.opacity0} ${styles.duration1900} ${styles.splashBottomLogo}`} alt="logo-images" />
+                        <span className={`${styles.splashBottomText}`}>Powered by</span>
+                        <img src={IMAGES.ADC} className={`${styles.splashBottomLogo}`} alt="logo-images" />
                     </div>
                 </div>
             </div>

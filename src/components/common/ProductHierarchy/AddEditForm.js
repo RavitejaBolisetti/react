@@ -40,7 +40,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
-                                <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
+                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}
                         </Select>
                     </Form.Item>

@@ -11,6 +11,7 @@ import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import * as routing from 'constants/routing';
 import { connect } from 'react-redux';
+import { MdStars } from 'react-icons/md';
 
 const { confirm } = Modal;
 
@@ -57,7 +58,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             onOk() {
                 navigate(ROUTING_DASHBOARD);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
 
@@ -91,15 +92,15 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
     return (
         <>
             <Row gutter={20} className={styles.pageHeader}>
-                <Col xs={16} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                <Col xs={visibleChangeHistory ? 12 : 16} sm={visibleChangeHistory ? 12 : 16} md={12} lg={14} xl={14} xxl={14}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
                         </div>
-                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>}
+                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<MdStars size={22} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<MdStars color="#1e1e1e" size={22} onClick={handleFavouriteClick} />)}</div>}
                     </Space>
                 </Col>
-                <Col xs={8} sm={24} md={12} lg={6} xl={6} xxl={6}>
+                <Col xs={visibleChangeHistory ? 12 : 8} sm={visibleChangeHistory ? 12 : 8} md={12} lg={10} xl={10} xxl={10}>
                     <div className={styles.buttonContainer}>
                         {/* {visibleSampleBtn && (
                             <Button danger onClick={handleSample}>
@@ -129,7 +130,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
