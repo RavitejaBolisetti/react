@@ -216,6 +216,11 @@
   font-size: 22px;
 }
 
+:global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
+  line-height: 30px !important;
+  height: 30px !important;
+}
+
 /* border color on input search in left-menu */
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
@@ -329,9 +334,9 @@
   vertical-align: sub;
 }
 
-:global .ant-menu-inline.ant-menu-root .ant-menu-item {
+/* :global .ant-menu-inline.ant-menu-root .ant-menu-item {
   height: 40px;
-}
+} */
 
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 8px;
