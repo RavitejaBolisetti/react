@@ -9,7 +9,7 @@ const initialState = {
 export const HierarchyAttributeMaster = (state = initialState, action) => {
     switch (action.type) {
         case HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED:
-            return { ...state, isLoaded: action.isLoaded, data: action.data };
+            return { ...state, isLoaded: action.isLoaded, data: action?.data?.hierarchyAttribute };
         case HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
         default:
