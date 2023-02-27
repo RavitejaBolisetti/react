@@ -15,3 +15,5 @@ export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
+
+export const BASE_URL_CONFIG_PARAM_EDIT = BASE_URL + 'configurableParameterTypes';

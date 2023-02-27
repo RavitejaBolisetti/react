@@ -1,13 +1,49 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
 import styles from '../Common.module.css';
+import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
+import { configparameditActions } from 'store/actions/data/configparameterediting';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 const { RangePicker } = DatePicker;
 let type;
-export const ConfigurableParameterEditing = () => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+        },
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    let returnValue = {
+        collapsed,
+        userId,
+        isDataLoaded,
+        geoData,
+        isDataAttributeLoaded,
+        attributeData: attributeData?.filter((i) => i),
+    };
+    return returnValue;
+};
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: configparameditActions.fetchList,
+            // saveData: configparameditActions.saveData,
+             listShowLoading: configparameditActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+export const ConfigurableParameterEditings = (userId, fetchList ,listShowLoading) => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -58,9 +94,17 @@ export const ConfigurableParameterEditing = () => {
             },
         });
     };
+   
+    useEffect(() => {
+        fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
 
     const onFinish = (values) => {
         // saveData({ data: values, setIsLoading: listShowLoading, userId });
+        fetchList({ setIsLoading: listShowLoading, userId });
+
     };
 
     const defaultColumns = [
@@ -69,7 +113,11 @@ export const ConfigurableParameterEditing = () => {
             dataIndex: 'ControlID',
             key: 'ControlID',
            render:()=> (<Form.Item name="ControlID" rules={[validateRequiredInputField('ControlID')]}>
-            <Input placeholder="Enter Data" />
+          <Select placeholder="Select" 
+                                 options={[
+                                    { value: 'ACLOK', label: 'Lock Account' },
+                                    { value: 'NOLOG', label: 'No Login' },
+                                ]}></Select>
             </Form.Item>),
             width: 200,
         },
@@ -225,7 +273,12 @@ export const ConfigurableParameterEditing = () => {
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item name="ControlID" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
-                                <Input placeholder="Enter Data" />
+                                <Select placeholder="Select" 
+                                 options={[
+                                    { value: 'ACLOK', label: 'Lock Account' },
+                                    { value: 'NOLOG', label: 'No Login' },
+                                ]}
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -277,7 +330,7 @@ export const ConfigurableParameterEditing = () => {
                     
                     <Row gutter={20}>
                         <Col span={12}>
-                        <Form.Item name="rolegroup" label="role group" rules={[validateRequiredSelectField('rolegroup')]}>
+                        <Form.Item name="rolegroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
                         <Select
                             placeholder="Select"
                             options={[
@@ -295,3 +348,6 @@ export const ConfigurableParameterEditing = () => {
         </>
     );
 };
+
+export const ConfigurableParameterEditing = connect(mapStateToProps, mapDispatchToProps)(ConfigurableParameterEditings);
+
