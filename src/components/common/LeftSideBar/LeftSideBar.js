@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import App from './Test';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -70,13 +71,15 @@ const mapDispatchToProps = (dispatch) => ({
 const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
+    const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -95,8 +98,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
 
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', changeTheme);
@@ -109,8 +110,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     const onSubmit = (value, type) => {
         setCollapsed(value);
     };
-
-    const [current, setCurrent] = useState('mail');
 
     const onClick = (e) => {
         setCurrent(e.key);
