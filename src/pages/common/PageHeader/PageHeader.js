@@ -58,14 +58,14 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             onOk() {
                 navigate(ROUTING_DASHBOARD);
             },
-            onCancel() { },
+            onCancel() {},
         });
     };
 
     const location = useLocation();
     const pagePath = location.pathname;
 
-    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : '';
+    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : pagePath === routing?.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY ? 'COMN-05.01' : '';
 
     const checkFev = (data) => data.find((item) => item.menuId === menuId);
     const isFavourite = checkFev(favouriteMenu);

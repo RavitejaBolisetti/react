@@ -41,13 +41,21 @@ export const MenuConstant = {
         parentMenuId: 'FAV',
     },
 
+    [getMenyKey('COMN-05.01')]: {
+        key: 'COMN-05.01',
+        link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
+        icon: undefined,
+        parentMenuId: 'FAV',
+    },
+
     [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
         link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
         icon: undefined,
         parentMenuId: 'FAV',
     },
-    [getMenyKey('COMN-05')]:  {
+
+    [getMenyKey('COMN-05')]: {
         key: 'MOH',
         link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
         icon: undefined,
@@ -93,19 +101,19 @@ export const MenuConstant = {
 
     [getMenyKey('SERV')]: {
         link: undefined,
-        icon: <img src={ICON_SERVICE} width='22px' />,
+        icon: <img src={ICON_SERVICE} width="22px" />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('ADMN')]: {
         link: undefined,
-        icon: <img src={ICON_ADMIN} width='22px' />,
+        icon: <img src={ICON_ADMIN} width="22px" />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <img src={ICON_SPARE} width='22px' />,
+        icon: <img src={ICON_SPARE} width="22px" />,
         parentMenuId: 'WEB',
     },
 

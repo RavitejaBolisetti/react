@@ -14,6 +14,7 @@ import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
+import LeftPanel from '../LeftPanel';
 // import { ChangeHistory } from '../ChangeHistory';
 
 const mapStateToProps = (state) => {
@@ -246,95 +247,86 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
         }
     };
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+
+    const myProps = {
+        isTreeViewVisible,
+        handleTreeViewVisiblity,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        fieldNames,
+        handleTreeViewClick,
+        dataList: manufacturerOrgHierarchyData,
+    };
     return (
         <>
             <div className={styles.geoSection}>
                 <Row gutter={20}>
-                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
-                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                    </div>
-                </Row>
-                <Row gutter={20}>
-                    {isTreeViewVisible ? (
-                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                            <div className={styles.leftpanel}>
-                                <div className={styles.treeViewContainer}>
-                                    <div className={styles.treemenu}>
-                                        <TreeView 
-                                        selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} 
-                                        fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} 
-                                        dataList={manufacturerOrgHierarchyData}
-                                         />
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    ) : undefined}
-                   
-
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
-                    {isChangeHistoryVisible ? (
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <LeftPanel {...myProps} />
+                    </Col>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
+                        {isChangeHistoryVisible ? (
                             <ManufacturerOrgHierarchyChangeHistory />
                         ) : (
-                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerOrgHierarchyData={manufacturerOrgHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                    {buttonData?.editBtn && (
-                                        <Button danger onClick={() => handleEditBtn()}>
-                                            <FaEdit className={styles.buttonIcon} />
-                                            Edit
-                                        </Button>
-                                    )}
+                            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerOrgHierarchyData={manufacturerOrgHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                        {buttonData?.editBtn && (
+                                            <Button danger onClick={() => handleEditBtn()}>
+                                                <FaEdit className={styles.buttonIcon} />
+                                                Edit
+                                            </Button>
+                                        )}
 
-                                    {buttonData?.rootChildBtn && (
-                                        <Button danger onClick={() => handleRootChildBtn()}>
-                                            <FaUserPlus className={styles.buttonIcon} />
-                                            Add Child
-                                        </Button>
-                                    )}
+                                        {buttonData?.rootChildBtn && (
+                                            <Button danger onClick={() => handleRootChildBtn()}>
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        )}
 
-                                    {buttonData?.childBtn && (
-                                        <Button danger onClick={() => handleChildBtn()}>
-                                            <FaUserPlus className={styles.buttonIcon} />
-                                            Add Child
-                                        </Button>
-                                    )}
+                                        {buttonData?.childBtn && (
+                                            <Button danger onClick={() => handleChildBtn()}>
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        )}
 
-                                    {buttonData?.siblingBtn && (
-                                        <Button danger onClick={() => handleSiblingBtn()}>
-                                            <FaUserFriends className={styles.buttonIcon} />
-                                            Add Sibling
-                                        </Button>
-                                    )}
+                                        {buttonData?.siblingBtn && (
+                                            <Button danger onClick={() => handleSiblingBtn()}>
+                                                <FaUserFriends className={styles.buttonIcon} />
+                                                Add Sibling
+                                            </Button>
+                                        )}
 
-                                    {isFormVisible && (
-                                        <>
-                                            {buttonData?.saveBtn && (
-                                                <Button htmlType="submit" danger>
-                                                    <FaSave className={styles.buttonIcon} />
-                                                    Save
-                                                </Button>
-                                            )}
+                                        {isFormVisible && (
+                                            <>
+                                                {buttonData?.saveBtn && (
+                                                    <Button htmlType="submit" danger>
+                                                        <FaSave className={styles.buttonIcon} />
+                                                        Save
+                                                    </Button>
+                                                )}
 
-                                            {buttonData?.resetBtn && (
-                                                <Button danger onClick={handleResetBtn}>
-                                                    <FaUndo className={styles.buttonIcon} />
-                                                    Reset
-                                                </Button>
-                                            )}
+                                                {buttonData?.resetBtn && (
+                                                    <Button danger onClick={handleResetBtn}>
+                                                        <FaUndo className={styles.buttonIcon} />
+                                                        Reset
+                                                    </Button>
+                                                )}
 
-                                            {buttonData?.cancelBtn && (
-                                                <Button danger onClick={() => handleBack()}>
-                                                    <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                    Cancel
-                                                </Button>
-                                            )}
-                                        </>
-                                    )}
-                                </Col>
-                            </Row>
-                        </Form>
+                                                {buttonData?.cancelBtn && (
+                                                    <Button danger onClick={() => handleBack()}>
+                                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                        Cancel
+                                                    </Button>
+                                                )}
+                                            </>
+                                        )}
+                                    </Col>
+                                </Row>
+                            </Form>
                         )}
                     </Col>
                 </Row>
