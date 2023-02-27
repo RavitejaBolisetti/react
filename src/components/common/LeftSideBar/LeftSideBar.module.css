@@ -216,6 +216,10 @@
   padding: 6px 12px;
 }
 
+:global .ant-input-affix-wrapper>input.ant-input {
+  line-height: 0;
+}
+
 .logoContainer input::placeholder {
   color: #8E8585;
 }
@@ -316,9 +320,9 @@
   vertical-align: sub;
 }
 
-/* :global .ant-menu-inline.ant-menu-root .ant-menu-item {
+:global .ant-menu-inline.ant-menu-root .ant-menu-item {
   height: 40px;
-} */
+}
 
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 8px;
@@ -331,15 +335,12 @@
 }
 
 .subMenuParent {
-  color: #ea2929 !important
+  color: #ea2929 !important;
+  text-overflow: ellipsis !important;
 }
 
 .subMenuItem {
-  color: #0458f7 !important
-}
-
-.ant-menu-inline.ant-menu-light .subMenuItem.ant-menu-item {
-  height: 40px !important;
+  color: #0458f7 !important;
 }
 
 @media (max-width: 768px) {
