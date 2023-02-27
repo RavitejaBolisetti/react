@@ -125,13 +125,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
+            const isParentMenu = parentMenuId === 'Web';
+
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: parentMenuId === 'Web', showTitle: collapsed ? !(parentMenuId === 'Web') : true })} className={styles.subMenuParent}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={menuId} className={styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: parentMenuId === 'Web', showTitle: collapsed ? !(parentMenuId === 'Web') : true })}
+                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
