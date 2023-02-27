@@ -20,6 +20,7 @@ import { ChangeHistory } from '../ChangeHistory';
 import { ProductMasterPage } from 'pages/common/ProductMaster/ProductMasterPage';
 import { ProductMaster } from 'pages/common/ProductHierarchy/ProductMaster';
 import { validateRequiredInputField } from 'utils/validation';
+import LeftPanel from '../LeftPanel';
 const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
@@ -319,30 +320,27 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
+
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
+    const myProps = {
+        isTreeViewVisible,
+        handleTreeViewVisiblity,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        fieldNames,
+        handleTreeViewClick,
+        dataList: productHierarchyData,
+    };
     return (
         <>
             <div className={styles.geoSection}>
                 <Row gutter={20}>
-                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
-                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                    </div>
-                </Row>
-                <Row gutter={20}>
-                    {isTreeViewVisible ? (
-                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                            <div className={styles.leftpanel}>
-                                <div className={styles.treeViewContainer}>
-                                    <div className={styles.treemenu}>
-                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={productHierarchyData} />
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    ) : undefined}
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <LeftPanel {...myProps} />
+                    </Col>
 
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
                             <ChangeHistory />
                         ) : collapsable ? (
