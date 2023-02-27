@@ -1,19 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Modal, Row } from 'antd';
-
+import { bindActionCreators } from 'redux';
+import { changePasswordActions } from 'store/actions/data/changePassword';
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
-export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '' }) => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { token, isLoggedIn, userId },
+
+        data: {
+            ChangePassword: { isLoading, isLoaded: isDataLoaded = false },
+        },
+    } = state;
+
+    return {
+        isDataLoaded,
+        token,
+        isLoggedIn,
+        userId,
+        isLoading,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            saveData: changePasswordActions.saveData,
+            listShowLoading: changePasswordActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
 
     const [confirmDirty, setConfirmDirty] = useState(false);
 
-    const onFinish = (values) => {
-        console.log('🚀 ~ file: ChangePassword.js:8 ~ onFinish ~ values', values);
+    const onFinish = (errorInfo) => {
+              // form.validateFields().then((values) => {});
     };
+    const onFinishFailed = (values) => {
+        if(values.errorFields.length==0){
+       const data = { ...values };
+       const onSuccess = (res) => {
+           form.resetFields();
+           handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+       };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('🚀 ~ file: ChangePassword.js:12 ~ onFinishFailed ~ errorInfo', errorInfo);
+       const onError = (message) => {
+           handleErrorModal(message);
+       };
+
+       const requestData = {
+           data: [data],
+           setIsLoading: listShowLoading,
+           userId,
+           onSuccess,
+           onError
+           
+       };
+
+       saveData(requestData); 
+    }       
     };
 
     const validateToNextPassword = (rule, value, callback) => {
@@ -37,7 +89,7 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
     };
     return (
         <>
-            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" onOk={onFinish} onCancel={onCancel}>
+            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary"  onOk={onFinishFailed} onCancel={onCancel}>
                 {discreption ? (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -104,3 +156,5 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
         </>
     );
 };
+
+export const ChangePassword = connect(mapStateToProps, mapDispatchToProps)(ChangePasswordBase);
