@@ -91,10 +91,10 @@ export const ConfigurableParameterEditingTable = () => {
                         <Select
                             placeholder="Select Parameter Type"
                             options={[
-                                { value: 'N', label: 'Number Range' },
-                                { value: 'T', label: 'Text' },
-                                { value: 'D', label: 'Date Range' },
-                                { value: 'B', label: 'Boolean' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY, label: 'Text' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY, label: 'Number Range' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY, label: 'Date Range' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY, label: 'Boolean' },
                             ]}
                             onChange={changeSelectOptionHandler}
                         />
