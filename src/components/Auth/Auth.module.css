@@ -37,7 +37,7 @@ p {
 }
 
 .loginSection {
-    background: url(assets/img/login_splash.png) no-repeat center center fixed;
+    background: url(assets/images/mainbg.png) no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@ p {
 
 .loginSection .loginMnMlogo {
     /* position: absolute; */
-    padding-top: 10px;
+    padding-top: 20px;
     width: 100%;
     text-align: right;
 }
@@ -90,8 +90,8 @@ p {
 }
 
 .loginSection .loginMnMlogo img {
-    padding-right: 12px;
-    width: 160px;
+    padding-right: 25px;
+    height: 40px;
 }
 
 .loginSection .center .loginLogoSection {
