@@ -27,7 +27,7 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
         setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(false);
     };
-    
+
     const onChange = (e) => {
         const { value } = e.target;
         const newExpandedKeys = dataList

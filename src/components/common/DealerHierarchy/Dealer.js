@@ -5,7 +5,6 @@ import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
 import TreeView from 'components/common/TreeView';
-import LeftPanel from 'components/common/LeftPanel';
 
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
@@ -14,6 +13,7 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 const mapStateToProps = (state) => {
     const {
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,7 +82,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES.DEALER_HIERARCHY.KEY });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -144,43 +144,49 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
-        const onSuccess = (res) => {
-            form.resetFields();
-            setForceFormReset(Math.random() * 10000);
+        console.log("🚀 ~ file: Dealer.js:147 ~ onFinish ~ values:", values);
 
-            setReadOnly(true);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            formData && setFormData(data);
+        // const recordId = formData?.id || '';
+        // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        // const data = {}
+        //    cont values.attributeId === "PARNT"
+        //         ? data = { attributeId: '', "parentGroup": { ...values }, "companyGroup": null, "gstinGroup": null, "branchGroup": null }
+        //         : null;
+        //     console.log(data, 'console');
+        // const onSuccess = (res) => {
+        //     form.resetFields();
+        //     setForceFormReset(Math.random() * 10000);
 
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
-                setFormActionType('view');
-            }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
-        };
+        //     setReadOnly(true);
+        //     setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+        //     setFormVisible(true);
+        //     formData && setFormData(data);
 
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
+        //     if (selectedTreeKey && selectedTreeKey.length > 0) {
+        //         !recordId && setSelectedTreeKey(codeToBeSaved);
+        //         setFormActionType('view');
+        //     }
+        //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+        //     fetchList({ setIsLoading: listShowLoading, userId });
+        // };
 
-        const requestData = {
-            data: [data],
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        // const onError = (message) => {
+        //     handleErrorModal(message);
+        // };
 
-        saveData(requestData);
+        // const requestData = {
+        //     data: [data],
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
+
+        // saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleEditBtn = () => {
@@ -244,45 +250,31 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
-
-    const myProps = {
-        isTreeViewVisible,
-        handleTreeViewVisiblity,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        fieldNames,
-        handleTreeViewClick,
-        dataList: geoData,
-    };
-
-    const formProps = {
-        isChecked,
-        setIsChecked,
-        setSelectedTreeKey,
-        flatternData,
-        formActionType,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        isReadOnly,
-        formData,
-        geoData,
-        handleSelectTreeClick,
-        isDataAttributeLoaded,
-        attributeData,
-        setIsModalOpen,
-    };
     return (
         <>
             <div className={styles.geoSection}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <LeftPanel {...myProps} />
-                    </Col>
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
+                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
+                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
+                    </div>
+                </Row>
+                <Row gutter={20}>
+                    {isTreeViewVisible ? (
+                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                            <div className={styles.leftpanel}>
+                                <div className={styles.treeViewContainer}>
+                                    <div className={styles.treemenu}>
+                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={geoData} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                    ) : undefined}
+
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            {isFormVisible && <AddEditForm {...formProps} />}
+                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={geoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                     {buttonData?.editBtn && (
@@ -349,4 +341,4 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
     );
 };
 
-export const Geo = connect(mapStateToProps, mapDispatchToProps)(GeoMain);
+export const Dealer = connect(mapStateToProps, mapDispatchToProps)(DealerMain);
