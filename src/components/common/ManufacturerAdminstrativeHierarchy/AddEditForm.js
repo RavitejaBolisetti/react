@@ -36,7 +36,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute Type')]}>
+                    <Form.Item initialValue={formData?.manufactAdmnHierarchyAttribueId} name="manufactAdmnHierarchyAttribueId" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute Type')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
@@ -70,7 +70,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                    <Form.Item label="Code" name="manufactAdmnHierarchyAttribueCode" initialValue={formData?.manufactAdmnHierarchyAttribueCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                         <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>

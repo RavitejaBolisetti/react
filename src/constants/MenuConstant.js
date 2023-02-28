@@ -41,11 +41,25 @@ export const MenuConstant = {
         parentMenuId: 'FAV',
     },
 
+    [getMenyKey('COMN-05.04')]: {
+        key: 'COMN-05.04',
+        link: routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY,
+        icon: undefined,
+        parentMenuId: 'FAV',
+    },
+
     [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
         link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
         icon: undefined,
         parentMenuId: 'FAV',
+    },
+
+    [getMenyKey('COMN-05.04')]: {
+        key: 'COMN-05.04',
+        link: routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY,
+        icon: undefined,
+        parentMenuId: 'ADMN',
     },
 
     [getMenyKey('PMA')]: {
@@ -87,19 +101,19 @@ export const MenuConstant = {
 
     [getMenyKey('SERV')]: {
         link: undefined,
-        icon: <img src={ICON_SERVICE} width='22px' />,
+        icon: <img src={ICON_SERVICE} width="22px" />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('ADMN')]: {
         link: undefined,
-        icon: <img src={ICON_ADMIN} width='22px' />,
+        icon: <img src={ICON_ADMIN} width="22px" />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <img src={ICON_SPARE} width='22px' />,
+        icon: <img src={ICON_SPARE} width="22px" />,
         parentMenuId: 'WEB',
     },
 
