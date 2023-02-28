@@ -9,44 +9,60 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 
-const sortDateFn = (a, b) => moment(a.ChangeDate, 'YYYY-MM-DD HH:mm:ss') - moment(b.ChangeDate, 'YYYY-MM-DD HH:mm:ss');
+const sortDateFn = (a, b) => moment(a.changedDate, 'YYYY-MM-DD HH:mm:ss') - moment(b.changedDate, 'YYYY-MM-DD HH:mm:ss');
 const generalsorter = (a, b) => {
-    if (a.EmployeeName !== undefined) {
-        if (a.EmployeeName > b.EmployeeName) {
+    if (a.employeeName !== undefined) {
+        if (a.employeeName > b.employeeName) {
             return 1;
-        } else if (a.EmployeeName < b.EmployeeName) {
+        } else if (a.employeeName < b.employeeName) {
             return -1;
         } else {
             return 0;
         }
-    } else if (a.Code !== undefined) {
-        if (a.Code > b.Code) {
+    } else if (a.employeeCode !== undefined) {
+        if (a.employeeCode > b.employeeCode) {
             return 1;
-        } else if (a.Code < b.Code) {
+        } else if (a.employeeCode < b.employeeCode) {
             return -1;
         } else {
             return 0;
         }
-    } else if (a.Attribute !== undefined) {
-        if (a.Attribute > b.Attribute) {
+    } else if (a.attributeCode !== undefined) {
+        if (a.attributeCode > b.attributeCode) {
+            return 1;
+        } else if (a.attributeCode < b.attributeCode) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else if (a.shortDescription !== undefined) {
+        if (a.shortDescription > b.shortDescription) {
             return 1;
         } else if (a.Attribute < b.Attribute) {
             return -1;
         } else {
             return 0;
         }
-    } else if (a.ShortDescription !== undefined) {
-        if (a.ShortDescription > b.ShortDescription) {
+    } else if (a.longDescription > b.longDescription) {
+        if (a.longDescription > b.longDescription) {
             return 1;
-        } else if (a.Attribute < b.Attribute) {
+        } else if (a.longDescription < b.longDescription) {
+            return -1;
+        } else {
+            return 0;
+        }
+    } else if (a.status > b.status) {
+        if (a.status > b.status) {
+            return 1;
+        } else if (a.status < b.status) {
             return -1;
         } else {
             return 0;
         }
     } else {
-        if (a.LongDescription > b.LongDescription) {
+        if (a.authorityType > b.authorityType) {
             return 1;
-        } else if (a.LongDescription < b.LongDescription) {
+        } else if (a.authorityType < b.authorityType) {
             return -1;
         } else {
             return 0;
@@ -55,7 +71,7 @@ const generalsorter = (a, b) => {
 };
 
 const onChange = (pagination, filters, sorter, extra) => {
-    // console.log('params', pagination, filters, sorter, extra);
+    //console.log('params', pagination, filters, sorter, extra);
 };
 
 const contractData = [
@@ -72,37 +88,37 @@ const contractData = [
         parent: 'A',
         shortDescription: 'des1',
         longDescription: 'des2',
-        status: 'active',
+        status: 'Y',
     },
     {
         authorityType: 'AD',
-        employeeCode: '1001',
-        employeeName: 'abc',
-        attributeCode: '1011',
+        employeeCode: '1002',
+        employeeName: 'ab',
+        attributeCode: '1012',
         dateEffectiveFrom: '2000/01/01',
         dateEffectiveTo: ' 2000/12/01',
-        changedDate: '2000/12/12',
-        changedBy: 'xyz',
-        code: '1000',
-        parent: 'A',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        status: 'active',
+        changedDate: '2000/1/13',
+        changedBy: 'xyx',
+        code: '1001',
+        parent: 'B',
+        shortDescription: 'desc1',
+        longDescription: 'description2',
+        status: 'Y',
     },
     {
         authorityType: 'AD',
-        employeeCode: '1001',
-        employeeName: 'abc',
-        attributeCode: '1011',
+        employeeCode: '1003',
+        employeeName: 'abcd',
+        attributeCode: '1013',
         dateEffectiveFrom: '2000/01/01',
         dateEffectiveTo: ' 2000/12/01',
-        changedDate: '2000/12/12',
-        changedBy: 'xyz',
-        code: '1000',
+        changedDate: '2000/2/11',
+        changedBy: 'xxy',
+        code: '1002',
         parent: 'A',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        status: 'active',
+        shortDescription: 'desc11',
+        longDescription: 'description22',
+        status: 'N',
     },
 ];
 const mapStateToProps = (state) => {
@@ -155,33 +171,66 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
+            sortFn: generalsorter,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Attribute',
-            dataIndex: 'parentAttributeName',
+            title: 'Attribute Code',
+            dataIndex: 'attributeCode',
             sortFn: generalsorter,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Code',
+            title: 'Attribute type',
+            dataIndex: 'authorityType',
+            sortFn: generalsorter,
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Employee Code',
             dataIndex: 'employeeCode',
             sortFn: generalsorter,
         })
     );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Employee Name',
+            dataIndex: 'employeeName',
+            sortFn: generalsorter,
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Date Effective From ',
+            dataIndex: 'dateEffectiveFrom',
+            render: (text) => convertDateTime(text),
+            sortFn: sortDateFn,
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Date Effective To ',
+            dataIndex: 'dateEffectiveTo',
+            render: (text) => convertDateTime(text),
+            sortFn: sortDateFn,
+        })
+    );
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parntHeirarchyCode',
+            dataIndex: 'parent',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'prodctShrtDescription',
+            dataIndex: 'shortDescription',
             sortFn: generalsorter,
         })
     );
@@ -189,7 +238,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     tableColumn.push(
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'prodctLongDiscription',
+            dataIndex: 'longDescription',
             sortFn: generalsorter,
         })
     );
@@ -224,7 +273,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
                 onChange={onChange}
                 dataSource={changeHistoryData}
                 pagination={{
-                    position: ['bottomLeft'],
+                    position: ['bottomright'],
                 }}
                 scroll={{
                     x: 'auto',
