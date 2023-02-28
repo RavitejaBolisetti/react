@@ -9,20 +9,20 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const fieldNames = { label: 'manufacturerOrgHierarchyName', value: 'id', children: 'subManufacturerOrgHierarchy' };
+    const fieldNames = { label: 'manufactOrgnHierarchyAttribueName', value: 'id', children: 'subManufacturerOrgHierarchy' };
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     if (formActionType === 'edit' || formActionType === 'view') {
-        treeCodeId = formData?.geoParentCode;
+        treeCodeId = formData?.parentCode;
     } else if (formActionType === 'child') {
         treeCodeId = selectedTreeKey;
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+        treeCodeId = treeCodeData && treeCodeData?.data?.parentCode;
     }
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="geoParentCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="parentCode">
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
@@ -65,14 +65,16 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                         />
                     </Form.Item>
                 </Col>
+            </Row>
 
+            <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.geoCode} label="Attribute Code" name="geoCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                    <Form.Item initialValue={formData?.manufactureOrgCode} label="Attribute Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                         <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
+                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.shortName} rules={[validateRequiredInputField('Short Description')]}>
                         <Input className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
@@ -81,14 +83,20 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         <Row gutter={20}>
         
             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <Form.Item name="longName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
+                <Form.Item name="longName" label="Long Description" initialValue={formData?.longName} rules={[validateRequiredInputField('Long Description')]}>
                     <TextArea rows={1} placeholder="Type here" {...disabledProps} />
                     </Form.Item>
             </Col>
 
+            {/* <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+                <Form.Item initialValue={formData?.status === 'Y' ? 1 : 0} label="Child Allowed" name="status">
+                    <Switch value={formData?.status === 'Y' ? 1 : 0} checkedChildren="Yes" unCheckedChildren="No" defaultChecked {...disabledProps} />
+                </Form.Item>
+            </Col> */}
+
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                 <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                    <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                    <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Yes" unCheckedChildren="No" defaultChecked {...disabledProps} />
                 </Form.Item>
             </Col>
         </Row>

@@ -11,46 +11,55 @@ import styles from './ChangeHistory.module.css';
 
 
 
-const sortDateFn = (a, b) => moment(a.ChangeDate, 'YYYY-MM-DD HH:mm:ss') - moment(b.ChangeDate, 'YYYY-MM-DD HH:mm:ss');
+const sortDateFn = (a, b) => moment(a.changedDate, 'YYYY-MM-DD HH:mm:ss') - moment(b.changedDate, 'YYYY-MM-DD HH:mm:ss');
+
 const generalsorter = (a, b) => {
-    if (a.EmployeeName !== undefined) {
-        if (a.EmployeeName > b.EmployeeName) {
+    if (a.changedBy !== undefined) {
+        if (a.changedBy > b.changedBy) {
             return 1;
-        } else if (a.EmployeeName < b.EmployeeName) {
+        } else if (a.changedBy < b.changedBy) {
             return -1;
         } else {
             return 0;
         }
-    } else if (a.Code !== undefined) {
-        if (a.Code > b.Code) {
+    } else if (a.hierarchyCode !== undefined) {
+        if (a.hierarchyCode > b.hierarchyCode) {
             return 1;
         } else if (a.Code < b.Code) {
             return -1;
         } else {
             return 0;
         }
-    } else if (a.Attribute !== undefined) {
-        if (a.Attribute > b.Attribute) {
+    } else if (a.attributeCode !== undefined) {
+        if (a.attributeCode > b.attributeCode) {
             return 1;
-        } else if (a.Attribute < b.Attribute) {
+        } else if (a.attributeCode < b.attributeCode) {
             return -1;
         } else {
             return 0;
         }
-    } else if (a.ShortDescription !== undefined) {
-        if (a.ShortDescription > b.ShortDescription) {
+    } else if (a.shortDescription !== undefined) {
+        if (a.shortDescription > b.shortDescription) {
             return 1;
-        } else if (a.Attribute < b.Attribute) {
+        } else if (a.shortDescription < b.shortDescription) {
             return -1;
         } else {
             return 0;
         }
-    } else {
-        if (a.LongDescription > b.LongDescription) {
+    } else if(a.longDescription !== undefined){
+        if (a.longDescription > b.longDescription) {
             return 1;
-        } else if (a.LongDescription < b.LongDescription) {
+        } else if (a.longDescription < b.longDescription) {
             return -1;
         } else {
+            return 0;
+        }
+    }else{
+        if(a.active > b.active){
+            return 1;
+        }else if(a.active < b.active){
+            return -1;
+        }else{
             return 0;
         }
     }
@@ -59,6 +68,67 @@ const generalsorter = (a, b) => {
 const onChange = (pagination, filters, sorter, extra) => {
     // console.log('params', pagination, filters, sorter, extra);
 };
+const contractData = [{
+    attributeCode: '1011', 
+    changedDate: '2000/12/17',
+    changedBy : 'Aman',
+    shortDescription : 'des1',
+    longDescription : 'des2',
+    hierarchyCode :'1001',
+    status : 'Y',
+    parentManufactOrgHie : 'DMS',
+},
+{
+    attributeCode: '1021', 
+    changedDate: '2000/12/10',
+    changedBy : 'Aditi',
+    shortDescription : 'des1',
+    longDescription : 'des2',
+    hierarchyCode :'1000',
+    status : 'Active',
+    parentManufactOrgHie : 'ABCD',
+},
+{
+    attributeCode: '1311', 
+    changedDate: '2000/12/13',
+    changedBy : 'Deepak',
+    shortDescription : 'des1',
+    longDescription : 'des2',
+    hierarchyCode :'1003',
+    status : 'Y',
+    parentManufactOrgHie : 'ABC',
+},
+{
+    attributeCode: '1013', 
+    changedDate: '2000/12/14',
+    changedBy : 'Karthik',
+    shortDescription : 'des1',
+    longDescription : 'des2',
+    hierarchyCode :'1004',
+    status : 'Active',
+    parentManufactOrgHie : 'ABCDE',
+},
+{
+    attributeCode: '1014', 
+    changedDate: '2000/12/15',
+    changedBy : 'Sakshi',
+    shortDescription : 'des1',
+    longDescription : 'des2',
+    hierarchyCode :'1031',
+    status : 'Y',
+    parentManufactOrgHie : 'DMS',
+},
+{
+    attributeCode: '1021', 
+    changedDate: '2000/12/16',
+    changedBy : 'Subrat',
+    shortDescription : 'des1',
+    longDescription : 'des2',
+    hierarchyCode :'1055',
+    status : 'Active',
+    parentManufactOrgHie : 'DMS',
+},
+]
 
 const mapStateToProps = (state) => {
     const {
@@ -72,7 +142,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData,
+        changeHistoryData: contractData || changeHistoryData,
     };
     return returnValue;
 };
@@ -100,7 +170,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
+            title: 'Changed Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
             sortFn: sortDateFn,
@@ -111,33 +181,34 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
+            sortFn: generalsorter,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Attribute',
-            dataIndex: 'parentAttributeName',
+            dataIndex: 'attributeCode',
             sortFn: generalsorter,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
-            dataIndex: 'manufacOrgHierarchyCode',
+            dataIndex: 'hierarchyCode',
             sortFn: generalsorter,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parntHeirarchyCode',
+            dataIndex: 'parentManufactOrgHie',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'manufacOrgHierarchyShrtDescription',
+            dataIndex: 'shortDescription',
             sortFn: generalsorter,
         })
     );
@@ -145,7 +216,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     tableColumn.push(
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'manufacOrgHierarchyLongDiscription',
+            dataIndex: 'longDescription',
             sortFn: generalsorter,
         })
     );
@@ -180,7 +251,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
                 onChange={onChange}
                 dataSource={changeHistoryData}
                 pagination={{
-                    position: ['bottomLeft'],
+                    position: ['bottomRight'],
                 }}
                 scroll={{
                     x: 'auto',
