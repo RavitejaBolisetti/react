@@ -62,7 +62,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const [formData, setFormData] = useState([]);
     const [Mycheckvals, setMycheckvals] = useState([]);
 
-    const [AddEditCancel, setAddEditCancel] = useState(false);
+    const [AddEditCancel, setAddEditCancel] = useState(true);
 
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
@@ -113,30 +113,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     };
 
     const AddEditCancelbutton = () => {
-        return (
-            <>
-                <Row justify="end" gutter={20}>
-                    <Col>
-                        <Button danger onClick={() => setAddchild(true)}>
-                            <FaEdit className={styles.buttonIcon} />
-                            cancel
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button danger onClick={onReset}>
-                            <FaUndo className={styles.buttonIcon} />
-                            Edit
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button htmlType="submit" onClick={handleSave} danger>
-                            <FaSave className={styles.buttonIcon} />
-                            Add Role
-                        </Button>
-                    </Col>
-                </Row>
-            </>
-        );
+        return <></>;
     };
 
     const Actions = () => {
@@ -144,8 +121,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             <>
                 <Row>
                     <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} offset={2}>
-                        <Form.Item name="All">
-                            <Checkbox name="All" checked={Checkboxdata.All} onChange={Onselectall}>
+                        <Form.Item name="All" initialValue={InitialData?.All}>
+                            <Checkbox name="All" checked={AddEditCancel?Checkboxdata.All:InitialData?.All} onChange={Onselectall}>
                                 Select All
                             </Checkbox>
                         </Form.Item>
@@ -239,6 +216,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     <Form.Item
                         name="roleid"
                         label="Role Id"
+                        initialValue={InitialData?.roleid}
                         rules={[
                             {
                                 required: true,
@@ -252,6 +230,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     <Form.Item
                         name="rolename"
                         label="Role Name"
+                        initialValue={InitialData?.rolename}
                         rules={[
                             {
                                 required: true,
@@ -265,6 +244,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     <Form.Item
                         name="roledesc"
                         label="Role Description"
+                        initialValue={InitialData?.roledesc}
+
                         rules={[
                             {
                                 required: true,
@@ -275,7 +256,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     </Form.Item>
                 </Col>
                 <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Status" name="active">
+                    <Form.Item label="Status" name="active" initialValue={InitialData?.active} >
                         <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
                 </Col>
@@ -321,12 +302,27 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         console.log('I am the final form data', values);
         setFormData([...formData, values]);
     };
+    const [InitialData, setInitialData] = useState({});
     const handleForms = (e) => {
         console.log(e.target.outerText);
-        console.log(formData);
+        setAddchild(false);
+        setAddEditCancel(false);
+        Object.keys(formData).map((keyName, i) => {
+            console.log(formData[keyName]);
+            Object.keys(formData[keyName]).map((keyName2, i) => {
+                console.log(keyName2);
+                if (keyName2 === 'rolename') {
+                    if (formData[keyName][keyName2] === e.target.outerText) {
+                        setInitialData(formData[keyName]);
+                    }
+                }
+            });
+        });
+        console.log('No need to open', formData);
+        console.log('This is the intialData', InitialData);
     };
     const Handlebuttons = () => {
-        return (
+        return AddEditCancel ? (
             <Row justify="end" gutter={20}>
                 <Col>
                     <Button danger onClick={() => setAddchild(true)}>
@@ -344,6 +340,27 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     <Button htmlType="submit" onClick={handleSave} danger>
                         <FaSave className={styles.buttonIcon} />
                         Save
+                    </Button>
+                </Col>
+            </Row>
+        ) : (
+            <Row justify="end" gutter={20}>
+                <Col>
+                    <Button danger onClick={() => setAddchild(true)}>
+                        <FaEdit className={styles.buttonIcon} />
+                        cancel
+                    </Button>
+                </Col>
+                <Col>
+                    <Button danger onClick={onReset}>
+                        <FaUndo className={styles.buttonIcon} />
+                        Edit
+                    </Button>
+                </Col>
+                <Col>
+                    <Button htmlType="submit" onClick={handleSave} danger>
+                        <FaSave className={styles.buttonIcon} />
+                        Add Role
                     </Button>
                 </Col>
             </Row>
