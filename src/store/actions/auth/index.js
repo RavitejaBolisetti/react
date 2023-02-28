@@ -184,6 +184,11 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
         dispatch(logoutClearAllData());
     };
 
+    /* ToDo : Need to remove this Start */
+    successAction && successAction();
+    authPostLogout();
+    /* ToDo : Need to remove this End */
+
     const logoutError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {

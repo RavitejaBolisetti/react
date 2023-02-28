@@ -1,4 +1,4 @@
-.leftMenuBox :global .ant-layout .ant-layout-sider-trigger {
+/* .leftMenuBox :global .ant-layout .ant-layout-sider-trigger {
   position: fixed;
   width: 24px !important;
   top: 3px;
@@ -10,12 +10,12 @@
   background: #ffffff;
   cursor: pointer;
   transition: all 0.2s;
-}
+} */
 
-.menuTitle {
-  /* font-size: 16px; */
+/* .menuTitle {
+  font-size: 16px;
   margin-top: -10px;
-}
+} */
 
 /* .menuIcon {
   font-size: 40px;
@@ -36,12 +36,32 @@
   z-index: 99 !important;
 }
 
+.leftMenuBox li.subMenuParent {
+  min-height: 40px;
+}
+
+.leftMenuBox li.subMenuParent:hover {
+  color: #ea2929 !important;
+  background: none !important;
+}
+
 .closeButton {
   font-size: 30px;
   padding-top: 12px;
   text-align: right;
   color: #ea2929;
   cursor: pointer;
+}
+
+:global .ant-menu-title-content a {
+  color: #000000 !important;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+:global .ant-menu-title-content a:hover {
+  color: #ea2929 !important;
 }
 
 :global .ant-input-group-wrapper {
@@ -80,8 +100,15 @@
   background-color: transparent;
 }
 
-:global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+/* :global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   background-color: transparent;
+  padding-left: 22px !important;
+} */
+
+/* font-family & size for sub-menu in left-menu text */
+:global .ant-menu .ant-menu-sub {
+  font-size: 14px;
+  background-color: #f4f4f4 !important;
   padding-left: 22px !important;
 }
 
@@ -92,28 +119,32 @@
   padding-left: 20px !important;
 }
 
-:global .ant-menu .ant-menu-item .ant-menu-item-icon+span:hover,
+/* :global .ant-menu .ant-menu-item .ant-menu-item-icon+span:hover,
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span:hover,
 :global .ant-menu .ant-menu-item .anticon+span:hover,
 :global .ant-menu .ant-menu-submenu-title .anticon+span:hover {
   background: #f4f4f4 !important;
   color: #ea2929 !important;
   width: 100%;
-}
+} */
 
 /* :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content,
 :global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content {
-  padding-left: 32px;
+  padding-left: 16px;
+}
+
+:global .ant-menu-inline.ant-menu-root li.subMenuParent>.ant-menu-submenu-title>.ant-menu-title-content {
+  padding-left: 16px;
+}
+
+:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content {
+  padding-left: 16px;
 } */
 
-/* :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content {
-  padding-left: 52px;
-} */
-
-:global .ant-menu-inline.ant-menu-root .subMenuItem>span:hover {
+/* :global .ant-menu-inline.ant-menu-root .subMenuItem>span:hover {
   background: #ffffff !important;
   color: #000000;
-}
+} */
 
 /* changes on menu list items on hover */
 :global .ant-menu-submenu-title:hover {
@@ -175,9 +206,9 @@
   /* color: #000000 !important; */
 }
 
-:global .ant-menu-vertical>.ant-menu-item {
+/* :global .ant-menu-vertical>.ant-menu-item {
   height: 40px !important;
-}
+} */
 
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
   text-transform: uppercase;
@@ -199,7 +230,11 @@
 
 :global .ant-menu-vertical .ant-menu-item,
 :global .ant-menu-vertical .ant-menu-submenu-title {
-  height: 40px !important;
+  /* height: 40px !important; */
+  margin-inline: 0;
+  margin-block: 0;
+  margin-bottom: 4px;
+  width: 100%;
 }
 
 :global .ant-menu .ant-menu-submenu-arrow {
@@ -208,24 +243,17 @@
   /* margin-top: -6px !important; */
 }
 
-/* font-family & size for sub-menu in left-menu text */
-:global .ant-menu .ant-menu-sub {
-  /* font-family: sans-serif; */
-  font-size: 14px;
-  padding-left: 8px !important;
-}
-
 /* font-size for icons in left-menu text */
-:global .ant-menu .ant-menu-submenu .ant-menu-item-icon,
+/* :global .ant-menu .ant-menu-submenu .ant-menu-item-icon,
 :global .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title .ant-menu-item-icon,
 :global .ant-menu .ant-menu-item .ant-menu-item-icon,
 :global .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title .ant-menu-item-icon {
-  font-size: 22px;
-}
+  font-size: 22px !important;
+} */
 
 :global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-  line-height: 30px !important;
-  height: 30px !important;
+  /* line-height: 30px !important; */
+  height: 32px !important;
 }
 
 /* border color on input search in left-menu */
@@ -249,10 +277,10 @@
   width: 40px;
 }
 
-:global .ant-input-search .ant-input:hover,
+/* :global .ant-input-search .ant-input:hover,
 :global .ant-input-search .ant-input:focus {
   border-color: #0458f7;
-}
+} */
 
 :global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
@@ -276,10 +304,10 @@
   color: #ea2929;
 }
 
-:global .ant-menu-submenu-popup,
+/* :global .ant-menu-submenu-popup,
 :global .ant-menu-light.ant-menu-submenu>.ant-menu {
   border-radius: 0;
-}
+} */
 
 .customSider {
   overflow: 'auto';
@@ -294,6 +322,11 @@
 .logoContainer {
   padding: 0px 14px;
   margin-bottom: 12px;
+}
+
+.logoContainerCollapsed {
+  padding: 0px 18px;
+  margin-bottom: 0px;
 }
 
 .brandLink {
@@ -338,40 +371,16 @@
   /* margin-right: 10px; */
 }
 
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child {
-  padding-right: 8px;
-  vertical-align: sub;
-}
-
+:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 8px;
   vertical-align: sub;
 }
 
-:global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
+/* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 0px;
   vertical-align: sub;
-}
-
-.leftMenuBox a {
-  color: #000000 !important;
-}
-
-.leftMenuBox a:hover {
-  color: #ea2929 !important;
-}
-
-.leftMenuBox li.subMenuParent {
-  /* color: #ea2929 !important; */
-  /* border: 1px solid green; */
-  min-height: 40px;
-  /* text-overflow: ellipsis !important; */
-}
-
-.leftMenuBox li.subMenuParent:hover {
-  color: #ea2929 !important;
-  background: none !important;
-}
+} */
 
 /* .leftMenuBox li.subMenuItem:hover {
   color: #ea2929 !important;

@@ -140,7 +140,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
-                <div className={styles.logoContainer} style={{ marginBottom: collapsed ? '0px' : '12px' }}>
+                <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
                     <Row>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
                             <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
@@ -156,7 +156,9 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     {!collapsed && <Input placeholder="Search menu.." allowClear onSearch={onSearch} />}
                 </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()}>
+                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} style={{
+                    paddingLeft: collapsed ? '18px' : '14px'
+                }}>
                     {prepareMenuItem(menuData)}
                 </Menu>
 
