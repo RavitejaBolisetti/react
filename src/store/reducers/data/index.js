@@ -4,6 +4,7 @@ import { Geo } from './geo';
 import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
+import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 
 export const data = combineReducers({
     Menu,
@@ -11,4 +12,5 @@ export const data = combineReducers({
     ProductHierarchy,
     HierarchyAttributeMaster,
     ManufacturerAdminHierarchy,
+    ManufacturerOrgHierarchy,
 });
