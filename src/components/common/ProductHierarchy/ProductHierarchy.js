@@ -1,25 +1,18 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Collapse, Table, Input } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
-
-import TreeView from 'components/common/TreeView';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
-import { ROUTING_COMMON_PRODUCT_MASTER } from 'constants/routing';
-import { addToolTip } from 'utils/customMenuLink';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
-import { ProductMasterPage } from 'pages/common/ProductMaster/ProductMasterPage';
-import { ProductMaster } from 'pages/common/ProductHierarchy/ProductMaster';
-import { validateRequiredInputField } from 'utils/validation';
 import LeftPanel from '../LeftPanel';
 const { Panel } = Collapse;
 
@@ -75,8 +68,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-    const [Visible, setVisible] = useState(true);
-
+    
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
