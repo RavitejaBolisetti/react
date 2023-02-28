@@ -16,7 +16,7 @@ export const MenuConstant = {
     [getMenyKey('FAV')]: {
         key: 'FAV',
         link: undefined,
-        icon: <MdStars fontSize={20} />,
+        icon: <MdStars fontSize={22} />,
         parentMenuId: 'FAV',
     },
 
@@ -71,13 +71,13 @@ export const MenuConstant = {
 
     [getMenyKey('COMN')]: {
         link: undefined,
-        icon: <FaCreativeCommonsShare fontSize={20} />,
+        icon: <FaCreativeCommonsShare fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('DBP')]: {
         link: undefined,
-        icon: <FaAddressBook fontSize={20} />,
+        icon: <FaAddressBook fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
@@ -89,13 +89,13 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <IoPeopleCircle fontSize={20} />,
+        icon: <IoPeopleCircle fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('Sales')]: {
         link: undefined,
-        icon: <AiFillCar fontSize={20} />,
+        icon: <AiFillCar fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
@@ -119,7 +119,7 @@ export const MenuConstant = {
 
     [getMenyKey('CRM')]: {
         link: undefined,
-        icon: <MdWeb fontSize={18} />,
+        icon: <MdWeb fontSize={22} />,
         parentMenuId: 'WEB',
     },
 };

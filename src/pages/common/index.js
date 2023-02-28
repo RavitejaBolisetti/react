@@ -4,5 +4,7 @@ import { ProductHierarchyPage } from './ProductHierarchy';
 import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy';
 import { HierarchyAttributeMaster as HierarchyAttributeMasterPage } from './HierarchyAttributeMaster/HierarchyAttributeMaster';
 import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarchy';
+import { DealerHierarchyPage } from './DealerHierarchy';
 
-export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage };
+export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage };
+

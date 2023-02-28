@@ -13,8 +13,8 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
-
 import LeftPanel from '../LeftPanel';
+
 const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
@@ -69,7 +69,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-
+    
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 

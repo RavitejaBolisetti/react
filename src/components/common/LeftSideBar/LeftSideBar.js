@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import App from './Test';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -32,10 +33,10 @@ const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true,
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
         </Link>
     ) : (
-        <div title={tooltip ? title : ''}>
+        <Link to={routing.ROUTING_DASHBOARD} title={tooltip ? title : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
-        </div>
+        </Link>
     );
 
 const mapStateToProps = (state) => {
@@ -70,13 +71,15 @@ const mapDispatchToProps = (dispatch) => ({
 const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
+    const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -95,8 +98,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
 
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', changeTheme);
@@ -109,8 +110,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     const onSubmit = (value, type) => {
         setCollapsed(value);
     };
-
-    const [current, setCurrent] = useState('mail');
 
     const onClick = (e) => {
         setCurrent(e.key);
@@ -125,13 +124,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
+            const isParentMenu = parentMenuId === 'Web';
+
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: parentMenuId === 'Web', showTitle: collapsed ? !(parentMenuId === 'Web') : true })} className={styles.subMenuParent}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={menuId} className={styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: parentMenuId === 'Web', showTitle: collapsed ? !(parentMenuId === 'Web') : true })}
+                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
