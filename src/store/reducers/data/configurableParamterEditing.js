@@ -1,4 +1,4 @@
-import { CONFIG_PARAM_EDIT_DATA_LOADED, CONFIG_PARAM_EDIT__DATA_SHOW_LOADING } from 'store/actions/data/configParamEditing';
+import { CONFIG_PARAM_EDIT_DATA_LOADED, CONFIG_PARAM_EDIT__DATA_SHOW_LOADING } from 'store/actions/data/configurableParamterEditing';
 
 const initialState = {
     isLoaded: false,
