@@ -286,8 +286,11 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         }
         console.log('I am the final form data', values);
+        setFormData(values);
     };
+    const handleForms=(e)=> {
 
+    }
     const Handlebuttons = () => {
         return (
             <Row gutter={20}>
@@ -329,7 +332,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                                 <Row gutter={20}>
                                     {Roledataset.map((e, i) => (
                                         <Col span={24}>
-                                            <p>{e}</p>
+                                            <p onClick={handleForms(e)}>{e}</p>
                                         </Col>
                                     ))}
                                 </Row>
