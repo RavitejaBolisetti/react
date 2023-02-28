@@ -1,3 +1,4 @@
 import { ChangeHistory } from './ChangeHistory';
+import { ChangeHistoryGeo } from './ChangeHistoryGeo';
 
-export { ChangeHistory };
+export { ChangeHistory, ChangeHistoryGeo };
