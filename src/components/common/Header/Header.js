@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
-import { BsBell } from 'react-icons/bs';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
@@ -22,8 +21,8 @@ import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
-import { RxCross2 } from 'react-icons/rx';
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
+import { MdOutlineChangeCircle } from 'react-icons/md';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -104,25 +103,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         });
     };
 
-    const onshowConfirm = () => {
-        confirm({
-            title: 'Update Your Password',
-            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
-            content: <ChangePassword />,
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            onOk() {
-                doLogout({
-                    successAction: () => {
-                        navigate(routing.ROUTING_LOGIN);
-                    },
-                    userId,
-                });
-            },
-        });
-    };
-
     const items = [
         customMenuLink({
             title: 'Branch Location',
@@ -173,7 +153,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         customMenuLink({
             key: '5',
             title: 'Change Password',
-            icon: <AiFillSetting />,
+            icon: <MdOutlineChangeCircle />,
             onClick: () => setChangePasswordModalOpen(true),
         }),
 
@@ -195,7 +175,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         setCollapsed(!collapsed);
     };
 
-    const theme = 'light';
     return (
         <>
             {!isLoading ? (
