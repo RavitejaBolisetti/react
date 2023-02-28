@@ -2,77 +2,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Table } from 'antd';
-import moment from 'moment';
 
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 
-const sortDateFn = (a, b) => moment(a.changedDate, 'YYYY-MM-DD HH:mm:ss') - moment(b.changedDate, 'YYYY-MM-DD HH:mm:ss');
-const generalsorter = (a, b) => {
-    if (a.employeeName !== undefined) {
-        if (a.employeeName > b.employeeName) {
-            return 1;
-        } else if (a.employeeName < b.employeeName) {
-            return -1;
-        } else {
-            return 0;
-        }
-    } else if (a.employeeCode !== undefined) {
-        if (a.employeeCode > b.employeeCode) {
-            return 1;
-        } else if (a.employeeCode < b.employeeCode) {
-            return -1;
-        } else {
-            return 0;
-        }
-    } else if (a.attributeCode !== undefined) {
-        if (a.attributeCode > b.attributeCode) {
-            return 1;
-        } else if (a.attributeCode < b.attributeCode) {
-            return -1;
-        } else {
-            return 0;
-        }
-    } else if (a.shortDescription !== undefined) {
-        if (a.shortDescription > b.shortDescription) {
-            return 1;
-        } else if (a.Attribute < b.Attribute) {
-            return -1;
-        } else {
-            return 0;
-        }
-    } else if (a.longDescription > b.longDescription) {
-        if (a.longDescription > b.longDescription) {
-            return 1;
-        } else if (a.longDescription < b.longDescription) {
-            return -1;
-        } else {
-            return 0;
-        }
-    } else if (a.status > b.status) {
-        if (a.status > b.status) {
-            return 1;
-        } else if (a.status < b.status) {
-            return -1;
-        } else {
-            return 0;
-        }
-    } else {
-        if (a.authorityType > b.authorityType) {
-            return 1;
-        } else if (a.authorityType < b.authorityType) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-};
-
-const onChange = (pagination, filters, sorter, extra) => {
-    //console.log('params', pagination, filters, sorter, extra);
-};
 
 const contractData = [
     {
@@ -163,7 +98,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-            sortFn: sortDateFn,
         })
     );
 
@@ -171,7 +105,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
-            sortFn: generalsorter,
         })
     );
 
@@ -179,21 +112,18 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Attribute Code',
             dataIndex: 'attributeCode',
-            sortFn: generalsorter,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Attribute type',
             dataIndex: 'authorityType',
-            sortFn: generalsorter,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Employee Code',
             dataIndex: 'employeeCode',
-            sortFn: generalsorter,
         })
     );
 
@@ -201,7 +131,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Employee Name',
             dataIndex: 'employeeName',
-            sortFn: generalsorter,
         })
     );
     tableColumn.push(
@@ -209,7 +138,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
             title: 'Date Effective From ',
             dataIndex: 'dateEffectiveFrom',
             render: (text) => convertDateTime(text),
-            sortFn: sortDateFn,
         })
     );
     tableColumn.push(
@@ -217,7 +145,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
             title: 'Date Effective To ',
             dataIndex: 'dateEffectiveTo',
             render: (text) => convertDateTime(text),
-            sortFn: sortDateFn,
         })
     );
 
@@ -231,7 +158,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Short Description',
             dataIndex: 'shortDescription',
-            sortFn: generalsorter,
         })
     );
 
@@ -239,7 +165,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Long Description',
             dataIndex: 'longDescription',
-            sortFn: generalsorter,
         })
     );
 
@@ -258,7 +183,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
                 },
             ],
             render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
-            sortFn: generalsorter,
         })
     );
 
@@ -270,7 +194,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
             <Table
                 loading={isLoading}
                 columns={tableColumn}
-                onChange={onChange}
                 dataSource={changeHistoryData}
                 pagination={{
                     position: ['bottomright'],
