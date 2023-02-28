@@ -36,14 +36,6 @@
   z-index: 99 !important;
 }
 
-.leftMenuBox a {
-  color: #000000 !important;
-}
-
-.leftMenuBox a:hover {
-  color: #ea2929 !important;
-}
-
 .leftMenuBox li.subMenuParent {
   min-height: 40px;
 }
@@ -59,6 +51,17 @@
   text-align: right;
   color: #ea2929;
   cursor: pointer;
+}
+
+:global .ant-menu-title-content a {
+  color: #000000 !important;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+:global .ant-menu-title-content a:hover {
+  color: #ea2929 !important;
 }
 
 :global .ant-input-group-wrapper {
@@ -105,7 +108,7 @@
 /* font-family & size for sub-menu in left-menu text */
 :global .ant-menu .ant-menu-sub {
   font-size: 14px;
-  background-color: transparent !important;
+  background-color: #f4f4f4 !important;
   padding-left: 22px !important;
 }
 
@@ -301,10 +304,10 @@
   color: #ea2929;
 }
 
-:global .ant-menu-submenu-popup,
+/* :global .ant-menu-submenu-popup,
 :global .ant-menu-light.ant-menu-submenu>.ant-menu {
   border-radius: 0;
-}
+} */
 
 .customSider {
   overflow: 'auto';
