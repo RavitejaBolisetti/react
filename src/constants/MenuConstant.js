@@ -11,6 +11,7 @@ import ICON_ADMIN from '../assets/img/icon-user-shield.png';
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
+import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 export const MenuConstant = {
     [getMenyKey('FAV')]: {
@@ -75,7 +76,7 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <IoPeopleCircle fontSize={22} />,
+        icon: <HrIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
@@ -87,25 +88,25 @@ export const MenuConstant = {
 
     [getMenyKey('SERV')]: {
         link: undefined,
-        icon: <img src={ICON_SERVICE} width='22px' />,
+        icon: <ServiceIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('ADMN')]: {
         link: undefined,
-        icon: <img src={ICON_ADMIN} width='22px' />,
+        icon: <AdminIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <img src={ICON_SPARE} width='22px' />,
+        icon: <SparesIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('CRM')]: {
         link: undefined,
-        icon: <MdWeb fontSize={22} />,
+        icon: <CrmIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 };
