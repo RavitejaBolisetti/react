@@ -74,7 +74,6 @@ const Login = (props) => {
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
     const navigate = useNavigate();
-    navigate(ROUTING_DASHBOARD);
 
     const onSuccess = () => {
         setIsLoading(false);
@@ -141,6 +140,9 @@ const Login = (props) => {
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
                                                             <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
                                                         </Form.Item>
+                                                        <div className={styles.forgotPasswordLink}>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                        </div>
                                                     </Col>
                                                 </Row>
 
@@ -153,10 +155,8 @@ const Login = (props) => {
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.loginFooter} type="radio">
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
-                                                            <div style={{ color: '#ff3e5b', fontWeight: 'bold', marginTop: '5px' }}>OR</div>
-                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>MnM User Login</Link>
+                                                        <div className={styles.loginFooter}>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
