@@ -40,7 +40,7 @@
 
 .changeHistoryContainer :global .ant-table-content::-webkit-scrollbar {
     height: 5px;
-    background-color: #F4F4F4;
+    background-color: #D9D9D9;
 }
 
 .changeHistoryContainer :global .ant-table-content:hover::-webkit-scrollbar {
@@ -48,6 +48,6 @@
 }
 
 .changeHistoryContainer :global .ant-table-content::-webkit-scrollbar-thumb {
-    background-color: #ea3434;
+    background-color: #342C2C;
     border-radius: 10px;
 }

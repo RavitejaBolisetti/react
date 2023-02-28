@@ -1,4 +1,7 @@
 export const ROUTING_HOME = '/';
+
+export const ROUTING_SSO_LOGIN = '/adidaccess';
+
 export const ROUTING_LOGIN = '/login';
 export const ROUTING_LOGOUT = '/logout';
 export const ROUTING_FORGOT_PASSWORD = '/forgot-password';
@@ -10,6 +13,7 @@ export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo');
 export const ROUTING_COMMON_PRODUCT_MASTER = ROUTING_COMMON.concat('product-master');
 export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('product-hierarchy');
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
+export const ROUTING_COMMON_DEALER_HIERARCHY = ROUTING_COMMON.concat('dealer-hierarchy');
 
 export const ROUTING_USER = '/user/';
 export const ROUTING_USER_PROFILE = ROUTING_USER.concat('profile');

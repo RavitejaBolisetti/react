@@ -2,4 +2,6 @@ import { LoginPage } from './Login';
 import { LogoutPage } from './Logout';
 import { ForgotPasswordPage } from './ForgotPassword';
 
-export { LoginPage, LogoutPage, ForgotPasswordPage };
+import { SSOLoginPage } from './SSOLogin';
+
+export { LoginPage, LogoutPage, ForgotPasswordPage, SSOLoginPage };

@@ -11,6 +11,7 @@ import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import * as routing from 'constants/routing';
 import { connect } from 'react-redux';
+import { MdStars } from 'react-icons/md';
 
 const { confirm } = Modal;
 
@@ -96,7 +97,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
                         </div>
-                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>}
+                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<MdStars size={22} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<MdStars color="#1e1e1e" size={22} onClick={handleFavouriteClick} />)}</div>}
                     </Space>
                 </Col>
                 <Col xs={visibleChangeHistory ? 12 : 8} sm={visibleChangeHistory ? 12 : 8} md={12} lg={10} xl={10} xxl={10}>
@@ -129,7 +130,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
