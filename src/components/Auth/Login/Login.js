@@ -74,6 +74,7 @@ const Login = (props) => {
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
     const navigate = useNavigate();
+    navigate(ROUTING_DASHBOARD);
 
     const onSuccess = () => {
         setIsLoading(false);
@@ -154,6 +155,8 @@ const Login = (props) => {
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                            <div style={{ color: '#ff3e5b', fontWeight: 'bold', marginTop: '5px' }}>OR</div>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>MnM User Login</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

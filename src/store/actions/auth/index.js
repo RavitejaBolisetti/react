@@ -18,8 +18,8 @@ export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
 
 export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
 
-const LOCAL_STORAGE_KEY_AUTH_TOKEN = 'authToken';
-const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
+export const LOCAL_STORAGE_KEY_AUTH_TOKEN = 'authToken';
+export const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
 
 export const authLoginSucess = (token, userName, userId) => ({
     type: AUTH_LOGIN_SUCCESS,
