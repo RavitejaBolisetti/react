@@ -6,121 +6,135 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 import dayjs from 'dayjs';
 
-const format = 'HH:mm';
-
 const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const [form] = Form.useForm();
+   
+    let drawerTitle =''
+    if (formActionType === 'add') {
+        drawerTitle='Add Application Criticality Group Details';
+    } else if (formActionType === 'update') {
+        drawerTitle='Update Application Criticality Group Details';
+    } else if (formActionType === 'view') {
+        drawerTitle='View Application Criticality Group Details';
+    }
+    
+    const momentTime = formData?.users?.map((i) => {
+        return {
+            startTime: dayjs(i.startTime, 'HH:mm'),
+            endTime: dayjs(i.endTime, 'HH:mm'),
+        };
+    });
+
     const disabledProps = { disabled: isReadOnly };
     const onClose = () => {
         setDrawer(false);
     };
-    const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const data = { ...values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' };
-        setFormData(data);
-        console.log(formData, 'hell', data, 'o', values, 'koko', recordId);
-    };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+    const onOk = (value) => {
+        console.log('onOk: ', dayjs().format());
+        console.log('onOk: ', typeof value);
+        console.log('onOk: ', value.format('HH:mm'));
     };
-    let drawerTitle = '';
-    if (formActionType === 'add') {
-        drawerTitle = 'Add Application Criticality Group Details';
-    } else if (formActionType === 'update') {
-        drawerTitle = 'Update Application Criticality Group Details';
-    } else if (formActionType === 'view') {
-        drawerTitle = 'View Application Criticality Group Details';
-    }
 
     return (
-        <Drawer title={drawerTitle} placement="right" onClose={onClose} open={open}>
-            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={formData?.criticalityGroupId} name="Criticality Group Id" label="Criticality Group Id">
-                            <Input {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={formData?.criticalityGroupName} name="Criticality Group Name" label="Criticality Group Name">
-                            <Input {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="defaultGroup" label="Default Group?">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.defaultGroup === 'Y' ? 1 : 0) || isChecked} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="Status" label="Status">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.Status === 'Y' ? 1 : 0) || isChecked} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col>
-                        <h4> Allowed Timings</h4>
-                    </Col>
-                </Row>
-                <Form.List name="users">
-                    {(fields, { add, remove }) => (
-                        <>
-                            {fields.map(({ key, name, ...restField }) => (
-                                <div key={key} style={{ background: 'pink' }}>
-                                    <Space
-                                        style={{
-                                            display: 'flex',
-                                            marginBottom: 8,
-                                        }}
-                                        align="baseline"
+        <Drawer
+            title={drawerTitle}
+            footer={
+                <>
+                    <Button form="myForm" key="submit" htmlType="submit">
+                        Submit
+                    </Button>
+                    <Button onClick={onClose}>Cancel</Button>
+                </>
+            }
+            placement="right"
+            onClose={onClose}
+            open={open}
+        >
+            <Row gutter={20}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item initialValue={formData?.criticalityGroupId} name="criticalityGroupId" label="Criticality Group Id">
+                        <Input {...disabledProps} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item initialValue={formData?.criticalityGroupName} name="criticalityGroupName" label="Criticality Group Name">
+                        <Input {...disabledProps} />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item name="defaultGroup" label="Default Group?">
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formData.defaultGroup} onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item name="status" label="Status">
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formData.status} onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col>
+                    <h4> Allowed Timings</h4>
+                </Col>
+            </Row>
+            <Form.List name="users" initialValue={momentTime}>
+                {(fields, { add, remove }) => (
+                    <>
+                        {fields.map(({ key, name, ...restField }) => (
+                            <div key={key} style={{ background: 'pink' }}>
+                                <Space
+                                    style={{
+                                        display: 'flex',
+                                        marginBottom: 8,
+                                    }}
+                                    align="baseline"
+                                >
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'startTime']}
+                                        label="Start Time"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Missing Start Time',
+                                            },
+                                        ]}
                                     >
-                                        <Form.Item
-                                            {...restField}
-                                            name={[name, 'Start Time']}
-                                            label="Start Time"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Missing Start Time',
-                                                },
-                                            ]}
-                                        >
-                                            <TimePicker initialValue={dayjs('12:00', format)} format={format} {...disabledProps} />
-                                        </Form.Item>
-                                        <Form.Item
-                                            {...restField}
-                                            name={[name, 'End Time']}
-                                            label="End Time"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Missing End Time',
-                                                },
-                                            ]}
-                                        >
-                                            <TimePicker initialValue={dayjs('12:00', format)} format={format} {...disabledProps} />
-                                        </Form.Item>
-                                        <AiOutlineClose onClick={() => remove(name)} />
-                                    </Space>
-                                </div>
-                            ))}
-                            <Row>
-                                <Col offset={16}>
-                                    <Form.Item style={{ display: 'flex', align: 'right' }}>
-                                        <Button onClick={() => add()} icon={<PlusOutlined />}>
-                                            Add Time
-                                        </Button>
+                                        <TimePicker format="HH:mm" {...disabledProps} />
                                     </Form.Item>
-                                </Col>
-                            </Row>
-                        </>
-                    )}
-                </Form.List>
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'endTime']}
+                                        label="End Time"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Missing End Time',
+                                            },
+                                        ]}
+                                    >
+                                        <TimePicker format="HH:mm" onOk={onOk} {...disabledProps} />
+                                    </Form.Item>
+                                    <AiOutlineClose {...disabledProps} onClick={() => remove(name)} />
+                                </Space>
+                            </div>
+                        ))}
+                        <Row>
+                            <Col offset={16}>
+                                <Form.Item style={{ display: 'flex', align: 'right' }}>
+                                    <Button {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
+                                        Add Time
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </>
+                )}
+            </Form.List>
 
-                <Row>
+            {/* <Row>
                     <Col>
                         <div
                             style={{
@@ -130,18 +144,9 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                                 textAlign: 'right',
                             }}
                         >
-                            <Form.Item>
-                                <Button style={{ marginRight: 8 }}>Cancel</Button>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </Form.Item>
                         </div>
                     </Col>
-                </Row>
-            </Form>
+                </Row> */}
         </Drawer>
     );
 };
