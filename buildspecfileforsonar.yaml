@@ -20,6 +20,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the dist folder
+      - npm test
       - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_91ce6bda1fe001a5607024f0f71e698b5dc2fb10
       #- npm run sonar
   post_build:
@@ -33,3 +34,9 @@ artifacts:
 cache:
   paths:
     - 'node_modules/**/*'
+reports:
+  jest_reports:
+    files:
+      - 'build/lcov1.info,build/lcov2.info'
+    file-format: 'JUNITXML'
+    base-directory: 'build'
