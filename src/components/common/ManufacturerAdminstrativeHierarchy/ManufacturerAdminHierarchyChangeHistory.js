@@ -58,6 +58,53 @@ const onChange = (pagination, filters, sorter, extra) => {
     // console.log('params', pagination, filters, sorter, extra);
 };
 
+const contractData = [
+    {
+        authorityType: 'AD',
+        employeeCode: '1001',
+        employeeName: 'abc',
+        attributeCode: '1011',
+        dateEffectiveFrom: '2000/01/01',
+        dateEffectiveTo: ' 2000/12/01',
+        changedDate: '2000/12/12',
+        changedBy: 'xyz',
+        code: '1000',
+        parent: 'A',
+        shortDescription: 'des1',
+        longDescription: 'des2',
+        status: 'active',
+    },
+    {
+        authorityType: 'AD',
+        employeeCode: '1001',
+        employeeName: 'abc',
+        attributeCode: '1011',
+        dateEffectiveFrom: '2000/01/01',
+        dateEffectiveTo: ' 2000/12/01',
+        changedDate: '2000/12/12',
+        changedBy: 'xyz',
+        code: '1000',
+        parent: 'A',
+        shortDescription: 'des1',
+        longDescription: 'des2',
+        status: 'active',
+    },
+    {
+        authorityType: 'AD',
+        employeeCode: '1001',
+        employeeName: 'abc',
+        attributeCode: '1011',
+        dateEffectiveFrom: '2000/01/01',
+        dateEffectiveTo: ' 2000/12/01',
+        changedDate: '2000/12/12',
+        changedBy: 'xyz',
+        code: '1000',
+        parent: 'A',
+        shortDescription: 'des1',
+        longDescription: 'des2',
+        status: 'active',
+    },
+];
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -65,12 +112,11 @@ const mapStateToProps = (state) => {
             ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
         },
     } = state;
-
     let returnValue = {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData,
+        changeHistoryData: contractData || changeHistoryData,
     };
     return returnValue;
 };
@@ -122,7 +168,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
-            dataIndex: 'prodctCode',
+            dataIndex: 'employeeCode',
             sortFn: generalsorter,
         })
     );
