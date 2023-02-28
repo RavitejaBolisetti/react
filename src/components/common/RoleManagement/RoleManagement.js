@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Space, Table, Drawer, Switch, Collapse, Checkbox, Card, Tree, Divider } from 'antd';
+import { Button, Col, Form, Row, Input, Space, Table, List, Drawer, Switch, Collapse, Checkbox, Card, Tree, Divider } from 'antd';
 
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const Roledataset = [];
+const Roledataset = ['Shakambhar'];
 export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -61,6 +61,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
 
     const [formData, setFormData] = useState([]);
     const [Mycheckvals, setMycheckvals] = useState([]);
+
+    const [AddEditCancel, setAddEditCancel] = useState(false);
 
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
@@ -108,6 +110,33 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         } else {
             setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         }
+    };
+
+    const AddEditCancelbutton = () => {
+        return (
+            <>
+                <Row justify="end" gutter={20}>
+                    <Col>
+                        <Button danger onClick={() => setAddchild(true)}>
+                            <FaEdit className={styles.buttonIcon} />
+                            cancel
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button danger onClick={onReset}>
+                            <FaUndo className={styles.buttonIcon} />
+                            Edit
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button htmlType="submit" onClick={handleSave} danger>
+                            <FaSave className={styles.buttonIcon} />
+                            Add Role
+                        </Button>
+                    </Col>
+                </Row>
+            </>
+        );
     };
 
     const Actions = () => {
@@ -172,11 +201,15 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         );
     };
     const [addchilds, setAddchild] = useState(true);
+    const [Switcher, setSwitcher] = useState(true);
     const handleChilds = () => {
         setAddchild(!addchilds);
     };
     const handleSave = () => {
         form.validateFields();
+    };
+    const Handleswitch = (e) => {
+        setSwitcher(!Switcher);
     };
 
     const CardTree = () => {
@@ -242,8 +275,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     </Form.Item>
                 </Col>
                 <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item initialValue={'Y'} label="Status" name="active">
-                        <Switch defaultChecked={true} checkedChildren="Active" unCheckedChildren="Inactive" />
+                    <Form.Item label="Status" name="active">
+                        <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
                 </Col>
             </Row>
@@ -251,6 +284,10 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     };
     const onReset = () => {
         form.resetFields();
+        setMycheckvals([]);
+        setSwitcher(true);
+        setCheckedKeys([]);
+        setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
     };
     const onFinisher = (values) => {
         if (Mycheckvals.length === 0) {
@@ -263,15 +300,11 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 if (keyName === 'rolename') {
                     Roledataset.push(values[keyName]);
                 }
-                if(keyName==='active')
-                {
-                    if(values[keyName]===false)
-                    {
-                        values[keyName]='N';
-                    }
-                    else
-                    {
-                        values[keyName]='Y';
+                if (keyName === 'active') {
+                    if (values[keyName] === false) {
+                        values[keyName] = 'N';
+                    } else {
+                        values[keyName] = 'Y';
                     }
                 }
             });
@@ -286,30 +319,31 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         }
         console.log('I am the final form data', values);
-        setFormData(values);
+        setFormData([...formData, values]);
     };
-    const handleForms=(e)=> {
-
-    }
+    const handleForms = (e) => {
+        console.log(e.target.outerText);
+        console.log(formData);
+    };
     const Handlebuttons = () => {
         return (
-            <Row gutter={20}>
+            <Row justify="end" gutter={20}>
                 <Col>
-                    <Button htmlType="submit" onClick={handleSave} danger>
-                        <FaSave className={styles.buttonIcon} />
-                        Save
-                    </Button>
-                </Col>
-                <Col>
-                    <Button danger>
+                    <Button danger onClick={() => setAddchild(true)}>
                         <FaEdit className={styles.buttonIcon} />
-                        Edit
+                        cancel
                     </Button>
                 </Col>
                 <Col>
                     <Button danger onClick={onReset}>
                         <FaUndo className={styles.buttonIcon} />
                         Reset
+                    </Button>
+                </Col>
+                <Col>
+                    <Button htmlType="submit" onClick={handleSave} danger>
+                        <FaSave className={styles.buttonIcon} />
+                        Save
                     </Button>
                 </Col>
             </Row>
@@ -329,13 +363,11 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                             <Row justify="left">
                                 <p style={{ paddingLeft: 10, paddingTop: 10, fontWeight: 500 }}>Role List</p>
                                 <Divider style={{ marginTop: 6 }} plain></Divider>
-                                <Row gutter={20}>
-                                    {Roledataset.map((e, i) => (
-                                        <Col span={24}>
-                                            <p onClick={handleForms(e)}>{e}</p>
-                                        </Col>
-                                    ))}
-                                </Row>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col span={24}>
+                                    <List size="large" bordered={true} dataSource={Roledataset} renderItem={(item) => <List.Item onClick={handleForms}>{item}</List.Item>} />
+                                </Col>
                             </Row>
                         </div>
                     </Col>
@@ -346,7 +378,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                             <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4} offset={21}>
                                 <Button onClick={handleChilds} danger>
                                     <FaUserPlus className={styles.buttonIcon} />
-                                    Add Child
+                                    Add Role
                                 </Button>
                             </Col>
                         ) : (
