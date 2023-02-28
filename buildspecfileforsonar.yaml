@@ -15,7 +15,7 @@ phases:
             - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
-            - npm install -D jest-sonar-reporter sonarqube-scanner
+            - npm install -D sonarqube-scanner
     build:
         commands:
             - echo Build started on `date`
