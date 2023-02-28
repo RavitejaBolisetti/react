@@ -5,8 +5,6 @@ import { Button, Col, Form, Row, Input, Space, Table, Drawer, Switch, Collapse, 
 
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
-import Trees from './Tree';
-
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
@@ -14,8 +12,8 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import './RoleManagement.module.css';
-import Treedata, { checkvals } from './Tree';
 import { validateEmailField } from 'utils/validation';
+import treeData from './Treedata.json';
 
 const mapStateToProps = (state) => {
     const {
@@ -62,13 +60,37 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const [validatetrees, setValidatetrees] = useState(false);
 
     const [formData, setFormData] = useState([]);
+    const [Mycheckvals, setMycheckvals] = useState([]);
 
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+
+    //Tree
+
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const [checkedKeys, setCheckedKeys] = useState([]);
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
+    const onExpand = (expandedKeysValue) => {
+        console.log('onExpand', expandedKeysValue);
+        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+        // or, you can remove all expanded children keys.
+        setExpandedKeys(expandedKeysValue);
+    };
+    const onCheck = (checkedKeysValue) => {
+        console.log('onCheck', checkedKeysValue);
+        setMycheckvals(checkedKeysValue);
+        setCheckedKeys(checkedKeysValue);
+    };
+    const onSelect = (selectedKeysValue, info) => {
+        console.log('onSelect', info);
+
+        setSelectedKeys(selectedKeysValue);
+    };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const [Checkboxdata, setCheckBoxData] = useState({
-        All: true,
+        All: false,
         Add: false,
         View: false,
         Delete: false,
@@ -76,37 +98,24 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         Upload: false,
         Download: false,
     });
+    const Onindivisualselect = (e) => {
+        console.log('Indivisual Val', e.target.checked, e.target.name);
+        setCheckBoxData({ ...Checkboxdata, [e.target.name]: e.target.checked });
+    };
     const Onselectall = (e) => {
         if (e.target.checked == true) {
-            const newvals = {
-                All: true,
-                Add: true,
-                View: true,
-                Delete: true,
-                Edit: true,
-                Upload: true,
-                Download: true,
-            };
-            setCheckBoxData(newvals);
+            setCheckBoxData({ ...Checkboxdata, All: true, Add: true, View: true, Delete: true, Edit: true, Upload: true, Download: true });
         } else {
-            const newvals = {
-                All: false,
-                Add: false,
-                View: false,
-                Delete: false,
-                Edit: false,
-                Upload: false,
-                Download: false,
-            };
-            setCheckBoxData(newvals);
+            setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         }
     };
+
     const Actions = () => {
         return (
             <>
                 <Row>
                     <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} offset={2}>
-                        <Form.Item name="All" valuePropName="checked">
+                        <Form.Item name="All">
                             <Checkbox name="All" checked={Checkboxdata.All} onChange={Onselectall}>
                                 Select All
                             </Checkbox>
@@ -115,22 +124,22 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 </Row>
                 <Row>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
-                        <Form.Item name="Add" valuePropName="checked">
-                            <Checkbox name="Add" checked={Checkboxdata.Add}>
+                        <Form.Item name="Add">
+                            <Checkbox name="Add" checked={Checkboxdata.Add} onChange={Onindivisualselect}>
                                 Add
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="View" valuePropName="checked">
-                            <Checkbox name="View" checked={Checkboxdata.View}>
+                        <Form.Item name="View">
+                            <Checkbox name="View" checked={Checkboxdata.View} onChange={Onindivisualselect}>
                                 View
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Delete" valuePropName="checked">
-                            <Checkbox name="Delete" checked={Checkboxdata.Delete}>
+                        <Form.Item name="Delete">
+                            <Checkbox name="Delete" checked={Checkboxdata.Delete} onChange={Onindivisualselect}>
                                 Delete
                             </Checkbox>
                         </Form.Item>
@@ -138,22 +147,22 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 </Row>
                 <Row>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
-                        <Form.Item name="Edit" valuePropName="checked">
-                            <Checkbox name="Edit" checked={Checkboxdata.Edit}>
+                        <Form.Item name="Edit">
+                            <Checkbox name="Edit" checked={Checkboxdata.Edit} onChange={Onindivisualselect}>
                                 Edit
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Upload" valuePropName="checked">
-                            <Checkbox name="Upload" checked={Checkboxdata.Upload}>
+                        <Form.Item name="Upload">
+                            <Checkbox name="Upload" checked={Checkboxdata.Upload} onChange={Onindivisualselect}>
                                 Upload
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Download" valuePropName="checked">
-                            <Checkbox name="Download" checked={Checkboxdata.Download}>
+                        <Form.Item name="Download">
+                            <Checkbox name="Download" checked={Checkboxdata.Download} onChange={Onindivisualselect}>
                                 Download
                             </Checkbox>
                         </Form.Item>
@@ -175,8 +184,10 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             <Row gutter={20}>
                 <Col span={12}>
                     <Card title="Access Applications" bordered={true}>
-                        <Trees />
-                        {validatetrees ? 'Please Select a access Application' : null}
+                        {/* <Trees /> */}
+                        <Form.Item initialValue={undefined} name="Treedata">
+                            <Tree defaultExpandAll={true} showLine={true} checkable onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} onCheck={onCheck} checkedKeys={checkedKeys} onSelect={onSelect} selectedKeys={selectedKeys} treeData={treeData} />
+                        </Form.Item>
                     </Card>
                 </Col>
                 <Col span={12}>
@@ -242,34 +253,41 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         form.resetFields();
     };
     const onFinisher = (values) => {
-        console.log(values, checkvals.length);
-        if (checkvals.length === 0) {
-            setValidatetrees(true);
+        if (Mycheckvals.length === 0) {
         } else {
-            let end = checkvals.length;
             Object.keys(values).map((keyName, i) => {
                 if (keyName === 'Treedata') {
-                    values[keyName] = checkvals[end - 1];
+                    values[keyName] = checkedKeys;
                 }
 
                 if (keyName === 'rolename') {
                     Roledataset.push(values[keyName]);
                 }
+                if(keyName==='active')
+                {
+                    if(values[keyName]===false)
+                    {
+                        values[keyName]='N';
+                    }
+                    else
+                    {
+                        values[keyName]='Y';
+                    }
+                }
             });
+            Object.keys(Checkboxdata).map((keyName, i) => {
+                values[keyName] = Checkboxdata[keyName];
+            });
+
             setAddchild(!addchilds);
             form.resetFields();
-            setValidatetrees(false);
+            setMycheckvals([]);
+            setCheckedKeys([]);
+            setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         }
-        console.log(checkvals);
+        console.log('I am the final form data', values);
     };
-    const RoleList = () => {
-        Object.keys(formData).map((keyName, i) => {
-            if (keyName === 'rolename') {
-                Roledataset.push(formData[keyName]);
-            }
-        });
-        console.log(Roledataset);
-    };
+
     const Handlebuttons = () => {
         return (
             <Row gutter={20}>
@@ -310,7 +328,9 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                                 <Divider style={{ marginTop: 6 }} plain></Divider>
                                 <Row gutter={20}>
                                     {Roledataset.map((e, i) => (
-                                        <Col span={24}>{e}</Col>
+                                        <Col span={24}>
+                                            <p>{e}</p>
+                                        </Col>
                                     ))}
                                 </Row>
                             </Row>

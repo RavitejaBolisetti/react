@@ -18,3 +18,9 @@ h4{
     /* margin-bottom: 24px; */
     vertical-align: top;
 }
+p{
+    text-align: center;
+}
+p:hover{
+    background-color: black;
+}
