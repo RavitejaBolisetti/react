@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react';
+import { connect } from 'react-redux';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
 import styles from '../Common.module.css';
@@ -8,6 +9,7 @@ import { validateRequiredSelectField, validateRequiredInputField } from 'utils/v
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 import { configparameditActions } from 'store/actions/data/configParamEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
+import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 const { RangePicker } = DatePicker;
 let type;
 const mapStateToProps = (state) => {
@@ -36,7 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditing = (fetchList,userId,configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData) => {
+export const ConfigurableParameterEditingBase = (fetchList,userId,configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData) => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -105,13 +107,17 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
             title: 'Control ID',
             dataIndex: 'ControlID',
             key: 'ControlID',
-           render:()=> (<Form.Item name="ControlID" rules={[validateRequiredInputField('ControlID')]}>
-          <Select placeholder="Select" 
-                                 options={[
-                                    { value: 'ACLOK', label: 'Lock Account' },
-                                    { value: 'NOLOG', label: 'No Login' },
-                                ]}></Select>
-            </Form.Item>),
+            render: () => (
+                <Form.Item name="ControlID" rules={[validateRequiredInputField('ControlID')]}>
+                    <Select
+                        placeholder="Select"
+                        options={[
+                            { value: 'ACLOK', label: 'Lock Account' },
+                            { value: 'NOLOG', label: 'No Login' },
+                        ]}
+                    ></Select>
+                </Form.Item>
+            ),
             width: 200,
         },
         {
@@ -135,10 +141,10 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
                         <Select
                             placeholder="Select Parameter Type"
                             options={[
-                                { value: 'N', label: 'Number Range' },
-                                { value: 'T', label: 'Text' },
-                                { value: 'D', label: 'Date Range' },
-                                { value: 'B', label: 'Boolean' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY, label: 'Text' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY, label: 'Number Range' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY, label: 'Date Range' },
+                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY, label: 'Boolean' },
                             ]}
                             onChange={changeSelectOptionHandler}
                         />
@@ -158,17 +164,21 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
             title: 'Role Group',
             dataIndex: 'rolegroup',
             key: 'rolegroup',
-            render:() => <><Form.Item name="rolegroup" rules={[validateRequiredSelectField('rolegroup')]}>
-            <Select
-            placeholder="Select"
-            options={[
-                { value: '1', label: 'Parameter Type 1' },
-                { value: '2', label: 'Parameter Type 2' },
-                { value: '3', label: 'Parameter Type 3' },
-                { value: '4', label: 'Parameter Type 4' },
-
-                ]}
-                /> </Form.Item></>
+            render: () => (
+                <>
+                    <Form.Item name="rolegroup" rules={[validateRequiredSelectField('rolegroup')]}>
+                        <Select
+                            placeholder="Select"
+                            options={[
+                                { value: '1', label: 'Parameter Type 1' },
+                                { value: '2', label: 'Parameter Type 2' },
+                                { value: '3', label: 'Parameter Type 3' },
+                                { value: '4', label: 'Parameter Type 4' },
+                            ]}
+                        />{' '}
+                    </Form.Item>
+                </>
+            ),
         },
         {
             title: 'Action',
@@ -234,12 +244,11 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
         form.validateFields().then((values) => {});
     };
 
-    
     return (
         <>
             <Button danger onClick={showDrawer}>
-                        <FaUserPlus className={styles.buttonIcon} />
-                        Add Row
+                <FaUserPlus className={styles.buttonIcon} />
+                Add Row
             </Button>
             <Table bordered dataSource={data} columns={defaultColumns} pagination={false} />
             <Drawer
@@ -266,11 +275,12 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item name="ControlID" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
-                                <Select placeholder="Select" 
-                                 options={[
-                                    { value: 'ACLOK', label: 'Lock Account' },
-                                    { value: 'NOLOG', label: 'No Login' },
-                                ]}
+                                <Select
+                                    placeholder="Select"
+                                    options={[
+                                        { value: 'ACLOK', label: 'Lock Account' },
+                                        { value: 'NOLOG', label: 'No Login' },
+                                    ]}
                                 />
                             </Form.Item>
                         </Col>
@@ -282,58 +292,56 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
-                        <Form.Item name="ConfigParamType" label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                        <Select
-                            placeholder="Select Parameter Type"
-                            options={[
-                                { value: 'N', label: 'Number Range' },
-                                { value: 'T', label: 'Text' },
-                                { value: 'D', label: 'Date Range' },
-                                { value: 'B', label: 'Boolean' },
-                            ]}
-                            onChange={changeSelectOptionHandler}
-                        />
-                        </Form.Item>
+                            <Form.Item name="ConfigParamType" label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                                <Select
+                                    placeholder="Select Parameter Type"
+                                    options={[
+                                        { value: 'N', label: 'Number Range' },
+                                        { value: 'T', label: 'Text' },
+                                        { value: 'D', label: 'Date Range' },
+                                        { value: 'B', label: 'Boolean' },
+                                    ]}
+                                    onChange={changeSelectOptionHandler}
+                                />
+                            </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item name="ConfigParamValues" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]} >
-                                {selected=='T'? (      
-                                     <Input placeholder="Enter Data" />                                  
-                                ):(selected == 'N'?(
+                            <Form.Item name="ConfigParamValues" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
+                                {selected == 'T' ? (
+                                    <Input placeholder="Enter Data" />
+                                ) : selected == 'N' ? (
                                     <>
-                                    <InputNumber min={1} max={100} defaultValue={1} />
-                                    <InputNumber min={1} max={100} defaultValue={100} />
+                                        <InputNumber min={1} max={100} defaultValue={1} />
+                                        <InputNumber min={1} max={100} defaultValue={100} />
                                     </>
-                                ):(selected == 'B' ?(
+                                ) : selected == 'B' ? (
                                     <Select
-                            placeholder="Select"
-                            options={[
-                                { value: 'Y', label: 'Yes' },
-                                { value: 'N', label: 'No' },
-                                ]}
-                                />
-                                ):(
-                                    <RangePicker /> 
-                                )))                                 
-                                }
+                                        placeholder="Select"
+                                        options={[
+                                            { value: 'Y', label: 'Yes' },
+                                            { value: 'N', label: 'No' },
+                                        ]}
+                                    />
+                                ) : (
+                                    <RangePicker />
+                                )}
                             </Form.Item>
                         </Col>
                     </Row>
 
-                    
                     <Row gutter={20}>
                         <Col span={12}>
-                        <Form.Item name="rolegroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
-                        <Select
-                            placeholder="Select"
-                            options={[
-                                { value: '1', label: 'Parameter Type 1' },
-                                { value: '2', label: 'Parameter Type 2' },
-                                { value: '3', label: 'Parameter Type 3' },
-                                { value: '4', label: 'Parameter Type 4' },
-
-                                ]}
-                                /> </Form.Item>
+                            <Form.Item name="rolegroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
+                                <Select
+                                    placeholder="Select"
+                                    options={[
+                                        { value: '1', label: 'Parameter Type 1' },
+                                        { value: '2', label: 'Parameter Type 2' },
+                                        { value: '3', label: 'Parameter Type 3' },
+                                        { value: '4', label: 'Parameter Type 4' },
+                                    ]}
+                                />{' '}
+                            </Form.Item>
                         </Col>
                     </Row>
                 </Form>
@@ -341,3 +349,5 @@ export const ConfigurableParameterEditing = (fetchList,userId,configData, isData
         </>
     );
 };
+
+export const ConfigurableParameterEditing = connect(mapStateToProps, mapDispatchToProps)(ConfigurableParameterEditingBase);
