@@ -1,12 +1,12 @@
-import React, {useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState,useEffect } from 'react';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
 import styles from '../Common.module.css';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
-import { configparameditActions } from 'store/actions/data/configparameterediting';
+import { configparameditActions } from 'store/actions/data/configParamEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 const { RangePicker } = DatePicker;
 let type;
@@ -14,36 +14,29 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false,data: configData = [] },
         },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
+        
     } = state;
 
-    let returnValue = {
-        collapsed,
+    let returnValue = {  
         userId,
         isDataLoaded,
-        geoData,
-        isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
-    };
+            };
     return returnValue;
 };
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
             fetchList: configparameditActions.fetchList,
-            // saveData: configparameditActions.saveData,
-             listShowLoading: configparameditActions.listShowLoading,
+            listShowLoading: configparameditActions.listShowLoading,
         },
         dispatch
     ),
 });
-export const ConfigurableParameterEditings = (userId, fetchList ,listShowLoading) => {
+export const ConfigurableParameterEditing = (fetchList,userId,configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData) => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -76,6 +69,14 @@ export const ConfigurableParameterEditings = (userId, fetchList ,listShowLoading
         setRowsData([...data, newData]);
         setCount(count + 1);
     };
+    useEffect(() => {
+        fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const finalConfigData = configData?.map((i) => {
+        return {  };
+    });
     const deleteTableRows = (index) => {
         const rows = [...data];
         rows.splice(index, 1);
@@ -95,16 +96,8 @@ export const ConfigurableParameterEditings = (userId, fetchList ,listShowLoading
         });
     };
    
-    // useEffect(() => {
-    //     fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
-
     const onFinish = (values) => {
         // saveData({ data: values, setIsLoading: listShowLoading, userId });
-        fetchList({ setIsLoading: listShowLoading, userId });
-
     };
 
     const defaultColumns = [
@@ -348,6 +341,3 @@ export const ConfigurableParameterEditings = (userId, fetchList ,listShowLoading
         </>
     );
 };
-
-export const ConfigurableParameterEditing = connect(mapStateToProps, mapDispatchToProps)(ConfigurableParameterEditings);
-
