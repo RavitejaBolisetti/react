@@ -29,6 +29,6 @@ export const validateVehicleRegistrationField = (fieldName) => ({
 });
 
 export const validateMobileNoField = (fieldName) => ({
-    pattern: /^([5-9]){5}([0-9])5$/,
+    pattern: /^([5-9]){1}([0-9]){9}$/,
     message: 'Please Enter Valid ' + fieldName,
 });

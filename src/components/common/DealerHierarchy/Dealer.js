@@ -148,11 +148,8 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
 
         // const recordId = formData?.id || '';
         // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        // const data = {}
-        //    cont values.attributeId === "PARNT"
-        //         ? data = { attributeId: '', "parentGroup": { ...values }, "companyGroup": null, "gstinGroup": null, "branchGroup": null }
-        //         : null;
-        //     console.log(data, 'console');
+       
+        
         // const onSuccess = (res) => {
         //     form.resetFields();
         //     setForceFormReset(Math.random() * 10000);

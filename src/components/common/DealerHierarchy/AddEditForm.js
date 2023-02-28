@@ -102,8 +102,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item label="Status" name="isActive">
-                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                    <Form.Item label="Status" name="status">
+                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -123,7 +123,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 <div>
                     <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.attributeId} name={[parentGroupForm, 'attributeId']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                    <Form.Item initialValue={formData?.attributeId} name={[parentGroupForm, 'id']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} onChange={handleChange} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
@@ -133,7 +133,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="dealerParentCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name={[parentGroupForm, 'parentId']}>
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
@@ -197,8 +197,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item label="Status" name={[parentGroupForm, 'isActive']}>
-                                <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                            <Form.Item label="Status" name={[parentGroupForm, 'status']}>
+                                <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -207,7 +207,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                     <div>
                         <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item initialValue={formData?.attributeId} name={[companyGroupForm, 'attributeId']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                        <Form.Item initialValue={formData?.attributeId} name={[companyGroupForm, 'id']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                             <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} onChange={handleChange} showSearch allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
@@ -217,7 +217,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="dealerParentCode">
+                        <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name={[companyGroupForm, 'parentId']}>
                             <TreeSelect
                                 treeLine={true}
                                 treeIcon={true}
@@ -287,8 +287,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                                <Form.Item label="Status" name={[companyGroupForm, 'isActive']}>
-                                    <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                                <Form.Item label="Status" name={[companyGroupForm, 'status']}>
+                                    <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -297,7 +297,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                         <div>
                             <Row gutter={20}>  
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item initialValue={formData?.attributeId} name={[gstinGroupForm, 'attributeId']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                        <Form.Item initialValue={formData?.attributeId} name={[gstinGroupForm, 'id']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                             <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} onChange={handleChange} showSearch allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
@@ -307,7 +307,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="dealerParentCode">
+                        <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name={[gstinGroupForm, 'parentId']}>
                             <TreeSelect
                                 treeLine={true}
                                 treeIcon={true}
@@ -384,8 +384,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                                    <Form.Item label="Status" name={[gstinGroupForm, 'isActive']}>
-                                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                                    <Form.Item label="Status" name={[gstinGroupForm, 'status']}>
+                                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -395,7 +395,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                                     
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.attributeId} name={[branchGroupForm, 'attributeId']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
+                                        <Form.Item initialValue={formData?.attributeId} name={[branchGroupForm, 'id']} label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                                             <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} onChange={handleChange} showSearch allowClear>
                                                 {attributeData?.map((item) => (
                                                     <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
@@ -405,7 +405,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                                        <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="dealerParentCode">
+                                        <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name={[branchGroupForm, 'parentId']}>
                                             <TreeSelect
                                                 treeLine={true}
                                                 treeIcon={true}
@@ -489,8 +489,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                                        <Form.Item label="Status" name={[branchGroupForm, 'isActive']}>
-                                            <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                                        <Form.Item label="Status" name={[branchGroupForm, 'status']}>
+                                            <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
