@@ -13,13 +13,13 @@
 }
 
 .menuTitle {
-  font-size: 16px;
+  /* font-size: 16px; */
   margin-top: -10px;
 }
 
-.menuIcon {
+/* .menuIcon {
   font-size: 40px;
-}
+} */
 
 :global .ant-layout-sider-zero-width-trigger {
   display: none !important;
@@ -82,7 +82,7 @@
 
 :global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   background-color: transparent;
-  padding-left: 20px !important;
+  padding-left: 22px !important;
 }
 
 :global .ant-menu .ant-menu-item .ant-menu-item-icon+span,
@@ -172,7 +172,11 @@
   font-family: "Lato", sans-serif;
   font-size: 15px;
   font-weight: 500 !important;
-  color: #000000 !important;
+  /* color: #000000 !important; */
+}
+
+:global .ant-menu-vertical>.ant-menu-item {
+  height: 40px !important;
 }
 
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
@@ -182,23 +186,26 @@
 }
 
 :global .ant-menu-inline .ant-menu-submenu-title,
-:global .ant-menu-vertical .ant-menu-submenu-title,
-:global .ant-menu-inline .ant-menu-item,
-:global .ant-menu-vertical .ant-menu-item {
+:global .ant-menu-inline .ant-menu-item {
   height: 32px;
   /* line-height: 40px; */
   padding-inline: 0 !important;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
   margin: 0;
   margin-bottom: 4px;
   width: 100%;
 }
 
+:global .ant-menu-vertical .ant-menu-item,
+:global .ant-menu-vertical .ant-menu-submenu-title {
+  height: 40px !important;
+}
+
 :global .ant-menu .ant-menu-submenu-arrow {
   position: initial;
   width: 8px;
-  margin-top: -6px !important;
+  /* margin-top: -6px !important; */
 }
 
 /* font-family & size for sub-menu in left-menu text */
@@ -264,7 +271,9 @@
 
 :global .ant-menu-light .ant-menu-item a:hover {
   text-decoration: none;
-  color: #000000;
+  /* color: #000000; */
+  /* background: #ffffff; */
+  color: #ea2929;
 }
 
 :global .ant-menu-submenu-popup,
@@ -334,10 +343,6 @@
   vertical-align: sub;
 }
 
-/* :global .ant-menu-inline.ant-menu-root .ant-menu-item {
-  height: 40px;
-} */
-
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 8px;
   vertical-align: sub;
@@ -348,14 +353,34 @@
   vertical-align: sub;
 }
 
-.subMenuParent {
-  color: #ea2929 !important;
-  text-overflow: ellipsis !important;
+.leftMenuBox a {
+  color: #000000 !important;
 }
 
-.subMenuItem {
-  color: #0458f7 !important;
+.leftMenuBox a:hover {
+  color: #ea2929 !important;
 }
+
+.leftMenuBox li.subMenuParent {
+  /* color: #ea2929 !important; */
+  /* border: 1px solid green; */
+  min-height: 40px;
+  /* text-overflow: ellipsis !important; */
+}
+
+.leftMenuBox li.subMenuParent:hover {
+  color: #ea2929 !important;
+  background: none !important;
+}
+
+/* .leftMenuBox li.subMenuItem:hover {
+  color: #ea2929 !important;
+  background: #ffffff !important;
+} */
+
+/* .subMenuItem {
+  color: #0458f7 !important;
+} */
 
 @media (max-width: 768px) {
   .leftMenuBox {
