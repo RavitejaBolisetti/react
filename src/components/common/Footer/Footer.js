@@ -1,27 +1,37 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Col, Layout, Row } from 'antd';
 
-import styles from './Footer.module.css';
-import { Link } from 'react-router-dom';
-import { ROUTING_DASHBOARD, ROUTING_USER_ABOUT } from 'constants/routing';
-import { ROUTING_USER_CONTACT } from 'constants/routing';
-import { ROUTING_USER_TERM } from 'constants/routing';
-import { ROUTING_USER_DISCLAIMER } from 'constants/routing';
+import Copyright from './Copyright';
 
 const { Footer: FooterLayout } = Layout;
 
 export const Footer = () => {
     return (
         <FooterLayout id="footerSection">
-            <div className={styles.footerLink}>
+            {/* <div className={styles.footerLink}> */}
+            <Row gutter={20}>
+                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.textLeft}>
+                        <div>
+                            <Link to={ROUTING_USER_TERM}>Terms of use</Link>
+                            <Link to={ROUTING_USER_ABOUT}>About us</Link>
+                            <Link to={ROUTING_USER_DISCLAIMER}>Disclaimer</Link>
+                            <Link to={ROUTING_USER_CONTACT}>Contact Us</Link>
+                        </div>
+                    </Col> */}
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Copyright />
+                </Col>
+            </Row>
+            {/* <div className={styles.footerLink}>
                 <Link to={ROUTING_USER_TERM}>Terms of use</Link>
                 <Link to={ROUTING_USER_ABOUT}>About us</Link>
                 <Link to={ROUTING_USER_DISCLAIMER}>Disclaimer</Link>
                 <Link to={ROUTING_USER_CONTACT}>Contact Us</Link>
             </div>
             <div className={styles.footerBottomText}>
-                Copyright &copy; 2022-2023 <Link to={ROUTING_DASHBOARD}>ROBIN</Link>. All rights reserved.
-            </div>
+                <span>Copyright &copy; {convertDateTime(moment(), 'Y ')} ROBIN. All Rights Reserved.</span>
+            </div> */}
+            {/* </div> */}
         </FooterLayout>
     );
 };

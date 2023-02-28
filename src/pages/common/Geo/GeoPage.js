@@ -1,22 +1,8 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { Geo } from 'components/common/Geo';
-
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-    return returnValue;
-};
 
 export const GeoPageBase = (props) => {
     const pageTitle = 'Geographical Hierarchy';
@@ -35,4 +21,4 @@ export const GeoPageBase = (props) => {
     );
 };
 
-export const GeoPage = connect(mapStateToProps, null)(withLayoutMaster(GeoPageBase));
+export const GeoPage = withLayoutMaster(GeoPageBase);

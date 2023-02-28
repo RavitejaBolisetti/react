@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { clearAllLocalStorage } from 'store/actions/auth';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
@@ -36,6 +37,7 @@ const baseAPICall = (params) => {
         axios
             .request(axiosConfig)
             .then((response) => {
+                console.log('🚀 ~ file: axiosAPICall.js:39 ~ .then ~ response:', response);
                 if (response.status === 200) {
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
@@ -59,6 +61,7 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
+                console.log('🚀 ~ file: axiosAPICall.js:63 ~ baseAPICall ~ error:', error.code);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
@@ -67,6 +70,9 @@ const baseAPICall = (params) => {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
                         onTimeout();
+                    } else if (error.code === 'ERR_NETWORK') {
+                        clearAllLocalStorage();
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are facing on server' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }
