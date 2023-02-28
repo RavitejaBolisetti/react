@@ -45,7 +45,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
     };
     const onFinishFailed = (values) => {
         if(values.errorFields.length==0){
-       const data = { ...values };
+       const data = { ...values.values };
        const onSuccess = (res) => {
            form.resetFields();
            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
