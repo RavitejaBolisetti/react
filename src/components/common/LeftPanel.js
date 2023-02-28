@@ -49,6 +49,7 @@ const LeftPanel = (props) => {
         setAutoExpandParent(true);
     };
     const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
+    
     return (
         <div className={`${styles.leftpanel} ${panelParentClass}`} >
             <div className={styles.treeCollapsibleButton} onClick={handleTreeViewVisiblity}>

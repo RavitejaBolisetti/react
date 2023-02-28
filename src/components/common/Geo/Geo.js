@@ -14,6 +14,7 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import LeftPanelGeo from '../LeftPanelGeo';
 
 const mapStateToProps = (state) => {
     const {
@@ -278,7 +279,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             <div className={styles.geoSection}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <LeftPanel {...myProps} />
+                        <LeftPanelGeo {...myProps} />
                     </Col>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
