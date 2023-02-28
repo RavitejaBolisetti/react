@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
 import styles from '../Common.module.css';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
