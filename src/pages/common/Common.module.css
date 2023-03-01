@@ -313,9 +313,9 @@
   color: #ffffff !important;
 }
 
-:global .ant-btn-default.ant-btn-dangerous {
+/* :global .ant-btn-default.ant-btn-dangerous {
   margin-bottom: 8px;
-}
+} */
 
 @media (max-width: 768px) {
   /* For mobile phones: */
