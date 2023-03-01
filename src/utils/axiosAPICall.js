@@ -71,7 +71,7 @@ const baseAPICall = (params) => {
                     if (error.code === 'ECONNABORTED') {
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        clearAllLocalStorage();
+                        // clearAllLocalStorage();
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are facing on server' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);

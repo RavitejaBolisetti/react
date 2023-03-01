@@ -183,6 +183,7 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
         tblPrepareColumns({
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
+<<<<<<< HEAD
             // // render: () => (
             // //     <>
             // //         <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
@@ -199,6 +200,8 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
             // //         </Form.Item>
             // //     </>
             // ),
+=======
+>>>>>>> 371bd5ac630f178daee08f7dc913c288c57645b7
             width: 300,
 
         }),
@@ -209,6 +212,7 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
+<<<<<<< HEAD
         //     render: () => (
         //         <>
         //             <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
@@ -224,6 +228,8 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
         //             </Form.Item>
         //         </>
         // ),
+=======
+>>>>>>> 371bd5ac630f178daee08f7dc913c288c57645b7
         }),
         {
             title: 'Action',
@@ -265,7 +271,7 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
     }
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     return (
@@ -288,10 +294,10 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
                 maskClosable={false}
                 footer={
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={styles.drawerFooterButtons}>
                             <Button danger>Cancel</Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} style={{ textAlign: 'right' }}>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             <Button onClick={onFinishFailed} htmlType="submit" type="primary">
                                 Save
                             </Button>

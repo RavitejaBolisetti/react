@@ -79,7 +79,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     }, [isDataLoaded]);
 
     useEffect(() => {
-        !isLoggedIn && navigate(routing.ROUTING_LOGIN);
+        // !isLoggedIn && navigate(routing.ROUTING_LOGIN);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
