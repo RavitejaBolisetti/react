@@ -9,7 +9,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const fieldNames = { label: 'manufactOrgnHierarchyAttribueName', value: 'id', children: 'subManufacturerOrgHierarchy' };
+    const fieldNames = { label: 'manufactureOrgShrtName', value: 'id', children: 'subManufactureOrg' };
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
