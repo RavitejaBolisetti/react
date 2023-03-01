@@ -1,16 +1,12 @@
 import { AiFillCar } from 'react-icons/ai';
 import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
-import { MdWeb, MdStars } from 'react-icons/md';
-import { IoPeopleCircle } from 'react-icons/io5';
-
-import ICON_SERVICE from '../assets/img/icon-job-service.png';
-import ICON_SPARE from '../assets/img/icon-spare.png';
-import ICON_ADMIN from '../assets/img/icon-user-shield.png';
+import { MdStars } from 'react-icons/md';
 
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
+import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 export const MenuConstant = {
     [getMenyKey('FAV')]: {
@@ -89,7 +85,7 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <IoPeopleCircle fontSize={22} />,
+        icon: <HrIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
@@ -101,25 +97,25 @@ export const MenuConstant = {
 
     [getMenyKey('SERV')]: {
         link: undefined,
-        icon: <img src={ICON_SERVICE} width="22px" alt="" />,
+        icon: <ServiceIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('ADMN')]: {
         link: undefined,
-        icon: <img src={ICON_ADMIN} width="22px" alt="" />,
+        icon: <AdminIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <img src={ICON_SPARE} width="22px" alt="" />,
+        icon: <SparesIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('CRM')]: {
         link: undefined,
-        icon: <MdWeb fontSize={22} />,
+        icon: <CrmIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 };
