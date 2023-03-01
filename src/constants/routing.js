@@ -14,6 +14,8 @@ export const ROUTING_COMMON_PRODUCT_MASTER = ROUTING_COMMON.concat('product-mast
 export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('product-hierarchy');
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
 export const ROUTING_COMMON_DEALER_HIERARCHY = ROUTING_COMMON.concat('dealer-hierarchy');
+export const ROUTING_COMMON_DEALER_MANPOWER = ROUTING_COMMON.concat('dealer-manpower');
+
 
 export const ROUTING_USER = '/user/';
 export const ROUTING_USER_PROFILE = ROUTING_USER.concat('profile');
