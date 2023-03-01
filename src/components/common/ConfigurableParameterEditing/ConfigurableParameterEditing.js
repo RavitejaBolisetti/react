@@ -8,6 +8,7 @@ import { validateRequiredSelectField, validateRequiredInputField } from 'utils/v
 import { FaPlus } from 'react-icons/fa';
 import { configparameditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
@@ -38,9 +39,66 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
+    const tableData = [
+        {
+            id: 'adfadfadaddfdasfadsfasdf',
+            controlId: 'NOLOG',
+            controlDescription: 'Desc 1',
+            configurableParameterType: 'T',
+            textValue: 'Text 1',
+            isActive: 'Y',
+            fromDate: null,
+            toDate: null,
+            fromNumber: null,
+            toNumber: null,
+            booleanValue: null,
+            controlGroup: 'CMN',
+        },
+        {
+            id: 'adfadfadaddfdasfadsfasdf',
+            controlId: 'NOLOG',
+            controlDescription: 'Desc 2',
+            configurableParameterType: 'N',
+            textValue: null,
+            isActive: 'Y',
+            fromDate: null,
+            toDate: null,
+            fromNumber: 122,
+            toNumber: 2300,
+            booleanValue: null,
+            controlGroup: 'CMN',
+        },
+        {
+            id: 'adfadfadaddfdasfadsfasdf',
+            controlId: 'NOLOG',
+            controlDescription: 'Desc 3',
+            configurableParameterType: 'D',
+            textValue: null,
+            isActive: 'Y',
+            fromDate: '01/01/2023',
+            toDate: '02/01/2023',
+            fromNumber: null,
+            toNumber: null,
+            booleanValue: null,
+            controlGroup: 'CMN',
+        },
+        {
+            id: 'adfadfadaddfdasfadsfasdf',
+            controlId: 'NOLOG',
+            controlDescription: 'Desc 4',
+            configurableParameterType: 'B',
+            textValue: null,
+            isActive: 'Y',
+            fromDate: null,
+            toDate: null,
+            fromNumber: null,
+            toNumber: null,
+            booleanValue: true,
+            controlGroup: 'ADMN',
+        },
+    ];
     const [form] = Form.useForm();
-    const [isFavourite, setFavourite] = useState(false);
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
+
     const { confirm } = Modal;
     const [selected, setSelected] = React.useState('T');
     const [open, setOpen] = useState(false);
@@ -95,32 +153,25 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         });
     };
 
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Control ID',
+            dataIndex: 'controlId',
+        })
+    );
+
     const defaultColumns = [
         {
             title: 'Control ID',
-            dataIndex: 'ControlID',
-            key: 'ControlID',
-            render: () => (
-                <Form.Item name="ControlID" rules={[validateRequiredInputField('ControlID')]}>
-                    <Select placeholder="Select">
-                        {configData?.map((item) => (
-                            <Option value={item?.id}>{item?.value}</Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-            ),
-            width: 200,
+            dataIndex: 'controlId',
+            key: 'controlId',
         },
         {
             title: 'Control Description',
             dataIndex: 'ControlDescription',
             key: 'ControlDescription',
-            render: () => (
-                <Form.Item name="ControlDescription" rules={[validateRequiredInputField('ControlDescription')]}>
-                    <Input placeholder="Enter Data" />
-                </Form.Item>
-            ),
-            width: 200,
         },
         {
             title: 'Configurable Parameter Type',
@@ -148,7 +199,6 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
             title: 'Configurable Parameter Values',
             dataIndex: 'ConfigParamValues',
             key: 'ConfigParamValues',
-            render: () => ConfigParamValue(),
             width: 200,
         },
         {
@@ -185,48 +235,6 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         },
     ];
 
-    const ConfigParamValue = () => {
-        if (selected == 'T') {
-            return (
-                <>
-                    <Form.Item name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
-                        <Input placeholder="Enter Data" />
-                    </Form.Item>
-                </>
-            );
-        } else if (selected == 'D') {
-            return (
-                <>
-                    <Form.Item name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
-                        <RangePicker />
-                    </Form.Item>
-                </>
-            );
-        } else if (selected == 'B') {
-            return (
-                <>
-                    <Form.Item name="ConfigParamValues" rules={[validateRequiredSelectField('ConfigParamValues')]}>
-                        <Select
-                            placeholder="Select"
-                            options={[
-                                { value: 'Y', label: 'Yes' },
-                                { value: 'N', label: 'No' },
-                            ]}
-                        />
-                    </Form.Item>
-                </>
-            );
-        } else if (selected == 'N') {
-            return (
-                <>
-                    <Form.Item name="ConfigParamValues" rules={[validateRequiredInputField('ConfigParamValues')]}>
-                        <InputNumber min={1} max={100} defaultValue={1} />
-                        <InputNumber min={1} max={100} defaultValue={100} />
-                    </Form.Item>
-                </>
-            );
-        }
-    };
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
@@ -241,7 +249,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                     </Button>
                 </Col>
             </Row>
-            <Table bordered dataSource={data} columns={defaultColumns} pagination={false} />
+            <Table bordered dataSource={tableData} columns={tableColumn} pagination={true} />
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
@@ -316,14 +324,14 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="ConfigParamValues" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
-                                {selected == 'T' ? (
+                                {selected === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
                                     <Input placeholder="Enter Data" />
-                                ) : selected == 'N' ? (
+                                ) : selected === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
                                     <>
                                         <InputNumber min={1} max={100} defaultValue={1} />
                                         <InputNumber min={1} max={100} defaultValue={100} />
                                     </>
-                                ) : selected == 'B' ? (
+                                ) : selected === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
                                     <Select
                                         placeholder="Select"
                                         options={[
