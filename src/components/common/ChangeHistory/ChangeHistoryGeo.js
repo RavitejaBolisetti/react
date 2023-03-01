@@ -8,54 +8,6 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 
-const contractData = [
-    {
-        geoCode: 'DL',
-        geoName: 'New Delhi',
-        changedDate: '2000/11/12',
-        changedBy: 'Aman',
-        parentName: 'ABC',
-        parentCode: '15542',
-        attributeType: 'State',
-    },
-    {
-        geoCode: 'GJ',
-        geoName: 'Gujarat',
-        changedDate: '2000/12/01',
-        changedBy: 'Akash',
-        parentName: 'XYZ',
-        parentCode: '12342',
-        attributeType: 'State',
-    },
-    {
-        geoCode: 'JBP',
-        geoName: 'Jabalpur',
-        changedDate: '2000/12/20',
-        changedBy: 'Aditya',
-        parentName: 'ABCDE',
-        parentCode: '12343',
-        attributeType: 'City/District',
-    },
-    {
-        geoCode: 'JHS',
-        geoName: 'Jhansi',
-        changedDate: '2000/12/30',
-        changedBy: 'Divya',
-        parentName: 'DMS',
-        parentCode: '12542',
-        attributeType: 'City/District',
-    },
-    {
-        geoCode: 'MP',
-        geoName: 'Madhya Pradesh',
-        changedDate: '2000/12/22',
-        changedBy: 'Shivam',
-        parentName: 'ACDE',
-        parentCode: '22342',
-        attributeType: 'State',
-    },
-];
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -68,7 +20,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData: contractData || changeHistoryData,
+        changeHistoryData: changeHistoryData,
     };
     return returnValue;
 };
