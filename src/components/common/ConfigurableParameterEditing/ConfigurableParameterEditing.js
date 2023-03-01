@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
@@ -6,24 +6,26 @@ import styles from '../Common.module.css';
 import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
-import { configparameditActions } from 'store/actions/data/configParamEditing';
+import { configparameditActions } from 'store/actions/data/configurableParamterEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 const { RangePicker } = DatePicker;
 let type;
+const { Option } = Select;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false,data: configData = [] },
+            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, data: configData = [] },
         },
-        
     } = state;
 
-    let returnValue = {  
+    let returnValue = {
         userId,
         isDataLoaded,
-            };
+        configData: configData?.filter((i) => i),
+
+    };
     return returnValue;
 };
 
@@ -37,7 +39,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = (fetchList,userId,configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData) => {
+export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -73,11 +75,9 @@ export const ConfigurableParameterEditingBase = (fetchList,userId,configData, is
     useEffect(() => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const finalConfigData = configData?.map((i) => {
-        return {  };
-    });
+    }, [userId]);
+   
+    // 
     const deleteTableRows = (index) => {
         const rows = [...data];
         rows.splice(index, 1);
@@ -96,7 +96,7 @@ export const ConfigurableParameterEditingBase = (fetchList,userId,configData, is
             },
         });
     };
-   
+
     const onFinish = (values) => {
         // saveData({ data: values, setIsLoading: listShowLoading, userId });
     };
@@ -109,12 +109,12 @@ export const ConfigurableParameterEditingBase = (fetchList,userId,configData, is
             render: () => (
                 <Form.Item name="ControlID" rules={[validateRequiredInputField('ControlID')]}>
                     <Select
-                        placeholder="Select"
-                        options={[
-                            { value: 'ACLOK', label: 'Lock Account' },
-                            { value: 'NOLOG', label: 'No Login' },
-                        ]}
-                    ></Select>
+                        placeholder="Select">
+                       
+                        {configData?.map((item) => (
+                            <Option value={item?.id}>{item?.value}</Option>
+                        ))}
+                    </Select>
                 </Form.Item>
             ),
             width: 200,
@@ -275,12 +275,11 @@ export const ConfigurableParameterEditingBase = (fetchList,userId,configData, is
                         <Col span={12}>
                             <Form.Item name="ControlID" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
                                 <Select
-                                    placeholder="Select"
-                                    options={[
-                                        { value: 'ACLOK', label: 'Lock Account' },
-                                        { value: 'NOLOG', label: 'No Login' },
-                                    ]}
-                                />
+                                    placeholder="Select"  >  
+                                
+                                {configData?.map((item) => (
+                                 <Option value={item?.id}>{item?.value}</Option>
+                                ))}</Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>

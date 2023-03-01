@@ -22,8 +22,6 @@ configparameditActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-
-
 configparameditActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, data, userId, parameterType = '' } = params;
     setIsLoading(true);
@@ -53,7 +51,6 @@ configparameditActions.fetchList = withAuthToken((params) => (token) => (dispatc
 
     axiosAPICall(apiCallParams);
 });
-
 
 // configparameditActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
 //     const { setIsLoading, errorAction, data, userId } = params;
