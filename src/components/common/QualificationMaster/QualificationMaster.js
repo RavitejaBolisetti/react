@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Modal,Empty, Form, Select, Switch, Space, Table } from 'antd';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Button, Col, Row, Input, Modal, Empty, Form, Select, Switch, Space, Table } from 'antd';
+import { ExclamationCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
+import { menuDataActions } from 'store/actions/data/menu';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from 'pages/common/Common.module.css';
 import { geoDataActions } from 'store/actions/data/geo';
@@ -47,9 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: geoDataActions.fetchList,
+            setFilter: menuDataActions.setFilter,
             saveData: geoDataActions.saveData,
             listShowLoading: geoDataActions.listShowLoading,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
@@ -58,12 +59,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const QualificationMasterMain = () => {
+export const QualificationMasterMain = (setFilter, filter) => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
     const handleFavouriteClick = () => setFavourite(!isFavourite);
-    const [data, setRowsData] = useState();
+    const [Data, setRowsData] = useState();
     const [drawer, setDrawer] = useState(false);
+    const [searchInput, setSearchInput] = useState('');
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -92,9 +94,12 @@ export const QualificationMasterMain = () => {
             },
         });
     };
-    
+
     const handleAdd = () => {
         setDrawer(true);
+    };
+    const handleResetBtn = () => {
+        form.resetFields();
     };
     const edit = (record) => {
         const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
@@ -107,17 +112,20 @@ export const QualificationMasterMain = () => {
         updatedData.splice(Number(index), 1);
         setRowsData([...updatedData]);
     };
+
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualificattion Code',
-            dataIndex: 'Qualificattion Code',
+            dataIndex: 'code',
+            sortFn: (a, b) => a.code.localeCompare(b.code),
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Qualificattion Name',
-            dataIndex: 'Qualificattion Name',
+            title: 'Qualification Name',
+            dataIndex: 'name',
+            sortFn: (a, b) => a.name.localeCompare(b.name),
         })
     );
     tableColumn.push(
@@ -141,21 +149,60 @@ export const QualificationMasterMain = () => {
         })
     );
 
+    const data = [
+        {
+            key: '1',
+            name: 'Mechanical',
+            code: 'JB0001'
+
+        },
+        {
+            key: '2',
+            name: 'Diploma',
+            code: 'RG0002'
+        },
+        {
+            key: '3',
+            name: 'Btech CSE',
+            code: 'AB0003'
+        },
+        {
+            key: '4',
+            name: 'Bachelor of Science',
+            code: 'NW0004'
+        },
+    ]
+
+    const [arrData, setArrData] = useState(data);
+
     // on Save table data  
     const onFinish = (values) => {
         console.log(values);
     };
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+    const onSearch = (value) => {
+        console.log(value);
     };
-    const handleReset = () => {
-        console.log('reset');
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => { });
+    };
+    const onChange = (sorter, filters) => {
+        console.log('sort', sorter, filters);
         form.resetFields();
     };
 
-
-
+    const onChangeHandle = (e) => {
+        const getSearch = e.target.value;
+        // console.log("value:", e.target.value);
+        if (e.target.value == '') {
+            const tempArr = arrData;
+            setArrData(tempArr)
+            return
+        }
+        if (getSearch.length > -1) {
+            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()))
+            setArrData(searchResult);
+        }
+    };
 
     return (
         <>
@@ -164,12 +211,14 @@ export const QualificationMasterMain = () => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                         <Search
                             placeholder="Search"
+                            allowClear
                             style={{
                                 width: 200,
                             }}
+                            onSearch={onSearch}
+                            onChange={onChangeHandle}
                         />
                     </Col>
-
                     <Col offset={12} xs={2} sm={2} md={2} lg={2} xl={2}>
                         <Button danger onClick={handleAdd}>
                             <AiOutlinePlus className={styles.buttonIcon} />
@@ -177,13 +226,13 @@ export const QualificationMasterMain = () => {
                         </Button>
                     </Col>
                 </Row>
-               <DrawerUtil drawer={drawer} setDrawer={setDrawer}/>
+                <DrawerUtil drawer={drawer} setDrawer={setDrawer} />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Table locale={{
                             emptyText: <Empty description="No Role Added" />
                         }}
-                            dataSource={data} pagination={true} columns={tableColumn} bordered />
+                           arrData={arrData} dataSource={arrData} pagination={true} columns={tableColumn} bordered onChange={onChange} />
                     </Col>
                 </Row>
             </Form>
