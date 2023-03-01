@@ -56,7 +56,44 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+    /* To Do : Need to remove once API deployed Start */
+    const manufacturerAdminHierarchyData = [
+        {
+            id: 'cd614369-0bb2-48a4-9065-282495798070',
+            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+            manufactureAdminShrtName: 'MAHINDRA THAR ',
+            manufactureAdminCode: 'SCR',
+            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+            active: 'N',
+            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+            subManufactureAdmin: [],
+        },
+        {
+            id: 'cd614369-0bb2-48a4-9065-282495798070',
+            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+            manufactureAdminShrtName: 'MAHINDRA THAR ',
+            manufactureAdminCode: 'SCR',
+            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+            active: 'N',
+            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+            subManufactureAdmin: [
+                {
+                    id: 'cd614369-0bb2-48a4-9065-282495798070',
+                    manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+                    manufactureAdminShrtName: 'MAHINDRA THAR ',
+                    manufactureAdminCode: 'SCR',
+                    manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+                    active: 'N',
+                    attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+                    subManufactureAdmin: [],
+                },
+            ],
+        },
+    ];
+
+    /* To Do : Need to remove once API deployed End */
+
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -246,7 +283,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const fieldNames = { title: 'manufactureAdminShrtName', key: 'id', children: 'subManufactureAdmin' };
 
     const myProps = {
         isTreeViewVisible,
