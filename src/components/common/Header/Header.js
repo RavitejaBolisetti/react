@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
-
-import { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaUserMd, FaHeadset, FaRegBell, FaBars } from 'react-icons/fa';
+import Icon, { DownOutlined } from '@ant-design/icons';
+import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
@@ -22,7 +21,8 @@ import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
-import { RxCross2 } from 'react-icons/rx';
+import { HeadPhoneIcon, MenuArrow } from 'Icons';
+import { MdOutlineChangeCircle } from 'react-icons/md';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -103,25 +103,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         });
     };
 
-    const onshowConfirm = () => {
-        confirm({
-            title: 'Update Your Password',
-            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
-            content: <ChangePassword />,
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            onOk() {
-                doLogout({
-                    successAction: () => {
-                        navigate(routing.ROUTING_LOGIN);
-                    },
-                    userId,
-                });
-            },
-        });
-    };
-
     const items = [
         customMenuLink({
             title: 'Branch Location',
@@ -172,16 +153,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         customMenuLink({
             key: '5',
             title: 'Change Password',
-            icon: <AiFillSetting />,
+            icon: <MdOutlineChangeCircle />,
             onClick: () => setChangePasswordModalOpen(true),
         }),
 
-        customMenuLink({
-            key: '6',
-            title: 'Update Your Password',
-            icon: <AiFillSetting />,
-            onClick: () => setUpdatePasswordModalOpen(true),
-        }),
+        // customMenuLink({
+        //     key: '6',
+        //     title: 'Update Your Password',
+        //     icon: <AiFillSetting />,
+        //     onClick: () => setUpdatePasswordModalOpen(true),
+        // }),
 
         customMenuLink({
             key: '7',
@@ -194,7 +175,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         setCollapsed(!collapsed);
     };
 
-    const theme = 'light';
     return (
         <>
             {!isLoading ? (
@@ -227,22 +207,19 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>
                                         <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
-                                            <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} />{' '}
-                                            <svg viewBox="64 64 896 896" focusable="false" data-icon="right" width="1em" height="1em" fill="red" style={{ margin: '0 0 0.6rem -0.2rem', fontSize: '0.9rem' }} aria-hidden="true">
-                                                <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"></path>
-                                            </svg>
+                                            <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} /> <Icon component={MenuArrow} />
                                         </div>
 
-                                        <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                        <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
                                                 <Badge size="small" count={notificationCount}>
                                                     {addToolTip('Notification')(<FaRegBell size={20} />)}
                                                 </Badge>
                                             </Link>
                                         </div>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6}`}>
+                                        <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
-                                                <FaHeadset size={20} />
+                                                <Icon component={HeadPhoneIcon} />
                                                 <span className={styles.helpLineText}>
                                                     OneStop <br></br> Help Desk
                                                 </span>

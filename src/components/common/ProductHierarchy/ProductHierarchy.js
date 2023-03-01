@@ -1,25 +1,19 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Collapse, Table, Input } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
-
-import TreeView from 'components/common/TreeView';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
-import { ROUTING_COMMON_PRODUCT_MASTER } from 'constants/routing';
-import { addToolTip } from 'utils/customMenuLink';
-import style from '../ProductHierarchy/producthierarchy.module.css'
+import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
-import { ProductMasterPage } from 'pages/common/ProductMaster/ProductMasterPage';
-import { ProductMaster } from 'pages/common/ProductHierarchy/ProductMaster';
-import { validateRequiredInputField } from 'utils/validation';
+import LeftPanel from '../LeftPanel';
 const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
@@ -74,7 +68,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-    const [Visible, setVisible] = useState(true);
     
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
@@ -85,13 +78,13 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const navigate = useNavigate();
     const [isProductMaster, setProductMaster] = useState(false);
 
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false ,enable:false};
+    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const rendFn = (key) => {
         return (
             <Form form={form}>
-                <Form.Item name={key} >
+                <Form.Item name={key}>
                     <Input placeholder={key} />
                 </Form.Item>
             </Form>
@@ -215,7 +208,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     };
 
     const onFinish = (values) => {
-        console.log(values)
+        console.log(values);
         const recordId = formData?.id || '';
         const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
 
@@ -265,7 +258,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setFormActionType('edit');
 
         setReadOnly(false);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true , enable:false});
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true, enable: false });
     };
 
     const handleRootChildBtn = () => {
@@ -275,7 +268,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true,enable: false });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true, enable: false });
     };
 
     const handleChildBtn = () => {
@@ -285,7 +278,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true ,enable: true});
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true, enable: true });
         setCollapsable(!collapsable);
     };
 
@@ -297,7 +290,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true,enable:false });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true, enable: false });
     };
 
     const handleResetBtn = () => {
@@ -319,102 +312,101 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
+
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
+    const myProps = {
+        isTreeViewVisible,
+        handleTreeViewVisiblity,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        fieldNames,
+        handleTreeViewClick,
+        dataList: productHierarchyData,
+    };
     return (
         <>
             <div className={styles.geoSection}>
                 <Row gutter={20}>
-                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
-                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                    </div>
-                </Row>
-                <Row gutter={20}>
-                    {isTreeViewVisible ? (
-                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                            <div className={styles.leftpanel}>
-                                <div className={styles.treeViewContainer}>
-                                    <div className={styles.treemenu}>
-                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={productHierarchyData} />
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    ) : undefined}
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <LeftPanel {...myProps} />
+                    </Col>
 
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
                             <ChangeHistory />
                         ) : collapsable ? (
                             <>
                                 {' '}
-                                <Collapse  defaultActiveKey={'1'} expandIconPosition="end" activeKey={closePanels} onChange={setClosePanels} >
+                                <Collapse defaultActiveKey={'1'} expandIconPosition="end" activeKey={closePanels} onChange={setClosePanels}>
                                     <Panel header="Product Details" key="1" className={style.producthierarchy}>
                                         {/* <AddEditForm showAttributeDetail={true} /> */}
                                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                        {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen}/>}
-                                       
-                                        <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    { (
-                                            <>
-                                                { (
-                                                    <Button htmlType="submit" danger>
-                                                        <FaSave className={styles.buttonIcon} />
-                                                        Save
-                                                    </Button>
-                                                )}
-                                                {(
-                                                    <Button danger onClick={() => handleEditBtn()}>
-                                                        <FaEdit className={styles.buttonIcon} />
-                                                            Edit
-                                                    </Button>
-                                                )}
-                                                 
-                                                { (
-                                                    <Button danger onClick={()=>handleResetBtn()}>
-                                                        <FaUndo className={styles.buttonIcon} />
-                                                        Reset
-                                                    </Button>
-                                                )}
+                                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
 
-                                                { (
-                                                    <Button danger onClick={() => handleRootChildBtn()}>
-                                                        <FaUserPlus className={styles.buttonIcon} />
-                                                            Add Child
-                                                    </Button>
-                                                )}
-                                                <Button danger  onClick={() => {setOpenPanels(['2']);setClosePanels([])}}>
-                                                        <FaUndo className={styles.buttonIcon} />
-                                                        View Attribute Detail
-                                                    </Button>
-                                            </>
-                                        )}
-                                        </Col>
-                                        </Row>
-                                 </Form>
-                                    </Panel>
-                                    
-                                </Collapse>
-                                <Collapse Visible={true} expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{margin:'10px 0 0 0'}}>
-                                    <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" className={style.producthierarchy}>
-                                   
-                                        <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
-                                        
-                                            <Form.Item>
-                                                <Row>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.buttonContainer}>
-                                                            <Button danger>
-                                                                <FaSave className={styles.buttonIcon} />
-                                                                Save
+                                            <Row>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    {
+                                                        <>
+                                                            {
+                                                                <Button htmlType="submit" danger>
+                                                                    <FaSave className={styles.buttonIcon} />
+                                                                    Save
+                                                                </Button>
+                                                            }
+                                                            {
+                                                                <Button danger onClick={() => handleEditBtn()}>
+                                                                    <FaEdit className={styles.buttonIcon} />
+                                                                    Edit
+                                                                </Button>
+                                                            }
+
+                                                            {
+                                                                <Button danger onClick={() => handleResetBtn()}>
+                                                                    <FaUndo className={styles.buttonIcon} />
+                                                                    Reset
+                                                                </Button>
+                                                            }
+
+                                                            {
+                                                                <Button danger onClick={() => handleRootChildBtn()}>
+                                                                    <FaUserPlus className={styles.buttonIcon} />
+                                                                    Add Child
+                                                                </Button>
+                                                            }
+                                                            <Button
+                                                                danger
+                                                                onClick={() => {
+                                                                    setOpenPanels(['2']);
+                                                                    setClosePanels([]);
+                                                                }}
+                                                            >
+                                                                <FaUndo className={styles.buttonIcon} />
+                                                                View Attribute Detail
                                                             </Button>
-                                                        </div>
-                                                        
-                                                    </Col>
-                                                </Row>
-                                            </Form.Item>
-                                    
+                                                        </>
+                                                    }
+                                                </Col>
+                                            </Row>
+                                        </Form>
+                                    </Panel>
+                                </Collapse>
+                                <Collapse Visible={true} expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{ margin: '10px 0 0 0' }}>
+                                    <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" className={style.producthierarchy}>
+                                        <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
+
+                                        <Form.Item>
+                                            <Row>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <div className={styles.buttonContainer}>
+                                                        <Button danger>
+                                                            <FaSave className={styles.buttonIcon} />
+                                                            Save
+                                                        </Button>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </Form.Item>
                                     </Panel>
                                 </Collapse>
                             </>
@@ -438,7 +430,13 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                         )}
 
                                         {buttonData?.childBtn && (
-                                            <Button danger onClick={() => {handleChildBtn();setClosePanels(['1'])}}>
+                                            <Button
+                                                danger
+                                                onClick={() => {
+                                                    handleChildBtn();
+                                                    setClosePanels(['1']);
+                                                }}
+                                            >
                                                 <FaUserPlus className={styles.buttonIcon} />
                                                 Add Child
                                             </Button>
@@ -450,8 +448,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                                 Add Sibling
                                             </Button>
                                         )}
-
-                                       
                                     </Col>
                                 </Row>
                             </Form>
