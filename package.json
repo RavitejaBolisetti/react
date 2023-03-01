@@ -62,7 +62,6 @@
     "devDependencies": {
         "react-app-rewired": "^2.2.1",
         "redux-devtools-extension": "^2.13.9",
-        "jest-sonar-reporter": "^2.0.0",
         "sonarqube-scanner": "^3.0.1"
     }
 }
