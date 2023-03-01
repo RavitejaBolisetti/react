@@ -42,7 +42,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
     const tableData = [
         {
             id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'NOLOG',
+            controlId: 'BOLOG',
             controlDescription: 'Desc 1',
             configurableParameterType: 'T',
             textValue: 'Text 1',
@@ -59,7 +59,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
             controlId: 'NOLOG',
             controlDescription: 'Desc 2',
             configurableParameterType: 'N',
-            textValue: null,
+            textValue: 'Text 2',
             isActive: 'Y',
             fromDate: null,
             toDate: null,
@@ -70,10 +70,10 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         },
         {
             id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'NOLOG',
-            controlDescription: 'Desc 3',
+            controlId: 'AOLOG',
+            controlDescription: 'Desc 8',
             configurableParameterType: 'D',
-            textValue: null,
+            textValue: 'Text 3',
             isActive: 'Y',
             fromDate: '01/01/2023',
             toDate: '02/01/2023',
@@ -84,10 +84,10 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         },
         {
             id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'NOLOG',
+            controlId: 'MOLOG',
             controlDescription: 'Desc 4',
             configurableParameterType: 'B',
-            textValue: null,
+            textValue: 'Text 4',
             isActive: 'Y',
             fromDate: null,
             toDate: null,
@@ -159,24 +159,15 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         tblPrepareColumns({
             title: 'Control ID',
             dataIndex: 'controlId',
-        })
-    );
+        }),
 
-    const defaultColumns = [
-        {
-            title: 'Control ID',
-            dataIndex: 'controlId',
-            key: 'controlId',
-        },
-        {
+        tblPrepareColumns({
             title: 'Control Description',
-            dataIndex: 'ControlDescription',
-            key: 'ControlDescription',
-        },
-        {
+            dataIndex: 'controlDescription',
+        }),
+        tblPrepareColumns({
             title: 'Configurable Parameter Type',
-            dataIndex: 'ConfigParamType',
-            key: 'ConfigParamType',
+            dataIndex: 'configurableParameterType',
             render: () => (
                 <>
                     <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
@@ -194,20 +185,18 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                 </>
             ),
             width: 300,
-        },
-        {
+
+        }),
+        tblPrepareColumns({
             title: 'Configurable Parameter Values',
-            dataIndex: 'ConfigParamValues',
-            key: 'ConfigParamValues',
-            width: 200,
-        },
-        {
+            dataIndex: 'textValue',
+        }),
+        tblPrepareColumns({
             title: 'Role Group',
-            dataIndex: 'rolegroup',
-            key: 'rolegroup',
+            dataIndex: 'controlGroup',
             render: () => (
                 <>
-                    <Form.Item name="rolegroup" rules={[validateRequiredSelectField('rolegroup')]}>
+                    <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
                         <Select
                             placeholder="Select"
                             options={[
@@ -219,8 +208,8 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                         />
                     </Form.Item>
                 </>
-            ),
-        },
+        ),
+        }),
         {
             title: 'Action',
             dataIndex: '',
@@ -233,7 +222,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                 </Space>,
             ],
         },
-    ];
+    );
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -277,7 +266,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                 <Form layout="vertical" onClick={onFinishFailed}>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item name="ControlID" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
+                            <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
                                 <Select placeholder="Select">
                                     {configData?.map((item) => (
                                         <Option value={item?.id}>{item?.value}</Option>
@@ -286,14 +275,14 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item name="ControlDescription" label="Control Description" rules={[validateRequiredInputField('ControlDescription')]}>
+                            <Form.Item name="controlDescription" label="Control Description" rules={[validateRequiredInputField('ControlDescription')]}>
                                 <Input placeholder="Enter Data" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item name="rolegroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
+                            <Form.Item name="controlGroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
                                 <Select
                                     placeholder="Select"
                                     options={[
@@ -306,7 +295,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item name="ConfigParamType" label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                            <Form.Item name="configurableParameterType" label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
                                 <Select
                                     placeholder="Select Parameter Type"
                                     options={[
@@ -323,7 +312,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item name="ConfigParamValues" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
+                            <Form.Item name="textValue" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
                                 {selected === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
                                     <Input placeholder="Enter Data" />
                                 ) : selected === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
