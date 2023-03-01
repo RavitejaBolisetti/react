@@ -4,9 +4,9 @@ import { convertDateTime } from 'utils/formatDateTime';
 
 import styles from './Footer.module.css';
 
-function Copyright() {
+function Copyright({ alignRight }) {
     return (
-        <div className={styles.footerText}>
+        <div className={alignRight ? styles.footerRight : styles.footerText}>
             <span>Copyright &copy; {convertDateTime(moment(), 'Y ')} ROBIN</span>
         </div>
     );
