@@ -19,8 +19,8 @@ changePasswordActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-changePasswordActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+changePasswordActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
 
@@ -29,7 +29,9 @@ changePasswordActions.saveData = withAuthToken((params) => (token) => (dispatch)
         method: 'post',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
+        accessToken,
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),

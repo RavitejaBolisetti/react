@@ -35,8 +35,8 @@ geoDataActions.setFormVisible = (isFormVisible) => ({
     isFormVisible,
 });
 
-geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, data, userId } = params;
+geoDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -53,6 +53,7 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
         method: 'get',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -65,8 +66,8 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     axiosAPICall(apiCallParams);
 });
 
-geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+geoDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
 
@@ -75,6 +76,7 @@ geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
         method: 'post',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

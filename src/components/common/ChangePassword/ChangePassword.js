@@ -41,36 +41,35 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
     const [confirmDirty, setConfirmDirty] = useState(false);
 
     const onFinish = (errorInfo) => {
-              // form.validateFields().then((values) => {});
+        // form.validateFields().then((values) => {});
     };
     const onFinishFailed = (values) => {
-        if(values.errorFields.length==0){
-       const data = { ...values.values };
-       const onSuccess = (res) => {
-           form.resetFields();
-           handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-       };
+        if (values.errorFields.length === 0) {
+            const data = { ...values.values };
+            const onSuccess = (res) => {
+                form.resetFields();
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            };
 
-       const onError = (message) => {
-           handleErrorModal(message);
-       };
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
 
-       const requestData = {
-           data: [data],
-           setIsLoading: listShowLoading,
-           userId,
-           onSuccess,
-           onError
-           
-       };
+            const requestData = {
+                data: data,
+                setIsLoading: listShowLoading,
+                userId,
+                onSuccess,
+                onError,
+            };
 
-       saveData(requestData); 
-    }       
+            saveData(requestData);
+        }
     };
 
     const validateToNextPassword = (rule, value, callback) => {
         if (value && confirmDirty) {
-            form.validateFields(['confirmPassword'], { force: true });
+            form.validateFields(['confirmNewPassword'], { force: true });
         }
         callback();
     };
@@ -89,7 +88,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
     };
     return (
         <>
-            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary"  onOk={onFinishFailed} onCancel={onCancel}>
+            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" onOk={onFinishFailed} onCancel={onCancel}>
                 {discreption ? (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -128,7 +127,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item
                                 label="Confirm Password"
-                                name="confirmPassword"
+                                name="confirmNewPassword"
                                 rules={[
                                     validateRequiredInputField('Confirm Password'),
                                     validateFieldsPassword('Confirm Password'),
