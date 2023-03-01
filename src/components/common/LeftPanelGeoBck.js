@@ -260,9 +260,41 @@ const defaultData = [
     },
 ];
 
+const dataList = [];
+const generateList = (data) => {
+    for (let i = 0; i < data.length; i++) {
+        const node = data[i];
+        const { id, geoName: title } = node;
+        dataList.push({
+            id,
+            title,
+        });
+        if (node.subGeo) {
+            generateList(node.subGeo);
+        }
+    }
+};
+generateList(defaultData);
+
+const getParentKey = (key, tree) => {
+    let parentKey;
+    for (let i = 0; i < tree.length; i++) {
+        const node = tree[i];
+        console.log('node.children', node.subGeo);
+        if (node.subGeo) {
+            if (node.subGeo.some((item) => item.id === key)) {
+                parentKey = node.id;
+            } else if (getParentKey(key, node.subGeo)) {
+                parentKey = getParentKey(key, node.subGeo);
+            }
+        }
+    }
+    return parentKey;
+};
+
 const LeftPanelGeo = ({ fieldNames }) => {
-    // const [expandedKeys, setExpandedKeys] = useState([]);
-    const [expandedKeys, setExpandedKeys] = useState(['067c09fd-c6d2-4962-8743-76b553d71d5e']);
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    // const [expandedKeys, setExpandedKeys] = useState(['067c09fd-c6d2-4962-8743-76b553d71d5e']);
     const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
 
@@ -271,45 +303,17 @@ const LeftPanelGeo = ({ fieldNames }) => {
         setAutoExpandParent(false);
     };
 
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
-            dataList.push({
-                id: node[fieldNames?.key],
-                title: node[fieldNames?.title],
-            });
-            if (node[fieldNames?.children]) {
-                generateList(node[fieldNames?.children]);
-            }
-        }
-    };
-    generateList(defaultData);
-
-    const getParentKey = (key, tree) => {
-        let parentKey;
-        for (let i = 0; i < tree.length; i++) {
-            const node = tree[i];
-            if (node[fieldNames?.children]) {
-                if (node[fieldNames?.children].some((item) => item[fieldNames?.key] === key)) {
-                    parentKey = node[fieldNames?.key];
-                } else if (getParentKey(key, node[fieldNames?.children])) {
-                    parentKey = getParentKey(key, node[fieldNames?.children]);
-                }
-            }
-        }
-        console.log('🚀 ~ file: LeftPanelGeo.js:303 ~ getParentKey ~ parentKey:', parentKey);
-        return parentKey;
-    };
-
     const onChange = (e) => {
         const { value } = e.target;
+        // console.clear();
+        console.log('Data List - Search Item', value, 'Total Item', dataList);
 
         const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
-                    console.log('🚀 ~ file: LeftPanelGeo.js:311 ~ .map ~ item:', item, value, defaultData);
-                    return getParentKey(item?.id, defaultData);
+                    console.log('Data List - Inner', item.id);
+                    return getParentKey(item.id, defaultData);
+                    // return '5acce565-c372-491a-ac3a-32b8ffcd236c';
                 }
                 return null;
             })
@@ -318,11 +322,11 @@ const LeftPanelGeo = ({ fieldNames }) => {
         setSearchValue(value);
         setAutoExpandParent(true);
     };
-
     const treeData = useMemo(() => {
         const loop = (data) =>
             data.map((item) => {
-                const strTitle = item[fieldNames?.title];
+                //console.log(item)
+                const strTitle = item?.geoName;
                 const index = strTitle.indexOf(searchValue);
                 const beforeStr = strTitle.substring(0, index);
                 const afterStr = strTitle.slice(index + searchValue.length);
@@ -338,23 +342,20 @@ const LeftPanelGeo = ({ fieldNames }) => {
                     ) : (
                         <span>{strTitle}</span>
                     );
-                if (item[fieldNames?.children]) {
+                if (item.subGeo) {
                     return {
-                        title,
-                        id: item[fieldNames?.key],
-                        children: loop(item[fieldNames?.children]),
+                        geoName: title,
+                        id: item.id,
+                        subGeo: loop(item.subGeo),
                     };
                 }
                 return {
-                    title,
-                    id: item[fieldNames?.key],
+                    geoName: title,
+                    id: item.id,
                 };
             });
         return loop(defaultData);
-    }, [searchValue, fieldNames]);
-    
-    console.log('expandedKeys', expandedKeys);
-    const fieldNames1 = { title: 'title', key: 'key', children: 'children' };
+    }, [searchValue]);
 
     return (
         <div>
@@ -364,9 +365,8 @@ const LeftPanelGeo = ({ fieldNames }) => {
                 }}
                 placeholder="Search"
                 onChange={onChange}
-                allowClear
             />
-            <Tree onExpand={onExpand} expandedKeys={expandedKeys} showLine={true} showIcon={true} autoExpandParent={autoExpandParent} treeData={treeData} fieldNames={fieldNames1} />
+            <Tree onExpand={onExpand} expandedKeys={expandedKeys} showLine={true} showIcon={true} autoExpandParent={autoExpandParent} treeData={treeData} fieldNames={fieldNames} />
         </div>
     );
 };

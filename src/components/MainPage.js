@@ -42,7 +42,7 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
-    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
+    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <AuthenticatedUserPage />}</div>;
 };
 const MainPageWithSpinner = withSpinner(MainPageBase);
 export const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageWithSpinner);
