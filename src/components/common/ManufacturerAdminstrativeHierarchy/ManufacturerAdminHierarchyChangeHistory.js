@@ -6,9 +6,8 @@ import { Table } from 'antd';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+
 import styles from './ChangeHistory.module.css';
-
-
 
 const mapStateToProps = (state) => {
     const {
@@ -45,11 +44,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
 
-    const tableColumn = [];
-
-
-
-   
+    const tableColumn = []; 
 
     tableColumn.push(
         tblPrepareColumns({
@@ -165,3 +160,4 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
 };
 
 export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ManufacturerAdminHierarchyChangeHistoryMain);
+
