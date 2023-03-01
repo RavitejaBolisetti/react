@@ -168,22 +168,6 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         tblPrepareColumns({
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
-            render: () => (
-                <>
-                    <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                        <Select
-                            placeholder="Select Parameter Type"
-                            options={[
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY, label: 'Text' },
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY, label: 'Number Range' },
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY, label: 'Date Range' },
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY, label: 'Boolean' },
-                            ]}
-                            onChange={changeSelectOptionHandler}
-                        />
-                    </Form.Item>
-                </>
-            ),
             width: 300,
 
         }),
@@ -194,21 +178,6 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
-            render: () => (
-                <>
-                    <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
-                        <Select
-                            placeholder="Select"
-                            options={[
-                                { value: '1', label: 'Parameter Type 1' },
-                                { value: '2', label: 'Parameter Type 2' },
-                                { value: '3', label: 'Parameter Type 3' },
-                                { value: '4', label: 'Parameter Type 4' },
-                            ]}
-                        />
-                    </Form.Item>
-                </>
-        ),
         }),
         {
             title: 'Action',
@@ -225,7 +194,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
     );
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     return (
@@ -248,10 +217,10 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                 maskClosable={false}
                 footer={
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={styles.drawerFooterButtons}>
                             <Button danger>Cancel</Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} style={{ textAlign: 'right' }}>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             <Button onClick={onFinishFailed} htmlType="submit" type="primary">
                                 Save
                             </Button>
