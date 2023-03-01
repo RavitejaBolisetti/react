@@ -8,69 +8,6 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 
-const contractData = [
-    {
-        attributeCode: '1011',
-        changedDate: '2000/12/17',
-        changedBy: 'Aman',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        hierarchyCode: '1001',
-        status: 'Y',
-        parentManufactOrgHie: 'DMS',
-    },
-    {
-        attributeCode: '1021',
-        changedDate: '2000/12/10',
-        changedBy: 'Aditi',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        hierarchyCode: '1000',
-        status: 'Active',
-        parentManufactOrgHie: 'ABCD',
-    },
-    {
-        attributeCode: '1311',
-        changedDate: '2000/12/13',
-        changedBy: 'Deepak',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        hierarchyCode: '1003',
-        status: 'Y',
-        parentManufactOrgHie: 'ABC',
-    },
-    {
-        attributeCode: '1013',
-        changedDate: '2000/12/14',
-        changedBy: 'Karthik',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        hierarchyCode: '1004',
-        status: 'Active',
-        parentManufactOrgHie: 'ABCDE',
-    },
-    {
-        attributeCode: '1014',
-        changedDate: '2000/12/15',
-        changedBy: 'Sakshi',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        hierarchyCode: '1031',
-        status: 'Y',
-        parentManufactOrgHie: 'DMS',
-    },
-    {
-        attributeCode: '1021',
-        changedDate: '2000/12/16',
-        changedBy: 'Subrat',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        hierarchyCode: '1055',
-        status: 'Active',
-        parentManufactOrgHie: 'DMS',
-    },
-];
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -83,7 +20,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData: contractData || changeHistoryData,
+        changeHistoryData: changeHistoryData,
     };
     return returnValue;
 };
@@ -145,14 +82,14 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'shortDescription',
+            dataIndex: 'shortDescript',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'longDescription',
+            dataIndex: 'longDescript',
         })
     );
 
