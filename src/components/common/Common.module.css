@@ -341,6 +341,11 @@
     margin-bottom: 8px;
 }
 
+:global .ant-btn-default.ant-btn-dangerous svg {
+    margin-right: 6px;
+    padding-top: 2px;
+}
+
 /* Drawer Override Start */
 :global .ant-drawer .ant-drawer-header-title {
     display: inline-block;
@@ -348,7 +353,7 @@
 
 :global .ant-drawer .ant-drawer-close {
     float: right;
-    margin-top: 5px;
+    padding-top: 4px;
 }
 
 /* Drawer Override End */
