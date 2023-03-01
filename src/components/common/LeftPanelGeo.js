@@ -341,20 +341,18 @@ const LeftPanelGeo = ({ fieldNames }) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        id: item[fieldNames?.key],
+                        key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
-                    id: item[fieldNames?.key],
+                    key: item[fieldNames?.key],
                 };
             });
         return loop(defaultData);
     }, [searchValue, fieldNames]);
-    
-    console.log('expandedKeys', expandedKeys);
-    const fieldNames1 = { title: 'title', key: 'key', children: 'children' };
+
 
     return (
         <div>
@@ -366,7 +364,7 @@ const LeftPanelGeo = ({ fieldNames }) => {
                 onChange={onChange}
                 allowClear
             />
-            <Tree onExpand={onExpand} expandedKeys={expandedKeys} showLine={true} showIcon={true} autoExpandParent={autoExpandParent} treeData={treeData} fieldNames={fieldNames1} />
+            <Tree onExpand={onExpand} expandedKeys={expandedKeys} showLine={true} showIcon={true} autoExpandParent={autoExpandParent} treeData={treeData} />
         </div>
     );
 };

@@ -30,19 +30,17 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
     const pagePath = location.pathname;
 
     useEffect(() => {
-        // if (!isLoggedIn && pagePath === ROUTING_LOGIN) {
-        //     navigate(ROUTING_LOGIN);
-        // } else if (!isLoggedIn && pagePath === ROUTING_LOGOUT) {
-        //     navigate(ROUTING_LOGOUT);
-        // } else if (isLoggedIn && (pagePath === ROUTING_LOGIN || pagePath === ROUTING_FORGOT_PASSWORD || pagePath === ROUTING_LOGOUT)) {
-        //     navigate(ROUTING_DASHBOARD);
-        // } else if (!isLoggedIn) {
-        //     navigate(ROUTING_LOGIN);
-        // }
+        if (!isLoggedIn && pagePath === ROUTING_LOGIN) {
+            navigate(ROUTING_LOGIN);
+        } else if (!isLoggedIn && pagePath === ROUTING_LOGOUT) {
+            navigate(ROUTING_LOGOUT);
+        } else if (isLoggedIn && (pagePath === ROUTING_LOGIN || pagePath === ROUTING_FORGOT_PASSWORD || pagePath === ROUTING_LOGOUT)) {
+            navigate(ROUTING_DASHBOARD);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
-    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <AuthenticatedUserPage />}</div>;
+    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
 };
 const MainPageWithSpinner = withSpinner(MainPageBase);
 export const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageWithSpinner);
