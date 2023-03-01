@@ -183,7 +183,6 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
         tblPrepareColumns({
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
-<<<<<<< HEAD
             // // render: () => (
             // //     <>
             // //         <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
@@ -200,8 +199,6 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
             // //         </Form.Item>
             // //     </>
             // ),
-=======
->>>>>>> 371bd5ac630f178daee08f7dc913c288c57645b7
             width: 300,
 
         }),
@@ -212,7 +209,6 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
-<<<<<<< HEAD
         //     render: () => (
         //         <>
         //             <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
@@ -228,8 +224,6 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
         //             </Form.Item>
         //         </>
         // ),
-=======
->>>>>>> 371bd5ac630f178daee08f7dc913c288c57645b7
         }),
         {
             title: 'Action',
