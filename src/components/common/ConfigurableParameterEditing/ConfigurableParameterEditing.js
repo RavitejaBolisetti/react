@@ -9,6 +9,8 @@ import { FaPlus } from 'react-icons/fa';
 import { configparameditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
@@ -17,12 +19,17 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, data: configData = [] },
+            ConfigurableParameterEditing: { isParamLoading,isParamLoaded = false, paramdata: Data = [] },
+
         },
     } = state;
 
     let returnValue = {
         userId,
         isDataLoaded,
+        Data,
+        isParamLoading,
+        isParamLoaded,
         configData: configData?.filter((i) => i),
     };
     return returnValue;
@@ -33,12 +40,20 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: configparameditActions.fetchList,
+            saveData: configparameditActions.saveData,
+            fetchdataList: configparameditActions.fetchdataList,
             listShowLoading: configparameditActions.listShowLoading,
         },
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,Data,fetchdataList,saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
+    useEffect(() => {
+        if (!isParamLoaded) {
+            fetchdataList({ setIsLoading: isParamLoading, userId });
+        }
+    }, [isParamLoaded]);
+    
     const tableData = [
         {
             id: 'adfadfadaddfdasfadsfasdf',
@@ -168,22 +183,22 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         tblPrepareColumns({
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
-            render: () => (
-                <>
-                    <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                        <Select
-                            placeholder="Select Parameter Type"
-                            options={[
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY, label: 'Text' },
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY, label: 'Number Range' },
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY, label: 'Date Range' },
-                                { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY, label: 'Boolean' },
-                            ]}
-                            onChange={changeSelectOptionHandler}
-                        />
-                    </Form.Item>
-                </>
-            ),
+            // // render: () => (
+            // //     <>
+            // //         <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
+            // //             <Select
+            // //                 placeholder="Select Parameter Type"
+            // //                 options={[
+            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY, label: 'Text' },
+            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY, label: 'Number Range' },
+            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY, label: 'Date Range' },
+            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY, label: 'Boolean' },
+            // //                 ]}
+            // //                 onChange={changeSelectOptionHandler}
+            // //             />
+            // //         </Form.Item>
+            // //     </>
+            // ),
             width: 300,
 
         }),
@@ -194,21 +209,21 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
-            render: () => (
-                <>
-                    <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
-                        <Select
-                            placeholder="Select"
-                            options={[
-                                { value: '1', label: 'Parameter Type 1' },
-                                { value: '2', label: 'Parameter Type 2' },
-                                { value: '3', label: 'Parameter Type 3' },
-                                { value: '4', label: 'Parameter Type 4' },
-                            ]}
-                        />
-                    </Form.Item>
-                </>
-        ),
+        //     render: () => (
+        //         <>
+        //             <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
+        //                 <Select
+        //                     placeholder="Select"
+        //                     options={[
+        //                         { value: '1', label: 'Parameter Type 1' },
+        //                         { value: '2', label: 'Parameter Type 2' },
+        //                         { value: '3', label: 'Parameter Type 3' },
+        //                         { value: '4', label: 'Parameter Type 4' },
+        //                     ]}
+        //                 />
+        //             </Form.Item>
+        //         </>
+        // ),
         }),
         {
             title: 'Action',
@@ -224,6 +239,31 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
         },
     );
 
+    const onFinish=(values)=>{
+        const data = { ...values};
+        const onSuccess = (res) => {
+            form.resetFields();
+           
+            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
+        };
+
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+
+        const requestData = {
+            data: [data],
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    
+    }
+
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
@@ -238,7 +278,7 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                     </Button>
                 </Col>
             </Row>
-            <Table bordered dataSource={tableData} columns={tableColumn} pagination={true} />
+            <Table bordered dataSource={Data} columns={tableColumn} pagination={true} />
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
@@ -263,14 +303,21 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                     </Row>
                 }
             >
-                <Form layout="vertical" onClick={onFinishFailed}>
+                <Form layout="vertical"  onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
-                                <Select placeholder="Select">
-                                    {configData?.map((item) => (
+                                <Select placeholder="Select"
+                                options={[
+                                    { value: '1', label: 'Parameter Type 1' },
+                                    { value: '2', label: 'Parameter Type 2' },
+                                    { value: '3', label: 'Parameter Type 3' },
+                                    { value: '4', label: 'Parameter Type 4' },
+                                ]}>
+                                    {/* {configData?.map((item) => (
                                         <Option value={item?.id}>{item?.value}</Option>
-                                    ))}
+                                    ))} */}
+                                    
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -334,6 +381,8 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                             </Form.Item>
                         </Col>
                     </Row>
+
+                
                 </Form>
             </Drawer>
         </>
