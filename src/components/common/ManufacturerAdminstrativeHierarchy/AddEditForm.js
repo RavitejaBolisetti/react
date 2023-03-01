@@ -9,7 +9,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
+    const fieldNames = { label: 'manufactureAdminShrtName', value: 'id', children: 'subManufactureAdmin' };
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
@@ -46,7 +46,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="parentCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="manufactureAdminParntId">
                         <TreeSelect
                             // treeLine={true}
                             // treeIcon={true}
@@ -76,14 +76,14 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.shortName} rules={[validateRequiredInputField('Short Description')]}>
+                    <Form.Item name="manufactureAdminShrtName" label="Short Description" initialValue={formData?.manufactureAdminShrtName} rules={[validateRequiredInputField('Short Description')]}>
                         <Input className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="longName" label="Long Description" initialValue={formData?.longName} rules={[validateRequiredInputField('Long Description')]}>
+                    <Form.Item name="manufactureAdminLongName" label="Long Description" initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField('Long Description')]}>
                         <TextArea rows={1} placeholder="Type here" {...disabledProps} />
                     </Form.Item>
                 </Col>

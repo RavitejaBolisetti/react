@@ -6,56 +6,9 @@ import { Table } from 'antd';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+
 import styles from './ChangeHistory.module.css';
 
-
-const contractData = [
-    {
-        authorityType: 'AD',
-        employeeCode: '1001',
-        employeeName: 'abc',
-        attributeCode: '1011',
-        dateEffectiveFrom: '2000/01/01',
-        dateEffectiveTo: ' 2000/12/01',
-        changedDate: '2000/12/12',
-        changedBy: 'xyz',
-        code: '1000',
-        parent: 'A',
-        shortDescription: 'des1',
-        longDescription: 'des2',
-        status: 'Y',
-    },
-    {
-        authorityType: 'AD',
-        employeeCode: '1002',
-        employeeName: 'ab',
-        attributeCode: '1012',
-        dateEffectiveFrom: '2000/01/01',
-        dateEffectiveTo: ' 2000/12/01',
-        changedDate: '2000/1/13',
-        changedBy: 'xyx',
-        code: '1001',
-        parent: 'B',
-        shortDescription: 'desc1',
-        longDescription: 'description2',
-        status: 'Y',
-    },
-    {
-        authorityType: 'AD',
-        employeeCode: '1003',
-        employeeName: 'abcd',
-        attributeCode: '1013',
-        dateEffectiveFrom: '2000/01/01',
-        dateEffectiveTo: ' 2000/12/01',
-        changedDate: '2000/2/11',
-        changedBy: 'xxy',
-        code: '1002',
-        parent: 'A',
-        shortDescription: 'desc11',
-        longDescription: 'description22',
-        status: 'N',
-    },
-];
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -67,7 +20,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData: contractData || changeHistoryData,
+        changeHistoryData:  changeHistoryData,
     };
     return returnValue;
 };
@@ -91,7 +44,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
 
-    const tableColumn = [];
+    const tableColumn = []; 
 
     tableColumn.push(
         tblPrepareColumns({
@@ -116,7 +69,7 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Attribute type',
+            title: 'Authority type',
             dataIndex: 'authorityType',
         })
     );
@@ -157,14 +110,14 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'shortDescription',
+            dataIndex: 'shortDescript',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'longDescription',
+            dataIndex: 'longDescript',
         })
     );
 
@@ -207,3 +160,4 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
 };
 
 export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ManufacturerAdminHierarchyChangeHistoryMain);
+
