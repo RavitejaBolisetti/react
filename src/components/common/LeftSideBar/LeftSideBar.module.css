@@ -17,9 +17,9 @@
   margin-top: -10px;
 } */
 
-/* .menuIcon {
-  font-size: 40px;
-} */
+.menuIcon {
+  font-size: 22px !important;
+}
 
 :global .ant-layout-sider-zero-width-trigger {
   display: none !important;
