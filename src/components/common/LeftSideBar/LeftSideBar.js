@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import App from './Test';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -19,9 +18,6 @@ import * as routing from 'constants/routing';
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 
-import Test from './Test'
-import Test2 from './Test2';
-
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
@@ -36,10 +32,10 @@ const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true,
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
         </Link>
     ) : (
-        <div title={tooltip ? title : ''}>
+        <Link to={routing.ROUTING_DASHBOARD} title={tooltip ? title : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
-        </div>
+        </Link>
     );
 
 const mapStateToProps = (state) => {
@@ -82,7 +78,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -127,13 +123,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
+            const isParentMenu = parentMenuId === 'Web';
+
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: parentMenuId === 'Web', showTitle: collapsed ? !(parentMenuId === 'Web') : true })} className={styles.subMenuParent}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={menuId} className={styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: parentMenuId === 'Web', showTitle: collapsed ? !(parentMenuId === 'Web') : true })}
+                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
@@ -141,7 +139,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
-                <div className={styles.logoContainer} style={{ marginBottom: collapsed ? '0px' : '12px' }}>
+                <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
                     <Row>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
                             <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
@@ -157,12 +155,19 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     {!collapsed && <Input placeholder="Search menu.." allowClear onSearch={onSearch} />}
                 </div>
 
-                {/* <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()}>
+                <Menu
+                    onClick={onClick}
+                    mode="inline"
+                    inlineIndent={15}
+                    defaultSelectedKeys={[defaultSelectedKeys]}
+                    defaultOpenKeys={defaultOpenKeys}
+                    collapsed={collapsed.toString()}
+                    style={{
+                        paddingLeft: collapsed ? '18px' : '14px',
+                    }}
+                >
                     {prepareMenuItem(menuData)}
-                </Menu> */}
-
-                <Test />
-                <Test2 />
+                </Menu>
 
                 <div
                     className={styles.changeTheme}
