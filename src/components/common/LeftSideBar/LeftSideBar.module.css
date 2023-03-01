@@ -41,7 +41,6 @@
 }
 
 .leftMenuBox li.subMenuParent:hover {
-  color: #ea2929 !important;
   background: none !important;
 }
 
@@ -62,6 +61,14 @@
 
 :global .ant-menu-title-content a:hover {
   color: #ea2929 !important;
+}
+
+:global .ant-menu-light .ant-menu-submenu-title:hover:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected) {
+  color: #ea2929 !important;
+}
+
+:global .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
+  background-color: transparent !important;
 }
 
 :global .ant-input-group-wrapper {
@@ -147,10 +154,10 @@
 } */
 
 /* changes on menu list items on hover */
-:global .ant-menu-submenu-title:hover {
+/* :global .ant-menu-submenu-title:hover {
   background-color: transparent !important;
   color: #ea2929 !important;
-}
+} */
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {
   background-color: #ffffff !important;
