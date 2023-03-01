@@ -285,6 +285,19 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item name="rolegroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
+                                <Select
+                                    placeholder="Select"
+                                    options={[
+                                        { value: '1', label: 'Parameter Type 1' },
+                                        { value: '2', label: 'Parameter Type 2' },
+                                        { value: '3', label: 'Parameter Type 3' },
+                                        { value: '4', label: 'Parameter Type 4' },
+                                    ]}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="ConfigParamType" label="Configurable Parameter Type" rules={[validateRequiredSelectField('ConfigParamType')]}>
                                 <Select
                                     placeholder="Select Parameter Type"
@@ -298,7 +311,10 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                                 />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    </Row>
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="ConfigParamValues" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
                                 {selected == 'T' ? (
                                     <Input placeholder="Enter Data" />
@@ -316,24 +332,8 @@ export const ConfigurableParameterEditingBase = ({ fetchList, userId, configData
                                         ]}
                                     />
                                 ) : (
-                                    <RangePicker />
+                                    <RangePicker width={'100%'} />
                                 )}
-                            </Form.Item>
-                        </Col>
-                    </Row>
-
-                    <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item name="rolegroup" label="Role Group" rules={[validateRequiredSelectField('rolegroup')]}>
-                                <Select
-                                    placeholder="Select"
-                                    options={[
-                                        { value: '1', label: 'Parameter Type 1' },
-                                        { value: '2', label: 'Parameter Type 2' },
-                                        { value: '3', label: 'Parameter Type 3' },
-                                        { value: '4', label: 'Parameter Type 4' },
-                                    ]}
-                                />
                             </Form.Item>
                         </Col>
                     </Row>
