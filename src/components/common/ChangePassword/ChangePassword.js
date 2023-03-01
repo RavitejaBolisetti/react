@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Modal, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 import { changePasswordActions } from 'store/actions/data/changePassword';
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { doLogoutAPI } from 'store/actions/auth';
+import { ROUTING_LOGOUT } from 'constants/routing';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,13 +31,14 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             saveData: changePasswordActions.saveData,
+            doLogout: doLogoutAPI,
             listShowLoading: changePasswordActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
 
     const [confirmDirty, setConfirmDirty] = useState(false);
@@ -43,12 +46,18 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
     const onFinish = (errorInfo) => {
         // form.validateFields().then((values) => {});
     };
+
     const onFinishFailed = (values) => {
         if (values.errorFields.length === 0) {
             const data = { ...values.values };
             const onSuccess = (res) => {
                 form.resetFields();
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                doLogout({
+                    successAction: () => {
+                        handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                        window.location.href = ROUTING_LOGOUT;
+                    },
+                });
             };
 
             const onError = (message) => {

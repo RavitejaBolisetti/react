@@ -37,7 +37,7 @@ const baseAPICall = (params) => {
         axios
             .request(axiosConfig)
             .then((response) => {
-                console.log('🚀 ~ file: axiosAPICall.js:39 ~ .then ~ response:', response);
+                console.log('🚀 ~ file: axiosAPICall.js:39 ~ .then ~ response:', response,response?.data?.statusCode);
                 if (response.status === 200) {
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
@@ -56,7 +56,7 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.errors });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.data?.errors || response?.data?.responseMessage });
                     }
                 }
             })

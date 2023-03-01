@@ -9,11 +9,7 @@ export const CHANGE_PASSWORD_SHOW_LOADING = 'CHANGE_PASSWORD_SHOW_LOADING';
 const changePasswordActions = {};
 
 const baseURLPath = BASE_URL_CHANGE_PASSWORD;
-const receiveHeaderData = (data) => ({
-    type: CHANGE_PASSWORD_LOADED,
-    isLoaded: true,
-    data,
-});
+
 changePasswordActions.listShowLoading = (isLoading) => ({
     type: CHANGE_PASSWORD_SHOW_LOADING,
     isLoading,
@@ -31,7 +27,6 @@ changePasswordActions.saveData = withAuthToken((params) => ({ token, accessToken
         token,
         accessToken,
         userId,
-        accessToken,
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
