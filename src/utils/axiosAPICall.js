@@ -21,7 +21,7 @@ const baseAPICall = (params) => {
 
     if (token) {
         const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, token, userId };
+        const headers = { Authorization: AuthStr, accessToken: token, userId, deviceType: 'W', deviceId: null };
         axiosConfig = {
             ...axiosConfig,
             headers,
