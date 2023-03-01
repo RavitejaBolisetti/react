@@ -18,8 +18,8 @@ export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
 
 export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
 
-const LOCAL_STORAGE_KEY_AUTH_TOKEN = 'authToken';
-const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
+export const LOCAL_STORAGE_KEY_AUTH_TOKEN = 'authToken';
+export const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
 
 export const authLoginSucess = (token, userName, userId) => ({
     type: AUTH_LOGIN_SUCCESS,
@@ -183,6 +183,11 @@ export const doLogoutAPI = withAuthTokenAndUserId((params) => (token) => (dispat
     const authPostLogout = () => {
         dispatch(logoutClearAllData());
     };
+
+    /* ToDo : Need to remove this Start */
+    successAction && successAction();
+    authPostLogout();
+    /* ToDo : Need to remove this End */
 
     const logoutError = (errorMessage) => message.error(errorMessage);
 

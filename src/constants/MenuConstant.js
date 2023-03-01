@@ -11,12 +11,13 @@ import ICON_ADMIN from '../assets/img/icon-user-shield.png';
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
+import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 export const MenuConstant = {
     [getMenyKey('FAV')]: {
         key: 'FAV',
         link: undefined,
-        icon: <MdStars fontSize={20} />,
+        icon: <MdStars fontSize={22} />,
         parentMenuId: 'FAV',
     },
 
@@ -57,13 +58,13 @@ export const MenuConstant = {
 
     [getMenyKey('COMN')]: {
         link: undefined,
-        icon: <FaCreativeCommonsShare fontSize={20} />,
+        icon: <FaCreativeCommonsShare fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('DBP')]: {
         link: undefined,
-        icon: <FaAddressBook fontSize={20} />,
+        icon: <FaAddressBook fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
@@ -75,37 +76,37 @@ export const MenuConstant = {
 
     [getMenyKey('HR')]: {
         link: undefined,
-        icon: <IoPeopleCircle fontSize={20} />,
+        icon: <HrIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('Sales')]: {
         link: undefined,
-        icon: <AiFillCar fontSize={20} />,
+        icon: <AiFillCar fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('SERV')]: {
         link: undefined,
-        icon: <img src={ICON_SERVICE} width='22px' />,
+        icon: <ServiceIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('ADMN')]: {
         link: undefined,
-        icon: <img src={ICON_ADMIN} width='22px' />,
+        icon: <AdminIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('SPR')]: {
         link: undefined,
-        icon: <img src={ICON_SPARE} width='22px' />,
+        icon: <SparesIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 
     [getMenyKey('CRM')]: {
         link: undefined,
-        icon: <MdWeb fontSize={18} />,
+        icon: <CrmIcon fontSize={22} />,
         parentMenuId: 'WEB',
     },
 };
