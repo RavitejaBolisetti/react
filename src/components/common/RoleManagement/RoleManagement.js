@@ -62,9 +62,29 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const [formData, setFormData] = useState([]);
     const [Mycheckvals, setMycheckvals] = useState([]);
 
-    const [AddEditCancel, setAddEditCancel] = useState(true);
+    const [Readonly, setReadOnly] = useState(true);
 
-    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+    const [AddEditCancel, setAddEditCancel] = useState(true);
+    const [forceFormReset, setForceFormReset] = useState(false);
+
+
+    const [InitialData, setInitialData] = useState({});
+    const [addchilds, setAddchild] = useState(true);
+    const [Switcher, setSwitcher] = useState(true);
+    const [Checkboxdata, setCheckBoxData] = useState({
+        All: false,
+        Add: false,
+        View: false,
+        Delete: false,
+        Edit: false,
+        Upload: false,
+        Download: false,
+    });
+
+    useEffect(() => {
+        form.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [forceFormReset]);
 
     //Tree
 
@@ -72,6 +92,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
+
     const onExpand = (expandedKeysValue) => {
         console.log('onExpand', expandedKeysValue);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
@@ -91,15 +112,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
-    const [Checkboxdata, setCheckBoxData] = useState({
-        All: false,
-        Add: false,
-        View: false,
-        Delete: false,
-        Edit: false,
-        Upload: false,
-        Download: false,
-    });
     const Onindivisualselect = (e) => {
         console.log('Indivisual Val', e.target.checked, e.target.name);
         setCheckBoxData({ ...Checkboxdata, [e.target.name]: e.target.checked });
@@ -112,17 +124,13 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         }
     };
 
-    const AddEditCancelbutton = () => {
-        return <></>;
-    };
-
     const Actions = () => {
         return (
             <>
                 <Row>
                     <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} offset={2}>
                         <Form.Item name="All" initialValue={InitialData?.All}>
-                            <Checkbox name="All" checked={AddEditCancel?Checkboxdata.All:InitialData?.All} onChange={Onselectall}>
+                            <Checkbox name="All" checked={AddEditCancel ? Checkboxdata.All : InitialData?.All} onChange={Onselectall}>
                                 Select All
                             </Checkbox>
                         </Form.Item>
@@ -131,21 +139,21 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 <Row>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
                         <Form.Item name="Add" initialValue={InitialData?.Add}>
-                            <Checkbox name="Add" checked={AddEditCancel?Checkboxdata.Add:InitialData?.Add} onChange={Onindivisualselect}>
+                            <Checkbox name="Add" checked={AddEditCancel ? Checkboxdata.Add : InitialData?.Add} onChange={Onindivisualselect}>
                                 Add
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="View" initialValue={InitialData?.View}>
-                            <Checkbox name="View" checked={AddEditCancel?Checkboxdata.View:InitialData?.View} onChange={Onindivisualselect}>
+                            <Checkbox name="View" checked={AddEditCancel ? Checkboxdata.View : InitialData?.View} onChange={Onindivisualselect}>
                                 View
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="Delete" initialValue={InitialData?.Delete}>
-                            <Checkbox name="Delete" checked={AddEditCancel?Checkboxdata.Delete:InitialData?.Delete} onChange={Onindivisualselect}>
+                            <Checkbox name="Delete" checked={AddEditCancel ? Checkboxdata.Delete : InitialData?.Delete} onChange={Onindivisualselect}>
                                 Delete
                             </Checkbox>
                         </Form.Item>
@@ -154,21 +162,21 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 <Row>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
                         <Form.Item name="Edit" initialValue={InitialData?.Edit}>
-                            <Checkbox name="Edit" checked={AddEditCancel?Checkboxdata.Edit:InitialData?.Edit} onChange={Onindivisualselect}>
+                            <Checkbox name="Edit" checked={AddEditCancel ? Checkboxdata.Edit : InitialData?.Edit} onChange={Onindivisualselect}>
                                 Edit
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="Upload" initialValue={InitialData?.Upload}>
-                            <Checkbox name="Upload" checked={AddEditCancel?Checkboxdata.Upload:InitialData?.Upload} onChange={Onindivisualselect}>
+                            <Checkbox name="Upload" checked={AddEditCancel ? Checkboxdata.Upload : InitialData?.Upload} onChange={Onindivisualselect}>
                                 Upload
                             </Checkbox>
                         </Form.Item>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Form.Item name="Download" initialValue={InitialData?.Download}>
-                            <Checkbox name="Download" checked={AddEditCancel?Checkboxdata.Download:InitialData?.Download} onChange={Onindivisualselect}>
+                            <Checkbox name="Download" checked={AddEditCancel ? Checkboxdata.Download : InitialData?.Download} onChange={Onindivisualselect}>
                                 Download
                             </Checkbox>
                         </Form.Item>
@@ -177,8 +185,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             </>
         );
     };
-    const [addchilds, setAddchild] = useState(true);
-    const [Switcher, setSwitcher] = useState(true);
+
     const handleChilds = () => {
         setAddchild(!addchilds);
     };
@@ -196,7 +203,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     <Card title="Access Applications" bordered={true}>
                         {/* <Trees /> */}
                         <Form.Item initialValue={undefined} name="Treedata">
-                            <Tree defaultExpandAll={true} showLine={true} checkable onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} onCheck={onCheck} checkedKeys={AddEditCancel?checkedKeys:InitialData?.Treedata } onSelect={onSelect} selectedKeys={selectedKeys} treeData={treeData} />
+                            <Tree defaultExpandAll={true} showLine={true} checkable onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} onCheck={onCheck} checkedKeys={AddEditCancel ? checkedKeys : InitialData?.Treedata} onSelect={onSelect} selectedKeys={selectedKeys} treeData={treeData} />
                         </Form.Item>
                     </Card>
                 </Col>
@@ -245,7 +252,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                         name="roledesc"
                         label="Role Description"
                         initialValue={InitialData?.roledesc}
-
                         rules={[
                             {
                                 required: true,
@@ -256,7 +262,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     </Form.Item>
                 </Col>
                 <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Status" name="active" initialValue={InitialData?.active} >
+                    <Form.Item label="Status" name="active" initialValue={InitialData?.active}>
                         <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
                 </Col>
@@ -268,6 +274,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         setMycheckvals([]);
         setSwitcher(true);
         setCheckedKeys([]);
+        setInitialData({});
         setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
     };
     const onFinisher = (values) => {
@@ -302,8 +309,10 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         console.log('I am the final form data', values);
         setFormData([...formData, values]);
     };
-    const [InitialData, setInitialData] = useState({});
+
     const handleForms = (e) => {
+        setForceFormReset(Math.random() * 10000);
+
         console.log(e.target.outerText);
         setAddchild(false);
         setAddEditCancel(false);
@@ -322,11 +331,21 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         console.log('This is the intialData', InitialData);
         form.resetFields();
     };
+    const oncancel = () => {
+        setAddchild(!addchilds);
+        setInitialData({});
+        form.resetFields();
+        setMycheckvals([]);
+        setAddEditCancel(!AddEditCancel);
+        setCheckedKeys([]);
+        setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
+    };
+    const OnEdit = () => {};
     const Handlebuttons = () => {
         return AddEditCancel ? (
             <Row justify="end" gutter={20}>
                 <Col>
-                    <Button danger onClick={() => setAddchild(true)}>
+                    <Button danger onClick={oncancel}>
                         <FaEdit className={styles.buttonIcon} />
                         cancel
                     </Button>
@@ -347,19 +366,19 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         ) : (
             <Row justify="end" gutter={20}>
                 <Col>
-                    <Button danger onClick={() => setAddchild(true)}>
+                    <Button danger onClick={oncancel}>
                         <FaEdit className={styles.buttonIcon} />
                         cancel
                     </Button>
                 </Col>
                 <Col>
-                    <Button danger onClick={onReset}>
+                    <Button danger onClick={OnEdit}>
                         <FaUndo className={styles.buttonIcon} />
                         Edit
                     </Button>
                 </Col>
                 <Col>
-                    <Button htmlType="submit" onClick={handleSave} danger>
+                    <Button htmlType="submit" onClick={onReset} danger>
                         <FaSave className={styles.buttonIcon} />
                         Add Role
                     </Button>
