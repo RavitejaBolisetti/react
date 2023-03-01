@@ -19,6 +19,9 @@ import * as routing from 'constants/routing';
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 
+import Test from './Test'
+import Test2 from './Test2';
+
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
@@ -154,9 +157,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     {!collapsed && <Input placeholder="Search menu.." allowClear onSearch={onSearch} />}
                 </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()}>
+                {/* <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()}>
                     {prepareMenuItem(menuData)}
-                </Menu>
+                </Menu> */}
+
+                <Test />
+                <Test2 />
 
                 <div
                     className={styles.changeTheme}
