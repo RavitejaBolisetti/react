@@ -51,12 +51,6 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
-<<<<<<< HEAD
-    
-    const [formData, setFormData] = useState([]);
-=======
-
->>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
     const [form] = Form.useForm();
 
     const { confirm } = Modal;
@@ -66,15 +60,6 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
     const showDrawer = () => {
         setOpen(true);
     };
-<<<<<<< HEAD
-    const showDrawerOnEdit = () => {
-        setOpen(true);
-        const formData = configData.find((i) => i.controlId === i.controlId);
-        formData && setFormData(formData);
-    };
-=======
-
->>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
     const onClose = () => {
         setOpen(false);
     };
@@ -88,17 +73,6 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-<<<<<<< HEAD
-    //
-   
-    const formProps = {
-       
-        formData,
-       
-    };
-
-=======
->>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
     const tableColumn = [];
 
     tableColumn.push(
@@ -130,14 +104,8 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
             width: 100,
             render: () => [
                 <Space wrap>
-<<<<<<< HEAD
-                    <EditOutlined onClick={showDrawerOnEdit}/>
-
-                    
-=======
                     <EditOutlined />
                     {/* <DeleteOutlined onClick={showConfirm} /> */}
->>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
                 </Space>,
             ],
         }
@@ -205,11 +173,7 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
                     </Row>
                 }
             >
-<<<<<<< HEAD
-                <Form layout="vertical"  onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
-=======
                 <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
->>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
