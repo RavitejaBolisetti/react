@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Table, Switch, Form, Select, Row, Col, Button,  Input,  Collapse } from 'antd';
+import { Table, Switch, Form, Select, Row, Col, Button, Input, Collapse } from 'antd';
 import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { ChangeHistory } from 'components/common/ChangeHistory';
-import { ParentHierarchy } from 'components/common/parentHierarchy/ParentHierarchy';
 
 import styles from '../Common.module.css';
 
@@ -94,7 +93,7 @@ export const ProductMasterPageBase = () => {
         },
     ];
 
-      return (
+    return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
@@ -239,7 +238,6 @@ export const ProductMasterPageBase = () => {
                     )}
                 </Col>
             </Row>
-            <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };

@@ -79,7 +79,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -156,9 +156,17 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     {!collapsed && <Input placeholder="Search menu.." allowClear onSearch={onSearch} />}
                 </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} style={{
-                    paddingLeft: collapsed ? '18px' : '14px'
-                }}>
+                <Menu
+                    onClick={onClick}
+                    mode="inline"
+                    inlineIndent={15}
+                    defaultSelectedKeys={[defaultSelectedKeys]}
+                    defaultOpenKeys={defaultOpenKeys}
+                    collapsed={collapsed.toString()}
+                    style={{
+                        paddingLeft: collapsed ? '18px' : '14px',
+                    }}
+                >
                     {prepareMenuItem(menuData)}
                 </Menu>
 

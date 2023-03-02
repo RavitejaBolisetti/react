@@ -151,14 +151,14 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
-            formData && setFormData(data);
 
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
+            if (res?.data) {
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId });
+                formData && setFormData(res?.data[0]);
+                setSelectedTreeKey([res?.data[0]?.id]);
                 setFormActionType('view');
             }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
@@ -251,7 +251,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        dataList: geoData,
+        treeData: geoData,
     };
 
     const formProps = {

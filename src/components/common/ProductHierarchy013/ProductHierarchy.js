@@ -9,7 +9,6 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 
 import TreeView from 'components/common/TreeView';
 import styles from 'pages/common/Common.module.css';
-// import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { addToolTip } from 'utils/customMenuLink';
 import { ChangeHistory } from 'components/common/ChangeHistory';
 import { ProductMaster } from './ProductMaster';
@@ -203,8 +202,6 @@ export const ProductHierarchyBase = (props) => {
                     )}
                 </Col>
             </Row>
-
-            {/* <ParentHierarchy title={'Parent Hierarchy'} dataList={productHierarchyData} handleSelectClick={handleSelectClick} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} /> */}
         </>
     );
 };
