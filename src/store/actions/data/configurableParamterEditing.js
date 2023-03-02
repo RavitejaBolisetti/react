@@ -89,7 +89,7 @@ configparameditActions.saveData = withAuthToken((params) => (token) => (dispatch
 
 configparameditActions.fetchdataList = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, onError, data, userId } = params;
-    // setIsLoading(true);
+     setIsLoading(true);
 
     const onSuccess = (res) => {
         if (res?.data) {

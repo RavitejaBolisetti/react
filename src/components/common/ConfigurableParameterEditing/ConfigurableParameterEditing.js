@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, data: configData = [] },
-            ConfigurableParameterEditing: { isParamLoading,isParamLoaded = false, paramdata: Data = [] },
+            // ConfigurableParameterEditing: { isParamLoading,isParamLoaded = false, paramdata: Data = [] },
 
         },
     } = state;
@@ -27,9 +27,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        Data,
-        isParamLoading,
-        isParamLoaded,
+    
         configData: configData?.filter((i) => i),
     };
     return returnValue;
@@ -47,12 +45,12 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,Data,fetchdataList,saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
     useEffect(() => {
-        if (!isParamLoaded) {
-            fetchdataList({ setIsLoading: isParamLoading, userId });
+        if (!isDataLoaded) {
+            fetchdataList({ setIsLoading: listShowLoading, userId });
         }
-    }, [isParamLoaded]);
+    }, [isDataLoaded]);
     
     const tableData = [
         {
@@ -278,7 +276,7 @@ export const ConfigurableParameterEditingBase = ({isParamLoaded,isParamLoading,D
                     </Button>
                 </Col>
             </Row>
-            <Table bordered dataSource={Data} columns={tableColumn} pagination={true} />
+            <Table bordered dataSource={configData} columns={tableColumn} pagination={true} />
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
