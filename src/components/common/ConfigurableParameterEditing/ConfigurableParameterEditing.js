@@ -52,7 +52,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         }
     }, [isDataLoaded]);
     
-   
+    const [formData, setFormData] = useState([]);
     const [form] = Form.useForm();
 
     const { confirm } = Modal;
@@ -60,6 +60,11 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
+    };
+    const showDrawerOnEdit = () => {
+        setOpen(true);
+        const formData = configData.find((i) => i.controlId === i.controlId);
+        formData && setFormData(formData);
     };
     const onClose = () => {
         setOpen(false);
@@ -90,23 +95,11 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
     }, [userId]);
 
     //
-    const deleteTableRows = (index) => {
-        const rows = [...data];
-        rows.splice(index, 1);
-        setRowsData(rows);
-    };
-    const showConfirm = () => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Some descriptions',
-            onOk() {
-                deleteTableRows(data.key);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
+   
+    const formProps = {
+       
+        formData,
+       
     };
 
     const tableColumn = [];
@@ -142,9 +135,9 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
             width: 100,
             render: () => [
                 <Space wrap>
-                    <EditOutlined />
+                    <EditOutlined onClick={showDrawerOnEdit}/>
 
-                    <DeleteOutlined onClick={showConfirm} />
+                    
                 </Space>,
             ],
         },
@@ -214,7 +207,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                     </Row>
                 }
             >
-                <Form layout="vertical"  onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form layout="vertical"  onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
