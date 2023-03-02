@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { Button, Col, Input, Modal, Form, Row, Select, Space, Table, DatePicker, InputNumber, Drawer } from 'antd';
 import styles from '../Common.module.css';
 import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { FaPlus } from 'react-icons/fa';
-import { configparameditActions } from 'store/actions/data/configurableParamterEditing';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
@@ -20,14 +20,13 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, data: configData = [] },
             // ConfigurableParameterEditing: { isParamLoading,isParamLoaded = false, paramdata: Data = [] },
-
         },
     } = state;
 
     let returnValue = {
         userId,
         isDataLoaded,
-    
+
         configData: configData?.filter((i) => i),
     };
     return returnValue;
@@ -37,63 +36,59 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: configparameditActions.fetchList,
-            saveData: configparameditActions.saveData,
-            fetchdataList: configparameditActions.fetchdataList,
-            listShowLoading: configparameditActions.listShowLoading,
+            fetchList: configParamEditActions.fetchList,
+            saveData: configParamEditActions.saveData,
+            fetchdataList: configParamEditActions.fetchDataList,
+            listShowLoading: configParamEditActions.listShowLoading,
         },
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
     useEffect(() => {
         if (!isDataLoaded) {
             fetchdataList({ setIsLoading: listShowLoading, userId });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
+<<<<<<< HEAD
     
     const [formData, setFormData] = useState([]);
+=======
+
+>>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
     const [form] = Form.useForm();
 
     const { confirm } = Modal;
     const [selected, setSelected] = React.useState('T');
     const [open, setOpen] = useState(false);
+
     const showDrawer = () => {
         setOpen(true);
     };
+<<<<<<< HEAD
     const showDrawerOnEdit = () => {
         setOpen(true);
         const formData = configData.find((i) => i.controlId === i.controlId);
         formData && setFormData(formData);
     };
+=======
+
+>>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
     const onClose = () => {
         setOpen(false);
     };
+
     const changeSelectOptionHandler = (event) => {
         setSelected(event);
     };
-    const [count, setCount] = useState(2);
-    const [data, setRowsData] = useState([
-        {
-            key: '0',
-            name: '',
-        },
-    ]);
-    const handleAdd = () => {
-        const newData = [
-            {
-                key: count,
-                name: '',
-            },
-        ];
-        setRowsData([...data, newData]);
-        setCount(count + 1);
-    };
+
     useEffect(() => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+<<<<<<< HEAD
     //
    
     const formProps = {
@@ -102,6 +97,8 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
        
     };
 
+=======
+>>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
     const tableColumn = [];
 
     tableColumn.push(
@@ -118,7 +115,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
             width: 300,
-
         }),
         tblPrepareColumns({
             title: 'Configurable Parameter Values',
@@ -127,7 +123,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
-
         }),
         {
             title: 'Action',
@@ -135,19 +130,23 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
             width: 100,
             render: () => [
                 <Space wrap>
+<<<<<<< HEAD
                     <EditOutlined onClick={showDrawerOnEdit}/>
 
                     
+=======
+                    <EditOutlined />
+                    {/* <DeleteOutlined onClick={showConfirm} /> */}
+>>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
                 </Space>,
             ],
-        },
+        }
     );
 
-    const onFinish=(values)=>{
-        const data = { ...values};
+    const onFinish = (values) => {
+        const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
-           
             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };
@@ -165,11 +164,10 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         };
 
         saveData(requestData);
-    
-    }
+    };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     return (
@@ -182,7 +180,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                     </Button>
                 </Col>
             </Row>
-            <Table bordered dataSource={configData} columns={tableColumn} pagination={true} />
+            {/* <Table bordered dataSource={configData} columns={tableColumn} pagination={true} /> */}
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
@@ -207,16 +205,18 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                     </Row>
                 }
             >
+<<<<<<< HEAD
                 <Form layout="vertical"  onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
+=======
+                <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+>>>>>>> cca77b8e2e274fba3be92e49e59c38ce7aa4734f
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
                                 <Select placeholder="Select">
-                               
                                     {configData?.map((item) => (
                                         <Option value={item?.controlDescription}>{item?.value}</Option>
                                     ))}
-                                    
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -280,8 +280,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                             </Form.Item>
                         </Col>
                     </Row>
-
-                
                 </Form>
             </Drawer>
         </>
