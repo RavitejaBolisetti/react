@@ -7,16 +7,15 @@ import { AiOutlineClose } from 'react-icons/ai';
 import dayjs from 'dayjs';
 
 const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
-   
-    let drawerTitle =''
+    let drawerTitle = '';
     if (formActionType === 'add') {
-        drawerTitle='Add Application Criticality Group Details';
+        drawerTitle = 'Add Application Criticality Group Details';
     } else if (formActionType === 'update') {
-        drawerTitle='Update Application Criticality Group Details';
+        drawerTitle = 'Update Application Criticality Group Details';
     } else if (formActionType === 'view') {
-        drawerTitle='View Application Criticality Group Details';
+        drawerTitle = 'View Application Criticality Group Details';
     }
-    
+
     const momentTime = formData?.users?.map((i) => {
         return {
             startTime: dayjs(i.startTime, 'HH:mm'),
@@ -38,6 +37,7 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
     return (
         <Drawer
             title={drawerTitle}
+            width="500"
             footer={
                 <>
                     <Button form="myForm" key="submit" htmlType="submit">
@@ -63,14 +63,17 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="defaultGroup" label="Default Group?">
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formData.defaultGroup} onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                    {' '}
+                </Col>
+                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                     <Form.Item name="status" label="Status">
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formData.status} onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

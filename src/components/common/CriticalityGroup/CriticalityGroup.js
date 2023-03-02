@@ -116,8 +116,6 @@ export const CriticalityGroupMain = () => {
     };
 
     const onFinish = (values) => {
-        
-       
         const arr = values.users.map((i) => {
             return {
                 startTime: i.startTime.format('HH:mm'),
