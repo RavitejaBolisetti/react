@@ -67,6 +67,7 @@ export const QualificationMasterMain = (setFilter, filter) => {
     const [drawer, setDrawer] = useState(false);
     const [searchInput, setSearchInput] = useState('');
 
+
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
@@ -104,13 +105,6 @@ export const QualificationMasterMain = (setFilter, filter) => {
     const edit = (record) => {
         const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
         setRowsData(updatedDataItem);
-    };
-
-    const deleteTableRows = (id) => {
-        const updatedData = [...data];
-        const index = updatedData.findIndex((el) => el.id === id);
-        updatedData.splice(Number(index), 1);
-        setRowsData([...updatedData]);
     };
 
     const tableColumn = [];
@@ -157,19 +151,14 @@ export const QualificationMasterMain = (setFilter, filter) => {
 
         },
         {
-            key: '2',
-            name: 'Diploma',
-            code: 'RG0002'
-        },
-        {
             key: '3',
             name: 'Btech CSE',
             code: 'AB0003'
         },
         {
             key: '4',
-            name: 'Bachelor of Science',
-            code: 'NW0004'
+            name: 'PhD',
+            code: 'NW0008'
         },
     ]
 
@@ -189,17 +178,23 @@ export const QualificationMasterMain = (setFilter, filter) => {
         console.log('sort', sorter, filters);
         form.resetFields();
     };
-
+    const deleteTableRows = (id) => {
+        const updatedData = [...arrData];
+        const index = updatedData.findIndex((el) => el.id === id);
+        updatedData.splice(Number(index), 1);
+        setArrData([...updatedData]);
+    };
     const onChangeHandle = (e) => {
         const getSearch = e.target.value;
         // console.log("value:", e.target.value);
         if (e.target.value == '') {
+            window.location.reload(true)
             const tempArr = arrData;
             setArrData(tempArr)
             return
         }
         if (getSearch.length > -1) {
-            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()))
+            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()))
             setArrData(searchResult);
         }
     };
@@ -226,13 +221,13 @@ export const QualificationMasterMain = (setFilter, filter) => {
                         </Button>
                     </Col>
                 </Row>
-                <DrawerUtil drawer={drawer} setDrawer={setDrawer} />
+                <DrawerUtil drawer={drawer} setDrawer={setDrawer} arrData={arrData} setArrData={setArrData} />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Table locale={{
                             emptyText: <Empty description="No Role Added" />
                         }}
-                           arrData={arrData} dataSource={arrData} pagination={true} columns={tableColumn} bordered onChange={onChange} />
+                            dataSource={arrData} pagination={true} columns={tableColumn} bordered onChange={onChange} />
                     </Col>
                 </Row>
             </Form>
