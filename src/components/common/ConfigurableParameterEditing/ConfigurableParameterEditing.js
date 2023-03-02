@@ -221,7 +221,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                                 <Select placeholder="Select">
                                
                                     {configData?.map((item) => (
-                                        <Option value={item?.id}>{item?.value}</Option>
+                                        <Option value={item?.controlDescription}>{item?.value}</Option>
                                     ))}
                                     
                                 </Select>
