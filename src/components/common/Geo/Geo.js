@@ -10,7 +10,6 @@ import styles from 'pages/common/Common.module.css';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 const mapStateToProps = (state) => {
@@ -154,17 +153,12 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             setFormVisible(true);
 
             if (res?.data) {
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
                 formData && setFormData(res?.data[0]);
                 setSelectedTreeKey([res?.data[0]?.id]);
-            } else {
-                formData && setFormData(data);
-            }
-
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
                 setFormActionType('view');
             }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
         };
 
         const onError = (message) => {
@@ -347,8 +341,6 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
                         </Form>
                     </Col>
                 </Row>
-
-                <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );

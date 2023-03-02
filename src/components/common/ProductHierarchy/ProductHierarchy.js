@@ -208,12 +208,9 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     };
 
     const onFinish = (values) => {
-        console.log(values);
         const recordId = formData?.id || '';
         const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
-
-        const data = { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
-        const formUpdatedData = { ...data, parntProdctId: codeToBeSaved, prodctShrtName: values?.shortName, prodctLongName: values?.longName };
+        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -221,14 +218,14 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
-            formData && setFormData(formUpdatedData);
 
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
+            if (res?.data) {
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId });
+                formData && setFormData(res?.data[0]);
+                setSelectedTreeKey([res?.data[0]?.id]);
                 setFormActionType('view');
             }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
@@ -337,7 +334,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                             <ChangeHistory />
                         ) : collapsable ? (
                             <>
-                                {' '}
                                 <Collapse defaultActiveKey={'1'} expandIconPosition="end" activeKey={closePanels} onChange={setClosePanels}>
                                     <Panel header="Product Details" key="1" className={style.producthierarchy}>
                                         {/* <AddEditForm showAttributeDetail={true} /> */}
@@ -454,8 +450,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                         )}
                     </Col>
                 </Row>
-
-                {/* <ParentHierarchy title={'Parent Hierarchy'} dataList={productHierarchyData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} /> */}
             </div>
         </>
     );
