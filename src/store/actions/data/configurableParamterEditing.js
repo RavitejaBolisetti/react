@@ -6,7 +6,7 @@ import { message } from 'antd';
 
 export const CONFIG_PARAM_EDIT_DATA_LOADED = 'CONFIG_PARAM_EDIT_DATA_LOADED';
 export const CONFIG_PARAM_EDIT_SHOW_LOADING = 'CONFIG_PARAM_EDIT_SHOW_LOADING';
-export const CONFIG_PARAM_DATA_LOADED='CONFIG_PARAM_DATA_LOADED';
+export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const CONFIG_PARAM_EDIT__DATA_SHOW_LOADING = 'CONFIG_PARAM_EDIT_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
@@ -28,14 +28,13 @@ configparameditActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-
 configparameditActions.changeHistoryShowLoading = (isLoading) => ({
     type: CONFIG_PARAM_EDIT_SHOW_LOADING,
     isLoading,
 });
 
-configparameditActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, data, userId, parameterType = '' } = params;
+configparameditActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data, parameterType = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -52,6 +51,7 @@ configparameditActions.fetchList = withAuthToken((params) => (token) => (dispatc
         method: 'get',
         url: baseURLPath + (parameterType ? '?parameterType=' + parameterType : ''),
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -64,9 +64,8 @@ configparameditActions.fetchList = withAuthToken((params) => (token) => (dispatc
     axiosAPICall(apiCallParams);
 });
 
-
-configparameditActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+configparameditActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
 
@@ -76,6 +75,7 @@ configparameditActions.saveData = withAuthToken((params) => (token) => (dispatch
         url: baseURLPath,
         token,
         userId,
+        accessToken,
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
@@ -87,9 +87,9 @@ configparameditActions.saveData = withAuthToken((params) => (token) => (dispatch
     axiosAPICall(apiCallParams);
 });
 
-configparameditActions.fetchdataList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId } = params;
-     setIsLoading(true);
+configparameditActions.fetchdataList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data } = params;
+    setIsLoading(true);
 
     const onSuccess = (res) => {
         if (res?.data) {
@@ -104,6 +104,7 @@ configparameditActions.fetchdataList = withAuthToken((params) => (token) => (dis
         method: 'get',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -115,6 +116,5 @@ configparameditActions.fetchdataList = withAuthToken((params) => (token) => (dis
 
     axiosAPICall(apiCallParams);
 });
-
 
 export { configparameditActions };
