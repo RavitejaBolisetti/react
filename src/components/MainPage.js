@@ -25,9 +25,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MainPageBase = ({ isLoggedIn, doLogout }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const pagePath = location.pathname;
+    // const navigate = useNavigate();
+    // const location = useLocation();
+    // const pagePath = location.pathname;
 
     useEffect(() => {
         // if (!isLoggedIn && pagePath === ROUTING_LOGIN) {
@@ -42,7 +42,7 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
-    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <AuthenticatedUserPage />}</div>;
+    return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
 };
 const MainPageWithSpinner = withSpinner(MainPageBase);
 export const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageWithSpinner);
