@@ -268,6 +268,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
+        fieldNames,
     };
     return (
         <>

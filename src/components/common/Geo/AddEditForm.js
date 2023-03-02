@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -6,8 +6,10 @@ import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, fieldNames, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
+    //const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    
+    const treeNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key , children: fieldNames.children  }
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
@@ -27,12 +29,21 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         attributeKey = selectedData && selectedData?.data?.attributeKey;
     }
 
+    /* tree */
+        const [value, setValue] = useState();
+        const onChange = (newValue) => {
+            setValue(newValue);
+            };
+        
+    /* tree */
+
     useEffect(() => {
         if (formActionType === 'sibling') {
             setSelectedTreeKey([treeCodeId]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
+
 
     return (
         <>
@@ -49,7 +60,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="geoParentCode">
-                        <TreeSelect
+                        {/* <TreeSelect
                             treeLine={true}
                             treeIcon={true}
                             onChange={handleSelectTreeClick}
@@ -62,9 +73,28 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                             placeholder="Select"
                             allowClear
                             treeDefaultExpandAll
-                            fieldNames={treeFieldNames}
+                           // fieldNames={treeFieldNames}
                             treeData={geoData}
                             disabled={treeCodeReadOnly || isReadOnly}
+                        /> */}
+                        <TreeSelect
+                            treeLine={true}
+                            treeIcon={true}
+                            showSearch
+                            style={{
+                                width: '100%',
+                            }}
+                            value={value}
+                            dropdownStyle={{
+                                maxHeight: 400,
+                                overflow: 'auto',
+                            }}
+                            placeholder="Select"
+                            allowClear
+                            fieldNames={treeNames}
+                            onChange={onChange}
+                            treeData={geoData}
+                            treeNodeFilterProp={fieldNames.title}
                         />
                     </Form.Item>
                 </Col>
