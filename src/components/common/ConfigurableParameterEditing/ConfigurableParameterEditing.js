@@ -305,16 +305,11 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
-                                <Select placeholder="Select"
-                                options={[
-                                    { value: '1', label: 'Parameter Type 1' },
-                                    { value: '2', label: 'Parameter Type 2' },
-                                    { value: '3', label: 'Parameter Type 3' },
-                                    { value: '4', label: 'Parameter Type 4' },
-                                ]}>
-                                    {/* {configData?.map((item) => (
+                                <Select placeholder="Select">
+                               
+                                    {configData?.map((item) => (
                                         <Option value={item?.id}>{item?.value}</Option>
-                                    ))} */}
+                                    ))}
                                     
                                 </Select>
                             </Form.Item>
