@@ -19,21 +19,21 @@ const receiveData = (data) => ({
     isLoaded: true,
     data,
 });
-const configparameditActions = {};
+const configParamEditActions = {};
 
 const baseURLPath = BASE_URL_CONFIG_PARAM_EDIT;
 
-configparameditActions.listShowLoading = (isLoading) => ({
+configParamEditActions.listShowLoading = (isLoading) => ({
     type: CONFIG_PARAM_EDIT__DATA_SHOW_LOADING,
     isLoading,
 });
 
-configparameditActions.changeHistoryShowLoading = (isLoading) => ({
+configParamEditActions.changeHistoryShowLoading = (isLoading) => ({
     type: CONFIG_PARAM_EDIT_SHOW_LOADING,
     isLoading,
 });
 
-configparameditActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+configParamEditActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, parameterType = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -64,7 +64,7 @@ configparameditActions.fetchList = withAuthToken((params) => ({ token, accessTok
     axiosAPICall(apiCallParams);
 });
 
-configparameditActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+configParamEditActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
@@ -87,7 +87,7 @@ configparameditActions.saveData = withAuthToken((params) => ({ token, accessToke
     axiosAPICall(apiCallParams);
 });
 
-configparameditActions.fetchdataList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+configParamEditActions.fetchDataList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data } = params;
     setIsLoading(true);
 
@@ -117,4 +117,4 @@ configparameditActions.fetchdataList = withAuthToken((params) => ({ token, acces
     axiosAPICall(apiCallParams);
 });
 
-export { configparameditActions };
+export { configParamEditActions };

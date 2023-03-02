@@ -6,7 +6,7 @@ import styles from '../Common.module.css';
 import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { FaPlus } from 'react-icons/fa';
-import { configparameditActions } from 'store/actions/data/configurableParamterEditing';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
@@ -37,10 +37,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: configparameditActions.fetchList,
-            saveData: configparameditActions.saveData,
-            fetchdataList: configparameditActions.fetchdataList,
-            listShowLoading: configparameditActions.listShowLoading,
+            fetchList: configParamEditActions.fetchList,
+            saveData: configParamEditActions.saveData,
+            fetchdataList: configParamEditActions.fetchDataList,
+            listShowLoading: configParamEditActions.listShowLoading,
         },
         dispatch
     ),
