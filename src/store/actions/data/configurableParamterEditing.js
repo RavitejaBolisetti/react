@@ -7,24 +7,26 @@ import { message } from 'antd';
 export const CONFIG_PARAM_EDIT_DATA_LOADED = 'CONFIG_PARAM_EDIT_DATA_LOADED';
 export const CONFIG_PARAM_EDIT_SHOW_LOADING = 'CONFIG_PARAM_EDIT_SHOW_LOADING';
 export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
-export const CONFIG_PARAM_EDIT__DATA_SHOW_LOADING = 'CONFIG_PARAM_EDIT_DATA_SHOW_LOADING';
+export const CONFIG_PARAM_EDIT_DATA_SHOW_LOADING = 'CONFIG_PARAM_EDIT_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
     type: CONFIG_PARAM_DATA_LOADED,
     isLoaded: true,
     data,
 });
+
 const receiveData = (data) => ({
     type: CONFIG_PARAM_EDIT_DATA_LOADED,
     isLoaded: true,
     data,
 });
+
 const configParamEditActions = {};
 
 const baseURLPath = BASE_URL_CONFIG_PARAM_EDIT;
 
 configParamEditActions.listShowLoading = (isLoading) => ({
-    type: CONFIG_PARAM_EDIT__DATA_SHOW_LOADING,
+    type: CONFIG_PARAM_EDIT_DATA_SHOW_LOADING,
     isLoading,
 });
 

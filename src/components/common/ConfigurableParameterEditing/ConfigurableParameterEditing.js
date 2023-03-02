@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, DatePicker, InputNumber, Drawer } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { Button, Col, Input, Modal, Form, Row, Select, Space, Table, DatePicker, InputNumber, Drawer } from 'antd';
 import styles from '../Common.module.css';
 import { bindActionCreators } from 'redux';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
@@ -20,14 +20,13 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, data: configData = [] },
             // ConfigurableParameterEditing: { isParamLoading,isParamLoaded = false, paramdata: Data = [] },
-
         },
     } = state;
 
     let returnValue = {
         userId,
         isDataLoaded,
-    
+
         configData: configData?.filter((i) => i),
     };
     return returnValue;
@@ -45,69 +44,36 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
+export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData }) => {
     useEffect(() => {
         if (!isDataLoaded) {
             fetchdataList({ setIsLoading: listShowLoading, userId });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
-    
-   
+
     const [form] = Form.useForm();
 
     const { confirm } = Modal;
     const [selected, setSelected] = React.useState('T');
     const [open, setOpen] = useState(false);
+
     const showDrawer = () => {
         setOpen(true);
     };
+
     const onClose = () => {
         setOpen(false);
     };
+
     const changeSelectOptionHandler = (event) => {
         setSelected(event);
     };
-    const [count, setCount] = useState(2);
-    const [data, setRowsData] = useState([
-        {
-            key: '0',
-            name: '',
-        },
-    ]);
-    const handleAdd = () => {
-        const newData = [
-            {
-                key: count,
-                name: '',
-            },
-        ];
-        setRowsData([...data, newData]);
-        setCount(count + 1);
-    };
+
     useEffect(() => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-
-    //
-    const deleteTableRows = (index) => {
-        const rows = [...data];
-        rows.splice(index, 1);
-        setRowsData(rows);
-    };
-    const showConfirm = () => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Some descriptions',
-            onOk() {
-                deleteTableRows(data.key);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
 
     const tableColumn = [];
 
@@ -125,7 +91,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
             width: 300,
-
         }),
         tblPrepareColumns({
             title: 'Configurable Parameter Values',
@@ -134,7 +99,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
-
         }),
         {
             title: 'Action',
@@ -143,18 +107,16 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
             render: () => [
                 <Space wrap>
                     <EditOutlined />
-
-                    <DeleteOutlined onClick={showConfirm} />
+                    {/* <DeleteOutlined onClick={showConfirm} /> */}
                 </Space>,
             ],
-        },
+        }
     );
 
-    const onFinish=(values)=>{
-        const data = { ...values};
+    const onFinish = (values) => {
+        const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
-           
             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
         };
@@ -172,11 +134,10 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         };
 
         saveData(requestData);
-    
-    }
+    };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     return (
@@ -189,7 +150,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                     </Button>
                 </Col>
             </Row>
-            <Table bordered dataSource={configData} columns={tableColumn} pagination={true} />
+            {/* <Table bordered dataSource={configData} columns={tableColumn} pagination={true} /> */}
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
@@ -214,16 +175,14 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                     </Row>
                 }
             >
-                <Form layout="vertical"  onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Form layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item name="controlId" label="Control ID" rules={[validateRequiredInputField('ControlID')]}>
                                 <Select placeholder="Select">
-                               
                                     {configData?.map((item) => (
                                         <Option value={item?.controlDescription}>{item?.value}</Option>
                                     ))}
-                                    
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -287,8 +246,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
                             </Form.Item>
                         </Col>
                     </Row>
-
-                
                 </Form>
             </Drawer>
         </>
