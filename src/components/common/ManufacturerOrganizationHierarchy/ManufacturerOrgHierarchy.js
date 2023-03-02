@@ -252,7 +252,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        dataList: manufacturerOrgHierarchyData,
+        treeData: manufacturerOrgHierarchyData,
     };
     return (
         <>
@@ -327,7 +327,6 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
                         )}
                     </Col>
                 </Row>
-
             </div>
         </>
     );
