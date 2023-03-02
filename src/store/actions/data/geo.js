@@ -36,13 +36,14 @@ geoDataActions.setFormVisible = (isFormVisible) => ({
     type: GEO_SET_FORM_IS_VISIBLE,
     isFormVisible,
 });
+
 const receiveChangeHistoryData = (data) => ({
     type: GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED,
     isLoaded: true,
     data,
 });
 
-geoDataActions.listShowLoading = (isLoading) => ({
+geoDataActions.changeHistoryShowLoading = (isLoading) => ({
     type: GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
     isLoading,
 });
