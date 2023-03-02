@@ -193,15 +193,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         dispatch(logoutClearAllData());
     };
 
-    /* ToDo : Need to remove this Start */
-    successAction && successAction();
-    authPostLogout();
-    /* ToDo : Need to remove this End */
-
     const logoutError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
-        if (res) {
+        if (res?.data) {
             successAction && successAction();
             authPostLogout();
         } else {
