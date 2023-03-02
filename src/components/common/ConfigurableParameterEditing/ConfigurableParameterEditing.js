@@ -67,13 +67,34 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
     const changeSelectOptionHandler = (event) => {
         setSelected(event);
     };
-    
-
+    const [count, setCount] = useState(2);
+    const [data, setRowsData] = useState([
+        {
+            key: '0',
+            name: '',
+        },
+    ]);
+    const handleAdd = () => {
+        const newData = [
+            {
+                key: count,
+                name: '',
+            },
+        ];
+        setRowsData([...data, newData]);
+        setCount(count + 1);
+    };
     useEffect(() => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    //
+    const deleteTableRows = (index) => {
+        const rows = [...data];
+        rows.splice(index, 1);
+        setRowsData(rows);
+    };
     const showConfirm = () => {
         confirm({
             title: 'Do you Want to delete these items?',
@@ -113,6 +134,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
+
         }),
         {
             title: 'Action',
