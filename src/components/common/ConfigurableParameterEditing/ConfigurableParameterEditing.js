@@ -52,64 +52,7 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         }
     }, [isDataLoaded]);
     
-    const tableData = [
-        {
-            id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'BOLOG',
-            controlDescription: 'Desc 1',
-            configurableParameterType: 'T',
-            textValue: 'Text 1',
-            isActive: 'Y',
-            fromDate: null,
-            toDate: null,
-            fromNumber: null,
-            toNumber: null,
-            booleanValue: null,
-            controlGroup: 'CMN',
-        },
-        {
-            id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'NOLOG',
-            controlDescription: 'Desc 2',
-            configurableParameterType: 'N',
-            textValue: 'Text 2',
-            isActive: 'Y',
-            fromDate: null,
-            toDate: null,
-            fromNumber: 122,
-            toNumber: 2300,
-            booleanValue: null,
-            controlGroup: 'CMN',
-        },
-        {
-            id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'AOLOG',
-            controlDescription: 'Desc 8',
-            configurableParameterType: 'D',
-            textValue: 'Text 3',
-            isActive: 'Y',
-            fromDate: '01/01/2023',
-            toDate: '02/01/2023',
-            fromNumber: null,
-            toNumber: null,
-            booleanValue: null,
-            controlGroup: 'CMN',
-        },
-        {
-            id: 'adfadfadaddfdasfadsfasdf',
-            controlId: 'MOLOG',
-            controlDescription: 'Desc 4',
-            configurableParameterType: 'B',
-            textValue: 'Text 4',
-            isActive: 'Y',
-            fromDate: null,
-            toDate: null,
-            fromNumber: null,
-            toNumber: null,
-            booleanValue: true,
-            controlGroup: 'ADMN',
-        },
-    ];
+   
     const [form] = Form.useForm();
 
     const { confirm } = Modal;
@@ -124,34 +67,13 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
     const changeSelectOptionHandler = (event) => {
         setSelected(event);
     };
-    const [count, setCount] = useState(2);
-    const [data, setRowsData] = useState([
-        {
-            key: '0',
-            name: '',
-        },
-    ]);
-    const handleAdd = () => {
-        const newData = [
-            {
-                key: count,
-                name: '',
-            },
-        ];
-        setRowsData([...data, newData]);
-        setCount(count + 1);
-    };
+    
+
     useEffect(() => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: 'CFG_PARAM' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    //
-    const deleteTableRows = (index) => {
-        const rows = [...data];
-        rows.splice(index, 1);
-        setRowsData(rows);
-    };
     const showConfirm = () => {
         confirm({
             title: 'Do you Want to delete these items?',
@@ -181,22 +103,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         tblPrepareColumns({
             title: 'Configurable Parameter Type',
             dataIndex: 'configurableParameterType',
-            // // render: () => (
-            // //     <>
-            // //         <Form.Item name="ConfigParamType" rules={[validateRequiredSelectField('ConfigParamType')]}>
-            // //             <Select
-            // //                 placeholder="Select Parameter Type"
-            // //                 options={[
-            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY, label: 'Text' },
-            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY, label: 'Number Range' },
-            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY, label: 'Date Range' },
-            // //                     { value: CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY, label: 'Boolean' },
-            // //                 ]}
-            // //                 onChange={changeSelectOptionHandler}
-            // //             />
-            // //         </Form.Item>
-            // //     </>
-            // ),
             width: 300,
 
         }),
@@ -207,21 +113,6 @@ export const ConfigurableParameterEditingBase = ({fetchdataList,saveData, fetchL
         tblPrepareColumns({
             title: 'Role Group',
             dataIndex: 'controlGroup',
-        //     render: () => (
-        //         <>
-        //             <Form.Item name="controlGroup" rules={[validateRequiredSelectField('rolegroup')]}>
-        //                 <Select
-        //                     placeholder="Select"
-        //                     options={[
-        //                         { value: '1', label: 'Parameter Type 1' },
-        //                         { value: '2', label: 'Parameter Type 2' },
-        //                         { value: '3', label: 'Parameter Type 3' },
-        //                         { value: '4', label: 'Parameter Type 4' },
-        //                     ]}
-        //                 />
-        //             </Form.Item>
-        //         </>
-        // ),
         }),
         {
             title: 'Action',
