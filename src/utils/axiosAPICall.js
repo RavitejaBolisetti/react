@@ -51,6 +51,9 @@ const baseAPICall = (params) => {
                         }
                     } else if (response?.statusCode === 401) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        /* To Do : Need to remove Start */
+                        // onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
+                        /* To Do : Need to remove End */
                     } else if (response.statusCode === 403) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 500) {
@@ -71,7 +74,10 @@ const baseAPICall = (params) => {
                     if (error.code === 'ECONNABORTED') {
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        clearAllLocalStorage();
+                        /* To Do : Need to remove Start */
+                        // clearAllLocalStorage();
+                        /* To Do : Need to remove End */
+
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are facing on server' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);

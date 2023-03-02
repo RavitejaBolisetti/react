@@ -1,12 +1,7 @@
 import { AiFillCar } from 'react-icons/ai';
 import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
-import { MdWeb, MdStars } from 'react-icons/md';
-import { IoPeopleCircle } from 'react-icons/io5';
-
-import ICON_SERVICE from '../assets/img/icon-job-service.png';
-import ICON_SPARE from '../assets/img/icon-spare.png';
-import ICON_ADMIN from '../assets/img/icon-user-shield.png';
+import { MdStars } from 'react-icons/md';
 
 import { getMenyKey } from 'utils/menuKey';
 

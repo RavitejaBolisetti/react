@@ -56,7 +56,8 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, manufacturerOrgHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading , manufacturerOrgHierarchyData}) => {
+
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -108,8 +109,8 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
                 key,
                 data: node,
             });
-            if (node.subManufacturerOrgHierarchy) {
-                generateList(node.subManufacturerOrgHierarchy);
+            if (node.subManufactureOrg) {
+                generateList(node.subManufactureOrg);
             }
         }
         return dataList;
@@ -246,7 +247,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     const myProps = {
         isTreeViewVisible,
