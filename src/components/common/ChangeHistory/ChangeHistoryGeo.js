@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Table } from 'antd';
 
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { geoDataActions } from 'store/actions/data/geo';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
@@ -29,14 +29,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            fetchChangeHistoryList: geoDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: geoDataActions.changeHistoryShowLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData, }) => {
     useEffect(() => {
         if (!isHistoryLoaded) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
