@@ -31,9 +31,17 @@
   position: sticky !important;
   top: 0 !important;
   /* box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important; */
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 3px rgba(0, 0, 0, .2) !important;
-  background-color: #f4f4f4 !important;
+  /* box-shadow: 0 0 #0000, 0 0 #0000, 0 0 3px rgba(0, 0, 0, .2) !important;
+  background-color: #f4f4f4 !important; */
   z-index: 99 !important;
+}
+
+.leftMenuBoxLight {
+  background-color: #f4f4f4 !important;
+}
+
+.leftMenuBoxDark {
+  background-color: #242424 !important;
 }
 
 .leftMenuBox li.subMenuParent {
