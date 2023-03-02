@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
-// import { FaSearch } from 'react-icons/fa';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import styles from 'pages/common/Common.module.css';
@@ -9,7 +8,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const fieldNames = { label: 'manufactureAdminShrtName', value: 'id', children: 'subManufactureAdmin' };
+    // const fieldNames = { label: 'manufactureAdminShrtName', value: 'id', children: 'subManufactureAdmin' };
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';

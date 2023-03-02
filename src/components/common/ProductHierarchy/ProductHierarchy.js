@@ -1,8 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { Button, Col, Form, Row, Collapse, Table, Input } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo } from 'react-icons/fa';
 
@@ -61,7 +60,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [form] = Form.useForm();
     const [collapsable, setCollapsable] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [openPanels, setOpenPanels] = React.useState([]);
 
@@ -69,14 +67,13 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
-    
+
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
-    const navigate = useNavigate();
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -298,21 +295,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         form.resetFields();
     };
 
-    const handleBack = () => {
-        setReadOnly(true);
-        setForceFormReset(Math.random() * 10000);
-        if (selectedTreeKey && selectedTreeKey.length > 0) {
-            const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-            formData && setFormData(formData?.data);
-            setFormActionType('view');
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-        } else {
-            setFormActionType('');
-            setFormVisible(false);
-            setButtonData({ ...defaultBtnVisiblity });
-        }
-    };
-
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const myProps = {
@@ -342,7 +324,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                     <Panel header="Product Details" key="1" className={style.producthierarchy}>
                                         {/* <AddEditForm showAttributeDetail={true} /> */}
                                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
 
                                             <Row>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -412,7 +394,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                             </>
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (
@@ -454,8 +436,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                         )}
                     </Col>
                 </Row>
-
-                {/* <ParentHierarchy title={'Parent Hierarchy'} dataList={productHierarchyData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} /> */}
             </div>
         </>
     );

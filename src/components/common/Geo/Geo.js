@@ -2,19 +2,16 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
-import { ChangeHistoryGeo } from '../ChangeHistory';
-import LeftPanel from 'components/common/LeftPanel';
-
-import styles from 'pages/common/Common.module.css';
-import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { ChangeHistoryGeo } from '../ChangeHistory';
+
+import LeftPanel from 'components/common/LeftPanel';
+import styles from 'pages/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -58,7 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
 export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -272,7 +268,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
-        setIsModalOpen,
     };
     return (
         <>
@@ -347,8 +342,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                         )}
                     </Col>
                 </Row>
-
-                <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );

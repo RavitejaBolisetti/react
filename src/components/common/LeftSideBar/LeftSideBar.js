@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import App from './Test';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -73,6 +72,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
+    console.log("🚀 ~ file: LeftSideBar.js:75 ~ LeftSideBarMain ~ filterMenuList:", filterMenuList)
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {

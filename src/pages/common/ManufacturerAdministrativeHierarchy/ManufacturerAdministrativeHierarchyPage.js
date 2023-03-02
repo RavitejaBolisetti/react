@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
-import { connect } from 'react-redux';
-// import { ProductHierarchy } from 'components/common/ProductHierarchy/ProductHierarchy';
 import { ManufacturerAdminstrativeHierarchy } from 'components/common/ManufacturerAdminstrativeHierarchy';
 
 import { PageHeader } from '../PageHeader';
@@ -22,7 +21,6 @@ const mapStateToProps = (state) => {
 };
 
 export const ManufacturerAdministrativeHierarchyPageBase = () => {
-    const [isAttributeVisible, setAttributeVisible] = useState(false);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const handleChangeHistoryClick = (e) => {
@@ -37,7 +35,7 @@ export const ManufacturerAdministrativeHierarchyPageBase = () => {
         visibleChangeHistory: true,
         handleChangeHistoryClick,
         isChangeHistoryVisible,
-        isUploadVisible:true,
+        isUploadVisible: true,
     };
     return (
         <>

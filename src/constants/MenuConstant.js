@@ -1,5 +1,5 @@
 import { AiFillCar } from 'react-icons/ai';
-import { FaAddressBook, FaCreativeCommonsShare, FaWrench } from 'react-icons/fa';
+import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 

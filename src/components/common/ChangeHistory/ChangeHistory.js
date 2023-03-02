@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Table } from 'antd';
-import moment from 'moment';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
