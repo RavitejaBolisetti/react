@@ -7,7 +7,6 @@ import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } f
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { AddEditForm } from './AddEditForm';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
 
@@ -329,7 +328,6 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
                     </Col>
                 </Row>
 
-                <ParentHierarchy title={'Parent Hierarchy'} dataList={manufacturerOrgHierarchyData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );

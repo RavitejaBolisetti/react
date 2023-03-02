@@ -25,9 +25,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const MainPageBase = ({ isLoggedIn, doLogout }) => {
-    // const navigate = useNavigate();
-    // const location = useLocation();
-    // const pagePath = location.pathname;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const pagePath = location.pathname;
 
     useEffect(() => {
         if (!isLoggedIn && pagePath === ROUTING_LOGIN) {
