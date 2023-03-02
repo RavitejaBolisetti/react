@@ -6,7 +6,7 @@ export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
 export const AXIOS_ERROR_INTERNAL = 'AXIOS_ERROR_INTERNAL';
 
 const baseAPICall = (params) => {
-    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, onUnAuthenticated, postRequest, token, userId } = params;
+    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, onUnAuthenticated, postRequest, token, accessToken, userId } = params;
     let axiosConfig = {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
@@ -21,7 +21,7 @@ const baseAPICall = (params) => {
 
     if (token) {
         const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, token, userId };
+        const headers = { Authorization: AuthStr, accessToken: accessToken, userId, deviceType: 'W', deviceId: '' };
         axiosConfig = {
             ...axiosConfig,
             headers,
@@ -31,37 +31,35 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        onError && (displayErrorTitle ? onError({ title: errorTitle, message: errorMessage }) : onError(errorMessage));
+        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
     try {
         axios
             .request(axiosConfig)
             .then((response) => {
-                console.log('🚀 ~ file: axiosAPICall.js:39 ~ .then ~ response:', response);
                 if (response.status === 200) {
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {
                             onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 404) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 409) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.data?.errorMessage || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         }
                     } else if (response?.statusCode === 401) {
-                        onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
+                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
-                        onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
+                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 500) {
-                        onUnAuthenticated && onUnAuthenticated(response?.responseMessage || unAuthorizedMessage);
+                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.responseMessage });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.data?.errors || response?.data?.responseMessage });
                     }
                 }
             })
             .catch((error) => {
-                console.log('🚀 ~ file: axiosAPICall.js:63 ~ baseAPICall ~ error:', error.code);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {

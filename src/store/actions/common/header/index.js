@@ -21,8 +21,8 @@ headerDataActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-headerDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId } = params;
+headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
 
@@ -39,6 +39,7 @@ headerDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) =>
         method: 'get',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

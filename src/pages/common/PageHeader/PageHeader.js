@@ -1,8 +1,10 @@
 import React from 'react';
-import { Row, Col, Space, Button, Modal } from 'antd';
+import { Row, Col, Space, Button, Modal, message } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
+import { FiUpload, FiDownload } from 'react-icons/fi';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { UploadOutlined } from '@ant-design/icons';
 import { addToolTip } from 'utils/customMenuLink';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import styles from './PageHeader.module.css';
@@ -11,9 +13,18 @@ import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import * as routing from 'constants/routing';
 import { connect } from 'react-redux';
+import { Upload } from 'components/common/ManufacturerAdminstrativeHierarchy/Upload';
 import { MdStars } from 'react-icons/md';
 
 const { confirm } = Modal;
+
+const handleUploadClick = () => {
+    return (
+        <>
+            <Upload />
+        </>
+    );
+};
 
 const mapStateToProps = (state) => {
     const {
@@ -42,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavourite, listShowLoading, canMarkFavourite = false, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavourite, listShowLoading, canMarkFavourite = false, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false, isUploadVisible = false }) => {
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
@@ -58,14 +69,14 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             onOk() {
                 navigate(ROUTING_DASHBOARD);
             },
-            onCancel() { },
+            onCancel() {},
         });
     };
 
     const location = useLocation();
     const pagePath = location.pathname;
 
-    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : '';
+    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : pagePath === routing?.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY ? 'COMN-05.01' : '';
 
     const checkFev = (data) => data.find((item) => item.menuId === menuId);
     const isFavourite = checkFev(favouriteMenu);
@@ -108,6 +119,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                                 View Product Detail
                             </Button>
                         )} */}
+
                         {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
@@ -120,6 +132,13 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                                     Change History
                                 </Button>
                             ))}
+
+                        {isUploadVisible ? (
+                            <Button danger onClick={handleUploadClick}>
+                                <FiUpload className={styles.buttonIcon} />
+                                Upload/Download
+                            </Button>
+                        ) : null}
 
                         <Button danger onClick={handleBack}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
