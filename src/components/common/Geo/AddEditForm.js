@@ -12,6 +12,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
+    let attributeKey = formData?.attributeKey;
+    let attributeKeyReadOnly = false;
     let treeCodeReadOnly = false;
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.geoParentCode;
@@ -20,8 +22,10 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+        attributeKeyReadOnly = true;
+        const selectedData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        treeCodeId = selectedData && selectedData?.data?.geoParentCode;
+        attributeKey = selectedData && selectedData?.data?.attributeKey;
     }
 
     useEffect(() => {
@@ -35,8 +39,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
+                    <Form.Item initialValue={attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
+                        <Select loading={!isDataAttributeLoaded} placeholder="Select" disabled={attributeKeyReadOnly || isReadOnly} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}

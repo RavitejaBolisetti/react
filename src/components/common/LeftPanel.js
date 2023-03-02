@@ -7,7 +7,7 @@ import styles from './TreeView.module.css';
 const { Search } = Input;
 
 const LeftPanel = (props) => {
-    const { selectedTreeKey, selectedTreeSelectKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
+    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
     const { isTreeViewVisible, handleTreeViewVisiblity } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
@@ -19,7 +19,6 @@ const LeftPanel = (props) => {
         setAutoExpandParent(false);
     };
 
-    console.log('🚀 ~ file: LeftPanel.js:11 ~ LeftPanel ~ fieldNames:', fieldNames, treeData);
     const dataList = [];
     const generateList = (data) => {
         for (let i = 0; i < data.length; i++) {
@@ -35,8 +34,6 @@ const LeftPanel = (props) => {
     };
 
     treeData && generateList(treeData);
-    console.log('🚀 ~ file: LeftPanel.js:24 ~ LeftPanel ~ dataList:', dataList);
-
     const getParentKey = (key, tree) => {
         let parentKey;
         for (let i = 0; i < tree.length; i++) {

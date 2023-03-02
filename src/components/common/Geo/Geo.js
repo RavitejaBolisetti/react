@@ -152,14 +152,19 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
-            formData && setFormData(data);
+
+            if (res?.data) {
+                fetchList({ setIsLoading: listShowLoading, userId });
+                formData && setFormData(res?.data[0]);
+                setSelectedTreeKey([res?.data[0]?.id]);
+            } else {
+                formData && setFormData(data);
+            }
 
             if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
                 setFormActionType('view');
             }
             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
