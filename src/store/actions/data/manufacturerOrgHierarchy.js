@@ -1,12 +1,12 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY, BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ORG_HIERARCHY_SAVE} from 'constants/routingApi';
+import { BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY, BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ORG_HIERARCHY_SAVE } from 'constants/routingApi';
 
 export const MANUFACTURER_ORG_HIERARCHY_DATA_LOADED = 'MANUFACTURER_ORG_HIERARCHY_DATA_LOADED';
 export const MANUFACTURER_ORG_HIERARCHY_DATA_SHOW_LOADING = 'MANUFACTURER_ORG_HIERARCHY_DATA_SHOW_LOADING';
 export const MANUFACTURER_ORG_HIERARCHY_SET_FORM_IS_VISIBLE = 'MANUFACTURER_ORG_HIERARCHY_SET_FORM_IS_VISIBLE';
-export const MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA = 'MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA'
+export const MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA = 'MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA';
 export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
 
@@ -34,8 +34,8 @@ manufacturerOrgHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
     isLoading,
 });
 
-manufacturerOrgHierarchyDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId } = params;
+manufacturerOrgHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
 
@@ -52,6 +52,7 @@ manufacturerOrgHierarchyDataActions.fetchList = withAuthToken((params) => (token
         method: 'get',
         url: BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -64,8 +65,8 @@ manufacturerOrgHierarchyDataActions.fetchList = withAuthToken((params) => (token
     axiosAPICall(apiCallParams);
 });
 
-manufacturerOrgHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId } = params;
+manufacturerOrgHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
@@ -81,6 +82,7 @@ manufacturerOrgHierarchyDataActions.fetchChangeHistoryList = withAuthToken((para
         method: 'get',
         url: BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -93,8 +95,8 @@ manufacturerOrgHierarchyDataActions.fetchChangeHistoryList = withAuthToken((para
     axiosAPICall(apiCallParams);
 });
 
-manufacturerOrgHierarchyDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+manufacturerOrgHierarchyDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
 
@@ -103,6 +105,7 @@ manufacturerOrgHierarchyDataActions.saveData = withAuthToken((params) => (token)
         method: 'post',
         url: BASE_URL_MANUFACTURER_ORG_HIERARCHY_SAVE,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

@@ -35,8 +35,8 @@ manufacturerAdminHierarchyDataActions.changeHistoryShowLoading = (isLoading) => 
     isLoading,
 });
 
-manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId } = params;
+manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
 
@@ -53,6 +53,7 @@ manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => (tok
         method: 'get',
         url: BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -65,8 +66,8 @@ manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => (tok
     axiosAPICall(apiCallParams);
 });
 
-manufacturerAdminHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId } = params;
+manufacturerAdminHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
@@ -82,6 +83,7 @@ manufacturerAdminHierarchyDataActions.fetchChangeHistoryList = withAuthToken((pa
         method: 'get',
         url: BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -94,8 +96,8 @@ manufacturerAdminHierarchyDataActions.fetchChangeHistoryList = withAuthToken((pa
     axiosAPICall(apiCallParams);
 });
 
-manufacturerAdminHierarchyDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+manufacturerAdminHierarchyDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
 
@@ -104,6 +106,7 @@ manufacturerAdminHierarchyDataActions.saveData = withAuthToken((params) => (toke
         method: 'post',
         url: BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
