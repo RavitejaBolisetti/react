@@ -275,6 +275,7 @@ export const GeoMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAtt
         isDataAttributeLoaded,
         attributeData,
         setIsModalOpen,
+        fieldNames,
     };
     return (
         <>
