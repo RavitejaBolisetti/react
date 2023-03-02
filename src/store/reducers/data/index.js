@@ -5,6 +5,7 @@ import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
+import { ChangePassword } from './changePassword';
 
 export const data = combineReducers({
     Menu,
@@ -13,4 +14,5 @@ export const data = combineReducers({
     HierarchyAttributeMaster,
     ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
+    ChangePassword,
 });
