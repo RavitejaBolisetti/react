@@ -1,20 +1,8 @@
-import React, { useState } from 'react';
-import { Button, Col, Form, Input, Modal, Row } from 'antd';
+import React from 'react';
+import { Button, Form, Row, Col, Modal } from 'antd';
 import { FiUpload, FiDownload } from 'react-icons/fi';
 
 export const Upload = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [form] = Form.useForm();
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
     return (
         <>
             <Modal>

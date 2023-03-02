@@ -2,20 +2,18 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
-
-import styles from 'pages/common/Common.module.css';
-import { addToolTip } from 'utils/customMenuLink';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { AddEditForm } from './AddEditForm';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
+
 import LeftPanel from '../LeftPanel';
-// import { ChangeHistory } from '../ChangeHistory';
+
+import styles from 'pages/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,8 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading , manufacturerOrgHierarchyData}) => {
-
+export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);

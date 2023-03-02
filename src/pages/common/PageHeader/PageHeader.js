@@ -1,10 +1,9 @@
 import React from 'react';
-import { Row, Col, Space, Button, Modal, message } from 'antd';
+import { Row, Col, Space, Button, Modal } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
-import { FiUpload, FiDownload } from 'react-icons/fi';
+import {  FaHistory, FaLongArrowAltLeft } from 'react-icons/fa';
+import { FiUpload } from 'react-icons/fi';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { UploadOutlined } from '@ant-design/icons';
 import { addToolTip } from 'utils/customMenuLink';
 import { ROUTING_DASHBOARD } from 'constants/routing';
 import styles from './PageHeader.module.css';

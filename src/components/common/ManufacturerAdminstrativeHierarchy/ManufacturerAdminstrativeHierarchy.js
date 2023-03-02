@@ -2,21 +2,16 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
-
-import styles from 'pages/common/Common.module.css';
-import { addToolTip } from 'utils/customMenuLink';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
-//import { ChangeHistory } from '../ChangeHistory';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
 import LeftPanel from '../LeftPanel';
 
+import styles from 'pages/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -96,7 +91,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
 
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -307,7 +301,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
                             <ManufacturerAdminHierarchyChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerAdminHierarchyData={manufacturerAdminHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerAdminHierarchyData={manufacturerAdminHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (
@@ -368,8 +362,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
                         )}
                     </Col>
                 </Row>
-
-                <ParentHierarchy title={'Parent Hierarchy'} dataList={manufacturerAdminHierarchyData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );
