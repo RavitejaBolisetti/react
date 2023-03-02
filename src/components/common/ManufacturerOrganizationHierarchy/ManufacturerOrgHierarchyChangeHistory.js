@@ -3,21 +3,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Table } from 'antd';
 
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
-
-
-const onChange = (pagination, filters, sorter, extra) => {
-    // console.log('params', pagination, filters, sorter, extra);
-};
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            ManufacturerOrgHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
         },
     } = state;
 
@@ -25,7 +20,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData,
+        changeHistoryData: changeHistoryData,
     };
     return returnValue;
 };
@@ -34,14 +29,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: manufacturerOrgHierarchyDataActions.changeHistoryShowLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
         if (!isHistoryLoaded) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
@@ -53,10 +48,9 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
+            title: 'Changed Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-            
         })
     );
 
@@ -70,36 +64,32 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     tableColumn.push(
         tblPrepareColumns({
             title: 'Attribute',
-            dataIndex: 'parentAttributeName',
-            
+            dataIndex: 'attributeCode',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
-            dataIndex: 'prodctCode',
-            
+            dataIndex: 'hierarchyCode',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parntHeirarchyCode',
+            dataIndex: 'parentManufactOrgHie',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'prodctShrtDescription',
-            
+            dataIndex: 'shortDescript',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'prodctLongDiscription',
-            
+            dataIndex: 'longDescript',
         })
     );
 
@@ -129,10 +119,9 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             <Table
                 loading={isLoading}
                 columns={tableColumn}
-                onChange={onChange}
                 dataSource={changeHistoryData}
                 pagination={{
-                    position: ['bottomLeft'],
+                    position: ['bottomRight'],
                 }}
                 scroll={{
                     x: 'auto',
@@ -142,4 +131,4 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ChangeHistoryMain);
+export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ManufacturerOrgHierarchyChangeHistoryMain);

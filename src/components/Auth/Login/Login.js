@@ -55,7 +55,6 @@ const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
-    const [captcha, setCaptcha] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -67,7 +66,6 @@ const Login = (props) => {
             ReactRecaptcha3.destroy();
             form.resetFields();
             doCloseLoginError();
-            setCaptcha('');
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +87,6 @@ const Login = (props) => {
         setIsLoading(true);
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
-                setCaptcha(captchaCode);
                 if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
             },
             (error) => {

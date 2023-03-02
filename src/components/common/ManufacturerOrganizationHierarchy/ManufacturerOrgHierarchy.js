@@ -4,20 +4,22 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { AddEditForm } from './AddEditForm';
+import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { ChangeHistoryGeo } from '../ChangeHistory';
+import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
 
-import LeftPanel from 'components/common/LeftPanel';
+import LeftPanel from '../LeftPanel';
+
 import styles from 'pages/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            ManufacturerOrgHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerOrgHierarchyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -29,7 +31,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        manufacturerOrgHierarchyData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -40,9 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: manufacturerOrgHierarchyDataActions.fetchList,
+            saveData: manufacturerOrgHierarchyDataActions.saveData,
+            listShowLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -52,9 +54,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -79,7 +82,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Organization' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -88,8 +91,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
-    const finalGeoData = geoData?.map((i) => {
-        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
+    const finalManufacturerOrgHierarchyData = manufacturerOrgHierarchyData?.map((i) => {
+        return { ...i, manufacturerOrgHierarchyParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -103,14 +106,14 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node.subManufactureOrg) {
+                generateList(node.subManufactureOrg);
             }
         }
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(finalManufacturerOrgHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
@@ -142,8 +145,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
+        const codeToBeSaved = Array.isArray(values?.manfacturerOrgHierarchyParentCode) ? values?.manfacturerOrgHierarchyParentCode[0] : values?.manfacturerOrgHierarchyParentCode || '';
+        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', manfacturerOrgHierarchyParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -151,14 +154,14 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
+            formData && setFormData(data);
 
-            if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+            if (selectedTreeKey && selectedTreeKey.length > 0) {
+                !recordId && setSelectedTreeKey(codeToBeSaved);
                 setFormActionType('view');
             }
+            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
@@ -241,8 +244,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     const myProps = {
         isTreeViewVisible,
@@ -251,23 +253,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: geoData,
-    };
-
-    const formProps = {
-        isChecked,
-        setIsChecked,
-        setSelectedTreeKey,
-        flatternData,
-        formActionType,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        isReadOnly,
-        formData,
-        geoData,
-        handleSelectTreeClick,
-        isDataAttributeLoaded,
-        attributeData,
+        dataList: manufacturerOrgHierarchyData,
     };
     return (
         <>
@@ -278,10 +264,10 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                     </Col>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
-                            <ChangeHistoryGeo />
+                            <ManufacturerOrgHierarchyChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm {...formProps} />}
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerOrgHierarchyData={manufacturerOrgHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (
@@ -342,9 +328,11 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                         )}
                     </Col>
                 </Row>
+
+                <ParentHierarchy title={'Parent Hierarchy'} dataList={manufacturerOrgHierarchyData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );
 };
 
-export const Geo = connect(mapStateToProps, mapDispatchToProps)(GeoMain);
+export const ManufacturerOrgHierarchy = connect(mapStateToProps, mapDispatchToProps)(ManufacturerOrgHierarchyMain);

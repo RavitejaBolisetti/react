@@ -4,20 +4,19 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import { geoDataActions } from 'store/actions/data/geo';
+import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { ChangeHistoryGeo } from '../ChangeHistory';
+import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
+import LeftPanel from '../LeftPanel';
 
-import LeftPanel from 'components/common/LeftPanel';
 import styles from 'pages/common/Common.module.css';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -29,7 +28,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -40,9 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: manufacturerAdminHierarchyDataActions.fetchList,
+            saveData: manufacturerAdminHierarchyDataActions.saveData,
+            listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -52,7 +51,44 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+    /* To Do : Need to remove once API deployed Start */
+    const manufacturerAdminHierarchyData = [
+        {
+            id: 'cd614369-0bb2-48a4-9065-282495798070',
+            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+            manufactureAdminShrtName: 'MAHINDRA THAR ',
+            manufactureAdminCode: 'SCR',
+            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+            active: 'N',
+            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+            subManufactureAdmin: [],
+        },
+        {
+            id: 'cd614369-0bb2-48a4-9065-282495798070',
+            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+            manufactureAdminShrtName: 'MAHINDRA THAR ',
+            manufactureAdminCode: 'SCR',
+            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+            active: 'N',
+            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+            subManufactureAdmin: [
+                {
+                    id: 'cd614369-0bb2-48a4-9065-282495798070',
+                    manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+                    manufactureAdminShrtName: 'MAHINDRA THAR ',
+                    manufactureAdminCode: 'SCR',
+                    manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+                    active: 'N',
+                    attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+                    subManufactureAdmin: [],
+                },
+            ],
+        },
+    ];
+
+    /* To Do : Need to remove once API deployed End */
+
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -79,7 +115,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -88,7 +124,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
-    const finalGeoData = geoData?.map((i) => {
+    const finalManufacturerAdministrativeHirarchyData = manufacturerAdminHierarchyData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
@@ -110,7 +146,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
@@ -142,8 +178,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
+        const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
+        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', manufacturerAdminHierarchyParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -151,14 +187,14 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
+            formData && setFormData(data);
 
-            if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+            if (selectedTreeKey && selectedTreeKey.length > 0) {
+                !recordId && setSelectedTreeKey(codeToBeSaved);
                 setFormActionType('view');
             }
+            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
@@ -241,8 +277,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const fieldNames = { title: 'manufactureAdminShrtName', key: 'id', children: 'subManufactureAdmin' };
 
     const myProps = {
         isTreeViewVisible,
@@ -251,24 +286,9 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: geoData,
+        dataList: manufacturerAdminHierarchyData,
     };
 
-    const formProps = {
-        isChecked,
-        setIsChecked,
-        setSelectedTreeKey,
-        flatternData,
-        formActionType,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        isReadOnly,
-        formData,
-        geoData,
-        handleSelectTreeClick,
-        isDataAttributeLoaded,
-        attributeData,
-    };
     return (
         <>
             <div className={styles.geoSection}>
@@ -278,10 +298,10 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                     </Col>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
-                            <ChangeHistoryGeo />
+                            <ManufacturerAdminHierarchyChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm {...formProps} />}
+                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerAdminHierarchyData={manufacturerAdminHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (
@@ -347,4 +367,4 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
     );
 };
 
-export const Geo = connect(mapStateToProps, mapDispatchToProps)(GeoMain);
+export const ManufacturerAdminstrativeHierarchy = connect(mapStateToProps, mapDispatchToProps)(ManufacturerAdminstrativeHierarchyMain);

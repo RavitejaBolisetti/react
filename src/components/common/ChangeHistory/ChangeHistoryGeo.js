@@ -3,21 +3,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Table } from 'antd';
 
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { geoDataActions } from 'store/actions/data/geo';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
-
-
-const onChange = (pagination, filters, sorter, extra) => {
-    // console.log('params', pagination, filters, sorter, extra);
-};
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            Geo: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
         },
     } = state;
 
@@ -25,7 +20,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData,
+        changeHistoryData: changeHistoryData,
     };
     return returnValue;
 };
@@ -34,14 +29,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            fetchChangeHistoryList: geoDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: geoDataActions.changeHistoryShowLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
         if (!isHistoryLoaded) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
@@ -56,7 +51,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-            
         })
     );
 
@@ -69,55 +63,33 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Attribute',
-            dataIndex: 'parentAttributeName',
-            
+            title: 'Attribute Type',
+            dataIndex: 'attributeType',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Code',
-            dataIndex: 'prodctCode',
-            
+            title: 'Hierarchy Code',
+            dataIndex: 'geoCode',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Parent',
-            dataIndex: 'parntHeirarchyCode',
+            title: 'Hierarchy Name',
+            dataIndex: 'geoName',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Short Description',
-            dataIndex: 'prodctShrtDescription',
-            
+            title: 'Parent Hierarchy Code',
+            dataIndex: 'parentCode',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Long Description',
-            dataIndex: 'prodctLongDiscription',
-            
-        })
-    );
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
-            render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
+            title: 'Parent Hierarchy Name',
+            dataIndex: 'parentName',
         })
     );
 
@@ -129,7 +101,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             <Table
                 loading={isLoading}
                 columns={tableColumn}
-                onChange={onChange}
                 dataSource={changeHistoryData}
                 pagination={{
                     position: ['bottomLeft'],
@@ -142,4 +113,4 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ChangeHistoryMain);
+export const ChangeHistoryGeo = connect(mapStateToProps, mapDispatchToProps)(ChangeHistoryGeoMain);
