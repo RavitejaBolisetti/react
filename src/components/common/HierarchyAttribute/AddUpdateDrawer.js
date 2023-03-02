@@ -4,22 +4,26 @@ import { validateRequiredSelectField } from 'utils/validation';
 import styles from '../Common.module.css';
 import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
 
-const AddUpdateDrawer = ({ editRow, showDrawer, setShowDrawer, setForceReset }) => {
+const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData }) => {
     const [open, setOpen] = useState(false);
+    const [form] = Form.useForm();
 
+    console.log('editRow', editRow);
     //   const showDrawer = () => {
     //     setOpen(true);
     //   };
     const handleReset = () => {
-        setForceReset(Math.random() * 1000);
+        form.resetFields();
     };
 
     const onClose = () => {
+        form.resetFields();
         setShowDrawer(false);
+        setEditRow({});
     };
 
     return (
-        <Drawer title="Basic Drawer" width="500" placement="right" onClose={onClose} open={showDrawer}>
+        <Drawer title="Hierarchy Attribute Master" width="500" placement="right" onClose={onClose} open={showDrawer}>
             {/* <FormitemsRoleDrawer /> */}
             <Space
                 direction="vertical"
@@ -28,56 +32,65 @@ const AddUpdateDrawer = ({ editRow, showDrawer, setShowDrawer, setForceReset }) 
                     display: 'flex',
                 }}
             >
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="Code" label="Code" rules={[validateRequiredSelectField('Code')]}>
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="Name" label="Name" rules={[validateRequiredSelectField('Name')]}>
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
-                        <Form.Item initialValue={'Y'} label="Duplicate Allowed?" name="Duplicate Allowed?">
-                            <Switch defaultChecked={true} checkedChildren="Active" unCheckedChildren="Inactive" />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
-                        <Form.Item initialValue={'Y'} label="Duplicate Allowed under different Parent?" name="Duplicate Allowed under different Parent?">
-                            <Switch defaultChecked={true} checkedChildren="Active" unCheckedChildren="Inactive" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
-                        <Form.Item initialValue={'Y'} label="Child Allowed?" name="Child Allowed?">
-                            <Switch defaultChecked={true} checkedChildren="Active" unCheckedChildren="Inactive" />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={6} xxl={12}>
-                        <Form.Item initialValue={'Y'} label="Status" name="Status">
-                            <Switch defaultChecked={true} checkedChildren="Active" unCheckedChildren="Inactive" />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={3} sm={3} md={3} lg={3} xl={9} xxl={3}></Col>
-                </Row>
-                <Row gutter={20} justify="end">
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                        <Button htmlType="submit" onClick={()=>setShowDrawer(!showDrawer)} danger>
-                            <FaSave className={styles.buttonIcon} />
-                            Save
-                        </Button>
-
-                        <Button danger onClick={handleReset}>
-                            <FaUndo className={styles.buttonIcon} />
-                            Reset
-                        </Button>
-                    </Col>
-                </Row>
+                <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+                    <Row gutter={20}>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[validateRequiredSelectField('Code')]}>
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueName'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
+                            <Form.Item initialValue={editRow?.duplicateAllowedAtAttributerLevelInd === 'Y' ? 'Y' : 'N'} normalize={(a, b) => (a ? 'Y' : 'N')} label="Duplicate Allowed?" name="duplicateAllowedAtAttributerLevelInd">
+                                <Switch defaultChecked={editRow?.duplicateAllowedAtAttributerLevelInd === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
+                            <Form.Item initialValue={editRow?.duplicateAllowedAtOtherParent === 'Y' ? 'Y' : 'N'} normalize={(a, b) => (a ? 'Y' : 'N')} label="Duplicate Allowed under different Parent?" name="duplicateAllowedAtOtherParent">
+                                <Switch defaultChecked={editRow?.duplicateAllowedAtOtherParent === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
+                            <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={editRow?.isChildAllowed === 'Y' ? 'Y' : 'N'} label="Child Allowed?" name="isChildAllowed">
+                                <Switch defaultChecked={editRow?.isChildAllowed === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={6} xxl={12}>
+                            <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={editRow?.status === 'Y' ? 'Y' : 'N'} label="Status" name="status">
+                                <Switch defaultChecked={editRow?.status === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={3} sm={3} md={3} lg={3} xl={9} xxl={3}></Col>
+                    </Row>
+                    <Row gutter={20} justify="end">
+                        <Col span={4}>
+                            {' '}
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
+                                    <FaSave className={styles.buttonIcon} />
+                                    Save
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                        <Col span={4}>
+                            {' '}
+                            <Form.Item>
+                                <Button danger onClick={handleReset}>
+                                    <FaUndo className={styles.buttonIcon} />
+                                    Reset
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
 
                 {/*Below The Fomrs*/}
                 {/* <Row>

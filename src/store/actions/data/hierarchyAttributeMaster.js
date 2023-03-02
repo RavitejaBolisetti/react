@@ -14,7 +14,7 @@ const receiveHeaderData = (data) => ({
     data,
 });
 
-const receiveHeaderDetailData = (data) => ({
+const receiveHeirarchyDetailData = (data) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED,
     isLoaded: true,
     data,
@@ -66,7 +66,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (tok
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderDetailData(res?.data));
+            dispatch(receiveHeirarchyDetailData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -90,6 +90,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (tok
 });
 
 hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+    console.log("payload", params)
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
 
