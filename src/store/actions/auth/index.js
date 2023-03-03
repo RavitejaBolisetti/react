@@ -200,7 +200,9 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
             successAction && successAction();
             authPostLogout();
         } else {
-            logoutError('There was an error, Please try again');
+            successAction && successAction();
+            authPostLogout();
+            // logoutError('There was an error, Please try again');
         }
     };
 
@@ -212,7 +214,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         userId,
         data: undefined,
         onSuccess,
-        onError: () => logoutError('There was an error, Please try again'),
+        onError: () => {
+            successAction && successAction();
+            authPostLogout();
+        }, //logoutError('There was an error, Please try again'),
         onTimeout: () => logoutError('Request timed out, Please try again'),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
