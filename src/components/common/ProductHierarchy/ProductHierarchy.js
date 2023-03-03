@@ -206,7 +206,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
+        // const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
@@ -219,8 +220,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
             }
         };
@@ -319,6 +320,24 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         treeData: productHierarchyData,
     };
 
+    const formProps = {
+        isChecked,
+        setIsChecked,
+        setSelectedTreeKey,
+        flatternData,
+        formActionType,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        isReadOnly,
+        formData,
+        productHierarchyData,
+        handleSelectTreeClick,
+        isDataAttributeLoaded,
+        attributeData,
+        fieldNames,
+        setSelectedTreeSelectKey,
+    };
+
     return (
         <>
             <div className={styles.geoSection}>
@@ -336,7 +355,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                     <Panel header="Product Details" key="1" className={style.producthierarchy}>
                                         {/* <AddEditForm showAttributeDetail={true} /> */}
                                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
+                                            {isFormVisible && <AddEditForm {...formProps} />}
 
                                             <Row>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -406,7 +425,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                             </>
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} productHierarchyData={productHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
+                                {isFormVisible && <AddEditForm {...formProps} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (

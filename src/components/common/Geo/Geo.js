@@ -156,8 +156,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
             }
         };
@@ -167,7 +167,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
