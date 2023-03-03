@@ -6,6 +6,7 @@ import { validateRequiredInputField } from 'utils/validation';
 
 import styles from '../Common.module.css';
 import AddEditForm from './AddEditForm';
+import { DataTable } from 'utils/dataTable';
 
 const { Panel } = Collapse;
 
@@ -91,7 +92,7 @@ export const ProductMaster = () => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse defaultActiveKey={['1']} expandIconPosition="end">
                         <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2">
-                            <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} onChange={onChange} pagination={false} />
+                            <DataTable tableColumn={tableColumn} tableData={dataSource} pagination={false} />
                             <Form>
                                 <Form.Item>
                                     <Row>
