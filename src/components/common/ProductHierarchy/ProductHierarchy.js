@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { Button, Col, Form, Row, Collapse, Table, Input } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
@@ -292,6 +292,21 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         form.resetFields();
     };
 
+    const handleBack = () => {
+        setReadOnly(true);
+        setForceFormReset(Math.random() * 10000);
+        if (selectedTreeKey && selectedTreeKey.length > 0) {
+            const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+            formData && setFormData(formData?.data);
+            setFormActionType('view');
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+        } else {
+            setFormActionType('');
+            setFormVisible(false);
+            setButtonData({ ...defaultBtnVisiblity });
+        }
+    };
+
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const myProps = {
@@ -303,6 +318,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         handleTreeViewClick,
         treeData: productHierarchyData,
     };
+
     return (
         <>
             <div className={styles.geoSection}>
@@ -425,6 +441,31 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                                 <FaUserFriends className={styles.buttonIcon} />
                                                 Add Sibling
                                             </Button>
+                                        )}
+
+                                        {isFormVisible && (
+                                            <>
+                                                {buttonData?.saveBtn && (
+                                                    <Button htmlType="submit" danger>
+                                                        <FaSave className={styles.buttonIcon} />
+                                                        Save
+                                                    </Button>
+                                                )}
+
+                                                {buttonData?.resetBtn && (
+                                                    <Button danger onClick={handleResetBtn}>
+                                                        <FaUndo className={styles.buttonIcon} />
+                                                        Reset
+                                                    </Button>
+                                                )}
+
+                                                {buttonData?.cancelBtn && (
+                                                    <Button danger onClick={() => handleBack()}>
+                                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                        Cancel
+                                                    </Button>
+                                                )}
+                                            </>
                                         )}
                                     </Col>
                                 </Row>
