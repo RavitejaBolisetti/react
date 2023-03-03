@@ -10,7 +10,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 
 import style from './criticatiltyGroup.module.css';
 
-const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
@@ -46,13 +46,15 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                 <>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
-                            <Button danger onClick={onClose}>Cancel</Button>
+                            <Button danger onClick={onClose}>
+                                Cancel
+                            </Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{textAlign:'right'}}>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             <Button form="myForm" key="submit" htmlType="submit" type="primary">
                                 Save
                             </Button>
-                            <Button form="myForm" key="submit" htmlType="submit" type="primary">
+                            <Button onClick={handleAdd} form="myForm" key="submit" htmlType="submit" type="primary">
                                 Save and New
                             </Button>
                         </Col>
@@ -65,13 +67,13 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.criticalityGroupId}  name="criticalityGroupId" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
-                        <Input {...disabledProps}  />
+                    <Form.Item initialValue={formData?.criticalityGroupId} name="criticalityGroupId" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
+                        <Input maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.criticalityGroupName} name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
-                        <Input {...disabledProps} />
+                        <Input maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -95,7 +97,7 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                     <p> Allowed Timings</p>
                 </Col>
             </Row>
-            <Form.List name="users" initialValue={momentTime}>
+            <Form.List required rules={[validateRequiredInputField('Allowed Timings')]} name="users" initialValue={momentTime}>
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
@@ -139,7 +141,7 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                         ))}
                         <Row>
                             <Col offset={19}>
-                                <Form.Item style={{   textAlign: 'right', float:'right' }}>
+                                <Form.Item style={{ textAlign: 'right', float: 'right' }}>
                                     <Button {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
                                         Add Time
                                     </Button>
@@ -149,20 +151,6 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                     </>
                 )}
             </Form.List>
-
-            {/* <Row>
-                    <Col>
-                        <div
-                            style={{
-                                borderTop: '1px solid #e9e9e9',
-                                padding: '10px 16px',
-                                background: '#fff',
-                                textAlign: 'right',
-                            }}
-                        >
-                        </div>
-                    </Col>
-                </Row> */}
         </Drawer>
     );
 };

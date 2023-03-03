@@ -2,10 +2,9 @@ import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, Empty } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { FaSave, FaUserPlus, FaUndo, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
@@ -79,6 +78,7 @@ export const CriticalityGroupMain = () => {
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
+    const [arrData,setArrData] = useState(data)
 
     useEffect(() => {
         form.resetFields();
@@ -212,6 +212,21 @@ export const CriticalityGroupMain = () => {
         // setRowsData([...updatedData]);
     };
 
+    const onChangeHandle = (e) => {
+        const getSearch = e.target.value;
+        // console.log("value:", e.target.value);
+        if (e.target.value == '') {
+            window.location.reload(true)
+            const tempArr = arrData;
+            setArrData(tempArr)
+            return
+        }
+        if (getSearch.length > -1) {
+            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()))
+            setArrData(searchResult);
+        }
+    };
+
     const tableColumn = [];
 
     tableColumn.push(
@@ -225,6 +240,7 @@ export const CriticalityGroupMain = () => {
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupId',
+            sortFn: (a, b) => a.criticalityGroupId.localeCompare(b.criticalityGroupId)
         })
     );
 
@@ -232,6 +248,8 @@ export const CriticalityGroupMain = () => {
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
+            sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName)
+
         })
     );
 
@@ -239,6 +257,7 @@ export const CriticalityGroupMain = () => {
         tblPrepareColumns({
             title: 'Default Group?',
             dataIndex: 'defaultGroup',
+            sortFn: (a, b) => a.defaultGroup.localeCompare(b.defaultGroup),
             render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
@@ -247,6 +266,7 @@ export const CriticalityGroupMain = () => {
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
+            sortFn: (a, b) => a.status.localeCompare(b.defaultGroup),
             render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
@@ -258,7 +278,7 @@ export const CriticalityGroupMain = () => {
                 return (
                     <Space wrap>
                         {<FaEdit onClick={() => handleUpdate(record)} />}
-                        {<FaTrash onClick={() => handleView(record)} />}
+                        {<AiOutlineEye onClick={() => handleView(record)} />}
                     </Space>
                 );
             },
@@ -274,6 +294,7 @@ export const CriticalityGroupMain = () => {
                         style={{
                             width: 200,
                         }}
+                        onChange={onChangeHandle}
                     />
                 </Col>
                 <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
@@ -284,7 +305,7 @@ export const CriticalityGroupMain = () => {
                 </Col>
             </Row>
             <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <DrawerUtil open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+                <DrawerUtil handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
