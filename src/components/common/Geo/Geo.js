@@ -142,7 +142,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
@@ -172,7 +173,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             onError,
             onSuccess,
         };
-
         saveData(requestData);
     };
 
@@ -269,6 +269,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         isDataAttributeLoaded,
         attributeData,
         fieldNames,
+        setSelectedTreeSelectKey,
     };
     return (
         <>
