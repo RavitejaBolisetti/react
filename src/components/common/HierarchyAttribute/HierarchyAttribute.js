@@ -73,13 +73,15 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [UpdatedTableData, setUpdatedTableData] = useState([]);
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
+    console.log('outside',detailData?.hierarchyAttribute);
     useEffect(() => {
         if (!isDataLoaded) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
+            forceUpdate(Math.random()*1000);
         }
         if (detailData?.hierarchyAttribute) {
             console.log('Running');
+            forceUpdate(Math.random()*1000);
             setRowsData(detailData?.hierarchyAttribute);
         }
         // if(detailData?.hierarchyAttribute){
@@ -88,7 +90,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         //         ));
         // };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, detailData?.hierarchyAttribute, hierarchyAttributeFetchList]);
+    }, [isDataLoaded, isDataAttributeLoaded ]);
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -279,9 +281,9 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         //     .filter(([key]) => key !== 'hierarchyAttribueType')
         //     .map(([keys, { id, key, deletable, ...value }]) => ({ ...value, hierarchyAttribueType: selectedHierarchyAttribue }));
         const onSuccess = (res) => {
-            console.log('This is the Heirarchy:', selectedHierarchyAttribue);
+            console.log('This is the Heirarchy:==?>', selectedHierarchyAttribue);
             form.resetFields();
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
             setShowDrawer(false);
             forceUpdate();
@@ -340,7 +342,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table loading={!isDataAttributeLoaded} dataSource={rowdata} pagination={false} columns={tableColumn} bordered />
+                            <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={false} columns={tableColumn} bordered />
                         </Col>
                     </Row>
                 </>
