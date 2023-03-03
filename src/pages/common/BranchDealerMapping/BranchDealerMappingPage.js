@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { Geo } from 'components/common/Geo';
+import {BranchDealerMapping} from 'components/common/BranchDealerMapping';
 
 export const BranchDealerMappingPageBase = (props) => {
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
@@ -10,7 +10,7 @@ export const BranchDealerMappingPageBase = (props) => {
     const handleChangeHistoryClick = (e) => {
         setChangeHistoryVisible(!isChangeHistoryVisible);
     };
-    const pageTitle = 'Geographical Hierarchy';
+    const pageTitle = 'BRANCH DEALER MAPPING';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -23,7 +23,7 @@ export const BranchDealerMappingPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <Geo isChangeHistoryVisible={isChangeHistoryVisible} />
+            <BranchDealerMapping isChangeHistoryVisible={isChangeHistoryVisible} />
         </>
     );
 };

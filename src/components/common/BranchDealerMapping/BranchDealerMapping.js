@@ -1,23 +1,28 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import { geoDataActions } from 'store/actions/data/geo';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { AddEditForm } from './AddEditForm';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { ChangeHistoryGeo } from '../ChangeHistory';
+import { Button, Col, Form, Row, Checkbox, Input, Select, Switch, Space, DatePicker, Collapse, Tree, Card } from 'antd';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { addToolTip } from 'utils/customMenuLink';
+import TreeView from 'components/common/TreeView';
 
-import LeftPanel from 'components/common/LeftPanel';
 import styles from 'pages/common/Common.module.css';
+
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { ChangeHistory } from '../ChangeHistory';
+
+const { Option } = Select;
+const { Panel } = Collapse;
+const { RangePicker } = DatePicker;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -26,10 +31,11 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
+        isLoading,
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        productHierarchyData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -40,9 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: productHierarchyDataActions.fetchList,
+            saveData: productHierarchyDataActions.saveData,
+            listShowLoading: productHierarchyDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -52,12 +58,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
-    const [form] = Form.useForm();
+export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
@@ -68,18 +72,103 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
 
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
+    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [value, setValue] = useState(['0-0-0']);
+    const treeData = [
+        {
+            title: 'parent 1',
+            key: '0-0',
+
+            children: [
+                {
+                    title: 'parent 1-0',
+                    key: '0-0-0',
+
+                    children: [
+                        {
+                            title: 'leaf',
+                            key: '0-0-0-0',
+                        },
+                        {
+                            title: (
+                                <>
+                                    <div>multiple line title</div>
+                                    <div>multiple line title</div>
+                                </>
+                            ),
+                            key: '0-0-0-1',
+                        },
+                        {
+                            title: 'leaf',
+                            key: '0-0-0-2',
+                        },
+                    ],
+                },
+                {
+                    title: 'parent 1-1',
+                    key: '0-0-1',
+
+                    children: [
+                        {
+                            title: 'leaf',
+                            key: '0-0-1-0',
+                        },
+                    ],
+                },
+                {
+                    title: 'parent 1-2',
+                    key: '0-0-2',
+
+                    children: [
+                        {
+                            title: 'leaf',
+                            key: '0-0-2-0',
+                        },
+                        {
+                            title: 'leaf',
+                            key: '0-0-2-1',
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            title: 'parent 2',
+            key: '0-1',
+
+            children: [
+                {
+                    title: 'parent 2-0',
+                    key: '0-1-0',
+
+                    children: [
+                        {
+                            title: 'leaf',
+                            key: '0-1-0-0',
+                        },
+                        {
+                            title: 'leaf',
+                            key: '0-1-0-1',
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -88,11 +177,9 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
-    const finalGeoData = geoData?.map((i) => {
+    const finalGeoData = productHierarchyData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
-
-    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const dataList = [];
     const generateList = (data) => {
@@ -103,8 +190,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node.subProdct) {
+                generateList(node.subProdct);
             }
         }
         return dataList;
@@ -141,9 +228,12 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const onFinish = (values) => {
+        console.log(form);
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
+        const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
+
+        const data = { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const formUpdatedData = { ...data, parntProdctId: codeToBeSaved, prodctShrtName: values?.shortName, prodctLongName: values?.longName };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -151,14 +241,14 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
+            formData && setFormData(formUpdatedData);
 
-            if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+            if (selectedTreeKey && selectedTreeKey.length > 0) {
+                !recordId && setSelectedTreeKey(codeToBeSaved);
                 setFormActionType('view');
             }
+            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
@@ -166,7 +256,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -241,108 +331,512 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const [form] = Form.useForm();
+    // const onFinish = (values) => {
+    //     console.log('Success:', values);
+    // };
+    // const onFinishFailed = (errorInfo) => {
+    //     console.log('Failed:', errorInfo);
+    // };
 
-    const myProps = {
-        isTreeViewVisible,
-        handleTreeViewVisiblity,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        fieldNames,
-        handleTreeViewClick,
-        treeData: geoData,
+    const onReset = () => {
+        form.resetFields();
     };
-
-    const formProps = {
-        isChecked,
-        setIsChecked,
-        setSelectedTreeKey,
-        flatternData,
-        formActionType,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        isReadOnly,
-        formData,
-        geoData,
-        handleSelectTreeClick,
-        isDataAttributeLoaded,
-        attributeData,
+    const TableRenderer = () => {
+        return <></>;
     };
-    return (
-        <>
-            <div className={styles.geoSection}>
-                <Row gutter={20}>
+    const onClick = (e) => {
+        if (e === '') {
+            form.validateFields(['division']);
+        }
+        console.log(e);
+    };
+    const DivisionDetailsFetch = () => {
+        return (
+            <Form.Item
+                name="division"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input  division',
+                    },
+                ]}
+            >
+                <Select placeholder="Select">
+                    <Select.Option value="">Select</Select.Option>
+                    <Select.Option value="Sales">Sales</Select.Option>
+                    <Select.Option value="Service">Service</Select.Option>
+                    <Select.Option value="Spares">Spares</Select.Option>
+                    <Select.Option value="HR">HR</Select.Option>
+                    <Select.Option value="Admin">Admin</Select.Option>
+                </Select>
+            </Form.Item>
+        );
+    };
+    const Leftpane = () => {
+        return (
+            <>
+                {isTreeViewVisible ? (
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <LeftPanel {...myProps} />
+                        <div className={styles.leftpanel}>
+                            <div className={styles.treeViewContainer}>
+                                <div className={styles.treemenu}>
+                                    <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={productHierarchyData} />
+                                </div>
+                            </div>
+                        </div>
                     </Col>
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
-                        {isChangeHistoryVisible ? (
-                            <ChangeHistoryGeo />
-                        ) : (
-                            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm {...formProps} />}
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                        {buttonData?.editBtn && (
-                                            <Button danger onClick={() => handleEditBtn()}>
-                                                <FaEdit className={styles.buttonIcon} />
-                                                Edit
-                                            </Button>
-                                        )}
-
-                                        {buttonData?.rootChildBtn && (
-                                            <Button danger onClick={() => handleRootChildBtn()}>
-                                                <FaUserPlus className={styles.buttonIcon} />
-                                                Add Child
-                                            </Button>
-                                        )}
-
-                                        {buttonData?.childBtn && (
-                                            <Button danger onClick={() => handleChildBtn()}>
-                                                <FaUserPlus className={styles.buttonIcon} />
-                                                Add Child
-                                            </Button>
-                                        )}
-
-                                        {buttonData?.siblingBtn && (
-                                            <Button danger onClick={() => handleSiblingBtn()}>
-                                                <FaUserFriends className={styles.buttonIcon} />
-                                                Add Sibling
-                                            </Button>
-                                        )}
-
-                                        {isFormVisible && (
-                                            <>
-                                                {buttonData?.saveBtn && (
-                                                    <Button htmlType="submit" danger>
-                                                        <FaSave className={styles.buttonIcon} />
-                                                        Save
-                                                    </Button>
-                                                )}
-
-                                                {buttonData?.resetBtn && (
-                                                    <Button danger onClick={handleResetBtn}>
-                                                        <FaUndo className={styles.buttonIcon} />
-                                                        Reset
-                                                    </Button>
-                                                )}
-
-                                                {buttonData?.cancelBtn && (
-                                                    <Button danger onClick={() => handleBack()}>
-                                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                        Cancel
-                                                    </Button>
-                                                )}
-                                            </>
-                                        )}
-                                    </Col>
-                                </Row>
-                            </Form>
-                        )}
+                ) : undefined}
+            </>
+        );
+    };
+    const disabledProps = { disabled: false };
+    const Formitems = () => {
+        return (
+            <Form form={form} name="control-hooks" layout="vertical" onFinish={onFinish}>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Attribute Level"
+                            label="Attribute Level"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Select an option'
+                                },
+                            ]}
+                        >
+                            <Select placeholder="Select a option and change input text above" allowClear>
+                                <Option value="Nothing2">Nothing2</Option>
+                                <Option value="Nothing1">Nothing1</Option>
+                                <Option value="other">other</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Parent"
+                            label="Parent"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Select an option'
+                                },
+                            ]}
+                        >
+                            <Select placeholder="Select a option and change input text above" allowClear>
+                                <Option value="Nothing2">Nothing2</Option>
+                                <Option value="Nothing1">Nothing1</Option>
+                                <Option value="other">other</Option>
+                            </Select>
+                        </Form.Item>
                     </Col>
                 </Row>
-            </div>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Branches Code"
+                            label="Branches Code"
+                            rules={[
+                                { 
+                                    max: 5, 
+                                    message: 'Code must be maximum 5 characters.' 
+                                },
+                                { 
+                                    required: true, 
+                                    message: 'Please Enter Code' 
+                                },
+                                { 
+                                    min: 5, 
+                                    message: 'Code must be maximum 5 characters.' 
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Short Description/Branch Name"
+                            label="Short Description/Branch Name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter Short Description/Branch Name',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'Short Description/Branch Name must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Long Description"
+                            label="Long Description"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter Long Description',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'Long Description must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Branch Address"
+                            label="Branch Address"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter Branch Address',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'Branch Address must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Locality"
+                            label="Locality"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter Locality',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'Locality must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="City"
+                            label="City"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter City',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'City must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="State"
+                            label="State"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter State',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'State must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="District"
+                            label="District"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter District',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'District must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Status"
+                            label="Status"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                            initialValue={formData?.isActive === 'Y' ? 1 : 0}
+                        >
+                            <Form.Item>
+                                <Switch value={formData?.isActive === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                            </Form.Item>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Company"
+                            label="Company"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please Enter Company',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'Company must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
+        );
+    };
+    //tree for the product hierarchy
+    const [expandedKeys, setExpandedKeys] = useState(['0-0-0', '0-0-1']);
+    const [checkedKeys, setCheckedKeys] = useState(['0-0-0']);
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
+    const onExpand = (expandedKeysValue) => {
+        console.log('onExpand', expandedKeysValue);
+        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+        // or, you can remove all expanded children keys.
+        setExpandedKeys(expandedKeysValue);
+        setAutoExpandParent(false);
+    };
+    const onCheck = (checkedKeysValue) => {
+        console.log('onCheck', checkedKeysValue);
+        setCheckedKeys(checkedKeysValue);
+    };
+    const onSelect = (selectedKeysValue, info) => {
+        console.log('onSelect', info);
+        setSelectedKeys(selectedKeysValue);
+    };
+    const FormitemsNew = () => {
+        return (
+            <Row gutter={20}>
+                <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
+                    <Card style={{ overflowY: 'scroll', height: '300px' }}>
+                        <Tree checkable onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} onCheck={onCheck} checkedKeys={checkedKeys} onSelect={onSelect} selectedKeys={selectedKeys} showLine={true} treeData={treeData} />
+                    </Card>
+                </Col>
+                <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
+                    <Row gutter={20}>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item
+                                name="Attribute Type"
+                                label="Attribute Type"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: ' Select  an option ',
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Select a option and change input text above"
+                                    style={{
+                                        height: '15px !important',
+                                    }}
+                                    allowClear
+                                >
+                                    <Option value="Primary">Primary</Option>
+                                    <Option value="Secondary">Secondary</Option>
+                                    <Option value="other">other</Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item
+                                name="Token"
+                                label="Token"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please Enter Token',
+                                    },
+                                    {
+                                        max: 50,
+                                        message: 'Token must be maximum 50 characters.',
+                                    },
+                                ]}
+                            >
+                                <Input style={{ height: '36px' }} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        {' '}
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                            <Space>
+                                <Button danger>
+                                    <FaSave className={styles.buttonIcon} />
+                                    Validate
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
+                    <Space direction="vertical">
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="Employee Name"
+                                    label="Employee Name"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please Enter Name',
+                                        },
+                                        {
+                                            max: 50,
+                                            message: 'Name must be maximum 5 characters.',
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={10} sm={10} md={10} lg={10} xl={10}></Col>
+                        </Row>
+
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="Primary/Secondary"
+                                    label="Primary/Secondary"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Select an option',
+                                        },
+                                    ]}
+                                >
+                                    <Select
+                                        placeholder="Select a option and change input text above"
+                                        style={{
+                                            height: '15px !important',
+                                        }}
+                                        allowClear
+                                    >
+                                        <Option value="Primary">Primary</Option>
+                                        <Option value="Secondary">Secondary</Option>
+                                        <Option value="other">other</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="Effective Date"
+                                    label="Effective Date"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Select a Range',
+                                        },
+                                    ]}
+                                    allowClear
+                                >
+                                    <RangePicker style={{ height: '36px' }} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </Space>
+                </Col>
+            </Row>
+        );
+    };
+    const [expandIconPosition, setExpandIconPosition] = useState('end');
+    return (
+        <>
+            <Form form={form} name="control-hooks" layout="vertical" onFinish={onFinish}>
+                <div className={styles.geoSection}>
+                    <Row gutter={20}>
+                        <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
+                            {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
+                        </div>
+                    </Row>
+                    <Row gutter={20}>
+                        <Leftpane />
+
+                        <Col xs={24} sm={24} md={isTreeViewVisible ? 16 : 24} lg={isTreeViewVisible ? 16 : 24} xl={isTreeViewVisible ? 16 : 24} xxl={isTreeViewVisible ? 16 : 24}>
+                            <Space
+                                direction="vertical"
+                                size="middle"
+                                style={{
+                                    display: 'flex',
+                                }}
+                            >
+                                <Collapse bordered={true} expandIconPosition={'end'}>
+                                    <Panel header="Dealer Branch" key="1">
+                                        <Formitems />
+                                    </Panel>
+                                </Collapse>
+                                <Collapse bordered={true} expandIconPosition={'end'}>
+                                    <Panel header="Product Hierarchy Mapping" key="1">
+                                        <FormitemsNew />
+                                    </Panel>
+                                </Collapse>
+                                <Row gutter={20} justify="end" className={styles.buttonContainer}><Space>
+                                <Button danger onClick={() => handleBack()}>
+                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                        Cancel
+                                    </Button>
+
+                                    <Button danger onClick={handleResetBtn}>
+                                        <FaUndo className={styles.buttonIcon} />
+                                        Reset
+                                    </Button>
+
+                                    <Button htmlType="submit" danger>
+                                        <FaSave className={styles.buttonIcon} />
+                                        Save
+                                    </Button>
+                                </Space>
+                                    
+                                </Row>
+                            </Space>
+                        </Col>
+                    </Row>
+                </div>
+            </Form>
         </>
     );
 };
