@@ -286,7 +286,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        dataList: manufacturerAdminHierarchyData,
+        treeData: manufacturerAdminHierarchyData,
     };
 
     return (
