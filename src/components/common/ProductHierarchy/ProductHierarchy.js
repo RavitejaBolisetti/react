@@ -288,11 +288,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true, enable: false });
     };
 
-    const handleResetBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        form.resetFields();
-    };
-
     const handleBack = () => {
         setReadOnly(true);
         setForceFormReset(Math.random() * 10000);
@@ -306,6 +301,11 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
             setFormVisible(false);
             setButtonData({ ...defaultBtnVisiblity });
         }
+    };
+
+    const handleResetBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+        form.resetFields();
     };
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
