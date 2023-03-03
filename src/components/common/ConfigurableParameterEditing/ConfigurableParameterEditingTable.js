@@ -6,6 +6,7 @@ import { validateRequiredSelectField, validateRequiredInputField } from 'utils/v
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { DataTable } from 'utils/dataTable';
 const { RangePicker } = DatePicker;
 let type;
 export const ConfigurableParameterEditingTable = () => {
@@ -172,10 +173,15 @@ export const ConfigurableParameterEditingTable = () => {
         form.validateFields().then((values) => {});
     };
 
+    const tableProps = {
+        isLoading: false,
+        tableColumn: defaultColumns,
+        tableData: data,
+    };
     return (
         <>
             <Form onFinishFailed={onFinishFailed}>
-                <Table bordered dataSource={data} columns={defaultColumns} pagination={false} />
+                <DataTable {...tableProps} />
 
                 <Row gutter={20} className={styles.btnContainer}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.btnLeft}>
