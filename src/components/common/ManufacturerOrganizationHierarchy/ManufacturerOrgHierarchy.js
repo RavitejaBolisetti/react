@@ -144,7 +144,6 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        // const codeToBeSaved = Array.isArray(values?.manfacturerOrgHierarchyParentCode) ? values?.manfacturerOrgHierarchyParentCode[0] : values?.manfacturerOrgHierarchyParentCode || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved };
         const onSuccess = (res) => {
