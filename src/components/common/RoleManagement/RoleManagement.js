@@ -11,7 +11,7 @@ import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import './RoleManagement.module.css';
+import styles2 from './RoleManagement.module.css';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
 
@@ -199,7 +199,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const CardTree = () => {
         return (
             <Row gutter={20}>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                     <Card title="Access Applications" bordered={true}>
                         {/* <Trees /> */}
                         <Form.Item initialValue={undefined} name="Treedata">
@@ -207,7 +207,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                         </Form.Item>
                     </Card>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                     <Card title="Access Actions" bordered={true}>
                         <Actions />
                     </Card>
@@ -219,7 +219,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const FormComponent = () => {
         return (
             <Row gutter={20}>
-                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
                         name="roleid"
                         label="Role Id"
@@ -233,7 +233,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                         <Input />
                     </Form.Item>
                 </Col>
-                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
                         name="rolename"
                         label="Role Name"
@@ -247,7 +247,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                         <Input />
                     </Form.Item>
                 </Col>
-                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
                         name="roledesc"
                         label="Role Description"
@@ -261,7 +261,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                         <Input />
                     </Form.Item>
                 </Col>
-                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item label="Status" name="active" initialValue={InitialData?.active}>
                         <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
@@ -402,7 +402,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                                 <Divider style={{ marginTop: 6 }} plain></Divider>
                             </Row>
                             <Row gutter={20}>
-                                <Col span={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <List size="large" bordered={true} dataSource={Roledataset} renderItem={(item) => <List.Item onClick={handleForms}>{item}</List.Item>} />
                                 </Col>
                             </Row>
@@ -412,14 +412,14 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={16}>
                     <Row>
                         {addchilds ? (
-                            <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4} offset={21}>
-                                <Button onClick={handleChilds} danger>
-                                    <FaUserPlus className={styles.buttonIcon} />
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}  >
+                                <Button onClick={handleChilds} className={styles.floatRight} danger>
+                                    <FaUserPlus className={styles2.buttonIcon} />
                                     Add Role
                                 </Button>
                             </Col>
                         ) : (
-                            <Col xs={4} sm={4} md={4} lg={4} xl={24} xxl={4}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} >
                                 <Form name="customized_form_controls" form={form} layout="vertical" onFinish={onFinisher}>
                                     <Space
                                         direction="vertical"
