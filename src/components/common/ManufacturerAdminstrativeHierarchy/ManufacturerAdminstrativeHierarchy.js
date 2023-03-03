@@ -202,7 +202,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
