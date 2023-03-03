@@ -6,6 +6,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 import dayjs from 'dayjs';
 
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+
 import style from './criticatiltyGroup.module.css';
 
 const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
@@ -63,12 +65,12 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.criticalityGroupId} name="criticalityGroupId" label="Criticality Group Id">
-                        <Input {...disabledProps} />
+                    <Form.Item initialValue={formData?.criticalityGroupId}  name="criticalityGroupId" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
+                        <Input {...disabledProps}  />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.criticalityGroupName} name="criticalityGroupName" label="Criticality Group Name">
+                    <Form.Item initialValue={formData?.criticalityGroupName} name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
                         <Input {...disabledProps} />
                     </Form.Item>
                 </Col>
@@ -76,7 +78,7 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="defaultGroup" label="Default Group?">
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                        <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
@@ -84,13 +86,13 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                 </Col>
                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                     <Form.Item name="status" label="Status">
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                        <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col>
-                    <h4> Allowed Timings</h4>
+                    <p> Allowed Timings</p>
                 </Col>
             </Row>
             <Form.List name="users" initialValue={momentTime}>
@@ -136,8 +138,8 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                             </div>
                         ))}
                         <Row>
-                            <Col offset={16}>
-                                <Form.Item style={{ display: 'flex', align: 'right', textAlign: 'right', float:'right' }}>
+                            <Col offset={19}>
+                                <Form.Item style={{   textAlign: 'right', float:'right' }}>
                                     <Button {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
                                         Add Time
                                     </Button>
