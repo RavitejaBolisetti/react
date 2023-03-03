@@ -196,7 +196,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     const logoutError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
-        if (res) {
+        if (res?.data) {
             successAction && successAction();
             authPostLogout();
         } else {
