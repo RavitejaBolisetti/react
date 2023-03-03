@@ -78,11 +78,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    useEffect(() => {
-        // !isLoggedIn && navigate(routing.ROUTING_LOGIN);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoggedIn]);
-
     const showConfirm = () => {
         confirm({
             title: 'Confirmation',
@@ -94,8 +89,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             onOk() {
                 doLogout({
                     successAction: () => {
-                        window.location.href = routing.ROUTING_LOGOUT;
-                        // navigate(routing.ROUTING_LOGOUT);
+                        navigate(routing.ROUTING_LOGOUT);
                     },
                     userId,
                 });
