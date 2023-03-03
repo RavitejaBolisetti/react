@@ -168,7 +168,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
