@@ -35,12 +35,12 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                 <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ min: 5, message: 'Code must be minimum 5 characters.' }]}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ min: 5, message: 'Code must be minimum 5 characters.' }, { required: true }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueCode'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 5, message: 'Name must be minimum 5 characters.' }]}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 5, message: 'Code must be minimum 5 characters.' }, { required: true }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueName'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
