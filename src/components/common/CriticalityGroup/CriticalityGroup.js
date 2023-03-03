@@ -278,7 +278,7 @@ export const CriticalityGroupMain = () => {
                 </Col>
                 <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
                     <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} />
+                        <AiOutlinePlus className={styles.buttonIcon} style={{textAlign:'right'}} />
                         Add Group
                     </Button>
                 </Col>

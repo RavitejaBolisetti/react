@@ -6,6 +6,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 import dayjs from 'dayjs';
 
+import style from './criticatiltyGroup.module.css';
+
 const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -37,13 +39,22 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
     return (
         <Drawer
             title={drawerTitle}
-            width="500"
+            width="540"
             footer={
                 <>
-                    <Button form="myForm" key="submit" htmlType="submit">
-                        Submit
-                    </Button>
-                    <Button onClick={onClose}>Cancel</Button>
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
+                            <Button danger onClick={onClose}>Cancel</Button>
+                        </Col>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{textAlign:'right'}}>
+                            <Button form="myForm" key="submit" htmlType="submit" type="primary">
+                                Save
+                            </Button>
+                            <Button form="myForm" key="submit" htmlType="submit" type="primary">
+                                Save and New
+                            </Button>
+                        </Col>
+                    </Row>
                 </>
             }
             placement="right"
@@ -86,7 +97,7 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
-                            <div key={key} style={{ background: 'pink' }}>
+                            <div key={key} className={style.allowedTiming}>
                                 <Space
                                     style={{
                                         display: 'flex',
@@ -126,7 +137,7 @@ const DrawerUtil = ({ open, setDrawer, isChecked, setIsChecked, formActionType, 
                         ))}
                         <Row>
                             <Col offset={16}>
-                                <Form.Item style={{ display: 'flex', align: 'right' }}>
+                                <Form.Item style={{ display: 'flex', align: 'right', textAlign: 'right', float:'right' }}>
                                     <Button {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
                                         Add Time
                                     </Button>
