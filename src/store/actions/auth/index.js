@@ -22,15 +22,14 @@ export const LOCAL_STORAGE_KEY_AUTH_ID_TOKEN = 'idToken';
 export const LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN = 'accessToken';
 export const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
 
-export const authLoginSucess = (idToken, accessToken, userName, userId) =>
-    console.log('AUTH_LOGIN_SUCCESS', 'idToken', idToken, 'accessToken', accessToken, 'userName', userName, 'userId', userId) || {
-        type: AUTH_LOGIN_SUCCESS,
-        token: idToken,
-        accessToken: accessToken,
-        userName,
-        userId,
-        isLoggedIn: true,
-    };
+export const authLoginSucess = (idToken, accessToken, userName, userId) => ({
+    type: AUTH_LOGIN_SUCCESS,
+    token: idToken,
+    accessToken: accessToken,
+    userName,
+    userId,
+    isLoggedIn: true,
+});
 
 export const authLoggingError = (title, message) => ({
     type: AUTH_LOGIN_ERROR,
@@ -194,11 +193,6 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         dispatch(logoutClearAllData());
     };
 
-    /* ToDo : Need to remove this Start */
-    successAction && successAction();
-    authPostLogout();
-    /* ToDo : Need to remove this End */
-
     const logoutError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
@@ -206,7 +200,9 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
             successAction && successAction();
             authPostLogout();
         } else {
-            logoutError('There was an error, Please try again');
+            successAction && successAction();
+            authPostLogout();
+            // logoutError('There was an error, Please try again');
         }
     };
 
@@ -218,7 +214,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         userId,
         data: undefined,
         onSuccess,
-        onError: () => logoutError('There was an error, Please try again'),
+        onError: () => {
+            successAction && successAction();
+            authPostLogout();
+        }, //logoutError('There was an error, Please try again'),
         onTimeout: () => logoutError('Request timed out, Please try again'),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
