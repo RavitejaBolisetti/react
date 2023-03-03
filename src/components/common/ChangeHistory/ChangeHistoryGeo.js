@@ -7,6 +7,7 @@ import { geoDataActions } from 'store/actions/data/geo';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
+import { DataTable } from 'utils/dataTable';
 
 const mapStateToProps = (state) => {
     const {
@@ -93,22 +94,18 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
         })
     );
 
+    const tableProps = {
+        isLoading,
+        tableColumn,
+        tableData: changeHistoryData,
+    };
+    
     return (
         <div className={styles.changeHistoryContainer}>
             <div>
                 <h3>Change History</h3>
             </div>
-            <Table
-                loading={isLoading}
-                columns={tableColumn}
-                dataSource={changeHistoryData}
-                pagination={{
-                    position: ['bottomLeft'],
-                }}
-                scroll={{
-                    x: 'auto',
-                }}
-            />
+            <DataTable {...tableProps} />
         </div>
     );
 };

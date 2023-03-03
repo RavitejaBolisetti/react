@@ -10,6 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from '../Common.module.css';
 import { PageHeader } from '../PageHeader';
+import { DataTable } from 'utils/dataTable';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -94,8 +95,6 @@ const data = [
     },
 ];
 
-
-
 export const HierarchyAttributeMasterBase = () => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
@@ -116,7 +115,7 @@ export const HierarchyAttributeMasterBase = () => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     return (
@@ -136,11 +135,10 @@ export const HierarchyAttributeMasterBase = () => {
                             </Select>
                         </Form.Item>
                     </Col>
-                    {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table columns={columns} dataSource={data} pagination={false} />
+                        <DataTable tableColumn={columns} tableData={data} />
                     </Col>
                 </Row>
             </Form>
