@@ -67,7 +67,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     const [AddEditCancel, setAddEditCancel] = useState(true);
     const [forceFormReset, setForceFormReset] = useState(false);
 
-
     const [InitialData, setInitialData] = useState({});
     const [addchilds, setAddchild] = useState(true);
     const [Switcher, setSwitcher] = useState(true);
@@ -81,10 +80,14 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         Download: false,
     });
 
-    useEffect(() => {
-        form.resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
+    useEffect(
+        () => {
+            form.resetFields();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        },
+        [forceFormReset],
+        [addchilds]
+    );
 
     //Tree
 
@@ -333,6 +336,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     };
     const oncancel = () => {
         setAddchild(!addchilds);
+        setForceFormReset(Math.random() * 10000);
+
         setInitialData({});
         form.resetFields();
         setMycheckvals([]);
@@ -412,14 +417,14 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={16}>
                     <Row>
                         {addchilds ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}  >
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Button onClick={handleChilds} className={styles.floatRight} danger>
                                     <FaUserPlus className={styles2.buttonIcon} />
                                     Add Role
                                 </Button>
                             </Col>
                         ) : (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form name="customized_form_controls" form={form} layout="vertical" onFinish={onFinisher}>
                                     <Space
                                         direction="vertical"
