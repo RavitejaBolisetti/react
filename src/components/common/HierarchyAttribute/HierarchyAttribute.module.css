@@ -1,0 +1,32 @@
+.allowedTiming {
+    background: #f4f4f4;
+    margin-top: 12px;
+    padding-top: 20px;
+    padding-left: 12px;
+}
+
+:global .css-dev-only-do-not-override-aprs5d.ant-drawer .ant-drawer-footer {
+    background: #d9d9d9;
+}
+
+:global .ant-drawer .ant-drawer-header-title {
+    display: inline-block;
+}
+
+:global .ant-drawer .ant-drawer-close {
+    float: right;
+    margin-inline-end: 0;
+}
+
+:global .ant-input {
+    padding: 5px;
+}
+
+.drawerFooterButtons button {
+    margin-bottom: 0 !important;
+    height: 34px;
+}
+
+.drawerFooterButtons button:not(:first-child) {
+    margin-left: 10px !important;
+}
