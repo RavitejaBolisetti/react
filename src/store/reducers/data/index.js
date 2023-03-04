@@ -7,6 +7,7 @@ import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ChangePassword } from './changePassword';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
+import { QualificationMaster } from './qualificationMaster';
 
 export const data = combineReducers({
     Menu,
@@ -17,4 +18,5 @@ export const data = combineReducers({
     ManufacturerOrgHierarchy,
     ChangePassword,
     ConfigurableParameterEditing,
+    QualificationMaster
 });

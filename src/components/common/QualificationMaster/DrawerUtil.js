@@ -5,153 +5,72 @@ import { validateRequiredInputField, validationFieldLetterAndNumber } from 'util
 import styles from '../QualificationMaster/QualificationMaster.module.css';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
+const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+    // const [formData, setFormData] = useState([]);
+    // // const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+    // const [isChecked, setIsChecked] = useState(true);
+    // const [switchIntial, setswitchIntial] = useState('Y');
+    // const [forceFormReset, setForceFormReset] = useState(false);
 
+    // const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    // const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    // const [form] = Form.useForm();
+    const disabledProps = { disabled: isReadOnly };
 
-function DrawerUtilMain({ drawer, setDrawer, arrData, setArrData }) {
-    const [formData, setFormData] = useState([]);
-    // const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
-    const [isChecked, setIsChecked] = useState(true);
-    const [switchIntial, setswitchIntial] = useState('Y')
-    const [forceFormReset, setForceFormReset] = useState(false);
-
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [form] = Form.useForm();
-    const [addFormData, setAddFormData] = useState({
-        code: '',
-        name: ''
-    })
-
-    const handleAddFormChange = (event) => {
-        event.preventDefault();
-
-        const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value;
-
-        const newFormData = { ...addFormData };
-        newFormData[fieldName] = fieldValue;
-
-        setAddFormData(newFormData);
-        console.log(newFormData);
-
-    };
-
-    //form submit
-    const handleAddFormSubmit = (event) => {
-        event.preventDefault();
-
-        const newQualification = {
-            code: addFormData.code,
-            name: addFormData.name,
-        }
-        const newQualifications = [...arrData, newQualification];
-        setArrData(newQualifications);
-
-    };
-
-    const onClose = () => {
-        setDrawer(!drawer)
-    };
-    const handleBack = () => {
-        setDrawer(false);
-    };
-    const handleResetBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        form.resetFields();
-    };
-
-    const onFinish = (values) => {
-
-        const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.code) ? values?.code[0] : values?.code || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', code: codeToBeSaved };
-
-        Object.entries(values).map(([keyname, value]) => {
-            if (keyname == 'status' && isChecked == false) {
-                values[keyname] = 'N';
-            }
-        });
-        console.log('Success:', values);
-
-
-    };
-    const Handleswitch = () => {
-        setIsChecked(!isChecked)
-        setswitchIntial('N')
+    let drawerTitle = '';
+    if (formActionType === 'add') {
+        drawerTitle = 'Add Qualification Details';
+    } else if (formActionType === 'update') {
+        drawerTitle = 'Update Application Criticality Group Details';
     }
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+    const onClose = () => {
+        setDrawer(false);
     };
+
+   
 
     return (
         <Drawer
-            title="Add Qualification Details"
+            title={drawerTitle}
             placement="right"
             onClose={onClose}
-            open={drawer}
+            open={open}
             footer={
-
-                <Form.Item >
-                    <Row justify="end">
-                        <Button
-                            danger
-                            onClick={() => handleBack()}
-                            className={styles.cancelButton}
-                            style={{ marginRight: 8 }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            danger
-                            onClick={handleResetBtn}
-                            className={styles.resetButton}
-                            style={{ marginRight: 8 }}
-                        >
-                            Reset
-                        </Button>
-                        <Button
-                            form="myForm"
-                            className={styles.saveButton}
-                            htmlType="submit">
-                            Save
-                        </Button>
-                    </Row>
-                </Form.Item>
+                <Row justify="end">
+                    <Button danger onClick={onClose} className={styles.cancelButton} style={{ marginRight: 8 }}>
+                        Cancel
+                    </Button>
+                    {/* <Button danger onClick={handleResetBtn} className={styles.resetButton} style={{ marginRight: 8 }}>
+                        Reset
+                    </Button> */}
+                    <Button form="myForm" className={styles.saveButton} htmlType="submit">
+                        Save
+                    </Button>
+                </Row>
             }
         >
-            <Form
-                name="Qualform"
-                id="myForm"
-                form={form}
-                layout="vertical"
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                onSubmitCapture={handleAddFormSubmit}
-            >
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Qualification Code" name="code" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                            <Input placeholder="QCN00001" name="code" onChange={handleAddFormChange} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Qualification Name" name="name" rules={[validateRequiredInputField('Name')]}>
-                            <Input placeholder="Name" name="name" onChange={handleAddFormChange} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={switchIntial} label="Status" name="status">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={isChecked} onChange={Handleswitch} />{' '}
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-            </Form>
+            <Row gutter={20}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item initialValue={formData?.qualificationCode} label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                        <Input maxLength={5} minLength={5} placeholder="Code" name="code" />
+                    </Form.Item>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item initialValue={formData?.qualificationName} label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Name')]}>
+                        <Input maxLength={50} placeholder="Name" name="name" />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item label="Status" name="status">
+                    <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                    </Form.Item>
+                </Col>
+            </Row>
         </Drawer>
     );
-}
+};
 
-export const DrawerUtil = DrawerUtilMain;
+export default DrawerUtil;
