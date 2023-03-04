@@ -14,20 +14,9 @@ const receiveDealerHierarchyData = (data) => ({
     data,
 });
 
-// const receiveChangeHistoryData = (data) => ({
-//     type: DEALER_HIERARCHY_CHANGE_HISTORY_DATA_LOADED,
-//     isLoaded: true,
-//     data,
-// });
-
 const dealerHierarchyDataActions = {};
 
-// manufacturerOrgHierarchyDataActions.listShowLoading = (isLoading) => ({
-//     type: DEALER_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
-//     isLoading,
-// });
-
-dealerHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
+dealerHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: DEALER_HIERARCHY_DATA_SHOW_LOADING,
     isLoading,
 });

@@ -4,19 +4,19 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 import styles from 'pages/common/Common.module.css';
-import { geoDataActions } from 'store/actions/data/geo';
+import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 import LeftPanel from 'components/common/LeftPanel';
-import { dealerData } from './test'
+import { dealerData } from './test';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            DealerHierarchy: { isLoaded: isDataLoaded = false, data: dealerHierarchyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        dealerHierarchyData: dealerData || dealerHierarchyData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -39,9 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: dealerHierarchyDataActions.fetchList,
+            saveData: dealerHierarchyDataActions.saveData,
+            listShowLoading: dealerHierarchyDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -51,10 +51,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -70,6 +69,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'title', key: 'id', children: 'children' };
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -88,7 +88,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
-    const finalGeoData = geoData?.map((i) => {
+    const finaldealerHierarchyData = dealerHierarchyData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
@@ -103,14 +103,14 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(finaldealerHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
@@ -142,20 +142,15 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
 
     const onFinish = (values) => {
         //console.log('🚀 ~ file: Dealer.js:147 ~ onFinish ~ values:', values);
-
         // const recordId = formData?.id || '';
         // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-       
-        
         // const onSuccess = (res) => {
         //     form.resetFields();
         //     setForceFormReset(Math.random() * 10000);
-
         //     setReadOnly(true);
         //     setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
         //     setFormVisible(true);
         //     formData && setFormData(data);
-
         //     if (selectedTreeKey && selectedTreeKey.length > 0) {
         //         !recordId && setSelectedTreeKey(codeToBeSaved);
         //         setFormActionType('view');
@@ -163,11 +158,9 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
         //     fetchList({ setIsLoading: listShowLoading, userId });
         // };
-
         // const onError = (message) => {
         //     handleErrorModal(message);
         // };
-
         // const requestData = {
         //     data: [data],
         //     setIsLoading: listShowLoading,
@@ -175,7 +168,6 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         //     onError,
         //     onSuccess,
         // };
-
         // saveData(requestData);
     };
 
@@ -245,15 +237,13 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         }
     };
 
-    const fieldNames = { title: 'title', key: 'id', children:'children'  };
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
         selectedTreeKey,
         selectedTreeSelectKey,
         handleTreeViewClick,
-        treeData: dealerData,
+        treeData: dealerHierarchyData,
         fieldNames,
     };
 
@@ -267,7 +257,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         selectedTreeSelectKey,
         isReadOnly,
         formData,
-        dealerData,
+        dealerHierarchyData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
@@ -282,7 +272,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <LeftPanel {...myProps} />
                     </Col>
-                
+
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {isFormVisible && <AddEditForm {...formProps} />}

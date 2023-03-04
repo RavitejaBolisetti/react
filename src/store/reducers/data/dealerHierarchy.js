@@ -1,4 +1,4 @@
-import { DEALER_HIERARCHY_DATA_LOADED, DEALER_HIERARCHY_DATA_SHOW_LOADING, DEALER_HIERARCHY_SET_FORM_DATA,DEALER_HIERARCHY_SET_FORM_IS_VISIBLE, } from 'store/actions/data/';
+import { DEALER_HIERARCHY_DATA_LOADED, DEALER_HIERARCHY_DATA_SHOW_LOADING, DEALER_HIERARCHY_SET_FORM_DATA, DEALER_HIERARCHY_SET_FORM_IS_VISIBLE } from 'store/actions/data/dealerHierarchy';
 
 const initialState = {
     isLoaded: false,
@@ -9,7 +9,7 @@ const initialState = {
     isHistoryLoading: false,
 };
 
-export const ManufacturerAdminHierarchy = (state = initialState, action) => {
+export const DealerHierarchy = (state = initialState, action) => {
     switch (action.type) {
         case DEALER_HIERARCHY_DATA_LOADED:
             return { ...state, isLoaded: action.isLoaded, data: action.data };
