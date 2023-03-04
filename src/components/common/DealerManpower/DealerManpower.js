@@ -76,13 +76,13 @@ export const DealerManpowerMain = ({ userId, isDataLoaded, geoData, fetchList, h
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -244,7 +244,7 @@ export const DealerManpowerMain = ({ userId, isDataLoaded, geoData, fetchList, h
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    
+
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     const myProps = {
@@ -349,4 +349,4 @@ export const DealerManpowerMain = ({ userId, isDataLoaded, geoData, fetchList, h
     );
 };
 
-export const DealerManpower = connect(mapStateToProps, mapDispatchToProps)(DealerManpowerMain);
+export const DealerManpower = connect(null, null)(DealerManpowerMain);
