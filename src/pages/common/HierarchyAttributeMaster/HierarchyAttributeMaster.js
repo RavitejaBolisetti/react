@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-
 import { FaUserPlus, FaSave, FaUndo } from 'react-icons/fa';
-
-// import TreeView from 'components/common/TreeView';
-// import { GeoTree as TreeView } from './Sample/GeoTree';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
@@ -15,6 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from '../Common.module.css';
 import { PageHeader } from '../PageHeader';
+import { DataTable } from 'utils/dataTable';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -99,20 +95,6 @@ const data = [
     },
 ];
 
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-
-    return returnValue;
-};
-
 export const HierarchyAttributeMasterBase = () => {
     const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
@@ -141,7 +123,7 @@ export const HierarchyAttributeMasterBase = () => {
             <PageHeader {...pageHeaderData} />
             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Hierarchy Attribute Type" name="Hierarchy Attribute" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
                             <Select>
                                 <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
@@ -153,11 +135,10 @@ export const HierarchyAttributeMasterBase = () => {
                             </Select>
                         </Form.Item>
                     </Col>
-                    {/* <Table columns={columns} dataSource={data} pagination={false} /> */}
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table columns={columns} dataSource={data} pagination={false} />
+                        <DataTable tableColumn={columns} tableData={data} />
                     </Col>
                 </Row>
             </Form>
@@ -186,4 +167,4 @@ export const HierarchyAttributeMasterBase = () => {
     );
 };
 
-export const HierarchyAttributeMaster = connect(mapStateToProps, null)(withLayoutMaster(HierarchyAttributeMasterBase));
+export const HierarchyAttributeMaster = withLayoutMaster(HierarchyAttributeMasterBase);

@@ -4,12 +4,14 @@ import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import styles from 'pages/common/Common.module.css';
+import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
-    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProdct' };
+const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
@@ -18,7 +20,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.parntProdctId;
     } else if (formActionType === 'child') {
-        treeCodeId = selectedTreeKey;
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
@@ -30,8 +32,19 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
         if (formActionType === 'sibling') {
             setSelectedTreeKey([treeCodeId]);
         }
+
+        setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+    };
 
     return (
         <>
@@ -40,31 +53,15 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
-                                <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
+                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
-                        <TreeSelect
-                            treeLine={true}
-                            treeIcon={true}
-                            onChange={handleSelectTreeClick}
-                            defaultValue={treeCodeId}
-                            showSearch
-                            dropdownStyle={{
-                                maxHeight: 400,
-                                overflow: 'auto',
-                            }}
-                            placeholder="Select"
-                            allowClear
-                            treeDefaultExpandAll
-                            fieldNames={fieldNames}
-                            treeData={productHierarchyData}
-                            disabled={treeCodeReadOnly || isReadOnly}
-                        />
+                    <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -77,14 +74,14 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="shortName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
+                    <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
                         <Input className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="longName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
+                    <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
                         <TextArea rows={1} placeholder="Type here" {...disabledProps} />
                     </Form.Item>
                 </Col>
