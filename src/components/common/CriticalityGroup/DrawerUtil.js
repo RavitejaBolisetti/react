@@ -11,6 +11,23 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import style from './criticatiltyGroup.module.css';
 
 const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+    const disabledProps = { disabled: isReadOnly };
+    const [selectedTime, setSelectedTime] = useState(null);
+
+    const disabledHours = () => {
+        if (selectedTime) {
+            const hour = selectedTime.hour();
+            return Array.from({ length: hour }, (_, i) => i);
+        }
+        return [];
+    };
+    const disabledMinutes = (hour) => {
+        if (selectedTime && hour === selectedTime.hour()) {
+            const minute = selectedTime.minute();
+            return Array.from({ length: minute }, (_, i) => i);
+        }
+        return [];
+    };
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
@@ -27,7 +44,6 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
         };
     });
 
-    const disabledProps = { disabled: isReadOnly };
     const onClose = () => {
         setDrawer(false);
     };
@@ -120,7 +136,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
                                             },
                                         ]}
                                     >
-                                        <TimePicker format="HH:mm" {...disabledProps} />
+                                        <TimePicker onChange={setSelectedTime} format="HH:mm" {...disabledProps} />
                                     </Form.Item>
                                     <Form.Item
                                         {...restField}
@@ -133,7 +149,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
                                             },
                                         ]}
                                     >
-                                        <TimePicker format="HH:mm" onOk={onOk} {...disabledProps} />
+                                        <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} format="HH:mm" onOk={onOk} {...disabledProps} />
                                     </Form.Item>
                                     <AiOutlineClose {...disabledProps} onClick={() => remove(name)} />
                                 </Space>
