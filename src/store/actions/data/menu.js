@@ -27,7 +27,7 @@ menuDataActions.setFilter = (filter) => ({
     filter,
 });
 
-menuDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
+menuDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, errorAction, data, userId } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
@@ -45,6 +45,7 @@ menuDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
         method: 'get',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -57,7 +58,7 @@ menuDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     axiosAPICall(apiCallParams);
 });
 
-menuDataActions.markFavourite = withAuthToken((params) => (token) => (dispatch) => {
+menuDataActions.markFavourite = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
 
     setIsLoading(true);
@@ -67,6 +68,7 @@ menuDataActions.markFavourite = withAuthToken((params) => (token) => (dispatch) 
         method: 'put',
         url: BASE_URL_MENU_FAVOURITE,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

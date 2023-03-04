@@ -11,8 +11,6 @@ import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 const mapStateToProps = (state) => {
@@ -135,7 +133,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
             setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
             setReadOnly(false);
         }
-        setSelectedTreeKey(keys);
+        setSelectedTreeKey(keys && keys.length > 0 ? keys[0] : undefined);
     };
 
     const handleSelectTreeClick = (value) => {
@@ -144,7 +142,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
     };
 
     const onFinish = (values) => {
-        console.log("🚀 ~ file: Dealer.js:147 ~ onFinish ~ values:", values);
+        console.log('🚀 ~ file: Dealer.js:147 ~ onFinish ~ values:', values);
 
         // const recordId = formData?.id || '';
         // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
@@ -186,7 +184,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleEditBtn = () => {
@@ -334,8 +332,6 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
                         </Form>
                     </Col>
                 </Row>
-
-                <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
             </div>
         </>
     );

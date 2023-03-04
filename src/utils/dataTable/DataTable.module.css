@@ -1,0 +1,25 @@
+.previousPage {
+  margin-top: 0px !important;
+  height: 35px !important;
+
+}
+
+.nextPage {
+  margin-top: 0px !important;
+  height: 35px !important;
+
+}
+
+:global .ant-pagination .ant-pagination-item {
+  height: 35px !important;
+  line-height: 35px !important;
+}
+
+/* :global .ant-pagination .ant-pagination-item-active {
+  color: #ffffff;
+}
+
+:global .ant-pagination .ant-pagination-item-active a {
+  background-color: #ff3e5b;
+  color: #ffffff;
+} */
