@@ -4,12 +4,14 @@ import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import styles from 'pages/common/Common.module.css';
+import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
-    const fieldNames = { label: 'prodctShrtName', value: 'id', children: 'subProdct' };
+const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
@@ -30,8 +32,19 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
         if (formActionType === 'sibling') {
             setSelectedTreeKey([treeCodeId]);
         }
+
+        setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+    };
 
     return (
         <>
@@ -48,23 +61,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, flattern
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
-                        <TreeSelect
-                            treeLine={true}
-                            treeIcon={true}
-                            onChange={handleSelectTreeClick}
-                            defaultValue={treeCodeId}
-                            showSearch
-                            dropdownStyle={{
-                                maxHeight: 400,
-                                overflow: 'auto',
-                            }}
-                            placeholder="Select"
-                            allowClear
-                            treeDefaultExpandAll
-                            fieldNames={fieldNames}
-                            treeData={productHierarchyData}
-                            disabled={treeCodeReadOnly || isReadOnly}
-                        />
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>

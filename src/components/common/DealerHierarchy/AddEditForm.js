@@ -4,12 +4,15 @@ import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateMobileNoField, validateEmailField, validatePanField } from 'utils/validation';
 
 import styles from 'pages/common/Common.module.css';
+import TreeSelectField from '../TreeSelectField';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
+import { dealerData } from './test';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData,fieldNames }) => {
+    console.log(fieldNames,'NameCheck')
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
 
     // const [ active, setActive ] = useState(activeStatus);
@@ -46,6 +49,15 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         { hierarchyAttribueId: 'LOCTN', hierarchyAttribueName: 'Dealer Branch' },
     ];
 
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: dealerData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+    };
+
     const defaultForm = (
         <div>
             <Row gutter={20}>
@@ -61,23 +73,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="dealerParentCode">
-                        <TreeSelect
-                            treeLine={true}
-                            treeIcon={true}
-                            onChange={handleSelectTreeClick}
-                            defaultValue={treeCodeId}
-                            showSearch
-                            dropdownStyle={{
-                                maxHeight: 400,
-                                overflow: 'auto',
-                            }}
-                            placeholder="Select"
-                            allowClear
-                            treeDefaultExpandAll
-                            fieldNames={fieldNames}
-                            treeData={geoData}
-                            disabled={treeCodeReadOnly || isReadOnly}
-                        />
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -114,6 +110,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
     const companyGroupForm = 'companyGroup';
     const gstinGroupForm = 'gstinGroup';
     const branchGroupForm = 'branchGroup';
+
+    
 
     return (
         <>
