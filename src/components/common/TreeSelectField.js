@@ -1,7 +1,7 @@
 import React from 'react';
 import { TreeSelect } from 'antd';
 
-export default function TreeSelectField({ treeFieldNames, treeData, defaultValue, selectedTreeSelectKey, handleSelectTreeClick, treeDisabled = false }) {
+export default function TreeSelectField({ treeFieldNames, treeData, defaultValue, selectedTreeSelectKey, handleSelectTreeClick, placeholder, treeDisabled = false }) {
     return (
         <TreeSelect
             treeLine={true}
@@ -16,7 +16,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 maxHeight: 400,
                 overflow: 'auto',
             }}
-            placeholder="Select"
+            placeholder={placeholder}
             allowClear
             fieldNames={treeFieldNames}
             onChange={handleSelectTreeClick}
