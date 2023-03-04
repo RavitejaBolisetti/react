@@ -51,41 +51,41 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     /* To Do : Need to remove once API deployed Start */
-    const manufacturerAdminHierarchyData = [
-        {
-            id: 'cd614369-0bb2-48a4-9065-282495798070',
-            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
-            manufactureAdminShrtName: 'MAHINDRA THAR ',
-            manufactureAdminCode: 'SCR',
-            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
-            active: 'N',
-            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
-            subManufactureAdmin: [],
-        },
-        {
-            id: 'cd614369-0bb2-48a4-9065-282495798070',
-            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
-            manufactureAdminShrtName: 'MAHINDRA THAR ',
-            manufactureAdminCode: 'SCR',
-            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
-            active: 'N',
-            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
-            subManufactureAdmin: [
-                {
-                    id: 'cd614369-0bb2-48a4-9065-282495798070',
-                    manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
-                    manufactureAdminShrtName: 'MAHINDRA THAR ',
-                    manufactureAdminCode: 'SCR',
-                    manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
-                    active: 'N',
-                    attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
-                    subManufactureAdmin: [],
-                },
-            ],
-        },
-    ];
+    // const manufacturerAdminHierarchyData = [
+    //     {
+    //         id: 'cd614369-0bb2-48a4-9065-282495798070',
+    //         manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+    //         manufactureAdminShrtName: 'MAHINDRA THAR ',
+    //         manufactureAdminCode: 'SCR',
+    //         manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+    //         active: 'N',
+    //         attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+    //         subManufactureAdmin: [],
+    //     },
+    //     {
+    //         id: 'cd614369-0bb2-48a4-9065-282495798070',
+    //         manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+    //         manufactureAdminShrtName: 'MAHINDRA THAR ',
+    //         manufactureAdminCode: 'SCR',
+    //         manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+    //         active: 'N',
+    //         attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+    //         subManufactureAdmin: [
+    //             {
+    //                 id: 'cd614369-0bb2-48a4-9065-282495798070',
+    //                 manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
+    //                 manufactureAdminShrtName: 'MAHINDRA THAR ',
+    //                 manufactureAdminCode: 'SCR',
+    //                 manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
+    //                 active: 'N',
+    //                 attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
+    //                 subManufactureAdmin: [],
+    //             },
+    //         ],
+    //     },
+    // ];
 
     /* To Do : Need to remove once API deployed End */
 
@@ -178,7 +178,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', manufacturerAdminHierarchyParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
@@ -202,7 +202,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -277,7 +277,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    const fieldNames = { title: 'manufactureAdminShrtName', key: 'id', children: 'subManufactureAdmin' };
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     const myProps = {
         isTreeViewVisible,
@@ -286,7 +286,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        dataList: manufacturerAdminHierarchyData,
+        treeData: manufacturerAdminHierarchyData,
     };
 
     return (

@@ -16,7 +16,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.geoParentCode;
     } else if (formActionType === 'child') {
-        treeCodeId = selectedTreeKey;
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;

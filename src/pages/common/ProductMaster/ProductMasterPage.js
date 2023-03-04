@@ -9,17 +9,12 @@ import { ChangeHistory } from 'components/common/ChangeHistory';
 
 import styles from '../Common.module.css';
 
-const onChange = (pagination, filters, sorter, extra) => {
-    // console.log('params', pagination, filters, sorter, extra);
-};
-
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 export const ProductMasterPageBase = () => {
     const [form] = Form.useForm();
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
@@ -148,7 +143,6 @@ export const ProductMasterPageBase = () => {
                                                             id="hierarchyChange"
                                                             className="btn btn-outline srchbtn mr0 boxShdwNon"
                                                             // disabled={props.editableFormContent.editParent}
-                                                            onClick={() => setIsModalOpen(true)}
                                                         >
                                                             <FaSearch />
                                                         </Button>
@@ -221,7 +215,7 @@ export const ProductMasterPageBase = () => {
 
                             <Collapse defaultActiveKey={['1']} expandIconPosition="end">
                                 <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2">
-                                    <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} onChange={onChange} />
+                                    <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} />
                                     <Form>
                                         <Form.Item>
                                             <div className={styles.buttonContainer}>

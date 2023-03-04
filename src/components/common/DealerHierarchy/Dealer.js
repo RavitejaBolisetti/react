@@ -133,7 +133,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
             setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
             setReadOnly(false);
         }
-        setSelectedTreeKey(keys);
+        setSelectedTreeKey(keys && keys.length > 0 ? keys[0] : undefined);
     };
 
     const handleSelectTreeClick = (value) => {

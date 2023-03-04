@@ -7,7 +7,7 @@ import { productHierarchyDataActions } from 'store/actions/data/productHierarchy
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
-
+import { DataTable } from 'utils/dataTable';
 
 const onChange = (pagination, filters, sorter, extra) => {
     // console.log('params', pagination, filters, sorter, extra);
@@ -56,7 +56,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-            
         })
     );
 
@@ -71,14 +70,12 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Attribute',
             dataIndex: 'parentAttributeName',
-            
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'prodctCode',
-            
         })
     );
     tableColumn.push(
@@ -91,7 +88,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Short Description',
             dataIndex: 'prodctShrtDescription',
-            
         })
     );
 
@@ -99,7 +95,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Long Description',
             dataIndex: 'prodctLongDiscription',
-            
         })
     );
 
@@ -121,23 +116,18 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         })
     );
 
+    const tableProps = {
+        isLoading,
+        tableColumn,
+        tableData: changeHistoryData,
+    };
     return (
         <div className={styles.changeHistoryContainer}>
             <div>
                 <h3>Change History</h3>
             </div>
-            <Table
-                loading={isLoading}
-                columns={tableColumn}
-                onChange={onChange}
-                dataSource={changeHistoryData}
-                pagination={{
-                    position: ['bottomLeft'],
-                }}
-                scroll={{
-                    x: 'auto',
-                }}
-            />
+
+            <DataTable {...tableProps} />
         </div>
     );
 };

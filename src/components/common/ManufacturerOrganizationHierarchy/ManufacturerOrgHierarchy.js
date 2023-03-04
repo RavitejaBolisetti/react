@@ -64,7 +64,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
-    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+    const [isChecked, setIsChecked] = useState(formData?.active === 'Y' ? true : false);
 
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
@@ -144,8 +144,8 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.manfacturerOrgHierarchyParentCode) ? values?.manfacturerOrgHierarchyParentCode[0] : values?.manfacturerOrgHierarchyParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', manfacturerOrgHierarchyParentCode: codeToBeSaved };
+        const codeToBeSaved = selectedTreeSelectKey || '';
+        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -168,7 +168,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -254,6 +254,23 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
         handleTreeViewClick,
         treeData: manufacturerOrgHierarchyData,
     };
+    const formProps = {
+        isChecked,
+        setIsChecked,
+        setSelectedTreeKey,
+        flatternData,
+        formActionType,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        isReadOnly,
+        formData,
+        manufacturerOrgHierarchyData,
+        handleSelectTreeClick,
+        isDataAttributeLoaded,
+        attributeData,
+        fieldNames,
+        setSelectedTreeSelectKey,
+    };
     return (
         <>
             <div className={styles.geoSection}>
@@ -266,7 +283,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
                             <ManufacturerOrgHierarchyChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerOrgHierarchyData={manufacturerOrgHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />}
+                                {isFormVisible && <AddEditForm {...formProps} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (

@@ -5,6 +5,9 @@ import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministr
 import { HierarchyAttributeMaster as HierarchyAttributeMasterPage } from './HierarchyAttributeMaster/HierarchyAttributeMaster';
 import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarchy';
 import { DealerHierarchyPage } from './DealerHierarchy';
+import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { BranchDealerMappingPage } from './BranchDealerMapping';
 
-export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage,BranchDealerMappingPage };
+import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
+
+export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage,BranchDealerMappingPage };
