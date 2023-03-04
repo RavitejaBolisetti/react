@@ -1,38 +1,31 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React ,{useState} from 'react';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { Geo } from 'components/common/Geo';
 
-const mapStateToProps = (state) => {
-    const {
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        collapsed,
-    };
-    return returnValue;
-};
-
 export const GeoPageBase = (props) => {
+    const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
+
+    const handleChangeHistoryClick = (e) => {
+        setChangeHistoryVisible(!isChangeHistoryVisible);
+    };
     const pageTitle = 'Geographical Hierarchy';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
         showChangeHisoty: true,
-        visibleChangeHistory: false,
+        visibleChangeHistory: true,
+        handleChangeHistoryClick,
+        isChangeHistoryVisible
     };
-
+    
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <Geo />
+            <Geo isChangeHistoryVisible={isChangeHistoryVisible}/>
         </>
     );
 };
 
-export const GeoPage = connect(mapStateToProps, null)(withLayoutMaster(GeoPageBase));
+export const GeoPage = withLayoutMaster(GeoPageBase);

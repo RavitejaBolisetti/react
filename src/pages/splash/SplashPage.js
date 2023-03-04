@@ -19,6 +19,7 @@ const SplashPageBase = ({ isLoggedIn }) => {
             setIsLoading(false);
             navigate(isLoggedIn ? ROUTING_DASHBOARD : ROUTING_LOGIN);
         }, 3000);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

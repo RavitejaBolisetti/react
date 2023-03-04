@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 };
 
 export const ApplicationMasterBase = (props) => {
-    const pageTitle = 'Application Master';
+    const pageTitle = 'APPLICATION MASTER';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

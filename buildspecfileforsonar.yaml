@@ -1,35 +1,41 @@
 version: 0.2
 phases:
-  install:
-    runtime-versions:
-      nodejs: latest
-  pre_build:
-    commands:
-      - npm i
-      #- npm install -D typescript
-     # - npm install -D ts-node
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
-      - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
-      - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-      - echo -e "sonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
-      - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
-      - source /etc/profile.d/sonar-scanner.sh
-      - pwd
-      - sonar-scanner -v
-  build:
-    commands:
-      - echo Build started on `date`
-      - echo Compiling the dist folder
-      - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_b771cabb9d2dad50b07ac617a850534527cf7fc7
-      #- npm run sonar
-  post_build:
-    commands:
-      - echo Build completed on `date`
+    install:
+        runtime-versions:
+            nodejs: latest
+    pre_build:
+        commands:
+            - npm i
+            #- npm install -D typescript
+            # - npm install -D ts-node
+            - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+            - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+            - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
+            - echo -e "sonar.host.url=http://a934e6c4cbd784869b91f275de6a396e-1142816301.ap-south-1.elb.amazonaws.com/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+            - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
+            - source /etc/profile.d/sonar-scanner.sh
+            - pwd
+            - npm install -D sonarqube-scanner
+    build:
+        commands:
+            - echo Build started on `date`
+            - echo Compiling the dist folder
+            - npm test -- --coverage
+            - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://internal-a7472bc5cc852487f9ecb8f22c8f63f8-93001103.ap-south-1.elb.amazonaws.com/ -Dsonar.login=squ_91ce6bda1fe001a5607024f0f71e698b5dc2fb10
+    post_build:
+        commands:
+            - echo Build completed on `date`
 # Include only the files required for your application to run.
 artifacts:
-  files:
-    - '**/*'
-  base-directory: 'build'
+    files:
+        - '**/*'
+    base-directory: 'build'
 cache:
-  paths:
-    - 'node_modules/**/*'
+    paths:
+        - 'node_modules/**/*'
+reports:
+    jest_reports:
+        files:
+            - 'coverage/lcov.info'
+        file-format: 'JUNITXML'
+        base-directory: 'coverage'

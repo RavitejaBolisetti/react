@@ -1,371 +1,403 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
-import { addToolTip } from 'utils/customMenuLink';
-
+import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
-import { Input, Select, Switch, TreeSelect, Collapse, Space, Table, Modal } from 'antd';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import styles from 'pages/common/Common.module.css';
 import TreeView from 'components/common/TreeView';
 import LocationTable from './LocationTable';
 
-const { Option } = Select;
-const { Panel } = Collapse;
-const { confirm } = Modal;
+import styles from 'pages/common/Common.module.css';
+import { addToolTip } from 'utils/customMenuLink';
+import { geoDataActions } from 'store/actions/data/geo';
+import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+// import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+// import { ParentHierarchy } from '../parentHierarchy';
+import AddEditForm from './AddEditForm';
 
-const showConfirm = () => {
-    confirm({
-        title: 'Do you Want to delete these items?',
-        icon: <ExclamationCircleFilled />,
-        content: 'Some descriptions',
-        onOk() {
-            // console.log('OK');
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
-        onCancel() {
-            // console.log('Cancel');
+        common: {
+            LeftSideBar: { collapsed = false },
         },
-    });
-};
+    } = state;
 
-const bottomOptions = [
-    {
-        label: 'bottomLeft',
-        value: 'bottomLeft',
-    },
-    {
-        label: 'bottomCenter',
-        value: 'bottomCenter',
-    },
-    {
-        label: 'bottomRight',
-        value: 'bottomRight',
-    },
-    {
-        label: 'none',
-        value: 'none',
-    },
-];
-
-const rendInput = (key) => {
-    return (
-        <Form>
-            <Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
-                <Input placeholder={key} />
-            </Form.Item>
-        </Form>
-    );
-};
-
-const rendSwitch = (key) => {
-    return (
-        <Form>
-            <Form.Item name={key}>
-                <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
-            </Form.Item>
-        </Form>
-    );
-};
-
-const rendDeleteEdit = (key) => {
-    return (
-        <Form>
-            <Form.Item name={key}>
-                <Space>
-                    <EditOutlined />
-                    <DeleteOutlined onClick={showConfirm} />
-                </Space>
-            </Form.Item>
-        </Form>
-    );
-};
-
-const onSubmit = (e) => {
-    // form.validateFields()
-    // .then((err, values) => {
-    //     // console.log('🚀 ~ file: GeoPage.js:17 ~ validateFields ~ values', values, err);
-    // })
-    // .catch((errorInfo) => {
-    //     // console.log('🚀 ~ file: GeoPage.js:20 ~ validateFields ~ errorInfo', errorInfo);
-    // });
-};
-
-const tblPrepareColumns = ({ title, dataIndex }) => {
-    return {
-        title,
-        dataIndex,
-        // render:rendFn,
+    let returnValue = {
+        collapsed,
+        userId,
+        isDataLoaded,
+        geoData,
+        isDataAttributeLoaded,
+        attributeData: attributeData?.filter((i) => i),
     };
+    return returnValue;
 };
 
-const tableColumn = [];
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Code',
-        dataIndex: 'Code',
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Description',
-        dataIndex: 'Description',
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'T&C Required',
-        dataIndex: 'TC',
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: 'Digital Signature Required',
-        dataIndex: 'DigiSignature',
-    })
-);
-tableColumn.push(
-    tblPrepareColumns({
-        title: '',
-        dataIndex: 'DeleteEdit',
-    })
-);
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: geoDataActions.fetchList,
+            saveData: geoDataActions.saveData,
+            listShowLoading: geoDataActions.listShowLoading,
 
-const dataSource = [
-    {
-        Code: rendInput('Enter Code'),
-        Description: rendInput('Enter Data'),
-        TC: rendSwitch('1'),
-        DigiSignature: rendSwitch('2'),
-        DeleteEdit: rendDeleteEdit('1'),
-    },
-    {
-        Code: rendInput('Enter Code'),
-        Description: rendInput('Enter Data'),
-        TC: rendSwitch('1'),
-        DigiSignature: rendSwitch('2'),
-        DeleteEdit: rendDeleteEdit('2'),
-    },
-];
+            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
 
-const columns = [
-    {
-        title: 'Action ID',
-        dataIndex: 'Action ID',
-        key: 'Action ID',
-        render: () => <Input placeholder="MT0001" />,
-        width: 150,
-    },
-    {
-        title: 'Action Name',
-        dataIndex: 'Action Name',
-        key: 'Action Name',
-        render: (text) => <Input placeholder="Name" />,
-        width: 400,
-    },
-    {
-        title: 'Status',
-        dataIndex: 'Status',
-        key: 'address 4',
-        render: () => <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />,
-    },
-    {
-        title: '',
-        dataIndex: '',
-        width: 100,
-        render: () => [
-            <Space wrap>
-                {/* <EditOutlined /> */}
-                <DeleteOutlined onClick={showConfirm} />
-            </Space>,
-        ],
-    },
-];
-const data = [
-    {
-        key: '1',
-        name: '',
-    },
-    {
-        key: '2',
-        name: '',
-    },
-];
 
-export const ApplicationMasterMain = () => {
+
+const mockgeoData = [{
+    "id": "067c09fd-c6d2-4962-8743-76b553d71d5e",
+    "geoCode": "GJ",
+    "geoName": "Appl 1",
+    "attributeKey": "0eb57e6b-af05-4689-8e61-c9db39b6e85d",
+    "geoParentCode": "APE",
+    "isActive": "N",
+    "subGeo": [
+      {
+        "id": "861c41f4-d831-4dff-b6a4-04678b4f7d17",
+        "geoCode": "SUR",
+        "geoName": "MEE",
+        "attributeKey": "0eb57e6b-af05-4689-8e61-c9db39b6e85d",
+        "geoParentCode": "067c09fd-c6d2-4962-8743-76b553d71d5e",
+        "isActive": "N",
+        "subGeo": [
+          {
+            "id": "bc386fc4-a79b-4b68-b05c-5f769d431a2e",
+            "geoCode": "677677",
+            "geoName": "677677",
+            "attributeKey": "a9999d08-b89e-4806-beed-efa0a14b4cc1",
+            "geoParentCode": "861c41f4-d831-4dff-b6a4-04678b4f7d17",
+            "isActive": "N",
+            "subGeo": []
+          },]
+        
+      },]
+}]
+
+export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+    const [applicationform ] = Form.useForm();
+    const [applicationActionsform] = Form.useForm();
+    const [documentTypesform] = Form.useForm();
+    const [accessibleDealerLocationsform] = Form.useForm();
+       
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+
+    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
+    const [formActionType, setFormActionType] = useState('');
+
+    const [formData, setFormData] = useState([]);
+    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+
+    const [isFormVisible, setFormVisible] = useState(false);
+    const [isReadOnly, setReadOnly] = useState(false);
+    const [forceFormReset, setForceFormReset] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const [openAccordian, setOpenAccordian] = useState('1');
+
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, isDataAttributeLoaded]);
+
+    useEffect(() => {
+        // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        // form.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [forceFormReset]);
+
+    const finalGeoData = mockgeoData?.map((i) => {
+        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
+    });
+
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
     const [bottom, setBottom] = useState('bottomLeft');
 
+    const dataList = [];
+    const generateList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const node = data[i];
+            const { id: key } = node;
+            dataList.push({
+                key,
+                data: node,
+            });
+            if (node.subGeo) {
+                generateList(node.subGeo);
+            }
+        }
+        return dataList;
+    };
+
+    const flatternData = generateList(finalGeoData);
+
+    const handleTreeViewClick = (keys) => {
+        setForceFormReset(Math.random() * 10000);
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
+        // form.resetFields();
+        setFormVisible(false);
+        setFormData([]);
+
+        if (keys && keys.length > 0) {
+            setFormActionType('view');
+            const formData = flatternData.find((i) => keys[0] === i.key);
+            formData && setFormData(formData?.data);
+
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+            setFormVisible(true);
+            forceUpdate();
+            setReadOnly(true);
+        } else {
+            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
+            setReadOnly(false);
+        }
+        setSelectedTreeKey(keys);
+    };
+
+    const handleSelectTreeClick = (value) => {
+        // setSelectedTreeKey([value]);
+        setSelectedTreeSelectKey(value);
+    };
+
+
+    const onFinish = (values) => {
+
+        let detailApplicationformValues;
+        let applicationActionsformValues;
+        let documentTypesformValues;
+        let accessibleDealerLocationsformValues;
+
+        applicationform.validateFields().then((values) => {
+            detailApplicationformValues = values;
+
+            applicationActionsform.validateFields().then((values) => {
+                if( !values[0] ) return setOpenAccordian("2");   
+                applicationActionsformValues = Object.entries(values).map(([key, va]) => (va));
+
+                documentTypesform.validateFields().then((values) => {
+                    if( !values[0] )return setOpenAccordian("3");   
+                    documentTypesformValues = Object.entries(values).map(([key, va]) => (va));
+
+                    accessibleDealerLocationsform.validateFields().then((values) => {
+                        if( !values[0] ) setOpenAccordian("4");   
+                        accessibleDealerLocationsformValues = Object.entries(values).map(([key, va]) => (va));
+                        // submit FORM HERE
+                        console.log("SUBMITTED Array val ===> ",detailApplicationformValues, applicationActionsformValues, documentTypesformValues, accessibleDealerLocationsformValues)
+                        console.log("<<== SUBMITTED ==>>")
+
+                    }).catch(err => {
+                        console.log("errrr4",err)
+                        if(err.errorFields.length) setOpenAccordian("4")
+    
+                    })
+
+
+                }).catch(err => {
+                    console.log("errrr3",err)
+                    if(err.errorFields.length) setOpenAccordian("3")
+                });
+
+
+            }).catch(err => {
+                console.log("errrr",err.errorFields.length)
+                if(err.errorFields.length) setOpenAccordian("2")
+            });
+            
+            
+        }).catch(err => {
+            console.log("errrr",err.errorFields.length)
+            if(err.errorFields.length)return setOpenAccordian("1"); 
+        });
+
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        // form.validateFields().then((values) => {});
+    };
+
+    const handleEditBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+
+        const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        formData && setFormData(formData?.data);
+        setFormActionType('edit');
+
+        setReadOnly(false);
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true });
+    };
+
+    const handleRootChildBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+        setFormActionType('rootChild');
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        // form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleChildBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+        setFormActionType('child');
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        // form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleSiblingBtn = () => {
+        setForceFormReset(Math.random() * 10000);
+
+        setFormActionType('sibling');
+        setFormVisible(true);
+        setReadOnly(false);
+        setFormData([]);
+        // form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+    };
+
+    const handleResetBtn = () => {
+        setForceFormReset(Math.random() * 10000);;
+        applicationform.resetFields();
+        applicationActionsform.resetFields();
+        documentTypesform.resetFields();
+        accessibleDealerLocationsform.resetFields();
+    };
+
+    const handleBack = () => {
+        setReadOnly(true);
+        setForceFormReset(Math.random() * 10000);
+        if (selectedTreeKey && selectedTreeKey.length > 0) {
+            const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+            formData && setFormData(formData?.data);
+            setFormActionType('view');
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+        } else {
+            setFormActionType('');
+            setFormVisible(false);
+            setButtonData({ ...defaultBtnVisiblity });
+        }
+    };
+
+
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
     return (
         <>
-            <Row gutter={20}>
-                <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
-                    {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                </div>
-            </Row>
-            <Row>
-                {isTreeViewVisible ? (
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <div className={styles.leftpanel}>
-                            <div className={styles.treeViewContainer}>
-                                <div className={styles.treemenu}>
-                                    <TreeView />
+            <div className={styles.geoSection}>
+                <Row gutter={20}>
+                    <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
+                        {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
+                    </div>
+                </Row>
+                <Row gutter={20}>
+                    {isTreeViewVisible ? (
+                        <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                            <div className={styles.leftpanel}>
+                                <div className={styles.treeViewContainer}>
+                                    <div className={styles.treemenu}>
+                                        <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={mockgeoData} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Col>
-                ) : undefined}
-
-                <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
-                    <Collapse defaultActiveKey={['1']} expandIconPosition="end">
-                        <Panel header="Application Details" key="1">
-                            <Form layout="vertical">
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Application ID" label="Application ID" rules={[validateRequiredSelectField('Application ID')]}>
-                                            <Input placeholder="Type code here" />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Application Name" label="Application Name" rules={[validateRequiredSelectField('Application Name')]}>
-                                            <Input placeholder="Type code here" />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Application Title" label="Application Title" rules={[validateRequiredSelectField('Application Type')]}>
-                                            <Input placeholder="Type code here" />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Application Type" label="Application Type" rules={[validateRequiredSelectField('Application Type')]}>
-                                            <Input placeholder="Type code here" />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Parent Application ID" label="Parent Application ID" rules={[validateRequiredSelectField('Parent Application ID')]}>
-                                            <Select>
-                                                <Option></Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Application Criticality Group" label="Application Criticality Group" rules={[validateRequiredSelectField('Application Criticality Group')]}>
-                                            <Select>
-                                                <Option></Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Accessible Locations" label="Accessible Locations" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                                            <Select>
-                                                <Option>Select</Option>
-                                                <Option>Accessible to all</Option>
-                                                <Option>Not accessible to all</Option>
-                                                <Option>Restricted Accessible</Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Document No. to be generated" label="Document No. to be generated" rules={[validateRequiredSelectField('Document No. to be generated')]}>
-                                            <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item name="Status" label="Status" rules={[validateRequiredSelectField('Status')]}>
-                                            <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </Panel>
-                    </Collapse>
-                    <Collapse defaultActiveKey={['1']} expandIconPosition="end">
-                        <Panel header="Application Actions" key="2">
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Table columns={columns} dataSource={data} pagination={false} />
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer} style={{ marginTop: '15px' }}>
-                                            <Button danger>
-                                                <FaUserPlus className={styles.buttonIcon} />
-                                                Add Row
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Panel>
-                    </Collapse>
-                    <Collapse defaultActiveKey={['1']} expandIconPosition="end">
-                        <Panel header="Document Types" key="3">
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Table
-                                        columns={tableColumn}
-                                        dataSource={dataSource}
-                                        pagination={{
-                                            position: [bottom],
-                                        }}
-                                        scrollable={true}
-                                    />
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                            <Button danger>
-                                                <FaUserPlus className={styles.buttonIcon} />
-                                                Add Row
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Panel>
-                    </Collapse>
-                    <Collapse defaultActiveKey={['1']} expandIconPosition="end">
-                        <Panel header="Accessible Dealer Locations" key="3">
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <LocationTable />
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                            <Button danger>
-                                                <FaUserPlus className={styles.buttonIcon} />
-                                                Add Row
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Panel>
-                    </Collapse>
-
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ marginTop: '10px' }}>
-                            <div className={styles.buttonContainer}>
-                                <Button htmlType="submit" danger onClick={onSubmit}>
-                                    <FaSave className={styles.buttonIcon} />
-                                    Save
-                                </Button>
-                                <Button danger>
-                                    <FaUndo className={styles.buttonIcon} />
-                                    Reset
-                                </Button>
-                            </div>
                         </Col>
-                    </Row>
-                </Col>
-            </Row>
+                    ) : undefined}
+
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                        {/* <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
+                            {/* {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={mockgeoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />} */}
+                            {isFormVisible &&  <AddEditForm setOpenAccordian={setOpenAccordian}  openAccordian={openAccordian} applicationform={applicationform} applicationActionsform={applicationActionsform} documentTypesform={documentTypesform} accessibleDealerLocationsform={accessibleDealerLocationsform} setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={mockgeoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen}  /> }
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                    {buttonData?.editBtn && (
+                                        <Button danger onClick={() => handleEditBtn()}>
+                                            <FaEdit className={styles.buttonIcon} />
+                                            Edit
+                                        </Button>
+                                    )}
+
+                                    {buttonData?.rootChildBtn && (
+                                        <Button danger onClick={() => handleRootChildBtn()}>
+                                            <FaUserPlus className={styles.buttonIcon} />
+                                            Add Child
+                                        </Button>
+                                    )}
+
+                                    {buttonData?.childBtn && (
+                                        <Button danger onClick={() => handleChildBtn()}>
+                                            <FaUserPlus className={styles.buttonIcon} />
+                                            Add Child
+                                        </Button>
+                                    )}
+
+                                    {buttonData?.siblingBtn && (
+                                        <Button danger onClick={() => handleSiblingBtn()}>
+                                            <FaUserFriends className={styles.buttonIcon} />
+                                            Add Sibling
+                                        </Button>
+                                    )}
+
+                                    {isFormVisible && (
+                                        <>
+                                            {buttonData?.cancelBtn && (
+                                                <Button danger onClick={() => handleBack()}>
+                                                    <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                    Cancel
+                                                </Button>
+                                            )}
+
+                                            {buttonData?.saveBtn && (
+                                                <Button onClick={onFinish} danger>
+                                                    <FaSave className={styles.buttonIcon} />
+                                                    Save
+                                                </Button>
+                                            )}
+
+                                            {buttonData?.resetBtn && (
+                                                <Button danger onClick={handleResetBtn}>
+                                                    <FaUndo className={styles.buttonIcon} />
+                                                    Reset
+                                                </Button>
+                                            )}
+
+                                        </>
+                                    )}
+                                </Col>
+                            </Row>
+                        {/* </Form> */}
+                    </Col>
+                </Row>
+
+                {/* <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} /> */}
+            </div>
         </>
     );
 };
 
-export const ApplicationMaster = connect(null, null)(ApplicationMasterMain);
+// export const Geo = connect(mapStateToProps, mapDispatchToProps)(GeoMain);
+
+
+export const ApplicationMaster = connect(mapStateToProps, mapDispatchToProps)(ApplicationMasterMain);

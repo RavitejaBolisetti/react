@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
-import { Table, Switch, Form, Select, Row, Col, Button,  Input,  Collapse } from 'antd';
+import { Table, Switch, Form, Select, Row, Col, Button, Input, Collapse } from 'antd';
 import { FaSave, FaUserFriends, FaUserPlus, FaEdit, FaUndo, FaSearch } from 'react-icons/fa';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { ChangeHistory } from 'components/common/ChangeHistory';
-import { ParentHierarchy } from 'components/common/parentHierarchy/ParentHierarchy';
 
 import styles from '../Common.module.css';
-
-const onChange = (pagination, filters, sorter, extra) => {
-    // console.log('params', pagination, filters, sorter, extra);
-};
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -20,7 +15,6 @@ const { Panel } = Collapse;
 export const ProductMasterPageBase = () => {
     const [form] = Form.useForm();
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
@@ -94,7 +88,7 @@ export const ProductMasterPageBase = () => {
         },
     ];
 
-      return (
+    return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.paddingRightZero}>
@@ -149,7 +143,6 @@ export const ProductMasterPageBase = () => {
                                                             id="hierarchyChange"
                                                             className="btn btn-outline srchbtn mr0 boxShdwNon"
                                                             // disabled={props.editableFormContent.editParent}
-                                                            onClick={() => setIsModalOpen(true)}
                                                         >
                                                             <FaSearch />
                                                         </Button>
@@ -222,7 +215,7 @@ export const ProductMasterPageBase = () => {
 
                             <Collapse defaultActiveKey={['1']} expandIconPosition="end">
                                 <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2">
-                                    <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} onChange={onChange} />
+                                    <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} />
                                     <Form>
                                         <Form.Item>
                                             <div className={styles.buttonContainer}>
@@ -239,7 +232,6 @@ export const ProductMasterPageBase = () => {
                     )}
                 </Col>
             </Row>
-            <ParentHierarchy title={'Parent Hierarchy'} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
         </>
     );
 };

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { Form, Row, Col, Button, Input, message } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { FiLock } from 'react-icons/fi';
+import { BiUser } from 'react-icons/bi';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
@@ -14,6 +14,8 @@ import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
+import ReactRecaptcha3 from 'react-google-recaptcha3';
+import Footer from '../Footer';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -33,7 +35,11 @@ const mapStateToProps = (state) => {
     };
 
     if (isError || returnValue.isUnauthenticated) {
-        returnValue = { ...returnValue, errorTitle: authApiCall.title, errorMessage: authApiCall.message };
+        returnValue = {
+            ...returnValue,
+            errorTitle: authApiCall.title,
+            errorMessage: authApiCall.message,
+        };
     }
 
     return returnValue;
@@ -45,26 +51,31 @@ const mapDispatchToProps = {
     doCloseUnAuthenticatedError,
 };
 
+const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
-    const recaptchaRef = React.useRef(null);
-    const [captcha, setCaptcha] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const navigate = useNavigate();
     useEffect(() => {
-        doCloseLoginError();
+        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
+            console.log(status, 'status');
+        });
 
-        form.resetFields();
-        setCaptcha('');
-        recaptchaRef.current.reset();
+        return () => {
+            ReactRecaptcha3.destroy();
+            form.resetFields();
+            doCloseLoginError();
+        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [GOOGLE_CAPTCHA_SITE_KEY]);
+
+    const navigate = useNavigate();
 
     const onSuccess = () => {
         setIsLoading(false);
+        ReactRecaptcha3.destroy();
         navigate(ROUTING_DASHBOARD);
     };
 
@@ -74,27 +85,21 @@ const Login = (props) => {
 
     const onFinish = (values) => {
         setIsLoading(true);
-        if (captcha) {
-            doLogin(values, loginPageIsLoading, onSuccess, onError);
-        } else {
-            message.error('Please select Captcha');
-            setIsLoading(false);
-        }
+        ReactRecaptcha3.getToken().then(
+            (captchaCode) => {
+                if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
+            },
+            (error) => {
+                message.error(error || 'Please select Captcha');
+                setIsLoading(false);
+            }
+        );
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
 
-    const onReCAPTCHAChange = async (captchaCode) => {
-        // If the reCAPTCHA code is null or undefined indicating that
-        // the reCAPTCHA was expired then return early
-        if (!captchaCode) {
-            return;
-        } else {
-            setCaptcha(captchaCode);
-        }
-    };
     return (
         <>
             <div className={styles.loginSection}>
@@ -103,7 +108,9 @@ const Login = (props) => {
                 </div>
                 <div className={styles.center}>
                     <div className={styles.loginLogoSection}>
-                        <img src={IMAGES.RL_LOGO} alt="" />
+                        <img src={IMAGES.RL_LOGO} className={styles.mainLogo} alt="" />
+                        <br></br>
+                        <img src={IMAGES.LINE} className={styles.mainLogoLine} alt="" />
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
@@ -111,44 +118,41 @@ const Login = (props) => {
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
-                                        <div className={styles.center}>
+                                        <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h4>Welcome!</h4>
+                                                    <h1>Welcome!</h1>
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            {<Input prefix={<AiOutlineMail size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
-                                                            {/* As discussed with Rahul */}
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<AiOutlineLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
                                                         </Form.Item>
+                                                        <div className={styles.forgotPasswordLink}>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                        </div>
                                                     </Col>
                                                 </Row>
+
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <ReCAPTCHA className={'g-recaptcha'} ref={recaptchaRef} size="normal" theme="dark" border="" sitekey={process.env.REACT_APP_GOOGLE_SITW_KEY} onChange={onReCAPTCHAChange} />
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button className={styles.button} style={{ marginTop: '20px' }} type="primary" htmlType="submit" loading={isLoading}>
+                                                        <Button className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
                                                     </Col>
                                                 </Row>
-                                                {/* <div className="hr"></div> */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.loginFooter} type="radio">
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                        <div className={styles.loginFooter}>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -176,6 +180,7 @@ const Login = (props) => {
                         )}
                     </div>
                 </div>
+                <Footer />
             </div>
         </>
     );
