@@ -11,6 +11,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import styles from '../Common.module.css';
+import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -69,19 +70,19 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [editRow, setEditRow] = useState({});
     const [showDrawer, setShowDrawer] = useState(false);
     const [checkfields, setCheckFields] = useState(false);
-    const [ForceReset, setForceReset] = useState(false);
+    const [ForceReset, setForceReset] = useState();
     const [UpdatedTableData, setUpdatedTableData] = useState([]);
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    console.log('outside',detailData?.hierarchyAttribute);
+    console.log('outside', detailData?.hierarchyAttribute);
     useEffect(() => {
         if (!isDataLoaded) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
-            forceUpdate(Math.random()*1000);
+            forceUpdate(Math.random() * 1000);
         }
         if (detailData?.hierarchyAttribute) {
             console.log('Running');
-            forceUpdate(Math.random()*1000);
+            forceUpdate(Math.random() * 1000);
             setRowsData(detailData?.hierarchyAttribute);
         }
         // if(detailData?.hierarchyAttribute){
@@ -90,7 +91,12 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         //         ));
         // };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded ]);
+    }, [isDataLoaded, isDataAttributeLoaded]);
+
+    useEffect(() => {
+        form.resetFields();
+        setEditRow({});
+    }, [ForceReset]);
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -188,7 +194,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: (record) => {
+            render: (record, values) => {
                 return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
             // render: (text, record, index) => {
@@ -200,9 +206,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     tableColumn.push(
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
-            dataIndex: 'duplicateAllowedAtDifferentParent',
+            dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
             render: (record) => {
+                console.log('Sorry baby', record);
+
                 return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
             // render: (text, record, index) => {
@@ -318,7 +326,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         <>
             {/* <Form preserve={false} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
             <Row gutter={20}>
-                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item layout="vertical" name="hierarchyAttribueType" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
                         <Select onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                             {attributeData?.map((item) => (
@@ -327,10 +335,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11}></Col>
+
                 {detailData?.hierarchyAttribueId && (
-                    <Col xs={3} sm={3} md={3} lg={3} xl={3} xxl={3}>
-                        <Button danger onClick={handleAdd}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Button danger onClick={handleAdd} className={style2.floatRight}>
                             <AiOutlinePlus className={styles.buttonIcon} />
                             Add Row
                         </Button>
@@ -348,7 +356,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                 </>
             )}
             {/* </Form> */}
-            {showDrawer && <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} />}
+            <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
         </>
     );
 };

@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import styles from '../Common.module.css';
+import style2 from './HierarchyAttribute.module.css';
 import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
 
 const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData }) => {
-    const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
-    const [switcher, setSwitcher] = useState({
-        duplicateAllowedAtAttributerLevelInd: 'Inactive',
-        duplicateAllowedAtOtherParent: 'Inactive',
-        hierarchyAttribueCode: 'Inactive',
-        hierarchyAttribueCode: 'Inactive',
-    });
+    const [editrowsetter, seteditrowsetter] = useState();
+    const [saverandnew, setsaverandnew] = useState();
+    useEffect(() => {
+        form.resetFields();
+        form.setFieldValue(editRow);
+    }, [editRow]);
+
+    useEffect(() => {
+        form.resetFields();
+        setEditRow({});
+    }, [saverandnew]);
 
     console.log('editRow', editRow);
     //   const showDrawer = () => {
@@ -21,39 +26,32 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
     const handleReset = () => {
         form.resetFields();
     };
-
+    const SaveAndNew = () => {
+        setsaverandnew(Math.random() * 1000);
+    };
     const onClose = () => {
-        form.resetFields();
         setShowDrawer(false);
-        setEditRow({});
     };
 
     return (
         <Drawer
             title="Hierarchy Attribute Master"
             footer={
-                <>
-                    <Row gutter={20} justify="end">
-                        <Col span={4}>
-                            {' '}
-                            <Form.Item>
-                                <Button form="myform" type="primary" htmlType="submit">
-                                    <FaSave className={styles.buttonIcon} />
-                                    Save
-                                </Button>
-                            </Form.Item>
-                        </Col>
-                        <Col span={4}>
-                            {' '}
-                            <Form.Item>
-                                <Button form="myform" danger onClick={handleReset}>
-                                    <FaUndo className={styles.buttonIcon} />
-                                    Reset
-                                </Button>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </>
+                <Row gutter={20}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style2.drawerFooterButtons}>
+                        <Button danger onClick={onClose}>
+                            Cancel
+                        </Button>
+                    </Col>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style2.drawerFooterButtons} style={{ textAlign: 'right' }}>
+                        <Button form="myForm" key="submit" htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                        <Button onClick={SaveAndNew} form="myForm" key="submit" htmlType="submit" type="primary">
+                            Save and New
+                        </Button>
+                    </Col>
+                </Row>
             }
             width="540"
             placement="right"
@@ -70,12 +68,12 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                 <Form id="myform" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be maximum 5 characters.' }, { required: true, message: 'Please Enter Code' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueCode'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, { required: true, message: 'Please Enter Code' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueCode'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 3, message: 'Name must be minimujm 3 characters.' },{ max: 50, message: 'Name must be maximum 50 characters.' }, { required: true, message: 'Please Enter Name' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueName'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, { required: true, message: 'Please Enter Name' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueName'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
