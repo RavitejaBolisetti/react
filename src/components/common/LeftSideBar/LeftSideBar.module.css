@@ -1,4 +1,4 @@
-.leftMenuBox :global .ant-layout .ant-layout-sider-trigger {
+/* .leftMenuBox :global .ant-layout .ant-layout-sider-trigger {
   position: fixed;
   width: 24px !important;
   top: 3px;
@@ -10,16 +10,16 @@
   background: #ffffff;
   cursor: pointer;
   transition: all 0.2s;
-}
+} */
 
-.menuTitle {
+/* .menuTitle {
   font-size: 16px;
   margin-top: -10px;
-}
+} */
 
-.menuIcon {
+/* .menuIcon {
   font-size: 40px;
-}
+} */
 
 :global .ant-layout-sider-zero-width-trigger {
   display: none !important;
@@ -30,9 +30,19 @@
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
-  box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important;
+  /* box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important; */
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 3px rgba(0, 0, 0, .2) !important;
   background-color: #f4f4f4 !important;
   z-index: 99 !important;
+}
+
+.leftMenuBox li.subMenuParent {
+  min-height: 40px;
+}
+
+.leftMenuBox li.subMenuParent:hover {
+  color: #ea2929 !important;
+  background: none !important;
 }
 
 .closeButton {
@@ -43,6 +53,17 @@
   cursor: pointer;
 }
 
+:global .ant-menu-title-content a {
+  color: #000000 !important;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+:global .ant-menu-title-content a:hover {
+  color: #ea2929 !important;
+}
+
 :global .ant-input-group-wrapper {
   vertical-align: inherit;
 }
@@ -50,7 +71,7 @@
 :global .ant-layout .ant-layout-sider-trigger {
   position: absolute;
   width: 0px !important;
-  top: 20px;
+  top: 23px;
   z-index: 1;
   /* height: 48px; */
   color: #ea2929;
@@ -65,7 +86,7 @@
 /* icon for collapse position when not collapsed */
 :global .ant-layout .ant-layout-sider-trigger .anticon-left {
   position: absolute;
-  left: 210px;
+  left: 208px;
 }
 
 /* icon for collapse position when collapsed */
@@ -79,9 +100,16 @@
   background-color: transparent;
 }
 
-:global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+/* :global .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   background-color: transparent;
-  padding-left: 20px !important;
+  padding-left: 22px !important;
+} */
+
+/* font-family & size for sub-menu in left-menu text */
+:global .ant-menu .ant-menu-sub {
+  font-size: 14px;
+  background-color: #f4f4f4 !important;
+  padding-left: 22px !important;
 }
 
 :global .ant-menu .ant-menu-item .ant-menu-item-icon+span,
@@ -91,28 +119,32 @@
   padding-left: 20px !important;
 }
 
-:global .ant-menu .ant-menu-item .ant-menu-item-icon+span:hover,
+/* :global .ant-menu .ant-menu-item .ant-menu-item-icon+span:hover,
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span:hover,
 :global .ant-menu .ant-menu-item .anticon+span:hover,
 :global .ant-menu .ant-menu-submenu-title .anticon+span:hover {
   background: #f4f4f4 !important;
   color: #ea2929 !important;
   width: 100%;
-}
+} */
 
 /* :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content,
 :global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content {
-  padding-left: 32px;
+  padding-left: 16px;
+}
+
+:global .ant-menu-inline.ant-menu-root li.subMenuParent>.ant-menu-submenu-title>.ant-menu-title-content {
+  padding-left: 16px;
+}
+
+:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content {
+  padding-left: 16px;
 } */
 
-/* :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content {
-  padding-left: 52px;
-} */
-
-:global .ant-menu-inline.ant-menu-root .subMenuItem>span:hover {
+/* :global .ant-menu-inline.ant-menu-root .subMenuItem>span:hover {
   background: #ffffff !important;
   color: #000000;
-}
+} */
 
 /* changes on menu list items on hover */
 :global .ant-menu-submenu-title:hover {
@@ -169,8 +201,14 @@
 /* font-family & size for left-menu text */
 :global .ant-menu {
   font-family: "Lato", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 500 !important;
+  /* color: #000000 !important; */
 }
+
+/* :global .ant-menu-vertical>.ant-menu-item {
+  height: 40px !important;
+} */
 
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
   text-transform: uppercase;
@@ -179,15 +217,22 @@
 }
 
 :global .ant-menu-inline .ant-menu-submenu-title,
-:global .ant-menu-vertical .ant-menu-submenu-title,
-:global .ant-menu-inline .ant-menu-item,
-:global .ant-menu-vertical .ant-menu-item {
+:global .ant-menu-inline .ant-menu-item {
   height: 32px;
   /* line-height: 40px; */
   padding-inline: 0 !important;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
   margin: 0;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+:global .ant-menu-vertical .ant-menu-item,
+:global .ant-menu-vertical .ant-menu-submenu-title {
+  /* height: 40px !important; */
+  margin-inline: 0;
+  margin-block: 0;
   margin-bottom: 4px;
   width: 100%;
 }
@@ -195,30 +240,33 @@
 :global .ant-menu .ant-menu-submenu-arrow {
   position: initial;
   width: 8px;
-}
-
-/* font-family & size for sub-menu in left-menu text */
-:global .ant-menu .ant-menu-sub {
-  /* font-family: sans-serif; */
-  font-size: 14px;
-  padding-left: 8px !important;
+  /* margin-top: -6px !important; */
 }
 
 /* font-size for icons in left-menu text */
-:global .ant-menu .ant-menu-submenu .ant-menu-item-icon,
+/* :global .ant-menu .ant-menu-submenu .ant-menu-item-icon,
 :global .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title .ant-menu-item-icon,
 :global .ant-menu .ant-menu-item .ant-menu-item-icon,
 :global .ant-menu-inline-collapsed>.ant-menu-submenu>.ant-menu-submenu-title .ant-menu-item-icon {
-  font-size: 22px;
+  font-size: 22px !important;
+} */
+
+:global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
+  /* line-height: 30px !important; */
+  height: 32px !important;
 }
 
 /* border color on input search in left-menu */
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
-  height: 34px;
+  height: 34px !important;
   border-radius: 4px;
   border-color: #DEDEDE;
   padding: 6px 12px;
+}
+
+:global .ant-input-affix-wrapper>input.ant-input {
+  line-height: 0;
 }
 
 .logoContainer input::placeholder {
@@ -229,10 +277,10 @@
   width: 40px;
 }
 
-:global .ant-input-search .ant-input:hover,
+/* :global .ant-input-search .ant-input:hover,
 :global .ant-input-search .ant-input:focus {
   border-color: #0458f7;
-}
+} */
 
 :global .ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub:not([class*='-active'])::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
@@ -251,13 +299,15 @@
 
 :global .ant-menu-light .ant-menu-item a:hover {
   text-decoration: none;
-  color: #000000;
+  /* color: #000000; */
+  /* background: #ffffff; */
+  color: #ea2929;
 }
 
-:global .ant-menu-submenu-popup,
+/* :global .ant-menu-submenu-popup,
 :global .ant-menu-light.ant-menu-submenu>.ant-menu {
   border-radius: 0;
-}
+} */
 
 .customSider {
   overflow: 'auto';
@@ -274,9 +324,14 @@
   margin-bottom: 12px;
 }
 
+.logoContainerCollapsed {
+  padding: 0px 18px;
+  margin-bottom: 0px;
+}
+
 .brandLink {
   display: block;
-  padding: 16px 0 12px;
+  padding: 19px 0 11px;
   /* padding-left: 4px !important; */
   transition: width 0.3s ease-in-out;
   white-space: nowrap;
@@ -316,35 +371,24 @@
   /* margin-right: 10px; */
 }
 
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child {
-  padding-right: 8px;
-  vertical-align: sub;
-}
-
-:global .ant-menu-inline.ant-menu-root .ant-menu-item {
-  height: 40px;
-}
-
+:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 8px;
   vertical-align: sub;
 }
 
-:global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
+/* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 0px;
   vertical-align: sub;
-}
-
-/* .subMenuParent {
-  color: #ea2929 !important
-}
-
-.subMenuItem {
-  color: #0458f7 !important
 } */
 
-/* .subMenuParent .subMenuItem span {
-  padding-left: 7px;
+/* .leftMenuBox li.subMenuItem:hover {
+  color: #ea2929 !important;
+  background: #ffffff !important;
+} */
+
+/* .subMenuItem {
+  color: #0458f7 !important;
 } */
 
 @media (max-width: 768px) {

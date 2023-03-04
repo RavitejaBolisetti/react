@@ -85,6 +85,7 @@ p {
 .loginSection .loginMainFooter div>span,
 .loginSection .logOutFooter div>span {
     color: #8E8585;
+    font-weight: 400;
     font-size: 14px;
     padding-right: 12px;
 }
@@ -323,8 +324,26 @@ p {
     margin: 0 3px;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .loginFooter {
+
+.loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink {
+    font-size: 16px;
+    color: #dedede;
+    text-align: right;
+    font-weight: normal;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a {
     color: #fff;
+}
+
+.loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a:hover {
+    text-decoration: underline;
+}
+
+.loginSection .loginWrap .loginHtml .loginForm .loginFooter {
+    color: #dedede;
     text-align: center;
     font-weight: normal;
     width: 100%;
