@@ -7,7 +7,7 @@ import styles from 'pages/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
 import { dealerData } from './test';
-import { preparePlaceholder } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 
@@ -71,7 +71,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
-        placeholder: preparePlaceholder('Parent', 'select'),
+        placeholder: preparePlaceholderSelect('Parent', 'select'),
     };
 
     const defaultForm = (
@@ -79,13 +79,13 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.code} label="Code" name="code" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input placeholder={preparePlaceholder('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={formData?.shortDescription} label="Short Description" name="shortDescription" rules={[validateRequiredInputField('Name')]}>
-                        <Input placeholder={preparePlaceholder('Short Description')} className={styles.inputBox} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -93,7 +93,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={formData?.longDescription} label="Long Description" name="longDescription" rules={[validateRequiredInputField('Name')]}>
-                        <Input placeholder={preparePlaceholder('Long Description')} className={styles.inputBox} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
@@ -115,7 +115,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.attributeId} name="attributeId" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholder('Attribute Level')} {...disabledProps} onChange={handleChange} showSearch allowClear>
+                        <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} onChange={handleChange} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
                             ))}
@@ -124,7 +124,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder={preparePlaceholder('Parent')} name="parentGroupCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder={preparePlaceholderSelect('Parent')} name="parentGroupCode">
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>

@@ -1,3 +1,7 @@
-export const preparePlaceholder = (name, type = 'text') => {
-    return type === 'text' ? 'Please Enter ' + name : type === 'select' ? 'Please Select ' + name : '';
+export const preparePlaceholderText = (name) => {
+    return 'Please Enter ' + name;
+};
+
+export const preparePlaceholderSelect = (name) => {
+    return 'Please Select ' + name;
 };
