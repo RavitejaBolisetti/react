@@ -34,7 +34,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Dealer Manpower Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
+                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Dealer Manpower Attribute Level" rules={[validateRequiredSelectField('Dealer Manpower Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.dealerManpowerAttributeL}</Option>
