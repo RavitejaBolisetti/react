@@ -19,27 +19,7 @@ const showConfirm = () => {
     });
 };
 
-const rendSelect = (key) => {
-    return (
-        <Select>
-            <Option>Location 1</Option>
-            <Option>Location 2</Option>
-        </Select>
-    );
-};
 
-const rendDeleteEdit = (key) => {
-    return (
-        <Form>
-            <Form.Item name={key}>
-                <Space>
-                    <EditOutlined />
-                    <DeleteOutlined onClick={showConfirm} />
-                </Space>
-            </Form.Item>
-        </Form>
-    );
-};
 const tblPrepareColumns = ({ title, dataIndex }) => {
     return {
         title,
@@ -63,8 +43,8 @@ tableColumn.push(
 
 const dataSource = [
     {
-        dealerLocation: rendSelect('Enter Code'),
-        DeleteEdit: rendDeleteEdit('1'),
+        dealerLocation: 'Enter Code',
+        DeleteEdit: '1',
     },
 ];
 const LocationTable = () => {
