@@ -34,17 +34,17 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
+                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Dealer Manpower Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
-                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                <Option value={item?.id}>{item?.dealerManpowerAttributeL}</Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="geoParentCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="manpowerCode">
                         <TreeSelect
                             treeLine={true}
                             treeIcon={true}
@@ -68,13 +68,13 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.geoCode} label="Code" name="geoCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                    <Form.Item initialValue={formData?.dealerManpowerCode} label="Code" name="dealerManpowerCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                        <Input placeholder="Code" maxLength={5} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={formData?.geoName} label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
+                    <Form.Item initialValue={formData?.dealerManpowerName} label="Name" name="dealerManpowerName" rules={[validateRequiredInputField('Name')]}>
                         <Input placeholder="Name" className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
