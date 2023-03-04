@@ -32,7 +32,7 @@ productHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
     isLoading,
 });
 
-productHierarchyDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
+productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, errorAction, data, userId } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
@@ -50,6 +50,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => (token) => (di
         method: 'get',
         url: BASE_URL_PRODUCT_HIERARCHY,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -62,7 +63,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => (token) => (di
     axiosAPICall(apiCallParams);
 });
 
-productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (token) => (dispatch) => {
+productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, userId } = params;
     setIsLoading(true);
 
@@ -79,6 +80,7 @@ productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (
         method: 'get',
         url: BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -91,7 +93,7 @@ productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => (
     axiosAPICall(apiCallParams);
 });
 
-productHierarchyDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+productHierarchyDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
 
     setIsLoading(true);
@@ -101,6 +103,7 @@ productHierarchyDataActions.saveData = withAuthToken((params) => (token) => (dis
         method: 'post',
         url: BASE_URL_PRODUCT_HIERARCHY_SAVE,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

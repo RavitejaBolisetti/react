@@ -5,8 +5,7 @@ import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-desi
 
 import { HierarchyAttribute } from 'components/common/HierarchyAttribute/HierarchyAttribute';
 import { PageHeader } from '../PageHeader';
-import styles from '../Common.module.css';
-import { Input, Modal, Select, Space, Switch } from 'antd';
+import { DataTable } from 'utils/dataTable';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -91,9 +90,8 @@ const data = [
     },
 ];
 
-
-
-export const HierarchyAttributeMasterBase = (props) => {
+export const HierarchyAttributeMasterBase = () => {
+    const [form] = Form.useForm();
     const [isFavourite, setFavourite] = useState(false);
 
     const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -108,10 +106,59 @@ export const HierarchyAttributeMasterBase = (props) => {
         visibleChangeHistory: false,
     };
 
+    const onFinish = (values) => {
+        // saveData({ data: values, setIsLoading: listShowLoading, userId });
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => {});
+    };
+
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <HierarchyAttribute />
+            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Hierarchy Attribute Type" name="Hierarchy Attribute" rules={[validateRequiredSelectField('Hierarchy Attribute ')]}>
+                            <Select>
+                                <Option value="Manufacturer Organisation">Manufacturer Organisation</Option>
+                                <Option value="Manufacturer Administration">Manufacturer Administration</Option>
+                                <Option value="Product">Product</Option>
+                                <Option value="Geographical">Geographical</Option>
+                                <Option value="Dealer">Dealer</Option>
+                                <Option value="Employee">Employee</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <DataTable tableColumn={columns} tableData={data} />
+                    </Col>
+                </Row>
+            </Form>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                    <Button danger>
+                        <FaUserPlus className={styles.buttonIcon} />
+                        Add Row
+                    </Button>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                    <Button htmlType="submit" danger>
+                        <FaSave className={styles.buttonIcon} />
+                        Save
+                    </Button>
+
+                    <Button danger>
+                        <FaUndo className={styles.buttonIcon} />
+                        Reset
+                    </Button>
+                </Col>
+            </Row>
         </>
     );
 };

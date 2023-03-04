@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import App from './Test';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -73,13 +72,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
+    console.log('🚀 ~ file: LeftSideBar.js:75 ~ LeftSideBarMain ~ filterMenuList:', filterMenuList);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -153,12 +153,20 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search menu.." allowClear onSearch={onSearch} />}
+                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
                 </div>
 
-                <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} style={{
-                    paddingLeft: collapsed ? '18px' : '14px'
-                }}>
+                <Menu
+                    onClick={onClick}
+                    mode="inline"
+                    inlineIndent={15}
+                    defaultSelectedKeys={[defaultSelectedKeys]}
+                    defaultOpenKeys={defaultOpenKeys}
+                    collapsed={collapsed.toString()}
+                    style={{
+                        paddingLeft: collapsed ? '18px' : '14px',
+                    }}
+                >
                     {prepareMenuItem(menuData)}
                 </Menu>
 
