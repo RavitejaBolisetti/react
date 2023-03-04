@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import styles from '../QualificationMaster/QualificationMaster.module.css';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 
@@ -91,11 +92,12 @@ function DrawerUtilMain({ drawer, setDrawer, arrData, setArrData }) {
             open={drawer}
             footer={
 
-                <Form.Item  >
+                <Form.Item >
                     <Row justify="end">
                         <Button
                             danger
                             onClick={() => handleBack()}
+                            className={styles.cancelButton}
                             style={{ marginRight: 8 }}
                         >
                             Cancel
@@ -103,21 +105,19 @@ function DrawerUtilMain({ drawer, setDrawer, arrData, setArrData }) {
                         <Button
                             danger
                             onClick={handleResetBtn}
+                            className={styles.resetButton}
                             style={{ marginRight: 8 }}
                         >
                             Reset
                         </Button>
                         <Button
                             form="myForm"
-                            danger
-                            style={{ marginRight: 8 }}
+                            className={styles.saveButton}
                             htmlType="submit">
                             Save
                         </Button>
                     </Row>
                 </Form.Item>
-
-
             }
         >
             <Form

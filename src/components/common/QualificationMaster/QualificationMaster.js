@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Modal, Empty, Form, Select, Switch, Space, Table } from 'antd';
 import { ExclamationCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
+import { FiEdit2} from "react-icons/fi";
+
 
 import { menuDataActions } from 'store/actions/data/menu';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from 'pages/common/Common.module.css';
+import styles from '../QualificationMaster/QualificationMaster.module.css';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { DrawerUtil } from './DrawerUtil';
@@ -103,8 +105,8 @@ export const QualificationMasterMain = (setFilter, filter) => {
         form.resetFields();
     };
     const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
-        setRowsData(updatedDataItem);
+        const updatedDataItem = arrData && arrData.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
+        setArrData(updatedDataItem);
     };
 
     const tableColumn = [];
@@ -131,12 +133,12 @@ export const QualificationMasterMain = (setFilter, filter) => {
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: '',
+            title: 'Action',
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {record?.hierarchyAttribueId && <FaEdit onClick={() => edit(record)} />}
-                        {!record?.hierarchyAttribueId && <FaTrashAlt onClick={() => showConfirm(record?.id)} />}
+                        <FiEdit2 style={{ color: "ff3e5b", cursor: "pointer"}}  onClick={() => edit(record)} />
+                        <FaTrashAlt style={{ color: 'ff3e5b', cursor: "pointer"}} onClick={() => showConfirm(record?.id)} />
                     </Space>
                 );
             },
@@ -221,13 +223,13 @@ export const QualificationMasterMain = (setFilter, filter) => {
                         </Button>
                     </Col>
                 </Row>
-                <DrawerUtil drawer={drawer} setDrawer={setDrawer} arrData={arrData} setArrData={setArrData} />
+                <DrawerUtil  drawer={drawer} setDrawer={setDrawer} arrData={arrData} setArrData={setArrData} />
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Table locale={{
                             emptyText: <Empty description="No Role Added" />
                         }}
-                            dataSource={arrData} pagination={true} columns={tableColumn} bordered onChange={onChange} />
+                            dataSource={arrData} pagination={false} columns={tableColumn} bordered onChange={onChange} />
                     </Col>
                 </Row>
             </Form>
