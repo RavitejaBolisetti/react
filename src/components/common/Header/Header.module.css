@@ -7,7 +7,7 @@
 }
 
 .headerLeft {
-    padding-left: 30px;
+    padding-left: 32px;
 }
 
 .userAvatar {
@@ -76,9 +76,12 @@
 }
 
 :global .ant-badge .ant-badge-count {
-    color: #212529;
-    background-color: #ffc107;
+    color: #fff;
+    background-color: #ff3e5b;
+    right: 5px;
+    top: 4px;
 }
+
 
 .helpLineText {
     display: inline-block;
@@ -121,6 +124,17 @@
     float: right;
 }
 
+/* .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
+.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item, 
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title, 
+.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title{
+    margin:0px;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 0px;
+} */
+
+
+
 .welcomeUser .userServiceArea {
     float: right;
 }
@@ -130,7 +144,7 @@
 }
 
 .floatLeft {
-    float: inline-start;
+    float: left;
 }
 
 .modalIconAlert {
@@ -141,7 +155,6 @@
 .mrt6 {
     margin-top: 6px;
 }
-
 
 .displayNone,
 .menuIcon {
@@ -185,6 +198,10 @@
         padding-left: 10px;
     }
 
+    .mrt6 {
+        margin-top: 0;
+    }
+
     .userAvatar {
         padding-top: 8px;
     }
@@ -198,7 +215,7 @@
     }
 
     .welcomeUser .userAvatar {
-        padding-top: 10px;
+        padding-top: 4px;
     }
 
     .welcomeUser .userAvatar .userAvatarInside {
@@ -217,6 +234,7 @@
         display: inline;
         position: absolute;
         left: 0;
+        cursor: pointer;
     }
 
     .navbarExpand .navbarNav .navLink {
@@ -243,6 +261,7 @@
         padding-top: 13px;
         font-size: 12px;
         font-weight: 500;
+        margin-top: 5px;
     }
 
     .welcomeUser .userText {
@@ -250,7 +269,7 @@
     }
 
     .headerRight {
-        padding: 10px 10px 0px 10px;
+        padding: 14px 10px 0px 10px;
         float: none;
     }
 

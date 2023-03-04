@@ -25,7 +25,7 @@ const generateList = (data) => {
     return dataList;
 };
 
-const favouriteMenuData = (data) => data?.find((item) => item.menuId === 'FEV')?.subMenu;
+const favouriteMenuData = (data) => data?.find((item) => item.menuId === 'FAV')?.subMenu;
 
 export const Menu = (state = initialState, action) => {
     switch (action.type) {
