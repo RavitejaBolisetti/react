@@ -94,6 +94,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
+    useEffect(() => {
+        form.resetFields();
+        setEditRow({});
+    }, [ForceReset]);
+
     const showSuccessModel = ({ title, message }) => {
         successModel({
             title: title,
@@ -126,8 +131,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     const handleAdd = () => {
         // const currentlyFormDataObj = form.getFieldsValue();
-        form.resetFields()
-        setEditRow(() => ({}));
+        setEditRow({});
         setShowDrawer(true);
 
         // const newData = {
@@ -275,9 +279,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     // on Save table data
     const onFinish = (values) => {
-
-
-
         form.validateFields();
         // const selectedHierarchyAttribue = values['hierarchyAttribueType'];
         const selectedHierarchyAttribue = selectedHierarchy;
@@ -287,12 +288,24 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         //     .filter(([key]) => key !== 'hierarchyAttribueType')
         //     .map(([keys, { id, key, deletable, ...value }]) => ({ ...value, hierarchyAttribueType: selectedHierarchyAttribue }));
         const onSuccess = (res) => {
+            console.log('This is the Heirarchy:==?>', selectedHierarchyAttribue);
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
             saveandnewclick ? setShowDrawer(true) : setShowDrawer(false);
             forceUpdate();
+            // console.log("selectedHierarchyAttribue", selectedHierarchyAttribue)
         };
+        // const reqData = {
+        //     data: {
+        //         hierarchyAttributeId: selectedHierarchyAttribue,
+        //         hierarchyAttribute: formData,
+        //     },
+        //     setIsLoading: hierarchyAttributeListShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
 
         hierarchyAttributeSaveData({ data: [{ ...values, hierarchyAttribueType: selectedHierarchy, hierarchyAttribueId: detailData?.hierarchyAttribueId }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
     };
@@ -342,9 +355,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                 </>
             )}
             {/* </Form> */}
-            {/* {showDrawer && */}
-             <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
-             {/* }  */}
             <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} setsaveandnewclick={setsaveandnewclick} saveandnewclick={saveandnewclick} />
         </>
     );
