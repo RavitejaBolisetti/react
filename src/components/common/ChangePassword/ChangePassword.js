@@ -97,7 +97,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
     };
     return (
         <>
-            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" onOk={onFinishFailed} onCancel={onCancel}>
+            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onOk={onFinishFailed} onCancel={onCancel}>
                 {discreption ? (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -151,7 +151,9 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                     </Row>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Button style={{ marginTop: '20px' }}>Cancel</Button>
+                            <Button onClick={onCancel} style={{ marginTop: '20px' }}>
+                                Cancel
+                            </Button>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
                             <Button style={{ marginTop: '20px' }} type="primary" htmlType="submit">

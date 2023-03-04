@@ -25,7 +25,6 @@ const { Search } = Input;
 const { Sider } = Layout;
 
 const LeftSideBarSkeletonMain = () => {
-
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '90px'} width={isMobile ? '100vw' : '250px'} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -33,19 +32,34 @@ const LeftSideBarSkeletonMain = () => {
                 <div className={styles.logoContainer}>
                     <Row>
                         <Col xs={21} sm={21} md={24} lg={24} xl={24}>
-                           <InputSkeleton width={190} height={80}/>
+                            <InputSkeleton width={190} height={80} />
                         </Col>
                         <Col xs={3} sm={3} md={0} lg={0} xl={0} className={styles.closeButton}>
                             <RxCross2 onClick={setCollapsed} />
                         </Col>
                     </Row>
 
-                    {!collapsed && <Search placeholder="Search" allowClear onSearch={onSearch} />}
+                    {!collapsed && <Search placeholder="Search" allowClear />}
                 </div>
 
                 <Menu onClick={onClick} mode="inline" inlineIndent={15} defaultSelectedKeys={[defaultSelectedKeys]} defaultOpenKeys={defaultOpenKeys} collapsed={collapsed.toString()} items={items} />
 
-                <div className={styles.changeTheme} onClick={setTheme} style={{ paddingLeft: isMobile ? (collapsed ? '0px' : '20px') : '20px', position: isMobile ? (collapsed ? setTimeout(() => { return "relative" }, 500) : setTimeout(() => { return "absolute" }, 1000)) : 'absolute' }}>
+                <div
+                    className={styles.changeTheme}
+                    onClick={setTheme}
+                    style={{
+                        paddingLeft: isMobile ? (collapsed ? '0px' : '20px') : '20px',
+                        position: isMobile
+                            ? collapsed
+                                ? setTimeout(() => {
+                                      return 'relative';
+                                  }, 500)
+                                : setTimeout(() => {
+                                      return 'absolute';
+                                  }, 1000)
+                            : 'absolute',
+                    }}
+                >
                     {theme === 'dark' ? <BsMoon size={18} backgroundColor="#dedede" /> : <BsSun size={18} backgroundColor="#dedede" />}
                     {!collapsed && 'Change Theme'}
                 </div>
@@ -54,4 +68,4 @@ const LeftSideBarSkeletonMain = () => {
     );
 };
 
-export const LeftSideBarSkeleton = (LeftSideBarSkeletonMain);
+export const LeftSideBarSkeleton = LeftSideBarSkeletonMain;
