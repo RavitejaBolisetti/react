@@ -248,7 +248,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         }
     };
 
-    const fieldNames = { title: 'parentGroupCode', key: 'id', children:'companyGroup'  };
+    const fieldNames = { title: 'title', key: 'id', children:'children'  };
 
     const myProps = {
         isTreeViewVisible,
@@ -256,7 +256,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         selectedTreeKey,
         selectedTreeSelectKey,
         handleTreeViewClick,
-        treeData: geoData,
+        treeData: dealerData,
         fieldNames,
     };
 
@@ -270,7 +270,7 @@ export const DealerMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchy
         selectedTreeSelectKey,
         isReadOnly,
         formData,
-        geoData,
+        dealerData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,

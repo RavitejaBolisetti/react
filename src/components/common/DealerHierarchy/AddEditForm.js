@@ -6,6 +6,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import styles from 'pages/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
+import { dealerData } from './test';
 
 const { Option } = Select;
 
@@ -50,7 +51,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
     const treeSelectFieldProps = {
         treeFieldNames,
-        treeData: geoData,
+        treeData: dealerData,
         treeDisabled: treeCodeReadOnly || isReadOnly,
         selectedTreeSelectKey,
         handleSelectTreeClick,
@@ -109,6 +110,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
     const companyGroupForm = 'companyGroup';
     const gstinGroupForm = 'gstinGroup';
     const branchGroupForm = 'branchGroup';
+
+    
 
     return (
         <>
