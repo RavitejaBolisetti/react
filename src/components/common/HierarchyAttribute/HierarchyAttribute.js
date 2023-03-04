@@ -73,6 +73,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [ForceReset, setForceReset] = useState();
     const [UpdatedTableData, setUpdatedTableData] = useState([]);
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
+    const [saveandnewclick, setsaveandnewclick] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     console.log('outside', detailData?.hierarchyAttribute);
     useEffect(() => {
@@ -209,8 +210,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
             render: (record) => {
-                console.log('Sorry baby', record);
-
                 return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
             // render: (text, record, index) => {
@@ -293,7 +292,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
-            setShowDrawer(false);
+            saveandnewclick ? setShowDrawer(true) : setShowDrawer(false);
             forceUpdate();
             // console.log("selectedHierarchyAttribue", selectedHierarchyAttribue)
         };
@@ -356,7 +355,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                 </>
             )}
             {/* </Form> */}
-            <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+            <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} setsaveandnewclick={setsaveandnewclick} saveandnewclick={saveandnewclick} />
         </>
     );
 };

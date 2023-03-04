@@ -5,7 +5,7 @@ import styles from '../Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
 
-const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData }) => {
+const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData,setsaveandnewclick,saveandnewclick }) => {
     const [form] = Form.useForm();
     const [editrowsetter, seteditrowsetter] = useState();
     const [saverandnew, setsaverandnew] = useState();
@@ -15,6 +15,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
     }, [editRow]);
 
     useEffect(() => {
+        setsaveandnewclick(true);
         form.resetFields();
         setEditRow({});
     }, [saverandnew]);
@@ -27,7 +28,9 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
         form.resetFields();
     };
     const SaveAndNew = () => {
-        setsaverandnew(Math.random() * 1000);
+        setTimeout(() => {
+            setsaverandnew(Math.random() * 1000);
+        }, 1000);
     };
     const onClose = () => {
         setShowDrawer(false);
@@ -65,7 +68,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                     display: 'flex',
                 }}
             >
-                <Form id="myform" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+                <Form id="myForm" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, { required: true, message: 'Please Enter Code' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueCode'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
