@@ -122,7 +122,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={formData?.treeCodeId} label="Parent" placeholder={preparePlaceholderSelect('Parent')} name="parentGroupCode">
+                    <Form.Item initialValue={formData?.treeCodeId} label="Parent" name="parentGroupCode">
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
@@ -134,7 +134,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                 <div>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Code" name={[parentGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
+                            <Form.Item initialValue={formData?.parentGroupCode} label="Code" name={[parentGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
@@ -162,7 +162,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.contactNumber} label="Contact Number" name={[parentGroupForm, 'contactNumber']} rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
+                            <Form.Item initialValue={formData?.contactNo} label="Contact Number" name={[parentGroupForm, 'contactNumber']} rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
                                 <Input placeholder={preparePlaceholderText('Contact Number')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -205,7 +205,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.regesteredAddressOfCompany} label="Registered Address of the Company" name={[companyGroupForm, 'regesteredAddressOfCompany']} rules={[validateRequiredInputField('Registered Address of the Company')]}>
+                            <Form.Item initialValue={formData?.registeredAddressOfCompany} label="Registered Address of the Company" name={[companyGroupForm, 'regesteredAddressOfCompany']} rules={[validateRequiredInputField('Registered Address of the Company')]}>
                                 <Input placeholder={preparePlaceholderText('Registered Address of the Company')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -332,7 +332,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.locality} label="Locality" name={[branchGroupForm, 'locality']} rules={[validateRequiredInputField('Locality')]}>
+                            <Form.Item initialValue={formData?.locality} label="Locality" name={[branchGroupForm, 'locality']}>
                                 <Input placeholder={preparePlaceholderText('Locality')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
