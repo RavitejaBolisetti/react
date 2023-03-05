@@ -22,7 +22,7 @@ const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
-        auth: { userId },
+        auth: { token, accessToken, userId },
         data: {
             // Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
             QualificationMaster: { isLoaded: isDataLoaded = false, data: qualificationData = [] },
@@ -38,6 +38,8 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         qualificationData,
+        token,
+        accessToken
         // isDataAttributeLoaded,
         // attributeData: attributeData?.filter((i) => i),
     };
@@ -51,9 +53,9 @@ const mapDispatchToProps = (dispatch) => ({
             // fetchList: geoDataActions.fetchList,
             // setFilter: menuDataActions.setFilter,
             // saveData: geoDataActions.saveData,
-            // listShowLoading: geoDataActions.listShowLoading,
-            qualificationDataFetchList: qualificationDataActions.fetchList,
-            qualificationSaveData: qualificationDataActions.saveData,
+            listShowLoading: qualificationDataActions.listShowLoading,
+            fetchList: qualificationDataActions.fetchList,
+            saveData: qualificationDataActions.saveData,
             // hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
         },
         dispatch
@@ -62,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ qualificationDataFetchList, userId, isDataLoaded, qualificationSaveData, listShowLoading }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading }) => {
     // const [form] = Form.useForm();
     // const [isFavourite, setFavourite] = useState(false);
     // const handleFavouriteClick = () => setFavourite(!isFavourite);
@@ -88,7 +90,7 @@ export const QualificationMasterMain = ({ qualificationDataFetchList, userId, is
 
     useEffect(() => {
         if (!isDataLoaded) {
-            qualificationDataFetchList({ userId });
+            fetchList({ setIsLoading: listShowLoading ,  userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
@@ -164,7 +166,7 @@ export const QualificationMasterMain = ({ qualificationDataFetchList, userId, is
     const onFinish = (values) => {
         console.log('ohhho');
         const recordId = formData?.id || '';
-        const data = { ...values, status: values?.status ? 'Y' : 'N',createdBy: "ME",createdDate: '2023-03-04T18:49:00.937Z' };
+        const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: 'ME', createdDate: '2023-03-04T18:49:00.937Z' };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -174,7 +176,7 @@ export const QualificationMasterMain = ({ qualificationDataFetchList, userId, is
 
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                qualificationDataFetchList({ userId });
+                fetchList({ userId });
                 formData && setFormData(res?.data);
 
                 // setFormActionType('view');
@@ -192,8 +194,8 @@ export const QualificationMasterMain = ({ qualificationDataFetchList, userId, is
             onError,
             onSuccess,
         };
-        console.log(requestData,'requestData')
-        qualificationSaveData(requestData);
+        console.log(requestData, 'requestData');
+        saveData(requestData);
 
         // setData([...data, values]);
         // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }

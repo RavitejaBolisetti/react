@@ -36,7 +36,11 @@ qualificationDataActions.setFormVisible = (isFormVisible) => ({
 });
 
 qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { data } = params;
+    const { setIsLoading, data } = params;
+    console.log(params,"parms")
+    console.log(token,accessToken,"headrer")
+
+    setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
@@ -59,8 +63,8 @@ qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessT
         onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        // postRequest: () => setIsLoading(false),
-        postRequest: () => console.log('get Succcess'),
+        postRequest: () => setIsLoading(false),
+       
     };
 
     axiosAPICall(apiCallParams);
