@@ -6,7 +6,6 @@ import { message } from 'antd';
 
 export const CRITICALITY_DATA_LOADED = 'CRITICALITY_DATA_LOADED';
 export const CRITICALITY_SET_FORM_DATA = 'CRITICALITY_SET_FORM_DATA';
-export const CRITICALITY_SET_FORM_IS_VISIBLE = 'CRITICALITY_SET_FORM_IS_VISIBLE';
 export const CRITICALITY_DATA_SHOW_LOADING = 'CRITICALITY_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
@@ -30,13 +29,9 @@ criticalityDataActions.setFormData = (formData) => ({
     formData,
 });
 
-criticalityDataActions.setFormVisible = (isFormVisible) => ({
-    type: CRITICALITY_SET_FORM_IS_VISIBLE,
-    isFormVisible,
-});
-
-criticalityDataActions.fetchData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, data, userId } = params;
+criticalityDataActions.fetchData = withAuthToken((params) => (token, accessToken, userId) => (dispatch) => {
+    console.log(params);
+    const { setIsLoading, data } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -53,6 +48,7 @@ criticalityDataActions.fetchData = withAuthToken((params) => (token) => (dispatc
         method: 'get',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -65,8 +61,8 @@ criticalityDataActions.fetchData = withAuthToken((params) => (token) => (dispatc
     axiosAPICall(apiCallParams);
 });
 
-criticalityDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
+criticalityDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
 
@@ -75,6 +71,7 @@ criticalityDataActions.saveData = withAuthToken((params) => (token) => (dispatch
         method: 'post',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

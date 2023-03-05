@@ -11,6 +11,7 @@ import styles from 'pages/common/Common.module.css';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 import dayjs from 'dayjs';
 
@@ -35,7 +36,7 @@ const showConfirm = () => {
 
 const mapStateToProps = (state) => {
     const {
-        // auth: { userId },
+        auth: { token, accesToken, userId },
         data: {
             criticalityGroup: { isLoaded: isDataLoaded = false, data: criticalityGroupData = [] },
         },
@@ -46,7 +47,9 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         collapsed,
-        // userId,
+        userId,
+        token,
+        accesToken,
         isDataLoaded,
         criticalityGroupData,
     };
@@ -57,8 +60,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: criticalityDataActions.fetchList,
-            saveData: criticalityDataActions.saveData,
+            criticalityFetchData: criticalityDataActions.fetchData,
+            criticalitySaveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
         },
         dispatch
@@ -67,23 +70,28 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const CriticalityGroupMain = () => {
+export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData, listShowLoading, userId,token,accessToken }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
-    const [isChecked, setIsChecked] = useState(data.isActive === 'Y' ? true : false);
+    const [isChecked, setIsChecked] = useState(data.status === 'Y' ? true : false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
-    const [arrData,setArrData] = useState(data)
+    const [arrData, setArrData] = useState(data);
 
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
+
+    useEffect(() => {
+        criticalityFetchData({ setIsLoading: listShowLoading, userId,token,accessToken });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -147,10 +155,31 @@ export const CriticalityGroupMain = () => {
         } else {
             console.log('ohhho');
             const recordId = formData?.id || '';
+            setForceFormReset(Math.random() * 10000);
+            const data = { ...values };
+            const onSuccess = (res) => {
+                form.resetFields();
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                criticalityFetchData({ setIsLoading: listShowLoading, userId });
+            };
 
-            setData([...data, values]);
-            // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-            setFormData(data);
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
+
+            const requestData = {
+                data: [data],
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            criticalitySaveData(requestData);
+            console.log(requestData);
+            // setData([...data, values]);
+            // // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
+            // setFormData(data);
             setDrawer(false);
         }
 
@@ -163,8 +192,6 @@ export const CriticalityGroupMain = () => {
     };
 
     const handleAdd = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData([]);
         console.log(data, 'datat');
         setDrawer(true);
         setFormActionType('add');
@@ -216,13 +243,13 @@ export const CriticalityGroupMain = () => {
         const getSearch = e.target.value;
         // console.log("value:", e.target.value);
         if (e.target.value == '') {
-            window.location.reload(true)
+            window.location.reload(true);
             const tempArr = arrData;
-            setArrData(tempArr)
-            return
+            setArrData(tempArr);
+            return;
         }
         if (getSearch.length > -1) {
-            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()))
+            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setArrData(searchResult);
         }
     };
@@ -240,7 +267,7 @@ export const CriticalityGroupMain = () => {
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupId',
-            sortFn: (a, b) => a.criticalityGroupId.localeCompare(b.criticalityGroupId)
+            sortFn: (a, b) => a.criticalityGroupId.localeCompare(b.criticalityGroupId),
         })
     );
 
@@ -248,8 +275,7 @@ export const CriticalityGroupMain = () => {
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
-            sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName)
-
+            sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName),
         })
     );
 
@@ -299,7 +325,7 @@ export const CriticalityGroupMain = () => {
                 </Col>
                 <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
                     <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} style={{textAlign:'right'}} />
+                        <AiOutlinePlus className={styles.buttonIcon} style={{ textAlign: 'right' }} />
                         Add Group
                     </Button>
                 </Col>
@@ -309,7 +335,7 @@ export const CriticalityGroupMain = () => {
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn}  />
+                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn} />
                     <div locale={{ emptyText: <Empty description="No Criticality Group Added" /> }}></div>
                 </Col>
             </Row>
@@ -317,4 +343,4 @@ export const CriticalityGroupMain = () => {
     );
 };
 
-export const CriticalityGroup = connect(null, null)(CriticalityGroupMain);
+export const CriticalityGroup = connect(mapStateToProps, mapDispatchToProps)(CriticalityGroupMain);
