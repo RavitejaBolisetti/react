@@ -36,7 +36,7 @@ const showConfirm = () => {
 
 const mapStateToProps = (state) => {
     const {
-        auth: { token, accesToken, userId },
+        auth: { userId },
         data: {
             criticalityGroup: { isLoaded: isDataLoaded = false, data: criticalityGroupData = [] },
         },
@@ -48,8 +48,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
-        token,
-        accesToken,
+        
         isDataLoaded,
         criticalityGroupData,
     };
@@ -89,7 +88,7 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
     }, [forceFormReset]);
 
     useEffect(() => {
-        criticalityFetchData({ setIsLoading: listShowLoading, userId,token,accessToken });
+        criticalityFetchData({ setIsLoading: listShowLoading, userId});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
