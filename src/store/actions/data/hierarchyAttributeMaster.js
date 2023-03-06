@@ -90,7 +90,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (tok
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token,accessToken) => (dispatch) => {
     console.log("payload", params)
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
