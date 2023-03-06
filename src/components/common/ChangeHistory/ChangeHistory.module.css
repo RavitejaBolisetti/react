@@ -51,3 +51,7 @@
     background-color: #342C2C;
     border-radius: 10px;
 }
+
+.changeHistoryContainer h3 {
+    margin-top: 4px;
+}
