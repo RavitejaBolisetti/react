@@ -29,8 +29,8 @@ hierarchyAttributeMasterActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
-    const { setIsLoading, data, userId, type = '' } = params;
+hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data, type = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -47,6 +47,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => (token) =>
         method: 'get',
         url: baseURLPath + (type ? '?type=' + type : ''),
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -99,6 +100,7 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => 
         method: 'post',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,

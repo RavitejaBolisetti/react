@@ -55,7 +55,6 @@ const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
-    const [captcha, setCaptcha] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -67,7 +66,6 @@ const Login = (props) => {
             ReactRecaptcha3.destroy();
             form.resetFields();
             doCloseLoginError();
-            setCaptcha('');
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +87,6 @@ const Login = (props) => {
         setIsLoading(true);
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
-                setCaptcha(captchaCode);
                 if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
             },
             (error) => {
@@ -131,7 +128,6 @@ const Login = (props) => {
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
                                                             {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
-                                                            {/* As discussed with Rahul */}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -140,6 +136,9 @@ const Login = (props) => {
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
                                                             <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
                                                         </Form.Item>
+                                                        <div className={styles.forgotPasswordLink}>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                        </div>
                                                     </Col>
                                                 </Row>
 
@@ -152,8 +151,8 @@ const Login = (props) => {
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.loginFooter} type="radio">
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                        <div className={styles.loginFooter}>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

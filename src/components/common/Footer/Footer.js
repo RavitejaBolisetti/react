@@ -19,7 +19,7 @@ export const Footer = () => {
                         </div>
                     </Col> */}
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Copyright />
+                    <Copyright alignRight={true} />
                 </Col>
             </Row>
             {/* <div className={styles.footerLink}>
