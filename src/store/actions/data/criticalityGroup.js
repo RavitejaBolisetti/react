@@ -29,8 +29,7 @@ criticalityDataActions.setFormData = (formData) => ({
     formData,
 });
 
-criticalityDataActions.fetchData = withAuthToken((params) => (token, accessToken, userId) => (dispatch) => {
-    console.log(params);
+criticalityDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
