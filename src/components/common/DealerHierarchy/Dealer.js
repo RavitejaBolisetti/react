@@ -122,7 +122,6 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
-            console.log('🚀 ~ file: Dealer.js:124 ~ handleTreeViewClick ~ formData:', formData?.data);
             formData && setFormData(formData?.data);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
@@ -143,11 +142,16 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
-        const data = { ...values, parentGroup: { ...values?.parentGroup, id: recordId, status: 'Y' } };
-        console.log('🚀 ~ file: Dealer.js:165 ~ onFinish ~ data:', data);
+        const parentGroupForm = 'parentGroup';
+        const companyGroupForm = 'companyGroup';
+        const gstinGroupForm = 'gstinGroup';
+        const branchGroupForm = 'branchGroup';
+
+        const customFormInput = { [parentGroupForm]: null, [companyGroupForm]: null, [gstinGroupForm]: null, [branchGroupForm]: null };
+
+        const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: 'Y' } };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -160,8 +164,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data);
-                setSelectedTreeKey([res?.data?.id]);
+                formData && setFormData(res?.data[values?.inputFormType]);
+                setSelectedTreeKey([res?.data[values?.inputFormType]?.id]);
                 setFormActionType('view');
             }
         };
@@ -170,17 +174,18 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             handleErrorModal(message);
         };
 
+        delete data.inputFormType;
+        delete data.parentId;
+
         const requestData = {
             data: data,
-            method: recordId ? 'put' : 'post',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
         saveData(requestData);
-
-        // delete values.parentId;
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -270,7 +275,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         selectedTreeSelectKey,
         isReadOnly,
         formData,
-        dealerHierarchyData,
+        treeData: dealerHierarchyData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
