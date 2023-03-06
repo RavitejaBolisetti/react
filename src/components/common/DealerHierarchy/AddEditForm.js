@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch} from 'antd';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateMobileNoField, validateEmailField, validatePanField } from 'utils/validation';
 import styles from 'pages/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
-import { dealerData } from './test';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
@@ -21,17 +20,20 @@ const checkType = (type) => {
     }
 };
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
+const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
     const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    console.log('🚀 ~ file: AddEditForm.js:27 ~ AddEditFormMain ~ seletedAttribute:', seletedAttribute);
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
-        setSeletedAttribute(checkType(formData?.type));
+        formData && setSeletedAttribute(attributeData?.find((i) => i.id === formData?.attributeId)?.hierarchyAttribueCode);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     const handleChange = (event) => {
-        setSeletedAttribute(event);
+        form?.resetFields();
+        setSeletedAttribute(attributeData?.find((i) => i.id === event)?.hierarchyAttribueCode);
     };
 
     let treeCodeId = '';
@@ -54,23 +56,23 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
         setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
-
-    attributeData = [
-        { hierarchyAttribueId: 'PARNT', hierarchyAttribueName: 'Parent Group' },
-        { hierarchyAttribueId: 'COMP', hierarchyAttribueName: 'Dealer Company' },
-        { hierarchyAttribueId: 'GSTIN', hierarchyAttribueName: 'GSTIN' },
-        { hierarchyAttribueId: 'LOCTN', hierarchyAttribueName: 'Dealer Branch' },
-    ];
-
+    
     const treeSelectFieldProps = {
         treeFieldNames,
-        treeData: dealerData,
+        treeData,
         treeDisabled: treeCodeReadOnly || isReadOnly,
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('Parent', 'select'),
     };
+
+    const parentGroupForm = 'parentGroup';
+    const companyGroupForm = 'companyGroup';
+    const gstinGroupForm = 'gstinGroup';
+    const branchGroupForm = 'branchGroup';
+
+    const parentIdFormName = seletedAttribute === DEALER_HIERARCHY.PARNT.KEY ? parentGroupForm : seletedAttribute === DEALER_HIERARCHY.PARNT.KEY ? companyGroupForm : seletedAttribute === DEALER_HIERARCHY.PARNT.KEY ? gstinGroupForm : seletedAttribute === DEALER_HIERARCHY.PARNT.KEY ? branchGroupForm : 'parentId';
 
     const defaultForm = (
         <div>
@@ -103,11 +105,6 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
         </div>
     );
 
-    const parentGroupForm = 'parentGroup';
-    const companyGroupForm = 'companyGroup';
-    const gstinGroupForm = 'gstinGroup';
-    const branchGroupForm = 'branchGroup';
-
     return (
         <>
             <Row gutter={20}>
@@ -115,21 +112,19 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                     <Form.Item initialValue={formData?.attributeId} name="attributeId" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} onChange={handleChange} showSearch allowClear>
                             {attributeData?.map((item) => (
-                                <Option value={item?.hierarchyAttribueId}>{item?.hierarchyAttribueName}</Option>
+                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}
                         </Select>
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={formData?.treeCodeId} label="Parent" name="parentGroupCode">
+                    <Form.Item initialValue={formData?.treeCodeId} label="Parent" name={[parentIdFormName, 'parentId']}>
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>
-
             {!seletedAttribute && defaultForm}
-
             {seletedAttribute === DEALER_HIERARCHY.PARNT.KEY ? (
                 <div>
                     <Row gutter={20}>
@@ -181,7 +176,16 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                         </Col>
                     </Row>
                 </div>
-            ) : seletedAttribute === DEALER_HIERARCHY.COMP.KEY ? (
+            ) : (
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+                        <Form.Item label="" name={parentGroupForm} initialValue={null}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
+            {seletedAttribute === DEALER_HIERARCHY.COMP.KEY ? (
                 <div>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -227,7 +231,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.panNumber} label="PAN Number" name={[companyGroupForm, 'panNumber']} rules={[validateRequiredInputField('PAN Number'), validatePanField('PAN Number')]}>
-                                <Input placeholder={preparePlaceholderText('PAN Number')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('PAN Number')} maxLength={10} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
@@ -237,17 +241,27 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                         </Col>
                     </Row>
                 </div>
-            ) : seletedAttribute === DEALER_HIERARCHY.GSTIN.KEY ? (
+            ) : (
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+                        <Form.Item label="" name={companyGroupForm} initialValue={null}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
+
+            {seletedAttribute === DEALER_HIERARCHY.GSTIN.KEY ? (
                 <div>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Code" name="code" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
+                            <Form.Item initialValue={formData?.code} label="Code" name={[gstinGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.shortDescription} label="Short Description" name="shortDescription" rules={[validateRequiredInputField('Name')]}>
+                            <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[gstinGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Name')]}>
                                 <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -255,7 +269,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.longDescription} label="Long Description" name="longDescription" rules={[validateRequiredInputField('Long Description')]}>
+                            <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[gstinGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
                                 <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -301,17 +315,27 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                         </Col>
                     </Row>
                 </div>
-            ) : seletedAttribute === DEALER_HIERARCHY.LOCTN.KEY ? (
+            ) : (
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+                        <Form.Item label="" name={gstinGroupForm} initialValue={null}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
+
+            {seletedAttribute === DEALER_HIERARCHY.LOCTN.KEY ? (
                 <div>
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.geoCode} label="Code" name="code" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                            <Form.Item initialValue={formData?.geoCode} label="Code" name={[branchGroupForm, 'longDescription']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.shortDescription} label="Short Description" name="shortDescription" rules={[validateRequiredInputField('Name')]}>
+                            <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[branchGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Name')]}>
                                 <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -319,7 +343,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                            <Form.Item initialValue={formData?.longDescription} label="Long Description" name="longDescription" rules={[validateRequiredInputField('Name')]}>
+                            <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[branchGroupForm, 'longDescription']} rules={[validateRequiredInputField('Name')]}>
                                 <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -364,7 +388,15 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                         </Col>
                     </Row>
                 </div>
-            ) : null}
+            ) : (
+                <Row gutter={20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+                        <Form.Item label="Branch Group" name={branchGroupForm} initialValue={null}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
         </>
     );
 };

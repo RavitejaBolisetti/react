@@ -10,7 +10,7 @@ import { AddEditForm } from './AddEditForm';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 import LeftPanel from 'components/common/LeftPanel';
-import { dealerData } from './test';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 const mapStateToProps = (state) => {
     const {
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        dealerHierarchyData: dealerData || dealerHierarchyData,
+        dealerHierarchyData: dealerHierarchyData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -69,7 +69,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const fieldNames = { title: 'title', key: 'id', children: 'children' };
+    const fieldNames = { title: 'shortDescription', key: 'id', children: 'children' };
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -89,7 +89,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     }, [forceFormReset]);
 
     const finaldealerHierarchyData = dealerHierarchyData?.map((i) => {
-        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
+        return { ...i, parentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -122,6 +122,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
+            console.log('🚀 ~ file: Dealer.js:124 ~ handleTreeViewClick ~ formData:', formData?.data);
             formData && setFormData(formData?.data);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
@@ -141,34 +142,45 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinish = (values) => {
-        // console.log('🚀 ~ file: Dealer.js:147 ~ onFinish ~ values:', values);
-        // const recordId = formData?.id || '';
+        const recordId = formData?.id || '';
         // const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
-        // const onSuccess = (res) => {
-        //     form.resetFields();
-        //     setForceFormReset(Math.random() * 10000);
-        //     setReadOnly(true);
-        //     setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-        //     setFormVisible(true);
-        //     formData && setFormData(data);
-        //     if (selectedTreeKey && selectedTreeKey.length > 0) {
-        //         !recordId && setSelectedTreeKey(codeToBeSaved);
-        //         setFormActionType('view');
-        //     }
-        //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-        //     fetchList({ setIsLoading: listShowLoading, userId });
-        // };
-        // const onError = (message) => {
-        //     handleErrorModal(message);
-        // };
-        // const requestData = {
-        //     data: [data],
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
-        // saveData(requestData);
+        const codeToBeSaved = selectedTreeSelectKey || '';
+
+        const data = { ...values, parentGroup: { ...values?.parentGroup, id: recordId, status: 'Y' } };
+        console.log('🚀 ~ file: Dealer.js:165 ~ onFinish ~ data:', data);
+
+        const onSuccess = (res) => {
+            form.resetFields();
+            setForceFormReset(Math.random() * 10000);
+
+            setReadOnly(true);
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+            setFormVisible(true);
+
+            if (res?.data) {
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId });
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
+                setFormActionType('view');
+            }
+        };
+
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+
+        const requestData = {
+            data: data,
+            method: recordId ? 'put' : 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
+
+        // delete values.parentId;
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -245,6 +257,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         handleTreeViewClick,
         treeData: dealerHierarchyData,
         fieldNames,
+        form,
     };
 
     const formProps = {

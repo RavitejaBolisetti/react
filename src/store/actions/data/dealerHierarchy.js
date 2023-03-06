@@ -53,13 +53,14 @@ dealerHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acces
 });
 
 dealerHierarchyDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, onSuccess } = params;
+    const { setIsLoading, onError, data, method, onSuccess } = params;
 
     setIsLoading(true);
 
     const apiCallParams = {
         data,
-        method: 'post',
+        // method: 'post',
+        method,
         url: BASE_URL_DEALER_HIERARCHY_SAVE,
         token,
         accessToken,
