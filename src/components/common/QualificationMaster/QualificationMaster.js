@@ -21,11 +21,12 @@ const { success: successModel, error: errorModel } = Modal;
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { token, accessToken, userId },
         data: {
             // Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
-            QualificationMaster: { isLoaded: isDataLoaded = false, data: qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData: qualificationData = [] },
             // HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         qualificationData,
         token,
-        accessToken
+        accessToken,
         // isDataAttributeLoaded,
         // attributeData: attributeData?.filter((i) => i),
     };
@@ -64,8 +65,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData }) => {
     // const [form] = Form.useForm();
+
     // const [isFavourite, setFavourite] = useState(false);
     // const handleFavouriteClick = () => setFavourite(!isFavourite);
     // const [Data, setRowsData] = useState();
@@ -81,16 +83,23 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
-    const [arrData, setArrData] = useState(data);
+    const [arrData, setArrData] = useState(qualificationData.data);
+    const state = {
+        button: 1,
+    };
 
     useEffect(() => {
         form.resetFields();
+        form.setFieldValue(formData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
+    console.log(qualificationData, 'data');
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading ,  userId });
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        if (qualificationData?.data) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
@@ -124,22 +133,22 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
 
     const edit = (record) => {
-        const updatedDataItem = arrData && arrData.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
-        setArrData(updatedDataItem);
+        setDrawer(true);
+        setFormData(record);
     };
 
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualificattion Code',
-            dataIndex: 'code',
+            dataIndex: 'qualificationCode',
             sortFn: (a, b) => a.code.localeCompare(b.code),
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
-            dataIndex: 'name',
+            dataIndex: 'qualificationName',
             sortFn: (a, b) => a.name.localeCompare(b.name),
         })
     );
@@ -147,7 +156,10 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: () => <Switch checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (record) => {
+                console.log(record);
+                return <Switch checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+            },
         })
     );
     tableColumn.push(
@@ -156,53 +168,100 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             render: (record) => {
                 return (
                     <Space wrap>
-                        <FiEdit2 style={{ color: 'ff3e5b', cursor: 'pointer' }} onClick={() => edit(record)} />
+                        <FiEdit2 style={{ color: 'ff3e5b', cursor: 'pointer' }} onClick={() => handleUpdate(record)} />
                     </Space>
                 );
             },
         })
     );
 
-    const onFinish = (values) => {
-        console.log('ohhho');
-        const recordId = formData?.id || '';
-        const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: 'ME', createdDate: '2023-03-04T18:49:00.937Z' };
+    const onFinish = (values, e) => {
+        if (state.button === 1) {
+            console.log('Button 1 clicked!');
+            console.log('ohhho');
+            const recordId = formData?.id || '';
+            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
+            let arrrData = [];
+            arrrData.push(data);
+            const onSuccess = (res) => {
+                form.resetFields();
+                setForceFormReset(Math.random() * 10000);
+                setDrawer(false);
+                forceUpdate();
+                if (res?.data) {
+                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId });
+                    formData && setFormData(res?.data);
+                }
+            };
 
-        const onSuccess = (res) => {
-            form.resetFields();
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
+
+            const requestData = {
+                data: arrrData,
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+            console.log(requestData, 'requestData');
+            saveData(requestData);
+
+            // setData([...data, values]);
+            // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
+            // setFormData(data);
+
+            console.log('the real data', data);
+            console.log(formData, 'formData');
+        }
+
+        if (state.button === 2) {
+            console.log('Button 2 clicked!');
             setForceFormReset(Math.random() * 10000);
-            // setFormVisible(true);
-            setDrawer(false);
+            form.resetFields();
 
-            if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                fetchList({ userId });
-                formData && setFormData(res?.data);
+            const recordId = formData?.id || '';
+            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
+            let arrrData = [];
+            arrrData.push(data);
+            const onSuccess = (res) => {
+              
 
-                // setFormActionType('view');
-            }
-        };
+                if (res?.data) {
+                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId });
+                    // formData && setFormData(res?.data);
+                    form.resetFields();
 
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
+                }
+                setForceFormReset(Math.random() * 10000);
+                form.resetFields();
+                forceUpdate();
+                // form.resetFields();
+                
 
-        const requestData = {
-            data: data,
-            // setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        console.log(requestData, 'requestData');
-        saveData(requestData);
+                // forceUpdate();
+                // setForceFormReset(Math.random() * 10000);
+            };
 
-        // setData([...data, values]);
-        // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-        // setFormData(data);
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
 
-        console.log('the real data', data);
-        console.log(formData, 'formData');
+            const requestData = {
+                data: arrrData,
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+            console.log(requestData, 'requestData');
+            saveData(requestData);
+            console.log('the real data', data);
+            console.log(formData, 'formData');
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -223,7 +282,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const handleUpdate = (record) => {
         setForceFormReset(Math.random() * 10000);
         setFormData(record);
-        console.log(formData, 'formData');
+        console.log(formData, 'updste formData');
         setDrawer(true);
         setFormActionType('update');
         setIsReadOnly(false);
@@ -245,7 +304,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         const getSearch = e.target.value;
         // console.log("value:", e.target.value);
         if (e.target.value == '') {
-            window.location.reload(true);
             const tempArr = arrData;
             setArrData(tempArr);
             return;
@@ -286,8 +344,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                     </Button>
                 </Col>
             </Row>
-            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <DrawerUtil handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+            <Form preserve={false} form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <DrawerUtil state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} drawerTitle={drawerTitle} />
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -295,7 +353,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                         locale={{
                             emptyText: <Empty description="No Role Added" />,
                         }}
-                        dataSource={data}
+                        dataSource={qualificationData}
                         pagination={false}
                         columns={tableColumn}
                         bordered

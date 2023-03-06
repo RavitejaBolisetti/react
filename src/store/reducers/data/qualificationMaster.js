@@ -12,7 +12,7 @@ const initialState = {
 export const QualificationMaster = (state = initialState, action) => {
     switch (action.type) {
         case QUALIFICATION_DATA_LOADED:
-            return { ...state, isLoaded: action.isLoaded, data: action.data };
+            return { ...state, isLoaded: action.isLoaded, qualificationData: action.data };
         case QUALIFICATION_SET_FORM_DATA:
             return { ...state, isFormDataLoaded: action.isFormDataLoaded, formData: action.formData };
         case QUALIFICATION_SET_FORM_IS_VISIBLE:

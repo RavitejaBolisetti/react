@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import styles from '../QualificationMaster/QualificationMaster.module.css';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
-const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     // const [formData, setFormData] = useState([]);
     // // const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
     // const [isChecked, setIsChecked] = useState(true);
@@ -16,6 +16,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
     // const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     // const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
+  
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -28,7 +29,9 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
         setDrawer(false);
     };
 
-   
+    useEffect(() => {
+        setForceFormReset(Math.random() * 1000);
+    }, [formData]);
 
     return (
         <Drawer
@@ -36,16 +39,17 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
             placement="right"
             onClose={onClose}
             open={open}
+            width="540px"
             footer={
                 <Row justify="end">
                     <Button danger onClick={onClose} className={styles.cancelButton} style={{ marginRight: 8 }}>
                         Cancel
                     </Button>
-                    {/* <Button danger onClick={handleResetBtn} className={styles.resetButton} style={{ marginRight: 8 }}>
-                        Reset
-                    </Button> */}
-                    <Button form="myForm" className={styles.saveButton} htmlType="submit">
+                    <Button form="myForm"  onClick={() => (state.button = 1)} className={styles.saveButton} htmlType="submit">
                         Save
+                    </Button>
+                    <Button form="myForm" onClick={() => (state.button = 2)} className={styles.saveButton} style={{ marginRight: 8 }} htmlType="submit">
+                        Save and New
                     </Button>
                 </Row>
             }
@@ -53,19 +57,19 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.qualificationCode} label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input maxLength={5} minLength={5} placeholder="Code" name="code" />
+                        <Input maxLength={5} minLength={5} placeholder="Code" />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.qualificationName} label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Name')]}>
-                        <Input maxLength={50} placeholder="Name" name="name" />
+                        <Input maxLength={50} placeholder="Name" />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Status" name="status">
-                    <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                    <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.isChildAllowed === 'Y' ? 'Y' : 'N'} label="Status" name="status">
+                        <Switch checkedChildren="Active" defaultChecked={formData?.status} unCheckedChildren="Inactive" {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

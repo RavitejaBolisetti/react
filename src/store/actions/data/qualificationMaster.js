@@ -37,8 +37,8 @@ qualificationDataActions.setFormVisible = (isFormVisible) => ({
 
 qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data } = params;
-    console.log(params,"parms")
-    console.log(token,accessToken,"headrer")
+    // console.log(params,"parms")
+    // console.log(token,accessToken,"headrer")
 
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
