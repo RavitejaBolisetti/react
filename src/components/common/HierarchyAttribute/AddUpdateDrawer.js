@@ -5,37 +5,33 @@ import styles from '../Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
 
-const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData,setsaveandnewclick,saveandnewclick }) => {
+const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData,setsaveandnewclick,setsaveclick }) => {
     const [form] = Form.useForm();
     const [editrowsetter, seteditrowsetter] = useState();
-    const [saverandnew, setsaverandnew] = useState();
+
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(editRow);
     }, [editRow]);
 
-    useEffect(() => {
-        setsaveandnewclick(true);
-        form.resetFields();
-        setEditRow({});
-    }, [saverandnew]);
-
     console.log('editRow', editRow);
-    //   const showDrawer = () => {
-    //     setOpen(true);
-    //   };
-    const handleReset = () => {
-        form.resetFields();
-    };
-    const SaveAndNew = () => {
-        setTimeout(() => {
-            setsaverandnew(Math.random() * 1000);
-        }, 1000);
-    };
+
     const onClose = () => {
         setShowDrawer(false);
     };
+    const handlesaveandnew =()=>{
+        setTimeout(() => {
+            form.resetFields();
+            setEditRow({});
+        }, 1000);
+        setsaveclick(false);
+        setsaveandnewclick(true);
 
+    }
+    const handesave =()=>{
+        setsaveclick(true);
+        setsaveandnewclick(false);
+    }
     return (
         <Drawer
             title="Hierarchy Attribute Master"
@@ -46,11 +42,11 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                             Cancel
                         </Button>
                     </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style2.drawerFooterButtons} style={{ textAlign: 'right' }}>
-                        <Button form="myForm" key="submit" htmlType="submit" type="primary">
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style2.drawerFooterButtons}  style={{ textAlign: 'right' }}>
+                        <Button onClick={handesave}  form="myForm" key="submit" htmlType="submit" type="primary">
                             Save
                         </Button>
-                        <Button onClick={SaveAndNew} form="myForm" key="submit" htmlType="submit" type="primary">
+                        <Button onClick={handlesaveandnew}  form="myForm" key="submit2" htmlType="submit" type="primary">
                             Save and New
                         </Button>
                     </Col>
