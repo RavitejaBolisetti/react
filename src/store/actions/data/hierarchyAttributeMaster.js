@@ -60,7 +60,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (token) => (dispatch) => {
+hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({token,accessToken}) => (dispatch) => {
     const { setIsLoading, data, userId, type = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -79,6 +79,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (tok
         url: baseURLPath + (type ? '?type=' + type : ''),
         token,
         userId,
+        accessToken,
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
@@ -90,7 +91,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => (tok
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token,accessToken) => (dispatch) => {
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({token,accessToken}) => (dispatch) => {
     console.log("payload", params)
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
