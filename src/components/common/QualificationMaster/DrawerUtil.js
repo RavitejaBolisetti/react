@@ -4,6 +4,7 @@ import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import styles from '../QualificationMaster/QualificationMaster.module.css';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const DrawerUtil = ({ state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
@@ -47,12 +48,12 @@ const DrawerUtil = ({ state, handleAdd, setForceFormReset, open, setDrawer, isCh
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.qualificationCode} label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input maxLength={5} minLength={5} placeholder="Code" />
+                        <Input  maxLength={5} minLength={5} placeholder={preparePlaceholderText('Code')} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.qualificationName} label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Name')]}>
-                        <Input maxLength={50} placeholder="Name" />
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Name')} />
                     </Form.Item>
                 </Col>
             </Row>
