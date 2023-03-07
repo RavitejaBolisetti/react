@@ -168,8 +168,8 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                 key,
                 data: node,
             });
-            if (node.subProdct) {
-                generateList(node.subProdct);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;

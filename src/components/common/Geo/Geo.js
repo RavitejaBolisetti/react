@@ -103,8 +103,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;

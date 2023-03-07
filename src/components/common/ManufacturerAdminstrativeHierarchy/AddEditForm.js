@@ -8,28 +8,28 @@ import styles from 'pages/common/Common.module.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked,fieldNames, flatternData,manufacturerAdminHierarchyData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    // const fieldNames = { label: 'manufactureOrgShrtName', value: 'id', children: 'subManufactureOrg' };
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, fieldNames, flatternData, manufacturerAdminHierarchyData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     if (formActionType === 'edit' || formActionType === 'view') {
-        treeCodeId = formData?.geoParentCode;
+        treeCodeId = formData?.manufactureOrgParntId;
     } else if (formActionType === 'child') {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
     }
 
     useEffect(() => {
         if (formActionType === 'sibling') {
             setSelectedTreeKey([treeCodeId]);
         }
+        setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 

@@ -72,6 +72,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -105,8 +106,8 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
                 key,
                 data: node,
             });
-            if (node.subManufactureOrg) {
-                generateList(node.subManufactureOrg);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
@@ -244,7 +245,6 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     const myProps = {
         isTreeViewVisible,
