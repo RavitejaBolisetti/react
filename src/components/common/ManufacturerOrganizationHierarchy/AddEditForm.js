@@ -9,7 +9,7 @@ import styles from 'pages/common/Common.module.css';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, manufacturerOrgHierarchyData }) => {
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, manufacturerOrgHierarchyData }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
 
@@ -30,6 +30,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         if (formActionType === 'sibling') {
             setSelectedTreeKey([treeCodeId]);
         }
+        setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
@@ -41,7 +42,6 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         handleSelectTreeClick,
         defaultValue: treeCodeId,
     };
-
     return (
         <>
             <Row gutter={20}>

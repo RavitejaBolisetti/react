@@ -146,6 +146,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved };
+
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -153,14 +154,14 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
-            formData && setFormData(data);
 
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
+            if (res?.data) {
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId });
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
             }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
         };
 
         const onError = (message) => {
