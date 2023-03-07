@@ -35,7 +35,7 @@ rolemanagementDataActions.setFormVisible = (isFormVisible) => ({
     isFormVisible,
 });
 
-rolemanagementDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
+rolemanagementDataActions.fetchList = withAuthToken((params) => ({token,accessToken,userId}) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -53,6 +53,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => (token) => (disp
         method: 'get',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
@@ -65,7 +66,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => (token) => (disp
     axiosAPICall(apiCallParams);
 });
 
-rolemanagementDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+rolemanagementDataActions.saveData = withAuthToken((params) => ({token,accessToken,userId}) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
 
     setIsLoading(true);
@@ -75,6 +76,7 @@ rolemanagementDataActions.saveData = withAuthToken((params) => (token) => (dispa
         method: 'post',
         url: baseURLPath,
         token,
+        accessToken,
         userId,
         onSuccess,
         onError,
