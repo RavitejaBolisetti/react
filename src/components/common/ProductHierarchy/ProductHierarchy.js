@@ -78,6 +78,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const rendFn = (key) => {
         return (
@@ -307,8 +308,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setForceFormReset(Math.random() * 10000);
         form.resetFields();
     };
-
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const myProps = {
         isTreeViewVisible,

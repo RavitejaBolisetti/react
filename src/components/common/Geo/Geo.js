@@ -70,6 +70,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -240,8 +241,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     const myProps = {
         isTreeViewVisible,
