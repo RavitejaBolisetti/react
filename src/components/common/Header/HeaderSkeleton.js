@@ -8,13 +8,14 @@ export const HeaderSkeleton = () => {
     return (
         <Row gutter={0}>
             <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                <div className={styles.headerLeft}>
+                <div className={styles.headerLeft} style={{ marginTop: '5px' }}>
                     <Space>
-                        <div className={styles.userAvatar} style={{ marginTop: '-5px' }}>
-                            <InputSkeleton width={50} height={45} />
+                        <div className={styles.userAvatarSkeleton}>
+                            <InputSkeleton width={40} height={40} />
                         </div>
-                        <div className={styles.userText}>
-                            <InputSkeleton width={250} height={45} />
+                        <div className={styles.userTypeSkeleton}>
+                            <InputSkeleton width={250} height={15} />
+                            <InputSkeleton width={250} height={15} />
                         </div>
                     </Space>
                 </div>
@@ -23,20 +24,32 @@ export const HeaderSkeleton = () => {
                 <div className={styles.headerRight}>
                     <div className={styles.mt10}>
                         <div className={styles.navbarNav}>
-                        <div className={styles.welcomeUser} >
+                            <div className={styles.welcomeUser} style={{ marginRight: '20px' }}>
                                 <Space>
-                                    <div className={styles.userAvatar1}>
-                                        <InputSkeleton width={45} height={45} />
+                                    <div className={styles.bellSkeleton}>
+                                        <InputSkeleton width={35} height={35} />
                                     </div>
-                                    <div className={styles.userText1}>
-                                        <InputSkeleton width={80} height={45} />
+                                </Space>
+                            </div>
+                            <div className={styles.welcomeUser} style={{ marginRight: '10px' }}>
+                                <Space>
+                                    <div className={styles.userAvatarSkeleton}>
+                                        <InputSkeleton width={35} height={35} />
+                                    </div>
+                                    <div className={styles.userTextSkeleton}>
+                                        <InputSkeleton width={60} height={10} />
+                                        <InputSkeleton width={80} height={10} />
                                     </div>
                                 </Space>
                             </div>
                             <div className={styles.welcomeUser}>
                                 <Space>
-                                    <div className={styles.userText1}>
-                                        <InputSkeleton width={180} height={45} />
+                                    <div className={styles.userAvatarSkeleton}>
+                                        <InputSkeleton width={35} height={35} />
+                                    </div>
+                                    <div className={styles.userTextSkeleton}>
+                                        <InputSkeleton width={60} height={10} />
+                                        <InputSkeleton width={80} height={10} />
                                     </div>
                                 </Space>
                             </div>

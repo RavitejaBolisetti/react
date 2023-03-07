@@ -157,6 +157,11 @@
     padding: 0px 17px 0px 4px;
 }
 
+:global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
+:global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
+    color: #ffffff !important;
+}
+
 :global .ant-tree .ant-tree-treenode {
     display: flex;
     align-items: flex-start;
