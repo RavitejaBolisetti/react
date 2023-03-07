@@ -47,8 +47,8 @@
   color: #ff3e5b;
 }
 
-:global .ant-select-single:not(.ant-select-customize-input),
-:global .ant-select-selector {
+:global .ant-pagination-options .ant-select-single:not(.ant-select-customize-input),
+:global .ant-pagination-options .ant-select-selector {
   border: none !important;
 }
 
