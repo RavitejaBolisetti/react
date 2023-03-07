@@ -244,7 +244,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                         onChange={onChangeHandle}
                     />
                 </Col>
-                <Col offset={12} xs={2} sm={2} md={2} lg={2} xl={2}>
+                <Col className={styles.addQualification}  xs={16} sm={16} md={16} lg={16} xl={16}>
                     <Button danger onClick={handleAdd}>
                         <AiOutlinePlus className={styles.buttonIcon} />
                         Add Qualification
