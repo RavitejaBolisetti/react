@@ -35,6 +35,7 @@ const showConfirm = () => {
 };
 
 const mapStateToProps = (state) => {
+    console.log(state);
     const {
         auth: { userId },
         data: {
@@ -48,7 +49,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
-        
         isDataLoaded,
         criticalityGroupData,
     };
@@ -59,8 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            criticalityFetchData: criticalityDataActions.fetchData,
-            criticalitySaveData: criticalityDataActions.saveData,
+            fetchData: criticalityDataActions.fetchData,
+            saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
         },
         dispatch
@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData, listShowLoading, userId,token,accessToken }) => {
+export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
@@ -88,7 +88,10 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
     }, [forceFormReset]);
 
     useEffect(() => {
-        criticalityFetchData({ setIsLoading: listShowLoading, userId});
+        if (!isDataLoaded) {
+            fetchData({ setIsLoading: listShowLoading, userId });
+            console.log(criticalityGroupData, 'critiality grpopu dtaa');
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
@@ -123,10 +126,18 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
     };
 
     const onFinish = (values) => {
-        const arr = values.users.map((i) => {
+        const arr = values.allowedTimingRequest.map((i) => {
             return {
-                startTime: i.startTime.format('HH:mm'),
-                endTime: i.endTime.format('HH:mm'),
+                serialNumber:0,
+                // timeSlotFrom: i.startTime.format('HH:mm'),
+                // timeSlotTo: i.endTime.format('HH:mm'),
+                timeSlotFrom:"2023-03-06T19:04:40.756Z",
+                timeSlotTo: "2023-03-06T19:04:40.756Z",
+                status: "Y",
+                remarks: "NO",
+                createdDate: "2023-03-06T19:04:40.756Z",
+                createdBy: "11111",
+                critcltyGropCode: values?.critcltyGropCode
             };
         });
 
@@ -155,11 +166,11 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
             console.log('ohhho');
             const recordId = formData?.id || '';
             setForceFormReset(Math.random() * 10000);
-            const data = { ...values };
+            const data = { ...values,createdDate:"2023-03-06T19:04:40.756Z",createdBy:userId,allowedTimingRequest:arr };
             const onSuccess = (res) => {
                 form.resetFields();
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                criticalityFetchData({ setIsLoading: listShowLoading, userId });
+                fetchData({ setIsLoading: listShowLoading, userId });
             };
 
             const onError = (message) => {
@@ -174,8 +185,8 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
                 onSuccess,
             };
 
-            criticalitySaveData(requestData);
-            console.log(requestData);
+            saveData(requestData);
+            console.log(requestData,"requestData");
             // setData([...data, values]);
             // // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
             // setFormData(data);
@@ -265,7 +276,7 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group ID',
-            dataIndex: 'criticalityGroupId',
+            dataIndex: 'critcltyGropCode',
             sortFn: (a, b) => a.criticalityGroupId.localeCompare(b.criticalityGroupId),
         })
     );
@@ -273,7 +284,7 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group Name',
-            dataIndex: 'criticalityGroupName',
+            dataIndex: 'critcltyGropDesc',
             sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName),
         })
     );
@@ -334,8 +345,7 @@ export const CriticalityGroupMain = ({ criticalityFetchData, criticalitySaveData
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={data} pagination={true} columns={tableColumn} />
-                    <div locale={{ emptyText: <Empty description="No Criticality Group Added" /> }}></div>
+                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={criticalityGroupData} pagination={true} columns={tableColumn} />
                 </Col>
             </Row>
         </>

@@ -70,7 +70,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
                             <Button form="myForm" key="submit" htmlType="submit" type="primary">
                                 Save
                             </Button>
-                            <Button onClick={handleAdd} form="myForm" key="submit" htmlType="submit" type="primary">
+                            <Button onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                 Save and New
                             </Button>
                         </Col>
@@ -83,37 +83,37 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.criticalityGroupId} name="criticalityGroupId" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
+                    <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
                         <Input maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.criticalityGroupName} name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
+                    <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
                         <Input maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
-            <Row gutter={20}>
+            {/* <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="defaultGroup" label="Default Group?">
-                        <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                    <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.defaultGroup === 'Y' ? 'Y' : 'N'} name="defaultGroup" label="Default Group?">
+                        <Switch defaultChecked={formData?.defaultGroup === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                     {' '}
                 </Col>
                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                    <Form.Item name="status" label="Status">
-                        <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                    <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.status === 'Y' ? 'Y' : 'N'} name="status" label="Status">
+                        <Switch defaultChecked={formData?.status === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
-            </Row>
+            </Row> */}
             <Row gutter={20}>
                 <Col>
                     <p> Allowed Timings</p>
                 </Col>
             </Row>
-            <Form.List required rules={[validateRequiredInputField('Allowed Timings')]} name="users" initialValue={momentTime}>
+            <Form.List required rules={[validateRequiredInputField('Allowed Timings')]} name="allowedTimingRequest" initialValue={momentTime}>
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
