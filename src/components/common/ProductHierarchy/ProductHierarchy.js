@@ -13,6 +13,7 @@ import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
 import LeftPanel from '../LeftPanel';
+import { DataTable } from 'utils/dataTable';
 
 const { Panel } = Collapse;
 
@@ -206,7 +207,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        // const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
@@ -406,8 +406,7 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
                                 </Collapse>
                                 <Collapse Visible={true} expandIconPosition="end" activeKey={openPanels} onChange={setOpenPanels} style={{ margin: '10px 0 0 0' }}>
                                     <Panel header="Product Attributes Details (Mahindra Scorpio Classic Petrol)" key="2" className={style.producthierarchy}>
-                                        <Table style={{ fontSize: '40px' }} columns={tableColumn} dataSource={dataSource} pagination={false} />
-
+                                        <DataTable tableColumn={tableColumn} tableData={dataSource} pagination={false} />
                                         <Form.Item>
                                             <Row>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>

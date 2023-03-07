@@ -148,7 +148,6 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
                     </Button>
                 </Col>
             </Row>
-            {/* <Table bordered dataSource={configData} columns={tableColumn} pagination={true} /> */}
             <Drawer
                 title="Add Configurable Parameter Editing"
                 placement="right"
