@@ -21,13 +21,10 @@ const { success: successModel, error: errorModel } = Modal;
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
-    console.log('state', state);
     const {
-        auth: { token, accessToken, userId },
+        auth: { userId },
         data: {
-            // Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
             QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData: qualificationData = [] },
-            // HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -39,10 +36,6 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         qualificationData,
-        token,
-        accessToken,
-        // isDataAttributeLoaded,
-        // attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -51,13 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: geoDataActions.fetchList,
-            // setFilter: menuDataActions.setFilter,
-            // saveData: geoDataActions.saveData,
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
-            // hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
         },
         dispatch
     ),
@@ -66,14 +55,12 @@ const mapDispatchToProps = (dispatch) => ({
 const initialTableData = [];
 
 export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData }) => {
-    // const [form] = Form.useForm();
-
-    // const [isFavourite, setFavourite] = useState(false);
-    // const handleFavouriteClick = () => setFavourite(!isFavourite);
-    // const [Data, setRowsData] = useState();
-    // const [drawer, setDrawer] = useState(false);
-    // const [searchInput, setSearchInput] = useState('');
     const [form] = Form.useForm();
+
+    const [isFavourite, setFavourite] = useState(false);
+    const handleFavouriteClick = () => setFavourite(!isFavourite);
+
+    const [searchInput, setSearchInput] = useState('');
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
@@ -93,7 +80,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         form.setFieldValue(formData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
-    console.log(qualificationData, 'data');
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -103,39 +89,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
-
-    const showSuccessModel = ({ title, message }) => {
-        successModel({
-            title: title,
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
-    };
-    const onError = (message) => {
-        errorModel({
-            title: 'ERROR',
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
-    };
-    const showConfirm = (key) => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete?',
-            onOk() {
-                deleteTableRows(key);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
-
-    const edit = (record) => {
-        setDrawer(true);
-        setFormData(record);
-    };
 
     const tableColumn = [];
     tableColumn.push(
@@ -177,8 +130,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
     const onFinish = (values, e) => {
         if (state.button === 1) {
-            console.log('Button 1 clicked!');
-            console.log('ohhho');
             const recordId = formData?.id || '';
             const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
             let arrrData = [];
@@ -191,7 +142,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 if (res?.data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId });
-                    formData && setFormData(res?.data);
                 }
             };
 
@@ -208,42 +158,20 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             };
             console.log(requestData, 'requestData');
             saveData(requestData);
-
-            // setData([...data, values]);
-            // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-            // setFormData(data);
-
-            console.log('the real data', data);
-            console.log(formData, 'formData');
         }
 
         if (state.button === 2) {
-            console.log('Button 2 clicked!');
-            setForceFormReset(Math.random() * 10000);
-            form.resetFields();
-
             const recordId = formData?.id || '';
             const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
             let arrrData = [];
             arrrData.push(data);
             const onSuccess = (res) => {
-              
-
                 if (res?.data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId });
-                    // formData && setFormData(res?.data);
                     form.resetFields();
-
+                    setFormData({});
                 }
-                setForceFormReset(Math.random() * 10000);
-                form.resetFields();
-                forceUpdate();
-                // form.resetFields();
-                
-
-                // forceUpdate();
-                // setForceFormReset(Math.random() * 10000);
             };
 
             const onError = (message) => {
@@ -257,10 +185,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 onError,
                 onSuccess,
             };
-            console.log(requestData, 'requestData');
+
             saveData(requestData);
-            console.log('the real data', data);
-            console.log(formData, 'formData');
         }
     };
 
@@ -271,7 +197,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const handleAdd = () => {
         setForceFormReset(Math.random() * 10000);
         setFormData([]);
-        console.log(data, 'datat');
         setDrawer(true);
         setFormActionType('add');
         setIsReadOnly(false);
@@ -282,27 +207,18 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const handleUpdate = (record) => {
         setForceFormReset(Math.random() * 10000);
         setFormData(record);
-        console.log(formData, 'updste formData');
         setDrawer(true);
         setFormActionType('update');
         setIsReadOnly(false);
         forceUpdate();
-
-        // formData && setFormData(formData?.data);
     };
     const onChange = (sorter, filters) => {
         console.log('sort', sorter, filters);
         form.resetFields();
     };
-    const deleteTableRows = (id) => {
-        const updatedData = [...arrData];
-        const index = updatedData.findIndex((el) => el.id === id);
-        updatedData.splice(Number(index), 1);
-        setArrData([...updatedData]);
-    };
+
     const onChangeHandle = (e) => {
         const getSearch = e.target.value;
-        // console.log("value:", e.target.value);
         if (e.target.value == '') {
             const tempArr = arrData;
             setArrData(tempArr);
@@ -312,15 +228,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setArrData(searchResult);
         }
-    };
-
-    // const handleResetBtn = () => {
-    //     setForceFormReset(Math.random() * 10000);
-    //     form.resetFields();
-    // };
-
-    const handleResetBtn = () => {
-        form.resetFields();
     };
 
     return (

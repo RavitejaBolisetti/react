@@ -5,18 +5,8 @@ import { validateRequiredInputField, validationFieldLetterAndNumber } from 'util
 import styles from '../QualificationMaster/QualificationMaster.module.css';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
-const DrawerUtil = ({state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
-    // const [formData, setFormData] = useState([]);
-    // // const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
-    // const [isChecked, setIsChecked] = useState(true);
-    // const [switchIntial, setswitchIntial] = useState('Y');
-    // const [forceFormReset, setForceFormReset] = useState(false);
-
-    // const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
-    // const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    // const [form] = Form.useForm();
+const DrawerUtil = ({ state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
-  
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -45,7 +35,7 @@ const DrawerUtil = ({state, handleAdd, setForceFormReset, open, setDrawer, isChe
                     <Button danger onClick={onClose} className={styles.cancelButton} style={{ marginRight: 8 }}>
                         Cancel
                     </Button>
-                    <Button form="myForm"  onClick={() => (state.button = 1)} className={styles.saveButton} htmlType="submit">
+                    <Button form="myForm" onClick={() => (state.button = 1)} className={styles.saveButton} htmlType="submit">
                         Save
                     </Button>
                     <Button form="myForm" onClick={() => (state.button = 2)} className={styles.saveButton} style={{ marginRight: 8 }} htmlType="submit">
@@ -67,7 +57,7 @@ const DrawerUtil = ({state, handleAdd, setForceFormReset, open, setDrawer, isChe
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                     <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.isChildAllowed === 'Y' ? 'Y' : 'N'} label="Status" name="status">
                         <Switch checkedChildren="Active" defaultChecked={formData?.status} unCheckedChildren="Inactive" {...disabledProps} />
                     </Form.Item>
