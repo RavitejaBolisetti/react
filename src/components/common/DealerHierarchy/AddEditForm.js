@@ -42,7 +42,7 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.parentId;
     } else if (formActionType === 'child') {
-        treeCodeId = selectedTreeKey;
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;

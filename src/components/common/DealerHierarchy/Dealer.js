@@ -132,7 +132,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
             setReadOnly(false);
         }
-        setSelectedTreeKey(keys);
+        setSelectedTreeKey(keys && keys.length > 0 ? keys[0] : undefined);
     };
 
     const handleSelectTreeClick = (value) => {
