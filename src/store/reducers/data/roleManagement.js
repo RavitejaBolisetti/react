@@ -1,4 +1,4 @@
-import { GEO_DATA_LOADED, GEO_SET_FORM_IS_VISIBLE, GEO_SET_FORM_DATA, GEO_DATA_SHOW_LOADING } from 'store/actions/data/geo';
+import { ROLE_MANAGEMENT_DATA_LOADED, ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE, ROLE_MANAGEMENT_SET_FORM_DATA, ROLE_MANAGEMENT_DATA_SHOW_LOADING } from 'store/actions/data/roleManagement';
 
 const initialState = {
     isLoaded: false,
@@ -11,13 +11,13 @@ const initialState = {
 
 export const RoleManagement = (state = initialState, action) => {
     switch (action.type) {
-        case GEO_DATA_LOADED:
+        case ROLE_MANAGEMENT_DATA_LOADED:
             return { ...state, isLoaded: action.isLoaded, data: action.data };
-        case GEO_SET_FORM_DATA:
+        case ROLE_MANAGEMENT_SET_FORM_DATA:
             return { ...state, isFormDataLoaded: action.isFormDataLoaded, formData: action.formData };
-        case GEO_SET_FORM_IS_VISIBLE:
+        case ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE:
             return { ...state, isFormVisible: true };
-        case GEO_DATA_SHOW_LOADING:
+        case ROLE_MANAGEMENT_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
         default:
             return { ...state };

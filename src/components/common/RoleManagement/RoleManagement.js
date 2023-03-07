@@ -9,7 +9,7 @@ import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
+import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
 import { validateEmailField } from 'utils/validation';
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            RoleManagement: { isLoaded: isDataLoaded = false, data: RoleManagementData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        RoleManagementData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -42,9 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: rolemanagementDataActions.fetchList,
+            saveData: rolemanagementDataActions.saveData,
+            listShowLoading: rolemanagementDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const Roledataset = ['Shakambhar'];
-export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [validatetrees, setValidatetrees] = useState(false);
@@ -79,7 +79,13 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         Upload: false,
         Download: false,
     });
-
+    console.log(RoleManagementData);
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, isDataAttributeLoaded]);
     useEffect(
         () => {
             form.resetFields();
@@ -447,4 +453,4 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     );
 };
 
-export const RoleManagement = connect(null, null)(RoleManagementMain);
+export const RoleManagement = connect(mapStateToProps, mapDispatchToProps)(RoleManagementMain);

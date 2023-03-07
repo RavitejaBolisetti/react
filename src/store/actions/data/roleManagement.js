@@ -4,38 +4,38 @@ import { withAuthToken } from 'utils/withAuthToken';
 import { BASE_URL_ROLE_MANAGEMENT } from 'constants/routingApi';
 import { message } from 'antd';
 
-export const GEO_DATA_LOADED = 'GEO_DATA_LOADED';
-export const GEO_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
-export const GEO_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
-export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
+export const ROLE_MANAGEMENT_DATA_LOADED = 'ROLE_MANAGEMENT_DATA_LOADED';
+export const ROLE_MANAGEMENT_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
+export const ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
+export const ROLE_MANAGEMENT_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
-    type: GEO_DATA_LOADED,
+    type:  ROLE_MANAGEMENT_DATA_LOADED,
     isLoaded: true,
     data,
 });
 
-const geoDataActions = {};
+const  rolemanagementDataActions = {};
 
 const baseURLPath = BASE_URL_ROLE_MANAGEMENT;
 
-geoDataActions.listShowLoading = (isLoading) => ({
-    type: GEO_DATA_SHOW_LOADING,
+rolemanagementDataActions.listShowLoading = (isLoading) => ({
+    type: ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE,
     isLoading,
 });
 
-geoDataActions.setFormData = (formData) => ({
-    type: GEO_SET_FORM_DATA,
+rolemanagementDataActions.setFormData = (formData) => ({
+    type: ROLE_MANAGEMENT_SET_FORM_DATA,
     isFormDataLoaded: true,
     formData,
 });
 
-geoDataActions.setFormVisible = (isFormVisible) => ({
-    type: GEO_SET_FORM_IS_VISIBLE,
+rolemanagementDataActions.setFormVisible = (isFormVisible) => ({
+    type:ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE,
     isFormVisible,
 });
 
-geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
+rolemanagementDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -65,7 +65,7 @@ geoDataActions.fetchList = withAuthToken((params) => (token) => (dispatch) => {
     axiosAPICall(apiCallParams);
 });
 
-geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+rolemanagementDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
 
     setIsLoading(true);
@@ -87,4 +87,4 @@ geoDataActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
     axiosAPICall(apiCallParams);
 });
 
-export { geoDataActions };
+export { rolemanagementDataActions };
