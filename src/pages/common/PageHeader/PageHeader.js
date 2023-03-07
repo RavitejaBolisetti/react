@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Col, Space, Button, Modal } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaHeart, FaHistory, FaLongArrowAltLeft, FaRegHeart } from 'react-icons/fa';
+import {  FaHistory, FaLongArrowAltLeft } from 'react-icons/fa';
+import { FiUpload } from 'react-icons/fi';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { ROUTING_DASHBOARD } from 'constants/routing';
@@ -11,8 +12,18 @@ import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import * as routing from 'constants/routing';
 import { connect } from 'react-redux';
+import { Upload } from 'components/common/ManufacturerAdminstrativeHierarchy/Upload';
+import { MdStars } from 'react-icons/md';
 
 const { confirm } = Modal;
+
+const handleUploadClick = () => {
+    return (
+        <>
+            <Upload />
+        </>
+    );
+};
 
 const mapStateToProps = (state) => {
     const {
@@ -41,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavourite, listShowLoading, canMarkFavourite = false, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false }) => {
+const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavourite, listShowLoading, canMarkFavourite = false, visibleSampleBtn = false, handleSample = undefined, visibleChangeHistory = true, handleChangeHistoryClick = undefined, isChangeHistoryVisible = false, isUploadVisible = false }) => {
     const navigate = useNavigate();
     const handleBack = () => {
         confirm({
@@ -57,14 +68,14 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             onOk() {
                 navigate(ROUTING_DASHBOARD);
             },
-            onCancel() { },
+            onCancel() {},
         });
     };
 
     const location = useLocation();
     const pagePath = location.pathname;
 
-    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : '';
+    const menuId = pagePath === routing?.ROUTING_COMMON_GEO ? 'COMN-07.01' : pagePath === routing?.ROUTING_COMMON_PRODUCT_HIERARCHY ? 'COMN-06.01' : pagePath === routing?.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY ? 'COMN-05.01' : '';
 
     const checkFev = (data) => data.find((item) => item.menuId === menuId);
     const isFavourite = checkFev(favouriteMenu);
@@ -96,7 +107,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>
                         </div>
-                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<FaHeart color="#ff3e5b" size={18} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<FaRegHeart size={18} onClick={handleFavouriteClick} />)}</div>}
+                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<MdStars size={22} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<MdStars color="#1e1e1e" size={22} onClick={handleFavouriteClick} />)}</div>}
                     </Space>
                 </Col>
                 <Col xs={visibleChangeHistory ? 12 : 8} sm={visibleChangeHistory ? 12 : 8} md={12} lg={10} xl={10} xxl={10}>
@@ -107,6 +118,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                                 View Product Detail
                             </Button>
                         )} */}
+
                         {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
@@ -120,6 +132,13 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                                 </Button>
                             ))}
 
+                        {isUploadVisible ? (
+                            <Button danger onClick={handleUploadClick}>
+                                <FiUpload className={styles.buttonIcon} />
+                                Upload/Download
+                            </Button>
+                        ) : null}
+
                         <Button danger onClick={handleBack}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
@@ -129,7 +148,7 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
             </Row>
