@@ -17,7 +17,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                     maxHeight: 400,
                     overflow: 'auto',
                 }}
-                placeholder="Select"
+                placeholder={placeholder}
                 allowClear
                 fieldNames={treeFieldNames}
                 onChange={handleSelectTreeClick}
