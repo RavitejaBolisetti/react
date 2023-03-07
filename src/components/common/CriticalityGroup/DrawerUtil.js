@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import style from './criticatiltyGroup.module.css';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
@@ -84,16 +85,16 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
-                        <Input maxLength={5} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Group Id')} maxLength={5} {...disabledProps}  />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
-                        <Input maxLength={5} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Name')} maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
-            {/* <Row gutter={20}>
+            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.defaultGroup === 'Y' ? 'Y' : 'N'} name="defaultGroup" label="Default Group?">
                         <Switch defaultChecked={formData?.defaultGroup === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
@@ -107,7 +108,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
                         <Switch defaultChecked={formData?.status === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
                     </Form.Item>
                 </Col>
-            </Row> */}
+            </Row>
             <Row gutter={20}>
                 <Col>
                     <p> Allowed Timings</p>
