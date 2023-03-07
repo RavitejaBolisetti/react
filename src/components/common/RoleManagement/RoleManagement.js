@@ -53,11 +53,12 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const Roledataset = ['Shakambhar'];
+
 export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [validatetrees, setValidatetrees] = useState(false);
+    const [Roledataset, setRoledataset] = useState([]);
 
     const [formData, setFormData] = useState([]);
     const [Mycheckvals, setMycheckvals] = useState([]);
@@ -79,7 +80,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         Upload: false,
         Download: false,
     });
-    console.log(RoleManagementData);
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -94,7 +94,20 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         [forceFormReset],
         [addchilds]
     );
+    useEffect(() => {
+        const SetRole=[];
+        const finalRoledata = RoleManagementData.map((e) => {
+            Object.keys(e).map((keyName, i) => {
+                if (keyName === 'roleName') {
+                    SetRole.push(e[keyName]);
+                }
+            });
+        });
+        setRoledataset(SetRole);
+        setFormData(RoleManagementData);
+    }, [RoleManagementData]);
 
+    
     //Tree
 
     const [expandedKeys, setExpandedKeys] = useState([]);
@@ -230,7 +243,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
-                        name="roleid"
+                        name="roleId"
                         label="Role Id"
                         initialValue={InitialData?.roleid}
                         rules={[
@@ -244,7 +257,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
-                        name="rolename"
+                        name="roleName"
                         label="Role Name"
                         initialValue={InitialData?.rolename}
                         rules={[
@@ -258,7 +271,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
-                        name="roledesc"
+                        name="roleDescription"
                         label="Role Description"
                         initialValue={InitialData?.roledesc}
                         rules={[
@@ -271,7 +284,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Status" name="active" initialValue={InitialData?.active}>
+                    <Form.Item label="Status" name="status" initialValue={InitialData?.active}>
                         <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
                 </Col>
@@ -294,14 +307,14 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                     values[keyName] = checkedKeys;
                 }
 
-                if (keyName === 'rolename') {
+                if (keyName === 'roleName') {
                     Roledataset.push(values[keyName]);
                 }
-                if (keyName === 'active') {
+                if (keyName === 'status') {
                     if (values[keyName] === false) {
-                        values[keyName] = 'N';
+                        values[keyName] = '0';
                     } else {
-                        values[keyName] = 'Y';
+                        values[keyName] = '1';
                     }
                 }
             });
@@ -420,7 +433,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                         </div>
                     </Col>
                 ) : undefined}
-                <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={16}>
+                <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={!isTreeViewVisible ? 24 : 16}>
                     <Row>
                         {addchilds ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
