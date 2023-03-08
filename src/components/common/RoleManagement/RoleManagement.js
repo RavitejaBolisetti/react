@@ -57,20 +57,20 @@ const mapDispatchToProps = (dispatch) => ({
 export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [validatetrees, setValidatetrees] = useState(false);
-    const [Roledataset, setRoledataset] = useState([]);
+    const [Roledataset, setRoledataset] = useState([]); //Left Menu render as new data is added Presently hardcoded
 
-    const [formData, setFormData] = useState([]);
-    const [Mycheckvals, setMycheckvals] = useState([]);
+    const [formData, setFormData] = useState([]); //When we fetch from Api the data is added here and the new data is also appended
+    const [Mycheckvals, setMycheckvals] = useState([]); //Reference to checked keys in the tree
 
-    const [Readonly, setReadOnly] = useState(true);
+    const [disabled, setDisabled] = useState(false); //To open form in read only mode true at the first time
 
-    const [AddEditCancel, setAddEditCancel] = useState(true);
-    const [forceFormReset, setForceFormReset] = useState(false);
+    const [AddEditCancel, setAddEditCancel] = useState(true); // when we click on Add Role save cancel and reset is opened
+    const [forceFormReset, setForceFormReset] = useState();
 
-    const [InitialData, setInitialData] = useState({});
-    const [addchilds, setAddchild] = useState(true);
+    const [InitialData, setInitialData] = useState({}); //Finding the Clicked role and setting it in intialData
+    const [addchilds, setAddchild] = useState(true); //Add role button to show or not
     const [Switcher, setSwitcher] = useState(true);
+
     const [Checkboxdata, setCheckBoxData] = useState({
         All: false,
         Add: false,
@@ -86,16 +86,12 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
-    useEffect(
-        () => {
-            form.resetFields();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        },
-        [forceFormReset],
-        [addchilds]
-    );
     useEffect(() => {
-        const SetRole=[];
+        form.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [forceFormReset]);
+    useEffect(() => {
+        const SetRole = [];
         const finalRoledata = RoleManagementData.map((e) => {
             Object.keys(e).map((keyName, i) => {
                 if (keyName === 'roleName') {
@@ -107,7 +103,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         setFormData(RoleManagementData);
     }, [RoleManagementData]);
 
-    
     //Tree
 
     const [expandedKeys, setExpandedKeys] = useState([]);
@@ -120,6 +115,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
+        setAutoExpandParent(false);
     };
     const onCheck = (checkedKeysValue) => {
         console.log('onCheck', checkedKeysValue);
@@ -209,6 +205,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     };
 
     const handleChilds = () => {
+        setAddEditCancel(true);
         setAddchild(!addchilds);
     };
     const handleSave = () => {
@@ -245,47 +242,47 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                     <Form.Item
                         name="roleId"
                         label="Role Id"
-                        initialValue={InitialData?.roleid}
+                        initialValue={InitialData?.roleId}
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled={disabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
                         name="roleName"
                         label="Role Name"
-                        initialValue={InitialData?.rolename}
+                        initialValue={InitialData?.roleName}
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled={disabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
                         name="roleDescription"
                         label="Role Description"
-                        initialValue={InitialData?.roledesc}
+                        initialValue={InitialData?.roleDescription}
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled={disabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Status" name="status" initialValue={InitialData?.active}>
-                        <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
+                    <Form.Item label="Status" name="status" initialValue={InitialData?.status === '1' ? true : false}>
+                        <Switch disabled={disabled} checked={AddEditCancel ? Switcher : InitialData?.status === '1' ? true : false} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
                 </Col>
             </Row>
@@ -333,7 +330,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     };
 
     const handleForms = (e) => {
-        setForceFormReset(Math.random() * 10000);
+        setDisabled(true);
+        setForceFormReset(Math.random() * 10000); //Important Form Rerender
 
         console.log(e.target.outerText);
         setAddchild(false);
@@ -342,7 +340,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
             console.log(formData[keyName]);
             Object.keys(formData[keyName]).map((keyName2, i) => {
                 console.log(keyName2);
-                if (keyName2 === 'rolename') {
+                if (keyName2 === 'roleName') {
                     if (formData[keyName][keyName2] === e.target.outerText) {
                         setInitialData(formData[keyName]);
                     }
@@ -355,16 +353,20 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     };
     const oncancel = () => {
         setAddchild(!addchilds);
+        setDisabled(false);
         setForceFormReset(Math.random() * 10000);
 
         setInitialData({});
         form.resetFields();
         setMycheckvals([]);
-        setAddEditCancel(!AddEditCancel);
+        // setAddEditCancel(!AddEditCancel);
         setCheckedKeys([]);
         setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
     };
-    const OnEdit = () => {};
+    const OnEdit = () => {
+        setAddEditCancel(true);
+        setDisabled(false);
+    };
     const Handlebuttons = () => {
         return AddEditCancel ? (
             <Row justify="end" gutter={20}>
