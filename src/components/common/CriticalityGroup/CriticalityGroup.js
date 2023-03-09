@@ -343,6 +343,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: '',
+            sorter:false,
             render: (text, record, index) => {
                 return (
                     <Space wrap>
