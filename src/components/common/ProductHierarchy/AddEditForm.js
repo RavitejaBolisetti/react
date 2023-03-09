@@ -10,7 +10,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     const disabledProps = { disabled: isReadOnly };
@@ -53,7 +53,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelec
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} showSearch allowClear>
+                        <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}

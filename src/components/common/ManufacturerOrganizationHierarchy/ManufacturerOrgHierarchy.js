@@ -139,7 +139,6 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
     };
 
     const handleSelectTreeClick = (value) => {
-        // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
 
