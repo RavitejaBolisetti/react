@@ -182,7 +182,6 @@ export const ConfigurableParameterEditingTable = () => {
         <>
             <Form onFinishFailed={onFinishFailed}>
                 <DataTable {...tableProps} />
-
                 <Row gutter={20} className={styles.btnContainer}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.btnLeft}>
                         <Button danger onClick={handleAdd}>
