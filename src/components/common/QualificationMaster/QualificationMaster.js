@@ -4,16 +4,15 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Modal, Empty, Form, Select, Switch, Space, Table } from 'antd';
 import { ExclamationCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 
 import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from '../QualificationMaster/QualificationMaster.module.css';
-import { geoDataActions } from 'store/actions/data/geo';
+import style from '../Common.module.css';
+
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import DrawerUtil from './DrawerUtil';
 
 const { confirm } = Modal;
@@ -299,7 +298,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             emptyText: <Empty description="No Role Added" />,
                         }}
                         dataSource={Searchdata}
-                        pagination={false}
+                        pagination={true}
                         columns={tableColumn}
                         bordered
                         onChange={onChange}
