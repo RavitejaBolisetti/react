@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
-import TreeView from 'components/common/TreeView';
 
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
@@ -141,6 +140,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
+    const [bottom, setBottom] = useState('bottomLeft');
 
     const dataList = [];
     const generateList = (data) => {
