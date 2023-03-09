@@ -6,6 +6,7 @@ import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ChangePassword } from './changePassword';
+import { DealerHierarchy } from './dealerHierarchy';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
 
 export const data = combineReducers({
@@ -16,5 +17,6 @@ export const data = combineReducers({
     ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
     ChangePassword,
+    DealerHierarchy,
     ConfigurableParameterEditing,
 });
