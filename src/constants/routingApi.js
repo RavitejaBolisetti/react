@@ -27,3 +27,8 @@ export const BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'ma
 export const BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY = BASE_URL + 'manufactureradministrationhierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE = BASE_URL + 'manufactureradministrationhierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/changehistory';
+
+export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'applications';
+export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
+
+export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';

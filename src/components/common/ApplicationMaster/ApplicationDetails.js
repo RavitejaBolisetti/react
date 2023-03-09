@@ -30,12 +30,12 @@ const ApplicationDetails = ({ form, isReadOnly, formActionType, setSelectedLocaa
 
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="ApplicationId" label="Application ID" rules={[validateRequiredInputField('Application ID')]}>
+                        <Form.Item name="applicationId" label="Application ID" rules={[validateRequiredInputField('Application ID')]}>
                             <Input  placeholder="Type code here" {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="ApplicationName" label="Application Name" rules={[validateRequiredInputField('Application Name')]}>
+                        <Form.Item name="applicationName" label="Application Name" rules={[validateRequiredInputField('Application Name')]}>
                             <Input placeholder="Type code here" {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -61,7 +61,7 @@ const ApplicationDetails = ({ form, isReadOnly, formActionType, setSelectedLocaa
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="parentApplication ID" label="Parent Application ID" rules={[validateRequiredSelectField('Parent Application ID')]}>
+                        <Form.Item name="parentApplicationId" label="Parent Application ID" rules={[validateRequiredSelectField('Parent Application ID')]}>
                             <Select {...disabledProps}>
                                 <Option value="" >Select</Option>
                                 <Option value="1" >parent application id 1</Option>
@@ -72,7 +72,7 @@ const ApplicationDetails = ({ form, isReadOnly, formActionType, setSelectedLocaa
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="applicationCriticalityGroup" label="Application Criticality Group" rules={[validateRequiredSelectField('Application Criticality Group')]}>
+                        <Form.Item name="criticalityGroupCode" label="Application Criticality Group" rules={[validateRequiredSelectField('Application Criticality Group')]}>
                         <Select {...disabledProps} >
                                 <Option value="1" >Application Criticality Group </Option>
                                 <Option value="2" >Application Criticality Group</Option>
@@ -93,7 +93,7 @@ const ApplicationDetails = ({ form, isReadOnly, formActionType, setSelectedLocaa
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="DocumentNoToBeGenerated" label="Document No to be generated" >
+                        <Form.Item name="documentNumRequired" label="Document No to be generated" >
                             <Switch defaultChecked checkedChildren="Yes" unCheckedChildren="No" {...disabledProps} />
                         </Form.Item>
                     </Col>

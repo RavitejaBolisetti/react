@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Row, Col, Table, Button, Input, Switch, Space, Modal, Form } from 'antd';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
@@ -66,9 +66,30 @@ const datainitial = [
     },
 ];
 
-const ApplicationActions = ({ form, isReadOnly }) => {
+const editRowData = [
+    {
+        key: Math.random() * 1000,
+        id: Math.random() * 1000,
+        actionId: '',
+        actionName: '',
+        status: 'Y',
+        deletable: true,
+        isEditable: true,
+    }
+]
+
+
+const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
     // const [form] = Form.useForm();
     const [data, setRowsData] = useState(datainitial);
+
+    useEffect(() => {
+        if(formActionType === "rootChild"){
+            setRowsData(editRowData)
+        }else{
+            setRowsData(datainitial);
+        }
+    },[formActionType])
 
     const showConfirm = (record, index) => {
         confirm({
@@ -118,7 +139,7 @@ const ApplicationActions = ({ form, isReadOnly }) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action ID',
-            dataIndex: 'actionId',
+            dataIndex: 'appId',
             render: (text, record, index) => {
                 return <Space wrap>{EditableCell({ record, index, title: 'Code', dataIndex: 'actionId', inputType: 'text', form })}</Space>;
             },
@@ -128,7 +149,7 @@ const ApplicationActions = ({ form, isReadOnly }) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action Name',
-            dataIndex: '',
+            dataIndex: 'actionName',
             render: (text, record, index) => {
                 return <Space wrap>{EditableCell({ record, index, title: 'Code', dataIndex: 'actionName', inputType: 'text', form })}</Space>;
             },
@@ -165,7 +186,7 @@ const ApplicationActions = ({ form, isReadOnly }) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
-            dataIndex: 'action',
+            dataIndex: '',
             // editable: false,
             render: (text, record, index) => {
                 return (
@@ -192,7 +213,7 @@ const ApplicationActions = ({ form, isReadOnly }) => {
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table dataSource={[...data]} pagination={false} columns={tableColumn} />
+                            <Table scroll={{ x: 'auto'}} dataSource={[...data]} pagination={false} columns={tableColumn} />
                         </Col>
                     </Row>
                     

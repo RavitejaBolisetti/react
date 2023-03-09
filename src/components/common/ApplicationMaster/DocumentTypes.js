@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Table, Button, Input, Switch, Space, Modal, Form } from 'antd';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
@@ -69,9 +69,30 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
         },
     ];
 
-const ApplicationActions = ({form, isReadOnly}) => {
+    const editRowData = [
+        {
+            key: Math.random() * 1000,
+            id: Math.random() * 1000,
+            documentTypeCode: '',
+            documentTypeDescription: '',
+            termsandcondition: "Y",
+            digitalsignature: "Y",
+            deletable: true,
+            isEditable: true,
+        }
+    ]
+
+const ApplicationActions = ({form, isReadOnly, formActionType}) => {
     // const [form] = Form.useForm();
     const [data, setRowsData] = useState(datainitial);
+
+    useEffect(() => {
+        if(formActionType === "rootChild"){
+            setRowsData(editRowData)
+        }else{
+            setRowsData(datainitial);
+        }
+    },[formActionType])
 
     const showConfirm = (record, index) => {
         confirm({
@@ -92,9 +113,10 @@ const ApplicationActions = ({form, isReadOnly}) => {
         const newData = {
             id: Math.random() * 1000,
             key: Math.random() * 1000,
-            actionId: "",
-            actionName: "",
-            status: "Y",
+            documentTypeCode: '',
+            documentTypeDescription: '',
+            termsandcondition: "Y",
+            digitalsignature: "Y",
             deletable: true,
         };
         const newlyAddedRow = Object.entries(currentlyFormDataObj)
@@ -131,7 +153,7 @@ const ApplicationActions = ({form, isReadOnly}) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Description',
-            dataIndex: 'documentTypeDescription',
+            dataIndex: 'documentTypeDiscription',
             render: (text, record, index) => {
                 return <Space wrap>{EditableCell({ record, index, title: 'Description', dataIndex: 'documentTypeDescription', inputType: 'text', form })}</Space>;
             },
@@ -141,7 +163,7 @@ const ApplicationActions = ({form, isReadOnly}) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'T&C Required',
-            dataIndex: 'termsandcondition',
+            dataIndex: 'termAndConRequired',
             render: (text, record, index) => {
                 return (
                     <Space wrap>
@@ -155,7 +177,7 @@ const ApplicationActions = ({form, isReadOnly}) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Digital Signature Required',
-            dataIndex: 'digitalsignature',
+            dataIndex: 'digitalSignatureRequired',
             render: (text, record, index) => {
                 return (
                     <Space wrap>

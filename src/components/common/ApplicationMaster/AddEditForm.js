@@ -21,7 +21,7 @@ const AddEditForm = ({ setOpenAccordian, openAccordian, applicationform, applica
 
     return (
         <>
-            <Row style={{ paddingBottom: '20px' }}>
+            <Row style={{ paddingBottom: '20px', marginTop: '9px' }}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.padRight0}>
                     <Space
                         direction="vertical"

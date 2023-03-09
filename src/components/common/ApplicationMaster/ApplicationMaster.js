@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row } from 'antd';
+import { Button, Col, Form, Row, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
 import TreeView from 'components/common/TreeView';
@@ -14,26 +14,31 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 // import { ParentHierarchy } from '../parentHierarchy';
 import AddEditForm from './AddEditForm';
+import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import LeftPanel from '../LeftPanel';
 
 const mapStateToProps = (state) => {
+    console.log("STATE==>", state)
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            // Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            // HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+            applicationDetailsData: applicationDetailsData,
         },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
+        // common: {
+        //     LeftSideBar: { collapsed = false },
+        // },
     } = state;
 
     let returnValue = {
-        collapsed,
-        userId,
-        isDataLoaded,
-        geoData,
-        isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
+        applicationDetailsData,
+        // collapsed,
+        // userId,
+        // isDataLoaded,
+        // geoData,
+        // isDataAttributeLoaded,
+        // attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -42,6 +47,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
+
             fetchList: geoDataActions.fetchList,
             saveData: geoDataActions.saveData,
             listShowLoading: geoDataActions.listShowLoading,
@@ -85,7 +92,7 @@ const mockgeoData = [{
       },]
 }]
 
-export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, fetchApplication }) => {
     const [applicationform ] = Form.useForm();
     const [applicationActionsform] = Form.useForm();
     const [documentTypesform] = Form.useForm();
@@ -113,12 +120,13 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
+        fetchApplication({ setIsLoading: hierarchyAttributeListShowLoading, id:"COMN-02.01"})
         // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -153,6 +161,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     const flatternData = generateList(finalGeoData);
 
     const handleTreeViewClick = (keys) => {
+
+        console.log("keys=handletreeviewclick", keys)
         setForceFormReset(Math.random() * 10000);
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         // form.resetFields();
@@ -193,47 +203,41 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
 
             applicationActionsform.validateFields().then((values) => {
                 if( !values[0] ) return setOpenAccordian("2");   
-                applicationActionsformValues = Object.entries(values).map(([key, va]) => (va));
+                applicationActionsformValues = Object.entries(values).map(([key, val]) => ({...val}));
 
                 documentTypesform.validateFields().then((values) => {
                     if( !values[0] )return setOpenAccordian("3");   
-                    documentTypesformValues = Object.entries(values).map(([key, va]) => (va));
+                    documentTypesformValues = Object.entries(values).map(([key, val]) => ({...val}));
 
                     accessibleDealerLocationsform.validateFields().then((values) => {
-                        if( !values[0] ) setOpenAccordian("4");   
-                        accessibleDealerLocationsformValues = Object.entries(values).map(([key, va]) => (va));
+                        console.log("val loc", values);
+                        // if( !values[0] ) setOpenAccordian("4");   
+                        accessibleDealerLocationsformValues = Object.entries(values).map(([key, val]) => ({...val}));
                         // submit FORM HERE
                         console.log("SUBMITTED Array val ===> ",detailApplicationformValues, applicationActionsformValues, documentTypesformValues, accessibleDealerLocationsformValues)
                         console.log("<<== SUBMITTED ==>>")
+                        // setOpenAccordian('1')
 
                     }).catch(err => {
-                        console.log("errrr4",err)
                         if(err.errorFields.length) setOpenAccordian("4")
     
                     })
 
 
                 }).catch(err => {
-                    console.log("errrr3",err)
                     if(err.errorFields.length) setOpenAccordian("3")
                 });
 
 
             }).catch(err => {
-                console.log("errrr",err.errorFields.length)
                 if(err.errorFields.length) setOpenAccordian("2")
             });
             
             
         }).catch(err => {
-            console.log("errrr",err.errorFields.length)
             if(err.errorFields.length)return setOpenAccordian("1"); 
         });
 
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        // form.validateFields().then((values) => {});
     };
 
     const handleEditBtn = () => {
@@ -301,30 +305,41 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
         }
     };
 
-
+    console.log("selectedTreeKey", selectedTreeKey, selectedTreeSelectKey, )
+    
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const myProps = {
+        isTreeViewVisible,
+        handleTreeViewVisiblity,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        fieldNames,
+        handleTreeViewClick,
+        treeData: geoData,
+    };
+
     return (
         <>
             <div className={styles.geoSection}>
-                <Row gutter={20}>
+                {/* <Row gutter={20}>
                     <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
                         {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
                     </div>
-                </Row>
+                </Row> */}
                 <Row gutter={20}>
-                    {isTreeViewVisible ? (
                         <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                            <div className={styles.leftpanel}>
+                            <LeftPanel handleTreeViewVisiblity={handleTreeViewVisiblity} isTreeViewVisible={isTreeViewVisible} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} treeData={mockgeoData}/>
+                            
+                            {/* <div className={styles.leftpanel}>
                                 <div className={styles.treeViewContainer}>
                                     <div className={styles.treemenu}>
                                         <TreeView selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} dataList={mockgeoData} />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </Col>
-                    ) : undefined}
 
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {/* <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
                             {/* {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={mockgeoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />} */}
                             {isFormVisible &&  <AddEditForm setOpenAccordian={setOpenAccordian}  openAccordian={openAccordian} applicationform={applicationform} applicationActionsform={applicationActionsform} documentTypesform={documentTypesform} accessibleDealerLocationsform={accessibleDealerLocationsform} setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={mockgeoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen}  /> }
@@ -358,19 +373,16 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
                                         </Button>
                                     )}
 
+                                    {!isFormVisible && (
+                                        <Empty imageStyle={{marginTop: "24vh"}} image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                                    )}
+                            
                                     {isFormVisible && (
                                         <>
                                             {buttonData?.cancelBtn && (
                                                 <Button danger onClick={() => handleBack()}>
                                                     <FaRegTimesCircle size={15} className={styles.buttonIcon} />
                                                     Cancel
-                                                </Button>
-                                            )}
-
-                                            {buttonData?.saveBtn && (
-                                                <Button onClick={onFinish} danger>
-                                                    <FaSave className={styles.buttonIcon} />
-                                                    Save
                                                 </Button>
                                             )}
 
@@ -381,15 +393,20 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
                                                 </Button>
                                             )}
 
+                                            {buttonData?.saveBtn && (
+                                                <Button onClick={onFinish} danger>
+                                                    <FaSave className={styles.buttonIcon} />
+                                                    Save
+                                                </Button>
+                                            )}
+
                                         </>
                                     )}
                                 </Col>
                             </Row>
-                        {/* </Form> */}
                     </Col>
                 </Row>
 
-                {/* <ParentHierarchy title={'Parent Hierarchy'} dataList={geoData} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} /> */}
             </div>
         </>
     );
