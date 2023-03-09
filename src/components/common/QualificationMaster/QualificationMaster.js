@@ -124,6 +124,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
+            sorter:false,
             render: (record) => {
                 return (
                     <Space wrap>
