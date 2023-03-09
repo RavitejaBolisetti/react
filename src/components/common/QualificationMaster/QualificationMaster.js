@@ -71,6 +71,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [arrData, setArrData] = useState(qualificationData.data);
+    const [Searchdata, setSearchdata] = useState();
+    // console.log(qualificationData);
     const state = {
         button: 1,
     };
@@ -90,11 +92,16 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
+    useEffect(() => {
+        setSearchdata(qualificationData);
+    }, [qualificationData]);
+
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Qualificattion Code',
+            title: 'Qualification Code',
             dataIndex: 'qualificationCode',
+            onFilter: (value, record) => record.qualificationCode.includes(value),
             sortFn: (a, b) => a.code.localeCompare(b.code),
         })
     );
@@ -218,16 +225,47 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
 
     const onChangeHandle = (e) => {
+        // const getSearch = e.target.value;
+        // if (e.target.value == '') {
+        //     const tempArr = arrData;
+        //     setArrData(tempArr);
+        //     return;
+        // }
+        // if (getSearch.length > -1) {
+        //     const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
+        //     setArrData(searchResult);
+        // }
+        // console.log(e.target.value);
+        const newdata = [];
+        Object.keys(qualificationData).map((keyname, i) => {
+            if (qualificationData[keyname].qualificationName === e) {
+                newdata.push(qualificationData[keyname]);
+                // setSearchdata(qualificationData[keyname])
+            } else if (qualificationData[keyname].qualificationCode === e) {
+                newdata.push(qualificationData[keyname]);
+                // setSearchdata(qualificationData[keyname])
+            }
+        });
+
+        if (e === '') {
+            setSearchdata(qualificationData);
+        } else {
+            setSearchdata(newdata);
+        }
+        //  record.qualificationCode.includes(value)
+    };
+    const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
         if (e.target.value == '') {
-            const tempArr = arrData;
-            setArrData(tempArr);
+            const tempArr = qualificationData;
+            setSearchdata(tempArr);
             return;
         }
         if (getSearch.length > -1) {
-            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setArrData(searchResult);
-        }
+            const searchResult = qualificationData.filter((record) => record.qualificationName.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.qualificationCode.toLowerCase().startsWith(e.target.value.toLowerCase()));
+            setSearchdata(searchResult);
+        } 
+        console.log(e.target.value);
     };
 
     return (
@@ -240,11 +278,11 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                         style={{
                             width: 200,
                         }}
-                        onSearch={() => console.log('search')}
-                        onChange={onChangeHandle}
+                        onSearch={onChangeHandle}
+                        onChange={onChangeHandle2}
                     />
                 </Col>
-                <Col className={styles.addQualification}  xs={16} sm={16} md={16} lg={16} xl={16}>
+                <Col className={styles.addQualification} xs={16} sm={16} md={16} lg={16} xl={16}>
                     <Button danger onClick={handleAdd}>
                         <AiOutlinePlus className={styles.buttonIcon} />
                         Add Qualification
@@ -260,12 +298,13 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                         locale={{
                             emptyText: <Empty description="No Role Added" />,
                         }}
-                        dataSource={qualificationData}
+                        dataSource={Searchdata}
                         pagination={false}
                         columns={tableColumn}
                         bordered
                         onChange={onChange}
                     />
+                    
                 </Col>
             </Row>
         </>
