@@ -204,6 +204,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
+            sorter:false,
             render: (text, record, index) => {
                 return <Space wrap>{<FaEdit onClick={() => edit(record)} />}</Space>;
             },
