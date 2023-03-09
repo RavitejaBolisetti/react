@@ -21,9 +21,7 @@ h4{
 p{
     text-align: center;
 }
-p:hover{
-    background-color: black;
-}
+
 .floatRight
 {
     float: right !important;

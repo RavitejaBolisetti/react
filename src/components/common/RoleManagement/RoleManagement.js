@@ -88,6 +88,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     }, [isDataLoaded, isDataAttributeLoaded]);
     useEffect(() => {
         form.resetFields();
+        setExpandedKeys([]);
+        setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
     useEffect(() => {
@@ -205,6 +207,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     };
 
     const handleChilds = () => {
+        setForceFormReset(Math.random() * 1000);
         setAddEditCancel(true);
         setAddchild(!addchilds);
     };
@@ -319,6 +322,40 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 values[keyName] = Checkboxdata[keyName];
             });
 
+            const Final_data = { cretdby: "shaka", cretddate: new Date(), modfdby: "Me", modfddate: "adasdad", roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
+            console.log("Final Sending data",Final_data);
+            const onSuccess = (res) => {
+                form.resetFields();
+                setForceFormReset(Math.random() * 10000);
+    
+               
+    
+                if (res?.Final_data) {
+                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId });
+                    
+                }
+            };
+    
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
+    
+            const requestData = {
+                data: Final_data,
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+            saveData(requestData);
+            
+            
+            
+            
+            
+            
+            
             setAddchild(!addchilds);
             form.resetFields();
             setMycheckvals([]);
