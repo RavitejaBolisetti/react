@@ -1,21 +1,103 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Modal, Row } from 'antd';
+import { bindActionCreators } from 'redux';
+import { changePasswordActions } from 'store/actions/data/changePassword';
+import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { doLogoutAPI } from 'store/actions/auth';
+import { ROUTING_LOGOUT } from 'constants/routing';
 
-import { validateRequiredInputField } from 'utils/validation';
+const mapStateToProps = (state) => {
+    const {
+        auth: { token, isLoggedIn, userId },
 
-export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '' }) => {
+        data: {
+            ChangePassword: { isLoading, isLoaded: isDataLoaded = false },
+        },
+    } = state;
+
+    return {
+        isDataLoaded,
+        token,
+        isLoggedIn,
+        userId,
+        isLoading,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            saveData: changePasswordActions.saveData,
+            doLogout: doLogoutAPI,
+            listShowLoading: changePasswordActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
-    const onFinish = (values) => {
-        console.log('🚀 ~ file: ChangePassword.js:8 ~ onFinish ~ values', values);
+
+    const [confirmDirty, setConfirmDirty] = useState(false);
+
+    const onFinish = (errorInfo) => {
+        // form.validateFields().then((values) => {});
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('🚀 ~ file: ChangePassword.js:12 ~ onFinishFailed ~ errorInfo', errorInfo);
+    const onFinishFailed = (values) => {
+        if (values.errorFields.length === 0) {
+            const data = { ...values.values };
+            const onSuccess = (res) => {
+                form.resetFields();
+                doLogout({
+                    successAction: () => {
+                        handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                        window.location.href = ROUTING_LOGOUT;
+                    },
+                });
+            };
+
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
+
+            const requestData = {
+                data: data,
+                setIsLoading: listShowLoading,
+                userId,
+                onSuccess,
+                onError,
+            };
+
+            saveData(requestData);
+        }
     };
 
+    const validateToNextPassword = (rule, value, callback) => {
+        if (value && confirmDirty) {
+            form.validateFields(['confirmNewPassword'], { force: true });
+        }
+        callback();
+    };
+
+    const compareToFirstPassword = (rule, value, callback) => {
+        if (value && value !== form.getFieldValue('newPassword')) {
+            callback("New Password and Confirm Password doesn't match!");
+        } else {
+            callback();
+        }
+    };
+
+    const handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        setConfirmDirty(confirmDirty || !!value);
+    };
     return (
         <>
-            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" onOk={onFinish} onCancel={onCancel}>
+            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onOk={onFinishFailed} onCancel={onCancel}>
                 {discreption ? (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -29,34 +111,52 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>
-                                <Input.Password type="text" placeholder="Enter Old Password" visibilityToggle={true} />
+                                <Input.Password type="text" allowClear placeholder="Enter Old Password" visibilityToggle={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('New Password')]}>
-                                <Input.Password type="text" placeholder="Enter New Password" visibilityToggle={true} />
+                            <Form.Item
+                                label="New Password"
+                                name="newPassword"
+                                rules={[
+                                    validateRequiredInputField('New Password'),
+                                    validateFieldsPassword('New Password'),
+                                    {
+                                        validator: validateToNextPassword,
+                                    },
+                                ]}
+                            >
+                                <Input.Password type="text" allowClear placeholder="Enter New Password" visibilityToggle={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Confirm Password" name="confirmPassword" rules={[validateRequiredInputField('Confirm Password')]}>
-                                <Input.Password type="text" placeholder="Enter Confirm Password" visibilityToggle={true} />
+                            <Form.Item
+                                label="Confirm Password"
+                                name="confirmNewPassword"
+                                rules={[
+                                    validateRequiredInputField('Confirm Password'),
+                                    validateFieldsPassword('Confirm Password'),
+                                    {
+                                        validator: compareToFirstPassword,
+                                    },
+                                ]}
+                            >
+                                <Input.Password type="text" allowClear placeholder="Enter Confirm Password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Button style={{ marginTop: '20px' }} >
-                                Cancel
-                            </Button>
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{textAlign:'right'}}>
-                            <Button  style={{ marginTop: '20px' }} type="primary" htmlType="submit">
+                            <Button style={{ marginTop: '20px' }} type="primary" htmlType="submit">
                                 Submit
                             </Button>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                            <Button style={{ marginTop: '20px' }}>Cancel</Button>
                         </Col>
                     </Row>
                 </Form>
@@ -64,3 +164,5 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
         </>
     );
 };
+
+export const ChangePassword = connect(mapStateToProps, mapDispatchToProps)(ChangePasswordBase);

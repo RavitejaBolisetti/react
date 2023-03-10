@@ -3,6 +3,12 @@
     color: #ffffff !important;
 }
 
+:global .ant-btn {
+    height: 34px;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
 .padRight0 {
     padding-right: 0px !important;
 }
