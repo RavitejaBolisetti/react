@@ -69,6 +69,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -102,8 +104,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
@@ -151,7 +153,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
-            formData && setFormData(data);  
+            formData && setFormData(data);
 
             if (selectedTreeKey && selectedTreeKey.length > 0) {
                 !recordId && setSelectedTreeKey(codeToBeSaved);
@@ -241,7 +243,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
     const myProps = {
         isTreeViewVisible,
