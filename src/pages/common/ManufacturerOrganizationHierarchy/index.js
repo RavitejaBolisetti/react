@@ -1,3 +1,3 @@
-import { ManufacturerOrgHierarchyPage} from "./ManufacturerOrgHierarchyPage";
+import { ManufacturerOrgHierarchyPage } from './ManufacturerOrgHierarchyPage';
 
 export { ManufacturerOrgHierarchyPage };
