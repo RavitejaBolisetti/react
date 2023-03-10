@@ -1,4 +1,4 @@
-import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster';
+import { HierarchyAttributeMasterPage } from './HierarchyAttributeMasterPage';
 
 
 export { HierarchyAttributeMasterPage};
