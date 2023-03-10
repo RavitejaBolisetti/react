@@ -116,4 +116,4 @@ export const HierarchyAttributeMasterBase = (props) => {
     );
 };
 
-export const HierarchyAttributeMaster = withLayoutMaster(HierarchyAttributeMasterBase);
+export const HierarchyAttributeMasterPage = withLayoutMaster(HierarchyAttributeMasterBase);
