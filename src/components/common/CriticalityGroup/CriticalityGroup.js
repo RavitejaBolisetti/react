@@ -8,6 +8,7 @@ import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
 import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
+import style from './criticatiltyGroup.module.css';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
@@ -81,7 +82,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
     const [arrData, setArrData] = useState(data);
-
+    const [searchData,setSearchdata] = useState('')
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -249,20 +250,52 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // setRowsData([...updatedData]);
     };
 
+    
     const onChangeHandle = (e) => {
+        // const getSearch = e.target.value;
+        // if (e.target.value == '') {
+        //     const tempArr = arrData;
+        //     setArrData(tempArr);
+        //     return;
+        // }
+        // if (getSearch.length > -1) {
+        //     const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
+        //     setArrData(searchResult);
+        // }
+        // console.log(e.target.value);
+        const newdata = [];
+        Object.keys(criticalityGroupData).map((keyname, i) => {
+            if (criticalityGroupData[keyname].critcltyGropCode === e) {
+                newdata.push(criticalityGroupData[keyname]);
+                // setSearchdata(qualificationData[keyname])
+            } else if (criticalityGroupData[keyname].critcltyGropDesc === e) {
+                newdata.push(criticalityGroupData[keyname]);
+                // setSearchdata(qualificationData[keyname])
+            }
+        });
+
+        if (e === '') {
+            setSearchdata(criticalityGroupData);
+        } else {
+            setSearchdata(newdata);
+        }
+        //  record.qualificationCode.includes(value)
+    };
+    const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
-        // console.log("value:", e.target.value);
         if (e.target.value == '') {
-            window.location.reload(true);
-            const tempArr = arrData;
-            setArrData(tempArr);
+            const tempArr = criticalityGroupData;
+            setSearchdata(tempArr);
             return;
         }
         if (getSearch.length > -1) {
-            const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setArrData(searchResult);
-        }
+            const searchResult = criticalityGroupData.filter((record) => record.critcltyGropCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.critcltyGropDesc.toLowerCase().startsWith(e.target.value.toLowerCase()));
+            setSearchdata(searchResult);
+        } 
+        console.log(e.target.value);
     };
+
+
 
     const tableColumn = [];
 
@@ -310,6 +343,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: '',
+            sorter:false,
             render: (text, record, index) => {
                 return (
                     <Space wrap>
@@ -330,12 +364,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                         style={{
                             width: 200,
                         }}
-                        onChange={onChangeHandle}
+                        onSearch={onChangeHandle}
+                        onChange={onChangeHandle2}
                     />
                 </Col>
-                <Col offset={13} xs={2} sm={2} md={2} lg={2} xl={2}>
+                <Col className={style.addGroup} xs={16} sm={16} md={16} lg={16} xl={16}>
                     <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} style={{ textAlign: 'right' }} />
+                        <AiOutlinePlus className={styles.buttonIcon} />
                         Add Group
                     </Button>
                 </Col>
