@@ -204,7 +204,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
-            sorter:false,
+            sorter: false,
             render: (text, record, index) => {
                 return <Space wrap>{<FaEdit onClick={() => edit(record)} />}</Space>;
             },
@@ -223,10 +223,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
             if (saveclick === true) {
                 setShowDrawer(false);
-            }
-            else
-            {
-                setShowDrawer(true); 
+            } else {
+                setShowDrawer(true);
             }
             forceUpdate();
         };
@@ -262,7 +260,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                         <Button danger onClick={handleAdd} className={style2.floatRight}>
                             <AiOutlinePlus className={styles.buttonIcon} />
-                            Add Row
+                            Add Attribute
                         </Button>
                     </Col>
                 )}
@@ -272,7 +270,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={false} columns={tableColumn} bordered />
+                            <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={{ pageSize: 20 }} columns={tableColumn} bordered />
                         </Col>
                     </Row>
                 </>
