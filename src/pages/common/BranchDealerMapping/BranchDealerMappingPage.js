@@ -5,25 +5,18 @@ import { PageHeader } from 'pages/common/PageHeader';
 import {BranchDealerMapping} from 'components/common/BranchDealerMapping';
 
 export const BranchDealerMappingPageBase = (props) => {
-    const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
-
-    const handleChangeHistoryClick = (e) => {
-        setChangeHistoryVisible(!isChangeHistoryVisible);
-    };
+    
     const pageTitle = 'BRANCH DEALER MAPPING';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        showChangeHisoty: true,
-        visibleChangeHistory: true,
-        handleChangeHistoryClick,
-        isChangeHistoryVisible,
+        visibleChangeHistory:false,
     };
 
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <BranchDealerMapping isChangeHistoryVisible={isChangeHistoryVisible} />
+            <BranchDealerMapping  />
         </>
     );
 };

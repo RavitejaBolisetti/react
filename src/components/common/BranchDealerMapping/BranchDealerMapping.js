@@ -2,8 +2,8 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Checkbox, Input, Select, Switch, Space, DatePicker, Collapse, Tree, Card } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { Button, Col, Form, Row, Checkbox, Input, Select, Switch, Space, DatePicker, Collapse, Tree, Card, Modal } from 'antd';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle, FaRegCheckCircle, FaBullhorn } from 'react-icons/fa';
 import { addToolTip } from 'utils/customMenuLink';
 import TreeView from 'components/common/TreeView';
 
@@ -16,6 +16,7 @@ import { ChangeHistory } from '../ChangeHistory';
 
 const { Option } = Select;
 const { Panel } = Collapse;
+const { success: successModel, error: errorModel } = Modal;
 const { RangePicker } = DatePicker;
 
 const mapStateToProps = (state) => {
@@ -69,15 +70,21 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
     const [isFormVisible, setFormVisible] = useState(false);
+    const [isCollapsible, setCollapsible] = useState(true);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
 
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [value, setValue] = useState(['0-0-0']);
+    const [isChildVisible, setChildVisible] = useState(true);
+    const disabledProps = { disabled: isReadOnly };
+    const [open, setOpen] = useState([]);
+    const [open2, setOpen2] = useState([]);
+
     const treeData = [
         {
             title: 'parent 1',
@@ -210,7 +217,6 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
             formData && setFormData(formData?.data);
-
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
             setFormVisible(true);
             forceUpdate();
@@ -226,44 +232,58 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
+    const showSuccessModal = (title, message) => {
+        successModel({
+            title: 'Success',
+            icon: <FaRegCheckCircle size={22} style={{ color: '#00A310', paddingRight: '8px' }} />,
+            content: message,
+        });
+    };
 
+    const showErrorModal = (title, message) => {
+        errorModel({
+            title: title,
+            icon: <FaBullhorn size={22} style={{ color: '#00A310', paddingRight: '8px' }} />,
+            content: message,
+        });
+    };
     const onFinish = (values) => {
-        console.log(form);
-        const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
+        console.log(values);
+        // const recordId = formData?.id || '';
+        // const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
 
-        const data = { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
-        const formUpdatedData = { ...data, parntProdctId: codeToBeSaved, prodctShrtName: values?.shortName, prodctLongName: values?.longName };
-        const onSuccess = (res) => {
-            form.resetFields();
-            setForceFormReset(Math.random() * 10000);
+        // const data = { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        // const formUpdatedData = { ...data, parntProdctId: codeToBeSaved, prodctShrtName: values?.shortName, prodctLongName: values?.longName };
+        // const onSuccess = (res) => {
+        //     form.resetFields();
+        //     setForceFormReset(Math.random() * 10000);
 
-            setReadOnly(true);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            formData && setFormData(formUpdatedData);
+        //     setReadOnly(true);
+        setButtonData({ ...defaultBtnVisiblity, saveBtn: true, resetBtn: true, cancelBtn: true, childBtn: false, rootChildBtn: false });
+        //     setFormVisible(true);
+        //     formData && setFormData(formUpdatedData);
 
-            if (selectedTreeKey && selectedTreeKey.length > 0) {
-                !recordId && setSelectedTreeKey(codeToBeSaved);
-                setFormActionType('view');
-            }
-            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
-        };
+        //     if (selectedTreeKey && selectedTreeKey.length > 0) {
+        //         !recordId && setSelectedTreeKey(codeToBeSaved);
+        //         setFormActionType('view');
+        //     }
+        //     showSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+        //     fetchList({ setIsLoading: listShowLoading, userId });
+        // };
 
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
+        // const onError = (message) => {
+        //     showErrorModal(message);
+        // };
 
-        const requestData = {
-            data: data,
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        // const requestData = {
+        //     data: data,
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
 
-        saveData(requestData);
+        // saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -288,17 +308,18 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: true, editBtn: true, siblingBtn: true });
     };
 
     const handleChildBtn = () => {
         setForceFormReset(Math.random() * 10000);
         setFormActionType('child');
-        setFormVisible(true);
+        setCollapsible(true);
+        setFormVisible(false);
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true, siblingBtn: false, editBtn: false });
     };
 
     const handleSiblingBtn = () => {
@@ -309,7 +330,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
+        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true, editBtn: false });
     };
 
     const handleResetBtn = () => {
@@ -319,6 +340,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
 
     const handleBack = () => {
         setReadOnly(true);
+        setOpen('0');
+
         setForceFormReset(Math.random() * 10000);
         if (selectedTreeKey && selectedTreeKey.length > 0) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
@@ -328,7 +351,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         } else {
             setFormActionType('');
             setFormVisible(false);
-            setButtonData({ ...defaultBtnVisiblity });
+            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
         }
     };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
@@ -392,19 +415,18 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             </>
         );
     };
-    const disabledProps = { disabled: false };
-    const Formitems = () => {
+
+    const FormitemsOld = () => {
         return (
             <Form form={form} name="control-hooks" layout="vertical" onFinish={onFinish}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
-                            name="Attribute Level"
-                            label="Attribute Level"
+                            name="Attribute"
+                            label="Attribute"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Select an option'
                                 },
                             ]}
                         >
@@ -422,7 +444,6 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Select an option'
                                 },
                             ]}
                         >
@@ -440,21 +461,193 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                             name="Branches Code"
                             label="Branches Code"
                             rules={[
-                                { 
-                                    max: 5, 
-                                    message: 'Code must be maximum 5 characters.' 
-                                },
-                                { 
-                                    required: true, 
-                                    message: 'Please Enter Code' 
-                                },
-                                { 
-                                    min: 5, 
-                                    message: 'Code must be maximum 5 characters.' 
+                                {
+                                    required: true,
                                 },
                             ]}
                         >
                             <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Short Description/GSTIN number"
+                            label="Short Description/GSTIN number"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Long Description"
+                            label="Long Description"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="GSTIN State Code"
+                            label="GSTIN State Code"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Centre of Jurisdiction"
+                            label="Centre of Jurisdiction"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="State Jurisdiction"
+                            label="State Jurisdiction"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Date of Registration"
+                            label="Date of Registration"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <DatePicker style={{ width: '100%' }} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Construction of Business"
+                            label="Construction of Business"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Taxpayer Type"
+                            label="Taxpayer Type"
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}></Col>
+                </Row>
+            </Form>
+        );
+    };
+    const Formitems = () => {
+        return (
+            <Form form={form} name="control-hooks" layout="vertical" onFinish={onFinish}>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Attribute Level"
+                            label="Attribute Level"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Select an option',
+                                },
+                            ]}
+                        >
+                            <Select placeholder="Enter Data" allowClear>
+                                <Option value="Nothing2">Nothing2</Option>
+                                <Option value="Nothing1">Nothing1</Option>
+                                <Option value="other">other</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Parent"
+                            label="Parent"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Select an option',
+                                },
+                            ]}
+                        >
+                            <Select placeholder="Enter Data" allowClear>
+                                <Option value="Nothing2">Nothing2</Option>
+                                <Option value="Nothing1">Nothing1</Option>
+                                <Option value="other">other</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                            name="Branches Code"
+                            label="Branches Code"
+                            rules={[
+                                {
+                                    max: 5,
+                                    message: 'Code must be maximum 5 characters.',
+                                },
+                                {
+                                    required: true,
+                                    message: 'Please Enter Code',
+                                },
+                                {
+                                    min: 5,
+                                    message: 'Code must be maximum 5 characters.',
+                                },
+                            ]}
+                        >
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -472,7 +665,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -492,7 +685,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -510,7 +703,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -530,7 +723,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -548,7 +741,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -568,7 +761,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -586,7 +779,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -603,7 +796,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                             initialValue={formData?.isActive === 'Y' ? 1 : 0}
                         >
                             <Form.Item>
-                                <Switch value={formData?.isActive === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                                <Switch initialValue={formData?.isActive === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                             </Form.Item>
                         </Form.Item>
                     </Col>
@@ -622,32 +815,12 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder="Enter Data" />
                         </Form.Item>
                     </Col>
                 </Row>
             </Form>
         );
-    };
-    //tree for the product hierarchy
-    const [expandedKeys, setExpandedKeys] = useState(['0-0-0', '0-0-1']);
-    const [checkedKeys, setCheckedKeys] = useState(['0-0-0']);
-    const [selectedKeys, setSelectedKeys] = useState([]);
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const onExpand = (expandedKeysValue) => {
-        console.log('onExpand', expandedKeysValue);
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
-        setExpandedKeys(expandedKeysValue);
-        setAutoExpandParent(false);
-    };
-    const onCheck = (checkedKeysValue) => {
-        console.log('onCheck', checkedKeysValue);
-        setCheckedKeys(checkedKeysValue);
-    };
-    const onSelect = (selectedKeysValue, info) => {
-        console.log('onSelect', info);
-        setSelectedKeys(selectedKeysValue);
     };
     const FormitemsNew = () => {
         return (
@@ -671,7 +844,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                 ]}
                             >
                                 <Select
-                                    placeholder="Select a option and change input text above"
+                                    placeholder="Select a option "
                                     style={{
                                         height: '15px !important',
                                     }}
@@ -686,11 +859,11 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item
                                 name="Token"
-                                label="Token"
+                                label="Enter Token No."
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please Enter Token',
+                                        message: 'Enter Token No',
                                     },
                                     {
                                         max: 50,
@@ -698,7 +871,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                     },
                                 ]}
                             >
-                                <Input style={{ height: '36px' }} />
+                                <Input placeholder="Enter Token No" style={{ height: '36px' }} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -722,7 +895,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please Enter Name',
+                                            message: 'Enter Name',
                                         },
                                         {
                                             max: 50,
@@ -730,10 +903,10 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                         },
                                     ]}
                                 >
-                                    <Input />
+                                    <Input placeholder="Enter Name" />
                                 </Form.Item>
                             </Col>
-                            <Col xs={10} sm={10} md={10} lg={10} xl={10}></Col>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}></Col>
                         </Row>
 
                         <Row gutter={20}>
@@ -744,12 +917,12 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Select an option',
+                                            message: 'Select',
                                         },
                                     ]}
                                 >
                                     <Select
-                                        placeholder="Select a option and change input text above"
+                                        placeholder="Select"
                                         style={{
                                             height: '15px !important',
                                         }}
@@ -783,6 +956,44 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             </Row>
         );
     };
+    //tree for the product hierarchy
+    const [expandedKeys, setExpandedKeys] = useState();
+    const [checkedKeys, setCheckedKeys] = useState();
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
+    const onExpand = (expandedKeysValue) => {
+        console.log('onExpand', expandedKeysValue);
+        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+        // or, you can remove all expanded children keys.
+        setExpandedKeys(expandedKeysValue);
+        setAutoExpandParent(false);
+    };
+    const onCheck = (checkedKeysValue) => {
+        console.log('onCheck', checkedKeysValue);
+        setCheckedKeys(checkedKeysValue);
+    };
+    const onSelect = (selectedKeysValue, info) => {
+        console.log('onSelect', info);
+        setSelectedKeys(selectedKeysValue);
+    };
+    const handlecollapse1 = () => {
+        if (open === '1') {
+            setOpen('');
+        } else {
+            setOpen('1');
+            setOpen2('');
+        }
+    };
+
+    const handlecollapse2 = () => {
+        if (open2 === '1') {
+            setOpen2('');
+        } else {
+            setOpen('');
+            setOpen2('1');
+        }
+    };
+
     const [expandIconPosition, setExpandIconPosition] = useState('end');
     return (
         <>
@@ -793,9 +1004,15 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                             {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
                         </div>
                     </Row>
+                    <>
+                        {isTreeViewVisible ? null : (
+                            <Space direction="vertical">
+                                <Row gutter={20}></Row>
+                            </Space>
+                        )}
+                    </>
                     <Row gutter={20}>
                         <Leftpane />
-
                         <Col xs={24} sm={24} md={isTreeViewVisible ? 16 : 24} lg={isTreeViewVisible ? 16 : 24} xl={isTreeViewVisible ? 16 : 24} xxl={isTreeViewVisible ? 16 : 24}>
                             <Space
                                 direction="vertical"
@@ -804,33 +1021,50 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                     display: 'flex',
                                 }}
                             >
-                                <Collapse bordered={true} expandIconPosition={'end'}>
-                                    <Panel header="Dealer Branch" key="1">
-                                        <Formitems />
-                                    </Panel>
-                                </Collapse>
-                                <Collapse bordered={true} expandIconPosition={'end'}>
-                                    <Panel header="Product Hierarchy Mapping" key="1">
-                                        <FormitemsNew />
-                                    </Panel>
-                                </Collapse>
-                                <Row gutter={20} justify="end" className={styles.buttonContainer}><Space>
-                                <Button danger onClick={() => handleBack()}>
-                                        <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                        Cancel
-                                    </Button>
+                                {isCollapsible && (
+                                    <>
+                                        <Collapse activeKey={open} onChange={handlecollapse1} bordered={true} expandIconPosition={'end'}>
+                                            {/* error haI ISME */}
+                                            <Panel header="Dealer Branch" key="1">
+                                                <Formitems />
+                                            </Panel>
+                                        </Collapse>
+                                        <Collapse activeKey={open2} onChange={handlecollapse2} bordered={true} expandIconPosition={'end'}>
+                                            <Panel header="Product Hierarchy Mapping" key="1">
+                                                <FormitemsNew />
+                                            </Panel>
+                                        </Collapse>
+                                    </>
+                                )}
+                                <Row gutter={20} justify="end">
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                        <Space>
+                                            {isCollapsible && (
+                                                <>
+                                                    {buttonData?.saveBtn && (
+                                                        <Button htmlType="submit" danger>
+                                                            <FaSave className={styles.buttonIcon} />
+                                                            Save
+                                                        </Button>
+                                                    )}
 
-                                    <Button danger onClick={handleResetBtn}>
-                                        <FaUndo className={styles.buttonIcon} />
-                                        Reset
-                                    </Button>
+                                                    {buttonData?.resetBtn && (
+                                                        <Button danger onClick={handleResetBtn}>
+                                                            <FaUndo className={styles.buttonIcon} />
+                                                            Reset
+                                                        </Button>
+                                                    )}
 
-                                    <Button htmlType="submit" danger>
-                                        <FaSave className={styles.buttonIcon} />
-                                        Save
-                                    </Button>
-                                </Space>
-                                    
+                                                    {buttonData?.cancelBtn && (
+                                                        <Button danger onClick={() => handleBack()}>
+                                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                            Cancel
+                                                        </Button>
+                                                    )}
+                                                </>
+                                            )}
+                                        </Space>
+                                    </Col>
                                 </Row>
                             </Space>
                         </Col>
