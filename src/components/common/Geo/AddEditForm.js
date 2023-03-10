@@ -3,10 +3,12 @@ import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import styles from 'pages/common/Common.module.css';
+import TreeSelectField from '../TreeSelectField';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, fieldNames, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
 
@@ -17,7 +19,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.geoParentCode;
     } else if (formActionType === 'child') {
-        treeCodeId = selectedTreeKey;
+        treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
@@ -31,15 +33,26 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
         if (formActionType === 'sibling') {
             setSelectedTreeKey([treeCodeId]);
         }
+        setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: geoData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('Parent'),
+    };
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder="Select" disabled={attributeKeyReadOnly || isReadOnly} showSearch allowClear>
+                        <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Geographical Attribute Level')} disabled={attributeKeyReadOnly || isReadOnly} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}
@@ -48,24 +61,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent" placeholder="Please Select" name="geoParentCode">
-                        <TreeSelect
-                            treeLine={true}
-                            treeIcon={true}
-                            onChange={handleSelectTreeClick}
-                            defaultValue={treeCodeId}
-                            showSearch
-                            dropdownStyle={{
-                                maxHeight: 400,
-                                overflow: 'auto',
-                            }}
-                            placeholder="Select"
-                            allowClear
-                            treeDefaultExpandAll
-                            fieldNames={treeFieldNames}
-                            treeData={geoData}
-                            disabled={treeCodeReadOnly || isReadOnly}
-                        />
+                    <Form.Item initialValue={treeCodeId} label="Parent"name="geoParentCode">
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -73,13 +70,13 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.geoCode} label="Code" name="geoCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                     <Form.Item initialValue={formData?.geoName} label="Name" name="geoName" rules={[validateRequiredInputField('Name')]}>
-                        <Input placeholder="Name" className={styles.inputBox} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Name')} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

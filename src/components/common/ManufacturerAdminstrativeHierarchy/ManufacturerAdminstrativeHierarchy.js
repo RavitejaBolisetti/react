@@ -51,44 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
-    /* To Do : Need to remove once API deployed Start */
-    const manufacturerAdminHierarchyData = [
-        {
-            id: 'cd614369-0bb2-48a4-9065-282495798070',
-            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
-            manufactureAdminShrtName: 'MAHINDRA THAR ',
-            manufactureAdminCode: 'SCR',
-            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
-            active: 'N',
-            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
-            subManufactureAdmin: [],
-        },
-        {
-            id: 'cd614369-0bb2-48a4-9065-282495798070',
-            manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
-            manufactureAdminShrtName: 'MAHINDRA THAR ',
-            manufactureAdminCode: 'SCR',
-            manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
-            active: 'N',
-            attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
-            subManufactureAdmin: [
-                {
-                    id: 'cd614369-0bb2-48a4-9065-282495798070',
-                    manufactureAdminLongName: 'MAHINDRA THAR VARIANT',
-                    manufactureAdminShrtName: 'MAHINDRA THAR ',
-                    manufactureAdminCode: 'SCR',
-                    manufactureAdminParntId: '79eac316-41ba-40f1-9507-c527f468ce4d',
-                    active: 'N',
-                    attributeKey: '31fb3314-1ab3-402c-874f-1515389209e5',
-                    subManufactureAdmin: [],
-                },
-            ],
-        },
-    ];
-
-    /* To Do : Need to remove once API deployed End */
-
+export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -106,6 +69,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -139,8 +104,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
@@ -178,8 +143,9 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', manufacturerAdminHierarchyParentCode: codeToBeSaved };
+        const codeToBeSaved = selectedTreeSelectKey || '';
+        // const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
+        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -202,7 +168,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -277,7 +243,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-    const fieldNames = { title: 'manufactureAdminShrtName', key: 'id', children: 'subManufactureAdmin' };
 
     const myProps = {
         isTreeViewVisible,
@@ -286,7 +251,25 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        dataList: manufacturerAdminHierarchyData,
+        treeData: manufacturerAdminHierarchyData,
+    };
+
+    const formProps = {
+        isChecked,
+        setIsChecked,
+        setSelectedTreeKey,
+        flatternData,
+        formActionType,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        isReadOnly,
+        formData,
+        manufacturerAdminHierarchyData,
+        handleSelectTreeClick,
+        isDataAttributeLoaded,
+        attributeData,
+        fieldNames,
+        setSelectedTreeSelectKey,
     };
 
     return (
@@ -301,7 +284,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
                             <ManufacturerAdminHierarchyChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} manufacturerAdminHierarchyData={manufacturerAdminHierarchyData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} />}
+                                {isFormVisible && <AddEditForm {...formProps} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                         {buttonData?.editBtn && (

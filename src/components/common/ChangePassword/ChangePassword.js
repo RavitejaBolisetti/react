@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
 
     const [confirmDirty, setConfirmDirty] = useState(false);
@@ -97,7 +97,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () =>
     };
     return (
         <>
-            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" onOk={onFinishFailed} onCancel={onCancel}>
+            <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onOk={onFinishFailed} onCancel={onCancel}>
                 {discreption ? (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

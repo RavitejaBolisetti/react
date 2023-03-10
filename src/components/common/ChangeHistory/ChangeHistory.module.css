@@ -1,6 +1,7 @@
 .changeHistoryContainer :global .ant-table-wrapper .ant-table-thead>tr>th> {
     border-radius: 0 !important;
-    background: #F4F4F4;
+    background: #000000 !important;
+    padding: 10px 16px !important;
 }
 
 .changeHistoryContainer :global .ant-table-wrapper .ant-table-thead>tr>th>span {
@@ -50,4 +51,8 @@
 .changeHistoryContainer :global .ant-table-content::-webkit-scrollbar-thumb {
     background-color: #342C2C;
     border-radius: 10px;
+}
+
+.changeHistoryContainer h3 {
+    margin-top: 4px;
 }

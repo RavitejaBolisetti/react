@@ -36,6 +36,8 @@ const MainPageBase = ({ isLoggedIn, doLogout }) => {
             navigate(ROUTING_LOGOUT);
         } else if (isLoggedIn && (pagePath === ROUTING_LOGIN || pagePath === ROUTING_FORGOT_PASSWORD || pagePath === ROUTING_LOGOUT)) {
             navigate(ROUTING_DASHBOARD);
+        } else if (!isLoggedIn) {
+            // navigate(ROUTING_LOGIN);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);

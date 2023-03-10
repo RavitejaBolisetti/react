@@ -70,6 +70,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -103,8 +104,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
@@ -142,7 +143,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
@@ -155,8 +156,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
             }
         };
@@ -166,13 +167,12 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-
         saveData(requestData);
     };
 
@@ -242,8 +242,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         }
     };
 
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -268,6 +266,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
+        fieldNames,
+        setSelectedTreeSelectKey,
     };
     return (
         <>
