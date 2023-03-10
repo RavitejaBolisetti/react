@@ -630,8 +630,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         );
     };
     //tree for the product hierarchy
-    const [expandedKeys, setExpandedKeys] = useState(['0-0-0', '0-0-1']);
-    const [checkedKeys, setCheckedKeys] = useState(['0-0-0']);
+    const [expandedKeys, setExpandedKeys] = useState();
+    const [checkedKeys, setCheckedKeys] = useState();
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const onExpand = (expandedKeysValue) => {
