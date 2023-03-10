@@ -30,12 +30,20 @@
 .drawerFooterButtons button:not(:first-child) {
     margin-left: 10px !important;
 }
-.floatRight
-{
+.floatRight {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
     float: right;
 }
-/* Change in label font size for accomodation of duplicate allowed under different parent */
-:global .ant-form-vertical .ant-form-item-label >label, :global .ant-col-24.ant-form-item-label >label, :global .ant-col-xl-24.ant-form-item-label >label {
+
+:global .ant-col-24.ant-form-item-label
+{
+    padding: 0;
+}
+.myAttributeButton {
     margin: 0;
-    font-size: 12px;
+    padding: 0 0;
+    white-space: initial;
+    text-align: start;
 }

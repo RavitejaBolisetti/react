@@ -17,6 +17,7 @@ import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { EditableCell } from 'utils/EditableCell';
 import AddUpdateDrawer from './AddUpdateDrawer';
+import DataTable from '../../../utils/dataTable/DataTable';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -76,6 +77,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
     console.log('outside', detailData?.hierarchyAttribute);
     useEffect(() => {
         if (!isDataLoaded) {
@@ -149,6 +151,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
+            width: '17%',
+
         })
     );
 
@@ -156,6 +160,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
+            width: '17%',
+
         })
     );
 
@@ -164,7 +170,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
             render: (record, values) => {
-                return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
         })
     );
@@ -175,7 +181,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
             render: (record) => {
-                return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
         })
     );
@@ -185,7 +191,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
             render: (record) => {
-                return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
         })
     );
@@ -195,7 +201,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Status',
             dataIndex: 'status',
             render: (record) => {
-                return <Switch checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
         })
     );
@@ -216,7 +222,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         const selectedHierarchyAttribue = selectedHierarchy;
 
         const onSuccess = (res) => {
-            console.log('This is the Heirarchy:==?>', selectedHierarchyAttribue);
 
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
@@ -243,38 +248,52 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
     };
+    const TableProps = {
+        isLoading: !isDataAttributeLoaded,
+        tableData: detailData?.hierarchyAttribute,
+        tableColumn: tableColumn,
+    };
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item layout="vertical" name="hierarchyAttribueType" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
-                        <Select onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
-                            {attributeData?.map((item) => (
-                                <Option value={item}>{item}</Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
+            <Space
+                direction="vertical"
+                size="middle"
+                style={{
+                    display: 'flex',
+                }}
+            >
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
+                        <Form.Item labelCol={{ span: 24 }} layout="vertical" name="hierarchyAttribueType" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
+                            <Select onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                {attributeData?.map((item) => (
+                                    <Option value={item}>{item}</Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+
+                    {detailData?.hierarchyAttribueId && (
+                        <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
+                            <Button danger onClick={handleAdd} className={style2.floatRight}>
+                                <AiOutlinePlus className={styles.buttonIcon} />
+                                Add Attribute
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
 
                 {detailData?.hierarchyAttribueId && (
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Button danger onClick={handleAdd} className={style2.floatRight}>
-                            <AiOutlinePlus className={styles.buttonIcon} />
-                            Add Attribute
-                        </Button>
-                    </Col>
+                    <>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                {/* <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={{ pageSize: 20 }} columns={tableColumn} bordered /> */}
+                                <DataTable {...TableProps} />
+                            </Col>
+                        </Row>
+                    </>
                 )}
-            </Row>
-
-            {detailData?.hierarchyAttribueId && (
-                <>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={{ pageSize: 20 }} columns={tableColumn} bordered />
-                        </Col>
-                    </Row>
-                </>
-            )}
+            </Space>
             <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} setsaveclick={setsaveclick} setsaveandnewclick={setsaveandnewclick} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} setsaveandnewclick={setsaveandnewclick} saveandnewclick={saveandnewclick} />
         </>
     );
