@@ -1,5 +1,5 @@
 import { GeoPage } from './Geo';
-import { ProductMasterPage } from './ProductMaster/ProductMasterPage';
+import { ProductMasterPage } from './ProductMaster';
 import { ProductHierarchyPage } from './ProductHierarchy';
 import { CriticalityGroupPage } from './CriticalityGroup';
 import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy';

@@ -21,8 +21,7 @@ const checkType = (type) => {
 };
 
 const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
-    console.log('🚀 ~ file: AddEditForm.js:24 ~ AddEditFormMain ~ treeData:', treeData);
-    const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
+      const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
     const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
@@ -30,8 +29,8 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
     useEffect(() => {
         if (formData) {
             const formInputType = attributeData?.find((i) => i.id === formData?.attributeId)?.hierarchyAttribueCode;
-            setSeletedAttribute(formInputType);
-            setInputFormType(DEALER_HIERARCHY[formInputType].FORM_NAME);
+            formInputType && setSeletedAttribute(formInputType);
+            formInputType && setInputFormType(DEALER_HIERARCHY[formInputType]?.FORM_NAME);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
