@@ -11,6 +11,7 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from '../QualificationMaster/QualificationMaster.module.css';
 import style from '../Common.module.css';
+import DataTable from 'utils/dataTable/DataTable';
 
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import DrawerUtil from './DrawerUtil';
@@ -72,6 +73,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [arrData, setArrData] = useState(qualificationData.data);
     const [Searchdata, setSearchdata] = useState();
     // console.log(qualificationData);
+
     const state = {
         button: 1,
     };
@@ -124,7 +126,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
-            sorter:false,
+            sorter: false,
             render: (record) => {
                 return (
                     <Space wrap>
@@ -134,6 +136,11 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             },
         })
     );
+    const tableProps = {
+        isLoading: listShowLoading,
+        tableData: Searchdata,
+        tableColumn: tableColumn,
+    };
 
     const onFinish = (values, e) => {
         if (state.button === 1) {
@@ -264,7 +271,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         if (getSearch.length > -1) {
             const searchResult = qualificationData.filter((record) => record.qualificationName.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.qualificationCode.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
-        } 
+        }
         console.log(e.target.value);
     };
 
@@ -294,17 +301,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table
-                        locale={{
-                            emptyText: <Empty description="No Role Added" />,
-                        }}
-                        dataSource={Searchdata}
-                        pagination={true}
-                        columns={tableColumn}
-                        bordered
-                        onChange={onChange}
-                    />
-                    
+                    <DataTable {...tableProps} onChange={onChange} />
                 </Col>
             </Row>
         </>
