@@ -34,3 +34,8 @@
 {
     float: right;
 }
+/* Change in label font size for accomodation of duplicate allowed under different parent */
+:global .ant-form-vertical .ant-form-item-label >label, :global .ant-col-24.ant-form-item-label >label, :global .ant-col-xl-24.ant-form-item-label >label {
+    margin: 0;
+    font-size: 12px;
+}

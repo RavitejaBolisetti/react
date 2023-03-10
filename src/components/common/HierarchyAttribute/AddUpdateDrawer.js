@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField,validateRequiredInputField } from 'utils/validation';
 import styles from '../Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
@@ -66,41 +66,40 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
             >
                 <Form id="myForm" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, { required: true, message: 'Please Enter Code' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueCode'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField("Code"), { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueCode'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, { required: true, message: 'Please Enter Name' }, { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueName'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField("Name"), { validator: (rule, value) => (tableData?.findIndex((el) => el['hierarchyAttribueName'] === value) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
-                        <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.duplicateAllowedAtAttributerLevelInd === 'Y' ? 'Y' : 'N'} normalize={(a, b) => (a ? 'Y' : 'N')} label="Duplicate Allowed?" name="duplicateAllowedAtAttributerLevelInd">
                                 <Switch defaultChecked={editRow?.duplicateAllowedAtAttributerLevelInd === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                         </Col>
-                        <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.duplicateAllowedAtOtherParent === 'Y' ? 'Y' : 'N'} normalize={(a, b) => (a ? 'Y' : 'N')} label="Duplicate Allowed under different Parent?" name="duplicateAllowedAtOtherParent">
                                 <Switch defaultChecked={editRow?.duplicateAllowedAtOtherParent === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
-                        <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={editRow?.isChildAllowed === 'Y' ? 'Y' : 'N'} label="Child Allowed?" name="isChildAllowed">
                                 <Switch defaultChecked={editRow?.isChildAllowed === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                         </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={6} xxl={12}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={editRow?.status === 'Y' ? 'Y' : 'N'} label="Status" name="status">
                                 <Switch defaultChecked={editRow?.status === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />
                             </Form.Item>
                         </Col>
-                        <Col xs={3} sm={3} md={3} lg={3} xl={9} xxl={3}></Col>
                     </Row>
                 </Form>
             </Space>
