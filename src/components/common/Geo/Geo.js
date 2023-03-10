@@ -142,7 +142,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const codeToBeSaved = Array.isArray(values?.geoParentCode) ? values?.geoParentCode[0] : values?.geoParentCode || '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
@@ -155,8 +155,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[0]);
-                setSelectedTreeKey([res?.data[0]?.id]);
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
             }
         };
@@ -166,13 +166,12 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
-
         saveData(requestData);
     };
 
@@ -268,6 +267,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
+        fieldNames,
+        setSelectedTreeSelectKey,
     };
     return (
         <>

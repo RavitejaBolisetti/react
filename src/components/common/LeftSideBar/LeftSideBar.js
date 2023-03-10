@@ -17,6 +17,7 @@ import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
+import { InputSkeleton, ListSkeleton } from '../Skeleton';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -42,14 +43,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], flatternData },
+            Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
         },
         common: {
             LeftSideBar: { collapsed = false, isMobile = false },
         },
     } = state;
 
-    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
     return returnValue;
 };
 
@@ -67,12 +68,12 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
-    console.log("🚀 ~ file: LeftSideBar.js:75 ~ LeftSideBarMain ~ filterMenuList:", filterMenuList)
+    console.log('🚀 ~ file: LeftSideBar.js:75 ~ LeftSideBarMain ~ filterMenuList:', filterMenuList);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
@@ -153,23 +154,27 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search menu.." allowClear onSearch={onSearch} />}
+                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
                 </div>
-
-                <Menu
-                    onClick={onClick}
-                    mode="inline"
-                    inlineIndent={15}
-                    defaultSelectedKeys={[defaultSelectedKeys]}
-                    defaultOpenKeys={defaultOpenKeys}
-                    collapsed={collapsed.toString()}
-                    style={{
-                        paddingLeft: collapsed ? '18px' : '14px',
-                    }}
-                >
-                    {prepareMenuItem(menuData)}
-                </Menu>
-
+                {!isLoading ? (
+                    <>
+                        <Menu
+                            onClick={onClick}
+                            mode="inline"
+                            inlineIndent={15}
+                            defaultSelectedKeys={[defaultSelectedKeys]}
+                            defaultOpenKeys={defaultOpenKeys}
+                            collapsed={collapsed.toString()}
+                            style={{
+                                paddingLeft: collapsed ? '18px' : '14px',
+                            }}
+                        >
+                            {prepareMenuItem(menuData)}
+                        </Menu>
+                    </>
+                ) : (
+                    <ListSkeleton border={'none'} height={30} count={5} color={'#e2dfdf'} />
+                )}
                 <div
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
@@ -179,7 +184,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                     }}
                 >
                     {theme === 'light' ? <BsSun size={30} className={styles.sun} /> : <BsMoon size={30} className={styles.moon} />}
-                    {/* {!collapsed && 'Change Theme'} */}
                 </div>
             </Sider>
         </>

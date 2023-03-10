@@ -7,4 +7,6 @@ import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarch
 import { DealerHierarchyPage } from './DealerHierarchy';
 import { BranchDealerMappingPage } from './BranchDealerMapping';
 
-export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage,BranchDealerMappingPage };
+import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
+
+export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, BranchDealerMappingPage };
