@@ -17,7 +17,7 @@ import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
-import { InputSkeleton, ListSkeleton } from '../Skeleton';
+import { ListSkeleton } from '../Skeleton';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -33,7 +33,7 @@ const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true,
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
         </Link>
     ) : (
-        <Link to={routing.ROUTING_DASHBOARD} title={tooltip ? title : ''}>
+        <Link to="#" title={tooltip ? title : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
         </Link>
