@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Modal, Empty, Form, Select, Switch, Space, Table } from 'antd';
-import { ExclamationCircleFilled, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Col, Row, Input, Modal, Form, Switch, Space } from 'antd';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiEdit2 } from 'react-icons/fi';
 
-import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from '../QualificationMaster/QualificationMaster.module.css';
@@ -16,8 +14,6 @@ import DataTable from 'utils/dataTable/DataTable';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import DrawerUtil from './DrawerUtil';
 
-const { confirm } = Modal;
-const { success: successModel, error: errorModel } = Modal;
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -72,7 +68,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [drawerTitle, setDrawerTitle] = useState('');
     const [arrData, setArrData] = useState(qualificationData.data);
     const [Searchdata, setSearchdata] = useState();
-    // console.log(qualificationData);
 
     const state = {
         button: 1,
@@ -119,7 +114,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             dataIndex: 'status',
             render: (record) => {
                 console.log(record);
-                return <Switch checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
         })
     );
@@ -232,25 +227,12 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
 
     const onChangeHandle = (e) => {
-        // const getSearch = e.target.value;
-        // if (e.target.value == '') {
-        //     const tempArr = arrData;
-        //     setArrData(tempArr);
-        //     return;
-        // }
-        // if (getSearch.length > -1) {
-        //     const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
-        //     setArrData(searchResult);
-        // }
-        // console.log(e.target.value);
         const newdata = [];
         Object.keys(qualificationData).map((keyname, i) => {
             if (qualificationData[keyname].qualificationName === e) {
                 newdata.push(qualificationData[keyname]);
-                // setSearchdata(qualificationData[keyname])
             } else if (qualificationData[keyname].qualificationCode === e) {
                 newdata.push(qualificationData[keyname]);
-                // setSearchdata(qualificationData[keyname])
             }
         });
 
@@ -259,7 +241,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         } else {
             setSearchdata(newdata);
         }
-        //  record.qualificationCode.includes(value)
     };
     const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
@@ -272,7 +253,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             const searchResult = qualificationData.filter((record) => record.qualificationName.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.qualificationCode.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
         }
-        console.log(e.target.value);
     };
 
     return (
