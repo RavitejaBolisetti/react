@@ -73,7 +73,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
-    console.log('🚀 ~ file: LeftSideBar.js:75 ~ LeftSideBarMain ~ filterMenuList:', filterMenuList);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
