@@ -2,17 +2,21 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Checkbox, Input, Select, Switch, Space, DatePicker, Collapse, Tree, Card, Modal } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle, FaRegCheckCircle, FaBullhorn } from 'react-icons/fa';
+import { Button, Col, Form, Row, Checkbox, Input, Select, Switch, Space, DatePicker, Collapse, Tree, Card, Modal, Divider, Table } from 'antd';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle, FaRegCheckCircle, FaBullhorn, FaLongArrowAltLeft } from 'react-icons/fa';
+import { EditOutlined } from '@ant-design/icons';
 import { addToolTip } from 'utils/customMenuLink';
 import TreeView from 'components/common/TreeView';
 
 import styles from 'pages/common/Common.module.css';
+import styles2 from './BranchDealerMapping.module.css';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
+import { DataTable } from 'utils/dataTable';
+import { tblPrepareColumns } from 'utils/tableCloumn';
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -53,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShformDataowLoading,
         },
         dispatch
     ),
@@ -73,6 +77,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     const [isCollapsible, setCollapsible] = useState(true);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
+    const [data, setRowsData] = useState([]);
 
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -84,6 +89,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     const disabledProps = { disabled: isReadOnly };
     const [open, setOpen] = useState([]);
     const [open2, setOpen2] = useState([]);
+    const [isValid, setValid] = useState(false);
 
     const treeData = [
         {
@@ -183,6 +189,49 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Product',
+            dataIndex: 'product',
+            // render: (text) => convertDateTime(text),
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Category',
+            dataIndex: 'Category',
+            // render: (text) => convertDateTime(text),
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'From Date',
+            dataIndex: 'fromDate',
+            // render: (text) => convertDateTime(text),
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'To Date',
+            dataIndex: 'toDate',
+            // render: (text) => convertDateTime(text),
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Action',
+            dataIndex: 'action',
+            // render: (text) => convertDateTime(text),
+            render: () => [
+                <Space wrap>
+                    <EditOutlined />
+                    {/* <DeleteOutlined onClick={showConfirm} /> */}
+                </Space>,
+            ],
+        })
+    );
 
     const finalGeoData = productHierarchyData?.map((i) => {
         return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
@@ -205,7 +254,9 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const flatternData = generateList(finalGeoData);
-
+    const handleValidity = () => {
+        // setValid(true);
+    };
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
@@ -337,10 +388,11 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         setForceFormReset(Math.random() * 10000);
         form.resetFields();
     };
-
+    const handleDrawer = () => {};
     const handleBack = () => {
         setReadOnly(true);
         setOpen('0');
+        setOpen2('0');
 
         setForceFormReset(Math.random() * 10000);
         if (selectedTreeKey && selectedTreeKey.length > 0) {
@@ -416,179 +468,9 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         );
     };
 
-    const FormitemsOld = () => {
-        return (
-            <Form form={form} name="control-hooks" layout="vertical" onFinish={onFinish}>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Attribute"
-                            label="Attribute"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Select placeholder="Select a option and change input text above" allowClear>
-                                <Option value="Nothing2">Nothing2</Option>
-                                <Option value="Nothing1">Nothing1</Option>
-                                <Option value="other">other</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Parent"
-                            label="Parent"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Select placeholder="Select a option and change input text above" allowClear>
-                                <Option value="Nothing2">Nothing2</Option>
-                                <Option value="Nothing1">Nothing1</Option>
-                                <Option value="other">other</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Branches Code"
-                            label="Branches Code"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Short Description/GSTIN number"
-                            label="Short Description/GSTIN number"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Long Description"
-                            label="Long Description"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="GSTIN State Code"
-                            label="GSTIN State Code"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Centre of Jurisdiction"
-                            label="Centre of Jurisdiction"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="State Jurisdiction"
-                            label="State Jurisdiction"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Date of Registration"
-                            label="Date of Registration"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <DatePicker style={{ width: '100%' }} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Construction of Business"
-                            label="Construction of Business"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            name="Taxpayer Type"
-                            label="Taxpayer Type"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}></Col>
-                </Row>
-            </Form>
-        );
-    };
     const Formitems = () => {
         return (
-            <Form form={form} name="control-hooks" layout="vertical" onFinish={onFinish}>
+            <>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
@@ -819,141 +701,70 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                         </Form.Item>
                     </Col>
                 </Row>
-            </Form>
+            </>
         );
     };
     const FormitemsNew = () => {
         return (
-            <Row gutter={20}>
-                <Col xs={9} sm={9} md={9} lg={9} xl={9} xxl={9}>
-                    <Card style={{ overflowY: 'scroll', height: '300px' }}>
-                        <Tree checkable onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} onCheck={onCheck} checkedKeys={checkedKeys} onSelect={onSelect} selectedKeys={selectedKeys} showLine={true} treeData={treeData} />
-                    </Card>
-                </Col>
-                <Col xs={15} sm={15} md={15} lg={15} xl={15} xxl={15}>
-                    <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item
-                                name="Attribute Type"
-                                label="Attribute Type"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: ' Select  an option ',
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    placeholder="Select a option "
-                                    style={{
-                                        height: '15px !important',
-                                    }}
-                                    allowClear
-                                >
-                                    <Option value="Primary">Primary</Option>
-                                    <Option value="Secondary">Secondary</Option>
-                                    <Option value="other">other</Option>
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item
-                                name="Token"
-                                label="Enter Token No."
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Enter Token No',
-                                    },
-                                    {
-                                        max: 50,
-                                        message: 'Token must be maximum 50 characters.',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder="Enter Token No" style={{ height: '36px' }} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        {' '}
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                            <Space>
-                                <Button danger>
-                                    <FaSave className={styles.buttonIcon} />
-                                    Validate
-                                </Button>
-                            </Space>
-                        </Col>
-                    </Row>
-                    <Space direction="vertical">
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item
-                                    name="Employee Name"
-                                    label="Employee Name"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Enter Name',
-                                        },
-                                        {
-                                            max: 50,
-                                            message: 'Name must be maximum 5 characters.',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder="Enter Name" />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}></Col>
+            <>
+                <Row gutter={20}>
+                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                        <Form.Item
+                            name="Token"
+                            label="Enter Token No."
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Enter Token No',
+                                },
+                                {
+                                    max: 50,
+                                    message: 'Token must be maximum 50 characters.',
+                                },
+                            ]}
+                        >
+                            <Input placeholder="Enter Token No" style={{ height: '36px' }} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles2.validBtn}>
+                        <Button onClick={handleValidity} danger>
+                            <FaSave className={styles.buttonIcon} />
+                            Validate
+                        </Button>
+                    </Col>
+                </Row>
+                {!isValid && (
+                    <Space direction="vertical" style={{ display: 'flex' }}>
+                        <Row gutter={20} style={{ padding: '10px 0px 0px 10px' }}>
+                            User Details
+                            <Divider type="horizontal" style={{ margin: '0px' }} />
+                        </Row>
+                        <Row gutter={20} style={{ padding: '5px 10px 10px 10px' }}>
+                            Employee Details:
                         </Row>
 
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item
-                                    name="Primary/Secondary"
-                                    label="Primary/Secondary"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Select',
-                                        },
-                                    ]}
-                                >
-                                    <Select
-                                        placeholder="Select"
-                                        style={{
-                                            height: '15px !important',
-                                        }}
-                                        allowClear
-                                    >
-                                        <Option value="Primary">Primary</Option>
-                                        <Option value="Secondary">Secondary</Option>
-                                        <Option value="other">other</Option>
-                                    </Select>
-                                </Form.Item>
+                        <Row gutter={20} className={styles2.rowBgColor}>
+                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                Product Dealer Mapping
                             </Col>
-
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item
-                                    name="Effective Date"
-                                    label="Effective Date"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Select a Range',
-                                        },
-                                    ]}
-                                    allowClear
-                                >
-                                    <RangePicker style={{ height: '36px' }} />
-                                </Form.Item>
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles2.floatRight}>
+                                {' '}
+                                {buttonData?.saveBtn && (
+                                    <Button onClick={handleDrawer} danger>
+                                        <FaSave className={styles.buttonIcon} />
+                                        Add Product-Dealer
+                                    </Button>
+                                )}
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Table dataSource={[...data]} columns={tableColumn} bordered />
                             </Col>
                         </Row>
                     </Space>
-                </Col>
-            </Row>
+                )}
+            </>
         );
     };
     //tree for the product hierarchy
@@ -1004,16 +815,10 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                             {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
                         </div>
                     </Row>
-                    <>
-                        {isTreeViewVisible ? null : (
-                            <Space direction="vertical">
-                                <Row gutter={20}></Row>
-                            </Space>
-                        )}
-                    </>
+
                     <Row gutter={20}>
                         <Leftpane />
-                        <Col xs={24} sm={24} md={isTreeViewVisible ? 16 : 24} lg={isTreeViewVisible ? 16 : 24} xl={isTreeViewVisible ? 16 : 24} xxl={isTreeViewVisible ? 16 : 24}>
+                        <Col xs={24} sm={24} md={isTreeViewVisible ? 12 : 24} lg={isTreeViewVisible ? 16 : 24} xl={isTreeViewVisible ? 16 : 24}>
                             <Space
                                 direction="vertical"
                                 size="middle"
@@ -1023,6 +828,44 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                             >
                                 {isCollapsible && (
                                     <>
+                                        <Row gutter={20} className={styles2.rowBgColor}>
+                                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                                New Dealer Details
+                                            </Col>
+                                            <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles2.floatRight}>
+                                                {' '}
+                                                <Space layout="horizontal" style={{ display: 'flex' }}>
+                                                    {buttonData?.saveBtn && (
+                                                        <Button htmlType="submit" danger>
+                                                            <FaSave className={styles.buttonIcon} />
+                                                            Save
+                                                        </Button>
+                                                    )}
+
+                                                    {buttonData?.cancelBtn && (
+                                                        <Button danger onClick={() => handleBack()}>
+                                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                            Cancel
+                                                        </Button>
+                                                    )}
+
+                                                    {buttonData?.resetBtn && (
+                                                        <Button danger onClick={handleResetBtn}>
+                                                            <FaUndo className={styles.buttonIcon} />
+                                                            Reset
+                                                        </Button>
+                                                    )}
+
+                                                    {buttonData?.saveBtn && (
+                                                        <Button htmlType="submit" danger>
+                                                            <FaLongArrowAltLeft className={styles.buttonIcon} />
+                                                            Exit
+                                                        </Button>
+                                                    )}
+                                                </Space>
+                                            </Col>
+                                        </Row>
+
                                         <Collapse activeKey={open} onChange={handlecollapse1} bordered={true} expandIconPosition={'end'}>
                                             {/* error haI ISME */}
                                             <Panel header="Dealer Branch" key="1">
@@ -1036,36 +879,6 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
                                         </Collapse>
                                     </>
                                 )}
-                                <Row gutter={20} justify="end">
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                        <Space>
-                                            {isCollapsible && (
-                                                <>
-                                                    {buttonData?.saveBtn && (
-                                                        <Button htmlType="submit" danger>
-                                                            <FaSave className={styles.buttonIcon} />
-                                                            Save
-                                                        </Button>
-                                                    )}
-
-                                                    {buttonData?.resetBtn && (
-                                                        <Button danger onClick={handleResetBtn}>
-                                                            <FaUndo className={styles.buttonIcon} />
-                                                            Reset
-                                                        </Button>
-                                                    )}
-
-                                                    {buttonData?.cancelBtn && (
-                                                        <Button danger onClick={() => handleBack()}>
-                                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                            Cancel
-                                                        </Button>
-                                                    )}
-                                                </>
-                                            )}
-                                        </Space>
-                                    </Col>
-                                </Row>
                             </Space>
                         </Col>
                     </Row>
