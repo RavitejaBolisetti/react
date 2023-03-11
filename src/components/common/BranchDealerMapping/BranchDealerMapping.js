@@ -195,6 +195,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'Product',
             dataIndex: 'product',
+            sorter:false,
             // render: (text) => convertDateTime(text),
         })
     );
@@ -202,6 +203,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'Category',
             dataIndex: 'Category',
+            sorter:false,
+
             // render: (text) => convertDateTime(text),
         })
     );
@@ -209,6 +212,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'From Date',
             dataIndex: 'fromDate',
+            sorter:false,
+
             // render: (text) => convertDateTime(text),
         })
     );
@@ -216,6 +221,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'To Date',
             dataIndex: 'toDate',
+            sorter:false,
+
             // render: (text) => convertDateTime(text),
         })
     );
@@ -224,6 +231,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             title: 'Action',
             dataIndex: 'action',
             // render: (text) => convertDateTime(text),
+            sorter:false,
+
             render: () => [
                 <Space wrap>
                     <EditOutlined />

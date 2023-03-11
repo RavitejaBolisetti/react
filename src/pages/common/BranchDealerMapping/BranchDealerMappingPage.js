@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import {BranchDealerMapping} from 'components/common/BranchDealerMapping';
+import { BranchDealerMapping } from 'components/common/BranchDealerMapping/BranchDealerMapping';
 
 export const BranchDealerMappingPageBase = (props) => {
-    
     const pageTitle = 'BRANCH DEALER MAPPING';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        visibleChangeHistory:false,
+        visibleChangeHistory: false,
     };
 
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <BranchDealerMapping  />
+            <BranchDealerMapping />
         </>
     );
 };
