@@ -6,21 +6,21 @@ import styles from 'pages/common/Common.module.css';
 
 const { Option } = Select;
 
-const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const fieldNames = { label: 'geoName', value: 'id', children: 'subGeo' };
+const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, dealerManpowerData }) => {
+    const fieldNames = { label: 'dealerManpowerCode', value: 'dealerManpowerId', children: 'subDivision' };
     const disabledProps = { disabled: isReadOnly };
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     if (formActionType === 'edit' || formActionType === 'view') {
-        treeCodeId = formData?.geoParentCode;
+        treeCodeId = formData?.dealerParentCode;
     } else if (formActionType === 'child') {
         treeCodeId = selectedTreeKey;
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+        treeCodeId = treeCodeData && treeCodeData?.data?.dealerParentCode;
     }
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                             allowClear
                             treeDefaultExpandAll
                             fieldNames={fieldNames}
-                            treeData={geoData}
+                            treeData={dealerManpowerData}
                             disabled={treeCodeReadOnly || isReadOnly}
                         />
                     </Form.Item>
@@ -74,7 +74,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={formData?.dealerManpowerName} label="Name" name="dealerManpowerName" rules={[validateRequiredInputField('Name')]}>
+                    <Form.Item initialValue={formData?.dealerManpowerDescription} label="Name" name="dealerManpowerName" rules={[validateRequiredInputField('Name')]}>
                         <Input placeholder="Name" className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
@@ -82,8 +82,8 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setIsChecked, flattern
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                    <Form.Item label="Status" name="isActive">
-                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.isActive === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
+                    <Form.Item label="Status" name="activeIndicator">
+                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.activeIndicator === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

@@ -30,3 +30,5 @@ export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + '
 
 export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
 export const BASE_URL_DEALER_HIERARCHY_SAVE = BASE_URL + 'dealerhierarchy';
+
+export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';

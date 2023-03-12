@@ -8,6 +8,7 @@ import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ChangePassword } from './changePassword';
 import { DealerHierarchy } from './dealerHierarchy';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
+import { dealerManpower } from './dealerManpower';
 
 export const data = combineReducers({
     Menu,
@@ -19,4 +20,5 @@ export const data = combineReducers({
     ChangePassword,
     DealerHierarchy,
     ConfigurableParameterEditing,
+    dealerManpower,
 });

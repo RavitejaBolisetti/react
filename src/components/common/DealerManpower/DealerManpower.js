@@ -5,6 +5,7 @@ import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
 import { geoDataActions } from 'store/actions/data/geo';
+import { dealerManpowerActions } from 'store/actions/data/dealerManpower';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
@@ -17,7 +18,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            Geo: {
+                //  isLoaded: isDataLoaded = false,
+                data: geoData = [],
+            },
+            dealerManpower : { isLoaded: isDataLoaded = false, data: dealerManpowerData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -30,6 +35,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         geoData,
+        dealerManpowerData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -40,9 +46,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            // fetchList: geoDataActions.fetchList,
+            // saveData: geoDataActions.saveData,
+            // listShowLoading: geoDataActions.listShowLoading,
+
+            fetchList: dealerManpowerActions.fetchList,
+            saveData: dealerManpowerActions.saveData,
+            listShowLoading: dealerManpowerActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -52,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoaded, dealerManpowerData, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -62,7 +72,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
-    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+    const [isChecked, setIsChecked] = useState(formData?.activeIndicator === 'Y' ? true : false);
 
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
@@ -88,8 +98,8 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
 
-    const finalGeoData = geoData?.map((i) => {
-        return { ...i, geoParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
+    const finalDealerData = dealerManpowerData?.map((i) => {
+        return { ...i, dealerParentData: attributeData?.find((a) => i.attributeKey === a.hierarchyAttribueId) };
     });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
@@ -103,14 +113,14 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node.subDivision) {
+                generateList(node.subDivision);
             }
         }
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(finalDealerData);
 
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
@@ -143,7 +153,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', geoParentCode: codeToBeSaved };
+        const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', dealerParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
             setForceFormReset(Math.random() * 10000);
@@ -241,7 +251,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
         }
     };
 
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const fieldNames = { title: 'dealerManpowerCode', key: 'dealerManpowerId', children: 'subDivision' };
 
     const myProps = {
         isTreeViewVisible,
@@ -250,7 +260,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: geoData,
+        treeData: dealerManpowerData,
     };
 
     const formProps = {
@@ -263,7 +273,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
         selectedTreeSelectKey,
         isReadOnly,
         formData,
-        geoData,
+        dealerManpowerData,
         handleSelectTreeClick,
         isDataAttributeLoaded,
         attributeData,
