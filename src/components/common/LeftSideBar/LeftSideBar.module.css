@@ -124,6 +124,9 @@
 :global .ant-menu .ant-menu-sub {
   font-size: 14px;
   background-color: #f4f4f4 !important;
+}
+
+:global .ant-menu .ant-menu-sub li {
   padding-left: 22px !important;
 }
 
