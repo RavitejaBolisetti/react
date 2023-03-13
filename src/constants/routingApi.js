@@ -12,6 +12,7 @@ export const BASE_URL_CHANGE_PASSWORD = BASE_URL + 'changepassword';
 
 export const BASE_URL_GEO_GRAPHY = BASE_URL + 'geography';
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
+export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/rolemanagement';
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
@@ -20,6 +21,8 @@ export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hie
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 
 export const BASE_URL_QUALIFICATION_MASTER = BASE_URL + 'application/qualifications';
+
+export const BASE_URL_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
 
 export const BASE_URL_CONFIG_PARAM_EDIT = BASE_URL + 'configurableparameters';
 export const BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY = BASE_URL + 'manufacturer/organization/hierarchy';

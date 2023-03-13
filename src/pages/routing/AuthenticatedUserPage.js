@@ -10,12 +10,14 @@ import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 
 import { CMSPage } from 'pages/cms';
 
+
 export const AuthenticatedUserPage = () => {
     return (
         <Routes>
             <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
             <Route path={routing.ROUTING_COMMON_GEO} element={<GeoPage />} />
+            <Route path={routing.ROUTING_COMMON_CRITICALITY_GROUP} element={<CriticalityGroupPage />} />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY} element={<ManufacturerOrgHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
@@ -28,8 +30,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
+          
 
-            <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />
+            <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />   
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
