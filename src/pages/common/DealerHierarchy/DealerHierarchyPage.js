@@ -3,7 +3,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { Dealer } from 'components/common/DealerHierarchy';
 
-export const DealerHierarchyBase = (props) => {
+const DealerHierarchyBase = (props) => {
     const pageTitle = 'Dealer Hierarchy';
     const pageHeaderData = {
         pageTitle,
