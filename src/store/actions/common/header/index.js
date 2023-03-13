@@ -23,6 +23,7 @@ headerDataActions.listShowLoading = (isLoading) => ({
 
 headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, errorAction, data } = params;
+    // console.log(params,token,accessToken,"headrer")
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
 
