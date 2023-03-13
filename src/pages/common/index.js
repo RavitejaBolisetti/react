@@ -1,8 +1,8 @@
 import { GeoPage } from './Geo';
-import { ProductMasterPage } from './ProductMaster/ProductMasterPage';
+import { ProductMasterPage } from './ProductMaster';
 import { ProductHierarchyPage } from './ProductHierarchy';
-import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy';
-import { HierarchyAttributeMaster as HierarchyAttributeMasterPage } from './HierarchyAttributeMaster/HierarchyAttributeMaster';
+import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster';
+import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy/ManufacturerAdministrativeHierarchyPage';
 import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarchy';
 import { DealerHierarchyPage } from './DealerHierarchy';
 import { DealerManpowerPage } from './DealerManpower';

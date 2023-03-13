@@ -11,13 +11,13 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 style={{
                     width: '100%',
                 }}
-                value={selectedTreeSelectKey}
+                value={selectedTreeSelectKey || []}
                 defaultValue={defaultValue}
                 dropdownStyle={{
                     maxHeight: 400,
                     overflow: 'auto',
                 }}
-                placeholder="Select"
+                placeholder={placeholder}
                 allowClear
                 fieldNames={treeFieldNames}
                 onChange={handleSelectTreeClick}
