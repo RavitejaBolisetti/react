@@ -1,0 +1,49 @@
+[
+    {
+        "title": "Common",
+        "key": "common",
+        "children": [
+            {
+                "title": "Application Master",
+                "key": "ApplicationMaster",
+                "children": [
+                    {
+                        "title": "Sub Application Master",
+                        "key": "subapplicationmaster"
+                    }
+                ]
+            },
+            {
+                "title": "Application Criticality Group",
+                "key": "applicationcriticalitygroup",
+                "children": [
+                    {
+                        "title": "dummy1",
+                        "key": "dummy1"
+                    }
+                ]
+            },
+            {
+                "title": "Geographical Hierarchy",
+                "key": "GeographicalHierarchy",
+                "children": [
+                    {
+                        "title": "dummy2",
+                        "key": "dummy2"
+                    }
+                ]
+            },
+            {
+                "title": "Product Hierarchy",
+                "key": "common-ProductHierarchy",
+                "children": [
+                    {
+                        "title": "dummy3",
+                        "key": "dummy3"
+                    }
+                ]
+            }
+        ]
+    }
+  
+]

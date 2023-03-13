@@ -14,7 +14,7 @@ const receiveHeaderData = (data) => ({
     data,
 });
 
-const receiveHeaderDetailData = (data) => ({
+const receiveHeirarchyDetailData = (data) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED,
     isLoaded: true,
     data,
@@ -60,14 +60,14 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, type = '' } = params;
+hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({token,accessToken}) => (dispatch) => {
+    const { setIsLoading, data, userId, type = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderDetailData(res?.data));
+            dispatch(receiveHeirarchyDetailData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -78,8 +78,8 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, a
         method: 'get',
         url: baseURLPath + (type ? '?type=' + type : ''),
         token,
-        accessToken,
         userId,
+        accessToken,
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
@@ -91,7 +91,8 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, a
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => (token) => (dispatch) => {
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({token,accessToken}) => (dispatch) => {
+    console.log("payload", params)
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
 
