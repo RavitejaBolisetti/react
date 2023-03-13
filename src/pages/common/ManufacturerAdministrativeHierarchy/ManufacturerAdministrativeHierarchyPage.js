@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const ManufacturerAdministrativeHierarchyPageBase = () => {
+const ManufacturerAdministrativeHierarchyPageBase = () => {
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const handleChangeHistoryClick = (e) => {
