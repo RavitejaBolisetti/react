@@ -159,7 +159,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
         tblPrepareColumns({
             title: 'Dealer Location',
             dataIndex: 'value',
-            width: '120',
+            width: '17%',
             render: (text, record, index) => {
                 return (
                     <Space wrap>
