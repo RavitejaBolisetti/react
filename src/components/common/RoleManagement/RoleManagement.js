@@ -9,7 +9,7 @@ import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
+
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
 import { validateEmailField } from 'utils/validation';
