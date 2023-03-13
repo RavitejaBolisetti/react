@@ -28,7 +28,9 @@ export default function DataTable({ isLoading, tableColumn, tableData }) {
             dataSource={tableData}
             pagination={{
                 position: ['bottomRight'],
-                itemRender,
+                // itemRender,
+                pageSize: 10,
+                showSizeChanger: true,
             }}
             scroll={{
                 x: 'auto',

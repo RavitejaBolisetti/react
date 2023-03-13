@@ -9,7 +9,11 @@ import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+<<<<<<< HEAD
 
+=======
+import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
+>>>>>>> c689e33c8a69d48414098fc43aae9ab2e89c0156
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
 import { validateEmailField } from 'utils/validation';
@@ -19,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
+            RoleManagement: { isLoaded: isDataLoaded = false, data: RoleManagementData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -31,7 +35,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
+        RoleManagementData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -42,9 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
+            fetchList: rolemanagementDataActions.fetchList,
+            saveData: rolemanagementDataActions.saveData,
+            listShowLoading: rolemanagementDataActions.listShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -53,23 +57,24 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const Roledataset = ['Shakambhar'];
-export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+
+export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [validatetrees, setValidatetrees] = useState(false);
+    const [Roledataset, setRoledataset] = useState([]); //Left Menu render as new data is added Presently hardcoded
 
-    const [formData, setFormData] = useState([]);
-    const [Mycheckvals, setMycheckvals] = useState([]);
+    const [formData, setFormData] = useState([]); //When we fetch from Api the data is added here and the new data is also appended
+    const [Mycheckvals, setMycheckvals] = useState([]); //Reference to checked keys in the tree
 
-    const [Readonly, setReadOnly] = useState(true);
+    const [disabled, setDisabled] = useState(false); //To open form in read only mode true at the first time
 
-    const [AddEditCancel, setAddEditCancel] = useState(true);
-    const [forceFormReset, setForceFormReset] = useState(false);
+    const [AddEditCancel, setAddEditCancel] = useState(true); // when we click on Add Role save cancel and reset is opened
+    const [forceFormReset, setForceFormReset] = useState();
 
-    const [InitialData, setInitialData] = useState({});
-    const [addchilds, setAddchild] = useState(true);
+    const [InitialData, setInitialData] = useState({}); //Finding the Clicked role and setting it in intialData
+    const [addchilds, setAddchild] = useState(true); //Add role button to show or not
     const [Switcher, setSwitcher] = useState(true);
+
     const [Checkboxdata, setCheckBoxData] = useState({
         All: false,
         Add: false,
@@ -79,15 +84,30 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         Upload: false,
         Download: false,
     });
-
-    useEffect(
-        () => {
-            form.resetFields();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        },
-        [forceFormReset],
-        [addchilds]
-    );
+    useEffect(() => {
+        if (!isDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, isDataAttributeLoaded]);
+    useEffect(() => {
+        form.resetFields();
+        setExpandedKeys([]);
+        setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [forceFormReset]);
+    useEffect(() => {
+        const SetRole = [];
+        const finalRoledata = RoleManagementData.map((e) => {
+            Object.keys(e).map((keyName, i) => {
+                if (keyName === 'roleName') {
+                    SetRole.push(e[keyName]);
+                }
+            });
+        });
+        setRoledataset(SetRole);
+        setFormData(RoleManagementData);
+    }, [RoleManagementData]);
 
     //Tree
 
@@ -101,6 +121,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
+        setAutoExpandParent(false);
     };
     const onCheck = (checkedKeysValue) => {
         console.log('onCheck', checkedKeysValue);
@@ -190,6 +211,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     };
 
     const handleChilds = () => {
+        setForceFormReset(Math.random() * 1000);
+        setAddEditCancel(true);
         setAddchild(!addchilds);
     };
     const handleSave = () => {
@@ -224,49 +247,49 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
-                        name="roleid"
+                        name="roleId"
                         label="Role Id"
-                        initialValue={InitialData?.roleid}
+                        initialValue={InitialData?.roleId}
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled={disabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
-                        name="rolename"
+                        name="roleName"
                         label="Role Name"
-                        initialValue={InitialData?.rolename}
+                        initialValue={InitialData?.roleName}
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled={disabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                     <Form.Item
-                        name="roledesc"
+                        name="roleDescription"
                         label="Role Description"
-                        initialValue={InitialData?.roledesc}
+                        initialValue={InitialData?.roleDescription}
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input />
+                        <Input disabled={disabled} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Status" name="active" initialValue={InitialData?.active}>
-                        <Switch checked={Switcher} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
+                    <Form.Item label="Status" name="status" initialValue={InitialData?.status === '1' ? true : false}>
+                        <Switch disabled={disabled} checked={AddEditCancel ? Switcher : InitialData?.status === '1' ? true : false} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
                     </Form.Item>
                 </Col>
             </Row>
@@ -288,14 +311,14 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                     values[keyName] = checkedKeys;
                 }
 
-                if (keyName === 'rolename') {
+                if (keyName === 'roleName') {
                     Roledataset.push(values[keyName]);
                 }
-                if (keyName === 'active') {
+                if (keyName === 'status') {
                     if (values[keyName] === false) {
-                        values[keyName] = 'N';
+                        values[keyName] = '0';
                     } else {
-                        values[keyName] = 'Y';
+                        values[keyName] = '1';
                     }
                 }
             });
@@ -303,6 +326,40 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                 values[keyName] = Checkboxdata[keyName];
             });
 
+            const Final_data = { cretdby: "shaka", cretddate: new Date(), modfdby: "Me", modfddate: "adasdad", roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
+            console.log("Final Sending data",Final_data);
+            const onSuccess = (res) => {
+                form.resetFields();
+                setForceFormReset(Math.random() * 10000);
+    
+               
+    
+                if (res?.Final_data) {
+                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId });
+                    
+                }
+            };
+    
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
+    
+            const requestData = {
+                data: Final_data,
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+            saveData(requestData);
+            
+            
+            
+            
+            
+            
+            
             setAddchild(!addchilds);
             form.resetFields();
             setMycheckvals([]);
@@ -314,7 +371,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     };
 
     const handleForms = (e) => {
-        setForceFormReset(Math.random() * 10000);
+        setDisabled(true);
+        setForceFormReset(Math.random() * 10000); //Important Form Rerender
 
         console.log(e.target.outerText);
         setAddchild(false);
@@ -323,7 +381,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
             console.log(formData[keyName]);
             Object.keys(formData[keyName]).map((keyName2, i) => {
                 console.log(keyName2);
-                if (keyName2 === 'rolename') {
+                if (keyName2 === 'roleName') {
                     if (formData[keyName][keyName2] === e.target.outerText) {
                         setInitialData(formData[keyName]);
                     }
@@ -336,16 +394,20 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     };
     const oncancel = () => {
         setAddchild(!addchilds);
+        setDisabled(false);
         setForceFormReset(Math.random() * 10000);
 
         setInitialData({});
         form.resetFields();
         setMycheckvals([]);
-        setAddEditCancel(!AddEditCancel);
+        // setAddEditCancel(!AddEditCancel);
         setCheckedKeys([]);
         setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
     };
-    const OnEdit = () => {};
+    const OnEdit = () => {
+        setAddEditCancel(true);
+        setDisabled(false);
+    };
     const Handlebuttons = () => {
         return AddEditCancel ? (
             <Row justify="end" gutter={20}>
@@ -414,7 +476,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
                         </div>
                     </Col>
                 ) : undefined}
-                <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={16}>
+                <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={!isTreeViewVisible ? 24 : 16}>
                     <Row>
                         {addchilds ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -447,4 +509,4 @@ export const RoleManagementMain = ({ userId, isDataLoaded, geoData, fetchList, h
     );
 };
 
-export const RoleManagement = connect(null, null)(RoleManagementMain);
+export const RoleManagement = connect(mapStateToProps, mapDispatchToProps)(RoleManagementMain);

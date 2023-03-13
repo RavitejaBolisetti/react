@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Tree, Form } from 'antd';
 import { useState } from 'react';
 import TreeData from './Treedata.json';
@@ -35,4 +35,4 @@ const Treedata = () => {
 };
 export { checkvals };
 
-export default Treedata;
+export default useMemo(Treedata);

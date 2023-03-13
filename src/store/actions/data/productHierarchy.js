@@ -33,7 +33,7 @@ productHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, userId } = params;
+    const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
     const onError = () => errorAction('Internal Error, Please try again');
 
@@ -64,7 +64,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
 });
 
 productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, userId } = params;
+    const { setIsLoading, onError, data } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {

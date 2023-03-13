@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const ManufacturerOrgHierarchyPageBase = (props) => {
+const ManufacturerOrgHierarchyPageBase = (props) => {
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const handleChangeHistoryClick = (e) => {
@@ -37,9 +37,9 @@ export const ManufacturerOrgHierarchyPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <ManufacturerOrgHierarchy isChangeHistoryVisible={isChangeHistoryVisible}/>
+            <ManufacturerOrgHierarchy isChangeHistoryVisible={isChangeHistoryVisible} />
         </>
     );
 };
 
-export const ManufacturerOrgHierarchyPage = connect(mapStateToProps, null) (withLayoutMaster(ManufacturerOrgHierarchyPageBase));
+export const ManufacturerOrgHierarchyPage = connect(mapStateToProps, null)(withLayoutMaster(ManufacturerOrgHierarchyPageBase));
