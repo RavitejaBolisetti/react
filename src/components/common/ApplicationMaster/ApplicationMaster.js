@@ -24,13 +24,12 @@ const mapStateToProps = (state) => {
             // Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
             // HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
             applicationDetailsData: applicationDetailsData,
+            ApplicationMaster: { applicationCriticalityGroupData:criticalityGroup }
         },
-        // common: {
-        //     LeftSideBar: { collapsed = false },
-        // },
     } = state;
 
     let returnValue = {
+        criticalityGroup,
         applicationDetailsData,
         // collapsed,
         // userId,
@@ -47,6 +46,11 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
+            fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
+            fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
+            fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
+
+            saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
 
             fetchList: geoDataActions.fetchList,
             saveData: geoDataActions.saveData,
@@ -91,7 +95,8 @@ const mockgeoData = [{
       },]
 }]
 
-export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, fetchApplication }) => {
+export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, fetchApplication,fetchApplicationCriticality, criticalityGroup, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails }) => {
+   
     const [applicationform ] = Form.useForm();
     const [applicationActionsform] = Form.useForm();
     const [documentTypesform] = Form.useForm();
@@ -125,7 +130,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        fetchApplication({ setIsLoading: hierarchyAttributeListShowLoading, id:"COMN-02.01"})
+        // fetchDealerLocations({setIsLoading: hierarchyAttributeListShowLoading, applicationId: 'COMN-02'})
+        // fetchApplication({ setIsLoading: hierarchyAttributeListShowLoading, id:"COMN-02.01"})
+        fetchApplicationCriticality({setIsLoading: hierarchyAttributeListShowLoading});
+        fetchApplicationAction({appId: '1', setIsLoading: hierarchyAttributeListShowLoading})
         // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -140,7 +148,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
-    const [bottom, setBottom] = useState('bottomLeft');
 
     const dataList = [];
     const generateList = (data) => {
@@ -203,7 +210,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
 
             applicationActionsform.validateFields().then((values) => {
                 if( !values[0] ) return setOpenAccordian("2");   
-                applicationActionsformValues = Object.entries(values).map(([key, val]) => ({...val}));
+                applicationActionsformValues = Object.entries(values).map(([key, val]) => ({actionName: val?.actionName, status: val?.status, actionId: val?.actionId,createdBy: userId }));
 
                 documentTypesform.validateFields().then((values) => {
                     if( !values[0] )return setOpenAccordian("3");   
@@ -216,6 +223,24 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
                         // submit FORM HERE
                         console.log("SUBMITTED Array val ===> ",detailApplicationformValues, applicationActionsformValues, documentTypesformValues, accessibleDealerLocationsformValues)
                         console.log("<<== SUBMITTED ==>>")
+
+                        const onSuccess = (res) => {
+                            handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                        };
+                        const onError = (message) => {
+                            handleErrorModal(message);
+                        };
+
+                        const reqData = [{
+                            ...detailApplicationformValues,
+                            documentTypeRequest: documentTypesformValues,
+                            accessibleLocationRequest: accessibleDealerLocationsformValues,
+                            applicationActionRequest: applicationActionsformValues,
+
+                        }];
+
+
+                        saveApplicationDetails({data: reqData, setIsLoading: listShowLoading, userId,onSuccess, onError  })
                         // setOpenAccordian('1')
 
                     }).catch(err => {

@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 import { Collapse, Space } from 'antd';
 
 import styles from 'pages/common/Common.module.css';
-import ApplicationDetails from './ApplicationDetails';
+import {ApplicationDetails} from './ApplicationDetails';
 import DocumentTypes from './DocumentTypes';
 import ApplicationActions from './ApplicationActions';
 import AccessibleDealerLocations from './AccessibleDealerLocations';

@@ -8,5 +8,6 @@ import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministr
 import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarchy';
 import { DealerHierarchyPage } from './DealerHierarchy';
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
+import { ApplicationMasterPage } from './ApplicationMasterPage'
 
 export { GeoPage, ProductMasterPage, ProductHierarchyPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage };
