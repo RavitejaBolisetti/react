@@ -10,12 +10,12 @@ export const ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
 export const ROLE_MANAGEMENT_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 
 const receiveHeaderData = (data) => ({
-    type:  ROLE_MANAGEMENT_DATA_LOADED,
+    type: ROLE_MANAGEMENT_DATA_LOADED,
     isLoaded: true,
     data,
 });
 
-const  rolemanagementDataActions = {};
+const rolemanagementDataActions = {};
 
 const baseURLPath = BASE_URL_ROLE_MANAGEMENT;
 
@@ -31,11 +31,11 @@ rolemanagementDataActions.setFormData = (formData) => ({
 });
 
 rolemanagementDataActions.setFormVisible = (isFormVisible) => ({
-    type:ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE,
+    type: ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE,
     isFormVisible,
 });
 
-rolemanagementDataActions.fetchList = withAuthToken((params) => ({token,accessToken,userId}) => (dispatch) => {
+rolemanagementDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -51,7 +51,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => ({token,accessTo
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath,
+        url: baseURLPath + '?id=Mn',
         token,
         accessToken,
         userId,
@@ -66,7 +66,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => ({token,accessTo
     axiosAPICall(apiCallParams);
 });
 
-rolemanagementDataActions.saveData = withAuthToken((params) => ({token,accessToken,userId}) => (dispatch) => {
+rolemanagementDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
 
     setIsLoading(true);
