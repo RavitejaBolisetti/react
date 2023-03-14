@@ -1,60 +1,82 @@
 import React, { useEffect, useState } from 'react';
-import OTPInput from 'otp-input-react';
 
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
-import { BiUser } from 'react-icons/bi';
-import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+// import { BiUser } from 'react-icons/bi';
+// import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 import { ROUTING_LOGIN } from 'constants/routing';
-import { validateRequiredInputField } from 'utils/validation';
+
+import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Footer from '../Footer';
 
-const UpdatePassword = (props) => {
+const UpdatePassword = (doLogin,saveData,handleSuccessModal,handleErrorModal,listShowLoading,userId) => {
     const [form] = Form.useForm();
-    const [submit, setSubmit] = useState(false);
-    const [validate, setValidate] = useState(false);
-    const [showtimer, setShowTimer] = useState(true);
-    const [password, setPassword] = useState(false);
-    const [passwordChanged, setPasswordChanged] = useState(false);
-
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleSendOtp = () => {
-        setOTP(true);
-        setShowTimer(true);
-        setValidate(true);
-        setPassword(false);
-        setOTPsent(true);
-        // alert('OTP sent to your registered mobile number and/or email ID');
+    const [confirmDirty, setConfirmDirty] = useState(false);
+
+    const validateToNextPassword = (rule, value, callback) => {
+        if (value && confirmDirty) {
+            form.validateFields(['confirmNewPassword'], { force: true });
+        }
+        callback();
     };
 
-    const handleNewPassword = () => {
-        setOTP(false);
-        setShowTimer(false);
-        setPassword(true);
-        setSubmit(true);
-        // alert('Create new password');
+    const compareToFirstPassword = (rule, value, callback) => {
+        if (value && value !== form.getFieldValue('newPassword')) {
+            callback("New Password and Confirm Password doesn't match!");
+        } else {
+            callback();
+        }
     };
 
-    const handleChangedPassword = () => {
-        setOTP(false);
-        setShowTimer(false);
-        setPassword(false);
-        setSubmit(false);
-        setPasswordChanged(true);
+    const onFinish = (values) => {
+        form.validateFields().then((values) => {
+            Navigate(ROUTING_LOGIN);
+        });
+    };
+    const handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        setConfirmDirty(confirmDirty || !!value);
     };
 
-    const handleChange = (event) => {
-        setValue(event);
+    const onFinishFailed = (values) => {
+        if (values.errorFields.length === 0) {
+            const data = { ...values.values };
+            const onSuccess = (res) => {
+                form.resetFields();
+                doLogin({
+                    successAction: () => {
+                        handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                        window.location.href = ROUTING_LOGIN;
+                    },
+                });
+            };
+
+            const onError = (message) => {
+                handleErrorModal(message);
+            };
+
+            const requestData = {
+                data: data,
+                setIsLoading: listShowLoading,
+                userId,
+                onSuccess,
+                onError,
+            };
+
+            saveData(requestData);
+        }
     };
+
     return (
         <>
             <div className={styles.loginSection}>
@@ -69,7 +91,7 @@ const UpdatePassword = (props) => {
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="login_from" autoComplete="false">
+                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -77,7 +99,7 @@ const UpdatePassword = (props) => {
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
                                                     <h1>Update Your Password!</h1>
-                                                    <div className={styles.loginSubHeading}>Please create a new password as your password has been expired after 90 days.</div>
+                                                    <div className={styles.loginSubHeading}>Please create a new password as your password has been expired.</div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -88,24 +110,26 @@ const UpdatePassword = (props) => {
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'),validateFieldsPassword('New Password'),{validator: validateToNextPassword}]} className={`${styles.inputBox}`}>
+                                                            <Input.Password prefix={<FaKey size={18} />} type="text"  allowClear placeholder="Enter new password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
+                                                        <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again'),validateFieldsPassword('Confirm Password'),{validator: compareToFirstPassword}]} className={styles.inputBox}>
+                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password"  onBlur={handleConfirmBlur} visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button onClick={handleChangedPassword} className={styles.button} type="primary" htmlType="submit">
+                                                        {/* <Link to={ROUTING_LOGIN}> */}
+                                                        <Button className={styles.button} type="primary" htmlType="submit">
                                                             Submit
                                                         </Button>
+                                                        {/* </Link> */}
                                                     </Col>
                                                 </Row>
                                             </div>
