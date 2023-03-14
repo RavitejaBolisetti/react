@@ -1,1 +1,1 @@
-export * from './HierarchyAttributeMasterPage';
+export {HierarchyAttributeMasterPage} from './HierarchyAttributeMasterPage';

@@ -9,11 +9,8 @@ import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-<<<<<<< HEAD
 
-=======
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
->>>>>>> c689e33c8a69d48414098fc43aae9ab2e89c0156
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
 import { validateEmailField } from 'utils/validation';
