@@ -29,6 +29,48 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'FAV',
     },
+    
+    [getMenyKey('MILE-02.04')]: {
+        key: 'MILE-02.04',
+        link: routing.ROUTING_COMMON_QUALIFICATION_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+    
+    [getMenyKey('COMN-03.01')]: {
+        key: 'COMN-03.01',
+        link: routing.ROUTING_COMMON_CRITICALITY_GROUP,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
+    [getMenyKey('COMN-02.01')]: {
+        key: 'COMN-02.01',
+        link: routing.ROUTING_COMMON_ROLE_MANAGEMENT,
+        icon: undefined,
+        parentMenuId: 'COMN-02',
+    },
+    
+    [getMenyKey('COMN-03.02')]: {
+        key: 'COMN-03.02',
+        link: routing.ROUTING_COMMON_APPLICATION_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
+    [getMenyKey('MILE-02')]: {
+        key: 'MILE-02',
+        link: routing.ROUTING_COMMON_DEALER_MANPOWER,
+        icon: undefined,
+        parentMenuId: 'HR',
+    },
+
+    [getMenyKey('COMN-05.03')]: {
+        key: 'COMN-05.03',
+        link: routing.ROUTING_COMMON_BRANCH_DEALER_MAPPING,
+        icon: undefined,
+        parentMenuId: 'COMN-05',
+    },
 
     [getMenyKey('COMN-06.01')]: {
         key: 'COMN-06.01',
