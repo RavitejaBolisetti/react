@@ -18,6 +18,7 @@ import * as routing from 'constants/routing';
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
+import { HomeIcon } from 'Icons';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -79,7 +80,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -156,6 +157,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     </Row>
 
                     {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
+                    {/* <Row>
+                        <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
+                            <span className={styles.menuIcon}><HomeIcon /></span>
+                            HOME
+                        </Link>
+                    </Row> */}
                 </div>
                 {!isLoading ? (
                     <>
@@ -170,6 +177,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
+                            <Row>
+                                <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
+                                    <span className={styles.menuIcon}><HomeIcon /></span>
+                                    HOME
+                                </Link>
+                            </Row>
                             {prepareMenuItem(menuData)}
                         </Menu>
                     </>
