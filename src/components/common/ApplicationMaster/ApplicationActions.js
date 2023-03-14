@@ -70,11 +70,12 @@ const editRowData = [
     {
         key: Math.random() * 1000,
         id: Math.random() * 1000,
-        actionId: '',
-        actionName: '',
-        status: 'Y',
         deletable: true,
         isEditable: true,
+
+        actionId: '', //as id  (UUID?)
+        actionName: '',
+        status: 'Y',
     }
 ]
 
@@ -139,7 +140,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action ID',
-            dataIndex: 'appId',
+            dataIndex: 'id',
             render: (text, record, index) => {
                 return <Space wrap>{EditableCell({ record, index, title: 'Code', dataIndex: 'actionId', inputType: 'text', form })}</Space>;
             },

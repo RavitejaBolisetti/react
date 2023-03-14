@@ -105,6 +105,18 @@ const existingLocation = [
         code: 'uuid123',
         value: 'Location uuid123',
     },
+    // {
+    //     dealerLocationId: "11709848-ad3c-453f-94ec-6dbe6e7bb2c1",
+    //     dealerOrgnizationId: "1",
+    //     applicationId: "1",
+    //     status: "y"
+    // },
+    // {
+    //     dealerLocationId : "29a9f481-d74b-4036-b56c-dceb22cec511",
+    //     dealerOrgnizationId : "1",
+    //     applicationId: "1",
+    //     status: "y"
+    // },
 ];
 
 const AccessibleDealerLocations = ({ form, isReadOnly }) => {

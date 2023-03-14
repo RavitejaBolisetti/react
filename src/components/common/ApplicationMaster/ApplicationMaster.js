@@ -130,8 +130,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        // fetchDealerLocations({setIsLoading: hierarchyAttributeListShowLoading, applicationId: 'COMN-02'})
-        // fetchApplication({ setIsLoading: hierarchyAttributeListShowLoading, id:"COMN-02.01"})
+        fetchDealerLocations({setIsLoading: hierarchyAttributeListShowLoading, applicationId: 'COMN-02'})
+        fetchApplication({ setIsLoading: hierarchyAttributeListShowLoading, id:"COMN-02.01"})
         fetchApplicationCriticality({setIsLoading: hierarchyAttributeListShowLoading});
         fetchApplicationAction({appId: '1', setIsLoading: hierarchyAttributeListShowLoading})
         // hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
@@ -169,7 +169,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
 
     const handleTreeViewClick = (keys) => {
 
-        console.log("keys=handletreeviewclick", keys)
+        console.log("handletreeviewclick", keys)
         setForceFormReset(Math.random() * 10000);
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         // form.resetFields();
@@ -193,6 +193,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     };
 
     const handleSelectTreeClick = (value) => {
+        console.log("handleSelectTreeClick", value)
         // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
@@ -223,7 +224,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
                         // submit FORM HERE
                         console.log("SUBMITTED Array val ===> ",detailApplicationformValues, applicationActionsformValues, documentTypesformValues, accessibleDealerLocationsformValues)
                         console.log("<<== SUBMITTED ==>>")
-
+return
                         const onSuccess = (res) => {
                             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                         };
@@ -367,7 +368,27 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {/* <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
                             {/* {isFormVisible && <AddEditForm setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={mockgeoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen} />} */}
-                            {isFormVisible &&  <AddEditForm setOpenAccordian={setOpenAccordian}  openAccordian={openAccordian} applicationform={applicationform} applicationActionsform={applicationActionsform} documentTypesform={documentTypesform} accessibleDealerLocationsform={accessibleDealerLocationsform} setSelectedTreeKey={setSelectedTreeKey} isChecked={isChecked} setIsChecked={setIsChecked} flatternData={flatternData} formActionType={formActionType} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} isReadOnly={isReadOnly} formData={formData} geoData={mockgeoData} handleSelectTreeClick={handleSelectTreeClick} isDataAttributeLoaded={isDataAttributeLoaded} attributeData={attributeData} setIsModalOpen={setIsModalOpen}  /> }
+                            {isFormVisible &&  <AddEditForm
+                             setOpenAccordian={setOpenAccordian}
+                             openAccordian={openAccordian} 
+                             applicationform={applicationform} 
+                             applicationActionsform={applicationActionsform} 
+                             documentTypesform={documentTypesform} 
+                             accessibleDealerLocationsform={accessibleDealerLocationsform} 
+                             setSelectedTreeKey={setSelectedTreeKey} 
+                             isChecked={isChecked} setIsChecked={setIsChecked} 
+                            //  flatternData={flatternData} 
+                             formActionType={formActionType} 
+                             selectedTreeKey={selectedTreeKey} 
+                             selectedTreeSelectKey={selectedTreeSelectKey} 
+                             isReadOnly={isReadOnly} formData={formData} 
+                             geoData={mockgeoData} 
+                             handleSelectTreeClick={handleSelectTreeClick} 
+                             isDataAttributeLoaded={isDataAttributeLoaded} 
+                             attributeData={attributeData} 
+                             setIsModalOpen={setIsModalOpen}  
+                             /> 
+                            }
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                                     {buttonData?.editBtn && (

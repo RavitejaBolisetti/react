@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Col, Form, Row } from 'antd';
 import { Input, Select, Switch } from 'antd';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 
@@ -61,24 +61,24 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="applicationId" label="Application ID" rules={[validateRequiredInputField('Application ID')]}>
-                            <Input  placeholder="Type code here" {...disabledProps} />
+                            <Input  placeholder={preparePlaceholderText('Application ID')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="applicationName" label="Application Name" rules={[validateRequiredInputField('Application Name')]}>
-                            <Input placeholder="Type code here" {...disabledProps} />
+                            <Input placeholder={preparePlaceholderText('Application Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="applicationTitle" label="Application Title" rules={[validateRequiredInputField('Application Title')]}>
-                            <Input placeholder="Type title here" {...disabledProps} />
+                            <Input placeholder={preparePlaceholderSelect('Application Title')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="applicationType" label="Application Type" rules={[validateRequiredSelectField('Application Type')]}>
-                            <Select {...disabledProps} >
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Application Type')}>
                                 <Option value="Module" >Module</Option>
                                 <Option value="Group" >Group</Option>
                                 <Option value="Transaction" >Transaction</Option>
@@ -107,9 +107,9 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
                             {criticalityGroup?.map((item) => (
                                 <Option value={item?.critcltyGropCode}>{item?.critcltyGropDesc}</Option>
                             ))}
-                                <Option value="1" >Application Criticality Group </Option>
+                                {/* <Option value="1" >Application Criticality Group </Option>
                                 <Option value="2" >Application Criticality Group</Option>
-                                <Option value="3" >Application Criticality Group</Option>
+                                <Option value="3" >Application Criticality Group</Option> */}
                             </Select>
                         </Form.Item>
                     </Col>
