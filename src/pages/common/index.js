@@ -2,7 +2,6 @@ import { GeoPage } from './Geo';
 import { ProductMasterPage } from './ProductMaster/ProductMasterPage';
 import { RoleManagementPage } from './RoleManagement/RoleManagementPage';
 import { ProductHierarchyPage } from './ProductHierarchy';
-import { ApplicationMasterPage } from './ApplicationMasterPage'
 
 import { CriticalityGroupPage } from './CriticalityGroup';
 import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster';
@@ -15,4 +14,4 @@ import { DealerManpowerPage } from './DealerManpower';
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { ApplicationMasterPage } from './ApplicationMasterPage'
 
-export { GeoPage, ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage,DealerManpowerPage, ApplicationMasterPage,CriticalityGroupPage,RoleManagementPage,QualificationMasterPage };
+export { GeoPage, ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage,DealerManpowerPage, ApplicationMasterPage,CriticalityGroupPage,RoleManagementPage,QualificationMasterPage,HierarchyAttributeMasterPage };

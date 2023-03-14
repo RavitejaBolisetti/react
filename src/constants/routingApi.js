@@ -47,3 +47,4 @@ export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/deal
 
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 
+export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';

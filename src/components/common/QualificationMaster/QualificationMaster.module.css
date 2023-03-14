@@ -4,7 +4,7 @@
     padding-top: 20px;
     padding-left: 12px;
 }
-
+/* 
 :global .css-dev-only-do-not-override-aprs5d.ant-drawer .ant-drawer-footer {
     background: #d9d9d9;
 }
@@ -20,7 +20,7 @@
 
 :global .ant-input {
     padding: 5px;
-}
+} */
 
 .buttonIcon {
   margin-right: 8px;
@@ -50,7 +50,7 @@
     justify-content: end;
 }
 
-:global .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+/* :global .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
     display: inline-block;
     margin-inline-end: 4px;
     color: #ff4d4f;
@@ -68,7 +68,7 @@
     margin-block: 0;
     margin-inline-start: 2px;
     margin-inline-end: 8px;
-}
+} */
 
 .switchTop {
     margin-top: -8px;
@@ -79,8 +79,8 @@
     padding: 0px;
 }
 
-:global .ant-col-24.ant-form-item-label {
+/* :global .ant-col-24.ant-form-item-label {
     padding: 0px;
     margin-bottom: -6px;
-}
+} */
   
