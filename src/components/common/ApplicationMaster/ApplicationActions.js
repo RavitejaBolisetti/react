@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Row, Col, Table, Button, Input, Switch, Space, Modal, Form } from 'antd';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import {  ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
@@ -75,21 +75,20 @@ const editRowData = [
         status: 'Y',
         deletable: true,
         isEditable: true,
-    }
-]
-
+    },
+];
 
 const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
     // const [form] = Form.useForm();
     const [data, setRowsData] = useState(datainitial);
 
     useEffect(() => {
-        if(formActionType === "rootChild"){
-            setRowsData(editRowData)
-        }else{
+        if (formActionType === 'rootChild') {
+            setRowsData(editRowData);
+        } else {
             setRowsData(datainitial);
         }
-    },[formActionType])
+    }, [formActionType]);
 
     const showConfirm = (record, index) => {
         confirm({
@@ -99,9 +98,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
             onOk() {
                 deleteTableRows(record, index);
             },
-            onCancel() {
-                console.log('Cancel');
-            },
+            onCancel() {},
         });
     };
 
@@ -213,20 +210,18 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table scroll={{ x: 'auto'}} dataSource={[...data]} pagination={false} columns={tableColumn} />
+                            <Table scroll={{ x: 'auto' }} dataSource={[...data]} pagination={false} columns={tableColumn} />
                         </Col>
                     </Row>
-                    
-                    {
-                        !isReadOnly 
-                        &&
+
+                    {!isReadOnly && (
                         <Row justify="end" gutter={20} style={{ marginTop: '20px', marginRight: '2px' }}>
                             <Button danger onClick={handleAdd}>
                                 <FaPlus className={styles.buttonIcon} />
                                 Add Row
                             </Button>
                         </Row>
-                    }
+                    )}
                 </>
             </Form>
         </>

@@ -9,7 +9,7 @@ export const DEALER_MANPOWER_SET_FORM_DATA = 'DEALER_MANPOWER_SET_FORM_DATA';
 export const DEALER_MANPOWER_SET_FORM_VISIBLE = 'DEALER_MANPOWER_SET_FORM_VISIBLE';
 export const DEALER_MANPOWER_DATA_SHOW_LOADING = 'DEALER_MANPOWER_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: DEALER_MANPOWER_DATA_LOADED,
     isLoaded: true,
     data,
@@ -42,7 +42,7 @@ dealerManpowerActions.fetchList = withAuthToken((params) => ({ token, accessToke
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }

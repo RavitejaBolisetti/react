@@ -195,7 +195,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'Product',
             dataIndex: 'product',
-            sorter:false,
+            sorter: false,
             // render: (text) => convertDateTime(text),
         })
     );
@@ -203,7 +203,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'Category',
             dataIndex: 'Category',
-            sorter:false,
+            sorter: false,
 
             // render: (text) => convertDateTime(text),
         })
@@ -212,7 +212,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'From Date',
             dataIndex: 'fromDate',
-            sorter:false,
+            sorter: false,
 
             // render: (text) => convertDateTime(text),
         })
@@ -221,7 +221,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         tblPrepareColumns({
             title: 'To Date',
             dataIndex: 'toDate',
-            sorter:false,
+            sorter: false,
 
             // render: (text) => convertDateTime(text),
         })
@@ -231,7 +231,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
             title: 'Action',
             dataIndex: 'action',
             // render: (text) => convertDateTime(text),
-            sorter:false,
+            sorter: false,
 
             render: () => [
                 <Space wrap>
@@ -288,62 +288,8 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         setSelectedTreeKey(keys);
     };
 
-    const handleSelectTreeClick = (value) => {
-        // setSelectedTreeKey([value]);
-        setSelectedTreeSelectKey(value);
-    };
-    const showSuccessModal = (title, message) => {
-        successModel({
-            title: 'Success',
-            icon: <FaRegCheckCircle size={22} style={{ color: '#00A310', paddingRight: '8px' }} />,
-            content: message,
-        });
-    };
-
-    const showErrorModal = (title, message) => {
-        errorModel({
-            title: title,
-            icon: <FaBullhorn size={22} style={{ color: '#00A310', paddingRight: '8px' }} />,
-            content: message,
-        });
-    };
     const onFinish = (values) => {
-        console.log(values);
-        // const recordId = formData?.id || '';
-        // const codeToBeSaved = Array.isArray(values?.parentCode) ? values?.parentCode[0] : values?.parentCode || '';
-
-        // const data = { ...values, id: formData?.id || '', active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
-        // const formUpdatedData = { ...data, parntProdctId: codeToBeSaved, prodctShrtName: values?.shortName, prodctLongName: values?.longName };
-        // const onSuccess = (res) => {
-        //     form.resetFields();
-        //     setForceFormReset(Math.random() * 10000);
-
-        //     setReadOnly(true);
         setButtonData({ ...defaultBtnVisiblity, saveBtn: true, resetBtn: true, cancelBtn: true, childBtn: false, rootChildBtn: false });
-        //     setFormVisible(true);
-        //     formData && setFormData(formUpdatedData);
-
-        //     if (selectedTreeKey && selectedTreeKey.length > 0) {
-        //         !recordId && setSelectedTreeKey(codeToBeSaved);
-        //         setFormActionType('view');
-        //     }
-        //     showSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-        //     fetchList({ setIsLoading: listShowLoading, userId });
-        // };
-
-        // const onError = (message) => {
-        //     showErrorModal(message);
-        // };
-
-        // const requestData = {
-        //     data: data,
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
-
-        // saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -418,47 +364,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const [form] = Form.useForm();
-    // const onFinish = (values) => {
-    //     console.log('Success:', values);
-    // };
-    // const onFinishFailed = (errorInfo) => {
-    //     console.log('Failed:', errorInfo);
-    // };
 
-    const onReset = () => {
-        form.resetFields();
-    };
-    const TableRenderer = () => {
-        return <></>;
-    };
-    const onClick = (e) => {
-        if (e === '') {
-            form.validateFields(['division']);
-        }
-        console.log(e);
-    };
-    const DivisionDetailsFetch = () => {
-        return (
-            <Form.Item
-                name="division"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input  division',
-                    },
-                ]}
-            >
-                <Select placeholder="Select">
-                    <Select.Option value="">Select</Select.Option>
-                    <Select.Option value="Sales">Sales</Select.Option>
-                    <Select.Option value="Service">Service</Select.Option>
-                    <Select.Option value="Spares">Spares</Select.Option>
-                    <Select.Option value="HR">HR</Select.Option>
-                    <Select.Option value="Admin">Admin</Select.Option>
-                </Select>
-            </Form.Item>
-        );
-    };
     const Leftpane = () => {
         return (
             <>

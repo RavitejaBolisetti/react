@@ -49,50 +49,49 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
     return <td key={record.id + index + dataIndex + 'swi'}>{inputField}</td>;
 };
 
-  
-    const datainitial = [
-        {
-            key:Math.random()*1000,
-            id: Math.random()*1000,
-            documentTypeCode: 'Enter Code',
-            documentTypeDescription: 'Descrption',
-            termsandcondition: 'Y',
-            digitalsignature: 'N',
-        },
-        {
-            key:Math.random()*1000,
-            id: Math.random()*1000,
-            documentTypeCode: 'Enter Code',
-            documentTypeDescription: 'Enter description Data',
-            termsandcondition: "Y",
-            digitalsignature: "N",
-        },
-    ];
+const datainitial = [
+    {
+        key: Math.random() * 1000,
+        id: Math.random() * 1000,
+        documentTypeCode: 'Enter Code',
+        documentTypeDescription: 'Descrption',
+        termsandcondition: 'Y',
+        digitalsignature: 'N',
+    },
+    {
+        key: Math.random() * 1000,
+        id: Math.random() * 1000,
+        documentTypeCode: 'Enter Code',
+        documentTypeDescription: 'Enter description Data',
+        termsandcondition: 'Y',
+        digitalsignature: 'N',
+    },
+];
 
-    const editRowData = [
-        {
-            key: Math.random() * 1000,
-            id: Math.random() * 1000,
-            documentTypeCode: '',
-            documentTypeDescription: '',
-            termsandcondition: "Y",
-            digitalsignature: "Y",
-            deletable: true,
-            isEditable: true,
-        }
-    ]
+const editRowData = [
+    {
+        key: Math.random() * 1000,
+        id: Math.random() * 1000,
+        documentTypeCode: '',
+        documentTypeDescription: '',
+        termsandcondition: 'Y',
+        digitalsignature: 'Y',
+        deletable: true,
+        isEditable: true,
+    },
+];
 
-const ApplicationActions = ({form, isReadOnly, formActionType}) => {
+const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
     // const [form] = Form.useForm();
     const [data, setRowsData] = useState(datainitial);
 
     useEffect(() => {
-        if(formActionType === "rootChild"){
-            setRowsData(editRowData)
-        }else{
+        if (formActionType === 'rootChild') {
+            setRowsData(editRowData);
+        } else {
             setRowsData(datainitial);
         }
-    },[formActionType])
+    }, [formActionType]);
 
     const showConfirm = (record, index) => {
         confirm({
@@ -102,9 +101,7 @@ const ApplicationActions = ({form, isReadOnly, formActionType}) => {
             onOk() {
                 deleteTableRows(record, index);
             },
-            onCancel() {
-                console.log('Cancel');
-            },
+            onCancel() {},
         });
     };
 
@@ -115,14 +112,14 @@ const ApplicationActions = ({form, isReadOnly, formActionType}) => {
             key: Math.random() * 1000,
             documentTypeCode: '',
             documentTypeDescription: '',
-            termsandcondition: "Y",
-            digitalsignature: "Y",
+            termsandcondition: 'Y',
+            digitalsignature: 'Y',
             deletable: true,
         };
         const newlyAddedRow = Object.entries(currentlyFormDataObj)
             .map(([key, value]) => value)
             .filter((v) => !!v);
-            setRowsData([...newlyAddedRow, { ...newData }]);
+        setRowsData([...newlyAddedRow, { ...newData }]);
     };
 
     const edit = (record) => {
@@ -165,11 +162,7 @@ const ApplicationActions = ({form, isReadOnly, formActionType}) => {
             title: 'T&C Required',
             dataIndex: 'termAndConRequired',
             render: (text, record, index) => {
-                return (
-                    <Space wrap>
-                        {EditableCell({ index, record, title: 'T&C Required', dataIndex: 'termsandcondition', inputType: 'switch', form })}
-                    </Space>
-                );
+                return <Space wrap>{EditableCell({ index, record, title: 'T&C Required', dataIndex: 'termsandcondition', inputType: 'switch', form })}</Space>;
             },
         })
     );
@@ -217,9 +210,7 @@ const ApplicationActions = ({form, isReadOnly, formActionType}) => {
         })
     );
 
-    const onFinish = (values) => {
-        console.log('On finish', values);
-    };
+    const onFinish = (values) => {};
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -227,22 +218,19 @@ const ApplicationActions = ({form, isReadOnly, formActionType}) => {
 
     return (
         <>
-
-            <Form scrollToFirstError={true} preserve={false} form={form} layout="vertical" onFinish={onFinish}  onFinishFailed={onFinishFailed}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table dataSource={[...data]} pagination={false} columns={tableColumn}  />
-                        </Col>
+            <Form scrollToFirstError={true} preserve={false} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Table dataSource={[...data]} pagination={false} columns={tableColumn} />
+                    </Col>
+                </Row>
+                {!isReadOnly && (
+                    <Row justify="end" gutter={20} style={{ marginTop: '20px', marginRight: '2px' }}>
+                        <Button danger onClick={handleAdd}>
+                            <FaPlus className={styles.buttonIcon} /> Add Row
+                        </Button>
                     </Row>
-                    {
-                        !isReadOnly &&
-                        <Row justify="end" gutter={20} style={{ marginTop: '20px', marginRight: '2px' }}>
-                            <Button  danger onClick={handleAdd}>
-                                <FaPlus className={styles.buttonIcon} />
-                                {" "}Add Row
-                            </Button>
-                        </Row>
-                    }
+                )}
             </Form>
         </>
     );

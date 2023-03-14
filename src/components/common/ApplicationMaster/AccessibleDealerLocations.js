@@ -51,7 +51,7 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
                         placeholder="Select accesable location"
                         optionFilterProp="children"
                         style={{
-                          width: '140px',
+                            width: '140px',
                         }}
                         // onChange={onChange}
                         // onSearch={onSearch}
@@ -144,12 +144,9 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
             icon: <ExclamationCircleFilled />,
             content: 'Do you Want to delete this location?',
             onOk() {
-                // console.log('OK');
                 deleteTableRows(record, index);
             },
-            onCancel() {
-                // console.log('Cancel');
-            },
+            onCancel() {},
         });
     };
 
@@ -164,7 +161,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
                 return (
                     <Space wrap>
                         {EditableCell({ record, index, title: 'Dealer Location', dataIndex: 'value', inputType: 'select', form })}
-        
+
                         <Form.Item hidden initialValue={record.key} name={[index, 'key']}>
                             <Input />
                         </Form.Item>
@@ -187,12 +184,12 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
         tblPrepareColumns({
             title: '',
             dataIndex: 'action',
-            width:'50',
+            width: '50',
             render: (text, record, index) => {
                 return (
                     <Space wrap>
                         {/* {!record?.deletable && <FaEdit onClick={() => edit(record)} />} */}
-                        { <FaTrash onClick={() => showConfirm(record, index)} />}
+                        {<FaTrash onClick={() => showConfirm(record, index)} />}
                     </Space>
                 );
             },
@@ -203,7 +200,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
         form.validateFields().then((values) => {});
     };
     const onFinish = (values) => {
-        console.log('On finish', values);
+        // console.log('On finish', values);
     };
 
     return (
@@ -214,15 +211,14 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
                         <Table dataSource={data} pagination={false} columns={tableColumn} />
                     </Col>
                 </Row>
-                {
-                    !isReadOnly &&
+                {!isReadOnly && (
                     <Row justify="end" gutter={20} style={{ marginTop: '20px', marginRight: '2px' }}>
                         <Button danger onClick={handleAdd}>
                             <FaPlus className={styles.buttonIcon} />
                             Add Row
                         </Button>
                     </Row>
-                }
+                )}
             </Form>
         </>
     );

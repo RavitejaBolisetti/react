@@ -9,7 +9,7 @@ export const QUALIFICATION_SET_FORM_DATA = 'QUALIFICATION_SET_FORM_DATA';
 export const QUALIFICATION_SET_FORM_IS_VISIBLE = 'QUALIFICATION_SET_FORM_IS_VISIBLE';
 export const QUALIFICATION_DATA_SHOW_LOADING = 'QUALIFICATION_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: QUALIFICATION_DATA_LOADED,
     isLoaded: true,
     data,
@@ -37,15 +37,13 @@ qualificationDataActions.setFormVisible = (isFormVisible) => ({
 
 qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data } = params;
-    // console.log(params,"parms")
-    // console.log(token,accessToken,"headrer")
 
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -64,7 +62,6 @@ qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessT
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),
-       
     };
 
     axiosAPICall(apiCallParams);

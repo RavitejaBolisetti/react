@@ -49,11 +49,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
         setDrawer(false);
     };
 
-    const onOk = (value) => {
-        console.log('onOk: ', dayjs().format());
-        console.log('onOk: ', typeof value);
-        console.log('onOk: ', value.format('HH:mm'));
-    };
+    const onOk = (value) => {};
 
     return (
         <Drawer
@@ -85,7 +81,7 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
-                        <Input placeholder={preparePlaceholderText('Group Id')} maxLength={5} {...disabledProps}  />
+                        <Input placeholder={preparePlaceholderText('Group Id')} maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

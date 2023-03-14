@@ -1,42 +1,25 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, Empty } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty } from 'antd';
 
-import { FaSave, FaUserPlus, FaUndo, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
+
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
-import dayjs from 'dayjs';
-
-const { Option } = Select;
 const { confirm } = Modal;
 const { success: successModel, error: errorModel } = Modal;
 const { Search } = Input;
 
-const showConfirm = () => {
-    confirm({
-        title: 'Do you Want to delete these items?',
-        icon: <ExclamationCircleFilled />,
-        content: 'Some descriptions',
-        onOk() {
-            // console.log('OK');
-        },
-        onCancel() {
-            // console.log('Cancel');
-        },
-    });
-};
-
 const mapStateToProps = (state) => {
-    console.log(state);
     const {
         auth: { userId },
         data: {
@@ -81,8 +64,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
-    const [arrData, setArrData] = useState(data);
-    const [searchData,setSearchdata] = useState('')
+    const [searchData, setSearchdata] = useState('');
+
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,54 +74,23 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
-            console.log(criticalityGroupData, 'critiality grpopu dtaa');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    const showSuccessModel = ({ title, message }) => {
-        successModel({
-            title: title,
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
-    };
-
-    const onError = (message) => {
-        errorModel({
-            title: 'ERROR',
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
-    };
-
-    const showConfirm = (key) => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete?',
-            onOk() {
-                deleteTableRows(key);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
-
     const onFinish = (values) => {
         const arr = values.allowedTimingRequest.map((i) => {
             return {
-                serialNumber:0,
+                serialNumber: 0,
                 // timeSlotFrom: i.startTime.format('HH:mm'),
                 // timeSlotTo: i.endTime.format('HH:mm'),
-                timeSlotFrom:"2023-03-06T19:04:40.756Z",
-                timeSlotTo: "2023-03-06T19:04:40.756Z",
-                status: "Y",
-                remarks: "NO",
-                createdDate: "2023-03-06T19:04:40.756Z",
-                createdBy: "11111",
-                critcltyGropCode: values?.critcltyGropCode
+                timeSlotFrom: '2023-03-06T19:04:40.756Z',
+                timeSlotTo: '2023-03-06T19:04:40.756Z',
+                status: 'Y',
+                remarks: 'NO',
+                createdDate: '2023-03-06T19:04:40.756Z',
+                createdBy: '11111',
+                critcltyGropCode: values?.critcltyGropCode,
             };
         });
 
@@ -149,6 +101,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             };
             return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
         };
+
         const isOverlapping = (arr) => {
             let i, j;
             for (i = 0; i < arr.length - 1; i++) {
@@ -160,14 +113,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             }
             return false;
         };
-        console.log(isOverlapping(arr));
+
         if (isOverlapping(arr) === true) {
             alert('Your timings are overlapping please check again and try');
         } else {
-            console.log('ohhho');
             const recordId = formData?.id || '';
             setForceFormReset(Math.random() * 10000);
-            const data = { ...values,createdDate:"2023-03-06T19:04:40.756Z",createdBy:userId,allowedTimingRequest:arr };
+            const data = { ...values, createdDate: '2023-03-06T19:04:40.756Z', createdBy: userId, allowedTimingRequest: arr };
             const onSuccess = (res) => {
                 form.resetFields();
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
@@ -187,15 +139,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             };
 
             saveData(requestData);
-            console.log(requestData,"requestData");
-            // setData([...data, values]);
-            // // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-            // setFormData(data);
             setDrawer(false);
         }
-
-        console.log('the real data', data);
-        console.log(formData, 'formData');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -203,7 +148,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const handleAdd = () => {
-        console.log(data, 'datat');
         setDrawer(true);
         setFormActionType('add');
         setIsReadOnly(false);
@@ -214,7 +158,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const handleUpdate = (record) => {
         setForceFormReset(Math.random() * 10000);
         setFormData(record);
-        console.log(formData, 'formData');
         setDrawer(true);
         setFormActionType('update');
         setIsReadOnly(false);
@@ -234,35 +177,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // formData && setFormData(formData?.data);
     };
 
-    const handleReset = () => {
-        console.log('reset called');
-    };
-
-    const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
-        // setRowsData(updatedDataItem);
-    };
-
-    const deleteTableRows = (id) => {
-        const updatedData = [...data];
-        const index = updatedData.findIndex((el) => el.id === id);
-        updatedData.splice(Number(index), 1);
-        // setRowsData([...updatedData]);
-    };
-
-    
     const onChangeHandle = (e) => {
-        // const getSearch = e.target.value;
-        // if (e.target.value == '') {
-        //     const tempArr = arrData;
-        //     setArrData(tempArr);
-        //     return;
-        // }
-        // if (getSearch.length > -1) {
-        //     const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
-        //     setArrData(searchResult);
-        // }
-        // console.log(e.target.value);
         const newdata = [];
         Object.keys(criticalityGroupData).map((keyname, i) => {
             if (criticalityGroupData[keyname].critcltyGropCode === e) {
@@ -283,7 +198,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
     const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
-        if (e.target.value == '') {
+        if (e.target.value === '') {
             const tempArr = criticalityGroupData;
             setSearchdata(tempArr);
             return;
@@ -291,11 +206,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         if (getSearch.length > -1) {
             const searchResult = criticalityGroupData.filter((record) => record.critcltyGropCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.critcltyGropDesc.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
-        } 
-        console.log(e.target.value);
+        }
     };
-
-
 
     const tableColumn = [];
 
@@ -310,7 +222,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'critcltyGropCode',
-            sortFn: (a, b) => a.criticalityGroupId.localeCompare(b.criticalityGroupId),
         })
     );
 
@@ -318,7 +229,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'critcltyGropDesc',
-            sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName),
         })
     );
 
@@ -326,7 +236,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Default Group?',
             dataIndex: 'defaultGroup',
-            sortFn: (a, b) => a.defaultGroup.localeCompare(b.defaultGroup),
             render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
@@ -335,7 +244,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            sortFn: (a, b) => a.status.localeCompare(b.defaultGroup),
             render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
@@ -343,7 +251,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: '',
-            sorter:false,
+            sorter: false,
             render: (text, record, index) => {
                 return (
                     <Space wrap>

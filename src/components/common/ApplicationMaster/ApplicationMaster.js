@@ -156,7 +156,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
     const flatternData = generateList(finalGeoData);
 
     const handleTreeViewClick = (keys) => {
-        console.log('keys=handletreeviewclick', keys);
         setForceFormReset(Math.random() * 10000);
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         // form.resetFields();
@@ -210,12 +209,9 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
                                 accessibleDealerLocationsform
                                     .validateFields()
                                     .then((values) => {
-                                        console.log('val loc', values);
                                         // if( !values[0] ) setOpenAccordian("4");
                                         accessibleDealerLocationsformValues = Object.entries(values).map(([key, val]) => ({ ...val }));
                                         // submit FORM HERE
-                                        console.log('SUBMITTED Array val ===> ', detailApplicationformValues, applicationActionsformValues, documentTypesformValues, accessibleDealerLocationsformValues);
-                                        console.log('<<== SUBMITTED ==>>');
 
                                         const onSuccess = (res) => {
                                             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
@@ -318,18 +314,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, geoData, fetchList
         }
     };
 
-    console.log('selectedTreeKey', selectedTreeKey, selectedTreeSelectKey);
-
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
-    const myProps = {
-        isTreeViewVisible,
-        handleTreeViewVisiblity,
-        selectedTreeKey,
-        selectedTreeSelectKey,
-        fieldNames,
-        handleTreeViewClick,
-        treeData: geoData,
-    };
 
     return (
         <>

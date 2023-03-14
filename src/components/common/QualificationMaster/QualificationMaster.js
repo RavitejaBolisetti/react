@@ -113,7 +113,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             title: 'Status',
             dataIndex: 'status',
             render: (record) => {
-                console.log(record);
                 return <Switch disabled={true} checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
             },
         })
@@ -165,7 +164,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 onError,
                 onSuccess,
             };
-            console.log(requestData, 'requestData');
             saveData(requestData);
         }
 
@@ -222,7 +220,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         forceUpdate();
     };
     const onChange = (sorter, filters) => {
-        console.log('sort', sorter, filters);
         form.resetFields();
     };
 

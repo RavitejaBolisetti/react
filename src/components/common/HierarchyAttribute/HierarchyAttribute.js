@@ -103,20 +103,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         });
     };
 
-    const showConfirm = (record, index) => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete?',
-            onOk() {
-                deleteTableRows(record, index);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
-
     const handleAdd = () => {
         setEditRow({});
         setShowDrawer(true);
@@ -229,7 +215,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         form.validateFields().then((values) => {});
     };
     const handleReset = () => {
-        console.log('Reset form');
         form.resetFields();
     };
     const handleChange = (attributeType) => {
