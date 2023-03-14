@@ -107,6 +107,14 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
+    
+    [getMenyKey('MILE-02.04')]: {
+        key: 'MILE-02.04',
+        link: routing.ROUTING_COMMON_QUALIFICATION_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+
     [getMenyKey('SPR')]: {
         link: undefined,
         icon: <SparesIcon fontSize={22} />,
