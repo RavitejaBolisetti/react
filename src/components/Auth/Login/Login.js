@@ -9,7 +9,7 @@ import { BiUser } from 'react-icons/bi';
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
-import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
+import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
@@ -97,7 +97,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     return (
@@ -138,6 +138,9 @@ const Login = (props) => {
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                        </div>
+                                                        <div className={styles.forgotPasswordLink}>
+                                                            <Link to={ROUTING_UPDATE_PASSWORD}>Update password?</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
