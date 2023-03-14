@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import { geoDataActions } from 'store/actions/data/geo';
 import { dealerManpowerActions } from 'store/actions/data/dealerManpower';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
@@ -18,11 +17,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: {
-                //  isLoaded: isDataLoaded = false,
-                data: geoData = [],
-            },
-            dealerManpower : { isLoaded: isDataLoaded = false, data: dealerManpowerData = [] },
+            dealerManpower: { isLoaded: isDataLoaded = false, data: dealerManpowerData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -34,7 +29,6 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
-        geoData,
         dealerManpowerData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
@@ -46,10 +40,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: geoDataActions.fetchList,
-            // saveData: geoDataActions.saveData,
-            // listShowLoading: geoDataActions.listShowLoading,
-
             fetchList: dealerManpowerActions.fetchList,
             saveData: dealerManpowerActions.saveData,
             listShowLoading: dealerManpowerActions.listShowLoading,
@@ -89,7 +79,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Dealer Manpower Hierarchy' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

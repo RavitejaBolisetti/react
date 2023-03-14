@@ -1,18 +1,16 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Space, Table, List, Drawer, Switch, Collapse, Checkbox, Card, Tree, Divider } from 'antd';
+import { Button, Col, Form, Row, Input, Space, Table, List, Drawer, Switch,  Checkbox, Card, Tree, Divider } from 'antd';
 
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
-import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
-import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
 
 const mapStateToProps = (state) => {
