@@ -61,7 +61,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent"name="geoParentCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" name="geoParentCode">
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
