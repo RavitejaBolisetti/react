@@ -272,7 +272,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
     return (
         <>
             <div className={styles.geoSection}>
-                <p>learn react</p>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <LeftPanel {...myProps} />
