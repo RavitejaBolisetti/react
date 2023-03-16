@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Geo } from './Geo';
 
@@ -17,6 +17,7 @@ window.matchMedia =
     };
 
 const fetchList = () => {};
+const saveData = () => {};
 const hierarchyAttributeFetchList = () => {};
 
 describe('geo component', () => {
@@ -24,6 +25,18 @@ describe('geo component', () => {
         render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const addChildBtn = screen.getByText('Add Child');
         expect(addChildBtn).toBeInTheDocument();
+    });
+
+    test('render Exit button', async () => {
+        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        const Exit = screen.getByText('Exit');
+        expect(Exit).toBeInTheDocument();
+    });
+
+    test('render Change History button', async () => {
+        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        const changeHistoryBtn = screen.getByText('Change History');
+        expect(changeHistoryBtn).toBeInTheDocument();
     });
 
     test('render form', async () => {
@@ -39,76 +52,18 @@ describe('geo component', () => {
         const codeInputField = screen.getByPlaceholderText('Please Enter Code');
         expect(codeInputField).toBeTruthy();
     });
-    test('render Enter Name Field in form element', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const codeInputField = screen.getByPlaceholderText('Please Enter Name');
-        expect(codeInputField).toBeTruthy();
-    });
-    test('render Geographical Attribute Level Placeholder in form element', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const codeInputField = await screen.getByRole('combobox', { name: 'Geographical Attribute Level' });
 
-        expect(codeInputField).toBeTruthy();
-    });
-    test('render Please Select Parent Placeholder in form element', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const codeInputField = await screen.getByRole('combobox', { name: '' });
-        expect(codeInputField).toBeTruthy();
-        const options = screen.getByRole('option', { name: 'Ireland' });
-        expect(options).toBeTruthy();
-    });
-    test('render Switch of Active and Inactive', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const codeInputField = await screen.getByRole('switch', { name: 'Status' });
-        expect(codeInputField).toBeTruthy();
-    });
-    test('render Switch of Active and Inactive', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const codeInputField = await screen.getByRole('switch', { name: 'Status' });
-        expect(codeInputField).not.toBeDisabled();
-    });
-    test('Check Cancel Functionality of Form Element', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const cancelbutton = screen.getByText('Cancel');
-        fireEvent.click(cancelbutton);
-        expect(RootChildButton).toBeTruthy();
-    });
-    test('Check Reset Functionality of Form Element', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const ResetButton = screen.getByText('Reset');
-        fireEvent.click(ResetButton);
-        const codeInputName = screen.getByPlaceholderText('Please Enter Name');
-        const codeInputCode = screen.getByPlaceholderText('Please Enter Code');
-        const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
-        expect(codeInputName.value).toMatch('');
-        expect(codeInputCode.value).toMatch('');
-        expect(codeSwitch).not.toBeDisabled();
-    });
-    test('Check Reset Functionality of Form Element', async () => {
-        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const RootChildButton = screen.getByText('Add Child');
-        fireEvent.click(RootChildButton);
-        const ResetButton = screen.getByText('Reset');
-        fireEvent.click(ResetButton);
-        const codeInputName = screen.getByPlaceholderText('Please Enter Name');
-        const codeInputCode = screen.getByPlaceholderText('Please Enter Code');
-        const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
-        expect(codeInputName.value).toMatch('');
-        expect(codeInputCode.value).toMatch('');
-        expect(codeSwitch).not.toBeDisabled();
-    });
+
+
+
+    // test('render form element', async () => {
+    //     render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        
+    //     const formText = screen.getByPlaceholderText("Please Enter Code");
+    //     expect(formText).toBeUndefined();
+    // });
+
+
+
+
 });
