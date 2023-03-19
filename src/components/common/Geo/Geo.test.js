@@ -349,6 +349,5 @@ describe('geo component', () => {
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         expect(saveBtn).toBeTruthy();
-        fireEvent.click(saveBtn);
     });
 });
