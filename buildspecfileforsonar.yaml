@@ -21,7 +21,7 @@ phases:
             - echo Build started on `date`
             - echo Compiling the dist folder
            # - npm run coverage
-            - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.14.133:9000/ -Dsonar.login=squ_c270ac422f096aa60b4dfe84f1f2c79e074cc803
+            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.14.133:9000/ -Dsonar.login=squ_c270ac422f096aa60b4dfe84f1f2c79e074cc803
     post_build:
         commands:
             - echo Build completed on `date`
