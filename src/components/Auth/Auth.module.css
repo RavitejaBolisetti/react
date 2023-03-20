@@ -4,6 +4,7 @@
 
 p {
     margin-bottom: 0px !important;
+    color: #342C2C;
 }
 
 .floatRight {
@@ -451,35 +452,37 @@ select.form-control:focus::-ms-value {
 }
 
 .errorBoxContainer {
-    width: 25%;
+    /* width: 25%; */
+    width: 320px;
     max-height: 90%;
-    margin: 3% auto;
-    padding: 15px;
-    background: #242424;
+    /* margin: 3% auto; */
+    padding: 10px 16px;
+    background: #FEE3D4;
     color: #dedede;
     font-size: 16px;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border: 2px solid #ea3434;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border: 1px solid #ED302D;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
     overflow: auto;
     position: fixed;
-    top: 10%;
-    right: 0;
+    top: 16px;
+    right: 16px;
 }
 
 .errorBoxContainer h5 {
     margin: 0 0 5px 0;
     padding: 0px;
-    border-bottom: 1px solid #ea3434;
+    /* border-bottom: 1px solid #ea3434; */
     font-size: 16px;
-    color: #fff;
-    padding-bottom: 5px;
+    color: #EF0000;
+    padding-bottom: 5px !important;
 }
 
 .errorBoxContainer h5 .icon {
-    color: #ea3434;
-    padding-bottom: 5px;
+    color: #ED302D;
+    /* padding-bottom: 5px; */
 }
 
 .errorBoxContainer h5 .infoIcon {
