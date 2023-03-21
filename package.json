@@ -2,7 +2,7 @@
     "name": "dms-ui-application",
     "version": "0.0.1",
     "private": true,
-    "proxy": "https://2lebbk509d.execute-api.ap-south-1.amazonaws.com/dev/",
+    "proxy": "https://apidev.mahindradealerrise.com/",
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
