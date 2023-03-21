@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Button, Input, message } from 'antd';
+import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import { AiFillInfoCircle, AiFillCloseCircle } from 'react-icons/ai';
+import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
@@ -16,6 +18,12 @@ import styles from '../Auth.module.css';
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import Footer from '../Footer';
+
+import { UpdatePassword } from '../UpdatePassword';
+
+// const Context = React.createContext({
+//     name: 'Default',
+// });
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -56,6 +64,7 @@ const Login = (props) => {
     const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false);
+    const [isTrue, setIsTrue] = useState(false);
 
     useEffect(() => {
         ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
@@ -97,11 +106,51 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
+    };
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = () => {
+        const btn = (
+            <Space>
+                <Link to={ROUTING_DASHBOARD}>
+                    <Button size="small">Skip For Now</Button>
+                </Link>
+                <Link to={ROUTING_UPDATE_PASSWORD}>
+                    <Button size="small" onClick={() => setIsTrue(true)}>
+                        Update Password
+                    </Button>
+                </Link>
+            </Space>
+        );
+        api.open({
+            icon: <CiCircleAlert />,
+            message: 'Update Password',
+            description: 'Your password will expire in next 5 days. Please change your password.',
+            btn,
+            duration: 0,
+        });
+    };
+
+    const [apii, contextHolderr] = notification.useNotification();
+    const openNotification1 = () => {
+        const btn = (
+            <Link to={ROUTING_UPDATE_PASSWORD}>
+                <Button size="small">Update Password</Button>
+            </Link>
+        );
+        apii.open({
+            icon: <CiCircleRemove />,
+            message: 'Password Expired',
+            description: 'Your Password has expired. Please update your password to login.',
+            btn,
+            duration: 0,
+        });
     };
 
     return (
         <>
+            {contextHolder}
+            {contextHolderr}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -139,9 +188,9 @@ const Login = (props) => {
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
                                                         </div>
-                                                        <div className={styles.forgotPasswordLink}>
+                                                        {/* <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_UPDATE_PASSWORD}>Update password?</Link>
-                                                        </div>
+                                                        </div> */}
                                                     </Col>
                                                 </Row>
 
@@ -150,6 +199,21 @@ const Login = (props) => {
                                                         <Button className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
+                                                        {/* <Button type="primary" onClick={openNotification}>
+                                                            topRight
+                                                        </Button> */}
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <Space>
+                                                            <Button type="primary" onClick={openNotification}>
+                                                                skip
+                                                            </Button>
+                                                            <Button type="primary" onClick={openNotification1}>
+                                                                Update
+                                                            </Button>
+                                                        </Space>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>

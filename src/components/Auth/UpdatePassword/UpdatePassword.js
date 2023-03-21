@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Form, Row, Col, Button, Input } from 'antd';
 import { FaKey } from 'react-icons/fa';
 
-import { ROUTING_LOGIN } from 'constants/routing';
+import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
 import { ROUTING_LOGOUT } from 'constants/routing';
 
 import { doLogoutAPI } from 'store/actions/auth';
@@ -17,7 +17,7 @@ import { validateFieldsPassword, validateRequiredInputField } from 'utils/valida
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 
 const mapStateToProps = (state) => {
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue=(true) }) => {
     const [form] = Form.useForm();
 
     const [confirmDirty, setConfirmDirty] = useState(false);
@@ -67,7 +67,7 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                 doLogout({
                     successAction: () => {
                         handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                        window.location.href = ROUTING_LOGOUT;
+                        window.location.href = ROUTING_LOGIN;
                     },
                 });
             };
@@ -123,51 +123,49 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="change_password" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="update_password" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h1>Update Your Password!</h1>
-                                                    <div className={styles.loginSubHeading}>Please create a new password as your password has been expired.</div>
+                                                    <h1>Update Your Password</h1>
+                                                    <div className={styles.loginSubHeading}></div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter old password" visibilityToggle={true} />
+                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Old password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password'), { validator: validateToNextPassword }]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" allowClear placeholder="Enter new password" visibilityToggle={true} />
+                                                            <Input.Password prefix={<FaKey size={18} />} type="text" allowClear placeholder="New password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('Confirm Password'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" onBlur={handleConfirmBlur} visibilityToggle={true} />
+                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        {/* <Link to={ROUTING_LOGIN}> */}
                                                         <Button className={styles.button} type="primary" htmlType="submit">
                                                             Submit
                                                         </Button>
-                                                        {/* </Link> */}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
-                                                            <Link to={ROUTING_LOGIN}>Back To Login Page</Link>
+                                                            {isTrue ? <Link to={ROUTING_LOGIN}>Back To Login Page</Link> : <Link to={ROUTING_DASHBOARD}>Skip For Now</Link>}
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -185,4 +183,5 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
     );
 };
 
-export const UpdatePassword = connect(mapStateToProps, mapDispatchToProps)(UpdatePasswordBase);
+// export const UpdatePassword = connect(mapStateToProps, mapDispatchToProps)(UpdatePasswordBase);
+export const UpdatePassword = connect()(UpdatePasswordBase);
