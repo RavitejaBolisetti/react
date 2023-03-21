@@ -15,6 +15,7 @@ import DrawerUtil from './DrawerUtil';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 import dayjs from 'dayjs';
+import { BsTruckFlatbed } from 'react-icons/bs';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -68,7 +69,41 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const initialTableData = [];
+const initialTableData = [
+    {
+        Srl: '1',
+        critcltyGropCode: 'helloo',
+        critcltyGropName: 'shsjshs',
+        defaultGroup: 'Y',
+        status: 'N',
+        allowedTimingRequest: [
+            {
+                Serial: 1,
+                startTime: '9:45',
+                endTime: '1:00',
+            },
+            {
+                Serial: 2,
+                startTime: '2:00',
+                endTime: '3:00',
+            },
+        ],
+    },
+    {
+        Srl: '2',
+        critcltyGropCode: 'unhip',
+        critcltyGropName: 'hiioi',
+        defaultGroup: 'N',
+        status: 'Y',
+        allowedTimingRequest: [
+            {
+                Serial: 1,
+                startTime: '2:00',
+                endTime: '3:00',
+            },
+        ],
+    },
+];
 
 export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
     const [formActionType, setFormActionType] = useState('');
@@ -82,7 +117,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
     const [arrData, setArrData] = useState(data);
-    const [searchData,setSearchdata] = useState('')
+    const [searchData, setSearchdata] = useState('');
+    const [selectedRecord, setSelectedRecord] = useState(null);
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +127,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
-            console.log(criticalityGroupData, 'critiality grpopu dtaa');
+            // console.log(criticalityGroupData, 'critiality grpopu dtaa');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -126,76 +162,80 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
     };
 
+    // const onFinish = (values) => {
+    //     const arr = values.allowedTimingRequest.map((i) => {
+    //         return {
+    //             serialNumber: 0,
+    //             timeSlotFrom: i.startTime.format('HH:mm'),
+    //             timeSlotTo: i.endTime.format('HH:mm'),
+    //             timeSlotFrom: '2023-03-06T19:04:40.756Z',
+    //             timeSlotTo: '2023-03-06T19:04:40.756Z',
+    //             status: 'Y',
+    //             remarks: 'NO',
+    //             createdDate: '2023-03-06T19:04:40.756Z',
+    //             createdBy: '11111',
+    //             critcltyGropCode: values?.critcltyGropCode,
+    //         };
+    //     });
+
+    //     const overlapping = (a, b) => {
+    //         const getMinutes = (s) => {
+    //             const p = s.split(':').map(Number);
+    //             return p[0] * 60 + p[1];
+    //         };
+    //         return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
+    //     };
+    //     const isOverlapping = (arr) => {
+    //         let i, j;
+    //         for (i = 0; i < arr.length - 1; i++) {
+    //             for (j = i + 1; j < arr.length; j++) {
+    //                 if (overlapping(arr[i], arr[j])) {
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //         return false;
+    //     };
+    //     console.log(isOverlapping(arr));
+    //     if (isOverlapping(arr) === true) {
+    //         alert('Your timings are overlapping please check again and try');
+    //     } else {
+    //         console.log('ohhho');
+    //         const recordId = formData?.id || '';
+    //         setForceFormReset(Math.random() * 10000);
+    //         const data = { ...values, createdDate: '2023-03-06T19:04:40.756Z', createdBy: userId, allowedTimingRequest: arr };
+    //         const onSuccess = (res) => {
+    //             form.resetFields();
+    //             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+    //             fetchData({ setIsLoading: listShowLoading, userId });
+    //         };
+
+    //         const onError = (message) => {
+    //             handleErrorModal(message);
+    //         };
+
+    //         const requestData = {
+    //             data: [data],
+    //             setIsLoading: listShowLoading,
+    //             userId,
+    //             onError,
+    //             onSuccess,
+    //         };
+
+    //         saveData(requestData);
+    //         console.log(requestData, 'requestData');
+    //         setData([...data, values]);
+    //         { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
+    //         setFormData(data);
+    //         setDrawer(false);
+    //     }
+
+    //     console.log('the real data', data);
+    //     console.log(formData, 'formData');
+    // };
+
     const onFinish = (values) => {
-        const arr = values.allowedTimingRequest.map((i) => {
-            return {
-                serialNumber:0,
-                // timeSlotFrom: i.startTime.format('HH:mm'),
-                // timeSlotTo: i.endTime.format('HH:mm'),
-                timeSlotFrom:"2023-03-06T19:04:40.756Z",
-                timeSlotTo: "2023-03-06T19:04:40.756Z",
-                status: "Y",
-                remarks: "NO",
-                createdDate: "2023-03-06T19:04:40.756Z",
-                createdBy: "11111",
-                critcltyGropCode: values?.critcltyGropCode
-            };
-        });
-
-        const overlapping = (a, b) => {
-            const getMinutes = (s) => {
-                const p = s.split(':').map(Number);
-                return p[0] * 60 + p[1];
-            };
-            return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
-        };
-        const isOverlapping = (arr) => {
-            let i, j;
-            for (i = 0; i < arr.length - 1; i++) {
-                for (j = i + 1; j < arr.length; j++) {
-                    if (overlapping(arr[i], arr[j])) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-        console.log(isOverlapping(arr));
-        if (isOverlapping(arr) === true) {
-            alert('Your timings are overlapping please check again and try');
-        } else {
-            console.log('ohhho');
-            const recordId = formData?.id || '';
-            setForceFormReset(Math.random() * 10000);
-            const data = { ...values,createdDate:"2023-03-06T19:04:40.756Z",createdBy:userId,allowedTimingRequest:arr };
-            const onSuccess = (res) => {
-                form.resetFields();
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                fetchData({ setIsLoading: listShowLoading, userId });
-            };
-
-            const onError = (message) => {
-                handleErrorModal(message);
-            };
-
-            const requestData = {
-                data: [data],
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-            console.log(requestData,"requestData");
-            // setData([...data, values]);
-            // // { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-            // setFormData(data);
-            setDrawer(false);
-        }
-
-        console.log('the real data', data);
-        console.log(formData, 'formData');
+        console.log('values n sub,it', values.defaultGroup ? 'Y' : 'N');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -203,34 +243,66 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const handleAdd = () => {
-        console.log(data, 'datat');
-        setDrawer(true);
         setFormActionType('add');
-        setIsReadOnly(false);
         form.resetFields();
-        forceUpdate();
+        setDrawer(true);
+        setIsReadOnly(false);
+        form.setFieldsValue({
+            defaultGroup: 'Y',
+            status: 'Y',
+        });
+        console.log(data, 'datat');
     };
 
     const handleUpdate = (record) => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData(record);
+        // setForceFormReset(Math.random() * 10000);
+        setFormActionType('update');
+        console.log('update', record);
+        // setFormData(record);
+        setSelectedRecord(record);
+        const momentTime = record?.allowedTimingRequest?.map((i) => {
+            return {
+                startTime: dayjs(i.startTime, 'HH:mm'),
+                endTime: dayjs(i.endTime, 'HH:mm'),
+            };
+        });
+        form.setFieldsValue({
+            critcltyGropCode: record.critcltyGropCode,
+            critcltyGropName: record.critcltyGropName,
+            defaultGroup: record.defaultGroup === 'Y',
+            status: record.status === 'Y',
+            allowedTimingRequest : momentTime
+
+        });
         console.log(formData, 'formData');
         setDrawer(true);
-        setFormActionType('update');
         setIsReadOnly(false);
-        forceUpdate();
+        // forceUpdate();
 
         // formData && setFormData(formData?.data);
     };
 
     const handleView = (record) => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData(record);
-        setDrawer(true);
         setFormActionType('view');
-        setIsReadOnly(true);
-        forceUpdate();
+        console.log('view', record);
+        // setFormData(record);
+        setSelectedRecord(record);
+        const momentTime = record?.allowedTimingRequest?.map((i) => {
+            return {
+                startTime: dayjs(i.startTime, 'HH:mm'),
+                endTime: dayjs(i.endTime, 'HH:mm'),
+            };
+        });
+        form.setFieldsValue({
+            critcltyGropCode: record.critcltyGropCode,
+            critcltyGropName: record.critcltyGropName,
+            defaultGroup: record.defaultGroup === 'Y',
+            status: record.status === 'Y',
+            allowedTimingRequest : momentTime
 
+        });
+        setDrawer(true);
+        setIsReadOnly(true);
         // formData && setFormData(formData?.data);
     };
 
@@ -250,7 +322,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // setRowsData([...updatedData]);
     };
 
-    
     const onChangeHandle = (e) => {
         // const getSearch = e.target.value;
         // if (e.target.value == '') {
@@ -291,11 +362,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         if (getSearch.length > -1) {
             const searchResult = criticalityGroupData.filter((record) => record.critcltyGropCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.critcltyGropDesc.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
-        } 
+        }
         console.log(e.target.value);
     };
-
-
 
     const tableColumn = [];
 
@@ -317,7 +386,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group Name',
-            dataIndex: 'critcltyGropDesc',
+            dataIndex: 'critcltyGropName',
             sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName),
         })
     );
@@ -327,7 +396,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             title: 'Default Group?',
             dataIndex: 'defaultGroup',
             sortFn: (a, b) => a.defaultGroup.localeCompare(b.defaultGroup),
-            render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <Switch disabled checked={text === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
 
@@ -336,14 +405,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             title: 'Status',
             dataIndex: 'status',
             sortFn: (a, b) => a.status.localeCompare(b.defaultGroup),
-            render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <Switch disabled checked={text === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: '',
-            sorter:false,
+            title: 'Action',
+            sorter: false,
             render: (text, record, index) => {
                 return (
                     <Space wrap>
@@ -375,12 +444,21 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                     </Button>
                 </Col>
             </Row>
-            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <DrawerUtil handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+            <Form
+                form={form}
+                initialValues={{
+                    defaultGroup: form.getFieldValue('defaultGroup'),
+                }}
+                id="myForm"
+                layout="vertical"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+            >
+                <DrawerUtil setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord} form={form} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={criticalityGroupData} pagination={true} columns={tableColumn} />
+                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={initialTableData} pagination={true} columns={tableColumn} />
                 </Col>
             </Row>
         </>

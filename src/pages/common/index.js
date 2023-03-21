@@ -9,4 +9,4 @@ import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarch
 import { DealerHierarchyPage } from './DealerHierarchy';
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 
-export { GeoPage, ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage,CriticalityGroupPage,RoleManagementPage };
+export { GeoPage, ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage,CriticalityGroupPage,RoleManagementPage,HierarchyAttributeMasterPage };

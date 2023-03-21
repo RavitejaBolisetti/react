@@ -8,10 +8,11 @@ import dayjs from 'dayjs';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
+import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
 
@@ -38,14 +39,15 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
         drawerTitle = 'View Application Criticality Group Details';
     }
 
-    const momentTime = formData?.users?.map((i) => {
-        return {
-            startTime: dayjs(i.startTime, 'HH:mm'),
-            endTime: dayjs(i.endTime, 'HH:mm'),
-        };
-    });
+    // const momentTime = formData?.users?.map((i) => {
+    //     return {
+    //         startTime: dayjs(i.startTime, 'HH:mm'),
+    //         endTime: dayjs(i.endTime, 'HH:mm'),
+    //     };
+    // });
 
     const onClose = () => {
+        setSelectedRecord(null);
         setDrawer(false);
     };
 
@@ -84,28 +86,70 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id')]}>
-                        <Input placeholder={preparePlaceholderText('Group Id')} maxLength={5} {...disabledProps}  />
+                    <Form.Item
+                        //  initialValue={formData?.critcltyGropCode}
+                        name="critcltyGropCode"
+                        label="Criticality Group Id"
+                        rules={[validateRequiredInputField('Criticality Group Id')]}
+                    >
+                        <Input placeholder={preparePlaceholderText('Group Id')} maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.critcltyGropCode} name="critcltyGropName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
+                    <Form.Item
+                        //  initialValue={formData?.critcltyGropCode}
+                        name="critcltyGropName"
+                        label="Criticality Group Name"
+                        rules={[validateRequiredInputField('Criticality Group Name')]}
+                    >
                         <Input placeholder={preparePlaceholderText('Name')} maxLength={5} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.defaultGroup === 'Y' ? 'Y' : 'N'} name="defaultGroup" label="Default Group?">
-                        <Switch defaultChecked={formData?.defaultGroup === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.defaultGroup} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        initialValue={true}
+                        labelAlign="left"
+                        wrapperCol={{ span: 24 }}
+                        // normalize={(a, b) => (a ? 'Y' : 'N')}
+                        // initialValue={formData?.defaultGroup === 'Y' ? 'Y' : 'N'}
+                        valuePropName="checked"
+                        name="defaultGroup"
+                        label="Default Group?"
+                    >
+                        <Switch
+                            //   defaultChecked={formData?.defaultGroup === 'Y'}
+                            // defaultChecked={form.getFieldValue('defaultGroup') === 'Y'}
+                            // defaultChecked={formActionType === 'add' || (selectedRecord && selectedRecord.defaultGroup === 'Y')}
+                            checkedChildren="Active"
+                            unCheckedChildren="Inactive"
+                            //    initialValue={formData.defaultGroup}
+                            onChange={(checked) => (checked ? 'Y' : 'N')}
+                            {...disabledProps}
+                        />
                     </Form.Item>
                 </Col>
-                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                    {' '}
-                </Col>
-                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                    <Form.Item normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.status === 'Y' ? 'Y' : 'N'} name="status" label="Status">
-                        <Switch defaultChecked={formData?.status === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" initialValue={formData.status} valuePropName="checked" onChange={() => setIsChecked(!isChecked)} {...disabledProps} />
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                    <Form.Item
+                        labelAlign="left"
+                        wrapperCol={{ span: 24 }}
+                        // normalize={(a, b) => (a ? 'Y' : 'N')}
+                        //    initialValue={formData?.status === 'Y' ? 'Y' : 'N'}
+                        name="status"
+                        label="Status"
+                        valuePropName="checked"
+                    >
+                        <Switch
+                            //  defaultChecked={formData?.status === 'Y'}
+                            checkedChildren="Active"
+                            unCheckedChildren="Inactive"
+                            //   initialValue={formData.status}
+                            valuePropName="checked"
+                            onChange={(checked) => (checked ? 'Y' : 'N')}
+                            {...disabledProps}
+                        />
                     </Form.Item>
                 </Col>
             </Row>
@@ -114,7 +158,11 @@ const DrawerUtil = ({ handleAdd, open, setDrawer, isChecked, setIsChecked, formA
                     <p> Allowed Timings</p>
                 </Col>
             </Row>
-            <Form.List required rules={[validateRequiredInputField('Allowed Timings')]} name="allowedTimingRequest" initialValue={momentTime}>
+            <Form.List 
+            // required rules={[validateRequiredInputField('Allowed Timings')]} 
+            name="allowedTimingRequest"
+            //  initialValue={momentTime}
+             >
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
