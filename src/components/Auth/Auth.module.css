@@ -4,7 +4,10 @@
 
 p {
     margin-bottom: 0px !important;
+    margin-top: 0px !important;
     color: #342C2C;
+    padding-left: 28px !important;
+    text-align: left;
 }
 
 .floatRight {
@@ -472,7 +475,7 @@ select.form-control:focus::-ms-value {
 }
 
 .errorBoxContainer h5 {
-    margin: 0 0 5px 0;
+    margin: 0;
     padding: 0px;
     /* border-bottom: 1px solid #ea3434; */
     font-size: 16px;
