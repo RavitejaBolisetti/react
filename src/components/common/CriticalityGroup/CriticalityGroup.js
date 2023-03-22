@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty,Select } from 'antd';
 
 import { FaEdit } from 'react-icons/fa';
 import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
@@ -104,6 +104,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [arrData, setArrData] = useState(data);
     const [searchData, setSearchdata] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
+
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
