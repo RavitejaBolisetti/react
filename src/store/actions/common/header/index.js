@@ -6,7 +6,7 @@ import { withAuthToken } from 'utils/withAuthToken';
 export const HEADER_USER_DATA_LOADED = 'HEADER_USER_DATA_LOADED';
 export const HEADER_USER_DATA_SHOW_LOADING = 'HEADER_USER_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: HEADER_USER_DATA_LOADED,
     isLoaded: true,
     data,
@@ -28,7 +28,7 @@ headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, u
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError();
         }
