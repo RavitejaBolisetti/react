@@ -20,6 +20,8 @@ export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hie
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 
+export const BASE_URL_QUALIFICATION_MASTER = BASE_URL + 'application/qualifications';
+
 export const BASE_URL_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
 
 export const BASE_URL_CONFIG_PARAM_EDIT = BASE_URL + 'configurableparameters';
@@ -33,3 +35,16 @@ export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + '
 
 export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
 export const BASE_URL_DEALER_HIERARCHY_SAVE = BASE_URL + 'dealerhierarchy';
+
+//get all applications
+export const BASE_URL_APPLICATIONS = BASE_URL + 'applications';
+// get post All form 
+export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationdetails';
+
+export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
+export const BASE_URL_APPLICATION_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
+export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/dealerlocation';
+
+export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
+
+export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';

@@ -3,19 +3,17 @@ import { connect } from 'react-redux';
 
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
-import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
-import { Table } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { Button, Col, Modal, Form, Row, Select, Space, Switch } from 'antd';
+import { validateRequiredSelectField } from 'utils/validation';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import styles from '../Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import { EditableCell } from 'utils/EditableCell';
+
 import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 
@@ -52,10 +50,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterActions.fetchDetailList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -65,27 +59,24 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
+export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
     const [showDrawer, setShowDrawer] = useState(false);
     const [checkfields, setCheckFields] = useState(false);
     const [ForceReset, setForceReset] = useState();
-    const [UpdatedTableData, setUpdatedTableData] = useState([]);
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    console.log('outside', detailData?.hierarchyAttribute);
     useEffect(() => {
         if (!isDataLoaded) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
             forceUpdate(Math.random() * 1000);
         }
         if (detailData?.hierarchyAttribute) {
-            console.log('Running');
             forceUpdate(Math.random() * 1000);
             setRowsData(detailData?.hierarchyAttribute);
         }
@@ -109,20 +100,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'ERROR',
             icon: <ExclamationCircleFilled />,
             content: message,
-        });
-    };
-
-    const showConfirm = (record, index) => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete?',
-            onOk() {
-                deleteTableRows(record, index);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
         });
     };
 
@@ -152,7 +129,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
             width: '17%',
-
         })
     );
 
@@ -161,7 +137,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
             width: '17%',
-
         })
     );
 
@@ -222,7 +197,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         const selectedHierarchyAttribue = selectedHierarchy;
 
         const onSuccess = (res) => {
-
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
@@ -241,7 +215,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         form.validateFields().then((values) => {});
     };
     const handleReset = () => {
-        console.log('Reset form');
         form.resetFields();
     };
     const handleChange = (attributeType) => {

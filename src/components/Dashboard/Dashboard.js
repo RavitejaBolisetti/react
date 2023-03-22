@@ -28,7 +28,6 @@ const mapStateToProps = (state) => {
 };
 
 const DashboardBase = ({ props }) => {
-    // const { firstName = 'Kuldeep' } = props;
     const onSearch = (value) => console.log(value);
     const firstName = '';
 

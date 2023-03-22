@@ -1,14 +1,15 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch, Table, Empty } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty } from 'antd';
 
-import { FaSave, FaUserPlus, FaUndo, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
+
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
@@ -22,7 +23,6 @@ const { confirm } = Modal;
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
-    console.log(state);
     const {
         auth: { userId },
         data: {
@@ -262,18 +262,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // formData && setFormData(formData?.data);
     };
 
+
     const onChangeHandle = (e) => {
-        // const getSearch = e.target.value;
-        // if (e.target.value == '') {
-        //     const tempArr = arrData;
-        //     setArrData(tempArr);
-        //     return;
-        // }
-        // if (getSearch.length > -1) {
-        //     const searchResult = arrData.filter((record) => record.name.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.code.toLowerCase().startsWith(e.target.value.toLowerCase()));
-        //     setArrData(searchResult);
-        // }
-        // console.log(e.target.value);
         const newdata = [];
         Object.keys(criticalityGroupData).map((keyname, i) => {
             if (criticalityGroupData[keyname].critcltyGropCode === e) {
@@ -294,7 +284,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
     const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
-        if (e.target.value == '') {
+        if (e.target.value === '') {
             const tempArr = criticalityGroupData;
             setSearchdata(tempArr);
             return;
@@ -319,15 +309,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'critcltyGropCode',
-            sortFn: (a, b) => a.criticalityGroupId.localeCompare(b.criticalityGroupId),
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group Name',
-            dataIndex: 'critcltyGropName',
-            sortFn: (a, b) => a.criticalityGroupName.localeCompare(b.criticalityGroupName),
+            dataIndex: 'critcltyGropDesc',
         })
     );
 
@@ -335,8 +323,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Default Group?',
             dataIndex: 'defaultGroup',
-            sortFn: (a, b) => a.defaultGroup.localeCompare(b.defaultGroup),
-            render: (text, record) => <Switch disabled checked={text === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
 
@@ -344,14 +331,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            sortFn: (a, b) => a.status.localeCompare(b.defaultGroup),
-            render: (text, record) => <Switch disabled checked={text === 'Y'} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Action',
+            title: '',
             sorter: false,
             render: (text, record, index) => {
                 return (

@@ -21,6 +21,26 @@
   font-size: 22px !important;
 }
 
+.homeIcon {
+  display: flex;
+  align-items: center;
+  color: #000000;
+  /* margin-top: 12px; */
+  margin-bottom: 4px;
+  height: 40px !important;
+  width: 100%;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.homeIcon span {
+  padding-right: 8px;
+}
+
+.homeIcon:hover {
+  color: #FF3E5B;
+}
+
 :global .ant-layout-sider-zero-width-trigger {
   display: none !important;
 }
@@ -200,7 +220,7 @@
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb {
-  background-color: #ea3434;
+  background-color: rgba(52, 44, 44, 0.34);
   border-radius: 10px;
   /* border: 2px solid ; */
 }
@@ -210,7 +230,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
   border-inline-end: none;
   overflow-y: scroll;
-  max-height: 83vh;
+  max-height: 80vh;
   /* padding: 0px 16px; */
   padding-left: 14px;
   padding-right: 14px;

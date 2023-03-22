@@ -51,11 +51,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
         setDrawer(false);
     };
 
-    const onOk = (value) => {
-        console.log('onOk: ', dayjs().format());
-        console.log('onOk: ', typeof value);
-        console.log('onOk: ', value.format('HH:mm'));
-    };
+    const onOk = (value) => {};
 
     return (
         <Drawer

@@ -7,7 +7,7 @@ export const MENU_DATA_LOADED = 'MENU_DATA_LOADED';
 export const MENU_DATA_FILTER = 'MENU_DATA_FILTER';
 export const MENU_DATA_SHOW_LOADING = 'MENU_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: MENU_DATA_LOADED,
     isLoaded: true,
     data,
@@ -34,7 +34,7 @@ menuDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, use
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError();
         }

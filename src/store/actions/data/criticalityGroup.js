@@ -8,7 +8,7 @@ export const CRITICALITY_DATA_LOADED = 'CRITICALITY_DATA_LOADED';
 export const CRITICALITY_SET_FORM_DATA = 'CRITICALITY_SET_FORM_DATA';
 export const CRITICALITY_DATA_SHOW_LOADING = 'CRITICALITY_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: CRITICALITY_DATA_LOADED,
     isLoaded: true,
     data,
@@ -36,7 +36,7 @@ criticalityDataActions.fetchData = withAuthToken((params) => ({ token, accessTok
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }

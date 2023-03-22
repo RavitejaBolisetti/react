@@ -1,18 +1,16 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Space, Table, List, Drawer, Switch, Collapse, Checkbox, Card, Tree, Divider } from 'antd';
+import { Button, Col, Form, Row, Input, Space, Table, List, Drawer, Switch, Checkbox, Card, Tree, Divider } from 'antd';
 
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
-import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
-import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
 
 const mapStateToProps = (state) => {
@@ -113,31 +111,26 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const [autoExpandParent, setAutoExpandParent] = useState(true);
 
     const onExpand = (expandedKeysValue) => {
-        console.log('onExpand', expandedKeysValue);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
         setAutoExpandParent(false);
     };
     const onCheck = (checkedKeysValue) => {
-        console.log('onCheck', checkedKeysValue);
         setMycheckvals(checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
     };
     const onSelect = (selectedKeysValue, info) => {
-        console.log('onSelect', info);
-
         setSelectedKeys(selectedKeysValue);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const Onindivisualselect = (e) => {
-        console.log('Indivisual Val', e.target.checked, e.target.name);
         setCheckBoxData({ ...Checkboxdata, [e.target.name]: e.target.checked });
     };
     const Onselectall = (e) => {
-        if (e.target.checked == true) {
+        if (e.target.checked === true) {
             setCheckBoxData({ ...Checkboxdata, All: true, Add: true, View: true, Delete: true, Edit: true, Upload: true, Download: true });
         } else {
             setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
@@ -322,25 +315,21 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 values[keyName] = Checkboxdata[keyName];
             });
 
-            const Final_data = { cretdby: "shaka", cretddate: new Date(), modfdby: "Me", modfddate: "adasdad", roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
-            console.log("Final Sending data",Final_data);
+            const Final_data = { cretdby: 'shaka', cretddate: new Date(), modfdby: 'Me', modfddate: 'adasdad', roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
             const onSuccess = (res) => {
                 form.resetFields();
                 setForceFormReset(Math.random() * 10000);
-    
-               
-    
+
                 if (res?.Final_data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId });
-                    
                 }
             };
-    
+
             const onError = (message) => {
                 handleErrorModal(message);
             };
-    
+
             const requestData = {
                 data: Final_data,
                 setIsLoading: listShowLoading,
@@ -349,20 +338,13 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 onSuccess,
             };
             saveData(requestData);
-            
-            
-            
-            
-            
-            
-            
+
             setAddchild(!addchilds);
             form.resetFields();
             setMycheckvals([]);
             setCheckedKeys([]);
             setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
         }
-        console.log('I am the final form data', values);
         setFormData([...formData, values]);
     };
 
@@ -370,13 +352,10 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         setDisabled(true);
         setForceFormReset(Math.random() * 10000); //Important Form Rerender
 
-        console.log(e.target.outerText);
         setAddchild(false);
         setAddEditCancel(false);
         Object.keys(formData).map((keyName, i) => {
-            console.log(formData[keyName]);
             Object.keys(formData[keyName]).map((keyName2, i) => {
-                console.log(keyName2);
                 if (keyName2 === 'roleName') {
                     if (formData[keyName][keyName2] === e.target.outerText) {
                         setInitialData(formData[keyName]);
@@ -384,8 +363,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 }
             });
         });
-        console.log('No need to open', formData);
-        console.log('This is the intialData', InitialData);
         form.resetFields();
     };
     const oncancel = () => {
