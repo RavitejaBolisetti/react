@@ -336,6 +336,24 @@
     /* overflow-y: scroll; */
 }
 
+:global .ant-modal .ant-modal-title {
+    border-bottom: 1px solid #DEDEDE;
+    padding-bottom: 16px;
+}
+
+:global .ant-modal .ant-modal-body {
+    padding-top: 16px;
+}
+
+:global .ant-modal .ant-modal-close:hover {
+    color: #ff3e5b;
+    background-color: transparent !important;
+}
+
+:global .ant-modal .ant-modal-close {
+    top: 22px;
+}
+
 :global .ant-tree {
     background: transparent;
 }
