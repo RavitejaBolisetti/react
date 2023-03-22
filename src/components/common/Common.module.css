@@ -48,10 +48,6 @@
     margin-bottom: 4px;
 }
 
-:global .ant-form-item {
-    margin-bottom: 0px;
-}
-
 .geoSection :global .ant-tree {
     background: transparent;
 }
