@@ -71,7 +71,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
+                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -79,15 +79,10 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                        <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} {...disabledProps} />
+                        <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
-                {/* <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                <Form.Item initialValue={formData?.status === 'Y' ? 1 : 0} label="Child Allowed" name="status">
-                    <Switch value={formData?.status === 'Y' ? 1 : 0} checkedChildren="Yes" unCheckedChildren="No" defaultChecked {...disabledProps} />
-                </Form.Item>
-            </Col> */}
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                     <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
