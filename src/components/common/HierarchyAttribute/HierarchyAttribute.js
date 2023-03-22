@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
-import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 
 import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
-import { Table } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { AiOutlinePlus } from 'react-icons/ai';
 
@@ -15,7 +14,6 @@ import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import { EditableCell } from 'utils/EditableCell';
 import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 
@@ -72,13 +70,11 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [showDrawer, setShowDrawer] = useState(false);
     const [checkfields, setCheckFields] = useState(false);
     const [ForceReset, setForceReset] = useState();
-    const [UpdatedTableData, setUpdatedTableData] = useState([]);
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-    console.log('outside', detailData?.hierarchyAttribute);
     useEffect(() => {
         if (!isDataLoaded) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
@@ -112,20 +108,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         });
     };
 
-    const showConfirm = (record, index) => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete?',
-            onOk() {
-                deleteTableRows(record, index);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
-
     const handleAdd = () => {
         setEditRow({});
         setShowDrawer(true);
@@ -136,15 +118,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         setShowDrawer(true);
     };
 
-    const deleteTableRows = (record, index) => {
-        const currentRows = form.getFieldsValue();
-        const updatedRows = Object.entries(currentRows)
-            .map(([key, value]) => key !== 'hierarchyAttribueType' && value)
-            .filter((v) => !!v)
-            .filter((el) => el?.id !== record?.id);
-        setRowsData([...updatedRows]);
-    };
-
     const tableColumn = [];
 
     tableColumn.push(
@@ -152,7 +125,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
             width: '17%',
-
         })
     );
 
@@ -161,7 +133,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
             width: '17%',
-
         })
     );
 
@@ -212,7 +183,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             dataIndex: 'action',
             sorter: false,
             render: (text, record, index) => {
-                return <Space wrap>{<FaEdit onClick={() => edit(record)} />}</Space>;
+                return <Space wrap>{<FaEdit data-testid="Editicon" onClick={() => edit(record)} />}</Space>;
             },
         })
     );
@@ -222,7 +193,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         const selectedHierarchyAttribue = selectedHierarchy;
 
         const onSuccess = (res) => {
-
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
             showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
@@ -240,10 +210,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-    const handleReset = () => {
-        console.log('Reset form');
-        form.resetFields();
-    };
+
     const handleChange = (attributeType) => {
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
