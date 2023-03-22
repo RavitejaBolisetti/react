@@ -7,6 +7,7 @@ import { validateFieldsPassword, validateRequiredInputField } from 'utils/valida
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGOUT } from 'constants/routing';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -38,7 +39,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
 
     const [confirmDirty, setConfirmDirty] = useState(false);
@@ -150,13 +151,10 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                         </Col>
                     </Row>
                     <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textCenter}>
                             <Button style={{ marginTop: '20px' }} type="primary" htmlType="submit">
-                                Submit
+                                Change Password
                             </Button>
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                            <Button style={{ marginTop: '20px' }}>Cancel</Button>
                         </Col>
                     </Row>
                 </Form>

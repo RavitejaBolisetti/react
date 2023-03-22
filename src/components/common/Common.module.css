@@ -133,6 +133,10 @@
     text-align: right;
 }
 
+.textCenter {
+    text-align: center;
+}
+
 .exitButton {
     border: 1px solid #ff3e5b;
     border-radius: 3px;
@@ -293,8 +297,8 @@
     margin: 0px 0px 0px 46px;
 }
 
-:global .ant-space-item{
-  color:  #ff3e5b;
+:global .ant-space-item {
+    color: #ff3e5b;
 }
 
 :global .ant-btn-default {
