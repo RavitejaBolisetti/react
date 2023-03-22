@@ -19,22 +19,7 @@ import { BsTruckFlatbed } from 'react-icons/bs';
 
 const { Option } = Select;
 const { confirm } = Modal;
-const { success: successModel, error: errorModel } = Modal;
 const { Search } = Input;
-
-const showConfirm = () => {
-    confirm({
-        title: 'Do you Want to delete these items?',
-        icon: <ExclamationCircleFilled />,
-        content: 'Some descriptions',
-        onOk() {
-            // console.log('OK');
-        },
-        onCancel() {
-            // console.log('Cancel');
-        },
-    });
-};
 
 const mapStateToProps = (state) => {
     console.log(state);
@@ -131,36 +116,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-
-    const showSuccessModel = ({ title, message }) => {
-        successModel({
-            title: title,
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
-    };
-
-    const onError = (message) => {
-        errorModel({
-            title: 'ERROR',
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
-    };
-
-    const showConfirm = (key) => {
-        confirm({
-            title: 'Do you Want to delete these items?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete?',
-            onOk() {
-                deleteTableRows(key);
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
+    useEffect(() => {
+        setSearchdata(criticalityGroupData);
+    }, [criticalityGroupData]);
 
     // const onFinish = (values) => {
     //     const arr = values.allowedTimingRequest.map((i) => {
@@ -271,8 +229,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             critcltyGropName: record.critcltyGropName,
             defaultGroup: record.defaultGroup === 'Y',
             status: record.status === 'Y',
-            allowedTimingRequest : momentTime
-
+            allowedTimingRequest: momentTime,
         });
         console.log(formData, 'formData');
         setDrawer(true);
@@ -298,28 +255,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             critcltyGropName: record.critcltyGropName,
             defaultGroup: record.defaultGroup === 'Y',
             status: record.status === 'Y',
-            allowedTimingRequest : momentTime
-
+            allowedTimingRequest: momentTime,
         });
         setDrawer(true);
         setIsReadOnly(true);
         // formData && setFormData(formData?.data);
-    };
-
-    const handleReset = () => {
-        console.log('reset called');
-    };
-
-    const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id || +item?.hierarchyAttribueId === +record?.hierarchyAttribueId ? { ...item, readOnly: true } : item));
-        // setRowsData(updatedDataItem);
-    };
-
-    const deleteTableRows = (id) => {
-        const updatedData = [...data];
-        const index = updatedData.findIndex((el) => el.id === id);
-        updatedData.splice(Number(index), 1);
-        // setRowsData([...updatedData]);
     };
 
     const onChangeHandle = (e) => {
@@ -416,8 +356,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {<FaEdit onClick={() => handleUpdate(record)} />}
-                        {<AiOutlineEye onClick={() => handleView(record)} />}
+                        {<FaEdit aria-label="fa-edit" onClick={() => handleUpdate(record)} />}
+                        {<AiOutlineEye aria-label="ai-view" onClick={() => handleView(record)} />}
                     </Space>
                 );
             },
@@ -458,7 +398,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={initialTableData} pagination={true} columns={tableColumn} />
+                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={searchData} pagination={true} columns={tableColumn} />
                 </Col>
             </Row>
         </>

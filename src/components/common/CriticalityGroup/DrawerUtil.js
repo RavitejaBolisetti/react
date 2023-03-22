@@ -102,7 +102,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                         label="Criticality Group Name"
                         rules={[validateRequiredInputField('Criticality Group Name')]}
                     >
-                        <Input placeholder={preparePlaceholderText('Name')} maxLength={5} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -155,14 +155,14 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
             </Row>
             <Row gutter={20}>
                 <Col>
-                    <p> Allowed Timings</p>
+                    <p>Allowed Timings</p>
                 </Col>
             </Row>
-            <Form.List 
-            // required rules={[validateRequiredInputField('Allowed Timings')]} 
-            name="allowedTimingRequest"
-            //  initialValue={momentTime}
-             >
+            <Form.List
+                // required rules={[validateRequiredInputField('Allowed Timings')]}
+                name="allowedTimingRequest"
+                //  initialValue={momentTime}
+            >
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
@@ -200,7 +200,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                                     >
                                         <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} format="HH:mm" onOk={onOk} {...disabledProps} />
                                     </Form.Item>
-                                    <AiOutlineClose {...disabledProps} onClick={() => remove(name)} />
+                                    <AiOutlineClose aria-label='outline-close' {...disabledProps} onClick={() => remove(name)} />
                                 </Space>
                             </div>
                         ))}
