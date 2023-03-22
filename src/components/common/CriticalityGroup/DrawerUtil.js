@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Table, Space } from 'antd';
+import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Table, Space, Alert } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -50,7 +50,9 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
         setSelectedRecord(null);
         setDrawer(false);
     };
-
+    const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
+        return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
+    };
     const onOk = (value) => {};
 
     return (
@@ -196,7 +198,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                                     >
                                         <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} format="HH:mm" onOk={onOk} {...disabledProps} />
                                     </Form.Item>
-                                    <AiOutlineClose aria-label='outline-close' {...disabledProps} onClick={() => remove(name)} />
+                                    <AiOutlineClose aria-label="outline-close" {...disabledProps} onClick={() => remove(name)} />
                                 </Space>
                             </div>
                         ))}
@@ -212,6 +214,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                     </>
                 )}
             </Form.List>
+            <Alerts NotificationTitle={"Added Successfully,Keep Adding more"} />
         </Drawer>
     );
 };

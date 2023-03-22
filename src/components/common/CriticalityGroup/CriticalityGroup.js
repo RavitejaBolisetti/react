@@ -1,7 +1,8 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty,Select } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Select, notification, Alert } from 'antd';
+import { TfiReload } from 'react-icons/tfi';
 
 import { FaEdit } from 'react-icons/fa';
 import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
@@ -93,6 +94,7 @@ const initialTableData = [
 export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [RefershData, setRefershData] = useState(false);
     const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
@@ -120,8 +122,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     useEffect(() => {
         setSearchdata(criticalityGroupData);
     }, [criticalityGroupData]);
+    useEffect(() => {
+        fetchData({ setIsLoading: listShowLoading, userId });
+        setSearchdata(criticalityGroupData);
+    }, [RefershData]);
 
     // const onFinish = (values) => {
+
     //     const arr = values.allowedTimingRequest.map((i) => {
     //         return {
     //             serialNumber: 0,
@@ -193,8 +200,30 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     //     console.log(formData, 'formData');
     // };
 
+    const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
+        notification.open({
+            message: NotificationTitle,
+            description: NotificationDescription,
+            placement: placement,
+            duration: duration,
+            onClick: () => {
+                console.log('Notification Clicked!');
+            },
+        });
+    };
+
     const onFinish = (values) => {
+        const notificationprops = {
+            NotificationTitle: 'Group Created Successfully',
+            NotificationDescription: 'Your Group Has been Created Referesh to get the results',
+            placement: 'bottomRight',
+            duration: 0,
+        };
+        openNotification({ ...notificationprops });
+
+        // <Alerts {...notificationprops} />;
         console.log('values n sub,it', values.defaultGroup ? 'Y' : 'N');
+        return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -262,8 +291,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setIsReadOnly(true);
         // formData && setFormData(formData?.data);
     };
-
-
+    const handleReferesh = () => {
+        setRefershData(!RefershData);
+    };
     const onChangeHandle = (e) => {
         const newdata = [];
         Object.keys(criticalityGroupData).map((keyname, i) => {
@@ -324,7 +354,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Default Group?',
             dataIndex: 'defaultGroup',
-            render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <Switch disabled={true} defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
 
@@ -332,7 +362,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <Switch defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <Switch disabled={true} defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
         })
     );
 
@@ -354,6 +384,58 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     return (
         <>
             <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Row gutter={20}>
+                                    <div className={style.searchAndLabelAlign}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                            Criticality Group List
+                                        </Col>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                    marginLeft: -40,
+                                                }}
+                                                onSearch={onChangeHandle}
+                                                onChange={onChangeHandle2}
+                                            />
+                                        </Col>
+                                    </div>
+                                </Row>
+                            </Col>
+
+                            <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Button className="button" onClick={handleReferesh} danger ghost>
+                                    <TfiReload />
+                                </Button>
+
+                                <Button type="primary" danger onClick={handleAdd}>
+                                    <AiOutlinePlus className={styles.buttonIcon} />
+                                    Add Group
+                                </Button>
+                                {/* <Row gutter={20}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <Button danger onClick={handleAdd}>
+                                            <TfiReload className={styles.buttonIcon} />
+                                        </Button>
+                                    </Col>
+                                    <Col>
+                                        <Button danger onClick={handleAdd}>
+                                            <AiOutlinePlus className={styles.buttonIcon} />
+                                            Add Group
+                                        </Button>
+                                    </Col>
+                                </Row> */}
+                            </Col>
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+            {/* <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                     <Search
                         placeholder="Search"
@@ -370,7 +452,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                         Add Group
                     </Button>
                 </Col>
-            </Row>
+            </Row> */}
             <Form
                 form={form}
                 initialValues={{

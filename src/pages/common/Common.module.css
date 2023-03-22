@@ -397,3 +397,21 @@
 :global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
     background: #00a310;
 }
+.contentHeaderBackground {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.addGroup {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0px !important;
+}
+.contentHeaderBackground .addGroup button {
+    margin-bottom: 0px !important;
+    margin-left: 10px;
+}
+.contentHeaderBackground .addGroup button svg {
+    margin-left: 10px;
+    margin-right: 10px;
+}
