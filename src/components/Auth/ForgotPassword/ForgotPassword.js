@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Form, Row, Col, Button, Input, Checkbox,Alert } from 'antd';
-import {UndoOutlined} from '@ant-design/icons'
+import { Form, Row, Col, Button, Input, Checkbox,Alert ,notification} from 'antd';
+import {UndoOutlined,} from '@ant-design/icons'
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
 import { BiUser } from 'react-icons/bi';
+import {CiCircleAlert} from 'react-icons/ci'
 import OtpTimer from 'otp-timer'
 
 
@@ -23,6 +24,7 @@ const ForgotPassword = (props) => {
     const [showFields, setShowFields] = useState(false);
     const [resend, setresend] = useState(false);
     const [userId, setuserId] = useState(true)
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [otpverification, setotpverification] = useState(false);
     const [OTP, setOTP] = useState(false);
     const [OTPsent, setOTPsent] = useState(false);
@@ -39,7 +41,7 @@ const ForgotPassword = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [counter, setCounter] = React.useState(10);
+    const [counter, setCounter] = React.useState(30);
     React.useEffect(() => {
         const timer =
         counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -57,6 +59,15 @@ const ForgotPassword = (props) => {
         setShowTimer(true);
         setValidate(true);
         setPassword(false);
+
+        alertNotification.open({
+            icon: <CiCircleAlert />,
+            message: "OTP Sent",
+            description: 'OTP sent to your registered mobile number and/or email ID..',
+            
+            duration: 0,
+            className: styles.warning
+            })
      
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
@@ -90,6 +101,7 @@ const ForgotPassword = (props) => {
     };
     return (
         <>
+           {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -213,7 +225,7 @@ const ForgotPassword = (props) => {
                                                                                 
                                                                                  <Col >
 
-                                                                                <div onClick={ () => setCounter(10)} className={styles.resend} type="radio">
+                                                                                <div onClick={ () => setCounter(30)} className={styles.resend} type="radio">
                                                                                 <UndoOutlined />  Resend OTP
                                                                                  </div></Col></Row>
                                                                             </>
@@ -283,16 +295,7 @@ const ForgotPassword = (props) => {
                         </Form>
                     </div>
                 </div>
-                {OTPsent && (
-                    <Alert
-                    message="OTP Sent"
-                    description="OTP sent to your registered mobile number and/or email ID."
-                    type="warning"
-                    showIcon
-                    closable
-                  />
-                   
-                )}
+               
                 <Footer />
             </div>
         </>
