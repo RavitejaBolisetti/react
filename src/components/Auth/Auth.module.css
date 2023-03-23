@@ -131,7 +131,7 @@ p {
 .loginSection .loginWrap .loginHtml {
     height: max-content;
     width: 420px;
-    
+
 }
 
 .loginSection .loginWrap .loginHtml .centerInner,
@@ -141,7 +141,7 @@ p {
     justify-content: center;
     align-items: center;
     /* min-height: stretch; */
-    padding: 25px;
+    padding: 30px;
 }
 
 .loginSection .loginWrap .logOutHtml {
@@ -160,6 +160,10 @@ p {
 
 .inputBox {
     margin-bottom: 20px !important;
+}
+
+.marginBottomZero {
+    margin-bottom: 0 !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input {
@@ -251,8 +255,8 @@ p {
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
     font-size: 14px;
     color: #fff;
-    margin-top: 10px;
-    margin-bottom: 16px;
+    margin-top: 16px;
+    margin-bottom: 24px;
     text-align: center;
     font-weight: normal;
 }
@@ -271,6 +275,7 @@ p {
     margin: 10px;
     color: #fff;
 }
+
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {
     background: none;
     color: #fff;
@@ -508,9 +513,10 @@ select.form-control:focus::-ms-value {
     text-align: center;
 }
 
-.resend{
-    color:white;
-    margin-left : 274px
+.resend {
+    color: white;
+    float: right;
+    cursor: pointer;
 }
 
 .buttonResend {
@@ -524,14 +530,14 @@ select.form-control:focus::-ms-value {
 
 .changer {
     margin-top: 20px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
 }
 
 .changer input {
     background: black;
     border: white !important;
     border-radius: 5px;
-    margin-right: 20px !important;
+    margin-right: 19px !important;
     padding: 6px;
     font-size: 20px;
     color: white;
@@ -756,6 +762,7 @@ select.form-control:focus::-ms-value {
     .checkColor {
         margin-bottom: 10px;
     }
+
     .timer :global .style .attribute {
         color: white;
     }

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Form, Row, Col, Button, Input, Checkbox,Alert } from 'antd';
-import {UndoOutlined} from '@ant-design/icons'
+import { Form, Row, Col, Button, Input, Checkbox, Alert } from 'antd';
+import { UndoOutlined } from '@ant-design/icons'
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
 import { BiUser } from 'react-icons/bi';
 import OtpTimer from 'otp-timer'
@@ -42,11 +42,11 @@ const ForgotPassword = (props) => {
     const [counter, setCounter] = React.useState(10);
     React.useEffect(() => {
         const timer =
-        counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+            counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
         return () => {
             clearInterval(timer);
         }
-        
+
     }, [counter]);
 
     const handleSendOtp = () => {
@@ -57,11 +57,11 @@ const ForgotPassword = (props) => {
         setShowTimer(true);
         setValidate(true);
         setPassword(false);
-     
+
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
 
-    const verifyUserbtn =()=>{
+    const verifyUserbtn = () => {
         setverifyUser(true);
         setShowFields(true);
         setuserId(false);
@@ -82,7 +82,7 @@ const ForgotPassword = (props) => {
         setShowTimer(false);
         setPassword(false);
         setSubmit(false);
-        
+
     };
 
     const handleChange = (event) => {
@@ -107,8 +107,7 @@ const ForgotPassword = (props) => {
                                 <Col span={24}>
                                     {passwordChanged ? (
                                         <>
-                                          <Alert message="Your password has been successfully changed. Please login with your new credentials" type="success" showIcon />
-                                             
+                                            <Alert message="Your password has been successfully changed. Please login with your new credentials" type="success" showIcon />
                                         </>
                                     ) : (
                                         <>
@@ -121,49 +120,49 @@ const ForgotPassword = (props) => {
                                                                     <h1 className={styles.inputBox}>Create New Password</h1>
                                                                     {/* <div className={styles.loginSubHeading}>Please enter your user details.</div> */}
                                                                 </>
-                                                            ) : (userId ?(
+                                                            ) : (userId ? (
                                                                 <>
                                                                     <h1>Forgot Your Password</h1>
-                                                                    <div className={styles.loginSubHeading}>Please enter your user details.</div>
+                                                                    <div className={styles.loginSubHeading}>Please enter your user credential</div>
                                                                 </>
-                                                            ):(otpverification ?(
+                                                            ) : (otpverification ? (
                                                                 <>
-                                                                <h1>OTP Verification</h1>
-                                                                <div className={styles.loginSubHeading}>Please enter 6 digit OTP sent to your registered Mobile number +91-966 XXXX XXXX</div>
-                                                                 </>
+                                                                    <h1>OTP Verification</h1>
+                                                                    <div className={styles.loginSubHeading}>Please enter 6 digit OTP sent to your <br></br> registered mobile number +91-96 XXXX XXXX</div>
+                                                                </>
 
-                                                             ) :
-                                                             <>
-                                                            <h1>Forgot Your Password</h1>
-                                                            <div className={styles.loginSubHeading}>User Credentials verified successfully</div>
-                                                             </>
-                                                        ))
-                                                        }
+                                                            ) :
+                                                                <>
+                                                                    <h1>Forgot Your Password</h1>
+                                                                    <div className={styles.loginSubHeading}>User credential verified successfully</div>
+                                                                </>
+                                                            ))
+                                                            }
                                                         </div>
 
                                                         {userId ? (
-                                                        <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={styles.inputBox}>
-                                                                    <Input prefix={<BiUser size={18} />} type="text" placeholder="User id, mobile no, or email id" />
-                                                                    {/* As discussed with Rahul */}
-                                                                </Form.Item>
-                                                            </Col>
-                                                        </Row>):null}
-                                                        {showFields ? (
-                                                            <>
-                                                            <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                               <div className={styles.registered} > OTP will be sent on </div>
-                                                            </Col>
-                                                            </Row>
                                                             <Row gutter={20}>
                                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                    <Checkbox className={styles.registered} defaultChecked="true" disabled="true">
-                                                                        Registered Mobile Number
-                                                                    </Checkbox>
+                                                                    <Form.Item name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                                        <Input prefix={<BiUser size={18} />} type="text" placeholder="User id, mobile no, or email id" />
+                                                                        {/* As discussed with Rahul */}
+                                                                    </Form.Item>
                                                                 </Col>
-                                                            </Row></>
+                                                            </Row>) : null}
+                                                        {showFields ? (
+                                                            <>
+                                                                <Row gutter={20}>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                        <div className={styles.registered} > OTP will be sent on </div>
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row gutter={20}>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                        <Checkbox className={styles.registered} defaultChecked="true" disabled="true">
+                                                                            Registered Mobile Number
+                                                                        </Checkbox>
+                                                                    </Col>
+                                                                </Row></>
                                                         ) : null}
 
                                                         {showFields ? (
@@ -178,44 +177,47 @@ const ForgotPassword = (props) => {
                                                         {/* <br /> */}
                                                         {OTP ? (
                                                             <>
-                                                            <Row>
-                                                                <Col span={4}>
-                                                                    <div className={styles.checkColor}> Enter Otp </div>
-                                                                </Col>
-                                                            </Row>
-                                                                <Row>
-                                                                    <Col span={4}>
-                                                                        <OTPInput  className={styles.changer} value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false}  />
+                                                                <Row gutter={20}>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                        <div className={styles.checkColor}> Enter Otp </div>
                                                                     </Col>
                                                                 </Row>
-                                                                <Row >
-                                                                    <Col>
+                                                                <Row gutter={20}>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                        <OTPInput className={styles.changer} value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false} />
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row gutter={20}>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                         {counter != 0 ? (
                                                                             <>
-                                                                           
-                                                                                <div>
-                                                                                  <span style={{color:"white"}}>
-                                                                                     00:{counter > 9 ? null : "0"}{counter}s
-                                                                                    </span>
-
-                                                                                </div> 
-                                                                            
-                                                                               
-                                                                                
+                                                                                <div className={styles.checkColor}>
+                                                                                    00:{counter > 9 ? null : "0"}{counter}s
+                                                                                </div>
                                                                             </>
                                                                         ) : (
                                                                             <>
-                                                                            <Row gutter={20}>
-                                                                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                                                                <div className={styles.checkColor} type="radio">
-                                                                                 Didn't receive OTP?
-                                                                                 </div></Col>
-                                                                                
-                                                                                 <Col >
-
-                                                                                <div onClick={ () => setCounter(10)} className={styles.resend} type="radio">
-                                                                                <UndoOutlined />  Resend OTP
-                                                                                 </div></Col></Row>
+                                                                                <Row gutter={20}>
+                                                                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                                                                        <div className={styles.checkColor}>
+                                                                                            Didn't receive OTP?
+                                                                                        </div>
+                                                                                    </Col>
+                                                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                                                        <div onClick={() => setCounter(10)} className={styles.resend} type="radio">
+                                                                                            <UndoOutlined />  Resend OTP
+                                                                                        </div>
+                                                                                    </Col>
+                                                                                </Row>
+                                                                                {/* <br></br>
+                                                                                <div>
+                                                                                    <span className={styles.checkColor} type="radio">
+                                                                                        Didn't receive OTP?
+                                                                                    </span>
+                                                                                    <span onClick={() => setCounter(10)} className={styles.resend} type="radio">
+                                                                                        <UndoOutlined />  Resend OTP
+                                                                                    </span>
+                                                                                </div> */}
                                                                             </>
                                                                         )
                                                                         }
@@ -246,7 +248,6 @@ const ForgotPassword = (props) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 {submit ? (
-                                                                   
                                                                     <Button onClick={handleChangedPassword} className={styles.button} type="primary" htmlType="submit">
                                                                         Submit
                                                                     </Button>
@@ -254,22 +255,21 @@ const ForgotPassword = (props) => {
                                                                     <Button onClick={handleNewPassword} className={styles.button} type="primary" htmlType="submit">
                                                                         Verify OTP
                                                                     </Button>
-                                                                ) : verifyUser?(
-                                                                <Button onClick={handleSendOtp} className={styles.button} type="primary" htmlType="submit">
-                                                                     Send OTP
-                                                                </Button>
-                                                                ):(
-                
-                                                             <Button onClick= {() => verifyUserbtn()} className={styles.button} id="login_from" type="primary" htmlType="submit">
-                                                                Verify User
-                                                            </Button>
+                                                                ) : verifyUser ? (
+                                                                    <Button onClick={handleSendOtp} className={styles.button} type="primary" htmlType="submit">
+                                                                        Send OTP
+                                                                    </Button>
+                                                                ) : (
+                                                                    <Button onClick={() => verifyUserbtn()} className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                                        Verify User
+                                                                    </Button>
                                                                 )}
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <div className={styles.loginFooter} type="radio">
-                                                                    <Link to={ROUTING_LOGIN}>Back To Login Page</Link>
+                                                                    <Link to={ROUTING_LOGIN}>Back To Login</Link>
                                                                 </div>
                                                             </Col>
                                                         </Row>
@@ -285,13 +285,13 @@ const ForgotPassword = (props) => {
                 </div>
                 {OTPsent && (
                     <Alert
-                    message="OTP Sent"
-                    description="OTP sent to your registered mobile number and/or email ID."
-                    type="warning"
-                    showIcon
-                    closable
-                  />
-                   
+                        message="OTP Sent"
+                        description="OTP sent to your registered mobile number and/or email ID."
+                        type="warning"
+                        showIcon
+                        closable
+                    />
+
                 )}
                 <Footer />
             </div>
