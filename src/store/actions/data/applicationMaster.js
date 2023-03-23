@@ -10,6 +10,7 @@ export const APPLICATION_MASTER_APPLICATION_DATA_SHOW_LOADING = 'APPLICATION_MAS
 export const APPLICATION_CRITICALITY_GROUP_LOADED = 'APPLICATION_CRITICALITY_GROUP_LOADED';
 export const DEALER_LOCATIONS_LOADED = 'DEALER_LOCATIONS_LOADED';
 export const APPLICATION_ACTON_DATA_LOADED = 'APPLICATION_ACTON_DATA_LOADED';
+export const APPLICATION_MASTER_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DATA_SHOW_LOADING';
 
 const receiveApplicationDetailsData = (data) => ({
     type: APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED,
@@ -36,6 +37,12 @@ const applicationMasterDataActions = {};
 
 const baseURLPath = BASE_URL_APPLICATION_DETAILS;
 
+
+applicationMasterDataActions.listShowLoading = (isLoading) => ({
+    type: APPLICATION_MASTER_DATA_SHOW_LOADING,
+    isLoading,
+});
+
 applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, id } = params;
     setIsLoading(true);
@@ -52,7 +59,7 @@ applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) =>
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + '?id=1',
+        url: baseURLPath + '?id='+ id,
         token,
         accessToken,
         userId,

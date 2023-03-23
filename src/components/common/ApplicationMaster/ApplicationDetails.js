@@ -9,36 +9,44 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
-    console.log("STATE==>", state)
     const {
         auth: { userId },
         data: {
-            // Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
-            // HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-            applicationDetailsData: applicationDetailsData,
-            ApplicationMaster: { applicationCriticalityGroupData:criticalityGroup }
+            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], favouriteMenu = [] },
+            ApplicationMaster: { applicationCriticalityGroupData:criticalityGroup, applicationDetailsData=[], }
         },
-        // common: {
-        //     LeftSideBar: { collapsed = false },
-        // },
+
     } = state;
 
     let returnValue = {
-        criticalityGroup,
+        criticalityGroup: criticalityGroup?.filter(i => i?.critcltyGropDesc && i?.critcltyGropCode ),
         applicationDetailsData,
-        // collapsed,
-        // userId,
-        // isDataLoaded,
-        // geoData,
-        // isDataAttributeLoaded,
-        // attributeData: attributeData?.filter((i) => i),
+        userId,
+        menuData: menuData?.filter((el) => el?.menuId !== 'FAV'),
     };
     return returnValue;
 };
 
-const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedLocaationAccessiblity, criticalityGroup }) => {
-    // const [form] = Form.useForm();
+const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedLocaationAccessiblity, criticalityGroup, menuData }) => {
     const disabledProps = { disabled: isReadOnly };
+
+    const dataList = [];
+    const generateList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const {subMenu, ...node} = data[i];
+            dataList.push({
+                ...node
+            });
+
+            if (subMenu?.length) {
+                generateList(subMenu);
+            }
+        }
+        return dataList;
+    };
+
+    const flatternData = generateList(menuData);
+
     
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -55,7 +63,6 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
 
     return (
         <div>
-            {/* <Form layout="vertical" handledetails={handledetails}> */}
             <Form scrollToFirstError={true} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}  >
 
                 <Row gutter={20}>
@@ -73,7 +80,7 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="applicationTitle" label="Application Title" rules={[validateRequiredInputField('Application Title')]}>
-                            <Input placeholder={preparePlaceholderSelect('Application Title')} {...disabledProps} />
+                            <Input placeholder={preparePlaceholderText('Application Title')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -93,17 +100,22 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="parentApplicationId" label="Parent Application ID" rules={[validateRequiredSelectField('Parent Application ID')]}>
                             <Select {...disabledProps}  placeholder={preparePlaceholderSelect("Group Application ID/Name")}>
-                                <Option value="" >Select</Option>
+                                {
+                                    flatternData?.map((item) => (
+                                        <Option value={item?.menuId}>{item?.menuTitle}</Option>
+                                    ))
+                                }
+                                {/* <Option value="" >Select</Option>
                                 <Option value="1" >parent application id 1</Option>
                                 <Option value="2" >parent application id 2</Option>
                                 <Option value="3" >parent application id 2</Option>
-                                <Option value="4" >apl id</Option>
+                                <Option value="4" >apl id</Option> */}
                             </Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="criticalityGroupCode" label="Application Criticality Group" rules={[validateRequiredSelectField('Application Criticality Group')]}>
-                        <Select placeholder={preparePlaceholderSelect("Application Criticality Group")} {...disabledProps} showSearch allowClear >
+                        <Select placeholder={preparePlaceholderSelect("Application Criticality Group")} {...disabledProps} showSearch >
                             {criticalityGroup?.map((item) => (
                                 <Option value={item?.critcltyGropCode}>{item?.critcltyGropDesc}</Option>
                             ))}
@@ -127,14 +139,14 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="documentNumRequired" label="Document No to be generated" >
-                            <Switch defaultChecked checkedChildren="Yes" unCheckedChildren="No" {...disabledProps} />
+                            <Switch  checkedChildren="Yes" unCheckedChildren="No" {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="status" label="Status" >
-                            <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
+                            <Switch  checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>

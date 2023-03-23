@@ -8,6 +8,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import styles from 'pages/common/Common.module.css';
 import { validateRequiredInputField } from 'utils/validation';
+import { DataTable } from 'utils/dataTable';
 
 const { confirm } = Modal;
 
@@ -23,7 +24,6 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
                     }}
                     key={record.id + index + dataIndex + 'swi'}
                     name={[index, dataIndex]}
-                    // rules={[validateRequiredInputField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
                     <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={!record?.isEditable && !record.deletable} disabled={!record?.isEditable && !record.deletable} checkedChildren="Active" unCheckedChildren="Inactive" />
@@ -83,11 +83,10 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
     ]
 
 const ApplicationActions = ({form, isReadOnly, formActionType}) => {
-    // const [form] = Form.useForm();
     const [data, setRowsData] = useState(datainitial);
 
     useEffect(() => {
-        if(formActionType === "rootChild"){
+        if(formActionType !== "view"){
             setRowsData(editRowData)
         }else{
             setRowsData(datainitial);
@@ -231,7 +230,8 @@ const ApplicationActions = ({form, isReadOnly, formActionType}) => {
             <Form scrollToFirstError={true} preserve={false} form={form} layout="vertical" onFinish={onFinish}  onFinishFailed={onFinishFailed}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table dataSource={[...data]} pagination={false} columns={tableColumn}  />
+                            {/* <Table dataSource={[...data]} pagination={false} columns={tableColumn}  /> */}
+                            <DataTable isLoading={false} tableColumn={tableColumn} tableData={data} />
                         </Col>
                     </Row>
                     {

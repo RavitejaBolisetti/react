@@ -1,8 +1,7 @@
-import { APPLICATION_MASTER_APPLICATION_DATA_SHOW_LOADING, APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED, APPLICATION_CRITICALITY_GROUP_LOADED, DEALER_LOCATIONS_LOADED } from 'store/actions/data/applicationMaster';
+import { APPLICATION_MASTER_APPLICATION_DATA_SHOW_LOADING, APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED, APPLICATION_CRITICALITY_GROUP_LOADED, DEALER_LOCATIONS_LOADED, APPLICATION_MASTER_DATA_SHOW_LOADING } from 'store/actions/data/applicationMaster';
 
 const initialState = {
     isLoaded: false,
-    // data: [],
     isLoading: false,
     isApplicationDeatilsLoaded: false,
     applicationDetailsData: [],
@@ -18,7 +17,7 @@ export const ApplicationMaster = (state = initialState, action) => {
             return { ...state, isCriticalityGroupLoaded: action.isLoaded, applicationCriticalityGroupData: action.data };
         case DEALER_LOCATIONS_LOADED:
             return { ...state, isDealerLocationsLoaded: action.isLoaded, dealerLocations: action.data };
-        case APPLICATION_MASTER_APPLICATION_DATA_SHOW_LOADING:
+        case APPLICATION_MASTER_DATA_SHOW_LOADING:
             return { ...state, isApplicationDeatilsLoading: action.isLoading };
         default:
             return { ...state };

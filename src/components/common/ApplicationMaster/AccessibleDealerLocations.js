@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { addToolTip } from 'utils/customMenuLink';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrash, FaPlus } from 'react-icons/fa';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { FaTrash, FaPlus } from 'react-icons/fa';
 
-import { Button, Col, Row, Form, Select, Modal, Input, Table, Switch } from 'antd';
-import { Collapse, Space } from 'antd';
+import { Button, Col, Row, Form, Select, Modal, Input, Switch, Space } from 'antd';
 
 import styles from 'pages/common/Common.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { DataTable } from 'utils/dataTable';
 
 const { Option } = Select;
 const { confirm } = Modal;
 
-export const EditableCell = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations },
+        },
+    } = state;
+
+    let returnValue = {
+        criticalityGroupData,
+        applicationDetailsData,
+        dealerLocations,
+    };
+    return returnValue;
+};
+
+export const EditableCell = ({ editing, dataIndex, title, inputType, record, index, children, form, dealerLocations=[], fieldNames, ...restProps }) => {
     let inputField = '';
     switch (inputType) {
         case 'switch':
@@ -41,7 +57,6 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
                     }}
                     key={record.id + index + dataIndex + 'swi'}
                     name={[index, dataIndex]}
-                    // rules={[validateRequiredInputField(`${title}`)]}
                     rules={[validateRequiredSelectField(`${title}`)]}
                     initialValue={record[dataIndex]}
                 >
@@ -50,13 +65,14 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
                         showSearch
                         placeholder="Select accesable location"
                         optionFilterProp="children"
+                        fieldNames={fieldNames}
                         style={{
                           width: '140px',
                         }}
                         // onChange={onChange}
                         // onSearch={onSearch}
                         filterOption={(input, option) => (option?.value ?? '').toLowerCase().includes(input.toLowerCase())}
-                        options={locationsData}
+                        options={dealerLocations}
                     />
                 </Form.Item>
             );
@@ -80,24 +96,6 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
     return <td key={record.id + index + dataIndex + 'swi'}>{inputField}</td>;
 };
 
-const locationsData = [
-    {
-        id: '1',
-        code: 'uuid1',
-        value: 'Location 1',
-    },
-    {
-        id: '2',
-        code: 'uuid2',
-        value: 'Location 2',
-    },
-    {
-        id: '3',
-        code: 'uuid3',
-        value: 'Location',
-    },
-];
-
 const existingLocation = [
     {
         key: Math.random() * 1000,
@@ -119,15 +117,24 @@ const existingLocation = [
     // },
 ];
 
-const AccessibleDealerLocations = ({ form, isReadOnly }) => {
+
+const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, dealerLocations }) => {
     const [data, setRowsData] = useState(existingLocation);
+
+    useEffect(() => {
+        if(formActionType === "view"){
+            setRowsData(existingLocation)
+        }else{
+            setRowsData([{}]);
+        }
+    },[formActionType])
 
     const handleAdd = () => {
         const currentlyFormDataObj = form.getFieldsValue();
         const newData = {
             id: Math.random() * 1000,
             key: Math.random() * 1000,
-            code: '',
+            label: '',
             value: '',
         };
         const newlyAddedRow = Object.entries(currentlyFormDataObj)
@@ -136,10 +143,10 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
         setRowsData([...newlyAddedRow, { ...newData }]);
     };
 
-    const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id ? { ...item, isEditable: true } : item));
-        setRowsData(updatedDataItem);
-    };
+    // const edit = (record) => {
+    //     const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id ? { ...item, isEditable: true } : item));
+    //     setRowsData(updatedDataItem);
+    // };
 
     const deleteTableRows = (record, index) => {
         const currentRows = form.getFieldsValue();
@@ -156,11 +163,10 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
             icon: <ExclamationCircleFilled />,
             content: 'Do you Want to delete this location?',
             onOk() {
-                // console.log('OK');
                 deleteTableRows(record, index);
             },
             onCancel() {
-                // console.log('Cancel');
+                console.log('Cancel');
             },
         });
     };
@@ -170,12 +176,12 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
     tableColumn.push(
         tblPrepareColumns({
             title: 'Dealer Location',
-            dataIndex: 'value',
+            dataIndex: 'dealerLocationId',
             width: '17%',
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {EditableCell({ record, index, title: 'Dealer Location', dataIndex: 'value', inputType: 'select', form })}
+                        {EditableCell({ record, index, title: 'Dealer Location', dataIndex: 'dealerLocationId', inputType: 'select', form, dealerLocations, fieldNames: {label: 'dealerLocationId', value: 'dealerLocationId' } })}
         
                         <Form.Item hidden initialValue={record.key} name={[index, 'key']}>
                             <Input />
@@ -200,6 +206,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
             title: '',
             dataIndex: 'action',
             width:'50',
+            sorter: false,
             render: (text, record, index) => {
                 return (
                     <Space wrap>
@@ -210,20 +217,14 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
             },
         })
     );
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
-    const onFinish = (values) => {
-        console.log('On finish', values);
-    };
-
+    
     return (
         <>
-            <Form scrollToFirstError={true} preserve={false} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form scrollToFirstError={true} preserve={false} form={form} layout="vertical" >
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Table dataSource={data} pagination={false} columns={tableColumn} />
+                        {/* <Table dataSource={data} pagination={false} columns={tableColumn} /> */}
+                        <DataTable isLoading={false} tableColumn={tableColumn} tableData={data} />
                     </Col>
                 </Row>
                 {
@@ -240,4 +241,4 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
     );
 };
 
-export default AccessibleDealerLocations;
+export const AccessibleDealerLocations = connect(mapStateToProps, null)(AccessibleDealerLocationsMain);

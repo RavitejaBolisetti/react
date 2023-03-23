@@ -8,6 +8,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import styles from 'pages/common/Common.module.css';
 import { validateRequiredInputField } from 'utils/validation';
+import { DataTable } from 'utils/dataTable';
 
 const { confirm } = Modal;
 
@@ -51,14 +52,12 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
 
 const datainitial = [
     {
-        key: Math.random() * 1000,
         id: Math.random() * 1000,
         actionId: '1',
         actionName: 'Action name',
         status: 'N',
     },
     {
-        key: Math.random() * 1000,
         id: Math.random() * 1000,
         actionId: '2',
         actionName: 'Random action',
@@ -68,7 +67,6 @@ const datainitial = [
 
 const editRowData = [
     {
-        key: Math.random() * 1000,
         id: Math.random() * 1000,
         deletable: true,
         isEditable: true,
@@ -81,11 +79,10 @@ const editRowData = [
 
 
 const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
-    // const [form] = Form.useForm();
     const [data, setRowsData] = useState(datainitial);
 
     useEffect(() => {
-        if(formActionType === "rootChild"){
+        if(formActionType === "view"){
             setRowsData(editRowData)
         }else{
             setRowsData(datainitial);
@@ -110,7 +107,6 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
         const currentlyFormDataObj = form.getFieldsValue();
         const newData = {
             id: Math.random() * 1000,
-            key: Math.random() * 1000,
             actionId: '',
             actionName: '',
             status: 'Y',
@@ -166,9 +162,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
                     <Space wrap>
                         {EditableCell({ index, record, title: 'Status', dataIndex: 'status', inputType: 'switch', form })}
 
-                        <Form.Item hidden initialValue={record.key} name={[index, 'key']}>
-                            <Input />
-                        </Form.Item>
+
                         <Form.Item hidden initialValue={record.id} name={[index, 'id']}>
                             <Input />
                         </Form.Item>
@@ -186,14 +180,14 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Action',
+            title: '',
             dataIndex: '',
             // editable: false,
             render: (text, record, index) => {
                 return (
                     <Space wrap>
-                        {!record?.deletable && <FaEdit onClick={() => edit(record)} />}
-                        {record?.deletable && <FaTrash onClick={() => showConfirm(record, index)} />}
+                        {record?.deletable && <FaEdit color='#ff3e5b' onClick={() => edit(record)} />}
+                        {!record?.deletable && <FaTrash color='#ff3e5b' onClick={() => showConfirm(record, index)} />}
                     </Space>
                 );
             },
@@ -214,7 +208,8 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Table scroll={{ x: 'auto'}} dataSource={[...data]} pagination={false} columns={tableColumn} />
+                            {/* <Table scroll={{ x: 'auto'}} dataSource={[...data]} pagination={false} columns={tableColumn} /> */}
+                            <DataTable isLoading={false} tableColumn={tableColumn} tableData={data} />
                         </Col>
                     </Row>
                     
