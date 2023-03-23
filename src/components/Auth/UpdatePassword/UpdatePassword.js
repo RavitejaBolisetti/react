@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, Input } from 'antd';
-import { FaKey } from 'react-icons/fa';
+import { FiLock } from 'react-icons/fi';
 
 import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
 import { ROUTING_LOGOUT } from 'constants/routing';
@@ -136,21 +136,21 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Old password" visibilityToggle={true} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Old password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password'), { validator: validateToNextPassword }]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" allowClear placeholder="New password" visibilityToggle={true} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="New password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('Confirm Password'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="Confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -158,14 +158,14 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Button className={styles.button} type="primary" htmlType="submit">
-                                                            Submit
+                                                            Update Password
                                                         </Button>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
-                                                            {isTrue ? <Link to={ROUTING_LOGIN}>Back To Login Page</Link> : <Link to={ROUTING_DASHBOARD}>Skip For Now</Link>}
+                                                            {isTrue ? <Link to={ROUTING_LOGIN}>Back To Login</Link> : <Link to={ROUTING_DASHBOARD}>Skip For Now</Link>}
                                                         </div>
                                                     </Col>
                                                 </Row>

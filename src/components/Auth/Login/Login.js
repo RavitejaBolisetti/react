@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message, notification, Space, Alert } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiFillInfoCircle, AiFillCloseCircle } from 'react-icons/ai';
+import { AiFillInfoCircle, AiFillCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
@@ -155,6 +155,24 @@ const Login = (props) => {
         });
     };
 
+    const success = () => {
+        // const btn = (
+        //     <Link to={ROUTING_UPDATE_PASSWORD}>
+        //         <Button type="primary" size="small">
+        //             Update Password
+        //         </Button>
+        //     </Link>
+        // );
+
+        alertNotification.open({
+            icon: <AiOutlineCheckCircle />,
+            message: 'Success',
+            description: 'Your Password has been successfully updated. Please login with your new credentials.',
+            duration: 0,
+            className: styles.error,
+        });
+    };
+
     return (
         <>
             {contextAlertNotification}
@@ -205,7 +223,7 @@ const Login = (props) => {
                                                         </Button>
                                                     </Col>
                                                 </Row>
-                                                {/* <Row gutter={20}>
+                                                <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Space>
                                                             <Button type="primary" onClick={skipPasswordUpdate}>
@@ -214,9 +232,12 @@ const Login = (props) => {
                                                             <Button type="primary" onClick={updatePassword}>
                                                                 Update
                                                             </Button>
+                                                            <Button type="primary" onClick={success}>
+                                                                Success
+                                                            </Button>
                                                         </Space>
                                                     </Col>
-                                                </Row> */}
+                                                </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter}>
