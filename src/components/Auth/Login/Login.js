@@ -106,7 +106,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const [alertNotification, contextAlertNotification] = notification.useNotification();
@@ -156,19 +156,11 @@ const Login = (props) => {
     };
 
     const success = () => {
-        // const btn = (
-        //     <Link to={ROUTING_UPDATE_PASSWORD}>
-        //         <Button type="primary" size="small">
-        //             Update Password
-        //         </Button>
-        //     </Link>
-        // );
-
         alertNotification.open({
             icon: <AiOutlineCheckCircle />,
             message: 'Success',
             description: 'Your Password has been successfully updated. Please login with your new credentials.',
-            duration: 0,
+            // duration: 0,
             className: styles.success,
         });
     };

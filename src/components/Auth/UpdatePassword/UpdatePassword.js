@@ -5,7 +5,6 @@ import { Form, Row, Col, Button, Input } from 'antd';
 import { FiLock } from 'react-icons/fi';
 
 import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
-import { ROUTING_LOGOUT } from 'constants/routing';
 
 import { doLogoutAPI } from 'store/actions/auth';
 import { updatePasswordActions } from 'store/actions/data/updatePassword';
@@ -97,7 +96,7 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
 
     const compareToFirstPassword = (rule, value, callback) => {
         if (value && value !== form.getFieldValue('newPassword')) {
-            callback("New Password and Confirm Password doesn't match!");
+            callback('Password you entered is not matched!');
         } else {
             callback();
         }
@@ -149,7 +148,7 @@ const UpdatePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('Confirm Password'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
+                                                        <Form.Item name="confirmPassword" rules={[validateRequiredInputField('Confirm password'), validateFieldsPassword('Confirm Password'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
                                                             <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="Confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
