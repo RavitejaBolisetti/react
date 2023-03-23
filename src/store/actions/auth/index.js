@@ -21,13 +21,15 @@ export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
 export const LOCAL_STORAGE_KEY_AUTH_ID_TOKEN = 'idToken';
 export const LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN = 'accessToken';
 export const LOCAL_STORAGE_KEY_AUTH_USER_ID = 'userId';
+export const LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS = 'passwordStatus';
 
-export const authLoginSucess = (idToken, accessToken, userName, userId) => ({
+export const authLoginSucess = (idToken, accessToken, userName, userId, passwordStatus) => ({
     type: AUTH_LOGIN_SUCCESS,
     token: idToken,
     accessToken: accessToken,
     userName,
     userId,
+    passwordStatus,
     isLoggedIn: true,
 });
 
@@ -62,6 +64,7 @@ const logoutClearAllData = () => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
     dispatch(authDoLogout(message));
 };
 
@@ -74,26 +77,29 @@ export const clearAllAuthentication = (message) => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
 };
 
 export const clearAllLocalStorage = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
+    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
 };
 
 const authPostLoginActions =
-    ({ idToken, accessToken, userId, saveTokenAndRoleRights = true }) =>
+    ({ idToken, accessToken, userId, passwordStatus, saveTokenAndRoleRights = true }) =>
     (dispatch) => {
         if (saveTokenAndRoleRights) {
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN, idToken);
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, accessToken);
             localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_USER_ID, userId);
+            localStorage.setItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS, JSON.stringify(passwordStatus));
         }
 
         const { username: userName } = jwtDecode(idToken);
 
-        dispatch(authLoginSucess(idToken, accessToken, userName, userId));
+        dispatch(authLoginSucess(idToken, accessToken, userName, userId, passwordStatus));
     };
 
 export const readFromStorageAndValidateAuth = () => (dispatch) => {
@@ -101,6 +107,9 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
         const idToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
         const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
         const userId = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
+        const passwordStatus = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
+        console.log("🚀 ~ file: index.js:111 ~ readFromStorageAndValidateAuth ~ passwordStatus:", passwordStatus)
+
         if (!idToken) {
             dispatch(authDoLogout());
         } else {
@@ -111,6 +120,7 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
                         idToken,
                         accessToken,
                         userId,
+                        passwordStatus: JSON.parse(passwordStatus),
                     })
                 );
             } else {
@@ -145,6 +155,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
                 userId: data?.userId,
                 idToken: data?.idToken,
                 accessToken: data?.accessToken,
+                passwordStatus: data?.passwordStatus,
             })
         );
     };
@@ -162,7 +173,6 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     const onSuccess = (res) => {
         if (res?.data) {
             authPostLogin(res?.data);
-            // res?.responseMessage && message.info(res?.responseMessage);
             onLogin();
         } else {
             loginError({ message: 'There was an error, Please try again' });
@@ -194,15 +204,18 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     };
 
     const logoutError = (errorMessage) => message.error(errorMessage);
+    const title = 'Logout Successful';
+    const message = 'You are successfully logged out.';
 
     const onSuccess = (res) => {
         if (res?.data) {
-            successAction && successAction();
+            dispatch(authLoggingError(title, message));
+            successAction && successAction(title, message);
             authPostLogout();
         } else {
-            successAction && successAction();
+            dispatch(authLoggingError(title, message));
+            successAction && successAction(title, message);
             authPostLogout();
-            // logoutError('There was an error, Please try again');
         }
     };
 
@@ -215,9 +228,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: undefined,
         onSuccess,
         onError: () => {
-            successAction && successAction();
+            dispatch(authLoggingError('logout', 'logout'));
+            successAction && successAction(title, message);
             authPostLogout();
-        }, //logoutError('There was an error, Please try again'),
+        },
         onTimeout: () => logoutError('Request timed out, Please try again'),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),

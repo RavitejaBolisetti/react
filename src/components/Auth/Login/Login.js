@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
 import { FaTimes } from 'react-icons/fa';
-import {  AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
@@ -20,14 +20,9 @@ import ReactRecaptcha3 from 'react-google-recaptcha3';
 import Footer from '../Footer';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-import { UpdatePassword } from '../UpdatePassword';
-
-// const Context = React.createContext({
-//     name: 'Default',
-// });
-
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
+    console.log('🚀 ~ file: Login.js:25 ~ mapStateToProps ~ authApiCall:', authApiCall);
 
     const isError = authApiCall.isError || false;
     const loginFailure = authApiCall.loginFailure;
@@ -37,11 +32,14 @@ const mapStateToProps = (state) => {
         isLoggedIn: authApiCall.isLoggedIn,
         isLoading: state.authPages.LoginPage.isLoading,
         data: authApiCall.data,
+        passwordStatus: authApiCall.passwordStatus,
         authData: authApiCall.authData,
         isError,
         loginFailure,
         message: '',
     };
+
+    console.log('passwordStatus', returnValue?.passwordStatus);
 
     if (isError || returnValue.isUnauthenticated) {
         returnValue = {
@@ -81,12 +79,33 @@ const Login = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
+    useEffect(() => {
+        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
+            // console.log(status, 'status');
+        });
+
+        return () => {
+            ReactRecaptcha3.destroy();
+            form.resetFields();
+            doCloseLoginError();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [GOOGLE_CAPTCHA_SITE_KEY]);
+
+    useEffect(() => {
+        if (isError) {
+            informationModalBox({ message: errorTitle, description: errorMessage });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isError]);
+
     const navigate = useNavigate();
 
     const onSuccess = () => {
         setIsLoading(false);
         ReactRecaptcha3.destroy();
-        navigate(ROUTING_DASHBOARD);
+        // navigate(ROUTING_DASHBOARD);
     };
 
     const onError = () => {
@@ -157,12 +176,13 @@ const Login = (props) => {
         });
     };
 
-    const success = ({ title, message }) => {
+    const informationModalBox = ({ message = 'information', description, className = styles.error }) => {
         alertNotification.open({
-            icon: <AiOutlineCheckCircle />,
-            message: 'Success',
-            description: 'Your Password has been successfully updated. Please login with your new credentials.',
-            className: styles.success,
+            icon: <AiOutlineCloseCircle />,
+            message,
+            description,
+            className,
+            duration: 5,
         });
     };
 
@@ -193,8 +213,8 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (Parent ID.MILE ID)')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (Parent ID.MILE ID)" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID)')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -225,9 +245,6 @@ const Login = (props) => {
                                                             <Button type="primary" onClick={updatePassword}>
                                                                 Update
                                                             </Button>
-                                                            <Button type="primary" onClick={success}>
-                                                                Success
-                                                            </Button>
                                                         </Space>
                                                     </Col>
                                                 </Row>
@@ -244,22 +261,6 @@ const Login = (props) => {
                                 </Col>
                             </Row>
                         </Form>
-                        {isError && (
-                            <div className={styles.errorBoxContainer}>
-                                <h5>
-                                    <span className={styles.icon}>
-                                        <AiOutlineCloseCircle size={22} />
-                                    </span>
-                                    <span className={styles.errorTitle}>{errorTitle}</span>
-                                    <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
-                                        <FaTimes size={20} />
-                                    </span>
-                                </h5>
-                                <div className="form_card">
-                                    <p>{errorMessage}</p>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
                 <Footer />
