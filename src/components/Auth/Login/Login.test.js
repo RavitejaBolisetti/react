@@ -1,7 +1,8 @@
 import { screen, render, fireEvent, findAllByText } from "@testing-library/react";
 import { Logins } from './Login'; 
 import { ForgotPassword } from "../ForgotPassword";
-import { BrowserRouter,Route,Routes } from "react-router-dom"
+import { act } from 'react-dom/test-utils';
+import { BrowserRouter,Route,Routes,MemoryRouter } from "react-router-dom"
 import { async } from "sonarqube-scanner";
 
 jest.mock('react-redux', () => ({
@@ -63,7 +64,22 @@ window.matchMedia =
             expect(passInput).toBeTruthy();
             expect(loginBtn).toBeInTheDocument();
             expect(errorModal).toBeTruthy();
-        })
+        });
+        test('redirects to forgot password page after clicking forgot password link  ' , async() => {
+            render(<BrowserRouter>
+                <Routes>   
+                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorTitle="Information" errorMessage = {errorMessage} isError={true} />}/>
+                    <Route path="/forgot-password" element= {<ForgotPassword/>}/>
+                </Routes>
+            </BrowserRouter>);
+            const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
+            const forgotPasswordLink = await screen.getByText('Forgot password?')
+            fireEvent.click(forgotPasswordLink);
+            const generateOtpBtn = await screen.getByText('Generate OTP')
+            expect(userId).toBeTruthy();
+            expect(forgotPasswordLink).toBeTruthy();
+            expect(generateOtpBtn).toBeInTheDocument();
+        });
     });
 
     <BrowserRouter>
