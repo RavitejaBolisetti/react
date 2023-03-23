@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
+import { Form, Row, Col, Button, Input, message, notification, Space, Alert } from 'antd';
 import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { AiFillInfoCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
@@ -108,49 +108,56 @@ const Login = (props) => {
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-    const [api, contextHolder] = notification.useNotification();
-    const openNotification = () => {
+
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
+
+    const skipPasswordUpdate = (warning = true) => {
         const btn = (
             <Space>
                 <Link to={ROUTING_DASHBOARD}>
-                    <Button size="small">Skip For Now</Button>
+                    <Button danger size="small">
+                        Skip For Now
+                    </Button>
                 </Link>
                 <Link to={ROUTING_UPDATE_PASSWORD}>
-                    <Button size="small" onClick={() => setIsTrue(true)}>
+                    <Button type="primary" size="small" onClick={() => setIsTrue(true)} className={styles.pl10}>
                         Update Password
                     </Button>
                 </Link>
             </Space>
         );
-        api.open({
+        alertNotification.open({
             icon: <CiCircleAlert />,
             message: 'Update Password',
             description: 'Your password will expire in next 5 days. Please change your password.',
             btn,
             duration: 0,
+            className: styles.warning,
         });
     };
 
-    const [apii, contextHolderr] = notification.useNotification();
-    const openNotification1 = () => {
+    const updatePassword = () => {
         const btn = (
             <Link to={ROUTING_UPDATE_PASSWORD}>
-                <Button size="small">Update Password</Button>
+                <Button type="primary" size="small">
+                    Update Password
+                </Button>
             </Link>
         );
-        apii.open({
+
+        alertNotification.open({
             icon: <CiCircleRemove />,
             message: 'Password Expired',
             description: 'Your Password has expired. Please update your password to login.',
             btn,
             duration: 0,
+            className: styles.error,
         });
     };
 
     return (
         <>
-            {contextHolder}
-            {contextHolderr}
+            {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -175,22 +182,19 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (Parent ID.MILE ID)')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (Parent ID.MILE ID)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={false} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
                                                         </div>
-                                                        {/* <div className={styles.forgotPasswordLink}>
-                                                            <Link to={ROUTING_UPDATE_PASSWORD}>Update password?</Link>
-                                                        </div> */}
                                                     </Col>
                                                 </Row>
 
@@ -199,23 +203,20 @@ const Login = (props) => {
                                                         <Button className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
-                                                        {/* <Button type="primary" onClick={openNotification}>
-                                                            topRight
-                                                        </Button> */}
                                                     </Col>
                                                 </Row>
-                                                <Row gutter={20}>
+                                                {/* <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Space>
-                                                            <Button type="primary" onClick={openNotification}>
+                                                            <Button type="primary" onClick={skipPasswordUpdate}>
                                                                 skip
                                                             </Button>
-                                                            <Button type="primary" onClick={openNotification1}>
+                                                            <Button type="primary" onClick={updatePassword}>
                                                                 Update
                                                             </Button>
                                                         </Space>
                                                     </Col>
-                                                </Row>
+                                                </Row> */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter}>
