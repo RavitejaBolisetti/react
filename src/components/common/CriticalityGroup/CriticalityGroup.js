@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Select, notification, Alert } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Select, notification, Alert, ConfigProvider } from 'antd';
 import { TfiReload } from 'react-icons/tfi';
 
 import { FaEdit } from 'react-icons/fa';
@@ -18,6 +18,8 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 import dayjs from 'dayjs';
 import { BsTruckFlatbed } from 'react-icons/bs';
+import { DataTable } from 'utils/dataTable';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -56,39 +58,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [
-    {
-        Srl: '1',
-        critcltyGropCode: 'helloo',
-        critcltyGropName: 'shsjshs',
-        defaultGroup: 'Y',
-        status: 'N',
-        allowedTimingRequest: [
-            {
-                Serial: 1,
-                startTime: '9:45',
-                endTime: '1:00',
-            },
-            {
-                Serial: 2,
-                startTime: '2:00',
-                endTime: '3:00',
-            },
-        ],
-    },
-    {
-        Srl: '2',
-        critcltyGropCode: 'unhip',
-        critcltyGropName: 'hiioi',
-        defaultGroup: 'N',
-        status: 'Y',
-        allowedTimingRequest: [
-            {
-                Serial: 1,
-                startTime: '2:00',
-                endTime: '3:00',
-            },
-        ],
-    },
+    //     {
+    //     critcltyGropCode : 'WOWOO'
+    // }
 ];
 
 export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
@@ -106,7 +78,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [arrData, setArrData] = useState(data);
     const [searchData, setSearchdata] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
-
+    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
+    const [footerEdit, setFooterEdit] = useState(false);
+    const [saveBtn, setSaveBtn] = useState(false);
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,7 +196,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         openNotification({ ...notificationprops });
 
         // <Alerts {...notificationprops} />;
-        console.log('values n sub,it', values.defaultGroup ? 'Y' : 'N');
+        console.log('values n submit', values.defaultGroup ? 'Y' : 'N');
         return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
     };
 
@@ -232,6 +206,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
     const handleAdd = () => {
         setFormActionType('add');
+        setSaveAndSaveNew(true);
+        setSaveBtn(true);
+        setFooterEdit(false);
         form.resetFields();
         setDrawer(true);
         setIsReadOnly(false);
@@ -239,13 +216,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             defaultGroup: 'Y',
             status: 'Y',
         });
-        console.log(data, 'datat');
     };
 
     const handleUpdate = (record) => {
         // setForceFormReset(Math.random() * 10000);
         setFormActionType('update');
         console.log('update', record);
+        setSaveAndSaveNew(false);
+        setFooterEdit(false);
+        setSaveBtn(true);
         // setFormData(record);
         setSelectedRecord(record);
         const momentTime = record?.allowedTimingRequest?.map((i) => {
@@ -274,6 +253,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         console.log('view', record);
         // setFormData(record);
         setSelectedRecord(record);
+        setSaveAndSaveNew(false);
+        setFooterEdit(true);
+        setSaveBtn(false);
+
         const momentTime = record?.allowedTimingRequest?.map((i) => {
             return {
                 startTime: dayjs(i.startTime, 'HH:mm'),
@@ -346,15 +329,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group Name',
-            dataIndex: 'critcltyGropDesc',
+            dataIndex: 'critcltyGropName',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Default Group?',
+            title: 'Default Group',
             dataIndex: 'defaultGroup',
-            render: (text, record) => <Switch disabled={true} defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <>{text === 'Y' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -362,19 +345,27 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <Switch disabled={true} defaultChecked={text} checkedChildren="Active" unCheckedChildren="Inactive" />,
+            render: (text, record) => <>{text === 'Y' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: '',
+            title: 'Actions',
             sorter: false,
             render: (text, record, index) => {
                 return (
-                    <Space wrap>
-                        {<FaEdit aria-label="fa-edit" onClick={() => handleUpdate(record)} />}
-                        {<AiOutlineEye aria-label="ai-view" onClick={() => handleView(record)} />}
+                    <Space style={{ display: 'flex' }}>
+                        {
+                            <Button style={{ border: 'none' }} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                                <EditIcon />
+                            </Button>
+                        }
+                        {
+                            <Button style={{ marginLeft: '-10px', border: 'none' }} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                                <ViewEyeIcon />
+                            </Button>
+                        }
                     </Space>
                 );
             },
@@ -407,17 +398,21 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
+                            {initialTableData?.length ? (
+                                <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
+                                    <Button className="button" onClick={handleReferesh} danger ghost>
+                                        <TfiReload />
+                                    </Button>
 
-                            <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Button className="button" onClick={handleReferesh} danger ghost>
-                                    <TfiReload />
-                                </Button>
-
-                                <Button type="primary" danger onClick={handleAdd}>
-                                    <AiOutlinePlus className={styles.buttonIcon} />
-                                    Add Group
-                                </Button>
-                                {/* <Row gutter={20}>
+                                    <Button type="primary" danger onClick={handleAdd}>
+                                        <AiOutlinePlus className={styles.buttonIcon} />
+                                        Add Group
+                                    </Button>
+                                </Col>
+                            ) : (
+                                ''
+                            )}
+                            {/* <Row gutter={20}>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                         <Button danger onClick={handleAdd}>
                                             <TfiReload className={styles.buttonIcon} />
@@ -430,7 +425,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                         </Button>
                                     </Col>
                                 </Row> */}
-                            </Col>
                         </Row>
                     </div>
                 </Col>
@@ -463,11 +457,39 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                <DrawerUtil setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord} form={form} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+                <DrawerUtil saveBtn={saveBtn} footerEdit={footerEdit} handleUpdate={handleUpdate} saveAndSaveNew={saveAndSaveNew} setSaveAndSaveNew={setSaveAndSaveNew} setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord} form={form} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
             </Form>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Table locale={{ emptyText: <Empty description="No Criticality Group Added" /> }} dataSource={searchData} pagination={true} columns={tableColumn} />
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        No records found. Please add new parameter <br />
+                                        using below button
+                                    </span>
+                                }
+                            >
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Button type="primary" danger onClick={handleAdd}>
+                                            <div style={{display:"flex",alignItems:"center"}}>
+                                                <AiOutlinePlus />
+                                                Add Group
+                                            </div>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Empty>
+                        )}
+                    >
+                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                    </ConfigProvider>
                 </Col>
             </Row>
         </>

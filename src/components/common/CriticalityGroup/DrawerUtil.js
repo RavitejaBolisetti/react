@@ -12,7 +12,7 @@ import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({ saveBtn, footerEdit,handleUpdate, saveAndSaveNew,setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
 
@@ -58,7 +58,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
     return (
         <Drawer
             title={drawerTitle}
-            width="540"
+            width="520"
             footer={
                 <>
                     <Row gutter={20}>
@@ -68,12 +68,19 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
-                            <Button form="myForm" key="submit" htmlType="submit" type="primary">
+                            { saveBtn ? (<Button form="myForm" key="submit" htmlType="submit" type="primary">
                                 Save
-                            </Button>
-                            <Button onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                Save and New
-                            </Button>
+                            </Button>) : ''}
+                            {saveAndSaveNew ? (
+                                <Button onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Save and New
+                                </Button>
+                            ) : ''}
+                            {footerEdit ? (
+                                <Button onClick={handleUpdate} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Edit
+                                </Button>
+                            ) : ''}
                         </Col>
                     </Row>
                 </>
@@ -175,7 +182,6 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                                     <Form.Item
                                         {...restField}
                                         name={[name, 'startTime']}
-                                        label="Start Time"
                                         rules={[
                                             {
                                                 required: true,
@@ -183,12 +189,11 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                                             },
                                         ]}
                                     >
-                                        <TimePicker onChange={setSelectedTime} format="HH:mm" {...disabledProps} />
+                                        <TimePicker use12Hours size="large" onChange={setSelectedTime} format="HH:mm a" {...disabledProps} />
                                     </Form.Item>
                                     <Form.Item
                                         {...restField}
                                         name={[name, 'endTime']}
-                                        label="End Time"
                                         rules={[
                                             {
                                                 required: true,
@@ -196,7 +201,9 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                                             },
                                         ]}
                                     >
-                                        <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} format="HH:mm" onOk={onOk} {...disabledProps} />
+                                        <TimePicker use12Hours size="large"
+                                        //  disabledHours={disabledHours} disabledMinutes={disabledMinutes} 
+                                         format="HH:mm a" onOk={onOk} {...disabledProps} />
                                     </Form.Item>
                                     <AiOutlineClose aria-label="outline-close" {...disabledProps} onClick={() => remove(name)} />
                                 </Space>
@@ -214,7 +221,7 @@ const DrawerUtil = ({ form, selectedRecord, setSelectedRecord, handleAdd, open, 
                     </>
                 )}
             </Form.List>
-            <Alerts NotificationTitle={"Added Successfully,Keep Adding more"} />
+            <Alerts NotificationTitle={'Added Successfully,Keep Adding more'} />
         </Drawer>
     );
 };
