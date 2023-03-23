@@ -106,7 +106,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const [alertNotification, contextAlertNotification] = notification.useNotification();
@@ -120,7 +120,7 @@ const Login = (props) => {
                     </Button>
                 </Link>
                 <Link to={ROUTING_UPDATE_PASSWORD}>
-                    <Button type="primary" size="small" onClick={() => setIsTrue(true)} className={styles.pl10}>
+                    <Button type="primary" size="small" onClick={() => setIsTrue(true)}>
                         Update Password
                     </Button>
                 </Link>
@@ -169,7 +169,7 @@ const Login = (props) => {
             message: 'Success',
             description: 'Your Password has been successfully updated. Please login with your new credentials.',
             duration: 0,
-            className: styles.error,
+            className: styles.success,
         });
     };
 
