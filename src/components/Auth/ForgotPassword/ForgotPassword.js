@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Form, Row, Col, Button, Input, Checkbox, Alert } from 'antd';
-import { UndoOutlined } from '@ant-design/icons'
+import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
+import { UndoOutlined, } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
 import { BiUser } from 'react-icons/bi';
-import OtpTimer from 'otp-timer'
+import { CiCircleAlert } from 'react-icons/ci'
+import OtpTimer from 'otp-timer';
 
 
 import { ROUTING_LOGIN } from 'constants/routing';
@@ -23,6 +24,7 @@ const ForgotPassword = (props) => {
     const [showFields, setShowFields] = useState(false);
     const [resend, setresend] = useState(false);
     const [userId, setuserId] = useState(true)
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [otpverification, setotpverification] = useState(false);
     const [OTP, setOTP] = useState(false);
     const [OTPsent, setOTPsent] = useState(false);
@@ -39,7 +41,7 @@ const ForgotPassword = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [counter, setCounter] = React.useState(10);
+    const [counter, setCounter] = React.useState(30);
     React.useEffect(() => {
         const timer =
             counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -57,6 +59,14 @@ const ForgotPassword = (props) => {
         setShowTimer(true);
         setValidate(true);
         setPassword(false);
+
+        alertNotification.open({
+            icon: <CiCircleAlert />,
+            message: "OTP Sent",
+            description: 'OTP sent to your registered mobile number and/or email ID.',
+            duration: 0,
+            className: styles.warning
+        })
 
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
@@ -90,6 +100,7 @@ const ForgotPassword = (props) => {
     };
     return (
         <>
+            {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -209,41 +220,34 @@ const ForgotPassword = (props) => {
                                                                                         </div>
                                                                                     </Col>
                                                                                 </Row>
-                                                                                {/* <br></br>
-                                                                                <div>
-                                                                                    <span className={styles.checkColor} type="radio">
-                                                                                        Didn't receive OTP?
-                                                                                    </span>
-                                                                                    <span onClick={() => setCounter(10)} className={styles.resend} type="radio">
-                                                                                        <UndoOutlined />  Resend OTP
-                                                                                    </span>
-                                                                                </div> */}
                                                                             </>
                                                                         )
                                                                         }
-                                                                    </Col>
-                                                                </Row>
+                                                                    </Col >
+                                                                </Row >
                                                             </>
                                                         ) : null}
 
-                                                        {password ? (
-                                                            <>
-                                                                <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
-                                                                        </Form.Item>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
-                                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
-                                                                        </Form.Item>
-                                                                    </Col>
-                                                                </Row>
-                                                            </>
-                                                        ) : null}
+                                                        {
+                                                            password ? (
+                                                                <>
+                                                                    <Row gutter={20}>
+                                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                            <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                                                <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
+                                                                            </Form.Item>
+                                                                        </Col>
+                                                                    </Row>
+                                                                    <Row gutter={20}>
+                                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                            <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
+                                                                                <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
+                                                                            </Form.Item>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </>
+                                                            ) : null
+                                                        }
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -273,28 +277,18 @@ const ForgotPassword = (props) => {
                                                                 </div>
                                                             </Col>
                                                         </Row>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                    </div >
+                                                </div >
+                                            </div >
                                         </>
                                     )}
-                                </Col>
-                            </Row>
-                        </Form>
-                    </div>
-                </div>
-                {OTPsent && (
-                    <Alert
-                        message="OTP Sent"
-                        description="OTP sent to your registered mobile number and/or email ID."
-                        type="warning"
-                        showIcon
-                        closable
-                    />
-
-                )}
+                                </Col >
+                            </Row >
+                        </Form >
+                    </div >
+                </div >
                 <Footer />
-            </div>
+            </div >
         </>
     );
 };

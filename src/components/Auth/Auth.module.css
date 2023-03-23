@@ -798,4 +798,60 @@ select.form-control:focus::-ms-value {
         margin-right: 15px !important;
         font-size: 14px;
     }
+    .warning {
+         color: #FF7A00;
+         background-color: #FFEAD7;       
+         border: 1px solid #FF7A00;        
+        }
+
+        .warning :global .ant-notification-notice-icon {
+         font-weight: 700; 
+        }
+       
+        .warning :global .ant-notification-close-icon {
+         color: #FF7A00;       
+        }
+      
+        .warning :global .ant-notification-notice-message {
+        
+         color: #FF7A00;     
+         font-weight: 700;     
+         margin-bottom: 0px !important;  
+         font-size: 14px !important; 
+         line-height: 22px !important;
+        
+        }
+      
+        .warning :global .ant-notification-notice-description {    
+         color: #342C2C; 
+         font-size: 12px !important;
+         line-height: 20px !important;
+         font-weight: 400 !important;
+         padding-right: 20px;
+        
+        }
+    
+        .warning :global .ant-notification-notice-btn {
+         margin-left: 35px;      
+         float: left;     
+         font-size: 12px;    
+        }
+ 
+        .warning :global .ant-notification-notice-btn .ant-btn-primary {     
+         background-color: #FF7A00;    
+         color: #FFFFFF;
+        }
+  
+        .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
+         color: #FF7A00;
+         border-color: #FF7A00;
+        
+        }
+        
+        .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover { 
+         background-color: #FF7A00 !important;
+        
+        }
+    
 }
+
