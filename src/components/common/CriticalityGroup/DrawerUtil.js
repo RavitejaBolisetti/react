@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Table, Space, Alert } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { AiOutlineClose } from 'react-icons/ai';
+import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon, LinearTrash } from 'Icons';
 
 import dayjs from 'dayjs';
 
@@ -58,6 +59,7 @@ const DrawerUtil = ({ saveBtn, footerEdit,handleUpdate, saveAndSaveNew,setSaveAn
     return (
         <Drawer
             title={drawerTitle}
+            className={style.drawerCriticalityGrp}
             width="520"
             footer={
                 <>
@@ -170,54 +172,73 @@ const DrawerUtil = ({ saveBtn, footerEdit,handleUpdate, saveAndSaveNew,setSaveAn
             >
                 {(fields, { add, remove }) => (
                     <>
-                        {fields.map(({ key, name, ...restField }) => (
-                            <div key={key} className={style.allowedTiming}>
-                                <Space
-                                    style={{
-                                        display: 'flex',
-                                        marginBottom: 8,
-                                    }}
-                                    align="baseline"
-                                >
-                                    <Form.Item
-                                        {...restField}
-                                        name={[name, 'startTime']}
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Missing Start Time',
-                                            },
-                                        ]}
-                                    >
-                                        <TimePicker use12Hours size="large" onChange={setSelectedTime} format="HH:mm a" {...disabledProps} />
-                                    </Form.Item>
-                                    <Form.Item
-                                        {...restField}
-                                        name={[name, 'endTime']}
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Missing End Time',
-                                            },
-                                        ]}
-                                    >
-                                        <TimePicker use12Hours size="large"
-                                        //  disabledHours={disabledHours} disabledMinutes={disabledMinutes} 
-                                         format="HH:mm a" onOk={onOk} {...disabledProps} />
-                                    </Form.Item>
-                                    <AiOutlineClose aria-label="outline-close" {...disabledProps} onClick={() => remove(name)} />
-                                </Space>
-                            </div>
-                        ))}
-                        <Row>
-                            <Col offset={19}>
-                                <Form.Item style={{ textAlign: 'right', float: 'right' }}>
-                                    <Button {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
-                                        Add Time
-                                    </Button>
-                                </Form.Item>
+                        <Row span={24}>
+                            <Col span={24} className={style.addTimeBtn}>
+                                <Button type="link" color="#FF3E5B" {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
+                                    Add Time
+                                </Button>
                             </Col>
                         </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className={style.timingHeader}>
+                                    <Row gutter={20}>
+                                        <Col  xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                            <div className={style.paddingLeft}>Start Time</div>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <div className={style.paddingLeft2}> End Time</div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Col>
+                        </Row>
+                        <>
+                            {fields.map(({ key, name, ...restField }) => (
+                                <div key={key} className={style.allowedTiming}>
+                                    <Space
+                                        size="middle"
+                                      
+                                    >
+                                        <Form.Item
+                                            {...restField}
+                                            name={[name, 'startTime']}
+                                            // label="Start Time"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Missing Start Time',
+                                                },
+                                            ]}
+                                        >
+                                            <TimePicker  size="large" onChange={setSelectedTime} format="HH:mm" {...disabledProps} />
+                                        </Form.Item>
+                                        <Form.Item
+                                            {...restField}
+                                            name={[name, 'endTime']}
+                                            // label="End Time"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Missing End Time',
+                                                },
+                                            ]}
+                                        >
+                                            <TimePicker size="large" disabledHours={disabledHours} disabledMinutes={disabledMinutes} format="HH:mm" onOk={onOk} {...disabledProps} />
+                                        </Form.Item>
+                                        {/* <AiOutlineClose aria-label="outline-close" {...disabledProps} onClick={() => remove(name)} /> */}
+                                        <Button danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft:"-12px"  }} onClick={() => remove(name)}>
+                                            <LinearTrash />
+                                        </Button>
+                                    </Space>
+                                </div>
+                            ))}
+                            {/* <Row>
+                                <Col offset={19}>
+                                    <Form.Item style={{ textAlign: 'right', float: 'right' }}></Form.Item>
+                                </Col>
+                            </Row> */}
+                        </>
                     </>
                 )}
             </Form.List>
