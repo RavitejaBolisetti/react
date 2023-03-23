@@ -6,5 +6,5 @@ import { SVGComponent as ServiceIcon } from './ServiceIcon';
 import { SVGComponent as SparesIcon } from './SparesIcon';
 import { SVGComponent as MenuArrow } from './MenuArrow';
 import { SVGComponent as HrIcon } from './HrIcon';
-
-export { HeadPhoneIcon, MenuArrow, AdminIcon, HomeIcon, CrmIcon, ServiceIcon, SparesIcon, HrIcon };
+import { SVGComponent as LinearTrash } from './LinearTrash';
+export { HeadPhoneIcon, MenuArrow, AdminIcon, HomeIcon, CrmIcon, ServiceIcon, SparesIcon, HrIcon, LinearTrash };

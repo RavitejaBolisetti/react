@@ -5,7 +5,7 @@ import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Sele
 import { TfiReload } from 'react-icons/tfi';
 
 import { FaEdit } from 'react-icons/fa';
-import { AiOutlinePlus, AiOutlineEye } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle } from 'react-icons/ai';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
@@ -202,7 +202,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
     const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
         notification.open({
-            message: NotificationTitle,
+            message: (
+                <div className="NotificationMessageAlign">
+                    <AiFillCheckCircle />
+                    {NotificationTitle}
+                </div>
+            ),
             description: NotificationDescription,
             placement: placement,
             duration: duration,
