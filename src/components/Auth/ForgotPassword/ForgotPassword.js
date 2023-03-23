@@ -224,7 +224,7 @@ const ForgotPassword = (props) => {
                                                                                         </div>
                                                                                     </Col>  
                                                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                                                        <div onClick={() => setCounter(30)} className={styles.resend} type="radio"  >
+                                                                                        <div onClick={() => setCounter(30)} className={styles.resendEnabled} type="radio"  >
                                                                                             <UndoOutlined />  Resend OTP
                                                                                         </div>
                                                                                     </Col> </Row> </>)
