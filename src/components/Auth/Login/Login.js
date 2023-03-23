@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Button, Input, message, notification, Space, Alert } from 'antd';
-import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
-import { AiFillInfoCircle, AiFillCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
+import { FaTimes } from 'react-icons/fa';
+import {  AiOutlineCheckCircle } from 'react-icons/ai';
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
@@ -18,6 +18,7 @@ import styles from '../Auth.module.css';
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import Footer from '../Footer';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { UpdatePassword } from '../UpdatePassword';
 
@@ -247,11 +248,11 @@ const Login = (props) => {
                             <div className={styles.errorBoxContainer}>
                                 <h5>
                                     <span className={styles.icon}>
-                                        <FaExclamationTriangle size={18} />
+                                        <AiOutlineCloseCircle size={22} />
                                     </span>
                                     <span className={styles.errorTitle}>{errorTitle}</span>
                                     <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
-                                        <FaTimes size={18} />
+                                        <FaTimes size={20} />
                                     </span>
                                 </h5>
                                 <div className="form_card">
