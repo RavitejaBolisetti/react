@@ -1,0 +1,76 @@
+.allowedTiming {
+    background: #F4F4F4;
+    margin-top: 12px;
+    padding-top: 20px;
+    padding-left: 12px;
+}
+
+/* 
+:global .css-dev-only-do-not-override-aprs5d.ant-drawer .ant-drawer-footer{
+    background: #D9D9D9; 
+}
+
+:global .ant-drawer .ant-drawer-header-title {
+    display: inline-block;
+}
+
+:global .ant-drawer .ant-drawer-close {
+    float: right;
+    margin-inline-end: 0;
+}
+
+:global .ant-input {
+    padding: 5px;
+} */
+
+
+.drawerFooterButtons button {
+    margin-bottom: 0 !important;
+    height: 34px;
+}
+
+.drawerFooterButtons button:not(:first-child) {
+    margin-left: 10px !important;
+}
+
+/* 
+
+:global .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+    display: inline-block;
+    margin-inline-end: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun,sans-serif;
+    line-height: 1;
+    content: "*";
+    padding-bottom: 10px;
+}
+
+
+:global .ant-form-item .ant-form-item-label >label::after {
+    content: "";
+    position: relative;
+    margin-block: 0;
+    margin-inline-start: 2px;
+    margin-inline-end: 8px;
+}
+
+.switchTop {
+    margin-top: -8px;
+    margin-bottom: -8px;
+}
+
+.statusButton {
+    padding: 0px;
+}
+
+:global .ant-col-24.ant-form-item-label {
+    padding: 0px;
+    margin-bottom: -6px;
+}
+ */
+
+.addGroup {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,6 @@
+projectKey=LoginDMS
+serverUrl=http://localhost:8094
+serverVersion=9.9.0.65466
+dashboardUrl=http://localhost:8094/dashboard?id=LoginDMS
+ceTaskId=AYcOfTgPcWBS6NI6mVWp
+ceTaskUrl=http://localhost:8094/api/ce/task?id=AYcOfTgPcWBS6NI6mVWp

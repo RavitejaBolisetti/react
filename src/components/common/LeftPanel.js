@@ -55,7 +55,6 @@ const LeftPanel = (props) => {
         const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
-                    console.log('🚀 ~ file: LeftPanelGeo.js:311 ~ .map ~ item:', item, value, treeData);
                     return getParentKey(item?.id, treeData);
                 }
                 return null;

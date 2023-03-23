@@ -59,7 +59,7 @@ const Login = (props) => {
 
     useEffect(() => {
         ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
-            console.log(status, 'status');
+            // console.log(status, 'status');
         });
 
         return () => {
@@ -186,4 +186,7 @@ const Login = (props) => {
     );
 };
 
+export const Logins=connect(mapStateToProps, mapDispatchToProps)(Login);
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
+

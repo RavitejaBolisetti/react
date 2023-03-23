@@ -9,7 +9,7 @@ export const CONFIG_PARAM_EDIT_SHOW_LOADING = 'CONFIG_PARAM_EDIT_SHOW_LOADING';
 export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const CONFIG_PARAM_EDIT_DATA_SHOW_LOADING = 'CONFIG_PARAM_EDIT_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveParametersData = (data) => ({
     type: CONFIG_PARAM_DATA_LOADED,
     isLoaded: true,
     data,
@@ -42,7 +42,7 @@ configParamEditActions.fetchList = withAuthToken((params) => ({ token, accessTok
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveParametersData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }

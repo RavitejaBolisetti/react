@@ -49,9 +49,7 @@ export const ConfigurableParameterEditingTable = () => {
             onOk() {
                 deleteTableRows(data.key);
             },
-            onCancel() {
-                console.log('Cancel');
-            },
+            onCancel() {},
         });
     };
 
@@ -125,7 +123,6 @@ export const ConfigurableParameterEditingTable = () => {
     ];
 
     const ConfigParamValue = () => {
-        console.log(selected, 'selected');
         let fieldType = undefined;
         switch (selected) {
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY:
