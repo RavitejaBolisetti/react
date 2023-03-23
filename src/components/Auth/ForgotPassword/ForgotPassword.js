@@ -51,6 +51,7 @@ const ForgotPassword = (props) => {
 
     const handleSendOtp = () => {
         setOTP(true);
+        setOTPsent(true);
         setotpverification(true);
         setShowFields(false);
         setShowTimer(true);
@@ -59,12 +60,6 @@ const ForgotPassword = (props) => {
      
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
-
-    const resendOTP= ()=>
-    {
-        setOTPsent(true);
-        
-    }
 
     const verifyUserbtn =()=>{
         setverifyUser(true);
@@ -123,7 +118,7 @@ const ForgotPassword = (props) => {
                                                         <div className={styles.loginHeading}>
                                                             {submit ? (
                                                                 <>
-                                                                    <h1 className={styles.inputBox}>Create New Password!</h1>
+                                                                    <h1 className={styles.inputBox}>Create New Password</h1>
                                                                     {/* <div className={styles.loginSubHeading}>Please enter your user details.</div> */}
                                                                 </>
                                                             ) : (userId ?(
@@ -200,20 +195,27 @@ const ForgotPassword = (props) => {
                                                                            
                                                                                 <div>
                                                                                   <span style={{color:"white"}}>
-                                                                                     00:{counter > 9 ? null : "0"}{counter}
+                                                                                     00:{counter > 9 ? null : "0"}{counter}s
                                                                                     </span>
 
                                                                                 </div> 
-
-                                                                                
+                                                                            
+                                                                               
                                                                                 
                                                                             </>
                                                                         ) : (
                                                                             <>
-                                                                            
+                                                                            <Row gutter={20}>
+                                                                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                                                                <div className={styles.checkColor} type="radio">
+                                                                                 Didn't receive OTP?
+                                                                                 </div></Col>
+                                                                                
+                                                                                 <Col >
+
                                                                                 <div onClick={ () => setCounter(10)} className={styles.resend} type="radio">
                                                                                 <UndoOutlined />  Resend OTP
-                                                                                 </div>
+                                                                                 </div></Col></Row>
                                                                             </>
                                                                         )
                                                                         }
@@ -282,24 +284,14 @@ const ForgotPassword = (props) => {
                     </div>
                 </div>
                 {OTPsent && (
-                    <div className={styles.errorBoxContainer}>
-                        <h5>
-                            <span className={styles.infoIcon}>
-                                <FaInfoCircle size={18} />
-                            </span>
-                            <span className={styles.errorTitle}>
-                                {/* {errorTitle} */}
-                                Notification
-                            </span>
-                            <span className={styles.loginErrorClose}>
-                                <FaTimes size={18} />
-                            </span>
-                        </h5>
-                        <div className="form_card">
-                            {/* <p>{errorMessage}</p> */}
-                            <p>OTP sent to your registered mobile number and/or email ID</p>
-                        </div>
-                    </div>
+                    <Alert
+                    message="OTP Sent"
+                    description="OTP sent to your registered mobile number and/or email ID."
+                    type="warning"
+                    showIcon
+                    closable
+                  />
+                   
                 )}
                 <Footer />
             </div>
