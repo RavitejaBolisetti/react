@@ -3,7 +3,7 @@ import OTPInput from 'otp-input-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
-import { UndoOutlined, } from '@ant-design/icons';
+import { UndoOutlined,CheckCircleOutlined  } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci'
@@ -64,12 +64,22 @@ const ForgotPassword = (props) => {
             icon: <CiCircleAlert />,
             message: "OTP Sent",
             description: 'OTP sent to your registered mobile number and/or email ID.',
-            duration: 2,
+            duration: 5,
             className: styles.warning
         })
-
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
+
+    const Alert= ()=>{
+        setCounter(30)
+        alertNotification.open({
+            icon: <CiCircleAlert />,
+            message: "OTP Sent",
+            description: 'OTP sent to your registered mobile number and/or email ID.',
+            duration: 5,
+            className: styles.warning
+        })
+    }
 
     const verifyUserbtn = () => {
         setverifyUser(true);
@@ -82,6 +92,14 @@ const ForgotPassword = (props) => {
         setShowTimer(false);
         setPassword(true);
         setSubmit(true);
+
+        alertNotification.open({
+            icon: <CheckCircleOutlined />,
+            message: "Success",
+            description: 'OTP verified successfully',
+            duration: 5,
+            className: styles.success
+        })
         // alert('Create new password');
     };
 
@@ -224,7 +242,7 @@ const ForgotPassword = (props) => {
                                                                                         </div>
                                                                                     </Col>  
                                                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                                                        <div onClick={() => setCounter(30)} className={styles.resendEnabled} type="radio"  >
+                                                                                        <div onClick={() => Alert()} className={styles.resendEnabled} type="radio"  >
                                                                                             <UndoOutlined />  Resend OTP
                                                                                         </div>
                                                                                     </Col> </Row> </>)
