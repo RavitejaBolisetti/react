@@ -58,9 +58,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [
-    //     {
-    //     critcltyGropCode : 'WOWOO'
-    // }
+    {
+        critcltyGropCode: 'WOWOO',
+    },
 ];
 
 export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
@@ -395,6 +395,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                                 style={{
                                                     width: 300,
                                                     marginLeft: -40,
+                                                    paddingBottom: '5px',
                                                 }}
                                                 onSearch={onChangeHandle}
                                                 onChange={onChangeHandle2}
@@ -434,36 +435,19 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                     </div>
                 </Col>
             </Row>
-            {/* <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    <Search
-                        placeholder="Search"
-                        style={{
-                            width: 200,
-                        }}
-                        onSearch={onChangeHandle}
-                        onChange={onChangeHandle2}
-                    />
-                </Col>
-                <Col className={style.addGroup} xs={16} sm={16} md={16} lg={16} xl={16}>
-                    <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} />
-                        Add Group
-                    </Button>
-                </Col>
-            </Row> */}
-            <Form
+
+            <DrawerUtil form={form} saveBtn={saveBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} footerEdit={footerEdit} handleUpdate={handleUpdate} saveAndSaveNew={saveAndSaveNew} setSaveAndSaveNew={setSaveAndSaveNew} setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord}  handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+            {/* <Form
                 form={form}
                 initialValues={{
                     defaultGroup: form.getFieldValue('defaultGroup'),
                 }}
                 id="myForm"
                 layout="vertical"
+                colon={false}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
-            >
-                <DrawerUtil saveBtn={saveBtn} footerEdit={footerEdit} handleUpdate={handleUpdate} saveAndSaveNew={saveAndSaveNew} setSaveAndSaveNew={setSaveAndSaveNew} setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord} form={form} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
-            </Form>
+            ></Form> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -483,7 +467,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Button type="primary" danger onClick={handleAdd}>
-                                            <div style={{display:"flex",alignItems:"center"}}>
+                                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                                 <AiOutlinePlus />
                                                 Add Group
                                             </div>
