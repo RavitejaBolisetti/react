@@ -566,10 +566,18 @@ select.form-control:focus::-ms-value {
     text-align: center;
 }
 
-.resend {
+.resendEnabled {
     color: white;
     float: right;
     cursor: pointer;
+}
+
+.resendDisabled{
+    color: #858585;
+    float: right;
+    cursor: pointer;
+    pointer-events: none;
+
 }
 
 .buttonResend {

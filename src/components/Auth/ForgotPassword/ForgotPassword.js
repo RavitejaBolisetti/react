@@ -64,7 +64,7 @@ const ForgotPassword = (props) => {
             icon: <CiCircleAlert />,
             message: "OTP Sent",
             description: 'OTP sent to your registered mobile number and/or email ID.',
-            duration: 0,
+            duration: 2,
             className: styles.warning
         })
 
@@ -202,9 +202,18 @@ const ForgotPassword = (props) => {
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                         {counter != 0 ? (
                                                                             <>
-                                                                                <div className={styles.checkColor}>
+                                                                               
+                                                                                <Row gutter={20}>
+                                                                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                                                                    <div className={styles.checkColor}>
                                                                                     00:{counter > 9 ? null : "0"}{counter}s
-                                                                                </div>
+                                                                                    </div>
+                                                                                    </Col>  
+                                                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                                                        <div onClick={() => setCounter(30)} className={styles.resendDisabled} type="radio"  >
+                                                                                            <UndoOutlined />  Resend OTP
+                                                                                        </div>
+                                                                                    </Col> </Row>
                                                                             </>
                                                                         ) : (
                                                                             <>
@@ -213,16 +222,16 @@ const ForgotPassword = (props) => {
                                                                                         <div className={styles.checkColor}>
                                                                                             Didn't receive OTP?
                                                                                         </div>
-                                                                                    </Col>
+                                                                                    </Col>  
                                                                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                                                        <div onClick={() => setCounter(10)} className={styles.resend} type="radio">
+                                                                                        <div onClick={() => setCounter(30)} className={styles.resendEnabled} type="radio"  >
                                                                                             <UndoOutlined />  Resend OTP
                                                                                         </div>
-                                                                                    </Col>
-                                                                                </Row>
-                                                                            </>
-                                                                        )
-                                                                        }
+                                                                                    </Col> </Row> </>)
+                                                                                        }
+                                                                                    
+                                                                       
+                                                                       
                                                                     </Col >
                                                                 </Row >
                                                             </>
