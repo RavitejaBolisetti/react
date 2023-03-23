@@ -111,7 +111,7 @@ const Login = (props) => {
 
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
-    const skipPasswordUpdate = (warning = true) => {
+    const skipPasswordUpdate = () => {
         const btn = (
             <Space>
                 <Link to={ROUTING_DASHBOARD}>
@@ -126,6 +126,7 @@ const Login = (props) => {
                 </Link>
             </Space>
         );
+
         alertNotification.open({
             icon: <CiCircleAlert />,
             message: 'Update Password',
@@ -155,12 +156,11 @@ const Login = (props) => {
         });
     };
 
-    const success = () => {
+    const success = ({ title, message }) => {
         alertNotification.open({
             icon: <AiOutlineCheckCircle />,
             message: 'Success',
             description: 'Your Password has been successfully updated. Please login with your new credentials.',
-            // duration: 0,
             className: styles.success,
         });
     };
