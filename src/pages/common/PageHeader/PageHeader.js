@@ -139,10 +139,10 @@ const PageHeaderMain = ({ pageTitle, fetchList, userId, favouriteMenu, markFavou
                             </Button>
                         ) : null}
 
-                        <Button danger onClick={handleBack}>
+                        {/* <Button danger onClick={handleBack}>
                             <FaLongArrowAltLeft className={styles.buttonIcon} />
                             Exit
-                        </Button>
+                        </Button> */}
                     </div>
                 </Col>
             </Row>

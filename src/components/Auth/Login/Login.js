@@ -65,6 +65,9 @@ const Login = (props) => {
     const [tempData, setTempData] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+
     useEffect(() => {
         ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
             // console.log(status, 'status');
@@ -111,6 +114,7 @@ const Login = (props) => {
             authPreLogin(data);
             setTempData(data);
             updatePasswordStatusInfo(data);
+            forceUpdate();
         } else {
             authPostLogin(data);
             // navigate(ROUTING_DASHBOARD);
@@ -125,9 +129,8 @@ const Login = (props) => {
         navigate(ROUTING_UPDATE_PASSWORD);
     };
 
-    const handleSkipUpdatePassword = () => {
-        console.log('tempData', tempData);
-        // authPostLogin(preLoginData);
+    const handleSkipUpdatePassword = (data) => {
+        authPostLogin(data);
     };
 
     const onFinish = (values) => {
@@ -153,10 +156,10 @@ const Login = (props) => {
         const { passwordStatus } = data;
         const { title, message } = passwordStatus;
         const status = 'A';
-        const btn = (
+        const btn = (data) => (
             <Space>
                 {status === 'A' && (
-                    <Button onClick={handleSkipUpdatePassword} danger size="small">
+                    <Button onClick={() => handleSkipUpdatePassword(data)} danger size="small">
                         Skip For Now
                     </Button>
                 )}
@@ -170,7 +173,7 @@ const Login = (props) => {
             icon: status === 'A' ? <CiCircleAlert /> : <CiCircleRemove />,
             message: title,
             description: message,
-            btn,
+            btn: btn(data),
             duration: 0,
             className: status === 'E' ? styles.error : styles.warning,
         });
