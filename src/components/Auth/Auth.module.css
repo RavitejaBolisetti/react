@@ -512,7 +512,8 @@ select.form-control:focus::-ms-value {
 }
 
 :global .ant-btn-default {
-    background-color: transparent;
+    /* background-color: transparent; */
+    
 }
 
 :global .ant-notification {

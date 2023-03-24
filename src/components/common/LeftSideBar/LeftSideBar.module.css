@@ -99,9 +99,9 @@
   background-color: transparent !important;
 }
 
-:global .ant-input-group-wrapper {
+/* :global .ant-input-group-wrapper {
   vertical-align: inherit;
-}
+} */
 
 :global .ant-layout .ant-layout-sider-trigger {
   position: absolute;

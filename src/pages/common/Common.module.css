@@ -400,7 +400,7 @@
 .contentHeaderBackground {
     background-color: #f4f4f4;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border-radius: 7px;
 }
 .addGroup {
@@ -412,11 +412,11 @@
     margin-bottom: 0px !important;
     margin-left: 10px;
 }
-.contentHeaderBackground .addGroup button svg {
+/* .contentHeaderBackground .addGroup button svg {
     margin-left: 10px;
     margin-right: 10px;
     transform: scaleX(-1);
-}
+} */
 
 .contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
 
@@ -426,3 +426,4 @@
 .contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left:  #ff3e5b;
 }
+

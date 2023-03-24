@@ -81,7 +81,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
-
+    const initialTableData = [];
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,7 +142,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // console.log(arr);
 
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? 1 : 0, allowedTimingRequest: formatedTime || [] };
         console.log('🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:', recordId);
         delete data?.allowedTimingResponse;
 
@@ -404,10 +404,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
                                             Criticality Group List
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
@@ -415,8 +415,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
-                                                    marginLeft: -40,
-                                                    paddingBottom: '5px',
+                                                    // marginLeft: -40,
+                                                    // paddingBottom: '5px',
                                                 }}
                                                 allowClear
                                                 onSearch={onChangeHandle}
@@ -427,13 +427,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                 </Row>
                             </Col>
                             {searchData?.length ? (
-                                <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
 
-                                    <Button type="primary" danger onClick={handleAdd}>
-                                        <AiOutlinePlus className={styles.buttonIcon} />
+                                    <Button className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        <AiOutlinePlus />
                                         Add Group
                                     </Button>
                                 </Col>
@@ -495,18 +495,16 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             >
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Button type="primary" danger onClick={handleAdd}>
-                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                <AiOutlinePlus />
-                                                Add Group
-                                            </div>
+                                        <Button className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <AiOutlinePlus  />
+                                            Add Group
                                         </Button>
                                     </Col>
                                 </Row>
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>

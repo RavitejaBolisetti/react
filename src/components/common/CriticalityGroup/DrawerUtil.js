@@ -85,7 +85,7 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                             )}
                             {saveAndSaveNew ? (
                                 <Button disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save and New
+                                    Save & Add New
                                 </Button>
                             ) : (
                                 ''
