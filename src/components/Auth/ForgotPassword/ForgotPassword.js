@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { doLogoutAPI } from 'store/actions/auth';
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
@@ -21,14 +22,13 @@ import * as IMAGES from 'assets';
 import { Link, Navigate } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
-import { forgotPassword } from 'store/reducers/data/forgotPassword';
 
 const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId },
 
         data: {
-            ForgotPassword: { isLoaded: isDataLoaded = false },
+            ForgotPassword: { isLoading,isLoaded: isDataLoaded = false },
         },
     } = state;
 
@@ -37,6 +37,7 @@ const mapStateToProps = (state) => {
         token,
         isLoggedIn,
         userId,
+        isLoading,
        
     };
 };
@@ -46,6 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             verifyUsers: forgotPasswordActions.verifyUsers,
+            doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
 
         },
@@ -169,8 +171,11 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
+            doLogout({
+                successAction: () => {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-  
+                }
+            });
         };
 
         const onError = (message) => {
