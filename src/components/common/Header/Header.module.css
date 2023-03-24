@@ -151,16 +151,42 @@
     float: right;
 }
 
-/* .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
-.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item, 
-.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title, 
-.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title{
-    margin:0px;
-    border-bottom: 1px solid #e5e7eb;
-    border-radius: 0px;
-} */
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
+    color: #342C2C;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 32px;
+    padding: 0;
+}
 
+:global .ant-dropdown {
+    width: 160px;
+}
 
+:global .ant-dropdown .ant-dropdown-menu,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu {
+    padding: 10px 16px;
+}
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-active,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item-active,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active {
+    background-color: transparent;
+    color: #ff3e5b;
+}
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:last-child {
+    color: #ff3e5b !important;
+}
 
 .welcomeUser .userServiceArea {
     float: right;
@@ -202,6 +228,7 @@
     height: 28px !important;
     font-size: 12px !important;
     line-height: 20px !important;
+    font-weight: 700;
 }
 
 @media (min-width: 997px) and (max-width: 1280px) {
