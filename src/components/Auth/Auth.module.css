@@ -5,7 +5,7 @@
 p {
     margin-bottom: 0px !important;
     margin-top: 0px !important;
-    color: #342C2C;
+    color: #342c2c;
     padding-left: 28px !important;
     text-align: left;
 }
@@ -15,7 +15,7 @@ p {
 }
 
 .textCenter {
-    text-align: center
+    text-align: center;
 }
 
 .loginSection .center {
@@ -74,23 +74,23 @@ p {
     width: 98%; */
 }
 
-.loginSection .loginMainFooter div>a,
-.loginSection .logOutFooter div>a {
+.loginSection .loginMainFooter div > a,
+.loginSection .logOutFooter div > a {
     padding: 0 32px 0 16px;
     text-transform: uppercase;
-    color: #8E8585;
+    color: #8e8585;
     font-size: 14px;
-    border-right: 1px solid #8E8585;
+    border-right: 1px solid #8e8585;
 }
 
-.loginSection .loginMainFooter div>a:last-child,
-.loginSection .logOutFooter div>a:last-child {
+.loginSection .loginMainFooter div > a:last-child,
+.loginSection .logOutFooter div > a:last-child {
     border-right: none;
 }
 
-.loginSection .loginMainFooter div>span,
-.loginSection .logOutFooter div>span {
-    color: #8E8585;
+.loginSection .loginMainFooter div > span,
+.loginSection .logOutFooter div > span {
+    color: #8e8585;
     font-weight: 400;
     font-size: 14px;
     padding-right: 12px;
@@ -128,7 +128,7 @@ p {
 
 .loginSection .loginWrap {
     /* margin: 20px; */
-    background: rgba(40, 39, 44, .6);
+    background: rgba(40, 39, 44, 0.6);
     box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
     border-radius: 19px;
     -moz-border-radius: 19px;
@@ -181,7 +181,7 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::placeholder,
 .changer input::placeholder {
-    color: #8E8585;
+    color: #8e8585;
     font-size: 16px !important;
     font-weight: 400 !important;
     line-height: 24px;
@@ -229,7 +229,6 @@ p {
     box-shadow: none !important;
 }
 
-
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
@@ -262,7 +261,7 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
     font-size: 14px;
-    color: #DEDEDE;
+    color: #dedede;
     margin-top: 16px;
     margin-bottom: 16px;
     text-align: center;
@@ -312,7 +311,7 @@ p {
     width: 100%;
     color: #fff;
     display: block;
-    background: #FF3E5B;
+    background: #ff3e5b;
     cursor: pointer;
     border-radius: 5px;
     border: none;
@@ -338,7 +337,6 @@ p {
     margin: 0 3px;
 }
 
-
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink {
     font-size: 16px;
     line-height: 24px;
@@ -351,7 +349,7 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a {
-    color: #DEDEDE !important;
+    color: #dedede !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a:hover {
@@ -367,7 +365,7 @@ p {
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
-    color: #FF3E5B;
+    color: #ff3e5b;
     font-size: 12px;
 }
 
@@ -375,7 +373,7 @@ p {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #DEDEDE;
+    color: #dedede;
     text-align: center;
     font-weight: normal;
 }
@@ -462,13 +460,13 @@ select.form-control:focus::-ms-value {
     max-height: 90%;
     /* margin: 3% auto; */
     padding: 10px 16px;
-    background: #FEE3D4;
+    background: #fee3d4;
     color: #dedede;
     font-size: 16px;
     border-radius: 8px;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
-    border: 1px solid #ED302D;
+    border: 1px solid #ed302d;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
     overflow: auto;
     position: fixed;
@@ -481,12 +479,12 @@ select.form-control:focus::-ms-value {
     padding: 0px;
     /* border-bottom: 1px solid #ea3434; */
     font-size: 16px;
-    color: #EF0000;
+    color: #ef0000;
     padding-bottom: 5px !important;
 }
 
 .errorBoxContainer h5 .icon {
-    color: #ED302D;
+    color: #ed302d;
     /* padding-bottom: 5px; */
 }
 
@@ -499,7 +497,7 @@ select.form-control:focus::-ms-value {
     cursor: pointer;
 }
 
-.loginSection :global .g-recaptcha>div>div {
+.loginSection :global .g-recaptcha > div > div {
     /* transform:scale(1.77);    -webkit-transform:scale(1.77);    transform-origin:0 0;    -webkit-transform-origin:0 0; */
     margin: 0px auto;
 }
@@ -513,7 +511,6 @@ select.form-control:focus::-ms-value {
 
 :global .ant-btn-default {
     /* background-color: transparent; */
-    
 }
 /* Placement Of notificatification should be scope bound Important is overriding */
 /* :global .ant-notification {
@@ -521,10 +518,11 @@ select.form-control:focus::-ms-value {
     margin-inline-end: 16px !important;
 } */
 
-:global .ant-notification-notice {
+/* :global .ant-notification-notice {
     width: 395px !important;
     padding: 10px !important;
-}
+    bottom: 30px !important;
+} */
 
 :global .ant-notification-notice-close {
     top: 10px !important;
@@ -537,9 +535,9 @@ select.form-control:focus::-ms-value {
 
 /*--------- Warning Notification Start ---------*/
 .warning {
-    color: #FF7A00;
-    background-color: #FFEAD7;
-    border: 1px solid #FF7A00;
+    color: #ff7a00;
+    background-color: #ffead7;
+    border: 1px solid #ff7a00;
 }
 
 .warning :global .ant-notification-notice-icon {
@@ -547,11 +545,11 @@ select.form-control:focus::-ms-value {
 }
 
 .warning :global .ant-notification-close-icon {
-    color: #FF7A00;
+    color: #ff7a00;
 }
 
 .warning :global .ant-notification-notice-message {
-    color: #FF7A00;
+    color: #ff7a00;
     font-weight: 700;
     margin-bottom: 0px !important;
     font-size: 14px !important;
@@ -559,7 +557,7 @@ select.form-control:focus::-ms-value {
 }
 
 .warning :global .ant-notification-notice-description {
-    color: #342C2C;
+    color: #342c2c;
     font-size: 12px !important;
     line-height: 20px !important;
     font-weight: 400 !important;
@@ -573,26 +571,26 @@ select.form-control:focus::-ms-value {
 }
 
 .warning :global .ant-notification-notice-btn .ant-btn-primary {
-    background-color: #FF7A00;
-    color: #FFFFFF;
+    background-color: #ff7a00;
+    color: #ffffff;
 }
 
 .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
-    color: #FF7A00;
-    border-color: #FF7A00;
+    color: #ff7a00;
+    border-color: #ff7a00;
 }
 
 .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #FF7A00 !important;
+    background-color: #ff7a00 !important;
 }
 
 /*--------- Warning Notification End ---------*/
 
 /*--------- Error Notification Start ---------*/
 .error {
-    color: #ED302D;
-    background-color: #FEE3D4;
-    border: 1px solid #ED302D;
+    color: #ed302d;
+    background-color: #fee3d4;
+    border: 1px solid #ed302d;
 }
 
 .error :global .ant-notification-notice-icon {
@@ -600,11 +598,11 @@ select.form-control:focus::-ms-value {
 }
 
 .error :global .ant-notification-close-icon {
-    color: #EF0000;
+    color: #ef0000;
 }
 
 .error :global .ant-notification-notice-message {
-    color: #EF0000;
+    color: #ef0000;
     font-weight: 700;
     margin-bottom: 0px !important;
     font-size: 14px !important;
@@ -612,7 +610,7 @@ select.form-control:focus::-ms-value {
 }
 
 .error :global .ant-notification-notice-description {
-    color: #342C2C;
+    color: #342c2c;
     font-size: 12px !important;
     line-height: 20px !important;
     font-weight: 400 !important;
@@ -626,13 +624,13 @@ select.form-control:focus::-ms-value {
 }
 
 .error :global .ant-notification-notice-btn .ant-btn-primary {
-    background-color: #EF0000;
-    color: #FFFFFF;
+    background-color: #ef0000;
+    color: #ffffff;
 }
 
 .error :global .ant-notification-notice-btn .ant-btn-dangerous {
-    color: #EF0000;
-    border-color: #EF0000;
+    color: #ef0000;
+    border-color: #ef0000;
 }
 
 .error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
@@ -643,9 +641,9 @@ select.form-control:focus::-ms-value {
 
 /*--------- Success Notification Start ---------*/
 .success {
-    color: #70C922;
-    background-color: #EEFCD2;
-    border: 1px solid #70C922;
+    color: #70c922;
+    background-color: #eefcd2;
+    border: 1px solid #70c922;
 }
 
 .success :global .ant-notification-notice-icon {
@@ -653,11 +651,11 @@ select.form-control:focus::-ms-value {
 }
 
 .success :global .ant-notification-close-icon {
-    color: #00A310;
+    color: #00a310;
 }
 
 .success :global .ant-notification-notice-message {
-    color: #00A310;
+    color: #00a310;
     font-weight: 700;
     margin-bottom: 0px !important;
     font-size: 14px !important;
@@ -665,7 +663,7 @@ select.form-control:focus::-ms-value {
 }
 
 .success :global .ant-notification-notice-description {
-    color: #342C2C;
+    color: #342c2c;
     font-size: 12px !important;
     line-height: 20px !important;
     font-weight: 400 !important;
@@ -683,7 +681,7 @@ select.form-control:focus::-ms-value {
     color: #fff;
 }
 
-.loginForm :global .ant-checkbox-disabled+span {
+.loginForm :global .ant-checkbox-disabled + span {
     color: #ffffff;
 }
 
@@ -704,7 +702,7 @@ select.form-control:focus::-ms-value {
 
 .changer {
     margin-top: 20px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
 }
 
 .changer input {
@@ -717,7 +715,7 @@ select.form-control:focus::-ms-value {
     color: white;
 }
 
-.changer>input:focus-visible {
+.changer > input:focus-visible {
     outline: none;
     margin-right: 10px;
 }
@@ -729,7 +727,6 @@ select.form-control:focus::-ms-value {
 /* #login_from_password{} */
 
 @media (min-width: 997px) and (max-width: 1280px) {
-
     .loginSection .loginMnMlogo img {
         width: 150px;
     }
@@ -783,7 +780,7 @@ select.form-control:focus::-ms-value {
         padding: 2px 10px 0;
     }
 
-    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
+    .loginSection :global .ant-input-affix-wrapper > input.ant-input {
         padding: 2px 5px 3px 5px;
     }
 
@@ -844,10 +841,10 @@ select.form-control:focus::-ms-value {
     }
 }
 
-@media (min-width: 768px) and (max-width: 997px) {}
+@media (min-width: 768px) and (max-width: 997px) {
+}
 
 @media (max-width: 768px) {
-
     .loginSection .loginMnMlogo img {
         width: 120px;
     }
@@ -903,7 +900,7 @@ select.form-control:focus::-ms-value {
         padding: 2px 10px 0;
     }
 
-    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
+    .loginSection :global .ant-input-affix-wrapper > input.ant-input {
         padding: 2px 5px 3px 5px;
     }
 

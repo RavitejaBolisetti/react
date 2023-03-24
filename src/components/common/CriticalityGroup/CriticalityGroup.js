@@ -112,7 +112,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             message,
             description,
             className,
-            duration: 500000000,
             placement,
         });
     };
@@ -165,9 +164,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
-                informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: style.success, placement: 'bottomLeft' });
+                informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
+                informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: style.success2, placement: 'bottomRight' });
             }
         };
 
@@ -378,7 +378,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -386,7 +386,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -513,7 +513,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Button className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            <AiOutlinePlus  />
+                                            <AiOutlinePlus />
                                             Add Group
                                         </Button>
                                     </Col>
@@ -521,7 +521,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
