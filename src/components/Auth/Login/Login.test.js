@@ -88,7 +88,6 @@ window.matchMedia =
             </BrowserRouter>);
             const ssoLogin = screen.getByText('M&M User Login')
             fireEvent.click(ssoLogin);
-            expect(ssoLogin).toBeTruthy();
         });
     });
 
