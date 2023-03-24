@@ -286,18 +286,19 @@ const ForgotPassword = (props) => {
                                                 </div>
                                             </div>
                                         ) :  currentStep === 4 ? (
+                                         
                                             <div className={styles.centerInner}>
                                                 <div className={styles.loginForm}>
                                                     <div className={styles.loginHeading}>
                                                     <h1 className={styles.inputBox}>Create New Password</h1>
-                                                <Form form={form}>
+                                                
                                                     <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
-                                                                        </Form.Item>
-                                                                    </Col>
-                                                                </Row>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                                <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    </Row>
                                                                 <Row gutter={20}>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                         <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
@@ -305,11 +306,12 @@ const ForgotPassword = (props) => {
                                                                         </Form.Item>
                                                                     </Col>
                                                                 </Row>
-                                                                <Button onClick={handleChangedPassword} className={styles.button} type="primary" htmlType="submit">
-                                                                        Submit
-                                                                    </Button>
-                                                                    </Form>
+                                                                <Button onClick={handleChangedPassword} id="login_from" className={styles.button} type="primary" htmlType="submit">
+                                                                    Submit
+                                                                </Button>
+                                                                    
                                                         </div></div></div>
+                                            
                                         ): null}
                                     </div>
                                 </Col>
