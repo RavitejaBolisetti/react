@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('isLoggedIn',isLoggedIn);
+    console.log('isLoggedIn', isLoggedIn);
     return {
         passwordStatus,
         loginUserData,
@@ -261,7 +261,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             )}
 
             <div style={{ clear: 'both' }}></div>
-            <ChangePassword title="Change Your Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
+            <ChangePassword title="Change Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
             <ChangePassword title="Update Your Password" discreption="You have not updated your password from 90 days. Please change your password" isOpen={iUpdatePasswordModalOpen} onOk={() => setUpdatePasswordModalOpen(false)} onCancel={() => setUpdatePasswordModalOpen(false)} />
         </>
     );

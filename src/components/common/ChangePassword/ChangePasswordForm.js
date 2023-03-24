@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
@@ -99,11 +99,11 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
         setConfirmDirty(confirmDirty || !!value);
     };
     return (
-        <Form form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed} className={styles.changePassword}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>
-                        <Input.Password type="text" allowClear placeholder="Enter Old Password" visibilityToggle={true} />
+                        <Input.Password type="text" allowClear placeholder="Enter old password" visibilityToggle={true} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -120,7 +120,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                             },
                         ]}
                     >
-                        <Input.Password type="text" allowClear placeholder="Enter New Password" visibilityToggle={true} />
+                        <Input.Password type="text" allowClear placeholder="Enter new password" visibilityToggle={true} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -137,13 +137,13 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                             },
                         ]}
                     >
-                        <Input.Password type="text" allowClear placeholder="Enter Confirm Password" onBlur={handleConfirmBlur} visibilityToggle={true} />
+                        <Input.Password type="text" allowClear placeholder="Enter confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textCenter}>
-                    <Button style={{ marginTop: '20px' }} type="primary" htmlType="submit">
+                    <Button style={{ marginTop: '6px' }} type="primary" htmlType="submit">
                         Change Password
                     </Button>
                 </Col>
