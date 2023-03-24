@@ -73,6 +73,19 @@
     margin-bottom: 0 !important;
     height: 34px;
 }
+
+.drawerFooterButtons :disabled {
+    background-color: #B5B5B6;
+    color: #ffffff;
+    border-color: white;
+}
+
+.deleteBtn :disabled {
+    background-color: #ffffff;
+    color: #B5B5B6;
+    border-color: white;
+}
+
 .searchAndLabelAlign {
     display: flex;
     align-items: center;

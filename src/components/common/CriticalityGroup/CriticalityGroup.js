@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import { BsTruckFlatbed } from 'react-icons/bs';
 import { DataTable } from 'utils/dataTable';
 import { EditIcon, ViewEyeIcon } from 'Icons';
+import moment from 'moment';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -57,17 +58,11 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const initialTableData = [
-    {
-        critcltyGropCode: 'WOWOO',
-    },
-];
-
 export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
-    const [data, setData] = useState(initialTableData);
+    const [data, setData] = useState(criticalityGroupData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(data.status === 'Y' ? true : false);
@@ -81,6 +76,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [footerEdit, setFooterEdit] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
+    const [successAlert, setSuccessAlert] = useState(false);
+    const [formBtnDisable,setFormBtnDisable] = useState(false)
+
+
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,78 +100,82 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSearchdata(criticalityGroupData);
     }, [RefershData]);
 
-    // const onFinish = (values) => {
+    const onFinish = (values) => {
+        console.log(values);
+        // const notificationprops = {n
+        //     NotificationTitle: 'Group Created Successfully',
+        //     NotificationDescription: 'Your Group Has been Created Referesh to get the results',
+        //     placement: 'bottomRight',
+        //     duration: 0,
+        // };
+        // openNotification({ ...notificationprops });
 
-    //     const arr = values.allowedTimingRequest.map((i) => {
-    //         return {
-    //             serialNumber: 0,
-    //             timeSlotFrom: i.startTime.format('HH:mm'),
-    //             timeSlotTo: i.endTime.format('HH:mm'),
-    //             timeSlotFrom: '2023-03-06T19:04:40.756Z',
-    //             timeSlotTo: '2023-03-06T19:04:40.756Z',
-    //             status: 'Y',
-    //             remarks: 'NO',
-    //             createdDate: '2023-03-06T19:04:40.756Z',
-    //             createdBy: '11111',
-    //             critcltyGropCode: values?.critcltyGropCode,
-    //         };
-    //     });
+        // // <Alerts {...notificationprops} />;
+        // console.log('values n submit', values.defaultGroup ? 'Y' : 'N');
+        // return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
+     
+        const arr = values?.allowedTimingResponse.map((i) => {
+            console.log(i,'i')
+            return {
+                timeSlotFrom: i.timeSlotFrom.format('HH:mm'),
+                timeSlotTo: i.timeSlotTo.format('HH:mm'),
+            };
+        });
 
-    //     const overlapping = (a, b) => {
-    //         const getMinutes = (s) => {
-    //             const p = s.split(':').map(Number);
-    //             return p[0] * 60 + p[1];
-    //         };
-    //         return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
-    //     };
-    //     const isOverlapping = (arr) => {
-    //         let i, j;
-    //         for (i = 0; i < arr.length - 1; i++) {
-    //             for (j = i + 1; j < arr.length; j++) {
-    //                 if (overlapping(arr[i], arr[j])) {
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //         return false;
-    //     };
-    //     console.log(isOverlapping(arr));
-    //     if (isOverlapping(arr) === true) {
-    //         alert('Your timings are overlapping please check again and try');
-    //     } else {
-    //         console.log('ohhho');
-    //         const recordId = formData?.id || '';
-    //         setForceFormReset(Math.random() * 10000);
-    //         const data = { ...values, createdDate: '2023-03-06T19:04:40.756Z', createdBy: userId, allowedTimingRequest: arr };
-    //         const onSuccess = (res) => {
-    //             form.resetFields();
-    //             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-    //             fetchData({ setIsLoading: listShowLoading, userId });
-    //         };
+        // const overlapping = (a, b) => {
+        //     const getMinutes = (s) => {
+        //         const p = s.split(':').map(Number);
+        //         return p[0] * 60 + p[1];
+        //     };
+        //     return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
+        // };
+        // const isOverlapping = (arr) => {
+        //     let i, j;
+        //     for (i = 0; i < arr.length - 1; i++) {
+        //         for (j = i + 1; j < arr.length; j++) {
+        //             if (overlapping(arr[i], arr[j])) {
+        //                 return true;
+        //             }
+        //         }
+        //     }
+        //     return false;
+        // };
+        // console.log(isOverlapping(arr));
+        // if (isOverlapping(arr) === true) {
+        //     alert('Your timings are overlapping please check again and try');
+        // } else {
+        //     console.log('ohhho');
+        //     const recordId = formData?.id || '';
+        //     setForceFormReset(Math.random() * 10000);
+        console.log(arr);
+        const data = { ...values, id: values?.id, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: arr };
 
-    //         const onError = (message) => {
-    //             handleErrorModal(message);
-    //         };
+        const onSuccess = (res) => {
+            form.resetFields();
+            // handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            setSuccessAlert(true)
+            fetchData({ setIsLoading: listShowLoading, userId });
+        };
 
-    //         const requestData = {
-    //             data: [data],
-    //             setIsLoading: listShowLoading,
-    //             userId,
-    //             onError,
-    //             onSuccess,
-    //         };
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+        const requestData = {
+            data: [data],
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
 
-    //         saveData(requestData);
-    //         console.log(requestData, 'requestData');
-    //         setData([...data, values]);
-    //         { values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-    //         setFormData(data);
-    //         setDrawer(false);
-    //     }
+        saveData(requestData);
 
-    //     console.log('the real data', data);
-    //     console.log(formData, 'formData');
-    // };
+        console.log(requestData, 'requestData');
+        // setData([...data, values]);
+        // {...values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
+        setFormData(data);
+       
+    };
 
     const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
         notification.open({
@@ -191,20 +194,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
     };
 
-    const onFinish = (values) => {
-        const notificationprops = {
-            NotificationTitle: 'Group Created Successfully',
-            NotificationDescription: 'Your Group Has been Created Referesh to get the results',
-            placement: 'bottomRight',
-            duration: 0,
-        };
-        openNotification({ ...notificationprops });
-
-        // <Alerts {...notificationprops} />;
-        console.log('values n submit', values.defaultGroup ? 'Y' : 'N');
-        return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
-    };
-
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
@@ -217,10 +206,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         form.resetFields();
         setDrawer(true);
         setIsReadOnly(false);
-        form.setFieldsValue({
-            defaultGroup: 'Y',
-            status: 'Y',
-        });
     };
 
     const handleUpdate = (record) => {
@@ -230,22 +215,60 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
-        // setFormData(record);
-        setSelectedRecord(record);
-        const momentTime = record?.allowedTimingRequest?.map((i) => {
+        console.log(selectedRecord, 'edit');
+        const momentTime = record?.allowedTimingResponse?.map((i) => {
+           console.log('allo',record?.allowedTimingResponse,'aslasl',i.timeSlotFrom)
             return {
-                startTime: dayjs(i.startTime, 'HH:mm'),
-                endTime: dayjs(i.endTime, 'HH:mm'),
+                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
             };
         });
+        console.log(momentTime,'moment');
+         setFormData(record);
+        // setSelectedRecord(record);
+
         form.setFieldsValue({
-            critcltyGropCode: record.critcltyGropCode,
-            critcltyGropName: record.critcltyGropName,
-            defaultGroup: record.defaultGroup === 'Y',
-            status: record.status === 'Y',
+            criticalityGroupCode: record.criticalityGroupCode,
+            criticalityGroupName: record.criticalityGroupName,
+            criticalityDefaultGroup: record.criticalityDefaultGroup,
+            activeIndicator: record.activeIndicator,
+            allowedTimingResponse: momentTime,
+        });
+
+        console.log(selectedRecord);
+
+        console.log(formData, 'formData');
+        setDrawer(true);
+        setIsReadOnly(false);
+        // forceUpdate();
+
+        // formData && setFormData(formData?.data);
+    };
+
+    const handleUpdate2 = () => {
+        // setForceFormReset(Math.random() * 10000);
+        setFormActionType('update');
+
+        setSaveAndSaveNew(false);
+        setFooterEdit(false);
+        setSaveBtn(true);
+        console.log(selectedRecord, 'edit');
+        const momentTime = selectedRecord?.allowedTimingResponse?.map((i) => {
+            console.log('allo',selectedRecord?.allowedTimingResponse,'aslasl',i.timeSlotFrom)
+             return {
+                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
+                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+             };
+         });
+
+        form.setFieldsValue({
+            criticalityGroupCode: selectedRecord.criticalityGroupCode,
+            criticalityGroupName: selectedRecord.criticalityGroupName,
+            criticalityDefaultGroup: selectedRecord.criticalityDefaultGroup,
+            activeIndicator: selectedRecord.activeIndicator,
             allowedTimingRequest: momentTime,
         });
-        console.log(formData, 'formData');
+
         setDrawer(true);
         setIsReadOnly(false);
         // forceUpdate();
@@ -261,19 +284,18 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(false);
         setFooterEdit(true);
         setSaveBtn(false);
-
-        const momentTime = record?.allowedTimingRequest?.map((i) => {
-            return {
-                startTime: dayjs(i.startTime, 'HH:mm'),
-                endTime: dayjs(i.endTime, 'HH:mm'),
-            };
-        });
+        const momentTime = record?.allowedTimingResponse?.map((i) => {
+             return {
+                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
+                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+             };
+         });
         form.setFieldsValue({
-            critcltyGropCode: record.critcltyGropCode,
-            critcltyGropName: record.critcltyGropName,
-            defaultGroup: record.defaultGroup === 'Y',
-            status: record.status === 'Y',
-            allowedTimingRequest: momentTime,
+            criticalityGroupCode: record.criticalityGroupCode,
+            criticalityGroupName: record.criticalityGroupName,
+            criticalityDefaultGroup: record.criticalityDefaultGroup,
+            activeIndicator: record.activeIndicator,
+            allowedTimingResponse: momentTime,
         });
         setDrawer(true);
         setIsReadOnly(true);
@@ -309,7 +331,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             return;
         }
         if (getSearch.length > -1) {
-            const searchResult = criticalityGroupData.filter((record) => record.critcltyGropCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.critcltyGropDesc.toLowerCase().startsWith(e.target.value.toLowerCase()));
+            const searchResult = criticalityGroupData.filter((record) => record.criticalityGroupCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.criticalityGroupName.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
         }
         console.log(e.target.value);
@@ -327,30 +349,30 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group ID',
-            dataIndex: 'critcltyGropCode',
+            dataIndex: 'criticalityGroupCode',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Criticality Group Name',
-            dataIndex: 'critcltyGropName',
+            dataIndex: 'criticalityGroupName',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Default Group',
-            dataIndex: 'defaultGroup',
-            render: (text, record) => <>{text === 'Y' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
+            dataIndex: 'criticalityDefaultGroup',
+            render: (text, record) => <>{text === '1' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'status',
-            render: (text, record) => <>{text === 'Y' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
+            dataIndex: 'activeIndicator',
+            render: (text, record) => <>{text === '1' ? <div className={style.activeInactiveText}>Active</div> : <div className={style.activeInactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -404,7 +426,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
-                            {initialTableData?.length ? (
+                            {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Button className="button" onClick={handleReferesh} danger ghost>
                                         <TfiReload />
@@ -418,36 +440,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             ) : (
                                 ''
                             )}
-                            {/* <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                        <Button danger onClick={handleAdd}>
-                                            <TfiReload className={styles.buttonIcon} />
-                                        </Button>
-                                    </Col>
-                                    <Col>
-                                        <Button danger onClick={handleAdd}>
-                                            <AiOutlinePlus className={styles.buttonIcon} />
-                                            Add Group
-                                        </Button>
-                                    </Col>
-                                </Row> */}
+                          
                         </Row>
                     </div>
                 </Col>
             </Row>
 
-            <DrawerUtil form={form} saveBtn={saveBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} footerEdit={footerEdit} handleUpdate={handleUpdate} saveAndSaveNew={saveAndSaveNew} setSaveAndSaveNew={setSaveAndSaveNew} setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord}  handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
-            {/* <Form
-                form={form}
-                initialValues={{
-                    defaultGroup: form.getFieldValue('defaultGroup'),
-                }}
-                id="myForm"
-                layout="vertical"
-                colon={false}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            ></Form> */}
+            <DrawerUtil setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} successAlert={successAlert} handleUpdate2={handleUpdate2} form={form} saveBtn={saveBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} footerEdit={footerEdit} handleUpdate={handleUpdate} saveAndSaveNew={saveAndSaveNew} setSaveAndSaveNew={setSaveAndSaveNew} setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -477,7 +477,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
