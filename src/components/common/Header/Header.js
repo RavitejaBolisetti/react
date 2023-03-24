@@ -34,7 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('isLoggedIn',isLoggedIn);
     return {
         passwordStatus,
         loginUserData,
@@ -115,9 +114,9 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                 }),
             ],
         }),
-        customMenuLink({
-            title: 'Financial Year',
-        }),
+        // customMenuLink({
+        //     title: 'Financial Year',
+        // }),
     ];
 
     const userSettingMenu = [
@@ -146,27 +145,32 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         //     icon: <FaUserMd />,
         // }),
 
-        customMenuLink({
-            key: '5',
-            title: 'Change Password',
-            icon: <MdOutlineChangeCircle />,
-            onClick: () => setChangePasswordModalOpen(true),
-        }),
-
         // customMenuLink({
         //     key: '6',
         //     title: 'Update Your Password',
         //     icon: <AiFillSetting />,
         //     onClick: () => setUpdatePasswordModalOpen(true),
         // }),
+    ];
 
+    userType === 'DLR' &&
+        userSettingMenu.push(
+            customMenuLink({
+                key: '5',
+                title: 'Change Password',
+                icon: <MdOutlineChangeCircle />,
+                onClick: () => setChangePasswordModalOpen(true),
+            })
+        );
+
+    userSettingMenu.push(
         customMenuLink({
             key: '7',
             title: 'Logout',
             onClick: showConfirm,
             icon: <FiLogOut />,
-        }),
-    ];
+        })
+    );
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
@@ -179,17 +183,26 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                         <Col xs={24} sm={24} md={10} lg={12} xl={12} xxl={12}>
                             <div className={styles.headerLeft}>
                                 <Space>
-                                    <div className={styles.userAvatar}>
+                                    {/* <div className={styles.userAvatar}>
                                         <Avatar shape="square" size="large" className={styles.userAvatarInside}>
                                             {dealerAvatar}
                                         </Avatar>
-                                    </div>
+                                    </div> */}
                                     <div className={styles.userText}>
                                         <div className={styles.dealerName}>{dealerName}</div>
-                                        <span className={styles.userServiceArea}>{dealerLocation}</span>
+                                        <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                        {userType === 'DLR' && (
+                                            <Dropdown className={styles.dropdownIcon} menu={{ items }} trigger={['click']}>
+                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
+                                                    <DownOutlined />
+                                                </a>
+                                            </Dropdown>
+                                        )}{' '}
+                                        <span className={styles.seprator}>|</span>
+                                        <span className={styles.dealerLocation}>FY2023</span>
                                         {userType === 'DLR' && (
                                             <Dropdown menu={{ items }} trigger={['click']}>
-                                                <a className={styles.navLink} data-toggle="dropdown" href="/">
+                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
                                                     <DownOutlined />
                                                 </a>
                                             </Dropdown>
@@ -237,16 +250,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div>{fullName}</div>
-                                                    <span className={styles.userServiceArea}>
-                                                        {mobileNo}
-                                                        <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                            <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                        <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                            <span className={styles.userServiceArea}>
+                                                                {mobileNo}
                                                                 <Space>
                                                                     <DownOutlined />
                                                                 </Space>
-                                                            </Link>
-                                                        </Dropdown>
-                                                    </span>
+                                                            </span>
+                                                        </Link>
+                                                    </Dropdown>
                                                 </div>
                                             </Space>
                                         </div>
@@ -261,7 +274,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             )}
 
             <div style={{ clear: 'both' }}></div>
-            <ChangePassword title="Change Your Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
+            <ChangePassword title="Change Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
             <ChangePassword title="Update Your Password" discreption="You have not updated your password from 90 days. Please change your password" isOpen={iUpdatePasswordModalOpen} onOk={() => setUpdatePasswordModalOpen(false)} onCancel={() => setUpdatePasswordModalOpen(false)} />
         </>
     );

@@ -57,11 +57,11 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
     const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
         return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
     };
-    const onOk = (value) => {};
+    const onOk = (value) => { };
 
     const handleForm = () => {
-        setFormBtnDisable(true)
-    }
+        setFormBtnDisable(true);
+    };
 
     return (
         <Drawer
@@ -79,7 +79,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             {saveBtn ? (
-                                <Button disabled={!formBtnDisable} onClick={()=>setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                <Button disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
                                 </Button>
                             ) : (
@@ -87,13 +87,13 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                             )}
                             {saveAndSaveNew ? (
                                 <Button disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save and New
+                                    Save & Add New
                                 </Button>
                             ) : (
                                 ''
                             )}
                             {footerEdit ? (
-                                <Button  onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Edit
                                 </Button>
                             ) : (
@@ -177,20 +177,20 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col>
-                        <p>Allowed Timings</p>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <p className={style.allowedTimingAlignment}>Allowed Timings</p>
                     </Col>
                 </Row>
 
                 <Form.List
                     // required rules={[validateRequiredInputField('Allowed Timings')]}
                     name="allowedTimingResponse"
-                    // initialValue={momentTime}
+                // initialValue={momentTime}
                 >
                     {(fields, { add, remove }) => (
                         <>
-                            <Row span={24}>
-                                <Col span={24} className={style.addTimeBtn}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
                                     <Button type="link" color="#FF3E5B" {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
                                         Add Time
                                     </Button>
@@ -243,10 +243,9 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                                             >
                                                 <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                             </Form.Item>
-                                            <Button className={style.deleteBtn} 
-                                            {...disabledProps} 
-                                            disabled
-                                            danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
+                                            <Button className={style.deleteBtn}
+                                                {...disabledProps}
+                                                danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
                                                 <LinearTrash />
                                             </Button>
                                         </Space>
