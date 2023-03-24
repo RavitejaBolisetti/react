@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { authLoggingError, doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
@@ -62,6 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const pagePath = location.pathname;
+
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);
 
@@ -177,13 +180,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         setCollapsed(!collapsed);
     };
     const onSearch = (value) => console.log(value);
-
+    const isDashboard = pagePath === routing.ROUTING_DASHBOARD;
     return (
         <>
             {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row gutter={0} className={styles.columnInterchange}>
-                        <Col xs={24} sm={24} md={10} lg={9} xl={9} xxl={9}>
+                        <Col xs={24} sm={24} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                             <div className={styles.headerLeft}>
                                 <Space>
                                     {/* <div className={styles.userAvatar}>
@@ -216,12 +219,15 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                 </Space>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={10} lg={7} xl={7} xxl={7}>
-                            <div className={styles.headerRight} style={{ width: '100%' }}>
-                                <Search allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={14} lg={8} xl={8} xxl={8}>
+
+                        {pagePath === routing.ROUTING_DASHBOARD && (
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7} xxl={7}>
+                                <div className={styles.headerRight} style={{ width: '100%' }}>
+                                    <Search allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+                                </div>
+                            </Col>
+                        )}
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>

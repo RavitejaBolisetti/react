@@ -392,23 +392,29 @@
   width: 100%;
   bottom: 0;
   padding: 10px 5px;
-  -webkit-box-shadow: 0px -1px 2px 0px rgba(0,0,0,0.29);
--moz-box-shadow: 0px -1px 2px 0px rgba(0,0,0,0.29);
-box-shadow: 0px -1px 2px 0px rgba(0,0,0,0.29);
+  -webkit-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
+  -moz-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
+  box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
 }
-.lightTheme, .lightThemeActive, .darkTheme, .darkThemeActive{
+
+.lightTheme,
+.lightThemeActive,
+.darkTheme,
+.darkThemeActive {
   width: 50%;
   margin: 0px !important;
-  padding:0px !important;
+  padding: 0px !important;
   display: flex;
   align-items: center;
 }
-.lightTheme, .darkTheme{
+
+.lightTheme,
+.darkTheme {
   border: none !important;
-  color:#000 !important;
+  color: #000 !important;
 }
 
-.changeTheme svg{
+.changeTheme svg {
   margin: 0px !important;
 }
 
@@ -443,10 +449,10 @@ box-shadow: 0px -1px 2px 0px rgba(0,0,0,0.29);
   vertical-align: sub;
 } */
 
-/* .leftMenuBox li.subMenuItem:hover {
+.leftMenuBox li.subMenuItemNew:hover {
   color: #ea2929 !important;
-  background: #ffffff !important;
-} */
+  background: transparent !important;
+}
 
 /* .subMenuItem {
   color: #0458f7 !important;
