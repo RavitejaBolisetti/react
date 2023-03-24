@@ -21,7 +21,7 @@ import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
-import { HeadPhoneIcon, MenuArrow } from 'Icons';
+import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, SettingsIcon } from 'Icons';
 import { MdOutlineChangeCircle } from 'react-icons/md';
 
 const { confirm } = Modal;
@@ -125,13 +125,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '1',
             title: 'My Profile',
             link: routing.ROUTING_USER_PROFILE,
-            icon: <FaRegIdBadge />,
+            icon: <ProfileIcon />,
         }),
         customMenuLink({
             key: '2',
             title: 'Settings',
             link: routing.ROUTING_USER_SETTING,
-            icon: <AiFillSetting />,
+            icon: <SettingsIcon />,
         }),
         // customMenuLink({
         //     key: '3',
@@ -149,7 +149,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         customMenuLink({
             key: '5',
             title: 'Change Password',
-            icon: <MdOutlineChangeCircle />,
+            icon: <ChangePasswordIcon />,
             onClick: () => setChangePasswordModalOpen(true),
         }),
 
@@ -164,7 +164,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '7',
             title: 'Logout',
             onClick: showConfirm,
-            icon: <FiLogOut />,
+            icon: <LogoutIcon />,
         }),
     ];
     const handleCollapse = () => {
