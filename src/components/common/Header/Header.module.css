@@ -6,6 +6,10 @@
     height: 64px;
 }
 
+.headerContainer {
+    font-family: 'Lato' !important;
+}
+
 .headerLeft {
     padding-left: 32px;
 }
@@ -13,7 +17,6 @@
 .userAvatar {
     padding-top: 12px;
 }
-
 
 .userAvatarSkeleton {
     padding-top: 0px;
