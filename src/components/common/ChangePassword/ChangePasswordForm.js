@@ -8,6 +8,7 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
+import styles from './ChangePasswordForm.module.css';
 
 const mapStateToProps = (state) => {
     const {

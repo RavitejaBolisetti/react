@@ -31,12 +31,14 @@ const MainPageBase = ({ doLogout }) => {
     const pagePath = location.pathname;
 
     const isLoggedIn = !!(localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN) && localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID));
-   
+
     useEffect(() => {
         if (!isLoggedIn && pagePath === ROUTING_SSO_LOGIN) {
             navigate(ROUTING_SSO_LOGIN);
-        } else if (!isLoggedIn && pagePath === ROUTING_LOGIN) {
-            navigate(ROUTING_LOGIN);
+        } else if (!isLoggedIn && pagePath === ROUTING_UPDATE_PASSWORD) {
+            navigate(ROUTING_UPDATE_PASSWORD);
+        } else if (!isLoggedIn && pagePath === ROUTING_FORGOT_PASSWORD) {
+            navigate(ROUTING_FORGOT_PASSWORD);
         } else if (isLoggedIn && (pagePath === ROUTING_LOGIN || pagePath === ROUTING_UPDATE_PASSWORD || pagePath === ROUTING_FORGOT_PASSWORD)) {
             navigate(ROUTING_DASHBOARD);
         } else if (!isLoggedIn) {
