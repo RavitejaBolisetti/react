@@ -6,6 +6,10 @@
     height: 64px;
 }
 
+.headerContainer {
+    font-family: 'Lato' !important;
+}
+
 .headerLeft {
     padding-left: 32px;
 }
@@ -13,7 +17,6 @@
 .userAvatar {
     padding-top: 12px;
 }
-
 
 .userAvatarSkeleton {
     padding-top: 0px;
@@ -60,6 +63,8 @@
     color: #342C2C;
     font-size: 16px;
     padding-bottom: 2px;
+    font-weight: 700;
+    line-height: 24px;
 }
 
 .dealerLocation {
@@ -206,13 +211,18 @@
     color: #ff3e5b;
 }
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child,
+/* :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child,
 :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:last-child {
     color: #ff3e5b !important;
-}
+} */
 
 .welcomeUser .userServiceArea {
     float: right;
+}
+
+.headerRight :global .ant-btn-default {
+    background-color: #ffffff;
+    font-size: 16px;
 }
 
 .welcomeUser .navLink:hover,
