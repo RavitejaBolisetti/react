@@ -201,14 +201,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </a>
                                             </Dropdown>
                                         )}{' '}
-                                        <span className={styles.seprator}>|</span>
-                                        <span className={styles.dealerLocation}>FY2023</span>
                                         {userType === 'DLR' && (
-                                            <Dropdown menu={{ items }} trigger={['click']}>
-                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                    <DownOutlined />
-                                                </a>
-                                            </Dropdown>
+                                            <>
+                                                <span className={styles.seprator}>|</span>
+                                                <span className={styles.dealerLocation}>FY2023</span>
+                                                <Dropdown menu={{ items }} trigger={['click']}>
+                                                    <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
+                                                        <DownOutlined />
+                                                    </a>
+                                                </Dropdown>
+                                            </>
                                         )}
                                     </div>
                                 </Space>

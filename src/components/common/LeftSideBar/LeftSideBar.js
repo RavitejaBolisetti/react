@@ -51,7 +51,10 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
+    // const finalMenuData = { ...menuData };
+    console.log("🚀 ~ file: LeftSideBar.js:55 ~ mapStateToProps ~ finalMenuData:", menuData)
+
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, isMobile, collapsed };
     return returnValue;
 };
 
@@ -157,12 +160,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     </Row>
 
                     {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
-                    {/* <Row>
-                        <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                            <span className={styles.menuIcon}><HomeIcon /></span>
-                            HOME
-                        </Link>
-                    </Row> */}
                 </div>
                 {!isLoading ? (
                     <>
@@ -177,14 +174,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
-                            <Row>
+                            {/* <Row>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
                                         <HomeIcon />
                                     </span>
                                     HOME
                                 </Link>
-                            </Row>
+                            </Row> */}
                             {prepareMenuItem(menuData)}
                         </Menu>
                     </>
