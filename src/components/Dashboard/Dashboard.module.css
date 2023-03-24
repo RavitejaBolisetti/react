@@ -1,3 +1,7 @@
+.dashboardContainer {
+  font-family: 'Lato' !important;
+}
+
 .dashboardContainer :global .ant-card .ant-card-head-title {
   font-size: 1rem;
   float: left;
