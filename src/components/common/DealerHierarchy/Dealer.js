@@ -141,6 +141,9 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinish = (values) => {
+
+        console.log(values,'Initial Data');
+
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
@@ -152,6 +155,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         const customFormInput = { [parentGroupForm]: null, [companyGroupForm]: null, [gstinGroupForm]: null, [branchGroupForm]: null };
 
         const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: 'Y' } };
+
+        console.log(data,'Final Data');
 
         const onSuccess = (res) => {
             form.resetFields();

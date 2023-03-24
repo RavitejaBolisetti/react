@@ -34,7 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('isLoggedIn', isLoggedIn);
     return {
         passwordStatus,
         loginUserData,

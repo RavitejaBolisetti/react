@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Modal, Row } from 'antd';
 import { ChangePasswordForm } from './ChangePasswordForm';
 
-export const ChangePassword = ({ isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     return (
         <>
             <Modal open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onCancel={onCancel} width={480}>
