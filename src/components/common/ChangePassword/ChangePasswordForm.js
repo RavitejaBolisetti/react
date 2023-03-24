@@ -141,13 +141,10 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => {}, onCancel = () => 
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textCenter}>
                     <Button style={{ marginTop: '20px' }} type="primary" htmlType="submit">
-                        Submit
+                        Change Password
                     </Button>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                    <Button style={{ marginTop: '20px' }}>Cancel</Button>
                 </Col>
             </Row>
         </Form>
