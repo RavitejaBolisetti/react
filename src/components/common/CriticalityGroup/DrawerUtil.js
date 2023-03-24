@@ -13,7 +13,7 @@ import style from './criticatiltyGroup.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import moment from 'moment';
 
-const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
 
@@ -59,8 +59,8 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
     const onOk = (value) => {};
 
     const handleForm = () => {
-        setFormBtnDisable(true)
-    }
+        setFormBtnDisable(true);
+    };
 
     return (
         <Drawer
@@ -77,7 +77,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             {saveBtn ? (
-                                <Button disabled={!formBtnDisable} onClick={()=>setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                <Button disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
                                 </Button>
                             ) : (
@@ -91,7 +91,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                                 ''
                             )}
                             {footerEdit ? (
-                                <Button  onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Edit
                                 </Button>
                             ) : (
@@ -241,10 +241,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                                             >
                                                 <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                             </Form.Item>
-                                            <Button className={style.deleteBtn} 
-                                            {...disabledProps} 
-                                            disabled
-                                            danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
+                                            <Button className={style.deleteBtn} {...disabledProps} disabled danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
                                                 <LinearTrash />
                                             </Button>
                                         </Space>
