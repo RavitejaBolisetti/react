@@ -3,6 +3,7 @@ import { Logins } from './Login';
 import { ForgotPassword } from "../ForgotPassword";
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter,Route,Routes,MemoryRouter } from "react-router-dom"
+import * as scanner from 'sonarqube-scanner';
 import { async } from "sonarqube-scanner";
 
 jest.mock('react-redux', () => ({

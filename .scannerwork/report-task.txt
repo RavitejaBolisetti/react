@@ -1,6 +1,6 @@
-projectKey=LoginDMS
+projectKey=DMS2
 serverUrl=http://localhost:8094
 serverVersion=9.9.0.65466
-dashboardUrl=http://localhost:8094/dashboard?id=LoginDMS
-ceTaskId=AYcOfTgPcWBS6NI6mVWp
-ceTaskUrl=http://localhost:8094/api/ce/task?id=AYcOfTgPcWBS6NI6mVWp
+dashboardUrl=http://localhost:8094/dashboard?id=DMS2
+ceTaskId=AYcOmC4FcWBS6NI6mVW4
+ceTaskUrl=http://localhost:8094/api/ce/task?id=AYcOmC4FcWBS6NI6mVW4
