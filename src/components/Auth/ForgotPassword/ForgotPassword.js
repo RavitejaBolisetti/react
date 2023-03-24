@@ -57,6 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
 const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
+    const [currentStep, setCurrentStep] = useState(1);
+    const [selectedUserId, setSelectedUserId] = useState();
     const [showFields, setShowFields] = useState(false);
     const [resend, setresend] = useState(false);
     const [userId, setuserId] = useState(true);
@@ -119,11 +121,49 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         });
     };
 
-    const verifyUserbtn = () => {
+    const handleVerifyUser = () => {
         setverifyUser(true);
         setShowFields(true);
-        setuserId(false);    
-        
+        setuserId(false);
+        const userId = form.getFieldValue('userId');
+
+        if (userId) {
+            //APi Call
+            setSelectedUserId(userId);
+            setCurrentStep(2);
+        }
+    };
+
+    const handleSendOTP = () => {
+        const userId = form.getFieldValue('userId');
+        if (userId) {
+            //APi Call
+            alertNotification.open({
+                icon: <CheckCircleOutlined />,
+                message: 'Success',
+                description: 'OTP send successfully',
+                duration: 5,
+                className: styles.success,
+            });
+            setSelectedUserId(userId);
+            setCurrentStep(3);
+        }
+    };
+
+    const handleVerifyOTP = () => {
+        const userId = form.getFieldValue('userId');
+        if (userId) {
+            alertNotification.open({
+                icon: <CheckCircleOutlined />,
+                message: 'Success',
+                description: 'OTP verified successfully',
+                duration: 5,
+                className: styles.success,
+            });
+            //APi Call
+            setSelectedUserId(userId);
+            setCurrentStep(4);
+        }
     };
     const onFinish= (values)=>{
         const data = { ...values };
@@ -214,7 +254,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => verifyUserbtn()} className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                            <Button onClick={() => handleVerifyUser()} className={styles.button} id="login_from" type="primary" htmlType="submit">
                                                                 Verify User
                                                             </Button>
                                                         </Col>
@@ -238,7 +278,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     </div>
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={20} xl={24}>
-                                                            <Form.Item initialValue={'11111'} style={{ width: '80%', textAlign: 'center', margin: '0 auto' }} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                            <Form.Item initialValue={selectedUserId} style={{ width: '80%', textAlign: 'center', margin: '0 auto' }} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
                                                                 <Input disabled prefix={<BiUser size={18} />} type="text" placeholder="User id, mobile no, or email id" />
                                                             </Form.Item>
                                                         </Col>
@@ -267,7 +307,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => verifyUserbtn()} className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                            <Button onClick={() => handleSendOTP()} className={styles.button} id="login_from" type="primary" htmlType="submit">
                                                                 Send OTP
                                                             </Button>
                                                         </Col>
@@ -286,58 +326,59 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                             <div className={styles.centerInner}>
                                                 <div className={styles.loginForm}>
                                                     <div className={styles.loginHeading}>
-                                                    <h1>OTP Verification</h1>
-                                                                    <div className={styles.loginSubHeading}>
-                                                                        Please enter 6 digit OTP sent to your <br></br> registered mobile number +91-96 XXXX XXXX
-                                                                    </div></div>
+                                                        <h1>OTP Verification</h1>
+                                                        <div className={styles.loginSubHeading}>
+                                                            Please enter 6 digit OTP sent to your <br></br> registered mobile number +91-96 XXXX XXXX
+                                                        </div>
+                                                    </div>
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <div className={styles.checkColor}> Enter Otp </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <OTPInput className={styles.changer} value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false} />
+                                                        </Col>
+                                                    </Row>
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            {counter != 0 ? (
+                                                                <>
                                                                     <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <div className={styles.checkColor}> Enter Otp </div>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <OTPInput className={styles.changer} value={value} onChange={handleChange} autoFocus OTPLength={6} disabled={false} />
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        {counter != 0 ? (
-                                                                            <>
-                                                                                <Row gutter={20}>
-                                                                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                                        <div className={styles.checkColor}>
-                                                                                            00:{counter > 9 ? null : '0'}
-                                                                                            {counter}s
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                                                        <div onClick={() => setCounter(30)} className={styles.resendDisabled} type="radio">
-                                                                                            <UndoOutlined /> Resend OTP
-                                                                                        </div>
-                                                                                    </Col>{' '}
-                                                                                </Row>
-                                                                            </>
-                                                                        ) : (
-                                                                            <>
-                                                                                <Row gutter={20}>
-                                                                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                                        <div className={styles.checkColor}>Didn't receive OTP?</div>
-                                                                                    </Col>
-                                                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                                                                        <div onClick={() => Alert()} className={styles.resendEnabled} type="radio">
-                                                                                            <UndoOutlined /> Resend OTP
-                                                                                        </div>
-                                                                                    </Col>{' '}
-                                                                                </Row>{' '}
-                                                                            </>
-                                                                        )}
-                                                                    </Col>
-                                                                </Row>
+                                                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                                                            <div className={styles.checkColor}>
+                                                                                00:{counter > 9 ? null : '0'}
+                                                                                {counter}s
+                                                                            </div>
+                                                                        </Col>
+                                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                                            <div onClick={() => setCounter(30)} className={styles.resendDisabled} type="radio">
+                                                                                <UndoOutlined /> Resend OTP
+                                                                            </div>
+                                                                        </Col>{' '}
+                                                                    </Row>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <Row gutter={20}>
+                                                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                                                            <div className={styles.checkColor}>Didn't receive OTP?</div>
+                                                                        </Col>
+                                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                                            <div onClick={() => Alert()} className={styles.resendEnabled} type="radio">
+                                                                                <UndoOutlined /> Resend OTP
+                                                                            </div>
+                                                                        </Col>{' '}
+                                                                    </Row>{' '}
+                                                                </>
+                                                            )}
+                                                        </Col>
+                                                    </Row>
 
-                                                                <Button onClick={handleNewPassword} className={styles.button} type="primary" htmlType="submit">
-                                                                        Verify OTP
-                                                                    </Button>
+                                                    <Button onClick={handleVerifyOTP} className={styles.button} type="primary" htmlType="submit">
+                                                        Verify OTP
+                                                    </Button>
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -348,32 +389,33 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     </Row>
                                                 </div>
                                             </div>
-                                        ) :  currentStep === 4 ? (
+                                        ) : currentStep === 4 ? (
                                             <div className={styles.centerInner}>
                                                 <div className={styles.loginForm}>
                                                     <div className={styles.loginHeading}>
-                                                    <h1 className={styles.inputBox}>Create New Password</h1>
-                                                <Form form={form}>
-                                                    <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
-                                                                        </Form.Item>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row gutter={20}>
-                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                        <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
-                                                                            <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
-                                                                        </Form.Item>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Button onClick={handleChangedPassword} className={styles.button} type="primary" htmlType="submit">
-                                                                        Submit
-                                                                    </Button>
-                                                                    </Form>
-                                                        </div></div></div>
-                                        ): null}
+                                                        <h1 className={styles.inputBox}>Create New Password</h1>
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                                    <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
+                                                                    <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
+                                                        <Button onClick={handleChangedPassword} id="login_from" className={styles.button} type="primary" htmlType="submit">
+                                                            Submit
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : null}
                                     </div>
                                 </Col>
                             </Row>
