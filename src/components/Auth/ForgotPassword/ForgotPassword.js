@@ -37,6 +37,19 @@ const ForgotPassword = (props) => {
     const [password, setPassword] = useState(false);
     const [passwordChanged, setPasswordChanged] = useState(false);
 
+    const tailFormItemLayout = {
+        wrapperCol: {
+          xs: {
+            span: 24,
+            offset: 0,
+          },
+          sm: {
+            span: 16,
+            offset: 8,
+          },
+        },
+      };
+
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,6 +167,18 @@ const ForgotPassword = (props) => {
         setValue(event);
     };
 
+    const [mobileCheckBox, setMobileCheckBox] = useState(true);
+    const [emailCheckBox, setEmailCheckBox] = useState(true);
+
+  const mobileCheckBoxChange = (event) => {
+    console.log(event.target.checked,'Final Chek');
+    setMobileCheckBox(event.target.checked);
+  }
+
+  const emailCheckBoxChange = (event) => {
+    setEmailCheckBox(event.target.checked);
+  }
+
     return (
         <>
             {contextAlertNotification}
@@ -227,28 +252,50 @@ const ForgotPassword = (props) => {
                                                         </Col>
                                                     </Row>
 
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Checkbox className={styles.registered} defaultChecked="true">
-                                                                Registered Mobile Number
-                                                            </Checkbox>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Checkbox className={styles.registered} defaultChecked="true">
-                                                                Registered Mail ID
-                                                            </Checkbox>
-                                                        </Col>
-                                                    </Row>
 
+                                                    <Form.Item
+                                                        name="agreement"
+                                                        valuePropName="checked"
+                                                        rules={[
+                                                            {
+                                                            validator: (_, value) =>
+                                                            mobileCheckBox || emailCheckBox ? Promise.resolve() : Promise.reject(new Error('Please choose at least one option')),
+                                                            },
+                                                        ]}
+                                                    >
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Checkbox className={styles.registered} defaultChecked="true"
+                                                                    onChange={mobileCheckBoxChange}
+                                                                >
+                                                                    Registered Mobile Number
+                                                                </Checkbox>
+                                                            </Col>
+                                                        </Row>
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Checkbox className={styles.registered} defaultChecked="true"
+                                                                    onChange={emailCheckBoxChange}
+                                                                >
+                                                                    Registered Mail ID
+                                                                </Checkbox>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Form.Item>
+
+                                                    <Form.Item >
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => handleSendOTP()} className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                            <Button className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                            {/* onClick={() => handleSendOTP()}  */}
                                                                 Send OTP
                                                             </Button>
                                                         </Col>
                                                     </Row>
+                                                    </Form.Item>
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -346,9 +393,11 @@ const ForgotPassword = (props) => {
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
+                                                        
                                                         <Button onClick={handleChangedPassword} id="login_from" className={styles.button} type="primary" htmlType="submit">
                                                             Submit
                                                         </Button>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
