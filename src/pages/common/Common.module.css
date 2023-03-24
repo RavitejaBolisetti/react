@@ -417,3 +417,12 @@
     margin-right: 10px;
     transform: scaleX(-1);
 }
+
+.contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+
+    border-left: #ffffff ;
+}
+
+.contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+    border-left:  #ff3e5b;
+}

@@ -175,7 +175,7 @@ const DrawerUtil = ({ formBtnDisable,setFormBtnDisable,successAlert, handleUpdat
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col>
+                    <Col style={{display: 'flex',justifyContent:'start',marginLeft:'-27px'}}>
                         <p>Allowed Timings</p>
                     </Col>
                 </Row>
@@ -243,7 +243,6 @@ const DrawerUtil = ({ formBtnDisable,setFormBtnDisable,successAlert, handleUpdat
                                             </Form.Item>
                                             <Button className={style.deleteBtn} 
                                             {...disabledProps} 
-                                            disabled
                                             danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
                                                 <LinearTrash />
                                             </Button>

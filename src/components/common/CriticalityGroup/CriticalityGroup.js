@@ -10,6 +10,7 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
+// import styles2 from '../Common.module.css'
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -138,7 +139,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
-        console.log("🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:", recordId)
+        console.log('🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:', recordId);
         delete data?.allowedTimingResponse;
 
         const onSuccess = (res) => {
@@ -187,7 +188,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-        form.resetFields();
+        // form.resetFields();
         setDrawer(true);
         setIsReadOnly(false);
     };
@@ -198,6 +199,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
+        setSelectedRecord(record);
         console.log(selectedRecord, 'edit');
         const momentTime = record?.allowedTimingResponse?.map((i) => {
             console.log('allo', record?.allowedTimingResponse, 'aslasl', i.timeSlotFrom);
@@ -326,6 +328,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'Srl',
+            render: (text, record, index) => {
+                return index + 1;
+            },
         })
     );
 
@@ -412,7 +417,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Col>
                             {searchData?.length ? (
                                 <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Button className="button" onClick={handleReferesh} danger ghost>
+                                    <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
 
