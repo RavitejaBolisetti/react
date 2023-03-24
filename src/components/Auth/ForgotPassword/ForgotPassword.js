@@ -216,7 +216,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         setValue(event);
     };
 
-    const currentStep = 1;
+    
     return (
         <>
             {contextAlertNotification}
