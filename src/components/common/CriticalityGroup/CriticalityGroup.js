@@ -5,7 +5,7 @@ import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Sele
 import { TfiReload } from 'react-icons/tfi';
 
 import { FaEdit } from 'react-icons/fa';
-import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
@@ -80,6 +80,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
         form.resetFields();
@@ -102,6 +103,17 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSearchdata(criticalityGroupData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
+
+    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
+        alertNotification.open({
+            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
+            message,
+            description,
+            className,
+            duration: 500000000,
+            placement,
+        });
+    };
 
     const onFinish = (values) => {
         console.log('SUBMIT', values);
@@ -151,13 +163,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
+                informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: style.success, placement: 'bottomLeft' });
             } else {
                 setDrawer(true);
             }
         };
 
         const onError = (message) => {
-            handleErrorModal(message);
+            // handleErrorModal(message);
+            informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
         };
 
         const requestData = {
@@ -196,7 +210,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-        // form.resetFields();
+        //  form.resetFields();
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
@@ -395,6 +409,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
     return (
         <>
+            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
@@ -470,6 +485,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
                 saveandnewclick={saveandnewclick}
+                contextAlertNotification={contextAlertNotification}
             />
 
             <Row gutter={20}>
