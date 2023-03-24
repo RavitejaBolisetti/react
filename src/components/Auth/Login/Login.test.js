@@ -3,7 +3,6 @@ import { Logins } from './Login';
 import { ForgotPassword } from "../ForgotPassword";
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter,Route,Routes,MemoryRouter } from "react-router-dom"
-import * as scanner from 'sonarqube-scanner';
 import { async } from "sonarqube-scanner";
 
 jest.mock('react-redux', () => ({
@@ -80,6 +79,16 @@ window.matchMedia =
             expect(userId).toBeTruthy();
             expect(forgotPasswordLink).toBeTruthy();
             expect(generateOtpBtn).toBeInTheDocument();
+        });
+        test('M&M SSO Login Link ' , async() => {
+            render(<BrowserRouter>
+                <Routes>   
+                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorTitle="Information" errorMessage = {errorMessage} isError={true} />}/>
+                </Routes>
+            </BrowserRouter>);
+            const ssoLogin = screen.getByText('M&M User Login')
+            fireEvent.click(ssoLogin);
+            expect(ssoLogin).toBeTruthy();
         });
     });
 
