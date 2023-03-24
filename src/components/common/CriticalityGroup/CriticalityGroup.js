@@ -77,8 +77,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [footerEdit, setFooterEdit] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
-    const [formBtnDisable,setFormBtnDisable] = useState(false)
-
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
 
     useEffect(() => {
         form.resetFields();
@@ -101,7 +100,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     }, [RefershData]);
 
     const onFinish = (values) => {
-        console.log(values);
         // const notificationprops = {n
         //     NotificationTitle: 'Group Created Successfully',
         //     NotificationDescription: 'Your Group Has been Created Referesh to get the results',
@@ -113,14 +111,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // // <Alerts {...notificationprops} />;
         // console.log('values n submit', values.defaultGroup ? 'Y' : 'N');
         // return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
-     
-        const arr = values?.allowedTimingResponse.map((i) => {
-            console.log(i,'i')
-            return {
-                timeSlotFrom: i.timeSlotFrom.format('HH:mm'),
-                timeSlotTo: i.timeSlotTo.format('HH:mm'),
-            };
-        });
+
+        // const arr = values?.allowedTimingResponse.map((i) => {
+        //     console.log(i, 'i');
+        //     return {
+        //         timeSlotFrom: i.timeSlotFrom.format('HH:mm'),
+        //         timeSlotTo: i.timeSlotTo.format('HH:mm'),
+        //     };
+        // });
 
         // const overlapping = (a, b) => {
         //     const getMinutes = (s) => {
@@ -147,13 +145,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         //     console.log('ohhho');
         //     const recordId = formData?.id || '';
         //     setForceFormReset(Math.random() * 10000);
-        console.log(arr);
-        const data = { ...values, id: values?.id, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: arr };
+        // console.log(arr);
+        const data = { ...values, id: values?.id, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: values?.allowedTimingResponse };
 
+        delete data?.allowedTimingResponse;
         const onSuccess = (res) => {
             form.resetFields();
             // handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            setSuccessAlert(true)
+            setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
         };
 
@@ -167,14 +166,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             onError,
             onSuccess,
         };
-
         saveData(requestData);
 
-        console.log(requestData, 'requestData');
-        // setData([...data, values]);
-        // {...values, id: recordId, defaultGroup: values?.defaultGroup ? 'Y' : 'N', Status: values?.Status ? 'Y' : 'N' }
-        setFormData(data);
-       
+        // setFormData(data);
     };
 
     const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
@@ -217,14 +211,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveBtn(true);
         console.log(selectedRecord, 'edit');
         const momentTime = record?.allowedTimingResponse?.map((i) => {
-           console.log('allo',record?.allowedTimingResponse,'aslasl',i.timeSlotFrom)
+            console.log('allo', record?.allowedTimingResponse, 'aslasl', i.timeSlotFrom);
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
             };
         });
-        console.log(momentTime,'moment');
-         setFormData(record);
+        console.log(momentTime, 'moment');
+        setFormData(record);
         // setSelectedRecord(record);
 
         form.setFieldsValue({
@@ -254,12 +248,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveBtn(true);
         console.log(selectedRecord, 'edit');
         const momentTime = selectedRecord?.allowedTimingResponse?.map((i) => {
-            console.log('allo',selectedRecord?.allowedTimingResponse,'aslasl',i.timeSlotFrom)
-             return {
-                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
-             };
-         });
+            console.log('allo', selectedRecord?.allowedTimingResponse, 'aslasl', i.timeSlotFrom);
+            return {
+                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+            };
+        });
 
         form.setFieldsValue({
             criticalityGroupCode: selectedRecord.criticalityGroupCode,
@@ -285,11 +279,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setFooterEdit(true);
         setSaveBtn(false);
         const momentTime = record?.allowedTimingResponse?.map((i) => {
-             return {
-                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
-             };
-         });
+            return {
+                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+            };
+        });
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
             criticalityGroupName: record.criticalityGroupName,
@@ -440,13 +434,38 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             ) : (
                                 ''
                             )}
-                          
                         </Row>
                     </div>
                 </Col>
             </Row>
 
-            <DrawerUtil setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} successAlert={successAlert} handleUpdate2={handleUpdate2} form={form} saveBtn={saveBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} footerEdit={footerEdit} handleUpdate={handleUpdate} saveAndSaveNew={saveAndSaveNew} setSaveAndSaveNew={setSaveAndSaveNew} setSelectedRecord={setSelectedRecord} selectedRecord={selectedRecord} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} drawerTitle={drawerTitle} />
+            <DrawerUtil
+                setFormBtnDisable={setFormBtnDisable}
+                formBtnDisable={formBtnDisable}
+                successAlert={successAlert}
+                handleUpdate2={handleUpdate2}
+                form={form}
+                saveBtn={saveBtn}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                footerEdit={footerEdit}
+                handleUpdate={handleUpdate}
+                saveAndSaveNew={saveAndSaveNew}
+                setSaveAndSaveNew={setSaveAndSaveNew}
+                setSelectedRecord={setSelectedRecord}
+                selectedRecord={selectedRecord}
+                handleAdd={handleAdd}
+                open={drawer}
+                data={data}
+                setDrawer={setDrawer}
+                isChecked={isChecked}
+                formData={formData}
+                setIsChecked={setIsChecked}
+                formActionType={formActionType}
+                isReadOnly={isReadOnly}
+                setFormData={setFormData}
+                drawerTitle={drawerTitle}
+            />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
