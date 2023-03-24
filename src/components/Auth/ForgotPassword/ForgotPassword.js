@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci';
 import OtpTimer from 'otp-timer';
@@ -16,8 +20,41 @@ import styles from '../Auth.module.css';
 import * as IMAGES from 'assets';
 import { Link, Navigate } from 'react-router-dom';
 import Footer from '../Footer';
+import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
+import { forgotPassword } from 'store/reducers/data/forgotPassword';
 
-const ForgotPassword = (props) => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { token, isLoggedIn, userId },
+
+        data: {
+            ForgotPassword: { isLoaded: isDataLoaded = false },
+        },
+    } = state;
+
+    return {
+        isDataLoaded,
+        token,
+        isLoggedIn,
+        userId,
+       
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            verifyUsers: forgotPasswordActions.verifyUsers,
+            listShowLoading: forgotPasswordActions.listShowLoading,
+
+        },
+        dispatch
+    ),
+});
+
+
+const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [showFields, setShowFields] = useState(false);
@@ -67,6 +104,10 @@ const ForgotPassword = (props) => {
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
 
+    const onVerifyUser = (values) => {
+        
+    };
+
     const Alert = () => {
         setCounter(30);
         alertNotification.open({
@@ -81,9 +122,31 @@ const ForgotPassword = (props) => {
     const verifyUserbtn = () => {
         setverifyUser(true);
         setShowFields(true);
-        setuserId(false);
+        setuserId(false);    
+        
     };
+    const onFinish= (values)=>{
+        const data = { ...values };
+        const onSuccess = (res) => {
+            form.resetFields();
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+  
+        };
 
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+
+        const requestData = {
+            data: data,
+            setIsLoading: listShowLoading,
+            userId,
+            onSuccess,
+            onError,
+        };
+
+        verifyUsers(requestData);
+    }
     const handleNewPassword = () => {
         setOTP(false);
         setShowTimer(false);
@@ -113,7 +176,7 @@ const ForgotPassword = (props) => {
         setValue(event);
     };
 
-    const currentStep = 4;
+    const currentStep = 1;
     return (
         <>
             {contextAlertNotification}
@@ -129,7 +192,7 @@ const ForgotPassword = (props) => {
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="login_from" autoComplete="false">
+                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -323,4 +386,4 @@ const ForgotPassword = (props) => {
     );
 };
 
-export default ForgotPassword;
+export const ForgotPassword =  connect(mapStateToProps, mapDispatchToProps) (ForgotPasswordBase);
