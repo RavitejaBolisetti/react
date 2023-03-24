@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
 
     const isError = authApiCall.isError || false;
     const loginFailure = authApiCall.loginFailure;
+    const preLoginData = authApiCall.preLoginData;
 
     let returnValue = {
         isUnauthenticated: authApiCall.isUnauthenticated,
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => {
         authData: authApiCall.authData,
         isError,
         loginFailure,
+        preLoginData,
         message: '',
     };
 
@@ -57,9 +59,10 @@ const mapDispatchToProps = {
 
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
-    const { doLogin, authPostLogin, authPreLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
+    const { doLogin, authPostLogin, authPreLogin, isError, doCloseLoginError, errorTitle, errorMessage, preLoginData } = props;
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false);
+    const [tempData, setTempData] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
@@ -104,7 +107,9 @@ const Login = (props) => {
         ReactRecaptcha3.destroy();
         const passwordStatus = data?.passwordStatus;
         if (passwordStatus) {
+            console.log('🚀 ~ file: Login.js:117 ~ onSuccess ~ data:', data);
             authPreLogin(data);
+            setTempData(data);
             updatePasswordStatusInfo(data);
         } else {
             authPostLogin(data);
@@ -118,6 +123,11 @@ const Login = (props) => {
 
     const handleUpdatePassword = () => {
         navigate(ROUTING_UPDATE_PASSWORD);
+    };
+
+    const handleSkipUpdatePassword = () => {
+        console.log('tempData', tempData);
+        // authPostLogin(preLoginData);
     };
 
     const onFinish = (values) => {
@@ -141,15 +151,14 @@ const Login = (props) => {
 
     const updatePasswordStatusInfo = (data) => {
         const { passwordStatus } = data;
-        const { status, title, message } = passwordStatus;
+        const { title, message } = passwordStatus;
+        const status = 'A';
         const btn = (
             <Space>
                 {status === 'A' && (
-                    <Link to={ROUTING_DASHBOARD}>
-                        <Button danger size="small">
-                            Skip For Now
-                        </Button>
-                    </Link>
+                    <Button onClick={handleSkipUpdatePassword} danger size="small">
+                        Skip For Now
+                    </Button>
                 )}
                 <Button onClick={handleUpdatePassword} type="primary" size="small">
                     Update Password

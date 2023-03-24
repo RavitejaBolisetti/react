@@ -49,7 +49,7 @@ const UpdatePasswordBase = ({ preLoginData, authPostLogin, isOpen = false, onOk 
     const [confirmDirty, setConfirmDirty] = useState(false);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
-    const canSkip = preLoginData?.passwordStatus?.status === 'A';
+    const canSkip = preLoginData?.passwordStatus?.status === 'E';
 
     useEffect(() => {
         if (!preLoginData) {
