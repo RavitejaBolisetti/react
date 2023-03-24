@@ -250,16 +250,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div>{fullName}</div>
-                                                    <span className={styles.userServiceArea}>
-                                                        {mobileNo}
-                                                        <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
-                                                            <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                        <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                            <span className={styles.userServiceArea}>
+                                                                {mobileNo}
                                                                 <Space>
                                                                     <DownOutlined />
                                                                 </Space>
-                                                            </Link>
-                                                        </Dropdown>
-                                                    </span>
+                                                            </span>
+                                                        </Link>
+                                                    </Dropdown>
                                                 </div>
                                             </Space>
                                         </div>
