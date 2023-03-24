@@ -28,7 +28,7 @@
 .userText {
     float: right;
     padding-top: 16px;
-    color: #0B0B0C;
+    color: #342C2C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
@@ -41,7 +41,7 @@
 .userTypeSkeleton {
     float: right;
     padding-top: 7px;
-    color: #0B0B0C;
+    color: #342C2C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
@@ -50,25 +50,46 @@
 .userTextSkeleton {
     float: right;
     padding-top: 8px;
-    color: #0B0B0C;
+    color: #342C2C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
 }
 
 .dealerName {
-    color: #ea3434;
-    font-size: 20px;
+    color: #342C2C;
+    font-size: 16px;
     padding-bottom: 2px;
 }
 
+.dealerLocation {
+    color: #FF3E5B;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.dropdownIcon {
+    color: #FF3E5B;
+    padding: 5px;
+}
+
+.dropdownIcon :hover {
+    color: #FF3E5B;
+}
+
+.seprator {
+    color: #342C2C;
+    padding-right: 5px;
+}
+
 .userServiceArea {
-    color: #6c757d;
+    color: #342C2C;
     font-size: 12px;
 }
 
 .navLink {
-    color: #0B0B0C;
+    color: #342C2C;
     padding: 5px;
 }
 
@@ -146,7 +167,7 @@
 }
 
 .welcomeUser .navLink {
-    color: #0B0B0C;
+    color: #342C2C;
     padding: 1px !important;
     float: right;
 }
@@ -212,6 +233,10 @@
 .displayNone,
 .menuIcon {
     display: none;
+}
+
+.confirmModal :global .ant-modal-confirm-confirm {
+    width: 316px !important;
 }
 
 .confirmModal :global .ant-modal-confirm-title {
