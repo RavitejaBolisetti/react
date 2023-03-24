@@ -78,7 +78,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveBtn, setSaveBtn] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
-   
 
     useEffect(() => {
         form.resetFields();
@@ -95,30 +94,18 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     useEffect(() => {
         setSearchdata(criticalityGroupData);
     }, [criticalityGroupData]);
+
     useEffect(() => {
         fetchData({ setIsLoading: listShowLoading, userId });
         setSearchdata(criticalityGroupData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
-    console.log("selectedRecord",selectedRecord)
 
     const onFinish = (values) => {
-
-        // const notificationprops = {n
-        //     NotificationTitle: 'Group Created Successfully',
-        //     NotificationDescription: 'Your Group Has been Created Referesh to get the results',
-        //     placement: 'bottomRight',
-        //     duration: 0,
-        // };
-        // openNotification({ ...notificationprops });
-
-        // // <Alerts {...notificationprops} />;
-        // console.log('values n submit', values.defaultGroup ? 'Y' : 'N');
-        // return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
-
-        const arr = values?.allowedTimingResponse.map((i) => {
+        const formatedTime = values?.allowedTimingResponse?.map((time) => {
             return {
-                timeSlotFrom: i.timeSlotFrom.format('HH:mm'),
-                timeSlotTo: i.timeSlotTo.format('HH:mm'),
+                timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
+                timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
             };
         });
 
@@ -148,12 +135,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         //     const recordId = formData?.id || '';
         //     setForceFormReset(Math.random() * 10000);
         // console.log(arr);
-        const data = { ...values, id: values?.id || '' , activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: values?.allowedTimingResponse ? arr : []  };
 
+        const recordId = selectedRecord?.id || '';
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
+        console.log("🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:", recordId)
         delete data?.allowedTimingResponse;
+
         const onSuccess = (res) => {
             form.resetFields();
-            // handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
         };
@@ -161,6 +150,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         const onError = (message) => {
             handleErrorModal(message);
         };
+
         const requestData = {
             data: [data],
             setIsLoading: listShowLoading,
@@ -169,8 +159,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             onSuccess,
         };
         saveData(requestData);
-
-        // setFormData(data);
     };
 
     const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
@@ -207,7 +195,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const handleUpdate = (record) => {
         // setForceFormReset(Math.random() * 10000);
         setFormActionType('update');
-        console.log('update', record);
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
@@ -415,6 +402,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                                     marginLeft: -40,
                                                     paddingBottom: '5px',
                                                 }}
+                                                allowClear
                                                 onSearch={onChangeHandle}
                                                 onChange={onChangeHandle2}
                                             />
@@ -422,7 +410,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
-                            {criticalityGroupData?.length ? (
+                            {searchData?.length ? (
                                 <Col className={styles.addGroup} xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Button className="button" onClick={handleReferesh} danger ghost>
                                         <TfiReload />
