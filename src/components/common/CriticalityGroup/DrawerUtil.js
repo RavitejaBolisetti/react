@@ -175,7 +175,7 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col>
+                    <Col style={{display: 'flex',justifyContent:'start',marginLeft:'-27px'}}>
                         <p>Allowed Timings</p>
                     </Col>
                 </Row>
@@ -241,7 +241,9 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                                             >
                                                 <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                             </Form.Item>
-                                            <Button className={style.deleteBtn} {...disabledProps} disabled danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
+                                            <Button className={style.deleteBtn} 
+                                            {...disabledProps} 
+                                            danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
                                                 <LinearTrash />
                                             </Button>
                                         </Space>
