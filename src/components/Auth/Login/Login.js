@@ -110,14 +110,12 @@ const Login = (props) => {
         ReactRecaptcha3.destroy();
         const passwordStatus = data?.passwordStatus;
         if (passwordStatus) {
-            console.log('🚀 ~ file: Login.js:117 ~ onSuccess ~ data:', data);
             authPreLogin(data);
             setTempData(data);
             updatePasswordStatusInfo(data);
             forceUpdate();
         } else {
             authPostLogin(data);
-            // navigate(ROUTING_DASHBOARD);
         }
     };
 
@@ -154,8 +152,8 @@ const Login = (props) => {
 
     const updatePasswordStatusInfo = (data) => {
         const { passwordStatus } = data;
-        const { title, message } = passwordStatus;
-        const status = 'A';
+        const { status, title, message } = passwordStatus;
+
         const btn = (data) => (
             <Space>
                 {status === 'A' && (
