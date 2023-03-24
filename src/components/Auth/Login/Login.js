@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message } from 'antd';
-import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
@@ -16,6 +16,7 @@ import styles from '../Auth.module.css';
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import Footer from '../Footer';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -97,7 +98,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     return (
@@ -126,15 +127,15 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID, Mobile no. or Email ID')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID, Mobile no. or Email ID" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={false} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
@@ -166,11 +167,11 @@ const Login = (props) => {
                             <div className={styles.errorBoxContainer}>
                                 <h5>
                                     <span className={styles.icon}>
-                                        <FaExclamationTriangle size={18} />
+                                        <AiOutlineCloseCircle size={22} />
                                     </span>
                                     <span className={styles.errorTitle}>{errorTitle}</span>
                                     <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
-                                        <FaTimes size={18} />
+                                        <FaTimes size={20} />
                                     </span>
                                 </h5>
                                 <div className="form_card">
