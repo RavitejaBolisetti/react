@@ -78,6 +78,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveBtn, setSaveBtn] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
+   
 
     useEffect(() => {
         form.resetFields();
@@ -98,8 +99,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         fetchData({ setIsLoading: listShowLoading, userId });
         setSearchdata(criticalityGroupData);
     }, [RefershData]);
+    console.log("selectedRecord",selectedRecord)
 
     const onFinish = (values) => {
+
         // const notificationprops = {n
         //     NotificationTitle: 'Group Created Successfully',
         //     NotificationDescription: 'Your Group Has been Created Referesh to get the results',
@@ -112,13 +115,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // console.log('values n submit', values.defaultGroup ? 'Y' : 'N');
         // return <>{values && <Alert message="Success Tips" description="Detailed description and advice about successful copywriting." type="success" showIcon />}</>;
 
-        // const arr = values?.allowedTimingResponse.map((i) => {
-        //     console.log(i, 'i');
-        //     return {
-        //         timeSlotFrom: i.timeSlotFrom.format('HH:mm'),
-        //         timeSlotTo: i.timeSlotTo.format('HH:mm'),
-        //     };
-        // });
+        const arr = values?.allowedTimingResponse.map((i) => {
+            return {
+                timeSlotFrom: i.timeSlotFrom.format('HH:mm'),
+                timeSlotTo: i.timeSlotTo.format('HH:mm'),
+            };
+        });
 
         // const overlapping = (a, b) => {
         //     const getMinutes = (s) => {
@@ -146,7 +148,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         //     const recordId = formData?.id || '';
         //     setForceFormReset(Math.random() * 10000);
         // console.log(arr);
-        const data = { ...values, id: values?.id, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: values?.allowedTimingResponse };
+        const data = { ...values, id: values?.id || '' , activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: values?.allowedTimingResponse ? arr : []  };
 
         delete data?.allowedTimingResponse;
         const onSuccess = (res) => {
