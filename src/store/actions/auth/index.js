@@ -8,6 +8,7 @@ import { withAuthToken } from 'utils//withAuthToken';
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
+export const AUTH_LOGIN_PRE_SUCCESS = 'AUTH_LOGIN_PRE_SUCCESS';
 export const AUTH_LOGIN_ERROR = 'AUTH_LOGIN_ERROR';
 export const AUTH_LOGIN_ERROR_CLOSE = 'AUTH_LOGIN_ERROR_CLOSE';
 export const AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE = 'AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE';
@@ -31,6 +32,11 @@ export const authLoginSucess = (idToken, accessToken, userName, userId, password
     userId,
     passwordStatus,
     isLoggedIn: true,
+});
+
+export const authPreLoginSuccess = (data) => ({
+    type: AUTH_LOGIN_PRE_SUCCESS,
+    data,
 });
 
 export const authLoggingError = (title, message) => ({
@@ -108,7 +114,6 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
         const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
         const userId = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
         const passwordStatus = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
-        console.log("🚀 ~ file: index.js:111 ~ readFromStorageAndValidateAuth ~ passwordStatus:", passwordStatus)
 
         if (!idToken) {
             dispatch(authDoLogout());
@@ -120,7 +125,7 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
                         idToken,
                         accessToken,
                         userId,
-                        passwordStatus: JSON.parse(passwordStatus),
+                        passwordStatus: passwordStatus && JSON.parse(passwordStatus),
                     })
                 );
             } else {
@@ -140,6 +145,22 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
     dispatch(authLoginUnAuthenticatedErrorClose());
 };
 
+export const authPostLogin = (data) => (dispatch) => {
+    console.log('🚀 ~ file: index.js:143 ~ authPostLogin ~ data:', data);
+    dispatch(
+        authPostLoginActions({
+            userId: data?.userId,
+            idToken: data?.idToken,
+            accessToken: data?.accessToken,
+            passwordStatus: data?.passwordStatus,
+        })
+    );
+};
+
+export const authPreLogin = (data) => (dispatch) => {
+    dispatch(authPreLoginSuccess(data));
+};
+
 export const doLogin = (requestData, showFormLoading, onLogin, onError) => (dispatch) => {
     const url = BASE_URL_LOGIN;
 
@@ -147,17 +168,6 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
         if (showFormLoading) {
             dispatch(showFormLoading(false));
         }
-    };
-
-    const authPostLogin = (data) => {
-        dispatch(
-            authPostLoginActions({
-                userId: data?.userId,
-                idToken: data?.idToken,
-                accessToken: data?.accessToken,
-                passwordStatus: data?.passwordStatus,
-            })
-        );
     };
 
     const loginError = ({ title = 'Information', message }) => {
@@ -172,8 +182,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     const onWarning = (errorMessage) => loginError(errorMessage);
     const onSuccess = (res) => {
         if (res?.data) {
-            authPostLogin(res?.data);
-            onLogin();
+            onLogin(res?.data);
         } else {
             loginError({ message: 'There was an error, Please try again' });
         }

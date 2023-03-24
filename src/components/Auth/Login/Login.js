@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
-import { FaTimes } from 'react-icons/fa';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
-import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
+import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
 import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
@@ -22,7 +20,6 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
-    console.log('🚀 ~ file: Login.js:25 ~ mapStateToProps ~ authApiCall:', authApiCall);
 
     const isError = authApiCall.isError || false;
     const loginFailure = authApiCall.loginFailure;
@@ -39,8 +36,6 @@ const mapStateToProps = (state) => {
         message: '',
     };
 
-    console.log('passwordStatus', returnValue?.passwordStatus);
-
     if (isError || returnValue.isUnauthenticated) {
         returnValue = {
             ...returnValue,
@@ -54,16 +49,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     doLogin,
+    authPostLogin,
+    authPreLogin,
     doCloseLoginError,
     doCloseUnAuthenticatedError,
 };
 
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
-    const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
+    const { doLogin, authPostLogin, authPreLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false);
-    const [isTrue, setIsTrue] = useState(false);
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
         ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
@@ -102,21 +99,34 @@ const Login = (props) => {
 
     const navigate = useNavigate();
 
-    const onSuccess = () => {
+    const onSuccess = (data) => {
         setIsLoading(false);
         ReactRecaptcha3.destroy();
-        // navigate(ROUTING_DASHBOARD);
+        const passwordStatus = data?.passwordStatus;
+        if (passwordStatus) {
+            authPreLogin(data);
+            updatePasswordStatusInfo(data);
+        } else {
+            authPostLogin(data);
+            // navigate(ROUTING_DASHBOARD);
+        }
     };
 
     const onError = () => {
         setIsLoading(false);
     };
 
+    const handleUpdatePassword = () => {
+        navigate(ROUTING_UPDATE_PASSWORD);
+    };
+
     const onFinish = (values) => {
         setIsLoading(true);
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
-                if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
+                if (captchaCode) {
+                    doLogin(values, loginPageIsLoading, onSuccess, onError);
+                }
             },
             (error) => {
                 message.error(error || 'Please select Captcha');
@@ -129,50 +139,31 @@ const Login = (props) => {
         form.validateFields().then((values) => {});
     };
 
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-
-    const skipPasswordUpdate = () => {
+    const updatePasswordStatusInfo = (data) => {
+        const { passwordStatus } = data;
+        const { status, title, message } = passwordStatus;
         const btn = (
             <Space>
-                <Link to={ROUTING_DASHBOARD}>
-                    <Button danger size="small">
-                        Skip For Now
-                    </Button>
-                </Link>
-                <Link to={ROUTING_UPDATE_PASSWORD}>
-                    <Button type="primary" size="small" onClick={() => setIsTrue(true)}>
-                        Update Password
-                    </Button>
-                </Link>
+                {status === 'A' && (
+                    <Link to={ROUTING_DASHBOARD}>
+                        <Button danger size="small">
+                            Skip For Now
+                        </Button>
+                    </Link>
+                )}
+                <Button onClick={handleUpdatePassword} type="primary" size="small">
+                    Update Password
+                </Button>
             </Space>
         );
 
         alertNotification.open({
-            icon: <CiCircleAlert />,
-            message: 'Update Password',
-            description: 'Your password will expire in next 5 days. Please change your password.',
+            icon: status === 'A' ? <CiCircleAlert /> : <CiCircleRemove />,
+            message: title,
+            description: message,
             btn,
             duration: 0,
-            className: styles.warning,
-        });
-    };
-
-    const updatePassword = () => {
-        const btn = (
-            <Link to={ROUTING_UPDATE_PASSWORD}>
-                <Button type="primary" size="small">
-                    Update Password
-                </Button>
-            </Link>
-        );
-
-        alertNotification.open({
-            icon: <CiCircleRemove />,
-            message: 'Password Expired',
-            description: 'Your Password has expired. Please update your password to login.',
-            btn,
-            duration: 0,
-            className: styles.error,
+            className: status === 'E' ? styles.error : styles.warning,
         });
     };
 
@@ -234,18 +225,6 @@ const Login = (props) => {
                                                         <Button className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Space>
-                                                            <Button type="primary" onClick={skipPasswordUpdate}>
-                                                                skip
-                                                            </Button>
-                                                            <Button type="primary" onClick={updatePassword}>
-                                                                Update
-                                                            </Button>
-                                                        </Space>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>

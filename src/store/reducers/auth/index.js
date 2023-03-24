@@ -1,4 +1,4 @@
-import { AUTH_LOGIN_SUCCESS, AUTH_LOGIN_ERROR_CLOSE, AUTH_LOGIN_ERROR, AUTH_LOGOUT, USER_UNAUTHENTICATED, AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE } from '../../actions/auth';
+import { AUTH_LOGIN_SUCCESS, AUTH_LOGIN_PRE_SUCCESS, AUTH_LOGIN_ERROR_CLOSE, AUTH_LOGIN_ERROR, AUTH_LOGOUT, USER_UNAUTHENTICATED, AUTH_LOGIN_USER_UNAUTHENTICATED_CLOSE } from '../../actions/auth';
 
 const initialState = {
     isLoggedIn: false,
@@ -8,6 +8,7 @@ const initialState = {
     message: '',
     isUnauthenticated: false,
     passwordStatus: null,
+    preLoginData: null,
 };
 
 export const auth = (state = initialState, action) => {
@@ -17,7 +18,7 @@ export const auth = (state = initialState, action) => {
 
         case AUTH_LOGIN_SUCCESS:
             const { token, accessToken, userName, userId, passwordStatus, exp, clientId } = action;
-            console.log("🚀 ~ file: index.js:20 ~ auth ~ action:", action);
+            console.log('🚀 ~ file: index.js:20 ~ auth ~ action:', action);
             return {
                 ...state,
                 isUnauthenticated: false,
@@ -32,6 +33,12 @@ export const auth = (state = initialState, action) => {
                 passwordStatus,
                 exp,
                 clientId,
+            };
+        case AUTH_LOGIN_PRE_SUCCESS:
+            const { data } = action;
+            return {
+                ...state,
+                preLoginData: data,
             };
         case AUTH_LOGIN_ERROR:
             return {

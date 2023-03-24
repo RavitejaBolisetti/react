@@ -27,14 +27,16 @@ import { MdOutlineChangeCircle } from 'react-icons/md';
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
-        auth: { token, isLoggedIn, userId },
+        auth: { token, isLoggedIn, userId, passwordStatus },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
+    console.log('isLoggedIn',isLoggedIn);
     return {
+        passwordStatus,
         loginUserData,
         isDataLoaded,
         token,
@@ -44,7 +46,6 @@ const mapStateToProps = (state) => {
         collapsed,
     };
 };
-
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
