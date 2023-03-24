@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
@@ -23,7 +23,9 @@ import IMG_ICON from 'assets/img/icon.png';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 import { MdOutlineChangeCircle } from 'react-icons/md';
+// import Search from 'antd/es/transfer/search';
 
+const { Search } = Input;
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
@@ -174,13 +176,14 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
+    const onSearch = (value) => console.log(value);
 
     return (
         <>
             {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row gutter={0} className={styles.columnInterchange}>
-                        <Col xs={24} sm={24} md={10} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} sm={24} md={10} lg={9} xl={9} xxl={9}>
                             <div className={styles.headerLeft}>
                                 <Space>
                                     {/* <div className={styles.userAvatar}>
@@ -211,7 +214,12 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                 </Space>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={14} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} sm={24} md={10} lg={7} xl={7} xxl={7}>
+                            <div className={styles.headerRight} style={{ width: '100%' }}>
+                                <Search allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={14} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>

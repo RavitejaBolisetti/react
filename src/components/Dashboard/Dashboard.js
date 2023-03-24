@@ -41,9 +41,9 @@ const DashboardBase = ({ props }) => {
                                 <span className={styles.headingGradient}>Welcome back {firstName}! </span>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
+                        {/* <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
                             <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
-                        </Col>
+                        </Col> */}
                     </Row>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
