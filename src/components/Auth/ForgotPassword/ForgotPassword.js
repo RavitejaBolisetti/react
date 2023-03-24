@@ -138,7 +138,7 @@ const ForgotPassword = (props) => {
                                         <>
                                             <Alert message="Your password has been successfully changed. Please login with your new credentials" type="success" showIcon />
                                         </>
-                                    ) : (
+                                    ) : ( 
                                         <>
                                             <div className={styles.loginHtml}>
                                                 <div className={styles.centerInner}>

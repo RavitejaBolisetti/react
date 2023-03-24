@@ -517,7 +517,7 @@ select.form-control:focus::-ms-value {
     position: fixed;
     top: 10%;
     right: 0;
-}
+} 
 
 .errorBoxContainer h5 {
     margin: 0 0 5px 0;
