@@ -188,6 +188,22 @@
     display: none;
 }
 
+.confirmModal :global .ant-modal-confirm-title {
+    font-weight: 700 !important;
+}
+
+.confirmModal :global .ant-modal-confirm-content {
+    text-align: center !important;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns button {
+    width: auto;
+    padding: 4px 16px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+    line-height: 20px !important;
+}
+
 @media (min-width: 997px) and (max-width: 1280px) {
     .headerLeft {
         padding-left: 20px;

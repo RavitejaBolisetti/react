@@ -14,7 +14,7 @@ import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { doLogoutAPI } from 'store/actions/auth';
+import { authLoggingError, doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
@@ -27,14 +27,16 @@ import { MdOutlineChangeCircle } from 'react-icons/md';
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
-        auth: { token, isLoggedIn, userId },
+        auth: { token, isLoggedIn, userId, passwordStatus },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
             LeftSideBar: { collapsed = false },
         },
     } = state;
 
+    console.log('isLoggedIn',isLoggedIn);
     return {
+        passwordStatus,
         loginUserData,
         isDataLoaded,
         token,
@@ -44,7 +46,6 @@ const mapStateToProps = (state) => {
         collapsed,
     };
 };
-
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -80,16 +81,17 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const showConfirm = () => {
         confirm({
-            title: 'Confirmation',
+            title: 'Logout',
             icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
             content: 'Are you sure you want to logout?',
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
+            wrapClassName: styles.confirmModal,
             onOk() {
                 doLogout({
-                    successAction: () => {
-                        navigate(routing.ROUTING_LOGOUT);
+                    successAction: (title, message) => {
+                        navigate(routing.ROUTING_LOGIN);
                     },
                     userId,
                 });

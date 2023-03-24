@@ -118,7 +118,7 @@ const ForgotPassword = (props) => {
                                                         </div>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
+                                                                <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID)')]} className={styles.inputBox}>
                                                                     <Input onBlur={() => setShowFields(true)} prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />
                                                                     {/* As discussed with Rahul */}
                                                                 </Form.Item>

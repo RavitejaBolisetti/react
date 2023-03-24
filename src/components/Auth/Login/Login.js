@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Button, Input, message } from 'antd';
-import { FaTimes } from 'react-icons/fa';
+import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
+import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
-import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
+import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
-import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
+import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
@@ -23,15 +23,18 @@ const mapStateToProps = (state) => {
 
     const isError = authApiCall.isError || false;
     const loginFailure = authApiCall.loginFailure;
+    const preLoginData = authApiCall.preLoginData;
 
     let returnValue = {
         isUnauthenticated: authApiCall.isUnauthenticated,
         isLoggedIn: authApiCall.isLoggedIn,
         isLoading: state.authPages.LoginPage.isLoading,
         data: authApiCall.data,
+        passwordStatus: authApiCall.passwordStatus,
         authData: authApiCall.authData,
         isError,
         loginFailure,
+        preLoginData,
         message: '',
     };
 
@@ -48,15 +51,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     doLogin,
+    authPostLogin,
+    authPreLogin,
     doCloseLoginError,
     doCloseUnAuthenticatedError,
 };
 
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
-    const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
+    const { doLogin, authPostLogin, authPreLogin, isError, doCloseLoginError, errorTitle, errorMessage, preLoginData } = props;
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false);
+    const [tempData, setTempData] = useState();
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
         ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
@@ -72,23 +79,64 @@ const Login = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
+    useEffect(() => {
+        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
+            // console.log(status, 'status');
+        });
+
+        return () => {
+            ReactRecaptcha3.destroy();
+            form.resetFields();
+            doCloseLoginError();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [GOOGLE_CAPTCHA_SITE_KEY]);
+
+    useEffect(() => {
+        if (isError) {
+            informationModalBox({ message: errorTitle, description: errorMessage });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isError]);
+
     const navigate = useNavigate();
 
-    const onSuccess = () => {
+    const onSuccess = (data) => {
         setIsLoading(false);
         ReactRecaptcha3.destroy();
-        navigate(ROUTING_DASHBOARD);
+        const passwordStatus = data?.passwordStatus;
+        if (passwordStatus) {
+            console.log('🚀 ~ file: Login.js:117 ~ onSuccess ~ data:', data);
+            authPreLogin(data);
+            setTempData(data);
+            updatePasswordStatusInfo(data);
+        } else {
+            authPostLogin(data);
+            // navigate(ROUTING_DASHBOARD);
+        }
     };
 
     const onError = () => {
         setIsLoading(false);
     };
 
+    const handleUpdatePassword = () => {
+        navigate(ROUTING_UPDATE_PASSWORD);
+    };
+
+    const handleSkipUpdatePassword = () => {
+        console.log('tempData', tempData);
+        // authPostLogin(preLoginData);
+    };
+
     const onFinish = (values) => {
         setIsLoading(true);
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
-                if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
+                if (captchaCode) {
+                    doLogin(values, loginPageIsLoading, onSuccess, onError);
+                }
             },
             (error) => {
                 message.error(error || 'Please select Captcha');
@@ -98,11 +146,49 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
+    };
+
+    const updatePasswordStatusInfo = (data) => {
+        const { passwordStatus } = data;
+        const { title, message } = passwordStatus;
+        const status = 'A';
+        const btn = (
+            <Space>
+                {status === 'A' && (
+                    <Button onClick={handleSkipUpdatePassword} danger size="small">
+                        Skip For Now
+                    </Button>
+                )}
+                <Button onClick={handleUpdatePassword} type="primary" size="small">
+                    Update Password
+                </Button>
+            </Space>
+        );
+
+        alertNotification.open({
+            icon: status === 'A' ? <CiCircleAlert /> : <CiCircleRemove />,
+            message: title,
+            description: message,
+            btn,
+            duration: 0,
+            className: status === 'E' ? styles.error : styles.warning,
+        });
+    };
+
+    const informationModalBox = ({ message = 'information', description, className = styles.error }) => {
+        alertNotification.open({
+            icon: <AiOutlineCloseCircle />,
+            message,
+            description,
+            className,
+            duration: 5,
+        });
     };
 
     return (
         <>
+            {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -127,8 +213,8 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID, Mobile no. or Email ID')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID, Mobile no. or Email ID" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID)')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -163,22 +249,6 @@ const Login = (props) => {
                                 </Col>
                             </Row>
                         </Form>
-                        {isError && (
-                            <div className={styles.errorBoxContainer}>
-                                <h5>
-                                    <span className={styles.icon}>
-                                        <AiOutlineCloseCircle size={22} />
-                                    </span>
-                                    <span className={styles.errorTitle}>{errorTitle}</span>
-                                    <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
-                                        <FaTimes size={20} />
-                                    </span>
-                                </h5>
-                                <div className="form_card">
-                                    <p>{errorMessage}</p>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
                 <Footer />
