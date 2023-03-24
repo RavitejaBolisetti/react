@@ -78,6 +78,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveBtn, setSaveBtn] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [saveclick, setsaveclick] = useState();
+    const [saveandnewclick, setsaveandnewclick] = useState();
 
     useEffect(() => {
         form.resetFields();
@@ -102,6 +104,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     }, [RefershData]);
 
     const onFinish = (values) => {
+        console.log('SUBMIT', values);
+
         const formatedTime = values?.allowedTimingResponse?.map((time) => {
             return {
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
@@ -138,13 +142,18 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
-        console.log("🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:", recordId)
+        console.log('🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:', recordId);
         delete data?.allowedTimingResponse;
 
         const onSuccess = (res) => {
             form.resetFields();
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
+            if (saveclick === true) {
+                setDrawer(false);
+            } else {
+                setDrawer(true);
+            }
         };
 
         const onError = (message) => {
@@ -187,9 +196,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-        form.resetFields();
+        // form.resetFields();
         setDrawer(true);
         setIsReadOnly(false);
+        setsaveclick(false);
+        setsaveandnewclick(true);
     };
 
     const handleUpdate = (record) => {
@@ -251,8 +262,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             activeIndicator: selectedRecord.activeIndicator,
             allowedTimingRequest: momentTime,
         });
-
-        setDrawer(true);
+        setsaveclick(true);
+        // setDrawer(true);
         setIsReadOnly(false);
         // forceUpdate();
 
@@ -455,6 +466,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 isReadOnly={isReadOnly}
                 setFormData={setFormData}
                 drawerTitle={drawerTitle}
+                saveclick={saveclick}
+                setsaveclick={setsaveclick}
+                setsaveandnewclick={setsaveandnewclick}
+                saveandnewclick={saveandnewclick}
             />
 
             <Row gutter={20}>
