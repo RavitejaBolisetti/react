@@ -69,7 +69,7 @@ const LeftPanel = (props) => {
 
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
-            data.map((item) => {
+            data?.map((item) => {
                 const strTitle = item[fieldNames?.title];
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);

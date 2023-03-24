@@ -213,7 +213,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
     };
 
-    const handleSiblingBtn = () => {
+     const handleSiblingBtn = () => {
         setForceFormReset(Math.random() * 10000);
 
         setFormActionType('sibling');
