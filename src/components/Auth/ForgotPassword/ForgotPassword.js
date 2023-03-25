@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         auth: { token, isLoggedIn, userId },
 
         data: {
-            ForgotPassword: { isLoading,isLoaded: isDataLoaded = false },
+            ForgotPassword: { isLoading, isLoaded: isDataLoaded = false },
         },
     } = state;
 
@@ -37,8 +37,7 @@ const mapStateToProps = (state) => {
         token,
         isLoggedIn,
         userId,
-        isLoading,
-       
+        isLoading,    
     };
 };
 
@@ -46,7 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            verifyUsers: forgotPasswordActions.verifyUsers,
+            verifyUsers: forgotPasswordActions.saveData,
             doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
 
@@ -125,6 +124,18 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         
     };
 
+    const [mobileCheckBox, setMobileCheckBox] = useState(true);
+    const [emailCheckBox, setEmailCheckBox] = useState(true);
+
+  const mobileCheckBoxChange = (event) => {
+    console.log(event.target.checked,'Final Chek');
+    setMobileCheckBox(event.target.checked);
+  }
+
+  const emailCheckBoxChange = (event) => {
+    setEmailCheckBox(event.target.checked);
+  }
+
     const Alert = () => {
         setCounter(30);
         alertNotification.open({
@@ -153,15 +164,19 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         const userId = form.getFieldValue('userId');
         if (userId) {
             //APi Call
-            alertNotification.open({
-                icon: <CheckCircleOutlined />,
-                message: 'Success',
-                description: 'OTP send successfully',
-                duration: 5,
-                className: styles.success,
-            });
-            setSelectedUserId(userId);
-            setCurrentStep(3);
+            
+            if(mobileCheckBox || emailCheckBox){
+                alertNotification.open({
+                    icon: <CheckCircleOutlined />,
+                    message: 'Success',
+                    description: 'OTP send successfully',
+                    duration: 5,
+                    className: styles.success,
+                });
+                setSelectedUserId(userId);
+                setCurrentStep(3);
+            }
+            
         }
     };
 
@@ -184,11 +199,11 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
-            doLogout({
-                successAction: () => {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                }
-            });
+            // doLogout({
+            //     successAction: () => {
+            //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            //     }
+            // });
         };
 
         const onError = (message) => {
@@ -233,19 +248,6 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     const handleChange = (event) => {
         setValue(event);
     };
-
-    const [mobileCheckBox, setMobileCheckBox] = useState(true);
-    const [emailCheckBox, setEmailCheckBox] = useState(true);
-
-  const mobileCheckBoxChange = (event) => {
-    console.log(event.target.checked,'Final Chek');
-    setMobileCheckBox(event.target.checked);
-  }
-
-  const emailCheckBoxChange = (event) => {
-    setEmailCheckBox(event.target.checked);
-  }
-
     
     return (
         <>
@@ -357,8 +359,8 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     <Form.Item >
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button className={styles.button} id="login_from" type="primary" htmlType="submit">
-                                                            {/* onClick={() => handleSendOTP()}  */}
+                                                            <Button onClick={() => handleSendOTP()}  className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                            {/*  */}
                                                                 Send OTP
                                                             </Button>
                                                         </Col>
@@ -482,4 +484,4 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     );
 };
 
-export const ForgotPassword =  connect(mapStateToProps, mapDispatchToProps) (ForgotPasswordBase);
+export const ForgotPassword =  connect(null, mapDispatchToProps)(ForgotPasswordBase);
