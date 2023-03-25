@@ -214,6 +214,14 @@ const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
             callback();
         }
     };
+    const mobileCheckBoxChange = (event) => {
+        console.log(event.target.checked,'Final Chek');
+        setMobileCheckBox(event.target.checked);
+      }
+    
+      const emailCheckBoxChange = (event) => {
+        setEmailCheckBox(event.target.checked);
+      }
 
     const handleNewPassword = () => {
         setOTP(false);
