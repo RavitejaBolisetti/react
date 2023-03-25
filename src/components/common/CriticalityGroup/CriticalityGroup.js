@@ -34,7 +34,9 @@ const informationMessage = {
     updateGroup: 'Your group has been updated. Refresh to get the latest result',
     createGroup: 'Your group has been Created. Refresh to get the latest result',
     success: 'Group Created Successfully',
-};
+    updated: "Group Updated",
+
+}
 
 const mapStateToProps = (state) => {
     const {
@@ -165,14 +167,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
         const onSuccess = (res) => {
             form.resetFields();
+            setSelectedRecord({})
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
-                informationModalBox({ icon: 'success', message: informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
+                informationModalBox({ icon: 'success', message:selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
-                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success2, placement: 'bottomRight' });
+                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
             }
         };
 
@@ -341,7 +344,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             const searchResult = criticalityGroupData.filter((record) => record.criticalityGroupCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.criticalityGroupName.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
         }
-        console.log(e.target.value);
     };
 
     const tableColumn = [];
@@ -438,7 +440,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
-                            {searchData?.length ? (
+                            {/* { searchKey && searchData?.length ? ( */}
+                            { criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
@@ -493,6 +496,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
                 saveandnewclick={saveandnewclick}
+                alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
             />
 
@@ -506,19 +510,25 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     height: 60,
                                 }}
                                 description={
-                                    <span>
-                                        No records found. Please add new parameter <br />
-                                        using below button
-                                    </span>
+                                    !criticalityGroupData?.length ?
+                                        <span>
+                                            No records found. Please add new parameter <br />
+                                            using below button
+                                        </span> 
+                                        : 
+                                        <span> No records found.</span>
                                 }
                             >
+                                { !criticalityGroupData?.length ? (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
                                             Add Group
                                         </Button>
                                     </Col>
-                                </Row>
+                                </Row>)
+                                : ""
+                        }
                             </Empty>
                         )}
                     >

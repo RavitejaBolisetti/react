@@ -194,7 +194,8 @@
 :global .ant-notification-notice {
     width: 395px !important;
     padding: 10px !important;
-    bottom: 30px !important;
+    bottom: 40px !important;
+    margin-top: 30px;
 }
 /* Error */
 .error :global .ant-notification-notice {
