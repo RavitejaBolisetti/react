@@ -34,9 +34,8 @@ const informationMessage = {
     updateGroup: 'Your group has been updated. Refresh to get the latest result',
     createGroup: 'Your group has been Created. Refresh to get the latest result',
     success: 'Group Created Successfully',
-    updated: "Group Updated",
-
-}
+    updated: 'Group Updated',
+};
 
 const mapStateToProps = (state) => {
     const {
@@ -94,7 +93,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
-    
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,12 +105,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
     useEffect(() => {
-        setSearchdata(criticalityGroupData);
+        setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
     }, [criticalityGroupData]);
 
     useEffect(() => {
         fetchData({ setIsLoading: listShowLoading, userId });
-        setSearchdata(criticalityGroupData);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
 
@@ -167,12 +165,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
         const onSuccess = (res) => {
             form.resetFields();
-            setSelectedRecord({})
+            setSelectedRecord({});
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
-                informationModalBox({ icon: 'success', message:selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
+                informationModalBox({ icon: 'success', message: selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
                 informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
@@ -351,10 +349,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
-            dataIndex: 'Srl',
-            render: (text, record, index) => {
-                return index + 1;
-            },
+            dataIndex: 'srl',
         })
     );
 
@@ -441,7 +436,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                 </Row>
                             </Col>
                             {/* { searchKey && searchData?.length ? ( */}
-                            { criticalityGroupData?.length ? (
+                            {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
@@ -452,7 +447,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </Button>
                                 </Col>
                             ) : (
-                             ''
+                                ''
                             )}
                         </Row>
                     </div>
@@ -503,25 +498,27 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     height: 60,
                                 }}
                                 description={
-                                    !criticalityGroupData?.length ?
+                                    !criticalityGroupData?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
-                                        </span> 
-                                        : 
+                                        </span>
+                                    ) : (
                                         <span> No records found.</span>
+                                    )
                                 }
                             >
-                                { !criticalityGroupData?.length ? (
-                                <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            Add Group
-                                        </Button>
-                                    </Col>
-                                </Row>)
-                                : ""
-                        }
+                                {!criticalityGroupData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Group
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
                             </Empty>
                         )}
                     >
