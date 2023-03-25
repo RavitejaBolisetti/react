@@ -54,9 +54,9 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
         setDrawer(false);
         setFormBtnDisable(false);
     };
-    const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
-        return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
-    };
+    // const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
+    //     return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
+    // };
     const onOk = (value) => { };
 
     const handleForm = () => {
@@ -255,7 +255,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                         </>
                     )}
                 </Form.List>
-                {successAlert ? <Alerts NotificationTitle={'Added Successfully,Keep Adding more'} /> : null}
+                {/* {successAlert ? <Alerts NotificationTitle={'Added Successfully,Keep Adding more'} /> : null} */}
             </Form>
         </Drawer>
     );

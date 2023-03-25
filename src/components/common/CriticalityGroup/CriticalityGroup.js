@@ -27,6 +27,15 @@ const { Option } = Select;
 const { confirm } = Modal;
 const { Search } = Input;
 
+const informationMessage = {
+    deleteGrpTiming: 'Group timing has been deleted successfully',
+    createGroupTitleOnSaveNew:'group created Successfully. Continue Creating More Groups',
+    updateGroup: 'Your group has been updated. Refresh to get the latest result',
+    createGroup: 'Your group has been Created. Refresh to get the latest result',
+    success: 'Group Created Successfully',
+
+}
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -92,7 +101,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     useEffect(() => {
         if (!isDataLoaded) {
             fetchData({ setIsLoading: listShowLoading, userId });
-            // console.log(criticalityGroupData, 'critiality grpopu dtaa');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -116,8 +124,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
     };
 
+
     const onFinish = (values) => {
-        console.log('SUBMIT', values);
 
         const formatedTime = values?.allowedTimingResponse?.map((time) => {
             return {
@@ -164,10 +172,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
-                informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: style.success, placement: 'topRight' });
+                informationModalBox({ icon: 'success', message: informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
-                informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: style.success2, placement: 'bottomRight' });
+                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success2, placement: 'bottomRight' });
             }
         };
 
@@ -228,13 +236,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSelectedRecord(record);
         console.log(selectedRecord, 'edit');
         const momentTime = record?.allowedTimingResponse?.map((i) => {
-            console.log('allo', record?.allowedTimingResponse, 'aslasl', i.timeSlotFrom);
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
             };
         });
-        console.log(momentTime, 'moment');
         setFormData(record);
         // setSelectedRecord(record);
 
@@ -246,14 +252,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             allowedTimingResponse: momentTime,
         });
 
-        console.log(selectedRecord);
-
-        console.log(formData, 'formData');
         setDrawer(true);
         setIsReadOnly(false);
         // forceUpdate();
 
-        // formData && setFormData(formData?.data);
     };
 
     const handleUpdate2 = () => {
@@ -263,9 +265,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
-        console.log(selectedRecord, 'edit');
         const momentTime = selectedRecord?.allowedTimingResponse?.map((i) => {
-            console.log('allo', selectedRecord?.allowedTimingResponse, 'aslasl', i.timeSlotFrom);
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
