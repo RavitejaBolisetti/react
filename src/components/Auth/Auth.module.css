@@ -205,6 +205,15 @@ p {
     padding: 0;
 }
 
+.loginSection .disabledInput :global .ant-input-affix-wrapper {
+    background: transparent;
+    border-style: none none solid none;
+    color: #838383;
+    font-size: 16px;
+    border-radius: 0;
+    padding: 0;
+}
+
 .loginSection .disabledInput {
    
     color: #838383;

@@ -418,7 +418,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
-                                                                    <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
+                                                                    <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={true} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
