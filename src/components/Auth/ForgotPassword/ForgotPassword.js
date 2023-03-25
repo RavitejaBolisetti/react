@@ -188,8 +188,48 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
             setCurrentStep(4);
         }
     };
+    const onFinish = (values) => {
+        const data = { ...values };
+        const onSuccess = (res) => {
+            form.resetFields();
+            // doLogout({
+            //     successAction: () => {
+            //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+            //     }
+            // });
+        };
 
-    const onFinish = (values) => {};
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+
+        const requestData = {
+            data: data,
+            setIsLoading: listShowLoading,
+            onSuccess,
+            onError,
+        };
+
+        verifyUsers(requestData);
+    }
+
+    const compareToFirstPassword = (rule, value, callback) => {
+        if (value && value !== form.getFieldValue('newPassword')) {
+            callback("New Password and Confirm Password doesn't match!");
+        } else {
+            callback();
+        }
+    };
+    const mobileCheckBoxChange = (event) => {
+        console.log(event.target.checked,'Final Chek');
+        setMobileCheckBox(event.target.checked);
+      }
+    
+      const emailCheckBoxChange = (event) => {
+        setEmailCheckBox(event.target.checked);
+      }
+
+  
 
     const handleChangedPassword = () => {
         setOTP(false);
