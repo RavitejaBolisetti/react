@@ -125,9 +125,9 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                             //  initialValue={formData?.critcltyGropCode}
                             name="criticalityGroupCode"
                             label="Criticality Group Code"
-                            rules={[validateRequiredInputField('Criticality Group Code')]}
+                            rules={[validateRequiredInputField('Criticality Group Code'), { max: 5, message: 'Code must be  5 characters long.' }]}
                         >
-                            <Input placeholder={preparePlaceholderText('Group Code')} maxLength={5} {...disabledProps} />
+                            <Input placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
