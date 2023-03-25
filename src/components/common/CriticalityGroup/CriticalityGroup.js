@@ -493,6 +493,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
                 saveandnewclick={saveandnewclick}
+                alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
             />
 
