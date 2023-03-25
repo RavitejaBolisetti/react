@@ -1,39 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Table, Space, Alert, notification, Modal } from 'antd';
+import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
+import { AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 
 import dayjs from 'dayjs';
 
 import { validateRequiredInputField } from 'utils/validation';
-import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import moment from 'moment';
+
 const { confirm } = Modal;
 
 const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
 
-    const disabledHours = () => {
-        if (selectedTime) {
-            const hour = selectedTime.hour();
-            return Array.from({ length: hour }, (_, i) => i);
-        }
-        return [];
-    };
-
-    const disabledMinutes = (hour) => {
-        if (selectedTime && hour === selectedTime.hour()) {
-            const minute = selectedTime.minute();
-            return Array.from({ length: minute }, (_, i) => i);
-        }
-        return [];
-    };
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
@@ -43,13 +28,6 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
         drawerTitle = 'View Application Criticality Group Details';
     }
 
-    const momentTime = formData?.allowedTimingResponse?.map((i) => {
-        //    console.log('allo',record?.allowedTimingResponse,'aslasl',i.timeSlotFrom)
-        return {
-            timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
-            timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
-        };
-    });
     const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
         alertNotification.open({
             icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
@@ -66,9 +44,7 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
         setDrawer(false);
         setFormBtnDisable(false);
     };
-    // const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
-    //     return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
-    // };
+
     const onOk = (value) => {};
 
     const handleForm = () => {
@@ -121,69 +97,26 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
             <Form form={form} id="myForm" layout="vertical" colon={false} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            //  initialValue={formData?.critcltyGropCode}
-                            name="criticalityGroupCode"
-                            label="Criticality Group Code"
-                            rules={[validateRequiredInputField('Criticality Group Code'), { max: 5, message: 'Code must be  5 characters long.' }]}
-                        >
+                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code'), { max: 5, message: 'Code must be  5 characters long.' }]}>
                             <Input placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            //  initialValue={formData?.critcltyGropCode}
-                            name="criticalityGroupName"
-                            label="Criticality Group Name"
-                            rules={[validateRequiredInputField('Criticality Group Name')]}
-                        >
+                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
                             <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            labelAlign="left"
-                            wrapperCol={{ span: 24 }}
-                            // normalize={(a, b) => (a ? 'Y' : 'N')}
-                            // initialValue={formData?.defaultGroup === 'Y' ? 'Y' : 'N'}
-                            valuePropName="checked"
-                            name="criticalityDefaultGroup"
-                            label="Default Group"
-                        >
-                            <Switch
-                                //   defaultChecked={formData?.defaultGroup === 'Y'}
-                                // defaultChecked={form.getFieldValue('defaultGroup') === 'Y'}
-                                // defaultChecked={formActionType === 'add' || (selectedRecord && selectedRecord.defaultGroup === 'Y')}
-                                checkedChildren="Active"
-                                unCheckedChildren="Inactive"
-                                //    initialValue={formData.defaultGroup}
-                                onChange={(checked) => (checked ? 1 : 0)}
-                                {...disabledProps}
-                            />
+                        <Form.Item labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="criticalityDefaultGroup" label="Default Group">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            labelAlign="left"
-                            wrapperCol={{ span: 24 }}
-                            // normalize={(a, b) => (a ? 'Y' : 'N')}
-                            //    initialValue={formData?.status === 'Y' ? 'Y' : 'N'}
-                            name="activeIndicator"
-                            label="Status"
-                            valuePropName="checked"
-                        >
-                            <Switch
-                                //  defaultChecked={formData?.status === 'Y'}
-                                checkedChildren="Active"
-                                unCheckedChildren="Inactive"
-                                //   initialValue={formData.status}
-                                valuePropName="checked"
-                                onChange={(checked) => (checked ? 1 : 0)}
-                                {...disabledProps}
-                            />
+                        <Form.Item labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -193,11 +126,7 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                     </Col>
                 </Row>
 
-                <Form.List
-                    // required rules={[validateRequiredInputField('Allowed Timings')]}
-                    name="allowedTimingResponse"
-                    // initialValue={momentTime}
-                >
+                <Form.List name="allowedTiming">
                     {(fields, { add, remove }) => (
                         <>
                             <Row gutter={20}>
@@ -283,7 +212,6 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                         </>
                     )}
                 </Form.List>
-                {/* {successAlert ? <Alerts NotificationTitle={'Added Successfully,Keep Adding more'} /> : null} */}
             </Form>
         </Drawer>
     );

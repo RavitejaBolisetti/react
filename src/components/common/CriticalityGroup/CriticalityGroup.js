@@ -1,31 +1,24 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Select, notification, Alert, ConfigProvider } from 'antd';
-import { TfiReload } from 'react-icons/tfi';
 
+import { Button, Col, Input, Modal, Form, Row, Space, Empty, Select, notification, ConfigProvider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { FaEdit } from 'react-icons/fa';
+import { TfiReload } from 'react-icons/tfi';
 import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 
-import styles from 'pages/common/Common.module.css';
-import style from './criticatiltyGroup.module.css';
-// import styles2 from '../Common.module.css'
+import moment from 'moment';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-
-import dayjs from 'dayjs';
-import { BsTruckFlatbed } from 'react-icons/bs';
 import { DataTable } from 'utils/dataTable';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import moment from 'moment';
-import { FiRefreshCw } from 'react-icons/fi';
 
-const { Option } = Select;
-const { confirm } = Modal;
+import styles from 'pages/common/Common.module.css';
+import style from './criticatiltyGroup.module.css';
+
 const { Search } = Input;
 
 const informationMessage = {
@@ -77,11 +70,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(data.status === 'Y' ? true : false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
-    const [arrData, setArrData] = useState(data);
     const [searchData, setSearchdata] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
@@ -104,6 +95,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
     useEffect(() => {
         setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
     }, [criticalityGroupData]);
@@ -125,43 +117,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const onFinish = (values) => {
-        const formatedTime = values?.allowedTimingResponse?.map((time) => {
+        const formatedTime = values?.allowedTiming?.map((time) => {
             return {
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
             };
         });
-        // const overlapping = (a, b) => {
-        //     const getMinutes = (s) => {
-        //         const p = s.split(':').map(Number);
-        //         return p[0] * 60 + p[1];
-        //     };
-        //     return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
-        // };
-        // const isOverlapping = (arr) => {
-        //     let i, j;
-        //     for (i = 0; i < arr.length - 1; i++) {
-        //         for (j = i + 1; j < arr.length; j++) {
-        //             if (overlapping(arr[i], arr[j])) {
-        //                 return true;
-        //             }
-        //         }
-        //     }
-        //     return false;
-        // };
-        // console.log(isOverlapping(arr));
-        // if (isOverlapping(arr) === true) {
-        //     alert('Your timings are overlapping please check again and try');
-        // } else {
-        //     console.log('ohhho');
-        //     const recordId = formData?.id || '';
-        //     setForceFormReset(Math.random() * 10000);
-        // console.log(arr);
 
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
-        console.log('🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:', recordId);
-        delete data?.allowedTimingResponse;
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTiming: formatedTime || [] };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -178,7 +142,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         };
 
         const onError = (message) => {
-            // handleErrorModal(message);
             informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
         };
 
@@ -192,23 +155,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         saveData(requestData);
     };
 
-    const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
-        notification.open({
-            message: (
-                <div className="NotificationMessageAlign">
-                    <AiFillCheckCircle />
-                    {NotificationTitle}
-                </div>
-            ),
-            description: NotificationDescription,
-            placement: placement,
-            duration: duration,
-            onClick: () => {
-                console.log('Notification Clicked!');
-            },
-        });
-    };
-
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
@@ -218,7 +164,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-        //  form.resetFields();
+
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
@@ -226,13 +172,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const handleUpdate = (record) => {
-        // setForceFormReset(Math.random() * 10000);
         setFormActionType('update');
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
-        console.log(selectedRecord, 'edit');
         const momentTime = record?.allowedTimingResponse?.map((i) => {
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
@@ -240,7 +184,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             };
         });
         setFormData(record);
-        // setSelectedRecord(record);
 
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
@@ -252,11 +195,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
         setDrawer(true);
         setIsReadOnly(false);
-        // forceUpdate();
     };
 
     const handleUpdate2 = () => {
-        // setForceFormReset(Math.random() * 10000);
         setFormActionType('update');
 
         setSaveAndSaveNew(false);
@@ -277,17 +218,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             allowedTimingRequest: momentTime,
         });
         setsaveclick(true);
-        // setDrawer(true);
         setIsReadOnly(false);
-        // forceUpdate();
-
-        // formData && setFormData(formData?.data);
     };
 
     const handleView = (record) => {
         setFormActionType('view');
-        console.log('view', record);
-        // setFormData(record);
+
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
         setFooterEdit(true);
@@ -307,20 +243,19 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
         setDrawer(true);
         setIsReadOnly(true);
-        // formData && setFormData(formData?.data);
     };
+
     const handleReferesh = () => {
         setRefershData(!RefershData);
     };
+
     const onChangeHandle = (e) => {
         const newdata = [];
         Object.keys(criticalityGroupData).map((keyname, i) => {
             if (criticalityGroupData[keyname].critcltyGropCode === e) {
                 newdata.push(criticalityGroupData[keyname]);
-                // setSearchdata(qualificationData[keyname])
             } else if (criticalityGroupData[keyname].critcltyGropDesc === e) {
                 newdata.push(criticalityGroupData[keyname]);
-                // setSearchdata(qualificationData[keyname])
             }
         });
 
@@ -329,8 +264,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         } else {
             setSearchdata(newdata);
         }
-        //  record.qualificationCode.includes(value)
     };
+
     const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
         if (e.target.value === '') {
@@ -424,8 +359,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
-                                                    // marginLeft: -40,
-                                                    // paddingBottom: '5px',
                                                 }}
                                                 allowClear
                                                 onSearch={onChangeHandle}
@@ -435,7 +368,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
-                            {/* { searchKey && searchData?.length ? ( */}
+
                             {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
