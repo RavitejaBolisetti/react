@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { doLogoutAPI } from 'store/actions/auth';
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
-import { UndoOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { UndoOutlined, CheckCircleOutlined,StopOutlined  } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes } from 'react-icons/fa';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
@@ -74,19 +74,6 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     const [showtimer, setShowTimer] = useState(true);
     const [password, setPassword] = useState(false);
     const [passwordChanged, setPasswordChanged] = useState(false);
-
-    const tailFormItemLayout = {
-        wrapperCol: {
-          xs: {
-            span: 24,
-            offset: 0,
-          },
-          sm: {
-            span: 16,
-            offset: 8,
-          },
-        },
-      };
 
     useEffect(() => {
         form.resetFields();
@@ -158,6 +145,14 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
             setSelectedUserId(userId);
             setCurrentStep(2);
         }
+
+        alertNotification.open({
+            icon: <StopOutlined className= {styles.toasticon}/>,
+            message: 'Invalid User ID',
+            description: 'User id that you have entered is invalid, please try again.',
+            duration: 0,
+            className: styles.warning,
+        });
     };
 
     const handleSendOTP = () => {
@@ -278,8 +273,8 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Form.Item name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
-                                                                <Input prefix={<BiUser size={18} />} type="text" placeholder="User id, mobile no, or email id" />
+                                                            <Form.Item name="userId" rules={[validateRequiredInputField('User ID (mile id.parent id)')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                                <Input prefix={<BiUser size={18} style={{color: '#ffffff'}}/>} type="text" placeholder="User ID (mile id.parent id)" />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -295,7 +290,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                             <div className={styles.loginFooter} type="radio">
-                                                                <Link to={ROUTING_LOGIN}>Back To Login</Link>
+                                                                <Link to={ROUTING_LOGIN}>Back to Login</Link>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -310,8 +305,8 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     </div>
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={20} xl={24}>
-                                                            <Form.Item initialValue={selectedUserId} style={{ width: '80%', textAlign: 'center', margin: '0 auto' }} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
-                                                                <Input disabled prefix={<BiUser size={18} />} type="text" placeholder="User id, mobile no, or email id" />
+                                                            <Form.Item initialValue={selectedUserId}  name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
+                                                                <Input disabled prefix={<BiUser size={18} className={styles.disabledInput}/>} type="text" placeholder="User ID (mile id.parent id)" />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -322,55 +317,33 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                         </Col>
                                                     </Row>
 
-
-                                                    <Form.Item
-                                                        name="agreement"
-                                                        valuePropName="checked"
-                                                        rules={[
-                                                            {
-                                                            validator: (_, value) =>
-                                                            mobileCheckBox || emailCheckBox ? Promise.resolve() : Promise.reject(new Error('Please choose at least one option')),
-                                                            },
-                                                        ]}
-                                                    >
-
-                                                        <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Checkbox className={styles.registered} defaultChecked="true"
-                                                                    onChange={mobileCheckBoxChange}
-                                                                >
-                                                                    Registered Mobile Number
-                                                                </Checkbox>
-                                                            </Col>
-                                                        </Row>
-
-                                                        <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Checkbox className={styles.registered} defaultChecked="true"
-                                                                    onChange={emailCheckBoxChange}
-                                                                >
-                                                                    Registered Mail ID
-                                                                </Checkbox>
-                                                            </Col>
-                                                        </Row>
-
-                                                    </Form.Item>
-
-                                                    <Form.Item >
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => handleSendOTP()}  className={styles.button} id="login_from" type="primary" htmlType="submit">
-                                                            {/*  */}
+                                                            <Checkbox className={styles.registered} defaultChecked="true">
+                                                                Registered Mobile Number
+                                                            </Checkbox>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Checkbox className={styles.registered} defaultChecked="true">
+                                                                Registered Mail ID
+                                                            </Checkbox>
+                                                        </Col>
+                                                    </Row>
+
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Button onClick={() => handleSendOTP()} className={styles.button} id="login_from" type="primary" htmlType="submit">
                                                                 Send OTP
                                                             </Button>
                                                         </Col>
                                                     </Row>
-                                                    </Form.Item>
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                             <div className={styles.loginFooter} type="radio">
-                                                                <Link to={ROUTING_LOGIN}>Back To Login</Link>
+                                                                <Link to={ROUTING_LOGIN}>Back to Login</Link>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -437,7 +410,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                             <div className={styles.loginFooter} type="radio">
-                                                                <Link to={ROUTING_LOGIN}>Back To Login</Link>
+                                                                <Link to={ROUTING_LOGIN}>Back to Login</Link>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -459,15 +432,13 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
-                                                                    <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={false} />
+                                                                    <Input.Password prefix={<FaKey size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={true} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
-                                                        
                                                         <Button onClick={handleChangedPassword} id="login_from" className={styles.button} type="primary" htmlType="submit">
                                                             Submit
                                                         </Button>
-                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -484,4 +455,4 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     );
 };
 
-export const ForgotPassword =  connect(null, mapDispatchToProps)(ForgotPasswordBase);
+export const ForgotPassword =  connect(null, mapDispatchToProps) (ForgotPasswordBase);
