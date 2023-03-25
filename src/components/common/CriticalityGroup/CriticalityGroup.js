@@ -177,7 +177,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 informationModalBox({ icon: 'success', message:selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
-                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success2, placement: 'bottomRight' });
+                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
             }
         };
 
