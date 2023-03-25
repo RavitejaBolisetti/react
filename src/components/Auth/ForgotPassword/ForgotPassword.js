@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,6 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            verifyUser: forgotPasswordActions.verifyUser,
             verifyUsers: forgotPasswordActions.saveData,
             doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
@@ -52,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
+const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoading }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
@@ -115,25 +117,31 @@ const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
         const userId = form.getFieldValue('userId');
 
         if (userId) {
-            //APi Call
-            setSelectedUserId(userId);
-            setCurrentStep(2);
-        }
+            const data = { userId };
 
-        alertNotification.open({
-            icon: <StopOutlined className={styles.toasticon} />,
-            message: 'Invalid User ID',
-            description: 'User id that you have entered is invalid, please try again.',
-            duration: 0,
-            className: styles.warning,
-        });
+            const onSuccess = (res) => {
+                setSelectedUserId(userId);
+                setCurrentStep(2);
+            };
+
+            const onError = (message) => {
+                informationModalBox({ message: 'ERROR', description: message[0] || message });
+            };
+
+            const requestData = {
+                data: data,
+                setIsLoading: listShowLoading,
+                onSuccess,
+                onError,
+            };
+
+            verifyUser(requestData);
+        }
     };
 
     const handleSendOTP = () => {
         const userId = form.getFieldValue('userId');
         if (userId) {
-            //APi Call
-
             if (mobileCheckBox || emailCheckBox) {
                 alertNotification.open({
                     icon: <CheckCircleOutlined />,
@@ -144,6 +152,7 @@ const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
                 });
                 setSelectedUserId(userId);
                 setCurrentStep(3);
+            } else {
             }
         }
     };
@@ -163,30 +172,8 @@ const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
             setCurrentStep(4);
         }
     };
-    const onFinish = (values) => {
-        const data = { ...values };
-        const onSuccess = (res) => {
-            form.resetFields();
-            // doLogout({
-            //     successAction: () => {
-            //     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-            //     }
-            // });
-        };
 
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
-
-        const requestData = {
-            data: data,
-            setIsLoading: listShowLoading,
-            onSuccess,
-            onError,
-        };
-
-        verifyUsers(requestData);
-    };
+    const onFinish = (values) => {};
 
     const handleChangedPassword = () => {
         setOTP(false);
@@ -198,6 +185,16 @@ const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
 
     const handleChange = (event) => {
         setValue(event);
+    };
+
+    const informationModalBox = ({ message = 'information', description, className = styles.error }) => {
+        alertNotification.open({
+            icon: <AiOutlineCloseCircle />,
+            message,
+            description,
+            className,
+            duration: 5,
+        });
     };
 
     return (
