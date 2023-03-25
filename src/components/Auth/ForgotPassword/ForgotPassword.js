@@ -292,7 +292,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={20} xl={24}>
                                                             <Form.Item initialValue={selectedUserId}  name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                <Input disabled prefix={<BiUser size={18} className={styles.disabledInput}/>} type="text" placeholder="User ID (mile id.parent id)" />
+                                                                <Input disabled prefix={<BiUser size={18} className={styles.disabledInput}/>} type="text" placeholder="User ID (mile id.parent id)" style={{color: '#838383'}} />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
