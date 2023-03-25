@@ -103,25 +103,22 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         });
     };
 
-    const items = [
+    const fyMenuOption = [
         customMenuLink({
-            title: 'Branch Location',
-            link: routing.ROUTING_HOME,
-            children: [
-                customMenuLink({
-                    title: 'Gurgaon',
-                }),
-                customMenuLink({
-                    title: 'Lajpat Nagar',
-                }),
-                customMenuLink({
-                    title: 'Noida',
-                }),
-            ],
+            title: '2023',
         }),
-        // customMenuLink({
-        //     title: 'Financial Year',
-        // }),
+    ];
+
+    const locationMenuOption = [
+        customMenuLink({
+            title: 'Gurgaon',
+        }),
+        customMenuLink({
+            title: 'Lajpat Nagar',
+        }),
+        customMenuLink({
+            title: 'Noida',
+        }),
     ];
 
     const userSettingMenu = [
@@ -196,25 +193,27 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                     </div> */}
                                     <div className={styles.userText}>
                                         <div className={styles.dealerName}>{dealerName}</div>
-                                        <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                        {userType === 'DLR' && (
-                                            <Dropdown className={styles.dropdownIcon} menu={{ items }} trigger={['click']}>
-                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                    <DownOutlined />
-                                                </a>
-                                            </Dropdown>
-                                        )}{' '}
-                                        {userType === 'DLR' && (
-                                            <>
-                                                <span className={styles.seprator}>|</span>
-                                                <span className={styles.dealerLocation}>FY2023</span>
-                                                <Dropdown menu={{ items }} trigger={['click']}>
+                                        <div className={styles.dealerInfo}>
+                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                            {userType === 'DLR' && (
+                                                <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }} trigger={['click']}>
                                                     <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
                                                         <DownOutlined />
                                                     </a>
                                                 </Dropdown>
-                                            </>
-                                        )}
+                                            )}{' '}
+                                            {userType === 'DLR' && (
+                                                <>
+                                                    <span className={styles.seprator}>|</span>
+                                                    <span className={styles.dealerLocation}>FY2023</span>
+                                                    <Dropdown menu={{ items: fyMenuOption }} trigger={['click']}>
+                                                        <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
+                                                            <DownOutlined />
+                                                        </a>
+                                                    </Dropdown>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
                                 </Space>
                             </div>
