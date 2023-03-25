@@ -142,7 +142,7 @@ const DashboardBase = ({ props }) => {
                                 <FaNewspaper /> News
                             </>
                         }
-                        className={styles.mb10}
+                        className={styles.newsCard}
                     >
                         <Carousel autoplay>
                             <div className={styles.newsCarsulalContaner}>
@@ -201,15 +201,34 @@ const DashboardBase = ({ props }) => {
                     <Card
                         title={
                             <>
-                                {' '}
                                 <FaBirthdayCake /> Birthday Calendar
                             </>
                         }
-                        className={styles.mb10}
+                        className={styles.birthCalendarCard}
                     >
                         <Carousel autoplay>
-                            <div className={styles.birthContaner}>
-                                <div className="row ">
+                            <div className={styles.birthContainer}>
+                                <div className={styles.birthdayItem}>
+                                    <div className={styles.birthdayImgcontaner}>
+                                        <img src={imdimg} alt="" />
+                                    </div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
+                                    </div>
+                                </div>
+                                <div className={styles.separator}></div>
+                                <div className={styles.birthdayItem}>
+                                    <div className={styles.birthdayImgcontaner}>
+                                        <img src={imdimg} alt="" />
+                                    </div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
+                                    </div>
+                                </div>
+                                <div className={styles.separator}></div>
+                                <div className={styles.birthdayItem}>
                                     <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>
@@ -219,8 +238,28 @@ const DashboardBase = ({ props }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.birthContaner}>
-                                <div className="row ">
+                            <div className={styles.birthContainer}>
+                                <div className={styles.birthdayItem}>
+                                    <div className={styles.birthdayImgcontaner}>
+                                        <img src={imdimg} alt="" />
+                                    </div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
+                                    </div>
+                                </div>
+                                <div className={styles.separator}></div>
+                                <div className={styles.birthdayItem}>
+                                    <div className={styles.birthdayImgcontaner}>
+                                        <img src={imdimg} alt="" />
+                                    </div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
+                                    </div>
+                                </div>
+                                <div className={styles.separator}></div>
+                                <div className={styles.birthdayItem}>
                                     <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>
@@ -230,8 +269,28 @@ const DashboardBase = ({ props }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.birthContaner}>
-                                <div className="row ">
+                            <div className={styles.birthContainer}>
+                                <div className={styles.birthdayItem}>
+                                    <div className={styles.birthdayImgcontaner}>
+                                        <img src={imdimg} alt="" />
+                                    </div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
+                                    </div>
+                                </div>
+                                <div className={styles.separator}></div>
+                                <div className={styles.birthdayItem}>
+                                    <div className={styles.birthdayImgcontaner}>
+                                        <img src={imdimg} alt="" />
+                                    </div>
+                                    <div className={styles.birthdayTxtcontaner}>
+                                        <div className={styles.birthdayName}>First Name, Last Name</div>
+                                        <div>Today - {convertDateTime(moment(), 'D MMM ')}.</div>
+                                    </div>
+                                </div>
+                                <div className={styles.separator}></div>
+                                <div className={styles.birthdayItem}>
                                     <div className={styles.birthdayImgcontaner}>
                                         <img src={imdimg} alt="" />
                                     </div>

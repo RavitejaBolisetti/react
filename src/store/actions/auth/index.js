@@ -229,12 +229,12 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     };
 
     const apiCallParams = {
-        method: 'get',
+        method: 'post',
         url,
         token,
         accessToken,
         userId,
-        data: undefined,
+        data: { userId },
         onSuccess,
         onError: () => {
             dispatch(authLoggingError('logout', 'logout'));
