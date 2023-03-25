@@ -124,6 +124,32 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             };
         });
 
+        //code for overlapping check on save
+        const overlapping = (a, b) => {
+            const getMinutes = (s) => {
+                const p = s.split(':').map(Number);
+                return p[0] * 60 + p[1];
+            };
+            return getMinutes(a.timeSlotTo) > getMinutes(b.timeSlotFrom) && getMinutes(b.timeSlotTo) > getMinutes(a.timeSlotFrom);
+        };
+        const isOverlapping = (arr) => {
+            let i, j;
+            for (i = 0; i < arr.length - 1; i++) {
+                for (j = i + 1; j < arr.length; j++) {
+                    if (overlapping(arr[i], arr[j])) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+      
+        if (isOverlapping(formatedTime) === true) {
+            alert('Your timings are overlapping please check again and try');
+        } else {
+          
+        
+return false;
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
 
@@ -153,6 +179,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             onSuccess,
         };
         saveData(requestData);
+    }
     };
 
     const onFinishFailed = (errorInfo) => {
