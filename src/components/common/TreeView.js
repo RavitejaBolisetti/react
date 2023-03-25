@@ -43,18 +43,11 @@ const TreeView = ({ selectedTreeKey, selectedTreeSelectKey, fieldNames, dataList
         setSearchValue(value);
         setAutoExpandParent(true);
     };
-
-    // console.log('dataList', dataList);
     return (
         <div className={isOpenInModal ? styles.modalView : ''}>
             <Search placeholder="Search" onChange={onChange} className={styles.searchField} />
 
             <div className={styles.scrollTreeData}>
-                {/* {`selectedTreeKey ${selectedTreeKey}`}
-                <br />
-                {`selectedTreeSelectKey ${selectedTreeSelectKey}`}
-                <br />
-                {JSON.stringify(fieldNames)} */}
                 <Tree selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} fieldNames={fieldNames} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={dataList} />
             </div>
         </div>

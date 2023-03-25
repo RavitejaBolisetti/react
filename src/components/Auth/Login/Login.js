@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Row, Col, Button, Input, message } from 'antd';
-import { FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import { Form, Row, Col, Button, Input, message, notification, Space } from 'antd';
+import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
-import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError } from 'store/actions/auth';
+import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
-import { ROUTING_FORGOT_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
+import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import Footer from '../Footer';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
 
     const isError = authApiCall.isError || false;
     const loginFailure = authApiCall.loginFailure;
+    const preLoginData = authApiCall.preLoginData;
 
     let returnValue = {
         isUnauthenticated: authApiCall.isUnauthenticated,
         isLoggedIn: authApiCall.isLoggedIn,
         isLoading: state.authPages.LoginPage.isLoading,
         data: authApiCall.data,
+        passwordStatus: authApiCall.passwordStatus,
         authData: authApiCall.authData,
         isError,
         loginFailure,
+        preLoginData,
         message: '',
     };
 
@@ -47,19 +51,26 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     doLogin,
+    authPostLogin,
+    authPreLogin,
     doCloseLoginError,
     doCloseUnAuthenticatedError,
 };
 
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
-    const { doLogin, isError, doCloseLoginError, errorTitle, errorMessage } = props;
+    const { doLogin, authPostLogin, authPreLogin, isError, doCloseLoginError, errorTitle, errorMessage, preLoginData } = props;
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false);
+    const [tempData, setTempData] = useState();
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
+
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
 
     useEffect(() => {
         ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
-            console.log(status, 'status');
+            // console.log(status, 'status');
         });
 
         return () => {
@@ -71,23 +82,62 @@ const Login = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
+    useEffect(() => {
+        ReactRecaptcha3.init(GOOGLE_CAPTCHA_SITE_KEY).then((status) => {
+            // console.log(status, 'status');
+        });
+
+        return () => {
+            ReactRecaptcha3.destroy();
+            form.resetFields();
+            doCloseLoginError();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [GOOGLE_CAPTCHA_SITE_KEY]);
+
+    useEffect(() => {
+        if (isError) {
+            informationModalBox({ message: errorTitle, description: errorMessage });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isError]);
+
     const navigate = useNavigate();
 
-    const onSuccess = () => {
+    const onSuccess = (data) => {
         setIsLoading(false);
         ReactRecaptcha3.destroy();
-        navigate(ROUTING_DASHBOARD);
+        const passwordStatus = data?.passwordStatus;
+        if (passwordStatus) {
+            authPreLogin(data);
+            setTempData(data);
+            updatePasswordStatusInfo(data);
+            forceUpdate();
+        } else {
+            authPostLogin(data);
+        }
     };
 
     const onError = () => {
         setIsLoading(false);
     };
 
+    const handleUpdatePassword = () => {
+        navigate(ROUTING_UPDATE_PASSWORD);
+    };
+
+    const handleSkipUpdatePassword = (data) => {
+        authPostLogin(data);
+    };
+
     const onFinish = (values) => {
         setIsLoading(true);
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
-                if (captchaCode) doLogin(values, loginPageIsLoading, onSuccess, onError);
+                if (captchaCode) {
+                    doLogin(values, loginPageIsLoading, onSuccess, onError);
+                }
             },
             (error) => {
                 message.error(error || 'Please select Captcha');
@@ -100,8 +150,46 @@ const Login = (props) => {
         form.validateFields().then((values) => {});
     };
 
+    const updatePasswordStatusInfo = (data) => {
+        const { passwordStatus } = data;
+        const { status, title, message } = passwordStatus;
+
+        const btn = (data) => (
+            <Space>
+                {status === 'A' && (
+                    <Button onClick={() => handleSkipUpdatePassword(data)} danger size="small">
+                        Skip For Now
+                    </Button>
+                )}
+                <Button onClick={handleUpdatePassword} type="primary" size="small">
+                    Update Password
+                </Button>
+            </Space>
+        );
+
+        alertNotification.open({
+            icon: status === 'A' ? <CiCircleAlert /> : <CiCircleRemove />,
+            message: title,
+            description: message,
+            btn: btn(data),
+            duration: 0,
+            className: status === 'E' ? styles.error : styles.warning,
+        });
+    };
+
+    const informationModalBox = ({ message = 'information', description, className = styles.error }) => {
+        alertNotification.open({
+            icon: <AiOutlineCloseCircle />,
+            message,
+            description,
+            className,
+            duration: 5,
+        });
+    };
+
     return (
         <>
+            {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -126,8 +214,8 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID) / Token No.')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID / Token No.)" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID)')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -162,22 +250,6 @@ const Login = (props) => {
                                 </Col>
                             </Row>
                         </Form>
-                        {isError && (
-                            <div className={styles.errorBoxContainer}>
-                                <h5>
-                                    <span className={styles.icon}>
-                                        <FaExclamationTriangle size={18} />
-                                    </span>
-                                    <span className={styles.errorTitle}>{errorTitle}</span>
-                                    <span className={styles.loginErrorClose} onClick={() => doCloseLoginError()}>
-                                        <FaTimes size={18} />
-                                    </span>
-                                </h5>
-                                <div className="form_card">
-                                    <p>{errorMessage}</p>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
                 <Footer />

@@ -28,7 +28,6 @@ const mapStateToProps = (state) => {
 };
 
 const DashboardBase = ({ props }) => {
-    // const { firstName = 'Kuldeep' } = props;
     const onSearch = (value) => console.log(value);
     const firstName = '';
 
@@ -39,12 +38,13 @@ const DashboardBase = ({ props }) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
                             <div>
-                                <span className={styles.headingGradient}>Welcome back {firstName}! </span>
+                                {/* <span className={styles.headingGradient}>Welcome back {firstName}! </span> */}
+                                <span className={styles.headingGradient}>Home</span>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
+                        {/* <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} className={styles.floatRight}>
                             <Search allowClear placeholder="Enter Doc ID..." onSearch={onSearch} />
-                        </Col>
+                        </Col> */}
                     </Row>
                     <div className={styles.pageHeaderNameSection}></div>
                 </Col>
