@@ -118,6 +118,14 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
     const [mobileCheckBox, setMobileCheckBox] = useState(true);
     const [emailCheckBox, setEmailCheckBox] = useState(true);
 
+    const mobileCheckBoxChange = (event) =>{
+        setMobileCheckBox(event.target.checked)
+    }
+
+    const emailCheckBoxChange = (event) =>{
+        setEmailCheckBox(event.target.checked)
+    }
+
     const Alert = () => {
         setCounter(30);
         alertNotification.open({
