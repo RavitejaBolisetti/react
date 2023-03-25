@@ -573,7 +573,7 @@ select.form-control:focus::-ms-value {
     right: 16px;
 }
 
-.toastmessage :global :where(.css-dev-only-do-not-override-aprs5d).ant-notification-notice .ant-notification-notice-with-icon .ant-notification-notice-message {
+.toastmessage :global .ant-notification-notice .ant-notification-notice-with-icon .ant-notification-notice-message {
 
     margin-bottom: 8px;
     margin-inline-start: 28px;
