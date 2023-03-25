@@ -94,7 +94,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
-    const initialTableData = [{}];
+    
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -525,7 +525,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
