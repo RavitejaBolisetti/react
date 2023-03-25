@@ -5,16 +5,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { doLogoutAPI } from 'store/actions/auth';
-import { Form, Row, Col, Button, Input, Checkbox, notification } from 'antd';
+import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
-import { handleErrorModal } from 'utils/responseModal';
+import { FaKey, FaInfoCircle, FaTimes, FaLock } from 'react-icons/fa';
+
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci';
 import OtpTimer from 'otp-timer';
 
 import { ROUTING_LOGIN } from 'constants/routing';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validateFieldsPassword } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
@@ -68,6 +70,19 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
     const [submit, setSubmit] = useState(false);
     const [showtimer, setShowTimer] = useState(true);
     const [password, setPassword] = useState(false);
+
+    const tailFormItemLayout = {
+        wrapperCol: {
+            xs: {
+                span: 24,
+                offset: 0,
+            },
+            sm: {
+                span: 16,
+                offset: 8,
+            },
+        },
+    };
 
     useEffect(() => {
         form.resetFields();
@@ -146,7 +161,7 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
                 alertNotification.open({
                     icon: <CheckCircleOutlined />,
                     message: 'Success',
-                    description: 'OTP send successfully',
+                    description: 'OTP sent successfully',
                     duration: 5,
                     className: styles.success,
                 });
@@ -250,58 +265,70 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
                                                 </div>
                                             </div>
                                         ) : currentStep === 2 ? (
-                                            <div className={styles.centerInner}>
-                                                <div className={styles.loginForm}>
-                                                    <div className={styles.loginHeading}>
-                                                        <h1>Forgot Your Password</h1>
-                                                        <div className={styles.loginSubHeading}>User credential verified successfully.</div>
+                                            <>
+                                                <div className={styles.centerInner}>
+                                                    <div className={styles.loginForm}>
+                                                        <div className={styles.loginHeading}>
+                                                            <h1>Forgot Your Password</h1>
+                                                            <div className={styles.loginSubHeading}>User credential verified successfully.</div>
+                                                        </div>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={20} xl={24}>
+                                                                <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
+                                                                    <Input disabled prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <div className={styles.registered}> OTP will be sent on </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Checkbox className={styles.registered} defaultChecked="true" onChange={mobileCheckBoxChange}>
+                                                                    Registered Mobile Number
+                                                                </Checkbox>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Checkbox className={styles.registered} defaultChecked="true" onChange={emailCheckBoxChange}>
+                                                                    Registered Mail ID
+                                                                </Checkbox>
+                                                            </Col>
+                                                        </Row>
+                                                        <Form.Item
+                                                            name="agreement"
+                                                            valuePropName="checked"
+                                                            className={styles.fielderror}
+                                                            rules={[
+                                                                {
+                                                                    validator: (_, value) => (mobileCheckBox || emailCheckBox ? Promise.resolve() : Promise.reject(new Error('Please choose at least one option'))),
+                                                                },
+                                                            ]}
+                                                        ></Form.Item>
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Button onClick={() => handleSendOTP()} className={styles.button} id="login_from" type="primary" htmlType="submit">
+                                                                    Send OTP
+                                                                </Button>
+                                                            </Col>
+                                                        </Row>
+
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <div className={styles.loginFooter} type="radio">
+                                                                    <Link to={ROUTING_LOGIN}>Back to Login</Link>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
                                                     </div>
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={20} xl={24}>
-                                                            <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                <Input disabled prefix={<BiUser size={18} className={styles.disabledInput} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <div className={styles.registered}> OTP will be sent on </div>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Checkbox className={styles.registered} defaultChecked="true">
-                                                                Registered Mobile Number
-                                                            </Checkbox>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Checkbox className={styles.registered} defaultChecked="true">
-                                                                Registered Mail ID
-                                                            </Checkbox>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => handleSendOTP()} className={styles.button} id="login_from" type="primary" htmlType="submit">
-                                                                Send OTP
-                                                            </Button>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <div className={styles.loginFooter} type="radio">
-                                                                <Link to={ROUTING_LOGIN}>Back to Login</Link>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                </div>
-                                            </div>
+                                                </div>{' '}
+                                            </>
                                         ) : currentStep === 3 ? (
                                             <div className={styles.centerInner}>
                                                 <div className={styles.loginForm}>
@@ -343,7 +370,7 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
                                                                 <>
                                                                     <Row gutter={20}>
                                                                         <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                            <div className={styles.checkColor}>Didn't receive OTP?</div>
+                                                                            <div className={styles.checkColors}>Didn't receive OTP?</div>
                                                                         </Col>
                                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                                             <div onClick={() => Alert()} className={styles.resendEnabled} type="radio">
@@ -377,19 +404,19 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password')]} className={`${styles.changer} ${styles.inputBox}`}>
                                                                     <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again')]} className={styles.inputBox}>
+                                                                <Form.Item name="confirmPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('New Password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
                                                                     <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={true} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
-                                                        <Button onClick={handleChangedPassword} id="login_from" className={styles.button} type="primary" htmlType="submit">
+                                                        <Button id="login_from" onClick={handleChangedPassword} className={styles.button} type="primary" htmlType="submit">
                                                             Submit
                                                         </Button>
                                                     </div>
