@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 
 import { doLogoutAPI } from 'store/actions/auth';
+<<<<<<< HEAD
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined,StopOutlined  } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes, FaLock } from 'react-icons/fa';
 import {  FiLock } from 'react-icons/fi';
 
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+=======
+import { Form, Row, Col, Button, Input, Checkbox, notification } from 'antd';
+import { UndoOutlined, CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
+import { handleErrorModal } from 'utils/responseModal';
+>>>>>>> 4f8c436a3ef6a53dc2829b1c706cb817075f46db
 
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci';
@@ -22,15 +28,15 @@ import { validateRequiredInputField ,validateFieldsPassword} from 'utils/validat
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
+import { FiLock } from 'react-icons/fi';
 
 
 const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId },
-
         data: {
             ForgotPassword: { isLoading, isLoaded: isDataLoaded = false },
         },
@@ -41,7 +47,7 @@ const mapStateToProps = (state) => {
         token,
         isLoggedIn,
         userId,
-        isLoading,    
+        isLoading,
     };
 };
 
@@ -52,32 +58,25 @@ const mapDispatchToProps = (dispatch) => ({
             verifyUsers: forgotPasswordActions.saveData,
             doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
-
         },
         dispatch
     ),
 });
 
-
-const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
+const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
-    const [showFields, setShowFields] = useState(false);
-    const [resend, setresend] = useState(false);
-    const [userId, setuserId] = useState(true);
+
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [otpverification, setotpverification] = useState(false);
     const [OTP, setOTP] = useState(false);
     const [OTPsent, setOTPsent] = useState(false);
     const [value, setValue] = useState('');
     const [submit, setSubmit] = useState(false);
-    const [validate, setValidate] = useState(false);
-    const [verifyUser, setverifyUser] = useState(false);
     const [showtimer, setShowTimer] = useState(true);
     const [password, setPassword] = useState(false);
-    const [passwordChanged, setPasswordChanged] = useState(false);
 
   
     const tailFormItemLayout = {
@@ -110,9 +109,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         setOTP(true);
         setOTPsent(true);
         setotpverification(true);
-        setShowFields(false);
         setShowTimer(true);
-        setValidate(true);
         setPassword(false);
 
         alertNotification.open({
@@ -125,21 +122,8 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         // alert('OTP sent to your registered mobile number and/or email ID');
     };
 
-    const onVerifyUser = (values) => {
-        
-    };
-
     const [mobileCheckBox, setMobileCheckBox] = useState(true);
     const [emailCheckBox, setEmailCheckBox] = useState(true);
-
-  const mobileCheckBoxChange = (event) => {
-    console.log(event.target.checked,'Final Chek');
-    setMobileCheckBox(event.target.checked);
-  }
-
-  const emailCheckBoxChange = (event) => {
-    setEmailCheckBox(event.target.checked);
-  }
 
     const Alert = () => {
         setCounter(30);
@@ -153,9 +137,6 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     };
 
     const handleVerifyUser = () => {
-        setverifyUser(true);
-        setShowFields(true);
-        setuserId(false);
         const userId = form.getFieldValue('userId');
 
         if (userId) {
@@ -165,7 +146,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         }
 
         alertNotification.open({
-            icon: <StopOutlined className= {styles.toasticon}/>,
+            icon: <StopOutlined className={styles.toasticon} />,
             message: 'Invalid User ID',
             description: 'User id that you have entered is invalid, please try again.',
             duration: 0,
@@ -177,8 +158,8 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         const userId = form.getFieldValue('userId');
         if (userId) {
             //APi Call
-            
-            if(mobileCheckBox || emailCheckBox){
+
+            if (mobileCheckBox || emailCheckBox) {
                 alertNotification.open({
                     icon: <CheckCircleOutlined />,
                     message: 'Success',
@@ -189,7 +170,6 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                 setSelectedUserId(userId);
                 setCurrentStep(3);
             }
-            
         }
     };
 
@@ -208,7 +188,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
             setCurrentStep(4);
         }
     };
-    const onFinish= (values)=>{
+    const onFinish = (values) => {
         const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
@@ -226,7 +206,6 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
-            userId,
             onSuccess,
             onError,
         };
@@ -260,7 +239,6 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
 
     const handleChangedPassword = () => {
         setOTP(false);
-        setPasswordChanged(true);
         navigate(ROUTING_LOGIN);
         setShowTimer(false);
         setPassword(false);
@@ -303,7 +281,7 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                             <Form.Item name="userId" rules={[validateRequiredInputField('User ID (mile id.parent id)')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
-                                                                <Input prefix={<BiUser size={18} style={{color: '#ffffff'}}/>} type="text" placeholder="User ID (mile id.parent id)" />
+                                                                <Input prefix={<BiUser size={18} style={{ color: '#ffffff' }} />} type="text" placeholder="User ID (mile id.parent id)" />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -335,8 +313,13 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
                                                     </div>
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={20} xl={24}>
+<<<<<<< HEAD
                                                             <Form.Item initialValue={selectedUserId}  name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
                                                                 <Input disabled prefix={<BiUser size={18}/>} type="text" placeholder="User ID (mile id.parent id)" style={{color: '#838383'}} />
+=======
+                                                            <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
+                                                                <Input disabled prefix={<BiUser size={18} className={styles.disabledInput} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
+>>>>>>> 4f8c436a3ef6a53dc2829b1c706cb817075f46db
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -502,4 +485,4 @@ const ForgotPasswordBase = ({ verifyUsers ,isDataLoaded,listShowLoading}) => {
     );
 };
 
-export const ForgotPassword =  connect(null, mapDispatchToProps) (ForgotPasswordBase);
+export const ForgotPassword = connect(null, mapDispatchToProps)(ForgotPasswordBase);

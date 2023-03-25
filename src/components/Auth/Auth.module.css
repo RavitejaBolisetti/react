@@ -4,6 +4,10 @@
 
 p {
     margin-bottom: 0px !important;
+    margin-top: 0px !important;
+    color: #342C2C;
+    padding-left: 28px !important;
+    text-align: left;
 }
 
 .floatRight {
@@ -88,6 +92,8 @@ p {
 .button {
     width: 100%;
     font-size: 18px;
+    font-weight: 400;
+    line-height: 26px;
     /* padding: 10px; */
     margin-top: 20px;
     /* text-transform: uppercase; */
@@ -160,34 +166,36 @@ p {
 
 .loginSection .center .loginLogoSection {
     text-align: center;
-    margin-top: 24px;
-    margin-bottom: 32px;
+    margin-top: 12px;
+    margin-bottom: 36px;
     color: #fff;
 }
 
 .loginSection .center .loginLogoSection .mainLogo {
-    width: 245px;
-    height: 55px;
+    /* width: 245px; */
+    height: 44px;
 }
 
 .loginSection .center .loginLogoSection .mainLogoLine {
     width: 300px;
-    height: 1px;
+    height: 2px;
     margin-top: 20px;
 }
 
 .loginSection .center .loginLogoSection .logoText {
     padding-top: 8px;
-    font-size: 24px;
+    font-size: 26px;
+    line-height: 34px;
+    font-weight: 400;
 }
 
 .loginSection .loginWrap {
     /* margin: 20px; */
-    background: rgba(40, 39, 44, .8);
+    background: rgba(40, 39, 44, .6);
     box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
-    border-radius: 16px;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
+    border-radius: 19px;
+    -moz-border-radius: 19px;
+    -webkit-border-radius: 19px;
     border: 0px solid #000000;
 }
 
@@ -222,7 +230,7 @@ p {
 }
 
 .inputBox {
-    margin-bottom: 20px !important;
+    margin-bottom: 24px !important;
 }
 
 
@@ -249,11 +257,14 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::placeholder,
 .changer input::placeholder {
     color: #8E8585;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 24px;
 }
 
-.loginSection :global .ant-input-affix-wrapper>input.ant-input {
+/* .loginSection :global .ant-input-affix-wrapper>input.ant-input {
     padding: 3px 0;
-}
+} */
 
 .loginSection :global .ant-input-affix-wrapper>input.ant-input.disabledInput {
     color: #838383 !important;
@@ -262,7 +273,8 @@ p {
 .loginSection :global .ant-input-affix-wrapper {
     background: transparent;
     border-style: none none solid none;
-    color: #aaaaaa;
+    border-color: #545454;
+    color: #ffffff;
     font-size: 16px;
     border-radius: 0;
     padding: 0;
@@ -275,9 +287,9 @@ p {
 }
 
 .loginSection .disabledInput {
-   
+
     color: #838383;
-    
+
 }
 
 .loginSection :global .ant-input-affix-wrapper .ant-input-prefix::placeholder {
@@ -333,6 +345,7 @@ p {
     font-size: 26px;
     color: #fff;
     text-align: center;
+    line-height: 34px;
     font-weight: 400;
     margin: 0;
 }
@@ -340,11 +353,12 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
     font-size: 14px;
-    color: #dedede;
+    color: #DEDEDE;
     margin-top: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     text-align: center;
-    font-weight: normal;
+    font-weight: 400;
+    line-height: 22px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group {
@@ -442,15 +456,17 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink {
     font-size: 16px;
-    color: #dedede;
+    line-height: 24px;
+    font-weight: 400;
     text-align: right;
     font-weight: normal;
     width: 100%;
-    margin-top: 12px;
+    margin-top: -6px;
+    margin-bottom: 10px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a {
-    color: #fff;
+    color: #DEDEDE !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a:hover {
@@ -473,7 +489,9 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
     font-size: 16px;
-    color: #fff;
+    font-weight: 400;
+    line-height: 24px;
+    color: #DEDEDE;
     text-align: center;
     font-weight: normal;
 }
@@ -542,7 +560,7 @@ select.form-control:not([size]):not([multiple]) {
     height: 18px;
     width: 18px;
     padding-top: 5px;
-   
+
 }
 
 select.form-control:focus::-ms-value {
@@ -615,41 +633,44 @@ select.form-control:focus::-ms-value {
 }
 
 .errorBoxContainer {
-    width: 25%;
+    /* width: 25%; */
+    width: 320px;
     max-height: 90%;
-    margin: 3% auto;
-    padding: 15px;
-    background: #242424;
+    /* margin: 3% auto; */
+    padding: 10px 16px;
+    background: #FEE3D4;
     color: #dedede;
     font-size: 16px;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border: 2px solid #ea3434;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border: 1px solid #ED302D;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
     overflow: auto;
     position: fixed;
-    top: 10%;
-    right: 0;
-} 
+    top: 16px;
+    right: 16px;
+}
 
-.toastmessage :global :where(.css-dev-only-do-not-override-aprs5d).ant-notification-notice .ant-notification-notice-with-icon .ant-notification-notice-message{
+.toastmessage :global .ant-notification-notice .ant-notification-notice-with-icon .ant-notification-notice-message {
 
     margin-bottom: 8px;
     margin-inline-start: 28px;
     font-size: 16px
 }
+
 .errorBoxContainer h5 {
-    margin: 0 0 5px 0;
+    margin: 0;
     padding: 0px;
-    border-bottom: 1px solid #ea3434;
+    /* border-bottom: 1px solid #ea3434; */
     font-size: 16px;
-    color: #fff;
-    padding-bottom: 5px;
+    color: #EF0000;
+    padding-bottom: 5px !important;
 }
 
 .errorBoxContainer h5 .icon {
-    color: #ea3434;
-    padding-bottom: 5px;
+    color: #ED302D;
+    /* padding-bottom: 5px; */
 }
 
 .errorBoxContainer h5 .infoIcon {
@@ -665,6 +686,175 @@ select.form-control:focus::-ms-value {
     /* transform:scale(1.77); -webkit-transform:scale(1.77); transform-origin:0 0; -webkit-transform-origin:0 0; */
     margin: 0px auto;
 }
+
+:global .ant-btn.ant-btn-sm {
+    height: 28px !important;
+    padding: 4px 16px;
+    margin-bottom: 0px !important;
+    font-size: 12px !important;
+}
+
+:global .ant-btn-default {
+    background-color: transparent;
+}
+
+:global .ant-notification {
+    top: 16px !important;
+    margin-inline-end: 16px !important;
+}
+
+:global .ant-notification-notice {
+    width: 395px !important;
+    padding: 10px !important;
+}
+
+:global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
+:global .ant-notification-notice-close:hover {
+    background-color: transparent !important;
+}
+
+/*--------- Warning Notification Start ---------*/
+.warning {
+    color: #FF7A00;
+    background-color: #FFEAD7;
+    border: 1px solid #FF7A00;
+}
+
+.warning :global .ant-notification-notice-icon {
+    font-weight: 700;
+}
+
+.warning :global .ant-notification-close-icon {
+    color: #FF7A00;
+}
+
+.warning :global .ant-notification-notice-message {
+    color: #FF7A00;
+    font-weight: 700;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+
+.warning :global .ant-notification-notice-description {
+    color: #342C2C;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    padding-right: 20px;
+}
+
+.warning :global .ant-notification-notice-btn {
+    margin-left: 35px;
+    float: left;
+    font-size: 12px;
+}
+
+.warning :global .ant-notification-notice-btn .ant-btn-primary {
+    background-color: #FF7A00;
+    color: #FFFFFF;
+}
+
+.warning :global .ant-notification-notice-btn .ant-btn-dangerous {
+    color: #FF7A00;
+    border-color: #FF7A00;
+}
+
+.warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #FF7A00 !important;
+}
+
+/*--------- Warning Notification End ---------*/
+
+/*--------- Error Notification Start ---------*/
+.error {
+    color: #ED302D;
+    background-color: #FEE3D4;
+    border: 1px solid #ED302D;
+}
+
+.error :global .ant-notification-notice-icon {
+    font-weight: 700;
+}
+
+.error :global .ant-notification-close-icon {
+    color: #EF0000;
+}
+
+.error :global .ant-notification-notice-message {
+    color: #EF0000;
+    font-weight: 700;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+
+.error :global .ant-notification-notice-description {
+    color: #342C2C;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    padding-right: 20px;
+}
+
+.error :global .ant-notification-notice-btn {
+    margin-left: 35px;
+    float: left;
+    font-size: 12px;
+}
+
+.error :global .ant-notification-notice-btn .ant-btn-primary {
+    background-color: #EF0000;
+    color: #FFFFFF;
+}
+
+.error :global .ant-notification-notice-btn .ant-btn-dangerous {
+    color: #EF0000;
+    border-color: #EF0000;
+}
+
+.error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ea3434 !important;
+}
+
+/*--------- Error Notification End ---------*/
+
+/*--------- Success Notification Start ---------*/
+.success {
+    color: #70C922;
+    background-color: #EEFCD2;
+    border: 1px solid #70C922;
+}
+
+.success :global .ant-notification-notice-icon {
+    font-weight: 700;
+}
+
+.success :global .ant-notification-close-icon {
+    color: #00A310;
+}
+
+.success :global .ant-notification-notice-message {
+    color: #00A310;
+    font-weight: 700;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+
+.success :global .ant-notification-notice-description {
+    color: #342C2C;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    padding-right: 20px;
+}
+
+/*--------- Success Notification End ---------*/
 
 /* New css */
 .ant-form-item .ant-form-item-control-input-content {
@@ -698,7 +888,7 @@ select.form-control:focus::-ms-value {
     font-size: 16px;
 }
 
-.resendDisabled{
+.resendDisabled {
     color: #858585;
     float: right;
     cursor: pointer;

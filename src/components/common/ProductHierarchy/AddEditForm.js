@@ -5,11 +5,12 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 
 import styles from 'pages/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
     const disabledProps = { disabled: isReadOnly };
@@ -44,6 +45,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelec
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('Parent'),
     };
 
     return (
@@ -51,7 +53,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelec
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                        <Select loading={!isDataAttributeLoaded} placeholder="Select" {...disabledProps} showSearch allowClear>
+                        <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                             ))}
@@ -69,20 +71,20 @@ const AddEditFormMain = ({ isChecked, setIsChecked, setSelectedTreeKey, setSelec
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input placeholder="Code" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                        <Input className={styles.inputBox} {...disabledProps} />
+                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
-                        <TextArea rows={1} placeholder="Type here" {...disabledProps} />
+                        <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>

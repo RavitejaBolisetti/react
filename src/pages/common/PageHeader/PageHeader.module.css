@@ -3,12 +3,18 @@
     color: #ffffff !important;
 }
 
+:global .ant-btn {
+    height: 34px;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
 .padRight0 {
     padding-right: 0px !important;
 }
 
 .pageHeader .headingGradient {
-    padding-bottom: 10px;
+    padding-bottom: 11px;
     border-radius: 5px;
     border: 0px;
     border-bottom: 4px solid;
@@ -16,8 +22,9 @@
     border-image-slice: 1;
     text-decoration: none;
     margin-bottom: 28px;
-    color: #0b0b0c;
-    font-size: 20px;
+    color: #342C2C;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .pageHeader .favIconHeading {

@@ -49,9 +49,7 @@ export const ConfigurableParameterEditingTable = () => {
             onOk() {
                 deleteTableRows(data.key);
             },
-            onCancel() {
-                console.log('Cancel');
-            },
+            onCancel() {},
         });
     };
 
@@ -125,7 +123,6 @@ export const ConfigurableParameterEditingTable = () => {
     ];
 
     const ConfigParamValue = () => {
-        console.log(selected, 'selected');
         let fieldType = undefined;
         switch (selected) {
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY:
@@ -182,7 +179,6 @@ export const ConfigurableParameterEditingTable = () => {
         <>
             <Form onFinishFailed={onFinishFailed}>
                 <DataTable {...tableProps} />
-
                 <Row gutter={20} className={styles.btnContainer}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.btnLeft}>
                         <Button danger onClick={handleAdd}>

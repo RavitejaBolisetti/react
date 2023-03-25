@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Table } from 'antd';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
-
-const onChange = (pagination, filters, sorter, extra) => {
-    // console.log('params', pagination, filters, sorter, extra);
-};
 
 const mapStateToProps = (state) => {
     const {
