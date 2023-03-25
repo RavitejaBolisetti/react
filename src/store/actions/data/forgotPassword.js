@@ -15,7 +15,7 @@ forgotPasswordActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-forgotPasswordActions.verifyUsers = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+forgotPasswordActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, onSuccess } = params;
 
     setIsLoading(true);
