@@ -336,16 +336,20 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
                                                                 </Checkbox>
                                                             </Col>
                                                         </Row>
-                                                        <Form.Item
-                                                            name="agreement"
-                                                            valuePropName="checked"
-                                                            className={styles.fielderror}
-                                                            rules={[
-                                                                {
-                                                                    validator: (_, value) => (mobileCheckBox || emailCheckBox ? Promise.resolve() : Promise.reject(new Error('Please choose at least one option'))),
-                                                                },
-                                                            ]}
-                                                        ></Form.Item>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Form.Item
+                                                                    name="agreement"
+                                                                    valuePropName="checked"
+                                                                    className={styles.fielderror}
+                                                                    rules={[
+                                                                        {
+                                                                            validator: (_, value) => (mobileCheckBox || emailCheckBox ? Promise.resolve() : Promise.reject(new Error('Please choose at least one option'))),
+                                                                        },
+                                                                    ]}
+                                                                ></Form.Item>
+                                                            </Col>
+                                                        </Row>
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
