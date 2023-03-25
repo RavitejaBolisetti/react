@@ -33,6 +33,7 @@ const informationMessage = {
     updateGroup: 'Your group has been updated. Refresh to get the latest result',
     createGroup: 'Your group has been Created. Refresh to get the latest result',
     success: 'Group Created Successfully',
+    updated: "Group Updated",
 
 }
 
@@ -168,11 +169,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
         const onSuccess = (res) => {
             form.resetFields();
+            setSelectedRecord({})
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
-                informationModalBox({ icon: 'success', message: informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
+                informationModalBox({ icon: 'success', message:selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
                 informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success2, placement: 'bottomRight' });
