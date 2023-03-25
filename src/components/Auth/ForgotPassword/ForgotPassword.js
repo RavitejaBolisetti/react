@@ -21,6 +21,7 @@ import * as IMAGES from 'assets';
 import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
+import { FiLock } from 'react-icons/fi';
 
 const mapStateToProps = (state) => {
     const {
