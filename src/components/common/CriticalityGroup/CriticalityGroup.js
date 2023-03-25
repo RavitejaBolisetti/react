@@ -145,7 +145,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         };
       
         if (isOverlapping(formatedTime) === true) {
-            alert('Your timings are overlapping please check again and try');
+            informationModalBox({ icon: 'success', message: 'The selected allowed timing slots are overlapping.', className: style.success, placement: 'bottomRight' });
         } else {
           
         
