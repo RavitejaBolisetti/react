@@ -125,7 +125,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
 
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTiming: formatedTime || [] };
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
 
         const onSuccess = (res) => {
             form.resetFields();

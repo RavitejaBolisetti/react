@@ -126,7 +126,7 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                     </Col>
                 </Row>
 
-                <Form.List name="allowedTiming">
+                <Form.List name="allowedTimings">
                     {(fields, { add, remove }) => (
                         <>
                             <Row gutter={20}>
