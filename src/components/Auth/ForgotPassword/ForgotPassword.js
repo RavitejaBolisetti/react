@@ -70,6 +70,7 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
     const [submit, setSubmit] = useState(false);
     const [showtimer, setShowTimer] = useState(true);
     const [password, setPassword] = useState(false);
+    const [confirmDirty, setConfirmDirty] = useState(false);
 
     const tailFormItemLayout = {
         wrapperCol: {
@@ -212,6 +213,25 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
         });
     };
 
+    const validateToNextPassword = (rule, value, callback) => {
+        if (value && confirmDirty) {
+            form.validateFields(['confirmNewPassword'], { force: true });
+        }
+        callback();
+    };
+
+    const compareToFirstPassword = (rule, value, callback) => {
+        if (value && value !== form.getFieldValue('newPassword')) {
+            callback("New Password and Confirm Password doesn't match!");
+        } else {
+            callback();
+        }
+    };
+
+    const handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        setConfirmDirty(confirmDirty || !!value);
+    };
     return (
         <>
             {contextAlertNotification}
@@ -404,7 +424,17 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                                <Form.Item
+                                                                    name="newPassword"
+                                                                    rules={[
+                                                                        validateRequiredInputField('New Password'),
+                                                                        validateFieldsPassword('New Password'),
+                                                                        {
+                                                                            validator: validateToNextPassword,
+                                                                        },
+                                                                    ]}
+                                                                    className={`${styles.changer} ${styles.inputBox}`}
+                                                                >
                                                                     <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
                                                                 </Form.Item>
                                                             </Col>
