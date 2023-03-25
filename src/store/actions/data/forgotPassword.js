@@ -15,6 +15,29 @@ forgotPasswordActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
+forgotPasswordActions.verifyUser = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
+
+    setIsLoading(true);
+
+    const apiCallParams = {
+        data,
+        method: 'post',
+        url: BASE_URL_VERIFY_USER,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
 forgotPasswordActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, onSuccess } = params;
 

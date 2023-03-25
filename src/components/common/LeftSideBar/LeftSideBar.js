@@ -105,7 +105,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         setTheme(changeTheme);
     };
     const onSearch = (value) => {
-        setFilter(value);
+        // setFilter(value);
     };
 
     const onSubmit = (value, type) => {
