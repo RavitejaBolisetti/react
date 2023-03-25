@@ -347,7 +347,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             const searchResult = criticalityGroupData.filter((record) => record.criticalityGroupCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.criticalityGroupName.toLowerCase().startsWith(e.target.value.toLowerCase()));
             setSearchdata(searchResult);
         }
-        console.log(e.target.value);
     };
 
     const tableColumn = [];
@@ -444,7 +443,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
-                            {searchData?.length ? (
+                            {/* { searchKey && searchData?.length ? ( */}
+                            { criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
@@ -506,12 +506,16 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     height: 60,
                                 }}
                                 description={
-                                    <span>
-                                        No records found. Please add new parameter <br />
-                                        using below button
-                                    </span>
+                                    !criticalityGroupData?.length ?
+                                        <span>
+                                            No records found. Please add new parameter <br />
+                                            using below button
+                                        </span> 
+                                        : 
+                                        <span> No records found.</span>
                                 }
                             >
+                                { !criticalityGroupData?.length ? (
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Button className={style.actionbtn} type="primary" danger onClick={handleAdd}>
@@ -519,7 +523,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                             Add Group
                                         </Button>
                                     </Col>
-                                </Row>
+                                </Row>)
+                                : ""
+                        }
                             </Empty>
                         )}
                     >
