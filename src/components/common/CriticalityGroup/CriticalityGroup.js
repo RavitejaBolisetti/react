@@ -117,7 +117,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const onFinish = (values) => {
-        const formatedTime = values?.allowedTiming?.map((time) => {
+        const formatedTime = values?.allowedTimings?.map((time) => {
             return {
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
@@ -177,7 +177,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
-        const momentTime = record?.allowedTimingResponse?.map((i) => {
+        const momentTime = record?.allowedTimings?.map((i) => {
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
@@ -188,9 +188,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
             criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: record.criticalityDefaultGroup,
+            criticalityDefaultGroup: Number(record.criticalityDefaultGroup)  ,
             activeIndicator: record.activeIndicator,
-            allowedTimingResponse: momentTime,
+            allowedTimings: momentTime,
         });
 
         setDrawer(true);
@@ -203,7 +203,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
-        const momentTime = selectedRecord?.allowedTimingResponse?.map((i) => {
+        const momentTime = selectedRecord?.allowedTimings?.map((i) => {
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
@@ -213,9 +213,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         form.setFieldsValue({
             criticalityGroupCode: selectedRecord.criticalityGroupCode,
             criticalityGroupName: selectedRecord.criticalityGroupName,
-            criticalityDefaultGroup: selectedRecord.criticalityDefaultGroup,
+            criticalityDefaultGroup: Number(selectedRecord.criticalityDefaultGroup),
             activeIndicator: selectedRecord.activeIndicator,
-            allowedTimingRequest: momentTime,
+            allowedTimings: momentTime,
         });
         setsaveclick(true);
         setIsReadOnly(false);
@@ -228,7 +228,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(false);
         setFooterEdit(true);
         setSaveBtn(false);
-        const momentTime = record?.allowedTimingResponse?.map((i) => {
+        const momentTime = record?.allowedTimings?.map((i) => {
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
@@ -237,9 +237,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
             criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: record.criticalityDefaultGroup,
+            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
             activeIndicator: record.activeIndicator,
-            allowedTimingResponse: momentTime,
+            allowedTimings: momentTime,
         });
         setDrawer(true);
         setIsReadOnly(true);
@@ -314,7 +314,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
         })
     );
 
