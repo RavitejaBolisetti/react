@@ -9,7 +9,7 @@ import { doLogoutAPI } from 'store/actions/auth';
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined,StopOutlined  } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes, FaLock } from 'react-icons/fa';
-import {  FiLock } from 'react-icons/fi';
+
 
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 
