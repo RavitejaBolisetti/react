@@ -1,6 +1,12 @@
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const BASE_URL_LOGIN = BASE_URL + 'login';
+export const BASE_URL_VERIFY_USER = BASE_URL + 'verifyuser';
+export const BASE_URL_GENERATE_OTP = BASE_URL + 'generateotp';
+export const BASE_URL_VALIDATE_OTP = BASE_URL + 'validateotp';
+export const BASE_URL_FORGOT_PASSWORD = BASE_URL + 'forgotpassword';
+
+
 export const BASE_URL_LOGOUT = BASE_URL + 'logout';
 export const BASE_URL_USER_DETAIL = BASE_URL + 'users';
 

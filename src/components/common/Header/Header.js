@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
@@ -16,14 +16,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { authLoggingError, doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 import { MdOutlineChangeCircle } from 'react-icons/md';
+// import Search from 'antd/es/transfer/search';
 
+const { Search } = Input;
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
@@ -60,6 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const pagePath = location.pathname;
+
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);
 
@@ -174,13 +179,14 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
-
+    const onSearch = (value) => console.log(value);
+    const isDashboard = pagePath === routing.ROUTING_DASHBOARD;
     return (
         <>
             {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row gutter={0} className={styles.columnInterchange}>
-                        <Col xs={24} sm={24} md={10} lg={12} xl={12} xxl={12}>
+                        <Col xs={24} sm={24} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                             <div className={styles.headerLeft}>
                                 <Space>
                                     {/* <div className={styles.userAvatar}>
@@ -198,20 +204,30 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </a>
                                             </Dropdown>
                                         )}{' '}
-                                        <span className={styles.seprator}>|</span>
-                                        <span className={styles.dealerLocation}>FY2023</span>
                                         {userType === 'DLR' && (
-                                            <Dropdown menu={{ items }} trigger={['click']}>
-                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                    <DownOutlined />
-                                                </a>
-                                            </Dropdown>
+                                            <>
+                                                <span className={styles.seprator}>|</span>
+                                                <span className={styles.dealerLocation}>FY2023</span>
+                                                <Dropdown menu={{ items }} trigger={['click']}>
+                                                    <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
+                                                        <DownOutlined />
+                                                    </a>
+                                                </Dropdown>
+                                            </>
                                         )}
                                     </div>
                                 </Space>
                             </div>
                         </Col>
-                        <Col xs={24} sm={24} md={14} lg={12} xl={12} xxl={12}>
+
+                        {pagePath === routing.ROUTING_DASHBOARD && (
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7} xxl={7}>
+                                <div className={styles.headerRight} style={{ width: '100%' }}>
+                                    <Search allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+                                </div>
+                            </Col>
+                        )}
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>

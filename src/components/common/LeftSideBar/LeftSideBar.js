@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col } from 'antd';
+import { Input, Menu, Layout, Row, Col, Button } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, isMobile, collapsed };
     return returnValue;
 };
 
@@ -80,7 +80,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -139,7 +139,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         });
     };
 
-    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
+    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -157,12 +157,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     </Row>
 
                     {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
-                    {/* <Row>
-                        <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                            <span className={styles.menuIcon}><HomeIcon /></span>
-                            HOME
-                        </Link>
-                    </Row> */}
                 </div>
                 {!isLoading ? (
                     <>
@@ -177,12 +171,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
-                            <Row>
+                            <Item key={'home'} className={styles.subMenuItemNew}>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                                    <span className={styles.menuIcon}><HomeIcon /></span>
+                                    <span className={styles.menuIcon}>
+                                        <HomeIcon />
+                                    </span>
                                     HOME
                                 </Link>
-                            </Row>
+                            </Item>
                             {prepareMenuItem(menuData)}
                         </Menu>
                     </>
@@ -197,7 +193,23 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    {theme === 'light' ? <BsSun size={30} className={styles.sun} /> : <BsMoon size={30} className={styles.moon} />}
+                    {collapsed ? (
+                        theme === 'light' ? (
+                            <BsSun size={30} className={styles.sun} />
+                        ) : (
+                            <BsMoon size={30} className={styles.moon} />
+                        )
+                    ) : (
+                        <>
+                            <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                <BsSun size={30} /> Light Mode
+                            </Button>
+
+                            <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                <BsMoon size={30} /> Dark Mode
+                            </Button>
+                        </>
+                    )}
                 </div>
             </Sider>
         </>

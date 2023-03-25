@@ -11,7 +11,7 @@ phases:
             - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
             - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
             - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-            - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+            - echo -e "sonar.host.url=http://10.168.14.133:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
             - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
@@ -21,10 +21,10 @@ phases:
             - echo Build started on `date`
             - echo Compiling the dist folder
             - npm test -- --coverage
-            - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
+            - sonar-scanner -Dsonar.sources=src/ -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.14.133:9000/ -Dsonar.login=squ_735931fe36013468bc639ae502029f9702fe5f86
     post_build:
         commands:
-            - echo Build completed on `date`
+            - echo Build completed on `date` 
 # Include only the files required for your application to run.
 artifacts:
     files:

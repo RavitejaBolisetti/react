@@ -2,6 +2,7 @@ import { AiFillCar } from 'react-icons/ai';
 import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
+import { HomeIcon } from 'Icons';
 
 import { getMenyKey } from 'utils/menuKey';
 
@@ -14,6 +15,13 @@ export const MenuConstant = {
         link: undefined,
         icon: <MdStars fontSize={22} />,
         parentMenuId: 'FAV',
+    },
+
+    [getMenyKey('HOM')]: {
+        key: 'HOM',
+        link: routing.ROUTING_DASHBOARD,
+        icon: HomeIcon,
+        parentMenuId: '',
     },
 
     [getMenyKey('DASH')]: {
