@@ -6,7 +6,7 @@
     border-radius: 8px;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
+    padding: 20px 0px 0px 20px;
     gap: 20px;
     margin-bottom: 20px;
 }
@@ -118,6 +118,7 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
+    padding-right: 0px;
 }
 
 .timingHeaderBackground {
@@ -300,6 +301,18 @@
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
     padding: 10px 20px;
 }
+.refreshBtn {
+    /* height : 28px !important ; */
+    background-color: transparent;
+    /* padding : 0px 24px; */
+    font-size: 18px;
+    line-height: 18px;
+    width: 60px !important;
+}
+
+.refreshBtn svg {
+   margin-right: 0px !important;
+}
 
 .refreshBtn :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:not(:disabled):hover {
     color: #ffffff;
@@ -325,17 +338,17 @@
     font-size: 12px;
     line-height: 20px;
     font-weight: 500;
-    height: 28px;
+    /* height: 28px; */
 }
 
 :global .ant-empty .ant-empty-footer {
     margin-top: 24px;
 }
-
+/* 
 .actionbtn svg {
     margin-right: 6px !important;
     font-size: 14px;
-}
+} */
 
 :global .ant-empty-normal {
     color: #635d5d;
@@ -360,5 +373,37 @@
     color: #00a310;
 }
 .InactiveText {
-    color: #ff3e5b;
+    color: #8E8585;
+}
+
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    border : none;
+    padding-top: 0px;
+}
+
+.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    padding-left: 0px !important;
+}
+
+.tableIcons {
+    border:none;
+    padding: 0px;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
+background-color: transparent;
+color: #B5B5B6 !important;
+}
+
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled svg {
+    /* background-color: transparent; */
+    color: #B5B5B6 !important;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous svg {
+    margin-right: 0px; 
+   /* padding-top: 0px; */
+   padding-left: 20px;
 }

@@ -13,7 +13,7 @@ import style from './criticatiltyGroup.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import moment from 'moment';
 
-const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
 
@@ -57,7 +57,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
     // const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
     //     return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
     // };
-    const onOk = (value) => { };
+    const onOk = (value) => {};
 
     const handleForm = () => {
         setFormBtnDisable(true);
@@ -70,7 +70,6 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
             width="520"
             footer={
                 <>
-
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
                             <Button danger onClick={onClose}>
@@ -185,7 +184,7 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                 <Form.List
                     // required rules={[validateRequiredInputField('Allowed Timings')]}
                     name="allowedTimingResponse"
-                // initialValue={momentTime}
+                    // initialValue={momentTime}
                 >
                     {(fields, { add, remove }) => (
                         <>
@@ -243,12 +242,9 @@ const DrawerUtil = ({setsaveclick, formBtnDisable,setFormBtnDisable,successAlert
                                             >
                                                 <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                             </Form.Item>
-                                            <Button className={style.deleteBtn}
-                                                {...disabledProps}
-                                                danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
-                                                <LinearTrash />
-                                            </Button>
+                                           
                                         </Space>
+                                        <Button icon={<LinearTrash />} className={style.deleteBtn} disabled={true} danger ghost onClick={() => remove(name)}></Button>
                                     </div>
                                 ))}
                             </>

@@ -6,7 +6,7 @@ import { TfiReload } from 'react-icons/tfi';
 
 import { FaEdit } from 'react-icons/fa';
 import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
@@ -22,6 +22,7 @@ import { BsTruckFlatbed } from 'react-icons/bs';
 import { DataTable } from 'utils/dataTable';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 import moment from 'moment';
+import { FiRefreshCw } from 'react-icons/fi';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -29,12 +30,11 @@ const { Search } = Input;
 
 const informationMessage = {
     deleteGrpTiming: 'Group timing has been deleted successfully',
-    createGroupTitleOnSaveNew:'group created Successfully. Continue Creating More Groups',
+    createGroupTitleOnSaveNew: 'group created Successfully. Continue Creating More Groups',
     updateGroup: 'Your group has been updated. Refresh to get the latest result',
     createGroup: 'Your group has been Created. Refresh to get the latest result',
     success: 'Group Created Successfully',
-
-}
+};
 
 const mapStateToProps = (state) => {
     const {
@@ -92,7 +92,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
-    const initialTableData = [];
+    const initialTableData = [{}];
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,16 +124,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
     };
 
-
     const onFinish = (values) => {
-
         const formatedTime = values?.allowedTimingResponse?.map((time) => {
             return {
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
             };
         });
-
         // const overlapping = (a, b) => {
         //     const getMinutes = (s) => {
         //         const p = s.split(':').map(Number);
@@ -162,7 +159,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         // console.log(arr);
 
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? 1 : 0, allowedTimingRequest: formatedTime || [] };
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
         console.log('🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:', recordId);
         delete data?.allowedTimingResponse;
 
@@ -172,7 +169,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
-                informationModalBox({ icon: 'success', message: informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
+                informationModalBox({ icon: 'success', message: informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
             } else {
                 setDrawer(true);
                 informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success2, placement: 'bottomRight' });
@@ -255,7 +252,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setDrawer(true);
         setIsReadOnly(false);
         // forceUpdate();
-
     };
 
     const handleUpdate2 = () => {
@@ -396,14 +392,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             sorter: false,
             render: (text, record, index) => {
                 return (
-                    <Space style={{ display: 'flex' }}>
+                    <Space>
                         {
-                            <Button style={{ border: 'none' }} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
                                 <EditIcon />
                             </Button>
                         }
                         {
-                            <Button style={{ marginLeft: '-10px', border: 'none' }} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
                                 <ViewEyeIcon />
                             </Button>
                         }
@@ -448,13 +444,19 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                         <TfiReload />
                                     </Button>
 
-                                    <Button className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        <AiOutlinePlus />
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        {/* <AiOutlinePlus /> */}
                                         Add Group
                                     </Button>
                                 </Col>
                             ) : (
-                                ''
+                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Button icon={<FiRefreshCw />} className={style.refreshBtn} onClick={handleReferesh} danger />
+
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Group
+                                    </Button>
+                                </Col>
                             )}
                         </Row>
                     </div>
@@ -512,8 +514,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             >
                                 <Row>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Button className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            <AiOutlinePlus />
+                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
                                             Add Group
                                         </Button>
                                     </Col>
@@ -521,7 +522,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
