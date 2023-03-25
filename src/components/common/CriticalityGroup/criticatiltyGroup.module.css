@@ -312,7 +312,7 @@
 }
 
 .refreshBtn svg {
-   margin-right: 0px !important;
+    margin-right: 0px !important;
 }
 
 .refreshBtn :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:not(:disabled):hover {
@@ -374,12 +374,11 @@
     color: #00a310;
 }
 .InactiveText {
-    color: #8E8585;
+    color: #8e8585;
 }
 
-
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-    border : none;
+    border: none;
     padding-top: 0px;
 }
 
@@ -388,24 +387,37 @@
 }
 
 .tableIcons {
-    border:none;
+    border: none;
     padding: 0px;
 }
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
-background-color: transparent;
-color: #B5B5B6 !important;
+    background-color: transparent;
+    color: #b5b5b6 !important;
 }
-
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled svg {
     /* background-color: transparent; */
-    color: #B5B5B6 !important;
+    color: #b5b5b6 !important;
 }
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous svg {
-    margin-right: 0px; 
-   padding-top: 5px;
-   padding-left: 20px;
-   color : #ff3e5b;
+    margin-right: 0px;
+    padding-top: 5px;
+    padding-left: 20px;
+    color: #ff3e5b;
+}
+:global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 44, 44, 0.34) !important;
+    border-radius: 10px;
+}
+:global .ant-picker-time-panel-column::-webkit-scrollbar {
+    width: 5px;
+    background-color: #f4f4f4;
+}
+:global .ant-picker-time-panel-column::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+}
+:global .ant-picker-input {
+
 }
