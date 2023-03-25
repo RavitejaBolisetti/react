@@ -118,13 +118,13 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
     const [mobileCheckBox, setMobileCheckBox] = useState(true);
     const [emailCheckBox, setEmailCheckBox] = useState(true);
 
-    const mobileCheckBoxChange = (event) =>{
-        setMobileCheckBox(event.target.checked)
-    }
+    // const mobileCheckBoxChange = (event) =>{
+    //     setMobileCheckBox(event.target.checked)
+    // }
 
-    const emailCheckBoxChange = (event) =>{
-        setEmailCheckBox(event.target.checked)
-    }
+    // const emailCheckBoxChange = (event) =>{
+    //     setEmailCheckBox(event.target.checked)
+    // }
 
     const Alert = () => {
         setCounter(30);
@@ -221,13 +221,13 @@ const ForgotPasswordBase = ({ verifyUser, verifyUsers, isDataLoaded, listShowLoa
         verifyUsers(requestData);
     }
 
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue('newPassword')) {
-            callback("New Password and Confirm Password doesn't match!");
-        } else {
-            callback();
-        }
-    };
+    // const compareToFirstPassword = (rule, value, callback) => {
+    //     if (value && value !== form.getFieldValue('newPassword')) {
+    //         callback("New Password and Confirm Password doesn't match!");
+    //     } else {
+    //         callback();
+    //     }
+    // };
     const mobileCheckBoxChange = (event) => {
         console.log(event.target.checked,'Final Chek');
         setMobileCheckBox(event.target.checked);
