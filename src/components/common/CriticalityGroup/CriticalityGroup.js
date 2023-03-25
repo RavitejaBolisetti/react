@@ -448,7 +448,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </Button>
 
                                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                     
                                         Add Group
                                     </Button>
                                 </Col>

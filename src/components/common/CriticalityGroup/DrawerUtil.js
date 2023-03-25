@@ -258,7 +258,7 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                                         <Button
                                             icon={<LinearTrash />}
                                             className={style.deleteBtn}
-                                            disabled={true}
+                                            {...disabledProps}
                                             danger
                                             ghost
                                             onClick={() => {

@@ -405,6 +405,7 @@ color: #B5B5B6 !important;
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous svg {
     margin-right: 0px; 
-   /* padding-top: 0px; */
+   padding-top: 5px;
    padding-left: 20px;
+   color : #ff3e5b;
 }
