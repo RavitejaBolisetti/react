@@ -6,18 +6,12 @@ import { connect } from 'react-redux';
 
 
 import { doLogoutAPI } from 'store/actions/auth';
-<<<<<<< HEAD
 import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined,StopOutlined  } from '@ant-design/icons';
 import { FaKey, FaInfoCircle, FaTimes, FaLock } from 'react-icons/fa';
 import {  FiLock } from 'react-icons/fi';
 
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-=======
-import { Form, Row, Col, Button, Input, Checkbox, notification } from 'antd';
-import { UndoOutlined, CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
-import { handleErrorModal } from 'utils/responseModal';
->>>>>>> 4f8c436a3ef6a53dc2829b1c706cb817075f46db
 
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci';
@@ -313,13 +307,8 @@ const ForgotPasswordBase = ({ verifyUsers, isDataLoaded, listShowLoading }) => {
                                                     </div>
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={20} xl={24}>
-<<<<<<< HEAD
                                                             <Form.Item initialValue={selectedUserId}  name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
                                                                 <Input disabled prefix={<BiUser size={18}/>} type="text" placeholder="User ID (mile id.parent id)" style={{color: '#838383'}} />
-=======
-                                                            <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                <Input disabled prefix={<BiUser size={18} className={styles.disabledInput} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
->>>>>>> 4f8c436a3ef6a53dc2829b1c706cb817075f46db
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
