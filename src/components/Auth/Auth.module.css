@@ -18,6 +18,70 @@ p {
     text-align: center
 }
 
+/*--------- Success Notification Start ---------*/
+
+.success {
+
+    color: #70C922;
+
+    background-color: #EEFCD2;
+
+    border: 1px solid #70C922;
+
+}
+
+
+
+
+.success :global .ant-notification-notice-icon {
+
+    font-weight: 700;
+
+}
+
+
+
+
+.success :global .ant-notification-close-icon {
+
+    color: #00A310;
+
+}
+
+
+
+
+.success :global .ant-notification-notice-message {
+
+    color: #00A310;
+
+    font-weight: 700;
+
+    margin-bottom: 0px !important;
+
+    font-size: 14px !important;
+
+    line-height: 22px !important;
+
+}
+
+
+
+
+.success :global .ant-notification-notice-description {
+
+    color: #342C2C;
+
+    font-size: 12px !important;
+
+    line-height: 20px !important;
+
+    font-weight: 400 !important;
+
+    padding-right: 20px;
+
+}
+
 .loginSection .center {
     display: flex;
     flex-direction: column;
@@ -183,7 +247,7 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
-    color: #838383;
+    color: #838383 !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::-ms-reveal,
@@ -204,7 +268,7 @@ p {
 } */
 
 .loginSection :global .ant-input-affix-wrapper>input.ant-input.disabledInput {
-    color: #838383;
+    color: #838383 !important;
 }
 
 .loginSection :global .ant-input-affix-wrapper {
@@ -218,12 +282,9 @@ p {
 }
 
 .loginSection .disabledInput :global .ant-input-affix-wrapper {
-    background: transparent;
-    border-style: none none solid none;
-    color: #838383;
-    font-size: 16px;
-    border-radius: 0;
-    padding: 0;
+
+    border-color: #838383;
+
 }
 
 .loginSection .disabledInput {
@@ -314,6 +375,21 @@ p {
 .registered {
     padding: 8px 0;
     color: #fff;
+    font-size: 16px;
+}
+
+.registered :global .ant-checkbox .ant-checkbox-inner {
+
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+    border: 1px solid #B5B5B5;
+
+}
+
+.registered :global .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: transparent;
+    border-color: #b5b5b5 !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {
@@ -327,6 +403,11 @@ p {
     color: #fff;
     text-decoration: none;
 }
+
+.fielderror {
+    min-height: 0px !important;
+}
+
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input,
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input:focus,
@@ -604,7 +685,7 @@ select.form-control:focus::-ms-value {
 }
 
 .loginSection :global .g-recaptcha>div>div {
-    /* transform:scale(1.77);    -webkit-transform:scale(1.77);    transform-origin:0 0;    -webkit-transform-origin:0 0; */
+    /* transform:scale(1.77); -webkit-transform:scale(1.77); transform-origin:0 0; -webkit-transform-origin:0 0; */
     margin: 0px auto;
 }
 
@@ -782,8 +863,15 @@ select.form-control:focus::-ms-value {
     margin-bottom: -10px !important;
 }
 
+.checkColors {
+    color: #ff3e5b;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+}
+
 .checkColor {
-    color: #fff;
+    color: #ffffff;
+    font-size: 16px;
 }
 
 .loginForm :global .ant-checkbox-disabled+span {
@@ -800,6 +888,7 @@ select.form-control:focus::-ms-value {
     color: white;
     float: right;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .resendDisabled {
@@ -1088,6 +1177,62 @@ select.form-control:focus::-ms-value {
         height: 18px !important;
         width: 18px !important;
         margin-right: 15px !important;
-        font-size: 14px;
+        font-size: 16px;
     }
+
+    .warning {
+        color: #FF7A00;
+        background-color: #FFEAD7;
+        border: 1px solid #FF7A00;
+    }
+
+    .warning :global .ant-notification-notice-icon {
+        font-weight: 700;
+    }
+
+    .warning :global .ant-notification-close-icon {
+        color: #FF7A00;
+    }
+
+    .warning :global .ant-notification-notice-message {
+
+        color: #FF7A00;
+        font-weight: 700;
+        margin-bottom: 0px !important;
+        font-size: 14px !important;
+        line-height: 22px !important;
+
+    }
+
+    .warning :global .ant-notification-notice-description {
+        color: #342C2C;
+        font-size: 12px !important;
+        line-height: 20px !important;
+        font-weight: 400 !important;
+        padding-right: 20px;
+
+    }
+
+    .warning :global .ant-notification-notice-btn {
+        margin-left: 35px;
+        float: left;
+        font-size: 12px;
+    }
+
+    .warning :global .ant-notification-notice-btn .ant-btn-primary {
+        background-color: #FF7A00;
+        color: #FFFFFF;
+    }
+
+    .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
+        color: #FF7A00;
+        border-color: #FF7A00;
+    }
+
+    .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+        background-color: #FF7A00 !important;
+
+    }
+
+    /*--------- Success Notification End ---------*/
 }

@@ -171,7 +171,8 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     };
 
     const loginError = ({ title = 'Information', message }) => {
-        onError();
+        console.log("🚀 ~ file: index.js:174 ~ loginError ~ title:", title)
+        onError({ title, message });
         dispatch(authLoggingError(title, message));
     };
 
@@ -179,7 +180,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
         dispatch(showFormLoading(true));
     }
 
-    const onWarning = (errorMessage) => loginError(errorMessage);
+    const onWarning = (errorMessage) =>  loginError(errorMessage);
     const onSuccess = (res) => {
         if (res?.data) {
             onLogin(res?.data);

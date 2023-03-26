@@ -4,12 +4,14 @@ import { auth } from './auth';
 import { authPages } from './authPages';
 import { common } from './common';
 import { data } from './data';
+import { notification } from './notification';
 
 const appReducer = combineReducers({
     auth,
     authPages,
     common,
     data,
+    notification,
 });
 
 export const rootReducer = (state, action) => {

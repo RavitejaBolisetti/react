@@ -97,7 +97,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     const onError = (message) => {
         errorModel({
-            title: 'ERROR',
+            title: 'Information',
             icon: <ExclamationCircleFilled />,
             content: message,
         });
