@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -12,12 +12,14 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
+import moment from 'moment';
 
 const { confirm } = Modal;
 
 const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
+    const [disableTimePickerEndTime, setDisableTimePickerEndTime] = useState(false);
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -45,7 +47,63 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
         setFormBtnDisable(false);
     };
 
-    const onOk = (value) => {};
+    const checkOverlap = () => {
+        let timeSegments = form.getFieldValue('allowedTimings');
+        console.log("timeSegments", timeSegments)
+        timeSegments = timeSegments?.map(time => ({timeSlotFrom: time?.timeSlotFrom?.format('HH:mm') ,timeSlotTo: time?.timeSlotTo?.format('HH:mm') }))
+        if (timeSegments?.length === 1) return false;
+
+        timeSegments?.sort((timeSegment1, timeSegment2) => timeSegment1['timeSlotFrom']?.localeCompare(timeSegment2['timeSlotFrom']));
+        console.log("timeSegments", timeSegments)
+
+        for (let i = 0; i < timeSegments.length - 1; i++) {
+            const currentEndTime = timeSegments[i]['timeSlotTo'];
+            const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
+            if (currentEndTime > nextStartTime) {
+                console.log('yes');
+                return {isOverlap: true,...timeSegments[i] };
+            }
+        }
+        console.log('no');
+
+        return {isOverlap: false };
+    };
+
+    const onOk = (value) => {
+        // checkOverlap()
+    };
+
+
+    // const disabledHours = () => {
+    //     const hours = [];
+    //     for (let i = 0; i < moment().hour(); i += 1) hours.push(i);
+    //     return hours;
+    //   };
+    
+    //   const disabledMinutes = (selectedHour) => {
+    //     const minutes = [];
+
+    //     const timePickers =  form.getFieldValue('allowedTimings');;
+    //     console.log()
+    //     if (selectedHour === moment().hour()) {
+    //       for (let i = 0; i < moment().minute(); i += 1) minutes.push(i);
+    //     }
+    //     return minutes;
+    //   };
+    //   useEffect(() => {
+    //     if(!form.getFieldValue('allowedTimings')?.length> 0) return;
+    //     setDisableTimePickerEndTime(disableTimePicker())
+
+    //   },[form.getFieldValue('allowedTimings')?.length])
+
+    //   const disableTimePicker = () => {
+          
+    //       const timeSlots =form.getFieldValue('allowedTimings'); 
+    //       console.log("timeSlots", timeSlots)
+    //     console.log("!timeSlots(timeSlots?.length-1)['timeSlotFrom']", timeSlots);
+    //     // return  timeSlots?.length>0 && !timeSlots[timeSlots?.length]['timeSlotFrom'];
+    //     return  timeSlots?.length>0 && !timeSlots[timeSlots?.length];
+    //   }
 
     const handleForm = () => {
         setFormBtnDisable(true);
@@ -158,6 +216,7 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                             <>
                                 {fields.map(({ key, name, ...restField }) => (
                                     <div key={key} className={style.allowedTiming}>
+                                        {console.log("===>>>>", "key",key,"name",name )}
                                         <Space size="middle">
                                             <Form.Item
                                                 {...restField}
@@ -167,9 +226,13 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                                                         required: true,
                                                         message: 'Missing Start Time',
                                                     },
+                                                    {validator: (rule, value)=> {
+                                                        const overlapData = checkOverlap();
+                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve()}}
                                                 ]}
+                                                // isOverlap timeSlotTo timeSlotFrom
                                             >
-                                                <TimePicker use12Hours size="large" format="h:mm A" {...disabledProps} />
+                                                <TimePicker  use12Hours size="large" format="h:mm A"  onOk={onOk} {...disabledProps} />
                                             </Form.Item>
                                             <Form.Item
                                                 {...restField}
@@ -179,9 +242,14 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                                                         required: true,
                                                         message: 'Missing End Time',
                                                     },
+                                                    {validator: (rule, value)=> {
+                                                        const overlapData = checkOverlap();
+                                                       return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve()}}
+                                                    
                                                 ]}
                                             >
-                                                <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
+                                                {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
+                                                <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps}  />
                                             </Form.Item>
                                         </Space>
                                         <Button
