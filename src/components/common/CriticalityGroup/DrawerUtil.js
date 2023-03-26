@@ -218,62 +218,70 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                                     <div key={key} className={style.allowedTiming}>
                                         {console.log("===>>>>", "key",key,"name",name )}
                                         <Space size="middle">
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'timeSlotFrom']}
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Missing Start Time',
-                                                    },
-                                                    {validator: (rule, value)=> {
+                                            <Row gutter={20}>
+                                                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                    <Form.Item
+                                                        {...restField}
+                                                        name={[name, 'timeSlotFrom']}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Missing Start Time',
+                                                            },
+                                                            {validator: (rule, value)=> {
                                                         const overlapData = checkOverlap();
                                                         return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve()}}
                                                 ]}
-                                                // isOverlap timeSlotTo timeSlotFrom
+                                                        // isOverlap timeSlotTo timeSlotFrom
                                             >
-                                                <TimePicker  use12Hours size="large" format="h:mm A"  onOk={onOk} {...disabledProps} />
-                                            </Form.Item>
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'timeSlotTo']}
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Missing End Time',
-                                                    },
-                                                    {validator: (rule, value)=> {
+                                                        <TimePicker  use12Hours size="large" format="h:mm A"  onOk={onOk} {...disabledProps} />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                    <Form.Item
+                                                        {...restField}
+                                                        name={[name, 'timeSlotTo']}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Missing End Time',
+                                                            },
+                                                            {validator: (rule, value)=> {
                                                         const overlapData = checkOverlap();
                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve()}}
                                                     
                                                 ]}
-                                            >
-                                                {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
+                                                    >
+                                                        {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
                                                 <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps}  />
-                                            </Form.Item>
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                                    <Button
+                                                        icon={<LinearTrash />}
+                                                        className={style.deleteBtn}
+                                                        {...disabledProps}
+                                                        danger
+                                                        ghost
+                                                        onClick={() => {
+                                                            confirm({
+                                                                title: 'Allowed Timing',
+                                                                icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
+                                                                content: 'Are you sure you want to Delete?',
+                                                                okText: 'Yes',
+                                                                okType: 'danger',
+                                                                cancelText: 'No',
+                                                                wrapClassName: styles.confirmModal,
+                                                                onOk() {
+                                                                    remove(name);
+                                                                    informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                                },
+                                                            });
+                                                        }}
+                                                    />
+                                                </Col>
+                                            </Row>
                                         </Space>
-                                        <Button
-                                            icon={<LinearTrash />}
-                                            className={style.deleteBtn}
-                                            {...disabledProps}
-                                            danger
-                                            ghost
-                                            onClick={() => {
-                                                confirm({
-                                                    title: 'Allowed Timing',
-                                                    icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
-                                                    content: 'Are you sure you want to Delete?',
-                                                    okText: 'Yes',
-                                                    okType: 'danger',
-                                                    cancelText: 'No',
-                                                    wrapClassName: styles.confirmModal,
-                                                    onOk() {
-                                                        remove(name);
-                                                        informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
-                                                    },
-                                                });
-                                            }}
-                                        />
                                     </div>
                                 ))}
                             </>

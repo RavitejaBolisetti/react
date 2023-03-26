@@ -403,7 +403,7 @@
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous svg {
     margin-right: 0px;
-    padding-top: 5px;
+    padding-top: 8px;
     padding-left: 20px;
     color: #ff3e5b;
 }
@@ -418,6 +418,8 @@
 :global .ant-picker-time-panel-column::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
-:global .ant-picker-input {
 
+.modalIconAlert {
+    color: #FF7A00;
+    padding-right: 8px;
 }
