@@ -49,12 +49,10 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
 
     const checkOverlap = () => {
         let timeSegments = form.getFieldValue('allowedTimings');
-        console.log("timeSegments", timeSegments)
         timeSegments = timeSegments?.map(time => ({timeSlotFrom: time?.timeSlotFrom?.format('HH:mm') ,timeSlotTo: time?.timeSlotTo?.format('HH:mm') }))
         if (timeSegments?.length === 1) return false;
 
         timeSegments?.sort((timeSegment1, timeSegment2) => timeSegment1['timeSlotFrom']?.localeCompare(timeSegment2['timeSlotFrom']));
-        console.log("timeSegments", timeSegments)
 
         for (let i = 0; i < timeSegments.length - 1; i++) {
             const currentEndTime = timeSegments[i]['timeSlotTo'];
@@ -64,7 +62,6 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                 return {isOverlap: true,...timeSegments[i] };
             }
         }
-        console.log('no');
 
         return {isOverlap: false };
     };
@@ -216,7 +213,6 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                             <>
                                 {fields.map(({ key, name, ...restField }) => (
                                     <div key={key} className={style.allowedTiming}>
-                                        {console.log("===>>>>", "key",key,"name",name )}
                                         <Space size="middle">
                                             <Row gutter={20}>
                                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
