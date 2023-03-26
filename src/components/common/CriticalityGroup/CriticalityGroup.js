@@ -125,61 +125,65 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         });
 
         //code for overlapping check on save
-        const overlapping = (a, b) => {
-            const getMinutes = (s) => {
-                const p = s.split(':').map(Number);
-                return p[0] * 60 + p[1];
-            };
-            return getMinutes(a.timeSlotTo) > getMinutes(b.timeSlotFrom) && getMinutes(b.timeSlotTo) > getMinutes(a.timeSlotFrom);
+        const timeInMinutes = (time) => {
+            const [hours, minutes] = time?.split(':').map(Number);
+            return hours * 60 + minutes;
         };
-        const isOverlapping = (arr) => {
-            let i, j;
-            for (i = 0; i < arr.length - 1; i++) {
-                for (j = i + 1; j < arr.length; j++) {
-                    if (overlapping(arr[i], arr[j])) {
-                        return true;
-                    }
+
+        const isOverlapping = (allowedTimingSlots) => {
+            const times = allowedTimingSlots?.map((slot) => {
+                const startTime = timeInMinutes(slot?.timeSlotFrom);
+                const endTime = timeInMinutes(slot?.timeSlotTo);
+                const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
+                return { startTime, endTime: adjustedTime };
+            });
+
+            times.sort((a, b) => a.startTime - b.startTime);
+
+            for (let i = 0; i < times.length - 1; i++) {
+                const slot1 = times[i];
+                const slot2 = times[i + 1];
+
+                if (slot1.endTime >= slot2.startTime || slot2.endTime >= slot1.startTime + (i===0 ?1440 :0)) {
+                    return true;
                 }
             }
             return false;
         };
-      
-        if (isOverlapping(formatedTime) === true) {
-            informationModalBox({ icon: 'success', message: 'The selected allowed timing slots are overlapping.', className: style.success, placement: 'bottomRight' });
+
+        if (isOverlapping(formatedTime)) {
+            informationModalBox({ icon: 'error', message: 'Error', description: 'The selected allowed timing slots are overlapping.', className: style.error, placement: 'bottomRight' });
         } else {
-          
-        
-return false;
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
+            const recordId = selectedRecord?.id || '';
+            const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            setSelectedRecord({});
-            setSuccessAlert(true);
-            fetchData({ setIsLoading: listShowLoading, userId });
-            if (saveclick === true) {
-                setDrawer(false);
-                informationModalBox({ icon: 'success', message: selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
-            } else {
-                setDrawer(true);
-                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
-            }
-        };
+            const onSuccess = (res) => {
+                form.resetFields();
+                setSelectedRecord({});
+                setSuccessAlert(true);
+                fetchData({ setIsLoading: listShowLoading, userId });
+                if (saveclick === true) {
+                    setDrawer(false);
+                    informationModalBox({ icon: 'success', message: selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
+                } else {
+                    setDrawer(true);
+                    informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
+                }
+            };
 
-        const onError = (message) => {
-            informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
-        };
+            const onError = (message) => {
+                informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
+            };
 
-        const requestData = {
-            data: [data],
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        saveData(requestData);
-    }
+            const requestData = {
+                data: [data],
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+            saveData(requestData);
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -215,7 +219,7 @@ return false;
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
             criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: Number(record.criticalityDefaultGroup)  ,
+            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
             activeIndicator: record.activeIndicator,
             allowedTimings: momentTime,
         });
