@@ -418,3 +418,8 @@
 :global .ant-picker-time-panel-column::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
+
+.modalIconAlert {
+    color: #FF7A00;
+    padding-right: 8px;
+}

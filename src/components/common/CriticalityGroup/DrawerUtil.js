@@ -198,7 +198,7 @@ const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBt
                                                         onClick={() => {
                                                             confirm({
                                                                 title: 'Allowed Timing',
-                                                                icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
+                                                                icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
                                                                 content: 'Are you sure you want to Delete?',
                                                                 okText: 'Yes',
                                                                 okType: 'danger',
