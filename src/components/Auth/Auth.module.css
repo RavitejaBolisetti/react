@@ -21,29 +21,16 @@ p {
 /*--------- Success Notification Start ---------*/
 
 .success {
-
     color: #70C922;
-
     background-color: #EEFCD2;
-
     border: 1px solid #70C922;
-
 }
-
-
-
 
 .success :global .ant-notification-notice-icon {
-
     font-weight: 700;
-
 }
 
-
-
-
 .success :global .ant-notification-close-icon {
-
     color: #00A310;
 
 }
