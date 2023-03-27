@@ -11,7 +11,7 @@ phases:
             - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
             - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
             - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-            - echo -e "sonar.host.url=http://10.168.14.133:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+            - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
             - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
