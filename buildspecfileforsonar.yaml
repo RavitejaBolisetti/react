@@ -1,41 +1,40 @@
 version: 0.2
 phases:
-    install:
-        runtime-versions:
-            nodejs: latest
-    pre_build:
-        commands:
-            - npm i
-            #- npm install -D typescript
-            # - npm install -D ts-node
-            - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
-            - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
-            - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-            - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
-            - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
-            - source /etc/profile.d/sonar-scanner.sh
-            - pwd
-            - npm install -D sonarqube-scanner
-    build:
-        commands:
-            - echo Build started on `date`
-            - echo Compiling the dist folder
-           # - npm run coverage
-            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-    post_build:
-        commands:
-            - echo Build completed on `date`
-# Include only the files required for your application to run.
-artifacts:
-    files:
-        - '**/*'
-    base-directory: 'build'
+  install: # Install AWS cli, maven, Trivy
+    runtime-versions:
+      java: corretto11
+    commands:
+       - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain common-lib-java --domain-owner 803584912514 --region ap-south-1 --query authorizationToken --output text`
+       - cp ./settings-dev.xml /root/.m2/settings-dev.xml
+       - mv ./settings-dev.xml /root/.m2/settings.xml
+       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+       - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+       - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
+       - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+       - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
+       - source /etc/profile.d/sonar-scanner.sh
+       - pwd
+       - sonar-scanner -v
+
+  pre_build: 
+    commands:
+      - "echo -e '\nMaven version: '"
+      - "mvn --version"
+      - "java -version"
+      - printenv
+  
+  build: 
+    commands:
+      - mvn clean install
+      - ls -la
+      - mvn sonar:sonar -Dsonar.projectKey=dms-user-management-service -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
 cache:
-    paths:
-        - 'node_modules/**/*'
+  paths:
+    - '/root/.m2/**/*'
 reports:
-    jest_reports:
-        files:
-            - 'coverage/lcov.info'
-        file-format: 'JUNITXML'
-        base-directory: 'coverage'
+  jacoco-report:
+    files:
+      - 'target/site/jacoco/jacoco.xml'
+    file-format: 'JACOCOXML'
+    
