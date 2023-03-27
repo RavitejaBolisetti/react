@@ -11,6 +11,11 @@
     margin-bottom: 20px;
 }
 
+.allowedTiming :global .ant-picker-input>input:placeholder-shown,
+.allowedTiming :global .ant-picker-input>input {
+    font-size: 14px;
+}
+
 .allowedTimingAlignment {
     border-top: 1px solid #dedede;
     padding-top: 24px;
@@ -191,17 +196,20 @@
 .drawerCriticalityGrp .allowedTiming :global .ant-space-item .ant-form-item {
     margin-bottom: 0px !important;
 }
+
 :global .ant-notification-notice {
     width: 395px !important;
     padding: 10px !important;
     bottom: 40px !important;
     margin-top: 30px;
 }
+
 /* Error */
 .error :global .ant-notification-notice {
     width: 395px !important;
     padding: 10px !important;
 }
+
 .error {
     color: #ed302d;
     background-color: #fee3d4;
@@ -282,6 +290,7 @@
     font-weight: 400 !important;
     padding-right: 20px;
 }
+
 .success :global .ant-notification {
     box-sizing: border-box;
     margin: 42px;
@@ -302,6 +311,7 @@
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
     padding: 10px 20px;
 }
+
 .refreshBtn {
     /* height : 28px !important ; */
     background-color: transparent;
@@ -345,6 +355,7 @@
 :global .ant-empty .ant-empty-footer {
     margin-top: 24px;
 }
+
 /* 
 .actionbtn svg {
     margin-right: 6px !important;
@@ -370,9 +381,11 @@
 :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;
 }
+
 .activeText {
     color: #00a310;
 }
+
 .InactiveText {
     color: #8e8585;
 }
@@ -407,14 +420,17 @@
     padding-left: 20px;
     color: #ff3e5b;
 }
+
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34) !important;
     border-radius: 10px;
 }
+
 :global .ant-picker-time-panel-column::-webkit-scrollbar {
     width: 5px;
     background-color: #f4f4f4;
 }
+
 :global .ant-picker-time-panel-column::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
@@ -423,6 +439,7 @@
     color: #ff7a00;
     padding-right: 8px;
 }
+
 :global .ant-picker-focused .ant-picker-input span.ant-picker-suffix .anticon.anticon-clock-circle {
     color: #ff3e5b;
 }

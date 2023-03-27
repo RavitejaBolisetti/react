@@ -14,6 +14,7 @@ import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { DataTable } from 'utils/dataTable';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
@@ -56,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchData: criticalityDataActions.fetchData,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -96,24 +98,23 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     }, [userId]);
 
     useEffect(() => {
-        setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+        setSearchdata(criticalityGroupData?.map((item, index) => ({ ...item, srl: index + 1 })));
     }, [criticalityGroupData]);
 
     useEffect(() => {
         fetchData({ setIsLoading: listShowLoading, userId });
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
 
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            placement,
-        });
-    };
+    // const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
+    //     alertNotification.open({
+    //         icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
+    //         message,
+    //         description,
+    //         className,
+    //         placement,
+    //     });
+    // };
 
     const onFinish = (values) => {
         const formatedTime = values?.allowedTimings?.map((time) => {
@@ -144,7 +145,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 const slot1 = times[i];
                 const slot2 = times[i + 1];
 
-                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i===0 ?1440 :0)) {
+                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
                     return true;
                 }
             }
@@ -152,7 +153,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         };
 
         if (isOverlapping(formatedTime)) {
-            informationModalBox({ icon: 'error', message: 'Error', description: 'The selected allowed timing slots are overlapping.', className: style.error, placement: 'bottomRight' });
+            showGlobalNotification({ message: 'The selected allowed timing slots are overlapping', placement: 'bottomRight' });
         } else {
             const recordId = selectedRecord?.id || '';
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
@@ -164,15 +165,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 fetchData({ setIsLoading: listShowLoading, userId });
                 if (saveclick === true) {
                     setDrawer(false);
-                    informationModalBox({ icon: 'success', message: selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
+                    showGlobalNotification({ notificationType: 'success', message: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, placement: 'bottomRight' });
                 } else {
                     setDrawer(true);
-                    informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
+                    showGlobalNotification({ notificationType: 'success', message: informationMessage.createGroupTitleOnSaveNew, placement: 'bottomRight' });
                 }
             };
 
             const onError = (message) => {
-                informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
+                showGlobalNotification({ message: message, placement: 'bottomRight' });
             };
 
             const requestData = {
