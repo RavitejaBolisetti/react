@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
+import { FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
@@ -15,7 +15,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { authLoggingError, doLogoutAPI } from 'store/actions/auth';
+import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
@@ -24,7 +24,7 @@ import IMG_ICON from 'assets/img/icon.png';
 
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 import { MdOutlineChangeCircle } from 'react-icons/md';
-// import Search from 'antd/es/transfer/search';
+import { AdminIcon } from 'Icons';
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -130,7 +130,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '1',
             title: 'My Profile',
             link: routing.ROUTING_USER_PROFILE,
-            icon: <FaRegIdBadge />,
+            icon: <Icon component={AdminIcon} />,
         }),
         customMenuLink({
             key: '2',
@@ -269,9 +269,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{fullName}</div>
-                                                    <span className={styles.userServiceArea}>
-                                                        {mobileNo}
-                                                    </span>
+                                                    <span className={styles.userServiceArea}>{mobileNo}</span>
                                                 </div>
                                                 <div className={styles.dropdownArrow}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
