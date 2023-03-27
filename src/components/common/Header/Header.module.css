@@ -68,7 +68,8 @@
 }
 
 .userName {
-    width: 150px;
+    max-width: 150px;
+    text-align: right;
     text-overflow: ellipsis;
 }
 
