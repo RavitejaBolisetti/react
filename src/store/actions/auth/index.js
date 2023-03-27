@@ -211,7 +211,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
 
     const logoutError = (errorMessage) => message.error(errorMessage);
     const title = 'Logout Successful';
-    const message = 'You are successfully logged out.';
+    const message = 'You have successfully logged out. Please log in again to continue using the application.';
 
     const onSuccess = (res) => {
         if (res?.data) {
