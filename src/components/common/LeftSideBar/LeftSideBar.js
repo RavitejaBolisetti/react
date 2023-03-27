@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col } from 'antd';
+import { Input, Menu, Layout, Row, Col, Button } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -17,6 +17,8 @@ import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
+import { ListSkeleton } from '../Skeleton';
+import { HomeIcon } from 'Icons';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -32,7 +34,7 @@ const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true,
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
         </Link>
     ) : (
-        <Link to={routing.ROUTING_DASHBOARD} title={tooltip ? title : ''}>
+        <Link to="#" title={tooltip ? title : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
             {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
         </Link>
@@ -42,14 +44,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], flatternData },
+            Menu: { isLoaded: isDataLoaded = false, isLoading, filter, data: menuData = [], flatternData },
         },
         common: {
             LeftSideBar: { collapsed = false, isMobile = false },
         },
     } = state;
 
-    let returnValue = { isLoading: false, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, isMobile, collapsed };
     return returnValue;
 };
 
@@ -67,12 +69,11 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
+const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
-    console.log('🚀 ~ file: LeftSideBar.js:75 ~ LeftSideBarMain ~ filterMenuList:', filterMenuList);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     useEffect(() => {
@@ -104,7 +105,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
         setTheme(changeTheme);
     };
     const onSearch = (value) => {
-        setFilter(value);
+        // setFilter(value);
     };
 
     const onSubmit = (value, type) => {
@@ -137,9 +138,11 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
             );
         });
     };
+
+    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
     return (
         <>
-            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={styles.leftMenuBox} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
+            <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
                     <Row>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
@@ -155,21 +158,33 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
 
                     {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
                 </div>
-
-                <Menu
-                    onClick={onClick}
-                    mode="inline"
-                    inlineIndent={15}
-                    defaultSelectedKeys={[defaultSelectedKeys]}
-                    defaultOpenKeys={defaultOpenKeys}
-                    collapsed={collapsed.toString()}
-                    style={{
-                        paddingLeft: collapsed ? '18px' : '14px',
-                    }}
-                >
-                    {prepareMenuItem(menuData)}
-                </Menu>
-
+                {!isLoading ? (
+                    <>
+                        <Menu
+                            onClick={onClick}
+                            mode="inline"
+                            inlineIndent={15}
+                            defaultSelectedKeys={[defaultSelectedKeys]}
+                            defaultOpenKeys={defaultOpenKeys}
+                            collapsed={collapsed.toString()}
+                            style={{
+                                paddingLeft: collapsed ? '18px' : '14px',
+                            }}
+                        >
+                            <Item key={'home'} className={styles.subMenuItemNew}>
+                                <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
+                                    <span className={styles.menuIcon}>
+                                        <HomeIcon />
+                                    </span>
+                                    HOME
+                                </Link>
+                            </Item>
+                            {prepareMenuItem(menuData)}
+                        </Menu>
+                    </>
+                ) : (
+                    <ListSkeleton border={'none'} height={30} count={5} color={'#e2dfdf'} />
+                )}
                 <div
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
@@ -178,8 +193,23 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, menuData, flatte
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    {theme === 'light' ? <BsSun size={30} className={styles.sun} /> : <BsMoon size={30} className={styles.moon} />}
-                    {/* {!collapsed && 'Change Theme'} */}
+                    {collapsed ? (
+                        theme === 'light' ? (
+                            <BsSun size={30} className={styles.sun} />
+                        ) : (
+                            <BsMoon size={30} className={styles.moon} />
+                        )
+                    ) : (
+                        <>
+                            <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                <BsSun size={30} /> Light Mode
+                            </Button>
+
+                            <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                <BsMoon size={30} /> Dark Mode
+                            </Button>
+                        </>
+                    )}
                 </div>
             </Sider>
         </>

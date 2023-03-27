@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+    console.log('🚀 ~ file: Geo.js:22 ~ mapStateToProps ~ attributeData:', attributeData);
 
     let returnValue = {
         collapsed,
@@ -31,7 +32,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         geoData,
         isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
+        attributeData,
+        // attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -70,6 +72,7 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -103,8 +106,8 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
                 key,
                 data: node,
             });
-            if (node.subGeo) {
-                generateList(node.subGeo);
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
             }
         }
         return dataList;
@@ -240,8 +243,6 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
             setButtonData({ ...defaultBtnVisiblity });
         }
     };
-
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     const myProps = {
         isTreeViewVisible,

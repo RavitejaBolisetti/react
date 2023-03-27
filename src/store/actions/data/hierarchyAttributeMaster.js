@@ -8,7 +8,7 @@ export const HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTE
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING';
 export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED,
     isLoaded: true,
     data,
@@ -36,7 +36,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -60,7 +60,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({token,accessToken}) => (dispatch) => {
+hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({ token, accessToken }) => (dispatch) => {
     const { setIsLoading, data, userId, type = '' } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
@@ -91,7 +91,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({to
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({token,accessToken}) => (dispatch) => {
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken }) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
 
@@ -100,7 +100,7 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({token,acc
         method: 'post',
         url: baseURLPath,
         token,
-        accessToken,
+
         userId,
         onSuccess,
         onError,

@@ -1,22 +1,52 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createContext } from 'react';
 import { connect } from 'react-redux';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, notification } from 'antd';
 import { MainPage } from './components/MainPage';
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import { hideGlobalNotification } from 'store/actions/notification';
+
+import styles from './App.module.css';
 
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
     readFromStorageAndValidateAuth,
-    // globalSetIsLoading,
+    hideGlobalNotification,
 };
 
-const AppBase = ({ readFromStorageAndValidateAuth }) => {
+const NotificationContext = createContext();
+
+const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => {
+    const [informationNotification, contextInformationNotification] = notification.useNotification();
+
     useEffect(() => {
         readFromStorageAndValidateAuth();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const checkIcon = {
+        success: <AiOutlineCheckCircle />,
+        error: <AiOutlineCloseCircle />,
+    };
+
+    const checkClassName = {
+        success: styles.success,
+        error: styles.error,
+    };
+
+    const informationModalBox = ({ type = 'error', title = 'Information', message, duration = 3 }) => {
+        informationNotification.open({
+            icon: checkIcon?.[type],
+            message: title,
+            description: message,
+            className: checkClassName?.[type],
+            duration,
+            onClose: hideGlobalNotification,
+        });
+    };
+
     return (
         <>
             <Router>
@@ -39,7 +69,10 @@ const AppBase = ({ readFromStorageAndValidateAuth }) => {
                         },
                     }}
                 >
-                    <MainPage />
+                    <NotificationContext.Provider value={informationModalBox}>
+                        {contextInformationNotification}
+                        <MainPage />
+                    </NotificationContext.Provider>
                 </ConfigProvider>
             </Router>
         </>
@@ -47,3 +80,5 @@ const AppBase = ({ readFromStorageAndValidateAuth }) => {
 };
 
 export const App = connect(mapStateToProps, mapDispatchToProps)(AppBase);
+
+export default NotificationContext;

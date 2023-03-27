@@ -14,7 +14,7 @@ export const handleSuccessModal = ({ title, message }) => {
 
 export const handleErrorModal = (message) => {
     error({
-        title: 'ERROR',
+        title: 'Information',
         icon: <TiInfoOutline size={22} style={{ color: '#FF3E5B', paddingRight: '8px' }} />,
         content: message,
     });

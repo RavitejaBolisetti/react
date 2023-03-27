@@ -5,15 +5,15 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
 import { FaEdit } from 'react-icons/fa';
 
-import { Button, Col, Input, Modal, Form, Row, Select, Space, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { Button, Col, Modal, Form, Row, Select, Space, Switch } from 'antd';
+import { validateRequiredSelectField } from 'utils/validation';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import styles from '../Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { geoDataActions } from 'store/actions/data/geo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+
 import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 
@@ -50,10 +50,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoDataActions.fetchList,
-            saveData: geoDataActions.saveData,
-            listShowLoading: geoDataActions.listShowLoading,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterActions.fetchDetailList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -63,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
+export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
@@ -81,7 +77,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             forceUpdate(Math.random() * 1000);
         }
         if (detailData?.hierarchyAttribute) {
-            console.log('Running');
             forceUpdate(Math.random() * 1000);
             setRowsData(detailData?.hierarchyAttribute);
         }
@@ -102,7 +97,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
 
     const onError = (message) => {
         errorModel({
-            title: 'ERROR',
+            title: 'Information',
             icon: <ExclamationCircleFilled />,
             content: message,
         });
@@ -116,6 +111,15 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const edit = (record) => {
         setEditRow(record);
         setShowDrawer(true);
+    };
+
+    const deleteTableRows = (record, index) => {
+        const currentRows = form.getFieldsValue();
+        const updatedRows = Object.entries(currentRows)
+            .map(([key, value]) => key !== 'hierarchyAttribueType' && value)
+            .filter((v) => !!v)
+            .filter((el) => el?.id !== record?.id);
+        setRowsData([...updatedRows]);
     };
 
     const tableColumn = [];
@@ -183,7 +187,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             dataIndex: 'action',
             sorter: false,
             render: (text, record, index) => {
-                return <Space wrap>{<FaEdit data-testid="Editicon" onClick={() => edit(record)} />}</Space>;
+                return <Space wrap>{<FaEdit onClick={() => edit(record)} />}</Space>;
             },
         })
     );
@@ -210,7 +214,9 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-
+    const handleReset = () => {
+        form.resetFields();
+    };
     const handleChange = (attributeType) => {
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);

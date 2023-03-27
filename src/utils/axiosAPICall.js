@@ -31,6 +31,7 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
+        console.log("🚀 ~ file: axiosAPICall.js:34 ~ handleErrorMessage ~ displayErrorTitle:", displayErrorTitle,errorTitle)
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
     try {
@@ -42,11 +43,11 @@ const baseAPICall = (params) => {
                         if (response?.data?.statusCode === 200) {
                             onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 404) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 409) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else {
-                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         }
                     } else if (response?.statusCode === 401) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
@@ -55,11 +56,12 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.data?.errors || response?.data?.responseMessage });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: response?.data?.errors || response?.data?.responseMessage });
                     }
                 }
             })
             .catch((error) => {
+                console.log('🚀 ~ file: axiosAPICall.js:63 ~ baseAPICall ~ error:', error);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
@@ -70,7 +72,7 @@ const baseAPICall = (params) => {
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
                         // clearAllLocalStorage();
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are facing on server' });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are facing on server' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }
