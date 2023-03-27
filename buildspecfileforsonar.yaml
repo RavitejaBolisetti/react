@@ -16,13 +16,17 @@ phases:
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
             - npm install -D sonarqube-scanner
-    build:
-        commands:
-            - echo Build started on `date`
-            - echo Compiling the dist folder
-            - npm run test:coverage # or whatever command generates the coverage report
-            - sonar-scanner -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-    post_build:
+build:
+  commands:
+    - echo Build started on `date`
+    - echo Compiling the dist folder
+    - npm run test -- --coverage --coverageReporters=jest-junit
+
+    # Run sonar scanner with specified parameters
+    - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
+    - sonar-scanner -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+
+post_build:
         commands:
             - echo Build completed on `date` 
 # Include only the files required for your application to run.
@@ -34,8 +38,8 @@ cache:
     paths:
         - 'node_modules/**/*'
 reports:
-    jest_reports:
-        files:
-            - 'coverage/lcov.info'
-        file-format: 'JUNITXML'
-        base-directory: 'coverage'
+  jest_reports:
+    files:
+      - 'coverage/lcov.info'
+    file-format: 'JUNITXML'
+    base-directory: 'coverage'
