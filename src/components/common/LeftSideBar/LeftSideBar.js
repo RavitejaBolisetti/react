@@ -80,7 +80,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -189,7 +189,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
-                        paddingLeft: isMobile ? (collapsed ? '0px' : '14px') : '16px',
+                        paddingLeft: collapsed ? '14px' : '10px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
