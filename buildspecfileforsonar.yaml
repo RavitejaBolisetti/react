@@ -22,7 +22,7 @@ phases:
             - echo Compiling the dist folder
 
             - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-
+            - sonar-scanner -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
     post_build:
         commands:
             - echo Build completed on `date` 
