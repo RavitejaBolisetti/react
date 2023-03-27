@@ -51,6 +51,7 @@ const MainPageBase = ({ notification }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
+    console.log('🚀 ~ file: MainPage.js:57 ~ useEffect ~ notification:', notification);
     useEffect(() => {
         if (notification?.visible) {
             informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message });

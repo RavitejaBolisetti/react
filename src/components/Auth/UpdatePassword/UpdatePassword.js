@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Form, Row, Col, Button, Input, notification } from 'antd';
+import { Form, Row, Col, Button, Input } from 'antd';
 import { FiLock } from 'react-icons/fi';
 
 import { doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { updatePasswordActions } from 'store/actions/data/updatePassword';
+import { showGlobalNotification } from 'store/actions/notification';
+
 import { bindActionCreators } from 'redux';
 
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
@@ -15,7 +17,6 @@ import styles from '../Auth.module.css';
 import * as IMAGES from 'assets';
 import { ROUTING_LOGIN } from 'constants/routing';
 import Footer from '../Footer';
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 
 const mapStateToProps = (state) => {
     const {
@@ -38,17 +39,16 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             listShowLoading: updatePasswordActions.listShowLoading,
             authPostLogin,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const UpdatePasswordBase = ({ preLoginData, authPostLogin, isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
+const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogin, isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [confirmDirty, setConfirmDirty] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-
     const canSkip = preLoginData?.passwordStatus?.status === 'A';
 
     useEffect(() => {
@@ -66,17 +66,14 @@ const UpdatePasswordBase = ({ preLoginData, authPostLogin, isOpen = false, onOk 
         if (values.errorFields.length === 0) {
             const data = { ...values.values };
             const onSuccess = (res) => {
+                showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
+                navigate(ROUTING_LOGIN);             
                 form.resetFields();
-                doLogout({
-                    successAction: () => {
-                        informationModalBox({ icon: 'success', message: 'SUCCESS', description: res?.responseMessage, className: styles.success });
-                        navigate(ROUTING_LOGIN);
-                    },
-                });
+                doLogout();
             };
 
             const onError = (message) => {
-                informationModalBox({ description: message });
+                showGlobalNotification({ message: message[0] });
             };
 
             const requestData = {
@@ -117,19 +114,8 @@ const UpdatePasswordBase = ({ preLoginData, authPostLogin, isOpen = false, onOk 
         authPostLogin(preLoginData);
     };
 
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className = styles.error }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            duration: 5,
-        });
-    };
-
     return (
         <>
-            {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -184,7 +170,13 @@ const UpdatePasswordBase = ({ preLoginData, authPostLogin, isOpen = false, onOk 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter} type="radio">
-                                                            {canSkip ? <span onClick={handleSkipNow}>Skip For Now</span> : <Link to={ROUTING_LOGIN}>Back To Login</Link>}
+                                                            {canSkip ? (
+                                                                <span className={styles.cursorPointer} onClick={handleSkipNow}>
+                                                                    Skip For Now
+                                                                </span>
+                                                            ) : (
+                                                                <Link to={ROUTING_LOGIN}>Back To Login</Link>
+                                                            )}
                                                         </div>
                                                     </Col>
                                                 </Row>

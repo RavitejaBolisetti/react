@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { Form, Row, Col, Button, Input, Checkbox, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
-import { handleErrorModal } from 'utils/responseModal';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci';
 import OTPTimer from 'otp-timer';
 
 import { ROUTING_LOGIN } from 'constants/routing';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
@@ -52,23 +52,30 @@ const mapDispatchToProps = (dispatch) => ({
             updatePassword: forgotPasswordActions.updatePassword,
             doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
+            showGlobalNotification,
+        },
         dispatch
     ),
 });
 
-const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, listShowLoading }) => {
+const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, listShowLoading }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-    const [otpverification, setotpverification] = useState(false);
+    const [otpMessage, setOTPMessage] = useState();
+    const [otpSentOnMobile, setOTPSentOnMobile] = useState(true);
+    const [otpSentOnEmail, setOTPSentOnEmail] = useState(true);
+    const [counter, setCounter] = useState(30);
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
 
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
+
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => {
             clearInterval(timer);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,13 +85,14 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         informationModalBox({ message: 'Information', description: message[0] || message });
     };
 
-    const handleVerifyUser = () => {
-        const userId = form.getFieldValue('userId');
+    const onVerifyUser = (values) => {
+        const userId = values?.userId;
+
         if (userId) {
             const data = { userId };
+            setSelectedUserId(userId);
 
             const onSuccess = () => {
-                setSelectedUserId(userId);
                 setCurrentStep(2);
             };
 
@@ -96,27 +104,23 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
             };
             verifyUser(requestData);
         }
+    };
 
-        alertNotification.open({
-            icon: <StopOutlined className={styles.toasticon} />,
-            message: 'Invalid User ID',
-            description: 'User id that you have entered is invalid, please try again.',
-            duration: 0,
-            className: styles.warning,
-        });
+    const onSentOTP = (values) => {
+        if (values) {
+            handleSendOTP();
+        }
     };
 
     const handleSendOTP = () => {
-        const userId = form.getFieldValue('userId');
-        if (userId) {
+        if (selectedUserId) {
             if (otpSentOnMobile || otpSentOnEmail) {
-                const data = { userId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
+                const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
 
                 const onSuccess = (res) => {
                     setCounter(30);
                     informationModalBox({ type: 'success', message: 'OTP Sent', description: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
-                    setSelectedUserId(userId);
                     setCurrentStep(3);
                 };
 
@@ -133,9 +137,8 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const handleVerifyOTP = () => {
-        const userId = form.getFieldValue('userId');
-        if (userId) {
-            const data = { userId, otp: otpInput };
+        if (selectedUserId) {
+            const data = { userId: selectedUserId, otp: otpInput };
 
             const onSuccess = (res) => {
                 setValidationKey(res?.data?.validationKey);
@@ -154,18 +157,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         }
     };
 
-    const onFinish = (values) => {
-        console.log('values', values);
-    };
-
-    const onFinish1 = (values) => {
-        const userId = form.getFieldValue('userId');
-
-        if (values) {
-            const data = { ...values, userId, validationKey };
+    const onUpdatePassword = (values) => {
+        if (selectedUserId && values) {
+            const data = { ...values, userId: selectedUserId, validationKey };
 
             const onSuccess = (res) => {
-                informationModalBox({ type: 'success', message: 'Password Updated', description: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
                 navigate(ROUTING_LOGIN);
             };
 
@@ -180,10 +177,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         }
     };
 
-    const onFinishFailed1 = ({ values, errorFields, outOfDate }) => {
-        console.log('🚀 ~ file: ForgotPassword.js:217 ~ onFinishFailed ~ errorFields:', errorFields);
-        console.log('🚀 ~ file: ForgotPassword.js:217 ~ onFinishFailed ~ values:', values);
-        console.log('🚀 ~ file: ForgotPassword.js:217 ~ onFinishFailed ~ values:', form.validateFields());
+    const onUpdatePasswordFailed = ({ values, errorFields, outOfDate }) => {
         // handle invalid form submission
     };
 
@@ -196,7 +190,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         setOTPSentOnEmail(event.target.checked);
     };
 
-    const informationModalBox = ({ type = 'error', message = 'information', description }) => {
+    const informationModalBox = ({ type = 'error', message = 'Information', description }) => {
         alertNotification.open({
             icon: <AiOutlineCloseCircle />,
             message,
@@ -263,7 +257,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                     {currentStep === 1 ? (
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
-                                                <Form form={form} id="forgotPassword" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                                <Form form={form} id="verifyUser" autoComplete="false" onFinish={onVerifyUser} onFinishFailed={onFinishFailed}>
                                                     <div className={styles.loginHeading}>
                                                         <h1>Forgot Your Password</h1>
                                                         <div className={styles.loginSubHeading}>Please enter your user credential</div>
@@ -279,7 +273,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => handleVerifyUser()} className={styles.button} type="primary">
+                                                            <Button form="verifyUser" className={styles.button} type="primary" htmlType="submit">
                                                                 Verify User
                                                             </Button>
                                                         </Col>
@@ -301,64 +295,66 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 <div className={styles.loginForm}>
                                                     <div className={styles.loginHeading}>
                                                         <h1>Forgot Your Password</h1>
-                                                        <div className={styles.loginSubHeading}>User credential verified successfully.</div>
+                                                        <div className={styles.loginSubHeading}>User verified successfully</div>
                                                     </div>
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={20} xl={24}>
-                                                            <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                <Input disabled prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
+                                                    <Form form={form} id="sendOTP" autoComplete="false" onFinish={onSentOTP} onFinishFailed={onFinishFailed}>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
+                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
 
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <div className={styles.registered}> OTP will be sent on </div>
-                                                        </Col>
-                                                    </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <div className={styles.registered}> OTP will be sent on </div>
+                                                            </Col>
+                                                        </Row>
 
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Form.Item name="sentOnMobile" className={styles.fielderror}>
-                                                                <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnMobileChange}>
-                                                                    Registered Mobile Number
-                                                                </Checkbox>
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Form.Item
-                                                                name="sentOnEmail"
-                                                                className={styles.fielderror}
-                                                                rules={[
-                                                                    {
-                                                                        validator: validateOTPOption,
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnEmailChange}>
-                                                                    Registered Mail ID
-                                                                </Checkbox>
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Form.Item name="sentOnMobile" className={styles.fielderror}>
+                                                                    <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnMobileChange}>
+                                                                        Registered Mobile Number
+                                                                    </Checkbox>
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Form.Item
+                                                                    name="sentOnEmail"
+                                                                    className={styles.fielderror}
+                                                                    rules={[
+                                                                        {
+                                                                            validator: validateOTPOption,
+                                                                        },
+                                                                    ]}
+                                                                >
+                                                                    <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnEmailChange}>
+                                                                        Registered Mail ID
+                                                                    </Checkbox>
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
 
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button onClick={() => handleSendOTP()} className={styles.button} type="primary">
-                                                                Send OTP
-                                                            </Button>
-                                                        </Col>
-                                                    </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <Button form="sendOTP" className={styles.button} type="primary" htmlType="submit">
+                                                                    Send OTP
+                                                                </Button>
+                                                            </Col>
+                                                        </Row>
 
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <div className={styles.loginFooter} type="radio">
-                                                                <Link to={ROUTING_LOGIN}>Back to Login</Link>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                                <div className={styles.loginFooter} type="radio">
+                                                                    <Link to={ROUTING_LOGIN}>Back to Login</Link>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+                                                    </Form>
                                                 </div>
                                             </div>{' '}
                                         </>
@@ -410,7 +406,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                     ) : currentStep === 4 ? (
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
-                                                <Form id="myForm" form={form} autoComplete="false" onFinish={onFinish1} onFinishFailed={onFinishFailed1} layout="vertical">
+                                                <Form id="updatePassword" form={form} autoComplete="false" onFinish={onUpdatePassword} onFinishFailed={onUpdatePasswordFailed} layout="vertical">
                                                     <div className={styles.loginHeading}>
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>
@@ -439,7 +435,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button form="myForm" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button form="updatePassword" className={styles.button} type="primary" htmlType="submit">
                                                                     Submit
                                                                 </Button>
                                                             </Col>

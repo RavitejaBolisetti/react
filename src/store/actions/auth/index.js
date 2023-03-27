@@ -6,6 +6,7 @@ import { axiosAPICall } from 'utils//axiosAPICall';
 import { withAuthToken } from 'utils//withAuthToken';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
+import { showGlobalNotification } from '../notification';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_PRE_SUCCESS = 'AUTH_LOGIN_PRE_SUCCESS';
@@ -66,12 +67,11 @@ export const doLogout = withAuthToken((params) => ({ token, accessToken, userId 
     dispatch(logoutClearAllData());
 });
 
-const logoutClearAllData = () => (dispatch) => {
+const logoutClearAllData = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
-    dispatch(authDoLogout(message));
 };
 
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
@@ -171,7 +171,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     };
 
     const loginError = ({ title = 'Information', message }) => {
-        console.log("🚀 ~ file: index.js:174 ~ loginError ~ title:", title)
+        console.log('🚀 ~ file: index.js:174 ~ loginError ~ title:', title);
         onError({ title, message });
         dispatch(authLoggingError(title, message));
     };
@@ -180,7 +180,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
         dispatch(showFormLoading(true));
     }
 
-    const onWarning = (errorMessage) =>  loginError(errorMessage);
+    const onWarning = (errorMessage) => loginError(errorMessage);
     const onSuccess = (res) => {
         if (res?.data) {
             onLogin(res?.data);
@@ -209,23 +209,17 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     const { successAction } = params;
     const url = BASE_URL_LOGOUT;
 
-    const authPostLogout = () => {
-        dispatch(logoutClearAllData());
-    };
-
     const logoutError = (errorMessage) => message.error(errorMessage);
     const title = 'Logout Successful';
     const message = 'You are successfully logged out.';
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(authLoggingError(title, message));
+            dispatch(showGlobalNotification({ notificationType: 'success', title, message }));
             successAction && successAction(title, message);
-            authPostLogout();
+            logoutClearAllData();
         } else {
-            dispatch(authLoggingError(title, message));
-            successAction && successAction(title, message);
-            authPostLogout();
+            dispatch(showGlobalNotification({ message }));
         }
     };
 
@@ -238,9 +232,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: { userId },
         onSuccess,
         onError: () => {
-            dispatch(authLoggingError('logout', 'logout'));
-            successAction && successAction(title, message);
-            authPostLogout();
+            dispatch(showGlobalNotification({ notificationType: 'error', title: 'Information', message }));
         },
         onTimeout: () => logoutError('Request timed out, Please try again'),
         postRequest: () => {},

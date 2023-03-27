@@ -36,7 +36,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
         error: styles.error,
     };
 
-    const informationModalBox = ({ type = 'error', title = 'information', message, duration = 3 }) => {
+    const informationModalBox = ({ type = 'error', title = 'Information', message, duration = 3 }) => {
         informationNotification.open({
             icon: checkIcon?.[type],
             message: title,

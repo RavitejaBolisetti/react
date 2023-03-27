@@ -10,6 +10,7 @@ import { AiFillSetting } from 'react-icons/ai';
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
@@ -55,12 +56,13 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, isLoggedIn, userId }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;
@@ -72,8 +74,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-    const delarAvtarData = dealerName?.split(' ');
-    const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
+    // const delarAvtarData = dealerName?.split(' ');
+    // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -82,6 +84,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
+
+    const successAction = (title, message) => {
+        navigate(routing.ROUTING_LOGIN);
+    };
 
     const showConfirm = () => {
         confirm({
@@ -94,9 +100,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             wrapClassName: styles.confirmModal,
             onOk() {
                 doLogout({
-                    successAction: (title, message) => {
-                        navigate(routing.ROUTING_LOGIN);
-                    },
+                    successAction,
                     userId,
                 });
             },
