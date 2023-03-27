@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Table, Space, Alert } from 'antd';
+import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Table, Space, Alert, notification, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
 import dayjs from 'dayjs';
 
 import { validateRequiredInputField } from 'utils/validation';
+import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import moment from 'moment';
+const { confirm } = Modal;
 
-const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({ setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedTime, setSelectedTime] = useState(null);
 
@@ -24,6 +26,7 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
         }
         return [];
     };
+
     const disabledMinutes = (hour) => {
         if (selectedTime && hour === selectedTime.hour()) {
             const minute = selectedTime.minute();
@@ -47,15 +50,25 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
             timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
         };
     });
+    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
+        alertNotification.open({
+            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
+            message,
+            description,
+            className,
+            placement,
+        });
+    };
 
     const onClose = () => {
+        form.resetFields();
         setSelectedRecord(null);
         setDrawer(false);
         setFormBtnDisable(false);
     };
-    const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
-        return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
-    };
+    // const Alerts = ({ NotificationTitle, NotificationDescription, placement }) => {
+    //     return <Alert message={NotificationTitle} description={NotificationDescription} type="success" showIcon closable />;
+    // };
     const onOk = (value) => {};
 
     const handleForm = () => {
@@ -85,7 +98,7 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                             )}
                             {saveAndSaveNew ? (
                                 <Button disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save and New
+                                    Save & Add New
                                 </Button>
                             ) : (
                                 ''
@@ -112,9 +125,9 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                             //  initialValue={formData?.critcltyGropCode}
                             name="criticalityGroupCode"
                             label="Criticality Group Code"
-                            rules={[validateRequiredInputField('Criticality Group Code')]}
+                            rules={[validateRequiredInputField('Criticality Group Code'), { max: 5, message: 'Code must be  5 characters long.' }]}
                         >
-                            <Input placeholder={preparePlaceholderText('Group Code')} maxLength={5} {...disabledProps} />
+                            <Input placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -175,8 +188,8 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col>
-                        <p>Allowed Timings</p>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <p className={style.allowedTimingAlignment}>Allowed Timings</p>
                     </Col>
                 </Row>
 
@@ -187,8 +200,8 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                 >
                     {(fields, { add, remove }) => (
                         <>
-                            <Row span={24}>
-                                <Col span={24} className={style.addTimeBtn}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
                                     <Button type="link" color="#FF3E5B" {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
                                         Add Time
                                     </Button>
@@ -241,17 +254,36 @@ const DrawerUtil = ({ setsaveclick, formBtnDisable, setFormBtnDisable, successAl
                                             >
                                                 <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                             </Form.Item>
-                                            <Button className={style.deleteBtn} {...disabledProps} disabled danger ghost style={{ border: 'none', marginBottom: '5px', marginLeft: '-12px' }} onClick={() => remove(name)}>
-                                                <LinearTrash />
-                                            </Button>
                                         </Space>
+                                        <Button
+                                            icon={<LinearTrash />}
+                                            className={style.deleteBtn}
+                                            {...disabledProps}
+                                            danger
+                                            ghost
+                                            onClick={() => {
+                                                confirm({
+                                                    title: 'Allowed Timing',
+                                                    icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
+                                                    content: 'Are you sure you want to Delete?',
+                                                    okText: 'Yes',
+                                                    okType: 'danger',
+                                                    cancelText: 'No',
+                                                    wrapClassName: styles.confirmModal,
+                                                    onOk() {
+                                                        remove(name);
+                                                        informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                    },
+                                                });
+                                            }}
+                                        />
                                     </div>
                                 ))}
                             </>
                         </>
                     )}
                 </Form.List>
-                {successAlert ? <Alerts NotificationTitle={'Added Successfully,Keep Adding more'} /> : null}
+                {/* {successAlert ? <Alerts NotificationTitle={'Added Successfully,Keep Adding more'} /> : null} */}
             </Form>
         </Drawer>
     );
