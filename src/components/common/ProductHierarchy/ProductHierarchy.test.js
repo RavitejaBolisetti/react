@@ -156,9 +156,12 @@ describe('ProductHierarchy component', () => {
         const ResetBtn = screen.getByText('Reset');
         fireEvent.click(ResetBtn);
         const codeInputField = screen.getByPlaceholderText('Please Enter Code');
-        const nameInputField = screen.getByPlaceholderText('Please Enter Name');
+        const shortInputField = screen.getByPlaceholderText('Please Enter Short Description');
+        const longInputField =  screen.getByPlaceholderText('Please Enter Long Description');
         expect(codeInputField.value).toMatch('');
-        expect(nameInputField.value).toMatch('');
+        expect(shortInputField.value).toMatch('');
+        expect(longInputField.value).toMatch('');
+
     });
 
     test('input field on enetering data form element', async () => {
@@ -166,7 +169,8 @@ describe('ProductHierarchy component', () => {
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
         const codeInputField = screen.getByPlaceholderText('Please Enter Code');
-        const nameInputField = screen.getByPlaceholderText('Please Enter Name');
+        const shortInputField = screen.getByPlaceholderText('Please Enter Short Description');
+        const longInputField =  screen.getByPlaceholderText('Please Enter Long Description');
         fireEvent.change(codeInputField, {
             target: {
                 value: 'New Checkbox Item!',
@@ -178,7 +182,9 @@ describe('ProductHierarchy component', () => {
             },
         });
         expect(codeInputField.value).toMatch('New Checkbox Item!');
-        expect(nameInputField.value).toMatch('New Checkbox Item!');
+        expect(shortInputField.value).toMatch('New Checkbox Item!');
+        expect(longInputField.value).toMatch('New Checkbox Item!');
+
     });
 
     test('Save form element', async () => {
@@ -188,7 +194,7 @@ describe('ProductHierarchy component', () => {
         fireEvent.click(RootChildButton);
         // console.log("test",SaveBtn)
         const codeInputField = getByLabelText('Code');
-        const nameInputField = getByLabelText('Name');
+        const nameInputField = getByLabelText('Short Description');
         const SaveBtn = getByText('Save');
         onFinish.mockResolvedValue({
             geoCode: 'ABCDE',
