@@ -19,6 +19,7 @@ import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
 import { HomeIcon } from 'Icons';
+import { useMemo } from 'react';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -71,8 +72,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 //searching in the menu
 
-
-
 const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
@@ -84,17 +83,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [openKeys, setOpenKeys] = useState([]);
     let expandedkeys = [];
     const [mainKeys, setmainKeys] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
- console.log(flatternData);
-
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -119,13 +116,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         setTheme(changeTheme);
     };
     const onSearch = (e) => {
-        if (e.target.value === "") {
+        if (e.target.value === '') {
             setmainKeys([]);
         } else if (MenuSearch(e.target.value) === true) {
-            console.log("we Found the Menu");
+            console.log('we Found the Menu');
             return;
         }
         setFilter(e);
+        setSearchValue(e.target.value);
     };
 
     // const onExpand = (newExpandedKeys) => {
@@ -146,34 +144,32 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         Object.entries(keys).map(([keyname, value]) => {
             console.log(value);
             values.push(value);
-
         });
+    };
+    const rootSubmenuKeys = menuData.map((e) => {
+        return e.menuId;
+    });
 
-
-    }
-    const rootSubmenuKeys = menuData.map((e) => { return e.menuId });
     function MenuSearch(target) {
-
         // let flag = true;
-        setOpenKeys([])
+        setOpenKeys([]);
         function subMenuSearch(TopMenu) {
             for (let i = 0; i < TopMenu.length; i++) {
                 // console.log(TopMenu[i].menuTitle)
                 expandedkeys.push(TopMenu[i].menuId);
-                let title=TopMenu[i].menuTitle;
+                let title = TopMenu[i].menuTitle;
                 let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
                 if (strTitle.toLowerCase() === target.toLowerCase()) {
                     // expanded.push(expandedkeys);
                     // setOpenKeys(expandedkeys?.toString());
                     // console.log(expandedkeys);
-                    
+
                     Saveopenkeys(expandedkeys);
                     // openKeys=>{
                     //     expandedkeys?.map((i)=>{ return i.toString()})
                     // }
                     //setexpandedKeys(expanded[0]);
-                }
-                else if (TopMenu[i].subMenu) {
+                } else if (TopMenu[i].subMenu) {
                     subMenuSearch(TopMenu[i].subMenu);
                 }
 
@@ -184,8 +180,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         // console.log(expanded);
         subMenuSearch(menuData);
         setmainKeys(values);
-        
-
     }
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
@@ -194,20 +188,19 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
     };
+
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
-            
-        }
-        else {
+        } else {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
-            const isParentMenu = parentMenuId === 'Web';
+            const isParentMenu = false; //parentMenuId === 'Web';
 
             return subMenu?.length ? (
                 <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
@@ -222,12 +215,47 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     };
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
-    useEffect(() => {
-        console.log(mainKeys);
-        setOpenKeys(mainKeys);
-        //console.log(typeof(mainKeys));
 
+    useEffect(() => {
+        setOpenKeys(mainKeys);
     }, [mainKeys]);
+
+    const finalTreeData = useMemo(() => {
+        const loop = (data) =>
+            data.map((item) => {
+                console.log('🚀 ~ file: LeftSideBar.js:224 ~ data.map ~ item:', item);
+                const strTitle = item?.menuTitle;
+                const index = strTitle?.indexOf(searchValue);
+                const beforeStr = strTitle?.substring(0, index);
+                const afterStr = strTitle?.slice(index + searchValue.length);
+                const menuTitle =
+                    index > -1 ? (
+                        <span>
+                            {beforeStr}
+                            <span className="site-tree-search-value" style={{ color: 'red' }}>
+                                {searchValue}
+                            </span>
+                            {afterStr}
+                        </span>
+                    ) : (
+                        <span>{strTitle}</span>
+                    );
+                if (item?.subMenu) {
+                    return {
+                        ...item,
+                        menuTitle,
+                        subMenu: loop(item?.subMenu),
+                    };
+                }
+                return {
+                    ...item,
+                    menuTitle,
+                };
+            });
+        return loop(menuData);
+    }, [searchValue, menuData]);
+
+    console.log('searchValue', searchValue, 'finalTreeData', finalTreeData);
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -269,11 +297,13 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         >
                             <Row>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                                    <span className={styles.menuIcon}><HomeIcon /></span>
+                                    <span className={styles.menuIcon}>
+                                        <HomeIcon />
+                                    </span>
                                     HOME
                                 </Link>
                             </Row>
-                            {prepareMenuItem(menuData)}
+                            {prepareMenuItem(finalTreeData)}
                         </Menu>
                     </>
                 ) : (
