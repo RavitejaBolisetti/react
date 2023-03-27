@@ -193,15 +193,17 @@ describe('ProductHierarchy component', () => {
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
         // console.log("test",SaveBtn)
-        const codeInputField = getByLabelText('Code');
-        const nameInputField = getByLabelText('Short Description');
+        const codeInputField = getByLabelText('Please Enter Code');
+        const shortInputField = getByLabelText('Please Enter Short Description');
+        const longInputField = getByLabelText('Please Enter Long Description');
+
         const SaveBtn = getByText('Save');
         onFinish.mockResolvedValue({
-            geoCode: 'ABCDE',
-            geoName: 'Asia',
+            prodctCode: 'ABCDE',
+            prodctShrtName: 'Asia',
             isActive: true,
             attributeKey: 'Continent',
-            geoParentCode: 'DMS',
+            parntProdctId: 'DMS',
         });
         const result = await onFinish();
         // fireEvent.change(codeInputField, {
@@ -227,15 +229,22 @@ describe('ProductHierarchy component', () => {
         const RootChildButton = getByText('Add Child');
         fireEvent.click(RootChildButton);
         const ResetBtn = getByText('Reset');
-        const codeInputField = getByLabelText('Code');
-        const nameInputField = getByLabelText('Name');
+        const codeInputField = getByLabelText('Please Enter Code');
+        const shortInputField = getByLabelText('Please Enter Short Description');
+        const longInputField = getByLabelText('Please Enter Long Description');
+
         fireEvent.change(codeInputField, {
             target: {
                 value: 'ABCDE',
             },
         });
 
-        fireEvent.change(nameInputField, {
+        fireEvent.change(shortInputField, {
+            target: {
+                value: 'ABCDEFG',
+            },
+        });
+        fireEvent.change(longInputField, {
             target: {
                 value: 'ABCDEFG',
             },
@@ -244,7 +253,8 @@ describe('ProductHierarchy component', () => {
         handleResetBtn.mockResolvedValue(1);
         const result = await handleResetBtn();
         expect(codeInputField.value).toMatch('');
-        expect(nameInputField.value).toMatch('');
+        expect(shortInputField.value).toMatch('');
+        expect(longInputField.value).toMatch('');
         expect(result).toBeTruthy();
         expect(handleResetBtn).toHaveBeenCalled();
     });
@@ -279,13 +289,17 @@ describe('ProductHierarchy component', () => {
         const EditButton = await screen.findByRole('button', { name: 'Edit' });
         expect(EditButton).toBeInTheDocument();
 
-        const codeInputName = screen.getByPlaceholderText('Please Enter Name');
-        const codeInputCode = screen.getByPlaceholderText('Please Enter Code');
+        const codeInputField = getByLabelText('Please Enter Code');
+        const shortInputField = getByLabelText('Please Enter Short Description');
+        const longInputField = getByLabelText('Please Enter Long Description');
+
         const ParentField = await screen.getByRole('combobox', { name: '' });
-        const GeoLevel = await screen.getByRole('combobox', { name: 'Geographical Attribute Level' });
+        const GeoLevel = await screen.getByRole('combobox', { name: 'Attribute Level' });
         const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
-        expect(codeInputName).toBeDisabled();
-        expect(codeInputCode).toBeDisabled();
+        expect(codeInputField).toBeDisabled();
+        expect(shortInputField).toBeDisabled();
+        expect(longInputField).toBeDisabled();
+
         expect(ParentField).toBeDisabled();
         expect(GeoLevel).toBeDisabled();
         expect(codeSwitch).toBeDisabled();
@@ -312,17 +326,21 @@ describe('ProductHierarchy component', () => {
         const treeBranch = screen.queryByText('parent 1');
         expect(treeBranch).toBeTruthy();
         fireEvent.click(treeBranch);
-        const codeInputName = screen.getByPlaceholderText('Please Enter Name');
-        const codeInputCode = screen.getByPlaceholderText('Please Enter Code');
+        const codeInputField = getByLabelText('Please Enter Code');
+        const shortInputField = getByLabelText('Please Enter Short Description');
+        const longInputField = getByLabelText('Please Enter Long Description');
+
         const ParentField = await screen.getByRole('combobox', { name: '' });
-        const GeoLevel = await screen.getByRole('combobox', { name: 'Geographical Attribute Level' });
+        const GeoLevel = await screen.getByRole('combobox', { name: 'Attribute Level' });
         const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
 
         expect(ParentField).toBeTruthy();
         expect(GeoLevel).toBeTruthy();
         expect(codeSwitch).toBeTruthy();
-        expect(codeInputName).toBeTruthy();
-        expect(codeInputCode).toBeTruthy();
+        expect(codeInputField).toBeTruthy();
+        expect(shortInputField).toBeTruthy();
+        expect(longInputField).toBeTruthy();
+
         const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
         fireEvent.click(addChildBtn);
         expect(addChildBtn).toBeTruthy();
@@ -342,13 +360,17 @@ describe('ProductHierarchy component', () => {
         const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
         expect(addChildBtn).toBeTruthy();
         fireEvent.click(addChildBtn);
-        const codeInputName = screen.getByPlaceholderText('Please Enter Name');
-        const codeInputCode = screen.getByPlaceholderText('Please Enter Code');
+        const codeInputField = getByLabelText('Please Enter Code');
+        const shortInputField = getByLabelText('Please Enter Short Description');
+        const longInputField = getByLabelText('Please Enter Long Description');
+
         const ParentField = await screen.getByRole('combobox', { name: '' });
-        const GeoLevel = await screen.getByRole('combobox', { name: 'Geographical Attribute Level' });
+        const GeoLevel = await screen.getByRole('combobox', { name: 'Attribute Level' });
         const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
-        fireEvent.change(codeInputName, { target: { value: '23' } });
-        fireEvent.change(codeInputCode, { target: { value: '23' } });
+        fireEvent.change(codeInputField, { target: { value: '23' } });
+        fireEvent.change(shortInputField, { target: { value: '23' } });
+        fireEvent.change(longInputField, { target: { value: '23' } });
+
         fireEvent.keyDown(ParentField, { key: 'A', code: 'KeyA' });
         fireEvent.keyDown(GeoLevel, { key: 'A', code: 'KeyA' });
         fireEvent.change(codeSwitch, { target: { value: false } });
