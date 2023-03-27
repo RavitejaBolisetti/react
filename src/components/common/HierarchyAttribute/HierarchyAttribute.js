@@ -8,6 +8,8 @@ import { FaEdit } from 'react-icons/fa';
 import { Button, Col, Modal, Form, Row, Select, Space, Switch } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { EditIcon, ViewEyeIcon } from 'Icons';
+
 
 import styles from '../Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
@@ -70,6 +72,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [formActionType, setFormActionType] = useState('');
+    const [isReadOnly, setIsReadOnly] = useState(false);
+
+
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -86,6 +92,13 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         form.resetFields();
         setEditRow({});
     }, [ForceReset]);
+
+    const handleEditView =() => {
+        console.log('handle View clicked')
+        setFormActionType('edit');
+        setIsReadOnly(false);
+
+    }
 
     const showSuccessModel = ({ title, message }) => {
         successModel({
@@ -104,13 +117,19 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     };
 
     const handleAdd = () => {
+        setFormActionType('add');
         setEditRow({});
         setShowDrawer(true);
     };
 
-    const edit = (record) => {
+    const edit = (record, type) => {
+        setFormActionType(type);
         setEditRow(record);
         setShowDrawer(true);
+
+        if(type === 'view'){
+            setIsReadOnly(true);
+        }
     };
 
     const deleteTableRows = (record, index) => {
@@ -144,9 +163,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: (record, values) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
+
         })
     );
 
@@ -155,9 +173,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
+
         })
     );
 
@@ -165,9 +182,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
         })
     );
 
@@ -175,9 +190,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
         })
     );
 
@@ -186,8 +199,22 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Action',
             dataIndex: 'action',
             sorter: false,
+            // render: (text, record, index) =><Button onClick={() => edit(record)} > <EditIcon  /></Button>,
             render: (text, record, index) => {
-                return <Space wrap>{<FaEdit onClick={() => edit(record)} />}</Space>;
+                return (
+                    <Space>
+                        {
+                            <Button className={style2.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
+                                <EditIcon />
+                            </Button>
+                        }
+                        {
+                            <Button className={style2.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
+                                <ViewEyeIcon />
+                            </Button>
+                        }
+                    </Space>
+                );
             },
         })
     );
@@ -214,9 +241,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-    const handleReset = () => {
-        form.resetFields();
-    };
+
     const handleChange = (attributeType) => {
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
@@ -260,14 +285,31 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
                     <>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                {/* <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={{ pageSize: 20 }} columns={tableColumn} bordered /> */}
                                 <DataTable {...TableProps} />
                             </Col>
                         </Row>
                     </>
                 )}
             </Space>
-            <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} setsaveclick={setsaveclick} setsaveandnewclick={setsaveandnewclick} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} setsaveandnewclick={setsaveandnewclick} saveandnewclick={saveandnewclick} />
+            <AddUpdateDrawer 
+                tableData={detailData?.hierarchyAttribute} 
+                setsaveclick={setsaveclick} 
+                setsaveandnewclick={setsaveandnewclick} 
+                selectedHierarchy={selectedHierarchy} 
+                onFinishFailed={onFinishFailed} 
+                onFinish={onFinish} 
+                setCheckFields={setCheckFields} 
+                setForceReset={setForceReset} 
+                setEditRow={setEditRow} 
+                editRow={editRow} 
+                showDrawer={showDrawer} 
+                setShowDrawer={setShowDrawer} 
+                saveandnewclick={saveandnewclick} 
+                formActionType={formActionType} 
+                handleEditView={handleEditView}
+                isReadOnly={isReadOnly}
+                setIsReadOnly={setIsReadOnly}
+            />
         </>
     );
 };

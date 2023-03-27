@@ -47,3 +47,17 @@
     white-space: initial;
     text-align: start;
 }
+.activeText {
+    color: #00a310;
+}
+.InactiveText {
+    color: #8E8585;
+}
+.tableIcons {
+    border:none;
+    padding: 0px;
+}
+.editDrawer :global .ant-drawer-wrapper-body .ant-drawer-footer {
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
+    padding: 10px 20px;
+}
