@@ -90,6 +90,11 @@
     font-size: 16px;
 }
 
+.dealerInfo {
+    margin-top: -5px;
+
+}
+
 .userServiceArea {
     color: #342C2C;
     font-size: 12px;
