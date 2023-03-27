@@ -6,9 +6,18 @@ import style2 from './HierarchyAttribute.module.css';
 import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly }) => {
+const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable,setFormBtnDisable }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
+
+    let drawerTitle = ''
+    if( formActionType === 'view'){
+        drawerTitle = 'View Hierarchy Attribute' ;
+    }else if(!!editRow?.id) {
+        drawerTitle = 'Edit Hierarchy Attribute' ;
+    }else{
+        drawerTitle = 'Add Hierarchy Attribute'
+    }
 
     useEffect(() => {
         form.resetFields();
@@ -18,6 +27,8 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
     const onClose = () => {
         setShowDrawer(false);
         setIsReadOnly(false)
+        setFormBtnDisable(false)
+
     };
     const handlesaveandnew = () => {
         setTimeout(() => {
@@ -31,10 +42,14 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
         setsaveclick(true);
         setsaveandnewclick(false);
     };
+    
+    const handleFormSubmitBtn = () => {
+        setFormBtnDisable(true);
+    };
 
     return (
         <Drawer
-            title={editRow?.id ? 'Edit Hierarchy Attribute' : 'Add Hierarchy Attribute'}
+            title={drawerTitle}
             footer={
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style2.drawerFooterButtons}>
@@ -49,11 +64,11 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                             </Button>
                         ) : (
                             <>
-                                <Button onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
+                                <Button disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
                                 </Button>
                                 {formActionType === 'add' ? (
-                                    <Button onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
+                                    <Button disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
                                         Save and New
                                     </Button>
                                 ) : (
@@ -77,7 +92,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                     display: 'flex',
                 }}
             >
-                <Form id="myForm" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+                <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField('Code'), { validator: (rule, value) => (!editRow['hierarchyAttribueCode'] ? (tableData?.findIndex((el) => el['hierarchyAttribueCode']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>

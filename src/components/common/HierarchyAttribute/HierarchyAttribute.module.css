@@ -70,7 +70,7 @@
     display: flex;
     align-items: center;
     margin-left: 20px;
-    padding-right: 20px;
+    /* padding-right: 20px; */
 
     /* font-weight: 400 !important;
     color: #0b0b0c !important;
@@ -79,6 +79,10 @@
 .subheading {
     font-size: 16px;
     color: #0b0c0c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 .refreshBtn {
     /* height : 28px !important ; */
@@ -96,4 +100,7 @@
     line-height: 20px;
     font-weight: 500;
     /* height: 28px; */
+}
+.attributeSelet {
+    width: 100%;
 }
