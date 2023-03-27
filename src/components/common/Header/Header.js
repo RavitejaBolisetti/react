@@ -10,6 +10,7 @@ import { AiFillSetting } from 'react-icons/ai';
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
@@ -55,12 +56,13 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, isLoggedIn, userId }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;
@@ -72,8 +74,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-    const delarAvtarData = dealerName?.split(' ');
-    const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
+    // const delarAvtarData = dealerName?.split(' ');
+    // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -82,6 +84,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
+
+    const successAction = (title, message) => {
+        navigate(routing.ROUTING_LOGIN);
+    };
 
     const showConfirm = () => {
         confirm({
@@ -94,34 +100,29 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             wrapClassName: styles.confirmModal,
             onOk() {
                 doLogout({
-                    successAction: (title, message) => {
-                        navigate(routing.ROUTING_LOGIN);
-                    },
+                    successAction,
                     userId,
                 });
             },
         });
     };
 
-    const items = [
+    const fyMenuOption = [
         customMenuLink({
-            title: 'Branch Location',
-            link: routing.ROUTING_HOME,
-            children: [
-                customMenuLink({
-                    title: 'Gurgaon',
-                }),
-                customMenuLink({
-                    title: 'Lajpat Nagar',
-                }),
-                customMenuLink({
-                    title: 'Noida',
-                }),
-            ],
+            title: '2023',
         }),
-        // customMenuLink({
-        //     title: 'Financial Year',
-        // }),
+    ];
+
+    const locationMenuOption = [
+        customMenuLink({
+            title: 'Gurgaon',
+        }),
+        customMenuLink({
+            title: 'Lajpat Nagar',
+        }),
+        customMenuLink({
+            title: 'Noida',
+        }),
     ];
 
     const userSettingMenu = [
@@ -196,25 +197,27 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                     </div> */}
                                     <div className={styles.userText}>
                                         <div className={styles.dealerName}>{dealerName}</div>
-                                        <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                        {userType === 'DLR' && (
-                                            <Dropdown className={styles.dropdownIcon} menu={{ items }} trigger={['click']}>
-                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                    <DownOutlined />
-                                                </a>
-                                            </Dropdown>
-                                        )}{' '}
-                                        {userType === 'DLR' && (
-                                            <>
-                                                <span className={styles.seprator}>|</span>
-                                                <span className={styles.dealerLocation}>FY2023</span>
-                                                <Dropdown menu={{ items }} trigger={['click']}>
+                                        <div className={styles.dealerInfo}>
+                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                            {userType === 'DLR' && (
+                                                <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }} trigger={['click']}>
                                                     <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
                                                         <DownOutlined />
                                                     </a>
                                                 </Dropdown>
-                                            </>
-                                        )}
+                                            )}{' '}
+                                            {userType === 'DLR' && (
+                                                <>
+                                                    <span className={styles.seprator}>|</span>
+                                                    <span className={styles.dealerLocation}>FY2023</span>
+                                                    <Dropdown menu={{ items: fyMenuOption }} trigger={['click']}>
+                                                        <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
+                                                            <DownOutlined />
+                                                        </a>
+                                                    </Dropdown>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
                                 </Space>
                             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -11,8 +11,11 @@ import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';
 import { ROUTING_DASHBOARD, ROUTING_FORGOT_PASSWORD, ROUTING_LOGIN, ROUTING_SSO_LOGIN, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
 import { LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, LOCAL_STORAGE_KEY_AUTH_USER_ID } from 'store/actions/auth';
 
+import NotificationContext from 'App';
+
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
+    notification: state.notification,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -25,10 +28,11 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const MainPageBase = ({ doLogout }) => {
+const MainPageBase = ({ notification }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;
+    const informationModalBox = useContext(NotificationContext);
 
     const isLoggedIn = !!(localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN) && localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID));
 
@@ -46,6 +50,13 @@ const MainPageBase = ({ doLogout }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
+
+    useEffect(() => {
+        if (notification?.visible) {
+            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [notification?.visible]);
 
     return <div>{isLoggedIn ? <AuthenticatedUserPage /> : <UnAuthenticatedUserPage />}</div>;
 };

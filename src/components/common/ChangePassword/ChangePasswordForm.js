@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Form, Input, Modal, Row } from 'antd';
+import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 import { changePasswordActions } from 'store/actions/data/changePassword';
+import { showGlobalNotification } from 'store/actions/notification';
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { handleErrorModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
-import styles from './ChangePasswordForm.module.css';
+import styles from './ChangePassword.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -35,12 +36,13 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: changePasswordActions.saveData,
             doLogout: doLogoutAPI,
             listShowLoading: changePasswordActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
@@ -50,16 +52,17 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () =>
         // form.validateFields().then((values) => {});
     };
 
+    const successAction = (title, message) => {
+        showGlobalNotification({ notificationType: 'success', title, message });
+        navigate(ROUTING_LOGIN);
+    };
     const onFinishFailed = (values) => {
         if (values.errorFields.length === 0) {
             const data = { ...values.values };
             const onSuccess = (res) => {
                 form.resetFields();
                 doLogout({
-                    successAction: () => {
-                        handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                        navigate(ROUTING_LOGIN);
-                    },
+                    successAction,
                 });
             };
 
@@ -99,11 +102,11 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () =>
         setConfirmDirty(confirmDirty || !!value);
     };
     return (
-        <Form form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed} className={styles.changePassword}>
+        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed} className={styles.changePassword}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>
-                        <Input.Password type="text" allowClear placeholder="Enter old password" visibilityToggle={true} />
+                        <Input.Password type="text" placeholder="Enter old password" visibilityToggle={true} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -120,7 +123,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () =>
                             },
                         ]}
                     >
-                        <Input.Password type="text" allowClear placeholder="Enter new password" visibilityToggle={true} />
+                        <Input.Password type="text" placeholder="Enter new password" visibilityToggle={true} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -137,7 +140,7 @@ const ChangePasswordBase = ({ isOpen = false, onOk = () => { }, onCancel = () =>
                             },
                         ]}
                     >
-                        <Input.Password type="text" allowClear placeholder="Enter confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
+                        <Input.Password type="text" placeholder="Enter confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                     </Form.Item>
                 </Col>
             </Row>
