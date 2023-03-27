@@ -138,13 +138,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 return { startTime, endTime: adjustedTime };
             });
 
-            times.sort((a, b) => a.startTime - b.startTime);
+            times?.sort((a, b) => a?.startTime - b?.startTime);
 
-            for (let i = 0; i < times.length - 1; i++) {
+            for (let i = 0; i < times?.length - 1; i++) {
                 const slot1 = times[i];
                 const slot2 = times[i + 1];
 
-                if (slot1.endTime >= slot2.startTime || slot2.endTime >= slot1.startTime + (i===0 ?1440 :0)) {
+                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i===0 ?1440 :0)) {
                     return true;
                 }
             }
