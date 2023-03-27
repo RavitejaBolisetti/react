@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, Button } from 'antd';
+import { Input, Menu, Layout, Row, Col, Search } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, isMobile, collapsed };
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
     return returnValue;
 };
 
@@ -69,18 +69,32 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
+//searching in the menu
+
+
+
 const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
+    const [FilterMenudata, setFilterMenudata] = useState(menuData);
+    const [expandedKeys, setexpandedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
+    const [openKeys, setOpenKeys] = useState([]);
+    let expandedkeys = [];
+    const [mainKeys, setmainKeys] = useState([]);
+
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+ console.log(flatternData);
+
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -104,9 +118,20 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         localStorage.setItem('theme', changeTheme);
         setTheme(changeTheme);
     };
-    const onSearch = (value) => {
-        // setFilter(value);
+    const onSearch = (e) => {
+        if (e.target.value === "") {
+            setmainKeys([]);
+        } else if (MenuSearch(e.target.value) === true) {
+            console.log("we Found the Menu");
+            return;
+        }
+        setFilter(e);
     };
+
+    // const onExpand = (newExpandedKeys) => {
+    //     setexpandedKeys(newExpandedKeys);
+    //     setAutoExpandParent(false);
+    //   };
 
     const onSubmit = (value, type) => {
         setCollapsed(value);
@@ -115,12 +140,69 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const onClick = (e) => {
         setCurrent(e.key);
     };
+    let values = [];
+
+    const Saveopenkeys = (keys) => {
+        Object.entries(keys).map(([keyname, value]) => {
+            console.log(value);
+            values.push(value);
+
+        });
+
+
+    }
+    const rootSubmenuKeys = menuData.map((e) => { return e.menuId });
+    function MenuSearch(target) {
+
+        // let flag = true;
+        setOpenKeys([])
+        function subMenuSearch(TopMenu) {
+            for (let i = 0; i < TopMenu.length; i++) {
+                // console.log(TopMenu[i].menuTitle)
+                expandedkeys.push(TopMenu[i].menuId);
+                let title=TopMenu[i].menuTitle;
+                let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
+                if (strTitle.toLowerCase() === target.toLowerCase()) {
+                    // expanded.push(expandedkeys);
+                    // setOpenKeys(expandedkeys?.toString());
+                    // console.log(expandedkeys);
+                    
+                    Saveopenkeys(expandedkeys);
+                    // openKeys=>{
+                    //     expandedkeys?.map((i)=>{ return i.toString()})
+                    // }
+                    //setexpandedKeys(expanded[0]);
+                }
+                else if (TopMenu[i].subMenu) {
+                    subMenuSearch(TopMenu[i].subMenu);
+                }
+
+                expandedkeys.pop();
+            }
+        }
+        //setexpandedKeys(mainkeys)
+        // console.log(expanded);
+        subMenuSearch(menuData);
+        setmainKeys(values);
+        
+
+    }
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
-
+    //   console.log(menuData);
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
+    };
+    const onOpenChange = (keys) => {
+        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            setOpenKeys(keys);
+            
+        }
+        else {
+            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+        }
     };
 
     const prepareMenuItem = (data) => {
@@ -139,7 +221,13 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         });
     };
 
-    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
+    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
+    useEffect(() => {
+        console.log(mainKeys);
+        setOpenKeys(mainKeys);
+        //console.log(typeof(mainKeys));
+
+    }, [mainKeys]);
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -157,6 +245,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     </Row>
 
                     {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
+                    {/* <Row>
+                        <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
+                            <span className={styles.menuIcon}><HomeIcon /></span>
+                            HOME
+                        </Link>
+                    </Row> */}
                 </div>
                 {!isLoading ? (
                     <>
@@ -165,20 +259,20 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             mode="inline"
                             inlineIndent={15}
                             defaultSelectedKeys={[defaultSelectedKeys]}
-                            defaultOpenKeys={defaultOpenKeys}
+                            // defaultOpenKeys={defaultOpenKeys}
+                            openKeys={openKeys}
+                            onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
-                            <Item key={'home'} className={styles.subMenuItemNew}>
+                            <Row>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                                    <span className={styles.menuIcon}>
-                                        <HomeIcon />
-                                    </span>
+                                    <span className={styles.menuIcon}><HomeIcon /></span>
                                     HOME
                                 </Link>
-                            </Item>
+                            </Row>
                             {prepareMenuItem(menuData)}
                         </Menu>
                     </>
@@ -193,23 +287,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    {collapsed ? (
-                        theme === 'light' ? (
-                            <BsSun size={30} className={styles.sun} />
-                        ) : (
-                            <BsMoon size={30} className={styles.moon} />
-                        )
-                    ) : (
-                        <>
-                            <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
-                                <BsSun size={30} /> Light Mode
-                            </Button>
-
-                            <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                <BsMoon size={30} /> Dark Mode
-                            </Button>
-                        </>
-                    )}
+                    {theme === 'light' ? <BsSun size={30} className={styles.sun} /> : <BsMoon size={30} className={styles.moon} />}
                 </div>
             </Sider>
         </>

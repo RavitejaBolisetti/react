@@ -5,13 +5,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { doLogoutAPI } from 'store/actions/auth';
-import { Form, Row, Col, Button, Input, Checkbox, Alert, notification } from 'antd';
+import { Form, Row, Col, Button, Input, Checkbox, notification } from 'antd';
 import { UndoOutlined, CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { BiUser } from 'react-icons/bi';
 import { CiCircleAlert } from 'react-icons/ci';
-import OTPTimer from 'otp-timer';
+// import OTPTimer from 'otp-timer';
 
 import { ROUTING_LOGIN } from 'constants/routing';
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
@@ -96,6 +96,42 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                 setCurrentStep(2);
             };
 
+            const requestData = {
+                data: data,
+                setIsLoading: listShowLoading,
+                onSuccess,
+                onError,
+            };
+            verifyUser(requestData);
+        }
+    };
+
+    const onSentOTP = (values) => {
+        if (values) {
+            handleSendOTP();
+        }
+    };
+
+    const handleSendOTP = () => {
+        if (selectedUserId) {
+            if (otpSentOnMobile || otpSentOnEmail) {
+                const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
+
+                const onSuccess = (res) => {
+                    setCounter(30);
+                    informationModalBox({ type: 'success', message: 'OTP Sent', description: res?.responseMessage });
+                    setOTPMessage(res?.data?.message);
+                    setCurrentStep(3);
+                };
+
+                const requestData = {
+                    data: data,
+                    setIsLoading: listShowLoading,
+                    onSuccess,
+                    onError,
+                };
+
+                sendOTP(requestData);
             }
         }
     };
@@ -200,35 +236,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         // handle invalid form submission
     };
 
-    const informationModalBox = ({ message = 'information', description, className = styles.error }) => {
-        alertNotification.open({
-            icon: <AiOutlineCloseCircle />,
-            message,
-            description,
-            className,
-            duration: 5,
-        });
-    };
-
-    const validateToNextPassword = (rule, value, callback) => {
-        if (value && confirmDirty) {
-            form.validateFields(['confirmNewPassword'], { force: true });
-        }
-        callback();
-    };
-
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue('newPassword')) {
-            callback("New Password and Confirm Password doesn't match!");
-        } else {
-            callback();
-        }
-    };
-
-    const handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        setConfirmDirty(confirmDirty || !!value);
-    };
     return (
         <>
             {contextAlertNotification}
