@@ -37,8 +37,8 @@ cache:
     paths:
         - 'node_modules/**/*'
 reports:
-    jest_reports:
-        files:
-            - 'coverage/lcov.info'
-        file-format: 'JUNITXML'
-        base-directory: 'coverage'
+  unit-test-reports:
+    files:
+      - '**/*'
+    base-directory: build/test-results/test
+    discard-paths: no
