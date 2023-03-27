@@ -269,14 +269,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{fullName}</div>
+                                                    <span className={styles.userServiceArea}>
+                                                        {mobileNo}
+                                                    </span>
+                                                </div>
+                                                <div className={styles.dropdownArrow}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                            <span className={styles.userServiceArea}>
-                                                                {mobileNo}
-                                                                <Space>
-                                                                    <DownOutlined />
-                                                                </Space>
-                                                            </span>
+                                                            <Space>
+                                                                <DownOutlined />
+                                                            </Space>
                                                         </Link>
                                                     </Dropdown>
                                                 </div>
