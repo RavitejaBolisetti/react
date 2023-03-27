@@ -40,5 +40,5 @@ reports:
   unit-test-reports:
     files:
       - '**/*'
-    base-directory: build/test-results/test
+    base-directory: dms-ui-application/build/test-results/test
     discard-paths: no
