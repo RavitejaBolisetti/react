@@ -450,6 +450,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 saveandnewclick={saveandnewclick}
                 alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
+                isDataLoaded={isDataLoaded}
             />
 
             <Row gutter={20}>
@@ -486,7 +487,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable isLoading={!isDataLoaded} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
