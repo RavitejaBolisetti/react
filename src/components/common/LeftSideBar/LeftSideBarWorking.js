@@ -72,18 +72,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 //searching in the menu
 
-const LeftSideBarMain = (props) => {
-   
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
+const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
     const location = useLocation();
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
     const [FilterMenudata, setFilterMenudata] = useState(menuData);
-    const [expandedKeys, setExpandedKeys] = useState([]);
+    const [expandedKeys, setexpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
-  //  let expandedkeys = [];
+    let expandedkeys = [];
     const [mainKeys, setmainKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
@@ -118,12 +116,12 @@ const LeftSideBarMain = (props) => {
         setTheme(changeTheme);
     };
     const onSearch = (e) => {
-        // if (e.target.value === '') {
-        //     setmainKeys([]);
-        // } else if (MenuSearch(e.target.value) === true) {
-        //     console.log('we Found the Menu');
-        //     return;
-        // }
+        if (e.target.value === '') {
+            setmainKeys([]);
+        } else if (MenuSearch(e.target.value) === true) {
+            console.log('we Found the Menu');
+            return;
+        }
         setFilter(e);
         setSearchValue(e.target.value);
     };
@@ -140,51 +138,49 @@ const LeftSideBarMain = (props) => {
     const onClick = (e) => {
         setCurrent(e.key);
     };
+    let values = [];
 
-
-    // let values = [];
-
-    // const Saveopenkeys = (keys) => {
-    //     Object.entries(keys).map(([keyname, value]) => {
-    //         console.log(value);
-    //         values.push(value);
-    //     });
-    // };
+    const Saveopenkeys = (keys) => {
+        Object.entries(keys).map(([keyname, value]) => {
+            console.log(value);
+            values.push(value);
+        });
+    };
     const rootSubmenuKeys = menuData.map((e) => {
         return e.menuId;
     });
 
-    // function MenuSearch(target) {
-    //     // let flag = true;
-    //     setOpenKeys([]);
-    //     function subMenuSearch(TopMenu) {
-    //         for (let i = 0; i < TopMenu.length; i++) {
-    //             // console.log(TopMenu[i].menuTitle)
-    //             expandedkeys.push(TopMenu[i].menuId);
-    //             let title = TopMenu[i].menuTitle;
-    //             let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
-    //             if (strTitle.toLowerCase() === target.toLowerCase()) {
-    //                 // expanded.push(expandedkeys);
-    //                 // setOpenKeys(expandedkeys?.toString());
-    //                 // console.log(expandedkeys);
+    function MenuSearch(target) {
+        // let flag = true;
+        setOpenKeys([]);
+        function subMenuSearch(TopMenu) {
+            for (let i = 0; i < TopMenu.length; i++) {
+                // console.log(TopMenu[i].menuTitle)
+                expandedkeys.push(TopMenu[i].menuId);
+                let title = TopMenu[i].menuTitle;
+                let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
+                if (strTitle.toLowerCase() === target.toLowerCase()) {
+                    // expanded.push(expandedkeys);
+                    // setOpenKeys(expandedkeys?.toString());
+                    // console.log(expandedkeys);
 
-    //                 Saveopenkeys(expandedkeys);
-    //                 // openKeys=>{
-    //                 //     expandedkeys?.map((i)=>{ return i.toString()})
-    //                 // }
-    //                 //setexpandedKeys(expanded[0]);
-    //             } else if (TopMenu[i].subMenu) {
-    //                 subMenuSearch(TopMenu[i].subMenu);
-    //             }
+                    Saveopenkeys(expandedkeys);
+                    // openKeys=>{
+                    //     expandedkeys?.map((i)=>{ return i.toString()})
+                    // }
+                    //setexpandedKeys(expanded[0]);
+                } else if (TopMenu[i].subMenu) {
+                    subMenuSearch(TopMenu[i].subMenu);
+                }
 
-    //             expandedkeys.pop();
-    //         }
-    //     }
-    //     //setexpandedKeys(mainkeys)
-    //     // console.log(expanded);
-    //     subMenuSearch(menuData);
-    //     setmainKeys(values);
-    // }
+                expandedkeys.pop();
+            }
+        }
+        //setexpandedKeys(mainkeys)
+        // console.log(expanded);
+        subMenuSearch(menuData);
+        setmainKeys(values);
+    }
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
@@ -224,74 +220,6 @@ const LeftSideBarMain = (props) => {
         setOpenKeys(mainKeys);
     }, [mainKeys]);
 
-
-
-    /* new implementatoion */
-    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
-    const { isTreeViewVisible, handleTreeViewVisiblity } = props;
-
-   // const [expandedKeys, setExpandedKeys] = useState([]);
-    // const [searchValue, setSearchValue] = useState('');
-    // const [autoExpandParent, setAutoExpandParent] = useState(true);
-
-    const onExpand = (newExpandedKeys) => {
-        setExpandedKeys(newExpandedKeys);
-        setAutoExpandParent(false);
-    };
-
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
-
-            console.log(node,'cheokingg')
-
-            dataList.push({
-                id: node[fieldNames?.menuId],
-                title: node[fieldNames?.menuTitle],
-            });
-            if (node[fieldNames?.subMenu]) {
-                generateList(node[fieldNames?.subMenu]);
-            }
-        }
-    };
-
-    treeData && generateList(treeData);
-    const getParentKey = (key, tree) => {
-        let parentKey;
-        for (let i = 0; i < tree.length; i++) {
-            const node = tree[i];
-            if (node[fieldNames?.subMenu]) {
-                if (node[fieldNames?.subMenu].some((item) => item[fieldNames?.key] === key)) {
-                    parentKey = node[fieldNames?.key];
-                } else if (getParentKey(key, node[fieldNames?.subMenu])) {
-                    parentKey = getParentKey(key, node[fieldNames?.subMenu]);
-                }
-            }
-        }
-        return parentKey;
-    };
-
-    const onChange = (e) => {
-        const { value } = e.target;
-
-        const newExpandedKeys = dataList
-            .map((item) => {
-                if (item?.title?.indexOf(value) > -1) {
-                    return getParentKey(item?.menuId, treeData);
-                }
-                return null;
-            })
-            .filter((item, i, self) => item && self?.indexOf(item) === i);
-        setExpandedKeys(value ? newExpandedKeys : []);
-        setSearchValue(value);
-        setAutoExpandParent(true);
-    };
-
-  // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
-
-
-
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
             data.map((item) => {
@@ -328,7 +256,6 @@ const LeftSideBarMain = (props) => {
     }, [searchValue, menuData]);
 
     console.log('searchValue', searchValue, 'finalTreeData', finalTreeData);
-    console.log(menuData,'MENUDATATTTTT')
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -345,7 +272,7 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onChange} />}
+                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
                     {/* <Row>
                         <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                             <span className={styles.menuIcon}><HomeIcon /></span>
@@ -361,20 +288,13 @@ const LeftSideBarMain = (props) => {
                             inlineIndent={15}
                             defaultSelectedKeys={[defaultSelectedKeys]}
                             // defaultOpenKeys={defaultOpenKeys}
-                           // openKeys={openKeys}
-                            onExpand={onExpand}
-                          // onOpenChange={onOpenChange}
+                            openKeys={openKeys}
+                            onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
-                            expandedKeys={expandedKeys}
-                            selectedKeys={selectedTreeKey}
-                            onSelect={handleTreeViewClick}
-                            autoExpandParent={autoExpandParent}
                         >
-
-{/* <Tree    showLine={true} showIcon={true}   treeData={finalTreeData} /> */}
                             <Row>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
