@@ -3,9 +3,6 @@ import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { FiLogOut } from 'react-icons/fi';
-
-import { AiFillSetting } from 'react-icons/ai';
 
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
@@ -22,9 +19,7 @@ import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
-import { HeadPhoneIcon, MenuArrow } from 'Icons';
-import { MdOutlineChangeCircle } from 'react-icons/md';
-import { AdminIcon } from 'Icons';
+import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, SettingsIcon } from 'Icons';
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -130,13 +125,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '1',
             title: 'My Profile',
             link: routing.ROUTING_USER_PROFILE,
-            icon: <Icon component={AdminIcon} />,
+            icon: <Icon component={ProfileIcon} />,
         }),
         customMenuLink({
             key: '2',
             title: 'Settings',
             link: routing.ROUTING_USER_SETTING,
-            icon: <AiFillSetting />,
+            icon: <Icon component={SettingsIcon} />,
         }),
         // customMenuLink({
         //     key: '3',
@@ -164,7 +159,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             customMenuLink({
                 key: '5',
                 title: 'Change Password',
-                icon: <MdOutlineChangeCircle />,
+                icon: <Icon component={ChangePasswordIcon} />,
                 onClick: () => setChangePasswordModalOpen(true),
             })
         );
@@ -174,9 +169,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '7',
             title: 'Logout',
             onClick: showConfirm,
-            icon: <FiLogOut />,
+            icon: <Icon component={LogoutIcon} />,
         })
     );
+
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
