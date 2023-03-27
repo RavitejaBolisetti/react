@@ -67,6 +67,11 @@
     line-height: 24px;
 }
 
+.userName {
+    width: 150px;
+    text-overflow: ellipsis;
+}
+
 .dealerLocation {
     color: #FF3E5B;
     font-weight: 400;

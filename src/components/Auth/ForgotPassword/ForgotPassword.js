@@ -82,7 +82,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     }, [counter]);
 
     const onError = (message) => {
-        informationModalBox({ message: 'Information', description: message[0] || message });
+        showGlobalNotification({ title: 'Information', message: message[0] || message });
     };
 
     const onVerifyUser = (values) => {
@@ -119,7 +119,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                 const onSuccess = (res) => {
                     setCounter(30);
-                    informationModalBox({ type: 'success', message: 'OTP Sent', description: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'success', title: 'OTP Sent', message: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
                     setCurrentStep(3);
                 };
@@ -142,7 +142,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
             const onSuccess = (res) => {
                 setValidationKey(res?.data?.validationKey);
-                informationModalBox({ type: 'success', message: 'OTP Verified', description: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'OTP Sent', message: res?.responseMessage });
                 setCurrentStep(4);
             };
 
@@ -190,15 +190,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         setOTPSentOnEmail(event.target.checked);
     };
 
-    const informationModalBox = ({ type = 'error', message = 'Information', description }) => {
-        alertNotification.open({
-            icon: <AiOutlineCloseCircle />,
-            message,
-            description,
-            className: type === 'error' ? styles.error : styles.success,
-            duration: 5,
-        });
-    };
 
     const validateOTPOption = (_, value) => {
         if (!(otpSentOnMobile || otpSentOnEmail)) {
@@ -224,15 +215,10 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const handleOTPInput = (value) => {
-        console.log('🚀 ~ file: ForgotPassword.js:219 ~ handleOTPInput ~ value:', value);
         setOTPInput(value);
     };
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
-        console.log('🚀 ~ file: ForgotPassword.js:217 ~ onFinishFailed ~ errorFields:', errorFields);
-        console.log('🚀 ~ file: ForgotPassword.js:217 ~ onFinishFailed ~ values:', values);
-        console.log('🚀 ~ file: ForgotPassword.js:217 ~ onFinishFailed ~ values:', form.validateFields());
-
         // handle invalid form submission
     };
 

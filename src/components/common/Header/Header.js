@@ -268,7 +268,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                     </span>
                                                 </div>
                                                 <div className={styles.userText}>
-                                                    <div>{fullName}</div>
+                                                    <div className={styles.userName}>{fullName}</div>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <span className={styles.userServiceArea}>
