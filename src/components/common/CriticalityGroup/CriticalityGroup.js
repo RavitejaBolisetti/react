@@ -1,12 +1,11 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Input, Modal, Form, Row, Space, Empty, Select, notification, ConfigProvider } from 'antd';
+import { Button, Col, Input, Modal, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { FaEdit } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
-import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import moment from 'moment';
@@ -119,6 +118,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const onFinish = (values) => {
         const formatedTime = values?.allowedTimings?.map((time) => {
             return {
+                id: time?.id || '',
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
             };
@@ -210,6 +210,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSelectedRecord(record);
         const momentTime = record?.allowedTimings?.map((i) => {
             return {
+                id: i?.id,
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
             };

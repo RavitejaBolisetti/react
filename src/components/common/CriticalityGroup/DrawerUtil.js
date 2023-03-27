@@ -1,31 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 import { AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 
-import dayjs from 'dayjs';
-
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
-import moment from 'moment';
 
 const { confirm } = Modal;
 
-const DrawerUtil = ({isDataLoaded, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ isDataLoaded, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
-    const [selectedTime, setSelectedTime] = useState(null);
-    const [disableTimePickerEndTime, setDisableTimePickerEndTime] = useState(false);
 
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
     } else if (formActionType === 'update') {
-        drawerTitle = 'Update Application Criticality Group Details';
+        drawerTitle = 'Edit Application Criticality Group Details';
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Criticality Group Details';
     }
@@ -49,7 +44,7 @@ const DrawerUtil = ({isDataLoaded, setsaveclick, alertNotification, formBtnDisab
 
     const checkOverlap = () => {
         let timeSegments = form.getFieldValue('allowedTimings');
-        timeSegments = timeSegments?.map(time => ({timeSlotFrom: time?.timeSlotFrom?.format('HH:mm') ,timeSlotTo: time?.timeSlotTo?.format('HH:mm') }))
+        timeSegments = timeSegments?.map((time) => ({ timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'), timeSlotTo: time?.timeSlotTo?.format('HH:mm') }));
         if (timeSegments?.length === 1) return false;
 
         timeSegments?.sort((timeSegment1, timeSegment2) => timeSegment1['timeSlotFrom']?.localeCompare(timeSegment2['timeSlotFrom']));
@@ -59,48 +54,16 @@ const DrawerUtil = ({isDataLoaded, setsaveclick, alertNotification, formBtnDisab
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
                 console.log('yes');
-                return {isOverlap: true,...timeSegments[i] };
+                return { isOverlap: true, ...timeSegments[i] };
             }
         }
 
-        return {isOverlap: false };
+        return { isOverlap: false };
     };
 
     const onOk = (value) => {
         // checkOverlap()
     };
-
-
-    // const disabledHours = () => {
-    //     const hours = [];
-    //     for (let i = 0; i < moment().hour(); i += 1) hours.push(i);
-    //     return hours;
-    //   };
-    
-    //   const disabledMinutes = (selectedHour) => {
-    //     const minutes = [];
-
-    //     const timePickers =  form.getFieldValue('allowedTimings');;
-    //     console.log()
-    //     if (selectedHour === moment().hour()) {
-    //       for (let i = 0; i < moment().minute(); i += 1) minutes.push(i);
-    //     }
-    //     return minutes;
-    //   };
-    //   useEffect(() => {
-    //     if(!form.getFieldValue('allowedTimings')?.length> 0) return;
-    //     setDisableTimePickerEndTime(disableTimePicker())
-
-    //   },[form.getFieldValue('allowedTimings')?.length])
-
-    //   const disableTimePicker = () => {
-          
-    //       const timeSlots =form.getFieldValue('allowedTimings'); 
-    //       console.log("timeSlots", timeSlots)
-    //     console.log("!timeSlots(timeSlots?.length-1)['timeSlotFrom']", timeSlots);
-    //     // return  timeSlots?.length>0 && !timeSlots[timeSlots?.length]['timeSlotFrom'];
-    //     return  timeSlots?.length>0 && !timeSlots[timeSlots?.length];
-    //   }
 
     const handleForm = () => {
         setFormBtnDisable(true);
@@ -224,13 +187,15 @@ const DrawerUtil = ({isDataLoaded, setsaveclick, alertNotification, formBtnDisab
                                                                 required: true,
                                                                 message: 'Missing Start Time',
                                                             },
-                                                            {validator: (rule, value)=> {
-                                                        const overlapData = checkOverlap();
-                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve()}}
-                                                ]}
-                                                        // isOverlap timeSlotTo timeSlotFrom
-                                            >
-                                                        <TimePicker  use12Hours size="large" format="h:mm A"  onOk={onOk} {...disabledProps} />
+                                                            {
+                                                                validator: (rule, value) => {
+                                                                    const overlapData = checkOverlap();
+                                                                    return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve();
+                                                                },
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                                     </Form.Item>
                                                 </Col>
                                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
@@ -242,16 +207,21 @@ const DrawerUtil = ({isDataLoaded, setsaveclick, alertNotification, formBtnDisab
                                                                 required: true,
                                                                 message: 'Missing End Time',
                                                             },
-                                                            {validator: (rule, value)=> {
-                                                        const overlapData = checkOverlap();
-                                                       return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve()}}
-                                                    
-                                                ]}
+                                                            {
+                                                                validator: (rule, value) => {
+                                                                    const overlapData = checkOverlap();
+                                                                    return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve();
+                                                                },
+                                                            },
+                                                        ]}
                                                     >
                                                         {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
-                                                <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps}  />
+                                                        <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                                     </Form.Item>
                                                 </Col>
+                                                <Form.Item hidden {...restField} name={[name, 'id']}>
+                                                    <Input />
+                                                </Form.Item>
                                                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                                     <Button
                                                         icon={<LinearTrash />}
