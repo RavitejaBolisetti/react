@@ -171,7 +171,6 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     };
 
     const loginError = ({ title = 'Information', message }) => {
-        console.log('🚀 ~ file: index.js:174 ~ loginError ~ title:', title);
         onError({ title, message });
         dispatch(authLoggingError(title, message));
     };
@@ -211,11 +210,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
 
     const logoutError = (errorMessage) => message.error(errorMessage);
     const title = 'Logout Successful';
-    const message = 'You are successfully logged out.';
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(showGlobalNotification({ notificationType: 'success', title, message }));
+            dispatch(showGlobalNotification({ notificationType: 'success', title, message: res?.responseMessage }));
             successAction && successAction(title, message);
             logoutClearAllData();
         } else {
