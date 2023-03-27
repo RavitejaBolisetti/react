@@ -420,6 +420,9 @@
 }
 
 .modalIconAlert {
-    color: #FF7A00;
+    color: #ff7a00;
     padding-right: 8px;
+}
+:global .ant-picker-focused .ant-picker-input span.ant-picker-suffix .anticon.anticon-clock-circle {
+    color: #ff3e5b;
 }
