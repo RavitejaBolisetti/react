@@ -1,45 +1,38 @@
 version: 0.2
 phases:
-    install:
-        runtime-versions:
-            nodejs: latest
-    pre_build:
-        commands:
-            - npm i
-            #- npm install -D typescript
-            # - npm install -D ts-node
-            - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
-            - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
-            - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-            - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
-            - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
-            - source /etc/profile.d/sonar-scanner.sh
-            - pwd
-            - npm install -D sonarqube-scanner
-build:
-  commands:
-    - echo Build started on `date`
-    - echo Compiling the dist folder
-    - npm run test -- --coverage --coverageReporters=jest-junit
-
-    # Run sonar scanner with specified parameters
-    - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-    - sonar-scanner -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-
-post_build:
-        commands:
-            - echo Build completed on `date` 
-# Include only the files required for your application to run.
-artifacts:
+  install:
+    runtime-versions:
+      nodejs: latest
+  pre_build:
+    commands:
+      - npm i
+      #- npm install -D typescript
+      # - npm install -D ts-node
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+      - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+      - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
+      - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+      - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
+      - source /etc/profile.d/sonar-scanner.sh
+      - pwd
+      - npm install -D sonarqube-scanner
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the dist folder
+      - npm run test:coverage
+      - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
+    # Include only the files required for your application to run.
+  artifacts:
     files:
-        - '**/*'
+      - '**/*'
     base-directory: 'build'
-cache:
+  cache:
     paths:
-        - 'node_modules/**/*'
-reports:
-  jest_reports:
-    files:
-      - 'coverage/lcov.info'
-    file-format: 'JUNITXML'
-    base-directory: 'coverage'
+      - 'node_modules/**/*'
+  reports:
+    jest_reports:
+      files:
+        - 'coverage/lcov.info'
+      file-format: 'JUNITXML'
+      base-directory: 'coverage'
