@@ -12,6 +12,10 @@ jest.mock('react-redux', () => ({
 const doCloseLoginError = () => {
 return;
 }
+const verifyUser = () => {}
+const sendOTP = () => {}
+const validateOTP = () => {}
+const updatePassword = () => {}
 const errorMessage = () => {
     return "Information";
 }
@@ -21,29 +25,22 @@ window.matchMedia =
         return { matches: false, addListener: function () {}, removeListener: function () {} };
     };
 
-    describe('Login component', () => {
+    describe('Forgot Password Component', () => {
         test('render welcome page', async () => {
             render(
                 <BrowserRouter>
                 <Routes>   
                     <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError}  />}/>
+                    <Route path="/forgot-password" element= {<ForgotPassword verifyUser = {verifyUser} sendOTP = {sendOTP} validateOTP = {validateOTP} updatePassword = {updatePassword} />}/>
                 </Routes>
             </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
-            const passInput = await screen.getByPlaceholderText('Password');
-            const loginBtn = await screen.getByText('Login');
-            fireEvent.change(userId, {target: {value:'122'}});
-            fireEvent.change(passInput, {target: {value:'080870'}});
-            fireEvent.change(userId, {target: {value:''}});
-            fireEvent.change(passInput, { target: { value: '' } });
-            fireEvent.click(loginBtn)
-            const validation =  screen.findByText('Please Enter User ID (mile id.parent id')
-            const validation2 =  screen.findByText('Please Enter Password');
-            expect(userId).toBeTruthy();
-            expect(passInput).toBeTruthy();
-            expect(validation).toBeTruthy();
-            expect(validation2).toBeTruthy();
-            expect(loginBtn).toBeInTheDocument();
+             const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
+             const forgotPasswordLink = await screen.getByText('Forgot password?')
+             fireEvent.click(forgotPasswordLink);
+             const generateOtpBtn = await screen.getByText('Generate OTP')
+             expect(userId).toBeTruthy();
+             expect(forgotPasswordLink).toBeTruthy();
+             expect(generateOtpBtn).toBeInTheDocument();
 
         });
         test('is error modal visible after entering username and password  ' , async() => {
@@ -52,7 +49,7 @@ window.matchMedia =
                     <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorTitle="Information" errorMessage = {errorMessage} isError={true} />}/>
                 </Routes>
             </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
+            const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
             const passInput = await screen.getByPlaceholderText('Password');
             const loginBtn = await screen.getByText('Login');
             fireEvent.change(userId, {target: {value:'reena'}});
@@ -72,13 +69,13 @@ window.matchMedia =
                     <Route path="/forgot-password" element= {<ForgotPassword/>}/>
                 </Routes>
             </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
+            const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
             const forgotPasswordLink = await screen.getByText('Forgot password?')
             fireEvent.click(forgotPasswordLink);
-            const verifyUserBtn = await screen.getByText('Verify User')
+            const generateOtpBtn = await screen.getByText('Generate OTP')
             expect(userId).toBeTruthy();
             expect(forgotPasswordLink).toBeTruthy();
-            expect(verifyUserBtn).toBeInTheDocument();
+            expect(generateOtpBtn).toBeInTheDocument();
         });
         test('M&M SSO Login Link ' , async() => {
             render(<BrowserRouter>
