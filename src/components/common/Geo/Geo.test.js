@@ -1,8 +1,14 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Geo } from './Geo';
+import { onSuccess } from './Geo';
+import axios from 'axios';
+
 import LeftPanel from '../LeftPanel';
+import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+
 import { Tree } from 'antd';
+import { geoDataActions } from 'store/actions/data/geo';
 
 jest.mock('react-redux', () => ({
     connect: () => (Geo) => Geo,
@@ -23,13 +29,13 @@ const treeDatas = [
         id: 'parent 1',
         subGeo: [
             {
-                title: 'node1',
-                key: 'node1',
+                geoName: 'asian',
+                id: 'AS',
 
-                children: [
+                subGeo: [
                     {
-                        title: 'randomNode_1',
-                        key: 'randomNode_1',
+                        geoName: 'India',
+                        id: 'IND',
                     },
                     {
                         title: 'node2',
@@ -61,9 +67,9 @@ const treeDatas = [
         ],
     },
     {
-        title: 'topNode',
-        key: 'topNode',
-        children: [
+        geoName: 'topNode',
+        id: 'topNode',
+        subGeo: [
             {
                 title: 'node1',
                 key: 'node1',
@@ -104,7 +110,6 @@ const treeDatas = [
     },
 ];
 const fetchList = () => {};
-const saveData = () => {};
 const hierarchyAttributeFetchList = () => {};
 
 describe('geo component', () => {
@@ -183,7 +188,7 @@ describe('geo component', () => {
 
     test('Save form element', async () => {
         const onFinish = jest.fn();
-        const { getByLabelText, getByText } = render(<Geo fetchList={fetchList} onFinish={onFinish} saveData={saveData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        const { getByLabelText, getByText } = render(<Geo fetchList={fetchList} onFinish={onFinish} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
         // console.log("test",SaveBtn)
@@ -331,6 +336,65 @@ describe('geo component', () => {
         fireEvent.click(addSiblingBtn);
     });
 
+    test('Testing the save function fail in Geo', async () => {
+        render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} geoData={treeDatas} />);
+        const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
+        expect(addChildBtn).toBeTruthy();
+        fireEvent.click(addChildBtn);
+        const codeInputName = screen.getByPlaceholderText('Please Enter Name');
+        const codeInputCode = screen.getByPlaceholderText('Please Enter Code');
+        const ParentField = await screen.getByRole('combobox', { name: '' });
+        const GeoLevel = await screen.getByRole('combobox', { name: 'Geographical Attribute Level' });
+        const codeSwitch = await screen.getByRole('switch', { name: 'Status' });
+        // fireEvent.change(codeInputName, { target: { value: '23' } });
+        // fireEvent.change(codeInputCode, { target: { value: '24' } });
+        // fireEvent.change(ParentField, {
+        //     target: { value: 'Asias' },
+        // });
+        // fireEvent.change(GeoLevel, {
+        //     target: { value: 'Asia6' },
+        // });
+
+        // fireEvent.change(codeSwitch, { target: { value: false } });
+        // fireEvent.click(ParentField);
+        const FindTree = await screen.findByText('topNode');
+        expect(FindTree).toBeTruthy();
+        fireEvent.click(FindTree);
+        const EditBTn = await screen.findByText('Edit');
+        fireEvent.click(EditBTn);
+
+        fireEvent.change(codeInputName, { target: { value: 'Mahindra' } });
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        axios.get.mockResolvedValue({
+            data: [
+                {
+                    userId: 1,
+                    id: 1,
+                    title: 'My First Album',
+                },
+                {
+                    userId: 1,
+                    id: 2,
+                    title: 'Album: The Sequel',
+                },
+            ],
+        });
+        expect(saveBtn).toBeTruthy();
+        fireEvent.click(saveBtn);
+        render(handleSuccessModal({ title: 'SUCCESS', message: 'Data Saved' }));
+
+        const Okbtn = await screen.findByRole('button', { name: 'OK' });
+        expect(Okbtn).toBeTruthy();
+        const errorMessage = await screen.findByText('We are facing on server');
+        expect(errorMessage).toBeTruthy();
+
+        // expect(codeInputName.value).toBe("23");
+        // expect(codeInputCode.value).toBe("24");
+        // expect(ParentField.value).toBe("Asias");
+        // expect(GeoLevel.value).toBe("Asia6");
+        // expect(codeSwitch.value).toBe("false");
+    }, 800000);
+
     test('Testing the save function on page', async () => {
         render(<Geo fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} geoData={treeDatas} />);
         const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
@@ -349,5 +413,25 @@ describe('geo component', () => {
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         expect(saveBtn).toBeTruthy();
+    });
+});
+// const axios = require('axios');
+global.fetch = jest.fn(() => {
+    Promise.resolve({
+        json: () => promise.resolve({ data: { id: 'f7d7c0ca-e03f-4d7b-8af8-30c17cd783cc', geoCode: 'ASI12', geoName: 'ASIA24', attributeKey: '59077c54-6cbf-46d0-9729-8cb6fbb7cd87', isActive: 'N', geoParentCode: 'DMS' } }),
+    });
+});
+// jest.mock('axios');
+
+describe('This is to test the Axios Call using Jest', () => {
+    test('This is the Api call test', async () => {
+        // const mockedresponse = { status: 'OK', statusCode: 200, responseMessage: 'Geo saved successfully.', data: { id: 'f7d7c0ca-e03f-4d7b-8af8-30c17cd783cc', geoCode: 'ASI12', geoName: 'ASIA24', attributeKey: '59077c54-6cbf-46d0-9729-8cb6fbb7cd87', isActive: 'N', geoParentCode: 'DMS' } };
+
+        // axios.get.mockResolvedValue(mockedresponse);
+        const Fetclists = await geoDataActions.fetchList();
+        console.log(Fetclists);
+        // expect(Fetclists).toHaveBeenCalled();
+
+        // expect(axios.get).toHaveBeenCalled();
     });
 });

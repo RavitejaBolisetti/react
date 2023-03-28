@@ -4,7 +4,7 @@ import { RoleManagementPage } from './RoleManagement/RoleManagementPage';
 import { ProductHierarchyPage } from './ProductHierarchy';
 
 import { CriticalityGroupPage } from './CriticalityGroup';
-import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster';
+import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster/HierarchyAttributeMasterPage';
 import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy';
 import { QualificationMasterPage } from './QualificationMaster';
 
