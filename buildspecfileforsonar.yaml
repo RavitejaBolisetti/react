@@ -5,42 +5,48 @@ phases:
             nodejs: latest
     pre_build:
         commands:
-            - npm i
+            - npm install
             #- npm install -D typescript
             # - npm install -D ts-node
             - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
             - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
             - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-            - echo -e "sonar.host.url=http://10.168.11.44/:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+            - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
             - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
-            #- npm install -D sonarqube-scanner
-            - npm install -D jest-sonar-reporter sonarqube-scanner
+            - npm install -D sonarqube-scanner
+            - ./node_modules/.bin/jest --coverage --coverageReporters=text-Icov | tee coverage/Icov.info
+            - ./node_modules/.bin/sonar-scanner -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482 -Dsonar.projectKey=dms-ui-application -Dsonar.sources=. -Dsonar.javascript.Icov.reportPaths=coverage/Icov.info 
     build:
         commands:
-            - echo Build started on `date`
-            - echo Compiling the dist folder
-            - npm run test --coverage --watchAll=false
-            - ls -la
-            - cd build
-            - ls -la
-            #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=./ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_02695ac95d1770d6221bff1cd2c1ed1ca9c44866
-
+            #- echo Build started on `date`
+            #- echo Compiling the dist folder
+            #- npm cache clean --force
+            #- npm install
+            #- npm rebuild node-sass
+            #- npm run test -- --coverage . --watchAll=false
+            #- ls -la
+            #- cd build
+            #- ls -la
+            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
+            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=. -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
+            - npm run coverage
+            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
+            - npm run build
     post_build:
         commands:
-            - echo Build completed on `date` 
+            - echo Build completed on `date`
 # Include only the files required for your application to run.
 artifacts:
     files:
         - '**/*'
-    base-directory: 'build'
+    base-directory: 'build/'
 cache:
     paths:
         - 'node_modules/**/*'
 reports:
-    jest_reports:
+    jest:
         files:
             - 'coverage/clover.xml'
         file-format: 'CLOVERXML'
