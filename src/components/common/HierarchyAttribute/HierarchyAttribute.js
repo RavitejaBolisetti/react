@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { TfiReload } from 'react-icons/tfi';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Modal, Form, Row, Select, Space, Switch, Input, notification } from 'antd';
+import { Button, Col, Modal, Form, Row, Select, Space, Switch, Input, notification, ConfigProvider, Empty } from 'antd';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlinePlus } from 'react-icons/ai';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
@@ -128,7 +128,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
     const onError = (message) => {
         informationModalBox({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
-
     };
 
     const handleAdd = () => {
@@ -318,13 +317,34 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             </Row>
 
             {/* {detailData?.hierarchyAttributeType && ( */}
-                <>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <ConfigProvider
+                            renderEmpty={() => (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 140,
+                                    }}
+                                    description={
+                                        !detailData?.length ? (
+                                            <span>
+                                                No records found. Please add new parameter <br />
+                                                using below button
+                                            </span>
+                                        ) : (
+                                            <span> No records found.</span>
+                                        )
+                                    }
+                                ></Empty>
+                            )}
+                        >
                             <DataTable {...TableProps} />
-                        </Col>
-                    </Row>
-                </>
+                        </ConfigProvider>
+                    </Col>
+                </Row>
+            </>
             {/* )} */}
             {/* </Space> */}
             <AddUpdateDrawer
