@@ -12,7 +12,7 @@ import style from './criticatiltyGroup.module.css';
 
 const { confirm } = Modal;
 
-const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -67,6 +67,11 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, isLoadi
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
+    };
+
+    const validatedDuplicateTime = (field) => (rule, value) => {
+        const overlapData = checkOverlap();
+        return field && overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.[field] ? Promise.reject('Time overlaps with other time') : Promise.resolve();
     };
 
     return (
@@ -185,15 +190,9 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, isLoadi
                                                             {...restField}
                                                             name={[name, 'timeSlotFrom']}
                                                             rules={[
+                                                                validateRequiredInputField('Start Time'),
                                                                 {
-                                                                    required: true,
-                                                                    message: 'Missing Start Time',
-                                                                },
-                                                                {
-                                                                    validator: (rule, value) => {
-                                                                        const overlapData = checkOverlap();
-                                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve();
-                                                                    },
+                                                                    validator: validatedDuplicateTime('timeSlotFrom'),
                                                                 },
                                                             ]}
                                                         >
@@ -205,15 +204,9 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, isLoadi
                                                             {...restField}
                                                             name={[name, 'timeSlotTo']}
                                                             rules={[
+                                                                validateRequiredInputField('End Time'),
                                                                 {
-                                                                    required: true,
-                                                                    message: 'Missing End Time',
-                                                                },
-                                                                {
-                                                                    validator: (rule, value) => {
-                                                                        const overlapData = checkOverlap();
-                                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve();
-                                                                    },
+                                                                    validator: validatedDuplicateTime('timeSlotTo'),
                                                                 },
                                                             ]}
                                                         >
@@ -236,6 +229,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, isLoadi
                                                             onClick={() => {
                                                                 removeItem(name);
                                                                 remove(name);
+                                                                showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
                                                                 // confirm({
                                                                 //     title: 'Allowed Timing',
                                                                 //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,

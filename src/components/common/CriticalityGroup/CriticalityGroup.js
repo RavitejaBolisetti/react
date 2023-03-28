@@ -406,6 +406,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             </Row>
 
             <DrawerUtil
+                showGlobalNotification={showGlobalNotification}
                 deletedItemList={deletedItemList}
                 setDeletedItemList={setDeletedItemList}
                 setFormBtnDisable={setFormBtnDisable}

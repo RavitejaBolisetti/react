@@ -36,12 +36,12 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
         error: styles.error,
     };
 
-    const informationModalBox = ({ type = 'error', title = 'Information', message, duration = 5, placement = 'topRight' }) => {
+    const informationModalBox = ({ type = 'error', title = 'Information', message, duration = 1400, placement = 'topRight', showTitle = true }) => {
         informationNotification.open({
             icon: checkIcon?.[type],
-            message: title,
+            message: showTitle ? title : false,
             description: message,
-            className: checkClassName?.[type],
+            className: `${checkClassName?.[type]} ${styles?.[placement]}`,
             duration,
             placement,
             onClose: hideGlobalNotification,
