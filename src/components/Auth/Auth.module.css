@@ -737,10 +737,11 @@ select.form-control:focus::-ms-value {
     background-color: transparent;
 }
 
-:global .ant-notification {
+/* BEcause of global keyword this is being overidden everywhere */
+/* :global .ant-notification {
     top: 16px !important;
     margin-inline-end: 16px !important;
-}
+} */
 
 :global .ant-notification-notice {
     width: 395px !important;

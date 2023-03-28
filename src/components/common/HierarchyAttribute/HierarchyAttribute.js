@@ -5,10 +5,9 @@ import { bindActionCreators } from 'redux';
 import { TfiReload } from 'react-icons/tfi';
 import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Modal, Form, Row, Select, Space, Switch, Input } from 'antd';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { Button, Col, Modal, Form, Row, Select, Space, Switch, Input, notification } from 'antd';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlinePlus } from 'react-icons/ai';
 import { EditIcon, ViewEyeIcon } from 'Icons';
-
 
 import styles from '../Common.module.css';
 import styles3 from 'pages/common/Common.module.css';
@@ -75,9 +74,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [ formBtnDisable, setFormBtnDisable] = useState(false)
-
-
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -95,7 +93,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         setEditRow({});
     }, [ForceReset]);
     useEffect(() => {
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: detailData?.hierarchyAttribueId });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+
         setSearchdata(detailData?.hierarchyAttribute);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
@@ -103,39 +102,45 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         setSearchdata(detailData?.hierarchyAttribute);
     }, [detailData]);
 
-    const handleEditView =() => {
-        console.log('handle View clicked')
+    const handleEditView = () => {
         setFormActionType('edit');
         setIsReadOnly(false);
         setFormBtnDisable(false);
-    }
+    };
 
-    const showSuccessModel = ({ title, message }) => {
-        successModel({
-            title: title,
-            icon: <ExclamationCircleFilled />,
-            content: message,
+    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
+        alertNotification.open({
+            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
+            message,
+            description,
+            className,
+            placement,
+            duration:500000,
         });
     };
 
+    // const showSuccessModel = ({ title, message }) => {
+    //     successModel({
+    //         title: title,
+    //         icon: <ExclamationCircleFilled />,
+    //         content: message,
+    //     });
+    // };
+
     const onError = (message) => {
-        errorModel({
-            title: 'Information',
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
+        informationModalBox({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
+
     };
 
     const handleAdd = () => {
         setFormActionType('add');
-        setEditRow({    
-            duplicateAllowedAtAttributerLevelInd: "Y",
-            duplicateAllowedAtOtherParent: 'Y',        
-            isChildAllowed: "Y",
-            status: "Y"
+        setEditRow({
+            duplicateAllowedAtAttributerLevelInd: true,
+            duplicateAllowedAtOtherParent: true,
+            isChildAllowed: true,
+            status: true,
         });
         setShowDrawer(true);
-
     };
 
     const edit = (record, type) => {
@@ -144,7 +149,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         setShowDrawer(true);
         setFormBtnDisable(false);
 
-        if(type === 'view'){
+        if (type === 'view') {
             setIsReadOnly(true);
         }
     };
@@ -175,8 +180,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
-
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -185,8 +189,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
-            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
-
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -194,7 +197,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
-            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -202,7 +205,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <>{text === 'Y' ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -230,52 +233,35 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         })
     );
 
-    const onChangeHandle = (e) => {
-        const newdata = [];
-        Object.keys(detailData?.hierarchyAttribute).map((keyname, i) => {
-            if (detailData?.hierarchyAttribute[keyname].hierarchyAttribueCode === e) {
-                newdata.push(detailData?.hierarchyAttribute[keyname]);
-            } else if (detailData?.hierarchyAttribute[keyname].hierarchyAttribueName === e) {
-                newdata.push(detailData?.hierarchyAttribute[keyname]);
-            }
-        });
-
-        if (e === '') {
-            setSearchdata(detailData?.hierarchyAttribute);
-        } else {
-            setSearchdata(newdata);
-        }
-    };
-    const onChangeHandle2 = (e) => {
-        const getSearch = e.target.value;
-        if (e.target.value === '') {
-            const tempArr = detailData?.hierarchyAttribute;
-            setSearchdata(tempArr);
-            return;
-        }
-        if (getSearch.length > -1) {
-            const searchResult = detailData?.hierarchyAttribute.filter((record) => record.hierarchyAttribueCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.hierarchyAttribueName.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setSearchdata(searchResult);
-        }
-    };
-
     const onFinish = (values) => {
         form.validateFields();
 
         const onSuccess = (res) => {
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
-            showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
-            setFormBtnDisable(false)
+            // showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
+            setFormBtnDisable(false);
             if (saveclick === true) {
                 setShowDrawer(false);
+                informationModalBox({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'topRight' });
             } else {
                 setShowDrawer(true);
+                informationModalBox({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'bottomRight' });
             }
             forceUpdate();
         };
+        // const reqData = {
+        //     duplicateAllowedAtAttributerLevelInd: true,
+        //     duplicateAllowedAtOtherParent: true,
+        //     hierarchyAttribueCode: "MUUUI",
+        //     hierarchyAttribueId: "Product Hierarchy",
+        //     hierarchyAttribueName: "Mo Family",
+        //     hierarchyAttribueType: "Product Hierarchy",
+        //     isChildAllowed: false,
+        //     status: false
+        // }
 
-        hierarchyAttributeSaveData({ data: [{ ...values, hierarchyAttribueType: selectedHierarchy, hierarchyAttribueId: detailData?.hierarchyAttribueId }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
+        hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -293,75 +279,70 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
     return (
         <>
-            <Space
+            {contextAlertNotification}
+            {/* <Space
                 direction="vertical"
                 size="middle"
-                style={{
-                    display: 'flex',
-                }}
-            >
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles3.contentHeaderBackground}>
-                            <Row >
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                    <Row >
-                                        {/* <div className={style2.searchAndLabelAlign}> */}
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style2.subheading}>
-                                                Hierarchy Attribute Type
-                                            </Col>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                                <Select className={style2.attributeSelet} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
-                                                    {attributeData?.map((item) => (
-                                                    <Option value={item}>{item}</Option>
-                                                ))}
-                                                </Select>
-                                            </Col>
-                                        {/* </div> */}
-
-                                    </Row>
-                                </Col>
-                                {detailData?.hierarchyAttribueId && (
-                                    <Col className={styles3.addGroup} xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Button className={style2.refreshBtn} onClick={handleReferesh} danger>
-                                            <TfiReload />
-                                        </Button>
-                                        <Button type="primary" danger onClick={handleAdd}>
-                                            <AiOutlinePlus className={style2.buttonIcon} />
-                                            Add Attribute
-                                        </Button>
-                                    </Col>
-                                )}
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-
-                {detailData?.hierarchyAttribueId && (
-                    <>
+               
+            > */}
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles3.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <DataTable {...TableProps} />
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    {/* <div className={style2.searchAndLabelAlign}> */}
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style2.subheading}>
+                                        Hierarchy Attribute Type
+                                    </Col>
+                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                        <Select className={style2.attributeSelet} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                            {attributeData?.map((item) => (
+                                                <Option value={item}>{item}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    {/* </div> */}
+                                </Row>
                             </Col>
+                            {detailData?.hierarchyAttributeType && (
+                                <Col className={styles3.addGroup} xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Button icon={<TfiReload />} className={style2.refreshBtn} onClick={handleReferesh} danger />
+                                    <Button icon={<PlusOutlined />} className={style2.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Attribute
+                                    </Button>
+                                </Col>
+                            )}
                         </Row>
-                    </>
-                )}
-            </Space>
-            <AddUpdateDrawer 
-                tableData={detailData?.hierarchyAttribute} 
-                setsaveclick={setsaveclick} 
-                setsaveandnewclick={setsaveandnewclick} 
-                selectedHierarchy={selectedHierarchy} 
-                onFinishFailed={onFinishFailed} 
-                onFinish={onFinish} 
-                setCheckFields={setCheckFields} 
-                setForceReset={setForceReset} 
-                setEditRow={setEditRow} 
-                editRow={editRow} 
-                showDrawer={showDrawer} 
-                setShowDrawer={setShowDrawer} 
-                saveandnewclick={saveandnewclick} 
-                formActionType={formActionType} 
+                    </div>
+                </Col>
+            </Row>
+
+            {detailData?.hierarchyAttributeType && (
+                <>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <DataTable {...TableProps} />
+                        </Col>
+                    </Row>
+                </>
+            )}
+            {/* </Space> */}
+            <AddUpdateDrawer
+                tableData={detailData?.hierarchyAttribute}
+                setsaveclick={setsaveclick}
+                setsaveandnewclick={setsaveandnewclick}
+                selectedHierarchy={selectedHierarchy}
+                onFinishFailed={onFinishFailed}
+                onFinish={onFinish}
+                setCheckFields={setCheckFields}
+                setForceReset={setForceReset}
+                setEditRow={setEditRow}
+                editRow={editRow}
+                showDrawer={showDrawer}
+                setShowDrawer={setShowDrawer}
+                saveandnewclick={saveandnewclick}
+                formActionType={formActionType}
                 handleEditView={handleEditView}
                 isReadOnly={isReadOnly}
                 setIsReadOnly={setIsReadOnly}
