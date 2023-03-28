@@ -3,7 +3,6 @@ import React from 'react';
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
-import { AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -23,17 +22,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Criticality Group Details';
     }
-
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            placement,
-        });
-    };
-
     const onClose = () => {
         form.resetFields();
         setSelectedRecord(null);
@@ -71,15 +59,11 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
     const removeItem = (name) => {
         const formList = form.getFieldsValue();
         const formAllowedTiming = formList?.allowedTimings;
-        console.log('🚀 ~ file: DrawerUtil.js:74 ~ removeItem ~ formAllowedTiming:', formAllowedTiming, name);
         const deletedItem = formAllowedTiming?.find((item, index) => index === name);
-        console.log('🚀 ~ file: DrawerUtil.js:75 ~ removeItem ~ deletedItem:', deletedItem, name);
-
         if (deletedItem && deletedItem?.id) {
             const savedAllowedTiming = selectedRecord?.allowedTimings;
             if (savedAllowedTiming) {
                 const saveDeletedItem = savedAllowedTiming?.find((item) => item?.id === deletedItem?.id);
-                console.log('🚀 ~ file: DrawerUtil.js:80 ~ removeItem ~ saveDeletedItem:', saveDeletedItem);
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
@@ -90,6 +74,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
             title={drawerTitle}
             className={style.drawerCriticalityGrp}
             width="520"
+            maskClosable={false}
             footer={
                 <>
                     <Row gutter={20}>
@@ -232,7 +217,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                                 },
                                                             ]}
                                                         >
-                                                            {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
                                                             <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>

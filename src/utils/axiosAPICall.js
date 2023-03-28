@@ -69,15 +69,12 @@ const baseAPICall = (params) => {
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
                     handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
-                    clearAllLocalStorage();
                 } else if (error.code) {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
-                        clearAllLocalStorage();
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        clearAllLocalStorage();
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
