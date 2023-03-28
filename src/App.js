@@ -33,6 +33,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
 
     const checkClassName = {
         success: styles.success,
+        warning: styles.warning,
         error: styles.error,
     };
 
