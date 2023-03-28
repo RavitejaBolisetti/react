@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Modal, Form, Switch, Space } from 'antd';
+import { Button, Col, Row, Input, Modal, Form, Switch, Space, Empty, ConfigProvider } from 'antd';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiEdit2 } from 'react-icons/fi';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { TfiReload } from 'react-icons/tfi';
+import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from '../QualificationMaster/QualificationMaster.module.css';
-import style from '../Common.module.css';
+import styles from 'pages/common/Common.module.css';
+import style from '../DrawerAndTable.module.css';
 import DataTable from 'utils/dataTable/DataTable';
 
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
@@ -67,7 +70,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [arrData, setArrData] = useState(qualificationData.data);
-    const [Searchdata, setSearchdata] = useState();
+    const [searchData, setSearchdata] = useState();
+    const [RefershData, setRefershData] = useState(false);
 
     const state = {
         button: 1,
@@ -97,23 +101,20 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
-            onFilter: (value, record) => record.qualificationCode.includes(value),
-            sortFn: (a, b) => a.code.localeCompare(b.code),
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
-            sortFn: (a, b) => a.name.localeCompare(b.name),
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+            render: (record, text) => {
+                <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>;
             },
         })
     );
@@ -122,26 +123,21 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             title: 'Action',
             sorter: false,
             render: (record) => {
-                return (
-                    <Space wrap>
-                        <FiEdit2 style={{ color: 'ff3e5b', cursor: 'pointer' }} onClick={() => handleUpdate(record)} />
-                    </Space>
-                );
+                return <Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)} />;
             },
         })
     );
     const tableProps = {
         isLoading: listShowLoading,
-        tableData: Searchdata,
+        tableData: searchData,
         tableColumn: tableColumn,
     };
 
     const onFinish = (values, e) => {
         if (state.button === 1) {
             const recordId = formData?.id || '';
-            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
-            let arrrData = [];
-            arrrData.push(data);
+            const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+
             const onSuccess = (res) => {
                 form.resetFields();
                 setForceFormReset(Math.random() * 10000);
@@ -158,7 +154,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             };
 
             const requestData = {
-                data: arrrData,
+                data: [data],
                 setIsLoading: listShowLoading,
                 userId,
                 onError,
@@ -169,9 +165,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
         if (state.button === 2) {
             const recordId = formData?.id || '';
-            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
-            let arrrData = [];
-            arrrData.push(data);
+            const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+
             const onSuccess = (res) => {
                 if (res?.data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
@@ -186,7 +181,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             };
 
             const requestData = {
-                data: arrrData,
+                data: [data],
                 setIsLoading: listShowLoading,
                 userId,
                 onError,
@@ -219,6 +214,11 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         setIsReadOnly(false);
         forceUpdate();
     };
+
+    const handleReferesh = () => {
+        setRefershData(!RefershData);
+    };
+
     const onChange = (sorter, filters) => {
         form.resetFields();
     };
@@ -255,30 +255,84 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     return (
         <>
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    <Search
-                        placeholder="Search"
-                        allowClear
-                        style={{
-                            width: 200,
-                        }}
-                        onSearch={onChangeHandle}
-                        onChange={onChangeHandle2}
-                    />
-                </Col>
-                <Col className={styles.addQualification} xs={16} sm={16} md={16} lg={16} xl={16}>
-                    <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} />
-                        Add Qualification
-                    </Button>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    <div className={style.searchAndLabelAlign}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
+                                            Qualification List
+                                        </Col>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                    // marginLeft: -40,
+                                                    // paddingBottom: '5px',
+                                                }}
+                                                allowClear
+                                                onSearch={onChangeHandle}
+                                                onChange={onChangeHandle2}
+                                            />
+                                        </Col>
+                                    </div>
+                                </Row>
+                            </Col>
+                            {/* { searchKey && searchData?.length ? ( */}
+                            {qualificationData?.length ? (
+                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
+
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Qualification
+                                    </Button>
+                                </Col>
+                            ) : (
+                                ''
+                            )}
+                        </Row>
+                    </div>
                 </Col>
             </Row>
-            <Form preserve={false} form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <DrawerUtil state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} drawerTitle={drawerTitle} />
-            </Form>
+            <DrawerUtil onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} drawerTitle={drawerTitle} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DataTable {...tableProps} onChange={onChange} />
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    !qualificationData?.length ? (
+                                        <span>
+                                            No records found. Please add new parameter <br />
+                                            using below button
+                                        </span>
+                                    ) : (
+                                        <span> No records found.</span>
+                                    )
+                                }
+                            >
+                                {!qualificationData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Qualification
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
+                            </Empty>
+                        )}
+                    >
+                        <DataTable tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                    </ConfigProvider>
                 </Col>
             </Row>
         </>
