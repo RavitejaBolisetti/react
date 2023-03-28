@@ -70,22 +70,18 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-//searching in the menu
 
 const LeftSideBarMain = (props) => {
 
     const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
     const location = useLocation();
-    const pagePath = location.pathname;
+    //const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
-    const [FilterMenudata, setFilterMenudata] = useState(menuData);
+    //const [FilterMenudata, setFilterMenudata] = useState(menuData);
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    //  let expandedkeys = [];
-    const [mainKeys, setmainKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -111,22 +107,10 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
-
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', changeTheme);
         setTheme(changeTheme);
-    };
-    const onSearch = (e) => {
-        // if (e.target.value === '') {
-        //     setmainKeys([]);
-        // } else if (MenuSearch(e.target.value) === true) {
-        //     console.log('we Found the Menu');
-        //     return;
-        // }
-        setFilter(e);
-        setSearchValue(e.target.value);
     };
 
     const onSubmit = (value, type) => {
@@ -137,67 +121,9 @@ const LeftSideBarMain = (props) => {
         setCurrent(e.key);
     };
 
-
-    // let values = [];
-
-    // const Saveopenkeys = (keys) => {
-    //     Object.entries(keys).map(([keyname, value]) => {
-    //         console.log(value);
-    //         values.push(value);
-    //     });
-    // };
-    const rootSubmenuKeys = menuData.map((e) => {
-        return e.menuId;
-    });
-
-    // function MenuSearch(target) {
-    //     // let flag = true;
-    //     setOpenKeys([]);
-    //     function subMenuSearch(TopMenu) {
-    //         for (let i = 0; i < TopMenu.length; i++) {
-    //             // console.log(TopMenu[i].menuTitle)
-    //             expandedkeys.push(TopMenu[i].menuId);
-    //             let title = TopMenu[i].menuTitle;
-    //             let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
-    //             if (strTitle.toLowerCase() === target.toLowerCase()) {
-    //                 // expanded.push(expandedkeys);
-    //                 // setOpenKeys(expandedkeys?.toString());
-    //                 // console.log(expandedkeys);
-
-    //                 Saveopenkeys(expandedkeys);
-    //                 // openKeys=>{
-    //                 //     expandedkeys?.map((i)=>{ return i.toString()})
-    //                 // }
-    //                 //setexpandedKeys(expanded[0]);
-    //             } else if (TopMenu[i].subMenu) {
-    //                 subMenuSearch(TopMenu[i].subMenu);
-    //             }
-
-    //             expandedkeys.pop();
-    //         }
-    //     }
-    //     //setexpandedKeys(mainkeys)
-    //     // console.log(expanded);
-    //     subMenuSearch(menuData);
-    //     setmainKeys(values);
-    // }
-
-    const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
-    const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
-    //   console.log(menuData);
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
     };
-
-    // const onExpand = (keys) => {
-    //     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    //     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-    //         setOpenKeys(keys);
-    //     } else {
-    //         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    //     }
-    //     setAutoExpandParent(false)
-    // };
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
@@ -217,15 +143,7 @@ const LeftSideBarMain = (props) => {
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
 
-    // useEffect(() => {
-    //     setOpenKeys(mainKeys);
-    // }, [mainKeys]);
-
-
-
     /* new implementatoion */
-    const { treeData, fieldNames, isOpenInModal } = props;
-    const { isTreeViewVisible, handleTreeViewVisiblity } = props;
 
     const customData = [
         {
@@ -415,11 +333,6 @@ const LeftSideBarMain = (props) => {
         }
     ]
 
-
-    // const [expandedKeys, setExpandedKeys] = useState([]);
-    // const [searchValue, setSearchValue] = useState('');
-    // const [autoExpandParent, setAutoExpandParent] = useState(true);
-
     const onExpand = (newExpandedKeys) => {
         setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(false);
@@ -429,13 +342,8 @@ const LeftSideBarMain = (props) => {
     const dataList = [];
     const generateList = (data) => {
 
-        //console.log(data,'DataListInitial')
-
         for (let i = 0; i < data.length; i++) {
             const node = data[i];
-
-            // console.log(node,'SingleValue')
-
             dataList.push({
                 id: node?.menuId,
                 title: node?.menuTitle,
@@ -451,16 +359,12 @@ const LeftSideBarMain = (props) => {
 
 
     const getParentKey = (key, tree) => {
-
-        //console.log( key,'KEYLEFTT', tree,'DATALEFTT' )
-
         let parentKey;
         for (let i = 0; i < tree.length; i++) {
             const node = tree[i];
 
             if (node?.subMenu) {
                 if (node?.subMenu.some((item) => item?.menuId === key)) {
-                    // console.log("INSIDE")
                     parentKey = node?.menuId;
                 } else if (getParentKey(key, node?.subMenu)) {
                     parentKey = getParentKey(key, node?.subMenu);
@@ -494,11 +398,9 @@ const LeftSideBarMain = (props) => {
 
     // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
-
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
             data.map((item) => {
-                //console.log('🚀 ~ file: LeftSideBar.js:224 ~ data.map ~ item:', item);
                 const strTitle = item?.menuTitle;
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);
