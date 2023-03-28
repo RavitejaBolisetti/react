@@ -345,9 +345,9 @@
     color: #342C2C;
 }
 
-:global .ant-modal .ant-modal-body {
+/* :global .ant-modal .ant-modal-body {
     padding-top: 16px;
-}
+} */
 
 :global .ant-modal .ant-modal-close:hover {
     color: #ff3e5b;
