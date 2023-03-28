@@ -737,10 +737,10 @@ select.form-control:focus::-ms-value {
     background-color: transparent;
 }
 
-:global .ant-notification {
+/* :global .ant-notification {
     top: 16px !important;
     margin-inline-end: 16px !important;
-}
+} */
 
 :global .ant-notification-notice {
     width: 395px !important;
