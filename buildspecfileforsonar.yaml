@@ -21,7 +21,7 @@ phases:
         commands:
             - echo Build started on `date`
             - echo Compiling the dist folder
-            #- npm run test -- --coverage . --watchAll=false
+            - npm run test --coverage --watchAll=false
             - ls -la
             - cd build
             - ls -la
