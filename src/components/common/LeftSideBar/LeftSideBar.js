@@ -76,8 +76,9 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [filterMenuList, setFilterMenuList] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [searchValue, setSearchValue] = useState('');
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -128,14 +129,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         let parentKey;
         for (let i = 0; i < tree.length; i++) {
             const node = tree[i];
-
             if (node?.subMenu) {
                 if (node?.subMenu.some((item) => item?.menuId === key)) {
-                    // console.log("INSIDE")
                     parentKey = node?.menuId;
                 } else if (getParentKey(key, node?.subMenu)) {
                     parentKey = getParentKey(key, node?.subMenu);
                 }
+            } else if (node?.menuId === key) {
+                parentKey = node?.menuId;
             }
         }
         return parentKey;
@@ -147,6 +148,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
+                    console.log('🚀 ~ file: LeftSideBar.js:154 ~ .map ~ item?.id:', item?.id);
                     return getParentKey(item?.id, menuData);
                 }
                 return null;
@@ -205,7 +207,9 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             {afterStr}
                         </span>
                     ) : (
-                        <span>{strTitle}</span>
+                        <span>
+                            <span>{strTitle}</span>
+                        </span>
                     );
                 if (item?.subMenu) {
                     return {
@@ -223,6 +227,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     }, [searchValue, menuData]);
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
+
+    const onExpand = (newExpandedKeys) => {
+        setExpandedKeys(newExpandedKeys);
+        setAutoExpandParent(false);
+        setOpenKeys(newExpandedKeys);
+    };
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -247,8 +257,10 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            defaultSelectedKeys={[defaultSelectedKeys]}
-                            defaultOpenKeys={defaultOpenKeys}
+                            // defaultSelectedKeys={[defaultSelectedKeys]}
+                            // defaultOpenKeys={defaultOpenKeys}
+                            openKeys={openKeys}
+                            onOpenChange={onExpand}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
@@ -276,23 +288,25 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    {collapsed ? (
-                        theme === 'light' ? (
-                            <BsSun size={30} className={styles.sun} />
+                    <div className={styles.changeThemeBorder}>
+                        {collapsed ? (
+                            theme === 'light' ? (
+                                <BsSun size={30} className={styles.sun} />
+                            ) : (
+                                <BsMoon size={30} className={styles.moon} />
+                            )
                         ) : (
-                            <BsMoon size={30} className={styles.moon} />
-                        )
-                    ) : (
-                        <>
-                            <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
-                                <BsSun size={30} /> Light Mode
-                            </Button>
+                            <>
+                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                    <BsSun size={30} /> Light Mode
+                                </Button>
 
-                            <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                <BsMoon size={30} /> Dark Mode
-                            </Button>
-                        </>
-                    )}
+                                <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                    <BsMoon size={30} /> Dark Mode
+                                </Button>
+                            </>
+                        )}
+                    </div>
                 </div>
             </Sider>
         </>
