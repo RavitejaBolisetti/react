@@ -76,14 +76,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [filterMenuList, setFilterMenuList] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [searchValue, setSearchValue] = useState('');
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
 
     useEffect(() => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -205,7 +206,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             {afterStr}
                         </span>
                     ) : (
-                        <span>{strTitle}</span>
+                        <span><span>{strTitle}</span></span>
                     );
                 if (item?.subMenu) {
                     return {
@@ -223,6 +224,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     }, [searchValue, menuData]);
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
+
+    const onExpand = (newExpandedKeys) => {
+        setExpandedKeys(newExpandedKeys);
+        setAutoExpandParent(false);
+        setOpenKeys(newExpandedKeys);
+    };
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -247,8 +254,10 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            defaultSelectedKeys={[defaultSelectedKeys]}
-                            defaultOpenKeys={defaultOpenKeys}
+                            // defaultSelectedKeys={[defaultSelectedKeys]}
+                            // defaultOpenKeys={defaultOpenKeys}
+                            openKeys={openKeys}
+                            onOpenChange={onExpand}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
