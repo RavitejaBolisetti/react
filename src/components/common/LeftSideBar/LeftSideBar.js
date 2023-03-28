@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 //searching in the menu
 
 const LeftSideBarMain = (props) => {
-   
+
     const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
     const location = useLocation();
     const pagePath = location.pathname;
@@ -84,7 +84,7 @@ const LeftSideBarMain = (props) => {
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-  //  let expandedkeys = [];
+    //  let expandedkeys = [];
     const [mainKeys, setmainKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
@@ -94,7 +94,7 @@ const LeftSideBarMain = (props) => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -223,7 +223,7 @@ const LeftSideBarMain = (props) => {
 
 
     /* new implementatoion */
-    const {  treeData, fieldNames, isOpenInModal } = props;
+    const { treeData, fieldNames, isOpenInModal } = props;
     const { isTreeViewVisible, handleTreeViewVisiblity } = props;
 
     const customData = [
@@ -412,10 +412,10 @@ const LeftSideBarMain = (props) => {
                 }
             ]
         }
-        ]
-    
+    ]
 
-   // const [expandedKeys, setExpandedKeys] = useState([]);
+
+    // const [expandedKeys, setExpandedKeys] = useState([]);
     // const [searchValue, setSearchValue] = useState('');
     // const [autoExpandParent, setAutoExpandParent] = useState(true);
 
@@ -432,7 +432,7 @@ const LeftSideBarMain = (props) => {
         for (let i = 0; i < data.length; i++) {
             const node = data[i];
 
-           // console.log(node,'SingleValue')
+            // console.log(node,'SingleValue')
 
             dataList.push({
                 id: node?.menuId,
@@ -446,8 +446,8 @@ const LeftSideBarMain = (props) => {
 
     customData && generateList(customData);
 
-    
- 
+
+
     const getParentKey = (key, tree) => {
 
         //console.log( key,'KEYLEFTT', tree,'DATALEFTT' )
@@ -455,10 +455,10 @@ const LeftSideBarMain = (props) => {
         let parentKey;
         for (let i = 0; i < tree.length; i++) {
             const node = tree[i];
-         
+
             if (node?.subMenu) {
                 if (node?.subMenu.some((item) => item?.menuId === key)) {
-                   // console.log("INSIDE")
+                    // console.log("INSIDE")
                     parentKey = node?.menuId;
                 } else if (getParentKey(key, node?.subMenu)) {
                     parentKey = getParentKey(key, node?.subMenu);
@@ -471,24 +471,24 @@ const LeftSideBarMain = (props) => {
     const onChange = (e) => {
         const { value } = e.target;
 
-         const newExpandedKeys = dataList
+        const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
                     return getParentKey(item?.id, customData);
                 }
                 return null;
             })
-            .filter((item, i, self) =>  item && self?.indexOf(item) === i)
-            
+            .filter((item, i, self) => item && self?.indexOf(item) === i)
 
-            console.log(newExpandedKeys,"LEFTOPENKEYS")
-        
+
+        console.log(newExpandedKeys, "LEFTOPENKEYS")
+
         setOpenKeys(value ? newExpandedKeys : []);
         setSearchValue(value);
         setAutoExpandParent(true);
     };
 
-  // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
+    // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
 
     const finalTreeData = useMemo(() => {
@@ -501,9 +501,9 @@ const LeftSideBarMain = (props) => {
                 const afterStr = strTitle?.slice(index + searchValue.length);
                 const menuTitle =
                     index > -1 ? (
-                        <span>
+                        <span className={styles.searchMenuContainer}>
                             {beforeStr}
-                            <span className="site-tree-search-value" style={{ color: 'red' }}>
+                            <span className={styles.searchMenuTitle}>
                                 {searchValue}
                             </span>
                             {afterStr}
@@ -526,7 +526,7 @@ const LeftSideBarMain = (props) => {
         return loop(customData);
     }, [searchValue, customData]);
 
-    console.log(expandedKeys,"KEYS")
+    console.log(expandedKeys, "KEYS")
 
     return (
         <>
@@ -561,16 +561,16 @@ const LeftSideBarMain = (props) => {
                             //defaultSelectedKeys={[defaultSelectedKeys]}
                             // defaultOpenKeys={defaultOpenKeys}
                             openKeys={openKeys}
-                           // onExpand={onExpand}
+                            // onExpand={onExpand}
                             onOpenChange={onExpand}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
-                            // expandedKeys={expandedKeys}
-                            // selectedKeys={selectedTreeKey}
-                            // onSelect={handleTreeViewClick}
-                            // autoExpandParent={autoExpandParent}
+                        // expandedKeys={expandedKeys}
+                        // selectedKeys={selectedTreeKey}
+                        // onSelect={handleTreeViewClick}
+                        // autoExpandParent={autoExpandParent}
                         >
 
                             <Row>

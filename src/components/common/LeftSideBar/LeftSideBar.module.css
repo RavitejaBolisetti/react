@@ -230,7 +230,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
   border-inline-end: none;
   overflow-y: scroll;
-  max-height: 80vh;
+  max-height: 74vh;
   /* padding: 0px 16px; */
   padding-left: 14px;
   padding-right: 14px;
@@ -460,7 +460,8 @@
 :global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 8px;
-  vertical-align: sub;
+  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
 }
 
 /* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
@@ -476,6 +477,22 @@
 /* .subMenuItem {
   color: #0458f7 !important;
 } */
+
+.searchMenuContainer {
+  display: inline-flex;
+  margin-top: -5px;
+}
+
+.searchMenuTitle {
+  color: #ea2929;
+  padding-right: 0 !important;
+}
+
+.leftMenuBox :global .ant-menu-light .ant-menu-item a,
+.leftMenuBox :global .ant-menu-light .ant-menu-item a:hover {
+  color: inherit;
+  display: flex;
+}
 
 @media (max-width: 768px) {
   .leftMenuBox {
