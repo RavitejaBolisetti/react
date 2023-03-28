@@ -42,6 +42,6 @@ cache:
 reports:
     jest_reports:
         files:
-            - 'coverage/lcov.info'
-        file-format: 'JUNITXML'
+            - 'coverage/clover.xml'
+        file-format: 'CLOVERXML'
         base-directory: 'coverage'
