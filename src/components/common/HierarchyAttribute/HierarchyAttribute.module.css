@@ -222,3 +222,8 @@
     margin-inline-end: 24px;
 }
 /* // // // */
+/* THIS WILL BE HOVER COLOR */
+
+/* :global .ant-input:hover {
+    border-color: #0B0B0C;
+} */

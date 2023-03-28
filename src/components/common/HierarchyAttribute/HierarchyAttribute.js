@@ -115,7 +115,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             description,
             className,
             placement,
-            duration:500000,
         });
     };
 
@@ -318,7 +317,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                 </Col>
             </Row>
 
-            {detailData?.hierarchyAttributeType && (
+            {/* {detailData?.hierarchyAttributeType && ( */}
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -326,7 +325,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                         </Col>
                     </Row>
                 </>
-            )}
+            {/* )} */}
             {/* </Space> */}
             <AddUpdateDrawer
                 tableData={detailData?.hierarchyAttribute}
