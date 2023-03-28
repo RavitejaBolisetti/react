@@ -80,7 +80,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -125,7 +125,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
-            const isParentMenu = parentMenuId === 'Web';
+            const isParentMenu = false; // parentMenuId === 'Web';
 
             return subMenu?.length ? (
                 <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
@@ -176,7 +176,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                     <span className={styles.menuIcon}>
                                         <HomeIcon />
                                     </span>
-                                    HOME
+                                    Home
                                 </Link>
                             </Item>
                             {prepareMenuItem(menuData)}

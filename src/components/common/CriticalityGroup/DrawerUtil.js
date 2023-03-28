@@ -250,24 +250,24 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                             danger
                                                             ghost
                                                             onClick={() => {
-                                                                // removeItem(name);
-                                                                // remove(name);
-                                                                confirm({
-                                                                    title: 'Allowed Timing',
-                                                                    icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
-                                                                    content: 'Are you sure you want to Delete?',
-                                                                    okText: 'Yes',
-                                                                    okType: 'danger',
-                                                                    cancelText: 'No',
-                                                                    wrapClassName: styles.confirmModal,
-                                                                    centered: true,
-                                                                    closable: true,
-                                                                    onOk() {
-                                                                        remove(name);
-                                                                        removeItem(name);
-                                                                        informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
-                                                                    },
-                                                                });
+                                                                removeItem(name);
+                                                                remove(name);
+                                                                // confirm({
+                                                                //     title: 'Allowed Timing',
+                                                                //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
+                                                                //     content: 'Are you sure you want to Delete?',
+                                                                //     okText: 'Yes',
+                                                                //     okType: 'danger',
+                                                                //     cancelText: 'No',
+                                                                //     wrapClassName: styles.confirmModal,
+                                                                //     centered: true,
+                                                                //     closable: true,
+                                                                //     onOk() {
+                                                                //         remove(name);
+                                                                //         removeItem(name);
+                                                                //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                                //     },
+                                                                // });
                                                             }}
                                                         />
                                                     </Col>

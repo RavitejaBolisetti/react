@@ -182,8 +182,19 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
+
     const onSearch = (value) => console.log(value);
     const isDashboard = pagePath === routing.ROUTING_DASHBOARD;
+
+    let formatPhoneNumber = (mobileNo) => {
+        let cleaned = ('' + mobileNo).replace(/\D/g, '');
+        let match = cleaned.match(/^(\d{3})(\d{4})(\d{3})$/);
+
+        if (match) {
+            return '+91-' + match[1] + '  ' + match[2] + ' ' + match[3];
+        }
+        return null;
+    };
     return (
         <>
             {!isLoading ? (
@@ -271,7 +282,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{fullName}</div>
-                                                    <span className={styles.userServiceArea}>{mobileNo}</span>
+                                                    <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span>
                                                 </div>
                                                 <div className={styles.dropdownArrow}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
