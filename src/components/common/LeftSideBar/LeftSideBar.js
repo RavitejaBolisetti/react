@@ -83,7 +83,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -276,23 +276,25 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    {collapsed ? (
-                        theme === 'light' ? (
-                            <BsSun size={30} className={styles.sun} />
+                    <div className={styles.changeThemeBorder}>
+                        {collapsed ? (
+                            theme === 'light' ? (
+                                <BsSun size={30} className={styles.sun} />
+                            ) : (
+                                <BsMoon size={30} className={styles.moon} />
+                            )
                         ) : (
-                            <BsMoon size={30} className={styles.moon} />
-                        )
-                    ) : (
-                        <>
-                            <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
-                                <BsSun size={30} /> Light Mode
-                            </Button>
+                            <>
+                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                    <BsSun size={30} /> Light Mode
+                                </Button>
 
-                            <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                <BsMoon size={30} /> Dark Mode
-                            </Button>
-                        </>
-                    )}
+                                <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                    <BsMoon size={30} /> Dark Mode
+                                </Button>
+                            </>
+                        )}
+                    </div>
                 </div>
             </Sider>
         </>
