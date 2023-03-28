@@ -14,7 +14,7 @@ import styles3 from 'pages/common/Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-
+import { showGlobalNotification } from 'store/actions/notification';
 import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 
@@ -53,12 +53,13 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterActions.fetchDetailList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
+export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
@@ -127,7 +128,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     // };
 
     const onError = (message) => {
-        informationModalBox({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
+        showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
     };
 
     const handleAdd = () => {
@@ -241,10 +242,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             setFormBtnDisable(false);
             if (saveclick === true) {
                 setShowDrawer(false);
-                informationModalBox({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'topRight' });
+                showGlobalNotification({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'topRight' });
             } else {
                 setShowDrawer(true);
-                informationModalBox({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'bottomRight' });
+                showGlobalNotification({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'bottomRight' });
             }
             forceUpdate();
         };
