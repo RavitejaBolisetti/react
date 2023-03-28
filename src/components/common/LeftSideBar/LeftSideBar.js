@@ -129,14 +129,14 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         let parentKey;
         for (let i = 0; i < tree.length; i++) {
             const node = tree[i];
-
             if (node?.subMenu) {
                 if (node?.subMenu.some((item) => item?.menuId === key)) {
-                    // console.log("INSIDE")
                     parentKey = node?.menuId;
                 } else if (getParentKey(key, node?.subMenu)) {
                     parentKey = getParentKey(key, node?.subMenu);
                 }
+            } else if (node?.menuId === key) {
+                parentKey = node?.menuId;
             }
         }
         return parentKey;
@@ -148,6 +148,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
+                    console.log('🚀 ~ file: LeftSideBar.js:154 ~ .map ~ item?.id:', item?.id);
                     return getParentKey(item?.id, menuData);
                 }
                 return null;
@@ -206,7 +207,9 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             {afterStr}
                         </span>
                     ) : (
-                        <span><span>{strTitle}</span></span>
+                        <span>
+                            <span>{strTitle}</span>
+                        </span>
                     );
                 if (item?.subMenu) {
                     return {
