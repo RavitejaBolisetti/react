@@ -2,5 +2,5 @@ projectKey=DMS2
 serverUrl=http://localhost:8094
 serverVersion=9.9.0.65466
 dashboardUrl=http://localhost:8094/dashboard?id=DMS2
-ceTaskId=AYciuckfcWBS6NI6mVW_
-ceTaskUrl=http://localhost:8094/api/ce/task?id=AYciuckfcWBS6NI6mVW_
+ceTaskId=AYcogVKMcWBS6NI6mVXF
+ceTaskUrl=http://localhost:8094/api/ce/task?id=AYcogVKMcWBS6NI6mVXF
