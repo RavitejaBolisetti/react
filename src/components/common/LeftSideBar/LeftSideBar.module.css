@@ -382,19 +382,22 @@
 
 .changeTheme {
   display: flex;
-  align-items: center;
-  font-size: 16px;
-  bottom: 16px;
+  /* align-items: center; */
+  /* font-size: 16px; */
   position: absolute;
   color: #ea2929 !important;
-  cursor: pointer;
+  /* cursor: pointer; */
   background: #F2F2F2;
   width: 100%;
   bottom: 0;
-  padding: 10px 5px;
+  padding: 10px 6px;
   -webkit-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
   box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
+}
+
+.changeTheme button>span {
+  font-size: 12px;
 }
 
 .lightTheme,
@@ -402,7 +405,9 @@
 .darkTheme,
 .darkThemeActive {
   width: 50%;
-  margin: 0px !important;
+  border: 1px solid #FF3E5B !important;
+  margin-right: 5px !important;
+  margin-bottom: 0 !important;
   padding: 0px !important;
   display: flex;
   align-items: center;
@@ -410,7 +415,8 @@
 
 .lightTheme,
 .darkTheme {
-  border: none !important;
+  /* border: none !important; */
+  border: 1px solid transparent !important;
   color: #000 !important;
 }
 
@@ -418,13 +424,26 @@
   margin: 0px !important;
 }
 
+.changeTheme :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover,
+.changeTheme :global .ant-btn-default.ant-btn-dangerous:not(:disabled):active {
+  background-color: transparent;
+  border: 1px solid #FF3E5B !important;
+  color: #FF3E5B !important;
+}
+
+.changeTheme :global .ant-btn-default.ant-btn-dangerous {
+  box-shadow: none;
+  /* border-color: transparent !important; */
+}
 
 .changeTheme .sun {
-  background: #fff;
+  /* background: #fff; */
+  cursor: pointer;
 }
 
 .changeTheme .moon {
-  background: #000;
+  /* background: #000; */
+  cursor: pointer;
 }
 
 .changeTheme svg {

@@ -125,7 +125,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
-            const isParentMenu = parentMenuId === 'Web';
+            const isParentMenu = false; // parentMenuId === 'Web';
 
             return subMenu?.length ? (
                 <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
@@ -176,7 +176,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                     <span className={styles.menuIcon}>
                                         <HomeIcon />
                                     </span>
-                                    HOME
+                                    Home
                                 </Link>
                             </Item>
                             {prepareMenuItem(menuData)}
@@ -189,7 +189,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
-                        paddingLeft: isMobile ? (collapsed ? '0px' : '14px') : '16px',
+                        paddingLeft: collapsed ? '14px' : '10px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >

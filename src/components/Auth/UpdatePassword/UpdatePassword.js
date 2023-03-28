@@ -58,16 +58,12 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preLoginData]);
 
-    const onFinish = (errorInfo) => {
-        // form.validateFields().then((values) => {});
-    };
-
-    const onFinishFailed = (values) => {
-        if (values.errorFields.length === 0) {
-            const data = { ...values.values };
+    const onFinish = (values) => {
+        if (values) {
+            const data = { ...values };
             const onSuccess = (res) => {
                 showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
-                navigate(ROUTING_LOGIN);             
+                navigate(ROUTING_LOGIN);
                 form.resetFields();
                 doLogout();
             };
@@ -88,6 +84,10 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
 
             saveData(requestData);
         }
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('🚀 ~ file: UpdatePassword.js:62 ~ onFinishFailed ~ errorInfo:', errorInfo);
     };
 
     const validateToNextPassword = (rule, value, callback) => {
@@ -147,14 +147,14 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password'), { validator: validateToNextPassword }]} className={`${styles.inputBox}`}>
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password')]} className={`${styles.inputBox}`}>
                                                             <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="New password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('Confirm password'), validateFieldsPassword('Confirm Password'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
+                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('Confirm password'), validateFieldsPassword('Confirm Password')]} className={styles.inputBox}>
                                                             <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="Confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>

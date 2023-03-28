@@ -22,15 +22,14 @@ headerDataActions.listShowLoading = (isLoading) => ({
 });
 
 headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data } = params;
+    const { setIsLoading, onError, data } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
 
     const onSuccess = (res) => {
         if (res?.data) {
             dispatch(receiveData(res?.data));
         } else {
-            onError();
+            onError('Internal Error, Please try again');
         }
     };
 
@@ -43,7 +42,7 @@ headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, u
         userId,
         onSuccess,
         onError,
-        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 
 import { AuthenticatedUserPage } from 'pages/routing/AuthenticatedUserPage';
 import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';
-import { ROUTING_DASHBOARD, ROUTING_FORGOT_PASSWORD, ROUTING_LOGIN, ROUTING_SSO_LOGIN, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
+import { ROUTING_DASHBOARD, ROUTING_FORGOT_PASSWORD, ROUTING_HOME, ROUTING_LOGIN, ROUTING_SSO_LOGIN, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
 import { LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, LOCAL_STORAGE_KEY_AUTH_USER_ID } from 'store/actions/auth';
 
 import NotificationContext from 'App';
@@ -37,7 +37,9 @@ const MainPageBase = ({ notification }) => {
     const isLoggedIn = !!(localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN) && localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID));
 
     useEffect(() => {
-        if (!isLoggedIn && pagePath === ROUTING_SSO_LOGIN) {
+        if (pagePath === ROUTING_HOME) {
+            navigate(ROUTING_HOME);
+        } else if (!isLoggedIn && pagePath === ROUTING_SSO_LOGIN) {
             navigate(ROUTING_SSO_LOGIN);
         } else if (!isLoggedIn && pagePath === ROUTING_UPDATE_PASSWORD) {
             navigate(ROUTING_UPDATE_PASSWORD);
@@ -51,7 +53,6 @@ const MainPageBase = ({ notification }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
 
-    console.log('🚀 ~ file: MainPage.js:57 ~ useEffect ~ notification:', notification);
     useEffect(() => {
         if (notification?.visible) {
             informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message });
