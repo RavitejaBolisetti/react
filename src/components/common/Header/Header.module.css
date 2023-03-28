@@ -31,10 +31,25 @@
 .userText {
     float: right;
     padding-top: 16px;
-    color: #342C2C;
+    color: #0B0B0C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
+}
+
+.userText .userName {
+    max-width: 112px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dropdownArrow {
+    padding: 80%;
+}
+
+.dropdownArrow .navLink {
+    color: #FF3E5B !important;
 }
 
 .bellSkeleton {
@@ -66,6 +81,12 @@
     font-weight: 700;
     line-height: 24px;
 }
+
+/* .userName {
+    max-width: 150px;
+    text-align: right;
+    text-overflow: ellipsis;
+} */
 
 .dealerLocation {
     color: #FF3E5B;
@@ -100,6 +121,17 @@
     font-size: 12px;
 }
 
+.userText .userServiceArea {
+    color: #858585;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
+    padding-left: 8px;
+}
+
 .navLink {
     color: #342C2C;
     padding: 5px;
@@ -131,23 +163,22 @@
 }
 
 .navbarExpand .navbarNav .navLink {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 14px;
 }
 
-:global .ant-badge .ant-badge-count {
+.navLink :global .ant-badge .ant-badge-count {
     color: #fff;
     background-color: #ff3e5b;
     right: 5px;
     top: 4px;
 }
 
-
 .helpLineText {
     display: inline-block;
     font-size: 12px;
     line-height: 16px;
-    padding-left: 5px;
+    /* padding-left: 5px; */
     margin-left: 4px;
     text-align: left;
     font-weight: 700;
@@ -196,7 +227,12 @@
 }
 
 :global .ant-dropdown {
-    width: 160px;
+    width: 170px;
+}
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon {
+    padding-right: 8px;
 }
 
 :global .ant-dropdown .ant-dropdown-menu,
@@ -221,9 +257,9 @@
     color: #ff3e5b !important;
 } */
 
-.welcomeUser .userServiceArea {
+/* .welcomeUser .userServiceArea {
     float: right;
-}
+} */
 
 .headerRight :global .ant-btn-default {
     background-color: #ffffff;

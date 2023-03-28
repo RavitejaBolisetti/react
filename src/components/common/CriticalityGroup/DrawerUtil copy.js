@@ -3,6 +3,7 @@ import React from 'react';
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
+import { AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -12,8 +13,9 @@ import style from './criticatiltyGroup.module.css';
 
 const { confirm } = Modal;
 
-const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ isDataLoaded, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
+
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
@@ -22,6 +24,17 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Criticality Group Details';
     }
+
+    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
+        alertNotification.open({
+            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
+            message,
+            description,
+            className,
+            placement,
+        });
+    };
+
     const onClose = () => {
         form.resetFields();
         setSelectedRecord(null);
@@ -56,30 +69,11 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
         setFormBtnDisable(true);
     };
 
-    const removeItem = (name) => {
-        const formList = form.getFieldsValue();
-        const formAllowedTiming = formList?.allowedTimings;
-        const deletedItem = formAllowedTiming?.find((item, index) => index === name);
-        if (deletedItem && deletedItem?.id) {
-            const savedAllowedTiming = selectedRecord?.allowedTimings;
-            if (savedAllowedTiming) {
-                const saveDeletedItem = savedAllowedTiming?.find((item) => item?.id === deletedItem?.id);
-                saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
-            }
-        }
-    };
-
-    const validatedDuplicateTime = (field) => (rule, value) => {
-        const overlapData = checkOverlap();
-        return field && overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.[field] ? Promise.reject('Time overlaps with other time') : Promise.resolve();
-    };
-
     return (
         <Drawer
             title={drawerTitle}
             className={style.drawerCriticalityGrp}
             width="520"
-            maskClosable={false}
             footer={
                 <>
                     <Row gutter={20}>
@@ -90,14 +84,14 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             {saveBtn ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                <Button loading={!isDataLoaded} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
                                 </Button>
                             ) : (
                                 ''
                             )}
                             {saveAndSaveNew ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                <Button loading={!isDataLoaded} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Save & Add New
                                 </Button>
                             ) : (
@@ -121,8 +115,8 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             <Form form={form} id="myForm" layout="vertical" colon={false} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" maxLength={6} rules={[validateRequiredInputField('Criticality Group Code'), { max: 6, message: 'Code must be 6 characters long.' }]}>
+                            <Input placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -190,9 +184,15 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                             {...restField}
                                                             name={[name, 'timeSlotFrom']}
                                                             rules={[
-                                                                validateRequiredInputField('Start Time'),
                                                                 {
-                                                                    validator: validatedDuplicateTime('timeSlotFrom'),
+                                                                    required: true,
+                                                                    message: 'Missing Start Time',
+                                                                },
+                                                                {
+                                                                    validator: (rule, value) => {
+                                                                        const overlapData = checkOverlap();
+                                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve();
+                                                                    },
                                                                 },
                                                             ]}
                                                         >
@@ -204,19 +204,23 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                             {...restField}
                                                             name={[name, 'timeSlotTo']}
                                                             rules={[
-                                                                validateRequiredInputField('End Time'),
                                                                 {
-                                                                    validator: validatedDuplicateTime('timeSlotTo'),
+                                                                    required: true,
+                                                                    message: 'Missing End Time',
+                                                                },
+                                                                {
+                                                                    validator: (rule, value) => {
+                                                                        const overlapData = checkOverlap();
+                                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve();
+                                                                    },
                                                                 },
                                                             ]}
                                                         >
+                                                            {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
                                                             <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
                                                     <Form.Item hidden {...restField} name={[name, 'id']}>
-                                                        <Input />
-                                                    </Form.Item>
-                                                    <Form.Item hidden {...restField} name={[name, 'isDeleted']} initialValue="N">
                                                         <Input />
                                                     </Form.Item>
                                                     <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
@@ -227,25 +231,19 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                             danger
                                                             ghost
                                                             onClick={() => {
-                                                                removeItem(name);
-                                                                remove(name);
-                                                                showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
-                                                                // confirm({
-                                                                //     title: 'Allowed Timing',
-                                                                //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
-                                                                //     content: 'Are you sure you want to Delete?',
-                                                                //     okText: 'Yes',
-                                                                //     okType: 'danger',
-                                                                //     cancelText: 'No',
-                                                                //     wrapClassName: styles.confirmModal,
-                                                                //     centered: true,
-                                                                //     closable: true,
-                                                                //     onOk() {
-                                                                //         remove(name);
-                                                                //         removeItem(name);
-                                                                //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
-                                                                //     },
-                                                                // });
+                                                                confirm({
+                                                                    title: 'Allowed Timing',
+                                                                    icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
+                                                                    content: 'Are you sure you want to Delete?',
+                                                                    okText: 'Yes',
+                                                                    okType: 'danger',
+                                                                    cancelText: 'No',
+                                                                    wrapClassName: styles.confirmModal,
+                                                                    onOk() {
+                                                                        remove(name);
+                                                                        informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                                    },
+                                                                });
                                                             }}
                                                         />
                                                     </Col>
