@@ -189,14 +189,15 @@ const LeftSideBarMain = (props) => {
         setIsMobile(broken);
     };
 
-    const onExpand = (keys) => {
-        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKeys(keys);
-        } else {
-            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-        }
-    };
+    // const onExpand = (keys) => {
+    //     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    //     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //         setOpenKeys(keys);
+    //     } else {
+    //         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    //     }
+    //     setAutoExpandParent(false)
+    // };
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
@@ -419,10 +420,11 @@ const LeftSideBarMain = (props) => {
     // const [searchValue, setSearchValue] = useState('');
     // const [autoExpandParent, setAutoExpandParent] = useState(true);
 
-    // const onExpand = (newExpandedKeys) => {
-    //     setExpandedKeys(newExpandedKeys);
-    //     setAutoExpandParent(false);
-    // };
+    const onExpand = (newExpandedKeys) => {
+        setExpandedKeys(newExpandedKeys);
+        setAutoExpandParent(false);
+        setOpenKeys(newExpandedKeys);
+    };
 
     const dataList = [];
     const generateList = (data) => {
@@ -467,7 +469,8 @@ const LeftSideBarMain = (props) => {
         }
         return parentKey;
     };
-
+     
+    
     const onChange = (e) => {
         const { value } = e.target;
 
@@ -480,11 +483,12 @@ const LeftSideBarMain = (props) => {
             })
             .filter((item, i, self) => item && self?.indexOf(item) === i)
 
-
-        console.log(newExpandedKeys, "LEFTOPENKEYS")
+            
+        //console.log(newExpandedKeys, "LEFTOPENKEYS")
 
         setOpenKeys(value ? newExpandedKeys : []);
         setSearchValue(value);
+        setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(true);
     };
 
@@ -568,9 +572,9 @@ const LeftSideBarMain = (props) => {
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         // expandedKeys={expandedKeys}
-                        // selectedKeys={selectedTreeKey}
+                         //selectedKeys={selectedTreeKey}
                         // onSelect={handleTreeViewClick}
-                        // autoExpandParent={autoExpandParent}
+                         autoExpandParent={autoExpandParent}
                         >
 
                             <Row>
