@@ -13,8 +13,9 @@ import style from './criticatiltyGroup.module.css';
 
 const { confirm } = Modal;
 
-const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ isDataLoaded, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
+
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
@@ -68,23 +69,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
         setFormBtnDisable(true);
     };
 
-    const removeItem = (name) => {
-        const formList = form.getFieldsValue();
-        const formAllowedTiming = formList?.allowedTimings;
-        console.log('🚀 ~ file: DrawerUtil.js:74 ~ removeItem ~ formAllowedTiming:', formAllowedTiming, name);
-        const deletedItem = formAllowedTiming?.find((item, index) => index === name);
-        console.log('🚀 ~ file: DrawerUtil.js:75 ~ removeItem ~ deletedItem:', deletedItem, name);
-
-        if (deletedItem && deletedItem?.id) {
-            const savedAllowedTiming = selectedRecord?.allowedTimings;
-            if (savedAllowedTiming) {
-                const saveDeletedItem = savedAllowedTiming?.find((item) => item?.id === deletedItem?.id);
-                console.log('🚀 ~ file: DrawerUtil.js:80 ~ removeItem ~ saveDeletedItem:', saveDeletedItem);
-                saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
-            }
-        }
-    };
-
     return (
         <Drawer
             title={drawerTitle}
@@ -131,8 +115,8 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
             <Form form={form} id="myForm" layout="vertical" colon={false} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" maxLength={6} rules={[validateRequiredInputField('Criticality Group Code'), { max: 6, message: 'Code must be 6 characters long.' }]}>
+                            <Input placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -239,9 +223,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                     <Form.Item hidden {...restField} name={[name, 'id']}>
                                                         <Input />
                                                     </Form.Item>
-                                                    <Form.Item hidden {...restField} name={[name, 'isDeleted']} initialValue="N">
-                                                        <Input />
-                                                    </Form.Item>
                                                     <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                                         <Button
                                                             icon={<LinearTrash />}
@@ -250,24 +231,19 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                             danger
                                                             ghost
                                                             onClick={() => {
-                                                                removeItem(name);
-                                                                remove(name);
-                                                                // confirm({
-                                                                //     title: 'Allowed Timing',
-                                                                //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
-                                                                //     content: 'Are you sure you want to Delete?',
-                                                                //     okText: 'Yes',
-                                                                //     okType: 'danger',
-                                                                //     cancelText: 'No',
-                                                                //     wrapClassName: styles.confirmModal,
-                                                                //     centered: true,
-                                                                //     closable: true,
-                                                                //     onOk() {
-                                                                //         remove(name);
-                                                                //         removeItem(name);
-                                                                //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
-                                                                //     },
-                                                                // });
+                                                                confirm({
+                                                                    title: 'Allowed Timing',
+                                                                    icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
+                                                                    content: 'Are you sure you want to Delete?',
+                                                                    okText: 'Yes',
+                                                                    okType: 'danger',
+                                                                    cancelText: 'No',
+                                                                    wrapClassName: styles.confirmModal,
+                                                                    onOk() {
+                                                                        remove(name);
+                                                                        informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                                    },
+                                                                });
                                                             }}
                                                         />
                                                     </Col>

@@ -146,7 +146,6 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
 };
 
 export const authPostLogin = (data) => (dispatch) => {
-    console.log('🚀 ~ file: index.js:143 ~ authPostLogin ~ data:', data);
     dispatch(
         authPostLoginActions({
             userId: data?.userId,
@@ -208,7 +207,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     const { successAction } = params;
     const url = BASE_URL_LOGOUT;
 
-    const logoutError = (errorMessage) => message.error(errorMessage);
+    // const logoutError = (errorMessage) => message.error(errorMessage);
     const title = 'Logout Successful';
 
     const onSuccess = (res) => {
@@ -230,9 +229,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: { userId },
         onSuccess,
         onError: () => {
+            logoutClearAllData();
             dispatch(showGlobalNotification({ notificationType: 'error', title: 'Information', message }));
         },
-        onTimeout: () => logoutError('Request timed out, Please try again'),
+        onTimeout: () => logoutClearAllData(),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
