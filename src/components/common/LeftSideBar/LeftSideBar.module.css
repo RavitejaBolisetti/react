@@ -19,6 +19,8 @@
 
 .menuIcon {
   font-size: 22px !important;
+  vertical-align: middle;
+  padding-right: 4px;
 }
 
 .homeIcon {
@@ -34,7 +36,7 @@
 }
 
 .homeIcon span {
-  padding-right: 8px;
+  padding-right: 12px;
 }
 
 .homeIcon:hover {
@@ -81,7 +83,7 @@
 }
 
 :global .ant-menu-title-content a {
-  color: #000000 !important;
+  color: #000000;
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -191,14 +193,16 @@
 } */
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {
-  background-color: #ffffff !important;
+  background-color: transparent !important;
   /* color: #000000; */
   border-radius: 4px;
 }
 
 /* changes on menu list items on select/visited/focus */
 :global .ant-menu-light .ant-menu-item-selected {
-  background-color: #ffffff;
+  background-color: transparent;
+  border-radius: 4px;
+  color: #ea2929;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
@@ -231,9 +235,7 @@
   border-inline-end: none;
   overflow-y: scroll;
   max-height: 80vh;
-  /* padding: 0px 16px; */
-  padding-left: 14px;
-  padding-right: 14px;
+  padding: 0px 14px;
 }
 
 /* font-family & size for left-menu text */
@@ -382,20 +384,16 @@
 
 :global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
 :global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
-  padding-left: 5px
+  padding-left: 4px;
 }
 
 .changeTheme {
   display: flex;
-  /* align-items: center; */
-  /* font-size: 16px; */
   position: absolute;
   color: #ea2929 !important;
-  /* cursor: pointer; */
   background: #F2F2F2;
   width: 100%;
   bottom: 0;
-  padding: 10px 6px;
   -webkit-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
   box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
@@ -403,7 +401,7 @@
 
 .changeThemeBorder {
   display: flex;
-  width: 98%;
+  width: 100%;
   border: 1px solid #DEDEDE;
   border-radius: 4px;
   padding: 4px;
@@ -436,7 +434,7 @@
 .darkTheme {
   /* border: none !important; */
   border: 1px solid transparent !important;
-  color: #000 !important;
+  color: #0B0B0C !important;
 }
 
 .changeTheme svg {
@@ -470,9 +468,9 @@
   padding-left: 7px;
 }
 
-/* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
+/* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-title-content a>span:first-child {
   padding-right: 0px;
-  vertical-align: sub;
+  vertical-align: middle;
 } */
 
 .leftMenuBox li.subMenuItemNew:hover {
@@ -484,11 +482,12 @@
   color: #0458f7 !important;
 } */
 .searchMenuContainer {
-  background: transparent;
+  padding-left: 8px !important;
 }
 
 .searchMenuTitle {
   color: #ea2929;
+  padding-left: 0 !important;
 }
 
 @media (max-width: 768px) {

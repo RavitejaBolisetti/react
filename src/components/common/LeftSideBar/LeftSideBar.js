@@ -84,7 +84,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -199,7 +199,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                 const beforeStr = strTitle?.substring(0, index);
                 const afterStr = strTitle?.slice(index + searchValue.length);
                 const menuTitle =
-                    index > -1 ? (
+                    searchValue && index > -1 ? (
                         <span className={styles.searchMenuContainer}>
                             {beforeStr}
                             <span className={styles.searchMenuTitle}>{searchValue}</span>
@@ -281,7 +281,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
-                        paddingLeft: collapsed ? '14px' : '10px',
+                        padding: collapsed ? '10px' : '10px 14px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
