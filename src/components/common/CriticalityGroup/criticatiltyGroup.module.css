@@ -6,9 +6,18 @@
     border-radius: 8px;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
+    padding: 20px 0px 0px 20px;
     gap: 20px;
     margin-bottom: 20px;
+}
+
+.allowedTimingAlignment {
+    border-top: 1px solid #dedede;
+    padding-top: 24px;
+    padding-left: 0 !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
 }
 
 /* 
@@ -75,34 +84,47 @@
 }
 
 .drawerFooterButtons :disabled {
-    background-color: #B5B5B6;
+    background-color: #b5b5b6;
     color: #ffffff;
     border-color: white;
 }
 
 .deleteBtn :disabled {
     background-color: #ffffff;
-    color: #B5B5B6;
+    color: #b5b5b6;
     border-color: white;
 }
 
 .searchAndLabelAlign {
     display: flex;
     align-items: center;
+    margin-left: 20px;
+    padding-right: 20px;
+
     /* font-weight: 400 !important;
     color: #0b0b0c !important;
     font-size: 18px !important; */
-    
 }
+
 .addTimeBtn {
     position: relative;
-    top: -26px;
+    top: -28px;
+    margin-bottom: -10px;
     text-align: right;
     color: #ff3e5b;
 }
+
+.addTimeBtn button {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    padding-right: 0px;
+}
+
 .timingHeaderBackground {
     border-radius: 8px;
 }
+
 .timingHeader {
     border-radius: 8px;
     background-color: #f4f4f4;
@@ -111,7 +133,8 @@
     border-radius: 7px;
     color: #342c2c;
 }
-:global .ant-notification-notice {
+
+/* :global .ant-notification-notice {
     position: relative;
     width: 384px;
     max-width: calc(100vw - 48px);
@@ -124,13 +147,15 @@
     background: #d9ffdd;
     border-radius: 8px;
     box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-}
+} */
+
 :global .ant-notification-notice .ant-notification-notice-message {
     margin-bottom: 8px;
     color: #00a310;
     font-size: 16px;
     line-height: 1.5;
 }
+
 /* .addGroup {
     display: flex;
     justify-content: flex-end;
@@ -140,6 +165,7 @@
 :global .ant-btn-link {
     color: #ff3e5b;
 }
+
 :global .ant-btn-link:not(:disabled):hover {
     color: #ff3e5bda;
 }
@@ -147,24 +173,239 @@
 .paddingLeft {
     padding-left: 10px;
 }
+
 .paddingLeft2 {
     padding-left: 10px;
 }
+
 :global .ant-picker-large {
     padding: 6.5px 11px 6.5px;
     width: 180px;
 }
-.allowedTiming  .ant-form-item {
+
+.ant-drawer .ant-drawer-body .allowedTiming .ant-space-item .ant-form-item {
     margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
 }
 
-.drawerCriticalityGrp  .allowedTiming :global .ant-space-item .ant-form-item {
+.drawerCriticalityGrp .allowedTiming :global .ant-space-item .ant-form-item {
     margin-bottom: 0px !important;
 }
+:global .ant-notification-notice {
+    width: 395px !important;
+    padding: 10px !important;
+    bottom: 40px !important;
+    margin-top: 30px;
+}
+/* Error */
+.error :global .ant-notification-notice {
+    width: 395px !important;
+    padding: 10px !important;
+}
+.error {
+    color: #ed302d;
+    background-color: #fee3d4;
+    border: 1px solid #ed302d;
+}
 
-.activeInactiveText {
+.error :global .ant-notification-notice-icon {
+    font-weight: 700;
+}
+
+.error :global .ant-notification-close-icon {
+    color: #ef0000;
+}
+
+.error :global .ant-notification-notice-message {
+    color: #ef0000;
+    font-weight: 700;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+
+.error :global .ant-notification-notice-description {
+    color: #342c2c;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    padding-right: 20px;
+}
+
+.error :global .ant-notification-notice-btn {
+    margin-left: 35px;
+    float: left;
+    font-size: 12px;
+}
+
+.error :global .ant-notification-notice-btn .ant-btn-primary {
+    background-color: #ef0000;
+    color: #ffffff;
+}
+
+.error :global .ant-notification-notice-btn .ant-btn-dangerous {
+    color: #ef0000;
+    border-color: #ef0000;
+}
+
+.error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ea3434 !important;
+}
+
+/* Success */
+.success {
+    color: #70c922 !important;
+    background-color: #eefcd2 !important;
+    border: 1px solid #70c922 !important;
+}
+
+.success :global .ant-notification-notice-icon {
+    font-weight: 700;
+}
+
+.success :global .ant-notification-close-icon {
     color: #00a310;
 }
 
+.success :global .ant-notification-notice-message {
+    color: #00a310;
+    font-weight: 700;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+
+.success :global .ant-notification-notice-description {
+    color: #342c2c;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    padding-right: 20px;
+}
+.success :global .ant-notification {
+    box-sizing: border-box;
+    margin: 42px;
+    /* padding: 0; */
+    padding-right: 40px;
+    margin-right: px;
+    color: rgba(0, 0, 0, 0.88);
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    list-style: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    position: fixed;
+    z-index: 1050;
+    margin-inline-end: 24px;
+}
+
+.drawerCriticalityGrp :global .ant-drawer-wrapper-body .ant-drawer-footer {
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
+    padding: 10px 20px;
+}
+.refreshBtn {
+    /* height : 28px !important ; */
+    background-color: transparent;
+    /* padding : 0px 24px; */
+    font-size: 18px;
+    line-height: 18px;
+    width: 60px !important;
+}
+
+.refreshBtn svg {
+   margin-right: 0px !important;
+}
+
+.refreshBtn :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:not(:disabled):hover {
+    color: #ffffff;
+    background-color: #ff3e5b;
+    border-color: #ff3e5b;
+}
+
+/*----------------------------------*/
+
+.subheading {
+    font-size: 16px;
+    color: #0b0c0c;
+}
+
+.srchbtn :global .ant-btn-default {
+    background-color: #ffffff;
+}
+
+.actionbtn {
+    background-color: #ff3e5b;
+    border-radius: 5px;
+    padding: 4px 16px;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
+    /* height: 28px; */
+}
+
+:global .ant-empty .ant-empty-footer {
+    margin-top: 24px;
+}
+/* 
+.actionbtn svg {
+    margin-right: 6px !important;
+    font-size: 14px;
+} */
+
+:global .ant-empty-normal {
+    color: #635d5d;
+}
+
+:global .ant-drawer .ant-drawer-header {
+    padding: 16px 20px;
+}
+
+:global .ant-drawer .ant-drawer-body {
+    padding: 20px;
+}
+
+:global .ant-drawer .ant-drawer-body .ant-input {
+    margin-top: 6px;
+}
+
+:global .ant-drawer .ant-drawer-body .ant-form-item {
+    padding-bottom: 16px;
+}
+.activeText {
+    color: #00a310;
+}
+.InactiveText {
+    color: #8E8585;
+}
 
 
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    border : none;
+    padding-top: 0px;
+}
+
+.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    padding-left: 0px !important;
+}
+
+.tableIcons {
+    border:none;
+    padding: 0px;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
+background-color: transparent;
+color: #B5B5B6 !important;
+}
+
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled svg {
+    /* background-color: transparent; */
+    color: #B5B5B6 !important;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous svg {
+    margin-right: 0px; 
+   padding-top: 5px;
+   padding-left: 20px;
+   color : #ff3e5b;
+}

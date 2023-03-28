@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
+import { FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { FiLogOut } from 'react-icons/fi';
-
-import { AiFillSetting } from 'react-icons/ai';
 
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { authLoggingError, doLogoutAPI } from 'store/actions/auth';
+import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
-import { HeadPhoneIcon, MenuArrow } from 'Icons';
-import { MdOutlineChangeCircle } from 'react-icons/md';
-// import Search from 'antd/es/transfer/search';
+import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, SettingsIcon } from 'Icons';
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -55,12 +51,13 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, isLoggedIn, userId }) => {
+const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, isLoggedIn, userId }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const pagePath = location.pathname;
@@ -72,8 +69,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-    const delarAvtarData = dealerName?.split(' ');
-    const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
+    // const delarAvtarData = dealerName?.split(' ');
+    // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -82,6 +79,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
+
+    const successAction = (title, message) => {
+        navigate(routing.ROUTING_LOGIN);
+    };
 
     const showConfirm = () => {
         confirm({
@@ -94,34 +95,29 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             wrapClassName: styles.confirmModal,
             onOk() {
                 doLogout({
-                    successAction: (title, message) => {
-                        navigate(routing.ROUTING_LOGIN);
-                    },
+                    successAction,
                     userId,
                 });
             },
         });
     };
 
-    const items = [
+    const fyMenuOption = [
         customMenuLink({
-            title: 'Branch Location',
-            link: routing.ROUTING_HOME,
-            children: [
-                customMenuLink({
-                    title: 'Gurgaon',
-                }),
-                customMenuLink({
-                    title: 'Lajpat Nagar',
-                }),
-                customMenuLink({
-                    title: 'Noida',
-                }),
-            ],
+            title: '2023',
         }),
-        // customMenuLink({
-        //     title: 'Financial Year',
-        // }),
+    ];
+
+    const locationMenuOption = [
+        customMenuLink({
+            title: 'Gurgaon',
+        }),
+        customMenuLink({
+            title: 'Lajpat Nagar',
+        }),
+        customMenuLink({
+            title: 'Noida',
+        }),
     ];
 
     const userSettingMenu = [
@@ -129,13 +125,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '1',
             title: 'My Profile',
             link: routing.ROUTING_USER_PROFILE,
-            icon: <FaRegIdBadge />,
+            icon: <Icon component={ProfileIcon} />,
         }),
         customMenuLink({
             key: '2',
             title: 'Settings',
             link: routing.ROUTING_USER_SETTING,
-            icon: <AiFillSetting />,
+            icon: <Icon component={SettingsIcon} />,
         }),
         // customMenuLink({
         //     key: '3',
@@ -163,7 +159,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             customMenuLink({
                 key: '5',
                 title: 'Change Password',
-                icon: <MdOutlineChangeCircle />,
+                icon: <Icon component={ChangePasswordIcon} />,
                 onClick: () => setChangePasswordModalOpen(true),
             })
         );
@@ -173,9 +169,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '7',
             title: 'Logout',
             onClick: showConfirm,
-            icon: <FiLogOut />,
+            icon: <Icon component={LogoutIcon} />,
         })
     );
+
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
@@ -196,25 +193,27 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                     </div> */}
                                     <div className={styles.userText}>
                                         <div className={styles.dealerName}>{dealerName}</div>
-                                        <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                        {userType === 'DLR' && (
-                                            <Dropdown className={styles.dropdownIcon} menu={{ items }} trigger={['click']}>
-                                                <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
-                                                    <DownOutlined />
-                                                </a>
-                                            </Dropdown>
-                                        )}{' '}
-                                        {userType === 'DLR' && (
-                                            <>
-                                                <span className={styles.seprator}>|</span>
-                                                <span className={styles.dealerLocation}>FY2023</span>
-                                                <Dropdown menu={{ items }} trigger={['click']}>
+                                        <div className={styles.dealerInfo}>
+                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                            {userType === 'DLR' && (
+                                                <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }} trigger={['click']}>
                                                     <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
                                                         <DownOutlined />
                                                     </a>
                                                 </Dropdown>
-                                            </>
-                                        )}
+                                            )}{' '}
+                                            {userType === 'DLR' && (
+                                                <>
+                                                    <span className={styles.seprator}>|</span>
+                                                    <span className={styles.dealerLocation}>FY2023</span>
+                                                    <Dropdown menu={{ items: fyMenuOption }} trigger={['click']}>
+                                                        <a className={styles.dropdownIcon} data-toggle="dropdown" href="/">
+                                                            <DownOutlined />
+                                                        </a>
+                                                    </Dropdown>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
                                 </Space>
                             </div>
@@ -265,15 +264,15 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                     </span>
                                                 </div>
                                                 <div className={styles.userText}>
-                                                    <div>{fullName}</div>
+                                                    <div className={styles.userName}>{fullName}</div>
+                                                    <span className={styles.userServiceArea}>{mobileNo}</span>
+                                                </div>
+                                                <div className={styles.dropdownArrow}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                            <span className={styles.userServiceArea}>
-                                                                {mobileNo}
-                                                                <Space>
-                                                                    <DownOutlined />
-                                                                </Space>
-                                                            </span>
+                                                            <Space>
+                                                                <DownOutlined />
+                                                            </Space>
                                                         </Link>
                                                     </Dropdown>
                                                 </div>

@@ -13,5 +13,5 @@ export const LeftSideBar = (state = initialState, action) => {
             return { ...state, isMobile: action.isMobile };
         default:
             return { ...state };
-    }
+    } 
 };

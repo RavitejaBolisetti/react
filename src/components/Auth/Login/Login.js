@@ -7,16 +7,16 @@ import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
+import { showGlobalNotification } from 'store/actions/notification';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
-import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD, ROUTING_DASHBOARD } from 'constants/routing';
+import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
 import Footer from '../Footer';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const mapStateToProps = (state) => {
     let authApiCall = state.auth || {};
@@ -26,6 +26,7 @@ const mapStateToProps = (state) => {
     const preLoginData = authApiCall.preLoginData;
 
     let returnValue = {
+        notification,
         isUnauthenticated: authApiCall.isUnauthenticated,
         isLoggedIn: authApiCall.isLoggedIn,
         isLoading: state.authPages.LoginPage.isLoading,
@@ -38,14 +39,6 @@ const mapStateToProps = (state) => {
         message: '',
     };
 
-    if (isError || returnValue.isUnauthenticated) {
-        returnValue = {
-            ...returnValue,
-            errorTitle: authApiCall.title,
-            errorMessage: authApiCall.message,
-        };
-    }
-
     return returnValue;
 };
 
@@ -55,12 +48,14 @@ const mapDispatchToProps = {
     authPreLogin,
     doCloseLoginError,
     doCloseUnAuthenticatedError,
+    showGlobalNotification,
 };
 
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
-    const { doLogin, authPostLogin, authPreLogin, isError, doCloseLoginError, errorTitle, errorMessage, preLoginData } = props;
+    const { doLogin, authPostLogin, authPreLogin, showGlobalNotification, doCloseLoginError } = props;
     const [form] = Form.useForm();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [tempData, setTempData] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
@@ -96,15 +91,6 @@ const Login = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
-    useEffect(() => {
-        if (isError) {
-            informationModalBox({ message: errorTitle, description: errorMessage });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isError]);
-
-    const navigate = useNavigate();
-
     const onSuccess = (data) => {
         setIsLoading(false);
         ReactRecaptcha3.destroy();
@@ -119,7 +105,8 @@ const Login = (props) => {
         }
     };
 
-    const onError = () => {
+    const onError = ({ title, message }) => {
+        showGlobalNotification({ title, message });
         setIsLoading(false);
     };
 
@@ -133,6 +120,7 @@ const Login = (props) => {
 
     const onFinish = (values) => {
         setIsLoading(true);
+
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
                 if (captchaCode) {
@@ -177,16 +165,6 @@ const Login = (props) => {
         });
     };
 
-    const informationModalBox = ({ message = 'information', description, className = styles.error }) => {
-        alertNotification.open({
-            icon: <AiOutlineCloseCircle />,
-            message,
-            description,
-            className,
-            duration: 5,
-        });
-    };
-
     return (
         <>
             {contextAlertNotification}
@@ -214,8 +192,8 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (MILE ID.Parent ID)')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (mile id.parent id')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
