@@ -83,6 +83,7 @@ const LeftSideBarMain = (props) => {
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
+    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
   //  let expandedkeys = [];
     const [mainKeys, setmainKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -127,11 +128,6 @@ const LeftSideBarMain = (props) => {
         setFilter(e);
         setSearchValue(e.target.value);
     };
-
-    // const onExpand = (newExpandedKeys) => {
-    //     setexpandedKeys(newExpandedKeys);
-    //     setAutoExpandParent(false);
-    //   };
 
     const onSubmit = (value, type) => {
         setCollapsed(value);
@@ -193,7 +189,7 @@ const LeftSideBarMain = (props) => {
         setIsMobile(broken);
     };
 
-    const onOpenChange = (keys) => {
+    const onExpand = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
@@ -220,52 +216,252 @@ const LeftSideBarMain = (props) => {
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
 
-    useEffect(() => {
-        setOpenKeys(mainKeys);
-    }, [mainKeys]);
+    // useEffect(() => {
+    //     setOpenKeys(mainKeys);
+    // }, [mainKeys]);
 
 
 
     /* new implementatoion */
-    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
+    const {  treeData, fieldNames, isOpenInModal } = props;
     const { isTreeViewVisible, handleTreeViewVisiblity } = props;
+
+    const customData = [
+        {
+            "menuId": "COMN",
+            "menuTitle": "Common",
+            "parentMenuId": "Web",
+            "menuIconUrl": "icon",
+            "isFavourite": "1",
+            "accessType": "R",
+            "displayOrder": "1",
+            "subMenu": [
+                {
+                    "menuId": "COMN-11",
+                    "menuTitle": "Vehicle Related",
+                    "parentMenuId": "COMN",
+                    "menuIconUrl": "icon",
+                    "isFavourite": "0",
+                    "accessType": "R",
+                    "displayOrder": "1",
+                    "subMenu": [
+                        {
+                            "menuId": "COMN-11.05",
+                            "menuTitle": "Theft Vehicle Flag Update",
+                            "parentMenuId": "COMN-11",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        },
+                        {
+                            "menuId": "COMN-11.02",
+                            "menuTitle": "Customer ID/Registration No. Change Requisition",
+                            "parentMenuId": "COMN-11",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        },
+                        {
+                            "menuId": "COMN-11.01",
+                            "menuTitle": "Vehicle Details",
+                            "parentMenuId": "COMN-11",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        },
+                        {
+                            "menuId": "COMN-11.04",
+                            "menuTitle": "Customer ID/Registration No. Change Report",
+                            "parentMenuId": "COMN-11",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        }
+                    ]
+                },
+                {
+                    "menuId": "COMN-10",
+                    "menuTitle": "Customer Related",
+                    "parentMenuId": "COMN",
+                    "menuIconUrl": "icon",
+                    "isFavourite": "0",
+                    "accessType": "R",
+                    "displayOrder": "1",
+                    "subMenu": [
+                        {
+                            "menuId": "COMN-10.01",
+                            "menuTitle": "Customer Master",
+                            "parentMenuId": "COMN-10",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        },
+                        {
+                            "menuId": "COMN-10.b",
+                            "menuTitle": "Key Account",
+                            "parentMenuId": "COMN-10",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": [
+                                {
+                                    "menuId": "COMN-10.06",
+                                    "menuTitle": "Key Account Creation",
+                                    "parentMenuId": "COMN-10.b",
+                                    "menuIconUrl": "icon",
+                                    "isFavourite": "0",
+                                    "accessType": "R",
+                                    "displayOrder": "1",
+                                    "subMenu": []
+                                },
+                                {
+                                    "menuId": "COMN-10.05",
+                                    "menuTitle": "Key Account Type",
+                                    "parentMenuId": "COMN-10.b",
+                                    "menuIconUrl": "icon",
+                                    "isFavourite": "0",
+                                    "accessType": "R",
+                                    "displayOrder": "1",
+                                    "subMenu": []
+                                },
+                                {
+                                    "menuId": "COMN-10.08",
+                                    "menuTitle": "Key Account Transaction Report",
+                                    "parentMenuId": "COMN-10.b",
+                                    "menuIconUrl": "icon",
+                                    "isFavourite": "0",
+                                    "accessType": "R",
+                                    "displayOrder": "1",
+                                    "subMenu": []
+                                },
+                                {
+                                    "menuId": "COMN-10.07",
+                                    "menuTitle": "Key Account Company Mapping/Un-Mapping",
+                                    "parentMenuId": "COMN-10.b",
+                                    "menuIconUrl": "icon",
+                                    "isFavourite": "0",
+                                    "accessType": "R",
+                                    "displayOrder": "1",
+                                    "subMenu": []
+                                }
+                            ]
+                        },
+                        {
+                            "menuId": "COMN-10.02",
+                            "menuTitle": "Party Master",
+                            "parentMenuId": "COMN-10",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        },
+                        {
+                            "menuId": "COMN-10.01a",
+                            "menuTitle": "Financier Master",
+                            "parentMenuId": "COMN-10",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": []
+                        },
+                        {
+                            "menuId": "COMN-10.a",
+                            "menuTitle": "Lessor Company",
+                            "parentMenuId": "COMN-10",
+                            "menuIconUrl": "icon",
+                            "isFavourite": "0",
+                            "accessType": "R",
+                            "displayOrder": "1",
+                            "subMenu": [
+                                {
+                                    "menuId": "COMN-10.03",
+                                    "menuTitle": "Lessor Company Master (M&M)",
+                                    "parentMenuId": "COMN-10.a",
+                                    "menuIconUrl": "icon",
+                                    "isFavourite": "0",
+                                    "accessType": "R",
+                                    "displayOrder": "1",
+                                    "subMenu": []
+                                },
+                                {
+                                    "menuId": "COMN-10.04",
+                                    "menuTitle": "Lessor Customer Creation",
+                                    "parentMenuId": "COMN-10.a",
+                                    "menuIconUrl": "icon",
+                                    "isFavourite": "0",
+                                    "accessType": "R",
+                                    "displayOrder": "1",
+                                    "subMenu": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        ]
+    
 
    // const [expandedKeys, setExpandedKeys] = useState([]);
     // const [searchValue, setSearchValue] = useState('');
     // const [autoExpandParent, setAutoExpandParent] = useState(true);
 
-    const onExpand = (newExpandedKeys) => {
-        setExpandedKeys(newExpandedKeys);
-        setAutoExpandParent(false);
-    };
+    // const onExpand = (newExpandedKeys) => {
+    //     setExpandedKeys(newExpandedKeys);
+    //     setAutoExpandParent(false);
+    // };
 
     const dataList = [];
     const generateList = (data) => {
+
+        //console.log(data,'DataListInitial')
+
         for (let i = 0; i < data.length; i++) {
             const node = data[i];
 
-            console.log(node,'cheokingg')
+           // console.log(node,'SingleValue')
 
             dataList.push({
-                id: node[fieldNames?.menuId],
-                title: node[fieldNames?.menuTitle],
+                id: node?.menuId,
+                title: node?.menuTitle,
             });
-            if (node[fieldNames?.subMenu]) {
-                generateList(node[fieldNames?.subMenu]);
+            if (node?.subMenu) {
+                generateList(node?.subMenu);
             }
         }
     };
 
-    treeData && generateList(treeData);
+    customData && generateList(customData);
+
+    
+ 
     const getParentKey = (key, tree) => {
+
+        //console.log( key,'KEYLEFTT', tree,'DATALEFTT' )
+
         let parentKey;
         for (let i = 0; i < tree.length; i++) {
             const node = tree[i];
-            if (node[fieldNames?.subMenu]) {
-                if (node[fieldNames?.subMenu].some((item) => item[fieldNames?.key] === key)) {
-                    parentKey = node[fieldNames?.key];
-                } else if (getParentKey(key, node[fieldNames?.subMenu])) {
-                    parentKey = getParentKey(key, node[fieldNames?.subMenu]);
+         
+            if (node?.subMenu) {
+                if (node?.subMenu.some((item) => item?.menuId === key)) {
+                   // console.log("INSIDE")
+                    parentKey = node?.menuId;
+                } else if (getParentKey(key, node?.subMenu)) {
+                    parentKey = getParentKey(key, node?.subMenu);
                 }
             }
         }
@@ -275,15 +471,19 @@ const LeftSideBarMain = (props) => {
     const onChange = (e) => {
         const { value } = e.target;
 
-        const newExpandedKeys = dataList
+         const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
-                    return getParentKey(item?.menuId, treeData);
+                    return getParentKey(item?.id, customData);
                 }
                 return null;
             })
-            .filter((item, i, self) => item && self?.indexOf(item) === i);
-        setExpandedKeys(value ? newExpandedKeys : []);
+            .filter((item, i, self) =>  item && self?.indexOf(item) === i)
+            
+
+            console.log(newExpandedKeys,"LEFTOPENKEYS")
+        
+        setOpenKeys(value ? newExpandedKeys : []);
         setSearchValue(value);
         setAutoExpandParent(true);
     };
@@ -291,11 +491,10 @@ const LeftSideBarMain = (props) => {
   // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
 
-
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
             data.map((item) => {
-                console.log('🚀 ~ file: LeftSideBar.js:224 ~ data.map ~ item:', item);
+                //console.log('🚀 ~ file: LeftSideBar.js:224 ~ data.map ~ item:', item);
                 const strTitle = item?.menuTitle;
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);
@@ -324,11 +523,11 @@ const LeftSideBarMain = (props) => {
                     menuTitle,
                 };
             });
-        return loop(menuData);
-    }, [searchValue, menuData]);
+        return loop(customData);
+    }, [searchValue, customData]);
 
-    console.log('searchValue', searchValue, 'finalTreeData', finalTreeData);
-    console.log(menuData,'MENUDATATTTTT')
+    console.log(expandedKeys,"KEYS")
+
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -359,22 +558,21 @@ const LeftSideBarMain = (props) => {
                             onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            defaultSelectedKeys={[defaultSelectedKeys]}
+                            //defaultSelectedKeys={[defaultSelectedKeys]}
                             // defaultOpenKeys={defaultOpenKeys}
-                           // openKeys={openKeys}
-                            onExpand={onExpand}
-                          // onOpenChange={onOpenChange}
+                            openKeys={openKeys}
+                           // onExpand={onExpand}
+                            onOpenChange={onExpand}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
-                            expandedKeys={expandedKeys}
-                            selectedKeys={selectedTreeKey}
-                            onSelect={handleTreeViewClick}
-                            autoExpandParent={autoExpandParent}
+                            // expandedKeys={expandedKeys}
+                            // selectedKeys={selectedTreeKey}
+                            // onSelect={handleTreeViewClick}
+                            // autoExpandParent={autoExpandParent}
                         >
 
-{/* <Tree    showLine={true} showIcon={true}   treeData={finalTreeData} /> */}
                             <Row>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
