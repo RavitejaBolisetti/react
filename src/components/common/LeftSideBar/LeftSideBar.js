@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -75,6 +75,9 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [searchValue, setSearchValue] = useState('');
+    const [openKeys, setOpenKeys] = useState([]);
+    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -104,8 +107,56 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         localStorage.setItem('theme', changeTheme);
         setTheme(changeTheme);
     };
-    const onSearch = (value) => {
-        // setFilter(value);
+
+    const dataList = [];
+    const generateList = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            const node = data[i];
+            dataList.push({
+                id: node?.menuId,
+                title: node?.menuTitle,
+            });
+            if (node?.subMenu) {
+                generateList(node?.subMenu);
+            }
+        }
+    };
+
+    menuData && generateList(menuData);
+
+    const getParentKey = (key, tree) => {
+        let parentKey;
+        for (let i = 0; i < tree.length; i++) {
+            const node = tree[i];
+
+            if (node?.subMenu) {
+                if (node?.subMenu.some((item) => item?.menuId === key)) {
+                    // console.log("INSIDE")
+                    parentKey = node?.menuId;
+                } else if (getParentKey(key, node?.subMenu)) {
+                    parentKey = getParentKey(key, node?.subMenu);
+                }
+            }
+        }
+        return parentKey;
+    };
+
+    const onSearch = (e) => {
+        const { value } = e.target;
+
+        const newExpandedKeys = dataList
+            .map((item) => {
+                if (item?.title?.indexOf(value) > -1) {
+                    return getParentKey(item?.id, menuData);
+                }
+                return null;
+            })
+            .filter((item, i, self) => item && self?.indexOf(item) === i);
+
+        console.log(newExpandedKeys, 'LEFTOPENKEYS');
+
+        setOpenKeys(value ? newExpandedKeys : []);
+        setSearchValue(value);
     };
 
     const onSubmit = (value, type) => {
@@ -138,6 +189,38 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
             );
         });
     };
+
+    const finalMenuData = useMemo(() => {
+        const loop = (data) =>
+            data.map((item) => {
+                const strTitle = item?.menuTitle;
+                const index = strTitle?.indexOf(searchValue);
+                const beforeStr = strTitle?.substring(0, index);
+                const afterStr = strTitle?.slice(index + searchValue.length);
+                const menuTitle =
+                    index > -1 ? (
+                        <span className={styles.searchMenuContainer}>
+                            {beforeStr}
+                            <span className={styles.searchMenuTitle}>{searchValue}</span>
+                            {afterStr}
+                        </span>
+                    ) : (
+                        <span>{strTitle}</span>
+                    );
+                if (item?.subMenu) {
+                    return {
+                        ...item,
+                        menuTitle,
+                        subMenu: loop(item?.subMenu),
+                    };
+                }
+                return {
+                    ...item,
+                    menuTitle,
+                };
+            });
+        return loop(menuData);
+    }, [searchValue, menuData]);
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
     return (
@@ -179,7 +262,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                     Home
                                 </Link>
                             </Item>
-                            {prepareMenuItem(menuData)}
+                            {prepareMenuItem(finalMenuData)}
                         </Menu>
                     </>
                 ) : (

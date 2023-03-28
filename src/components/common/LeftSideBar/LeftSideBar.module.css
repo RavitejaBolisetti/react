@@ -476,6 +476,11 @@
 /* .subMenuItem {
   color: #0458f7 !important;
 } */
+.searchMenuContainer {}
+
+.searchMenuTitle {
+  color: #ea2929;
+}
 
 @media (max-width: 768px) {
   .leftMenuBox {
