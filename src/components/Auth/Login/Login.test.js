@@ -13,7 +13,7 @@ const doCloseLoginError = () => {
 return;
 }
 const errorMessage = () => {
-    return "Information";
+    return "Invalid credentials.";
 }
 window.matchMedia =
     window.matchMedia ||
@@ -29,15 +29,15 @@ window.matchMedia =
                     <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError}  />}/>
                 </Routes>
             </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
+            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
             const passInput = await screen.getByPlaceholderText('Password');
             const loginBtn = await screen.getByText('Login');
-            fireEvent.change(userId, {target: {value:'122'}});
-            fireEvent.change(passInput, {target: {value:'080870'}});
+            fireEvent.change(userId, {target: {value:'11111'}});
+            fireEvent.change(passInput, { target: { value: 'dasdasd' } });
             fireEvent.change(userId, {target: {value:''}});
             fireEvent.change(passInput, { target: { value: '' } });
             fireEvent.click(loginBtn)
-            const validation =  screen.findByText('Please Enter User ID (MILE ID.Parent ID) / Token No.')
+            const validation =  screen.findByText('Please Enter User ID (mile id.parent id)')
             const validation2 =  screen.findByText('Please Enter Password');
             expect(userId).toBeTruthy();
             expect(passInput).toBeTruthy();
@@ -49,16 +49,16 @@ window.matchMedia =
         test('is error modal visible after entering username and password  ' , async() => {
             render(<BrowserRouter>
                 <Routes>   
-                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorTitle="Information" errorMessage = {errorMessage} isError={true} />}/>
+                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorMessage = {errorMessage} isError={true} />}/>
                 </Routes>
             </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
+            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
             const passInput = await screen.getByPlaceholderText('Password');
             const loginBtn = await screen.getByText('Login');
-            fireEvent.change(userId, {target: {value:'reena'}});
+            fireEvent.change(userId, {target: {value:'11111'}});
             fireEvent.change(passInput, {target: {value:'asgdndjd'}});
             fireEvent.click(loginBtn);
-            const errorModal = await screen.findAllByText('Information');
+            const errorModal = await screen.findAllByText('Invalid credentials.');
 
             expect(userId).toBeTruthy();
             expect(passInput).toBeTruthy();
@@ -68,22 +68,22 @@ window.matchMedia =
         test('redirects to forgot password page after clicking forgot password link  ' , async() => {
             render(<BrowserRouter>
                 <Routes>   
-                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorTitle="Information" errorMessage = {errorMessage} isError={true} />}/>
+                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError}  errorMessage = {errorMessage} isError={true} />}/>
                     <Route path="/forgot-password" element= {<ForgotPassword/>}/>
                 </Routes>
             </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID / Token No.)')
+            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
             const forgotPasswordLink = await screen.getByText('Forgot password?')
             fireEvent.click(forgotPasswordLink);
-            const generateOtpBtn = await screen.getByText('Generate OTP')
+            const verifyUserBtn = await screen.getByText('Verify User')
             expect(userId).toBeTruthy();
             expect(forgotPasswordLink).toBeTruthy();
-            expect(generateOtpBtn).toBeInTheDocument();
+            expect(verifyUserBtn).toBeInTheDocument();
         });
         test('M&M SSO Login Link ' , async() => {
             render(<BrowserRouter>
                 <Routes>   
-                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorTitle="Information" errorMessage = {errorMessage} isError={true} />}/>
+                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError}  errorMessage = {errorMessage} isError={true} />}/>
                 </Routes>
             </BrowserRouter>);
             const ssoLogin = screen.getByText('M&M User Login')

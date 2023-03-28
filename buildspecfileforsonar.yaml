@@ -21,12 +21,12 @@ phases:
         commands:
             - echo Build started on `date`
             - echo Compiling the dist folder
-            - npm run test -- --coverage . --watchAll=false
+            - npm run test --coverage --watchAll=false
             - ls -la
             - cd build
             - ls -la
             #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=. -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_02695ac95d1770d6221bff1cd2c1ed1ca9c44866
+            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=./ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_02695ac95d1770d6221bff1cd2c1ed1ca9c44866
 
     post_build:
         commands:
@@ -40,8 +40,8 @@ cache:
     paths:
         - 'node_modules/**/*'
 reports:
-  unit-test-reports:
-    files:
-      - '**/*'
-    base-directory: dms-ui-application/build/test-results/test
-    discard-paths: no
+    jest_reports:
+        files:
+            - 'coverage/lcov.info'
+        file-format: 'JUNITXML'
+        base-directory: 'coverage'
