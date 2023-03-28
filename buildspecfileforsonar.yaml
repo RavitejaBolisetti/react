@@ -40,8 +40,8 @@ cache:
     paths:
         - 'node_modules/**/*'
 reports:
-  unit-test-reports:
-    files:
-      - '**/*'
-    base-directory: dms-ui-application/build/test-results/test
-    discard-paths: no
+    jest_reports:
+        files:
+            - 'coverage/lcov.info'
+        file-format: 'JUNITXML'
+        base-directory: 'coverage'
