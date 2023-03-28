@@ -37,6 +37,21 @@
     font-weight: 700;
 }
 
+.userText .userName {
+    max-width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dropdownArrow {
+    padding: 100%;
+}
+
+.dropdownArrow .navLink {
+    color: #FF3E5B !important;
+}
+
 .bellSkeleton {
     padding-top: 1px;
 }
@@ -137,7 +152,7 @@
 }
 
 .navbarExpand .navbarNav .navLink {
-    padding-left: 20px;
+    padding-left: 16px;
     padding-right: 20px;
 }
 
@@ -153,7 +168,7 @@
     display: inline-block;
     font-size: 12px;
     line-height: 16px;
-    padding-left: 5px;
+    /* padding-left: 5px; */
     margin-left: 4px;
     text-align: left;
     font-weight: 700;
@@ -202,7 +217,7 @@
 }
 
 :global .ant-dropdown {
-    width: 160px;
+    width: 162px;
 }
 
 :global .ant-dropdown .ant-dropdown-menu,
@@ -227,9 +242,9 @@
     color: #ff3e5b !important;
 } */
 
-.welcomeUser .userServiceArea {
+/* .welcomeUser .userServiceArea {
     float: right;
-}
+} */
 
 .headerRight :global .ant-btn-default {
     background-color: #ffffff;

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
-import { FaRegIdBadge, FaRegBell } from 'react-icons/fa';
+import { FaRegBell } from 'react-icons/fa';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { FiLogOut } from 'react-icons/fi';
-
-import { AiFillSetting } from 'react-icons/ai';
 
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
@@ -15,16 +12,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { authLoggingError, doLogoutAPI } from 'store/actions/auth';
+import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
 
-import { HeadPhoneIcon, MenuArrow } from 'Icons';
-import { MdOutlineChangeCircle } from 'react-icons/md';
-// import Search from 'antd/es/transfer/search';
+import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, SettingsIcon } from 'Icons';
 
 const { Search } = Input;
 const { confirm } = Modal;
@@ -136,13 +131,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '1',
             title: 'My Profile',
             link: routing.ROUTING_USER_PROFILE,
-            icon: <FaRegIdBadge />,
+            icon: <Icon component={ProfileIcon} />,
         }),
         customMenuLink({
             key: '2',
             title: 'Settings',
             link: routing.ROUTING_USER_SETTING,
-            icon: <AiFillSetting />,
+            icon: <Icon component={SettingsIcon} />,
         }),
         // customMenuLink({
         //     key: '3',
@@ -170,7 +165,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             customMenuLink({
                 key: '5',
                 title: 'Change Password',
-                icon: <MdOutlineChangeCircle />,
+                icon: <Icon component={ChangePasswordIcon} />,
                 onClick: () => setChangePasswordModalOpen(true),
             })
         );
@@ -180,9 +175,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '7',
             title: 'Logout',
             onClick: showConfirm,
-            icon: <FiLogOut />,
+            icon: <Icon component={LogoutIcon} />,
         })
     );
+
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
@@ -275,14 +271,14 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{fullName}</div>
+                                                    <span className={styles.userServiceArea}>{mobileNo}</span>
+                                                </div>
+                                                <div className={styles.dropdownArrow}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                            <span className={styles.userServiceArea}>
-                                                                {mobileNo}
-                                                                <Space>
-                                                                    <DownOutlined />
-                                                                </Space>
-                                                            </span>
+                                                            <Space>
+                                                                <DownOutlined />
+                                                            </Space>
                                                         </Link>
                                                     </Dropdown>
                                                 </div>
