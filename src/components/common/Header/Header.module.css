@@ -44,6 +44,14 @@
     text-overflow: ellipsis;
 }
 
+.dropdownArrow {
+    padding: 100%;
+}
+
+.dropdownArrow .navLink {
+    color: #FF3E5B !important;
+}
+
 .bellSkeleton {
     padding-top: 1px;
 }
@@ -72,6 +80,12 @@
     padding-bottom: 2px;
     font-weight: 700;
     line-height: 24px;
+}
+
+.userName {
+    max-width: 150px;
+    text-align: right;
+    text-overflow: ellipsis;
 }
 
 .dealerLocation {
@@ -203,7 +217,7 @@
 }
 
 :global .ant-dropdown {
-    width: 160px;
+    width: 162px;
 }
 
 :global .ant-dropdown .ant-dropdown-menu,
@@ -228,9 +242,9 @@
     color: #ff3e5b !important;
 } */
 
-.welcomeUser .userServiceArea {
+/* .welcomeUser .userServiceArea {
     float: right;
-}
+} */
 
 .headerRight :global .ant-btn-default {
     background-color: #ffffff;

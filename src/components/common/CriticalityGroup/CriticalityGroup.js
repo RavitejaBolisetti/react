@@ -1,31 +1,23 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Modal, Form, Row, Space, Switch, Table, Empty, Select, notification, Alert, ConfigProvider } from 'antd';
+
+import { Button, Col, Input, Modal, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 
-import { FaEdit } from 'react-icons/fa';
-import { AiOutlinePlus, AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
-
-import styles from 'pages/common/Common.module.css';
-import style from './criticatiltyGroup.module.css';
-// import styles2 from '../Common.module.css'
+import moment from 'moment';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-
-import dayjs from 'dayjs';
-import { BsTruckFlatbed } from 'react-icons/bs';
 import { DataTable } from 'utils/dataTable';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import moment from 'moment';
-import { FiRefreshCw } from 'react-icons/fi';
 
-const { Option } = Select;
-const { confirm } = Modal;
+import styles from 'pages/common/Common.module.css';
+import style from './criticatiltyGroup.module.css';
+
 const { Search } = Input;
 
 const informationMessage = {
@@ -34,9 +26,8 @@ const informationMessage = {
     updateGroup: 'Your group has been updated. Refresh to get the latest result',
     createGroup: 'Your group has been Created. Refresh to get the latest result',
     success: 'Group Created Successfully',
-    updated: "Group Updated",
-
-}
+    updated: 'Group Updated',
+};
 
 const mapStateToProps = (state) => {
     const {
@@ -78,11 +69,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(data.status === 'Y' ? true : false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
-    const [arrData, setArrData] = useState(data);
     const [searchData, setSearchdata] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
@@ -92,9 +81,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
+    const [deletedItemList, setDeletedItemList] = useState([]);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
-    
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,13 +95,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
     useEffect(() => {
-        setSearchdata(criticalityGroupData);
+        setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
     }, [criticalityGroupData]);
 
     useEffect(() => {
         fetchData({ setIsLoading: listShowLoading, userId });
-        setSearchdata(criticalityGroupData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
 
@@ -127,88 +116,79 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const onFinish = (values) => {
-        const formatedTime = values?.allowedTimingResponse?.map((time) => {
+        const finalAllowedTimingList = deletedItemList ? [...deletedItemList, ...values?.allowedTimings] : values?.allowedTimings;
+        
+        const formatedTime = finalAllowedTimingList?.map((time) => {
             return {
+                id: time?.id || '',
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
+                isDeleted: time?.isDeleted,
             };
         });
-        // const overlapping = (a, b) => {
-        //     const getMinutes = (s) => {
-        //         const p = s.split(':').map(Number);
-        //         return p[0] * 60 + p[1];
-        //     };
-        //     return getMinutes(a.endTime) > getMinutes(b.startTime) && getMinutes(b.endTime) > getMinutes(a.startTime);
-        // };
-        // const isOverlapping = (arr) => {
-        //     let i, j;
-        //     for (i = 0; i < arr.length - 1; i++) {
-        //         for (j = i + 1; j < arr.length; j++) {
-        //             if (overlapping(arr[i], arr[j])) {
-        //                 return true;
-        //             }
-        //         }
-        //     }
-        //     return false;
-        // };
-        // console.log(isOverlapping(arr));
-        // if (isOverlapping(arr) === true) {
-        //     alert('Your timings are overlapping please check again and try');
-        // } else {
-        //     console.log('ohhho');
-        //     const recordId = formData?.id || '';
-        //     setForceFormReset(Math.random() * 10000);
-        // console.log(arr);
 
-        const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimingRequest: formatedTime || [] };
-        console.log('🚀 ~ file: CriticalityGroup.js:141 ~ onFinish ~ recordId:', recordId);
-        delete data?.allowedTimingResponse;
-
-        const onSuccess = (res) => {
-            form.resetFields();
-            setSelectedRecord({})
-            setSuccessAlert(true);
-            fetchData({ setIsLoading: listShowLoading, userId });
-            if (saveclick === true) {
-                setDrawer(false);
-                informationModalBox({ icon: 'success', message:selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup , className: style.success, placement: 'topRight' });
-            } else {
-                setDrawer(true);
-                informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
-            }
+        //code for overlapping check on save
+        const timeInMinutes = (time) => {
+            const [hours, minutes] = time?.split(':').map(Number);
+            return hours * 60 + minutes;
         };
 
-        const onError = (message) => {
-            // handleErrorModal(message);
-            informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
+        const isOverlapping = (allowedTimingSlots) => {
+            return false;
+            // const times = allowedTimingSlots?.map((slot) => {
+            //     const startTime = timeInMinutes(slot?.timeSlotFrom);
+            //     const endTime = timeInMinutes(slot?.timeSlotTo);
+            //     const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
+            //     return { startTime, endTime: adjustedTime };
+            // });
+
+            // times?.sort((a, b) => a?.startTime - b?.startTime);
+
+            // for (let i = 0; i < times?.length - 1; i++) {
+            //     const slot1 = times[i];
+            //     const slot2 = times[i + 1];
+
+            //     if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
+            //         return true;
+            //     }
+            // }
+            // return false;
         };
 
-        const requestData = {
-            data: [data],
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        saveData(requestData);
-    };
+        if (isOverlapping(formatedTime)) {
+            informationModalBox({ icon: 'error', message: 'Error', description: 'The selected allowed timing slots are overlapping.', className: style.error, placement: 'bottomRight' });
+        } else {
+            const recordId = selectedRecord?.id || '';
+            const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
 
-    const openNotification = ({ NotificationTitle, NotificationDescription, placement, duration }) => {
-        notification.open({
-            message: (
-                <div className="NotificationMessageAlign">
-                    <AiFillCheckCircle />
-                    {NotificationTitle}
-                </div>
-            ),
-            description: NotificationDescription,
-            placement: placement,
-            duration: duration,
-            onClick: () => {
-                console.log('Notification Clicked!');
-            },
-        });
+            const onSuccess = (res) => {
+                form.resetFields();
+                setSelectedRecord({});
+                setSuccessAlert(true);
+                fetchData({ setIsLoading: listShowLoading, userId });
+                if (saveclick === true) {
+                    setDrawer(false);
+                    informationModalBox({ icon: 'success', message: selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
+                } else {
+                    setDrawer(true);
+                    informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
+                }
+            };
+
+            const onError = (message) => {
+                informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
+            };
+
+            const requestData = {
+                data: [data],
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            saveData(requestData);
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -220,7 +200,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-        //  form.resetFields();
+
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
@@ -228,43 +208,39 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const handleUpdate = (record) => {
-        // setForceFormReset(Math.random() * 10000);
         setFormActionType('update');
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
-        console.log(selectedRecord, 'edit');
-        const momentTime = record?.allowedTimingResponse?.map((i) => {
+        const momentTime = record?.allowedTimings?.map((i) => {
             return {
+                id: i?.id,
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
             };
         });
         setFormData(record);
-        // setSelectedRecord(record);
 
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
             criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: record.criticalityDefaultGroup,
+            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
             activeIndicator: record.activeIndicator,
-            allowedTimingResponse: momentTime,
+            allowedTimings: momentTime,
         });
 
         setDrawer(true);
         setIsReadOnly(false);
-        // forceUpdate();
     };
 
     const handleUpdate2 = () => {
-        // setForceFormReset(Math.random() * 10000);
         setFormActionType('update');
 
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
-        const momentTime = selectedRecord?.allowedTimingResponse?.map((i) => {
+        const momentTime = selectedRecord?.allowedTimings?.map((i) => {
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
@@ -274,27 +250,22 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         form.setFieldsValue({
             criticalityGroupCode: selectedRecord.criticalityGroupCode,
             criticalityGroupName: selectedRecord.criticalityGroupName,
-            criticalityDefaultGroup: selectedRecord.criticalityDefaultGroup,
+            criticalityDefaultGroup: Number(selectedRecord.criticalityDefaultGroup),
             activeIndicator: selectedRecord.activeIndicator,
-            allowedTimingRequest: momentTime,
+            allowedTimings: momentTime,
         });
         setsaveclick(true);
-        // setDrawer(true);
         setIsReadOnly(false);
-        // forceUpdate();
-
-        // formData && setFormData(formData?.data);
     };
 
     const handleView = (record) => {
         setFormActionType('view');
-        console.log('view', record);
-        // setFormData(record);
+
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
         setFooterEdit(true);
         setSaveBtn(false);
-        const momentTime = record?.allowedTimingResponse?.map((i) => {
+        const momentTime = record?.allowedTimings?.map((i) => {
             return {
                 timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
                 timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
@@ -303,36 +274,35 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         form.setFieldsValue({
             criticalityGroupCode: record.criticalityGroupCode,
             criticalityGroupName: record.criticalityGroupName,
-            criticalityDefaultGroup: record.criticalityDefaultGroup,
+            criticalityDefaultGroup: Number(record.criticalityDefaultGroup),
             activeIndicator: record.activeIndicator,
-            allowedTimingResponse: momentTime,
+            allowedTimings: momentTime,
         });
         setDrawer(true);
         setIsReadOnly(true);
-        // formData && setFormData(formData?.data);
     };
+
     const handleReferesh = () => {
         setRefershData(!RefershData);
     };
+
     const onChangeHandle = (e) => {
         const newdata = [];
         Object.keys(criticalityGroupData).map((keyname, i) => {
             if (criticalityGroupData[keyname].critcltyGropCode === e) {
                 newdata.push(criticalityGroupData[keyname]);
-                // setSearchdata(qualificationData[keyname])
             } else if (criticalityGroupData[keyname].critcltyGropDesc === e) {
                 newdata.push(criticalityGroupData[keyname]);
-                // setSearchdata(qualificationData[keyname])
             }
         });
 
         if (e === '') {
             setSearchdata(criticalityGroupData);
         } else {
-            setSearchdata(newdata);
+            setSearchdata(newdata?.map((el, i) => ({ ...el, srl: i + 1 })));
         }
-        //  record.qualificationCode.includes(value)
     };
+
     const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
         if (e.target.value === '') {
@@ -351,10 +321,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
-            dataIndex: 'Srl',
-            render: (text, record, index) => {
-                return index + 1;
-            },
+            dataIndex: 'srl',
         })
     );
 
@@ -384,7 +351,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -429,8 +396,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
-                                                    // marginLeft: -40,
-                                                    // paddingBottom: '5px',
                                                 }}
                                                 allowClear
                                                 onSearch={onChangeHandle}
@@ -440,8 +405,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </div>
                                 </Row>
                             </Col>
-                            {/* { searchKey && searchData?.length ? ( */}
-                            { criticalityGroupData?.length ? (
+
+                            {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
@@ -452,7 +417,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     </Button>
                                 </Col>
                             ) : (
-                             ''
+                                ''
                             )}
                         </Row>
                     </div>
@@ -460,6 +425,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             </Row>
 
             <DrawerUtil
+                deletedItemList={deletedItemList}
+                setDeletedItemList={setDeletedItemList}
                 setFormBtnDisable={setFormBtnDisable}
                 formBtnDisable={formBtnDisable}
                 successAlert={successAlert}
@@ -491,6 +458,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 saveandnewclick={saveandnewclick}
                 alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
+                isDataLoaded={isDataLoaded}
             />
 
             <Row gutter={20}>
@@ -503,29 +471,31 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                                     height: 60,
                                 }}
                                 description={
-                                    !criticalityGroupData?.length ?
+                                    !criticalityGroupData?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
-                                        </span> 
-                                        : 
+                                        </span>
+                                    ) : (
                                         <span> No records found.</span>
+                                    )
                                 }
                             >
-                                { !criticalityGroupData?.length ? (
-                                <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            Add Group
-                                        </Button>
-                                    </Col>
-                                </Row>)
-                                : ""
-                        }
+                                {!criticalityGroupData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Group
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable isLoading={!isDataLoaded} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>

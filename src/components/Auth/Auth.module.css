@@ -738,7 +738,7 @@ select.form-control:focus::-ms-value {
 }
 
 :global .ant-notification {
-    top: 16px !important;
+    top: 26px !important;
     margin-inline-end: 16px !important;
 }
 
@@ -981,9 +981,9 @@ select.form-control:focus::-ms-value {
         height: 300px;
     }
 
-    .loginSection .loginWrap .loginHtml {
+    /* .loginSection .loginWrap .loginHtml {
         height: 350px;
-    }
+    } */
 
     .loginSection .center .loginLogoSection img {
         width: 240px;
@@ -1101,7 +1101,6 @@ select.form-control:focus::-ms-value {
     }
 
     .loginSection .loginWrap .loginHtml {
-        height: 350px;
         width: auto;
         padding: 0px 15px;
     }
