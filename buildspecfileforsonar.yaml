@@ -26,7 +26,7 @@ phases:
             - cd build
             - ls -la
             #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
-            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=. -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_02695ac95d1770d6221bff1cd2c1ed1ca9c44866
+            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=./ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_02695ac95d1770d6221bff1cd2c1ed1ca9c44866
 
     post_build:
         commands:
