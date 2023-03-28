@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, data: criticalityGroupData = [] },
+            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -34,6 +34,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
+        isLoading,
         criticalityGroupData,
     };
     return returnValue;
@@ -52,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification }) => {
+export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
@@ -75,6 +76,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [deletedItemList, setDeletedItemList] = useState([]);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
+    const errorAction = (message) => {
+        showGlobalNotification(message);
+    };
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,7 +86,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, userId });
+            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -92,13 +96,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     }, [criticalityGroupData]);
 
     useEffect(() => {
-        fetchData({ setIsLoading: listShowLoading, userId });
+        fetchData({ setIsLoading: listShowLoading, errorAction, userId });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
-
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
-        showGlobalNotification({ message: description });
-    };
 
     const onFinish = (values) => {
         const allowedTiming = values?.allowedTimings?.map((time) => {
@@ -476,7 +476,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={!isDataLoaded} tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
