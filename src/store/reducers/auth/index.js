@@ -18,7 +18,6 @@ export const auth = (state = initialState, action) => {
 
         case AUTH_LOGIN_SUCCESS:
             const { token, accessToken, userName, userId, passwordStatus, exp, clientId } = action;
-            console.log('🚀 ~ file: index.js:20 ~ auth ~ action:', action);
             return {
                 ...state,
                 isUnauthenticated: false,

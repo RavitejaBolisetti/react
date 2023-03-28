@@ -419,7 +419,7 @@
 } */
 
 .contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
-
+    background-color: #ffffff;
     border-left: #ffffff ;
 }
 

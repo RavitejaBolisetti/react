@@ -30,11 +30,16 @@ criticalityDataActions.setFormData = (formData) => ({
 });
 
 criticalityDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data } = params;
+    const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onError = (errorMessage) => {
+        errorAction(errorMessage);
+        setIsLoading(false);
+    };
 
     const onSuccess = (res) => {
+        setIsLoading(false);
         if (res?.data) {
             dispatch(receiveData(res?.data));
         } else {

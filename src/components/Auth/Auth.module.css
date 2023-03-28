@@ -663,98 +663,10 @@ select.form-control:focus::-ms-value {
 }
 
 /*--------- Warning Notification End ---------*/
-.errorTitle {
-    margin-left: 5px;
-    padding-left: 5px;
-}
-
-.errorBoxContainer {
-    /* width: 25%;
-    */
-    width: 320px;
-    max-height: 90%;
-    /* margin: 3% auto;
-    */
-    padding: 10px 16px;
-    background: #FEE3D4;
-    color: #dedede;
-    font-size: 16px;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border: 1px solid #ED302D;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-    overflow: auto;
-    position: fixed;
-    top: 16px;
-    right: 16px;
-}
-
-.toastmessage :global .ant-notification-notice .ant-notification-notice-with-icon .ant-notification-notice-message {
-    margin-bottom: 8px;
-    margin-inline-start: 28px;
-    font-size: 16px
-}
-
-.errorBoxContainer h5 {
-    margin: 0;
-    padding: 0px;
-    /* border-bottom: 1px solid #ea3434;
-    */
-    font-size: 16px;
-    color: #EF0000;
-    padding-bottom: 5px !important;
-}
-
-.errorBoxContainer h5 .icon {
-    color: #ED302D;
-    /* padding-bottom: 5px;
-    */
-}
-
-.errorBoxContainer h5 .infoIcon {
-    color: #ffffff;
-}
-
-.errorBoxContainer h5 .loginErrorClose {
-    float: right;
-    cursor: pointer;
-}
 
 .loginSection :global .g-recaptcha>div>div {
     /* transform:scale(1.77); -webkit-transform:scale(1.77); transform-origin:0 0; -webkit-transform-origin:0 0; */
     margin: 0px auto;
-}
-
-:global .ant-btn.ant-btn-sm {
-    height: 28px !important;
-    padding: 4px 16px;
-    margin-bottom: 0px !important;
-    font-size: 12px !important;
-}
-
-:global .ant-btn-default {
-    background-color: transparent;
-}
-
-/* BEcause of global keyword this is being overidden everywhere */
-/* :global .ant-notification {
-    top: 16px !important;
-    margin-inline-end: 16px !important;
-} */
-
-:global .ant-notification-notice {
-    width: 395px !important;
-    padding: 10px !important;
-}
-
-:global .ant-notification-notice-close {
-    top: 10px !important;
-    right: 15px !important;
-}
-
-:global .ant-notification-notice-close:hover {
-    background-color: transparent !important;
 }
 
 /*--------- Warning Notification Start ---------*/
@@ -808,7 +720,13 @@ select.form-control:focus::-ms-value {
     background-color: #FF7A00 !important;
 }
 
+.warning :global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
 /*--------- Warning Notification End ---------*/
+
 /*--------- Error Notification Start ---------*/
 .error {
     color: #ED302D;
@@ -860,7 +778,15 @@ select.form-control:focus::-ms-value {
     background-color: #ea3434 !important;
 }
 
+
+
+.error :global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
 /*--------- Error Notification End ---------*/
+
 /*--------- Success Notification Start ---------*/
 .success {
     color: #70C922;
@@ -892,7 +818,13 @@ select.form-control:focus::-ms-value {
     padding-right: 20px;
 }
 
+.success :global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
 /*--------- Success Notification End ---------*/
+
 /* New css */
 .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
@@ -982,9 +914,9 @@ select.form-control:focus::-ms-value {
         height: 300px;
     }
 
-    .loginSection .loginWrap .loginHtml {
+    /* .loginSection .loginWrap .loginHtml {
         height: 350px;
-    }
+    } */
 
     .loginSection .center .loginLogoSection img {
         width: 240px;
@@ -1102,7 +1034,6 @@ select.form-control:focus::-ms-value {
     }
 
     .loginSection .loginWrap .loginHtml {
-        height: 350px;
         width: auto;
         padding: 0px 15px;
     }

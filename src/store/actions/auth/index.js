@@ -146,7 +146,6 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
 };
 
 export const authPostLogin = (data) => (dispatch) => {
-    console.log('🚀 ~ file: index.js:143 ~ authPostLogin ~ data:', data);
     dispatch(
         authPostLoginActions({
             userId: data?.userId,
@@ -171,7 +170,6 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
     };
 
     const loginError = ({ title = 'Information', message }) => {
-        console.log('🚀 ~ file: index.js:174 ~ loginError ~ title:', title);
         onError({ title, message });
         dispatch(authLoggingError(title, message));
     };
@@ -209,13 +207,12 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     const { successAction } = params;
     const url = BASE_URL_LOGOUT;
 
-    const logoutError = (errorMessage) => message.error(errorMessage);
+    // const logoutError = (errorMessage) => message.error(errorMessage);
     const title = 'Logout Successful';
-    const message = 'You are successfully logged out.';
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(showGlobalNotification({ notificationType: 'success', title, message }));
+            dispatch(showGlobalNotification({ notificationType: 'success', title, message: res?.responseMessage }));
             successAction && successAction(title, message);
             logoutClearAllData();
         } else {
@@ -232,9 +229,10 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: { userId },
         onSuccess,
         onError: () => {
+            logoutClearAllData();
             dispatch(showGlobalNotification({ notificationType: 'error', title: 'Information', message }));
         },
-        onTimeout: () => logoutError('Request timed out, Please try again'),
+        onTimeout: () => logoutClearAllData(),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
