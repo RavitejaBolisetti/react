@@ -65,18 +65,20 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
-                console.log('🚀 ~ file: axiosAPICall.js:63 ~ baseAPICall ~ error:', error);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    console.log('We are facing server issue!!');
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
+                    clearAllLocalStorage();
                 } else if (error.code) {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
+                        clearAllLocalStorage();
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
                         clearAllLocalStorage();
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are facing on server' });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }

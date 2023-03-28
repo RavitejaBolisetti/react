@@ -207,7 +207,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     const { successAction } = params;
     const url = BASE_URL_LOGOUT;
 
-    const logoutError = (errorMessage) => message.error(errorMessage);
+    // const logoutError = (errorMessage) => message.error(errorMessage);
     const title = 'Logout Successful';
 
     const onSuccess = (res) => {
@@ -232,7 +232,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
             logoutClearAllData();
             dispatch(showGlobalNotification({ notificationType: 'error', title: 'Information', message }));
         },
-        onTimeout: () => logoutError('Request timed out, Please try again'),
+        onTimeout: () => logoutClearAllData(),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),

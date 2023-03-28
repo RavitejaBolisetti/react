@@ -116,8 +116,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const onFinish = (values) => {
-        const finalAllowedTimingList = [...deletedItemList, ...values?.allowedTimings];
-        console.log("🚀 ~ file: CriticalityGroup.js:120 ~ onFinish ~ deletedItemList:", deletedItemList)
+        const finalAllowedTimingList = deletedItemList ? [...deletedItemList, ...values?.allowedTimings] : values?.allowedTimings;
+        
         const formatedTime = finalAllowedTimingList?.map((time) => {
             return {
                 id: time?.id || '',
@@ -186,8 +186,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 onError,
                 onSuccess,
             };
-                console.log("🚀 ~ file: CriticalityGroup.js:188 ~ onFinish ~ data:", data)
-            // saveData(requestData);
+
+            saveData(requestData);
         }
     };
 

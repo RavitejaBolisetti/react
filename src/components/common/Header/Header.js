@@ -281,7 +281,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                     </span>
                                                 </div>
                                                 <div className={styles.userText}>
-                                                    <div className={styles.userName}>{fullName}</div>
+                                                    <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
                                                     <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span>
                                                 </div>
                                                 <div className={styles.dropdownArrow}>
