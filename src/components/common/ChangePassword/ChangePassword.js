@@ -7,7 +7,7 @@ import styles from './ChangePassword.module.css';
 export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     return (
         <>
-            <Modal className={styles.changePassword} open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onCancel={onCancel} width={480}>
+            <Modal className={styles.changePassword} centered open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onCancel={onCancel} width={480}>
                 {discreption && (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

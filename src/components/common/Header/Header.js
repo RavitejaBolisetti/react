@@ -77,9 +77,13 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     // const delarAvtarData = dealerName?.split(' ');
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
+    const onError = (message) => {
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, userId });
+            fetchData({ setIsLoading: listShowLoading, userId, onError });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,6 +102,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             okType: 'danger',
             cancelText: 'No',
             wrapClassName: styles.confirmModal,
+            centered: true,
+            closable: true,
             onOk() {
                 doLogout({
                     successAction,

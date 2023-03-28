@@ -6,7 +6,7 @@ export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
 export const AXIOS_ERROR_INTERNAL = 'AXIOS_ERROR_INTERNAL';
 
 const baseAPICall = (params) => {
-    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, onUnAuthenticated, postRequest, token, accessToken, userId } = params;
+    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, postRequest, token, accessToken, userId } = params;
     let axiosConfig = {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
@@ -31,8 +31,12 @@ const baseAPICall = (params) => {
     const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        console.log("🚀 ~ file: axiosAPICall.js:34 ~ handleErrorMessage ~ displayErrorTitle:", displayErrorTitle,errorTitle)
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
+    };
+
+    const onUnAuthenticated = (message) => {
+        clearAllLocalStorage();
+        onError && onError(unAuthorizedMessage);
     };
     try {
         axios
@@ -71,7 +75,7 @@ const baseAPICall = (params) => {
                     if (error.code === 'ECONNABORTED') {
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        // clearAllLocalStorage();
+                        clearAllLocalStorage();
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are facing on server' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);

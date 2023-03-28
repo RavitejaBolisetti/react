@@ -146,7 +146,6 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
 };
 
 export const authPostLogin = (data) => (dispatch) => {
-    console.log('🚀 ~ file: index.js:143 ~ authPostLogin ~ data:', data);
     dispatch(
         authPostLoginActions({
             userId: data?.userId,
@@ -230,6 +229,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: { userId },
         onSuccess,
         onError: () => {
+            logoutClearAllData();
             dispatch(showGlobalNotification({ notificationType: 'error', title: 'Information', message }));
         },
         onTimeout: () => logoutError('Request timed out, Please try again'),

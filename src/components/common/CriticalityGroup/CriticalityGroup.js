@@ -81,6 +81,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
+    const [deletedItemList, setDeletedItemList] = useState([]);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
@@ -115,11 +116,14 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     };
 
     const onFinish = (values) => {
-        const formatedTime = values?.allowedTimings?.map((time) => {
+        const finalAllowedTimingList = [...deletedItemList, ...values?.allowedTimings];
+        console.log("🚀 ~ file: CriticalityGroup.js:120 ~ onFinish ~ deletedItemList:", deletedItemList)
+        const formatedTime = finalAllowedTimingList?.map((time) => {
             return {
                 id: time?.id || '',
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
+                isDeleted: time?.isDeleted,
             };
         });
 
@@ -130,24 +134,25 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         };
 
         const isOverlapping = (allowedTimingSlots) => {
-            const times = allowedTimingSlots?.map((slot) => {
-                const startTime = timeInMinutes(slot?.timeSlotFrom);
-                const endTime = timeInMinutes(slot?.timeSlotTo);
-                const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
-                return { startTime, endTime: adjustedTime };
-            });
-
-            times?.sort((a, b) => a?.startTime - b?.startTime);
-
-            for (let i = 0; i < times?.length - 1; i++) {
-                const slot1 = times[i];
-                const slot2 = times[i + 1];
-
-                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
-                    return true;
-                }
-            }
             return false;
+            // const times = allowedTimingSlots?.map((slot) => {
+            //     const startTime = timeInMinutes(slot?.timeSlotFrom);
+            //     const endTime = timeInMinutes(slot?.timeSlotTo);
+            //     const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
+            //     return { startTime, endTime: adjustedTime };
+            // });
+
+            // times?.sort((a, b) => a?.startTime - b?.startTime);
+
+            // for (let i = 0; i < times?.length - 1; i++) {
+            //     const slot1 = times[i];
+            //     const slot2 = times[i + 1];
+
+            //     if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
+            //         return true;
+            //     }
+            // }
+            // return false;
         };
 
         if (isOverlapping(formatedTime)) {
@@ -181,7 +186,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 onError,
                 onSuccess,
             };
-            saveData(requestData);
+                console.log("🚀 ~ file: CriticalityGroup.js:188 ~ onFinish ~ data:", data)
+            // saveData(requestData);
         }
     };
 
@@ -419,6 +425,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             </Row>
 
             <DrawerUtil
+                deletedItemList={deletedItemList}
+                setDeletedItemList={setDeletedItemList}
                 setFormBtnDisable={setFormBtnDisable}
                 formBtnDisable={formBtnDisable}
                 successAlert={successAlert}
