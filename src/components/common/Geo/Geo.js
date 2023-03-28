@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+    console.log('🚀 ~ file: Geo.js:22 ~ mapStateToProps ~ attributeData:', attributeData);
 
     let returnValue = {
         collapsed,
@@ -31,7 +32,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         geoData,
         isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
+        attributeData,
+        // attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };

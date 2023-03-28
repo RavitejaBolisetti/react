@@ -5,15 +5,12 @@ function Captcha() {
     const [token, setToken] = useState('');
     const [name, setName] = useState('');
     useEffect(() => {
-        ReactRecaptcha3.init('6LedAJEUAAAAAPttxeFNp6ZtAvKGI8D9gESE-hl3').then((status) => {
-            console.log(status);
-        });
+        ReactRecaptcha3.init('6LedAJEUAAAAAPttxeFNp6ZtAvKGI8D9gESE-hl3').then((status) => {});
     }, []);
 
     const submit = () => {
         ReactRecaptcha3.getToken().then(
             (resp) => {
-                console.log(resp);
                 setToken(resp);
             },
             (error) => {

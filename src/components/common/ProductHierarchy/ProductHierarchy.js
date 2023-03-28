@@ -356,8 +356,6 @@ export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoa
         setSelectedTreeSelectKey,
         handleAttributeChange,
     };
-    
-    console.log(formData, 'formData');
 
     return (
         <>
