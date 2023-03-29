@@ -193,14 +193,14 @@
 } */
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {
-  background-color: transparent !important;
+  background-color: white !important;
   /* color: #000000; */
   border-radius: 4px;
 }
 
 /* changes on menu list items on select/visited/focus */
 :global .ant-menu-light .ant-menu-item-selected {
-  background-color: transparent;
+  background-color: white;
   border-radius: 4px;
   color: #ea2929;
 }
@@ -397,6 +397,10 @@
   -webkit-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
   box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
+}
+
+.changeTheme :global .ant-btn-default {
+  background-color: transparent !important;
 }
 
 .changeThemeBorder {
