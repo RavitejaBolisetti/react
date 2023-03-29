@@ -31,7 +31,7 @@ phases:
             #- npm run coverage --watchAll=false
             - npm run build
             - ls -la
-            - npm run test
+            - cd build
             - ls -la
             #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
             - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=src/ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860 -Dsonar.jascript.lcov.reportPaths=coverage/**/locov.info
