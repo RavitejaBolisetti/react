@@ -6,7 +6,6 @@ import { axiosAPICall } from 'utils//axiosAPICall';
 import { withAuthToken } from 'utils//withAuthToken';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
-import { showGlobalNotification } from '../notification';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_PRE_SUCCESS = 'AUTH_LOGIN_PRE_SUCCESS';
@@ -63,11 +62,8 @@ const unAuthenticate = (message) => ({
     message,
 });
 
-export const doLogout = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    dispatch(logoutClearAllData());
-});
-
-const logoutClearAllData = () => {
+export const doLogout = () => {
+    // dispatch(authDoLogout());
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
@@ -76,21 +72,7 @@ const logoutClearAllData = () => {
 
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
     dispatch(unAuthenticate(errorMessage));
-    dispatch(logoutClearAllData());
-};
-
-export const clearAllAuthentication = (message) => (dispatch) => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
-};
-
-export const clearAllLocalStorage = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
-    localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
+    dispatch(doLogout());
 };
 
 const authPostLoginActions =
@@ -146,7 +128,6 @@ export const doCloseUnAuthenticatedError = () => (dispatch) => {
 };
 
 export const authPostLogin = (data) => (dispatch) => {
-    console.log('🚀 ~ file: index.js:143 ~ authPostLogin ~ data:', data);
     dispatch(
         authPostLoginActions({
             userId: data?.userId,
@@ -170,7 +151,7 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
         }
     };
 
-    const loginError = ({ title = 'Information', message }) => {
+    const loginError = ({ title = 'ERROR', message }) => {
         onError({ title, message });
         dispatch(authLoggingError(title, message));
     };
@@ -205,20 +186,12 @@ export const doLogin = (requestData, showFormLoading, onLogin, onError) => (disp
 };
 
 export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { successAction } = params;
+    const { onSuccess, onError } = params;
     const url = BASE_URL_LOGOUT;
 
-    const logoutError = (errorMessage) => message.error(errorMessage);
-    const title = 'Logout Successful';
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(showGlobalNotification({ notificationType: 'success', title, message: res?.responseMessage }));
-            successAction && successAction(title, message);
-            logoutClearAllData();
-        } else {
-            dispatch(showGlobalNotification({ message }));
-        }
+    const onSuccessAction = (res) => {
+        onSuccess && onSuccess(res);
+        doLogout();
     };
 
     const apiCallParams = {
@@ -228,11 +201,9 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         accessToken,
         userId,
         data: { userId },
-        onSuccess,
-        onError: () => {
-            dispatch(showGlobalNotification({ notificationType: 'error', title: 'Information', message }));
-        },
-        onTimeout: () => logoutError('Request timed out, Please try again'),
+        onSuccess: onSuccessAction,
+        onError: onError,
+        onTimeout: () => doLogout(),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),

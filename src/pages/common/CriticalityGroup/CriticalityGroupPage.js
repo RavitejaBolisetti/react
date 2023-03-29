@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
@@ -23,7 +23,7 @@ export const CriticalityGroupPageBase = (props) => {
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-    
+
         showChangeHisoty: true,
         visibleChangeHistory: false,
     };

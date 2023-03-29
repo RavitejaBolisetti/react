@@ -1,12 +1,14 @@
+import { EN } from 'language/en';
+
 import axios from 'axios';
-import { clearAllLocalStorage } from 'store/actions/auth';
+import { doLogout } from 'store/actions/auth';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
 export const AXIOS_ERROR_INTERNAL = 'AXIOS_ERROR_INTERNAL';
 
 const baseAPICall = (params) => {
-    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, onUnAuthenticated, postRequest, token, accessToken, userId } = params;
+    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, postRequest, token, accessToken, userId } = params;
     let axiosConfig = {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
@@ -28,12 +30,17 @@ const baseAPICall = (params) => {
         };
     }
 
-    const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
+    const unAuthorizedTtitle = EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
+    const unAuthorizedMessage = EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
-        console.log("🚀 ~ file: axiosAPICall.js:34 ~ handleErrorMessage ~ displayErrorTitle:", displayErrorTitle,errorTitle)
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
+
+    const onUnAuthenticated = () => {
+        onError && onError({ title: unAuthorizedTtitle, message: unAuthorizedMessage });
+    };
+
     try {
         axios
             .request(axiosConfig)
@@ -56,23 +63,26 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: response?.data?.errors || response?.data?.responseMessage });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.data?.errors || response?.data?.responseMessage });
                     }
                 }
             })
             .catch((error) => {
-                console.log('🚀 ~ file: axiosAPICall.js:63 ~ baseAPICall ~ error:', error);
+                console.log('🚀 ~ file: axiosAPICall.js:70 ~ baseAPICall ~ error:', error);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    console.log('We are facing server issue!!');
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                 } else if (error.code) {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        // clearAllLocalStorage();
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are facing on server' });
+                        doLogout();
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
+                    } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: EN.GENERAL.NETWORK_ERROR.MESSAGE });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -52,6 +52,11 @@ const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () 
         // form.validateFields().then((values) => {});
     };
 
+    useEffect(() => {
+        form.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
+
     const successAction = (title, message) => {
         showGlobalNotification({ notificationType: 'success', title, message });
         navigate(ROUTING_LOGIN);
@@ -102,7 +107,7 @@ const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () 
         setConfirmDirty(confirmDirty || !!value);
     };
     return (
-        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed} className={styles.changePassword}>
+        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>

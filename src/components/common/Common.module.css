@@ -345,9 +345,9 @@
     color: #342C2C;
 }
 
-:global .ant-modal .ant-modal-body {
+/* :global .ant-modal .ant-modal-body {
     padding-top: 16px;
-}
+} */
 
 :global .ant-modal .ant-modal-close:hover {
     color: #ff3e5b;
@@ -363,7 +363,7 @@
 }
 
 :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b ;
+    background-color: #ff3e5b;
     color: #ffffff !important;
 }
 
@@ -477,6 +477,6 @@
 
 
 
-.contentHeaderBackground  :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
+.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }

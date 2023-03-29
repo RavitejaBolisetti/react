@@ -63,8 +63,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const pagePath = location.pathname;
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);
-
+    
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
@@ -73,15 +72,23 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
     useEffect(() => {
-        if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, userId });
+        if (!isDataLoaded && userId) {
+            fetchData({ setIsLoading: listShowLoading, userId, onError });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
-    const successAction = (title, message) => {
-        navigate(routing.ROUTING_LOGIN);
+    const onSuccess = (res) => {
+        if (res?.data) {
+            showGlobalNotification({ notificationType: 'success', title: 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
+            navigate(routing.ROUTING_LOGIN);
+        } else {
+            // onError({ message });
+        }
+    };
+
+    const onError = (message) => {
+        showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
     };
 
     const showConfirm = () => {
@@ -93,9 +100,12 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             okType: 'danger',
             cancelText: 'No',
             wrapClassName: styles.confirmModal,
+            centered: true,
+            closable: true,
             onOk() {
                 doLogout({
-                    successAction,
+                    onSuccess,
+                    onError,
                     userId,
                 });
             },
@@ -176,8 +186,19 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
+
     const onSearch = (value) => console.log(value);
     const isDashboard = pagePath === routing.ROUTING_DASHBOARD;
+
+    let formatPhoneNumber = (mobileNo) => {
+        let cleaned = ('' + mobileNo).replace(/\D/g, '');
+        let match = cleaned.match(/^(\d{3})(\d{4})(\d{3})$/);
+
+        if (match) {
+            return '+91-' + match[1] + '  ' + match[2] + ' ' + match[3];
+        }
+        return null;
+    };
     return (
         <>
             {!isLoading ? (
@@ -264,8 +285,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                     </span>
                                                 </div>
                                                 <div className={styles.userText}>
-                                                    <div className={styles.userName}>{fullName}</div>
-                                                    <span className={styles.userServiceArea}>{mobileNo}</span>
+                                                    <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
+                                                    <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span>
                                                 </div>
                                                 <div className={styles.dropdownArrow}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
@@ -289,12 +310,9 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             )}
 
             <div style={{ clear: 'both' }}></div>
-            <ChangePassword title="Change Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
-            <ChangePassword title="Update Your Password" discreption="You have not updated your password from 90 days. Please change your password" isOpen={iUpdatePasswordModalOpen} onOk={() => setUpdatePasswordModalOpen(false)} onCancel={() => setUpdatePasswordModalOpen(false)} />
+            <ChangePassword title="Change Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />
         </>
     );
 };
 
 export const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderMain);
-
-//<
