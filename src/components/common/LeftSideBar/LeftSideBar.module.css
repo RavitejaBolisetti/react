@@ -468,7 +468,7 @@
   padding-left: 7px;
 }
 
-/* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-title-content a>span:first-child {
+/* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 0px;
   vertical-align: middle;
 } */

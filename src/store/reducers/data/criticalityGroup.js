@@ -15,7 +15,7 @@ export const criticalityGroup = (state = initialState, action) => {
         case CRITICALITY_SET_FORM_DATA:
             return { ...state, isFormDataLoaded: action.isFormDataLoaded, formData: action.formData };
         case CRITICALITY_DATA_SHOW_LOADING:
-            return { ...state, isLoading: action.isLoading };
+            return { ...state, isLoading: action.isLoading, };
         default:
             return { ...state };
     }

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
-import { Button, Col, Input, Modal, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { showGlobalNotification } from 'store/actions/notification';
 import { EditIcon, ViewEyeIcon } from 'Icons';
-
-import moment from 'moment';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -20,20 +19,11 @@ import style from './criticatiltyGroup.module.css';
 
 const { Search } = Input;
 
-const informationMessage = {
-    deleteGrpTiming: 'Group timing has been deleted successfully',
-    createGroupTitleOnSaveNew: 'group created Successfully. Continue Creating More Groups',
-    updateGroup: 'Your group has been updated. Refresh to get the latest result',
-    createGroup: 'Your group has been Created. Refresh to get the latest result',
-    success: 'Group Created Successfully',
-    updated: 'Group Updated',
-};
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, data: criticalityGroupData = [] },
+            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -44,6 +34,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
+        isLoading,
         criticalityGroupData,
     };
     return returnValue;
@@ -56,12 +47,13 @@ const mapDispatchToProps = (dispatch) => ({
             fetchData: criticalityDataActions.fetchData,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, userId, criticalityGroupData, isDataLoaded }) => {
+export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
@@ -75,8 +67,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [searchData, setSearchdata] = useState('');
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
-    const [footerEdit, setFooterEdit] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
+    const [footerEdit, setFooterEdit] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [saveclick, setsaveclick] = useState();
@@ -84,6 +76,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     const [deletedItemList, setDeletedItemList] = useState([]);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
+    const errorAction = (message) => {
+        showGlobalNotification(message);
+    };
     useEffect(() => {
         form.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +86,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
 
     useEffect(() => {
         if (!isDataLoaded) {
-            fetchData({ setIsLoading: listShowLoading, userId });
+            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -101,31 +96,21 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
     }, [criticalityGroupData]);
 
     useEffect(() => {
-        fetchData({ setIsLoading: listShowLoading, userId });
+        fetchData({ setIsLoading: listShowLoading, errorAction, userId });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
 
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            placement,
-        });
-    };
-
     const onFinish = (values) => {
-        const finalAllowedTimingList = deletedItemList ? [...deletedItemList, ...values?.allowedTimings] : values?.allowedTimings;
-        
-        const formatedTime = finalAllowedTimingList?.map((time) => {
+        const allowedTiming = values?.allowedTimings?.map((time) => {
             return {
                 id: time?.id || '',
                 timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'),
                 timeSlotTo: time?.timeSlotTo?.format('HH:mm'),
-                isDeleted: time?.isDeleted,
+                isDeleted: 'N',
             };
         });
+
+        const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
 
         //code for overlapping check on save
         const timeInMinutes = (time) => {
@@ -134,32 +119,28 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
         };
 
         const isOverlapping = (allowedTimingSlots) => {
-            return false;
             // const times = allowedTimingSlots?.map((slot) => {
             //     const startTime = timeInMinutes(slot?.timeSlotFrom);
             //     const endTime = timeInMinutes(slot?.timeSlotTo);
             //     const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
             //     return { startTime, endTime: adjustedTime };
             // });
-
             // times?.sort((a, b) => a?.startTime - b?.startTime);
-
             // for (let i = 0; i < times?.length - 1; i++) {
             //     const slot1 = times[i];
             //     const slot2 = times[i + 1];
-
             //     if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
             //         return true;
             //     }
             // }
-            // return false;
+            return false;
         };
 
-        if (isOverlapping(formatedTime)) {
-            informationModalBox({ icon: 'error', message: 'Error', description: 'The selected allowed timing slots are overlapping.', className: style.error, placement: 'bottomRight' });
+        if (isOverlapping(finalAllowedTimingList)) {
+            showGlobalNotification({ title: 'Warning', message: 'The selected allowed timing slots are overlapping', placement: 'bottomRight' });
         } else {
             const recordId = selectedRecord?.id || '';
-            const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: formatedTime || [] };
+            const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
             const onSuccess = (res) => {
                 form.resetFields();
@@ -168,15 +149,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                 fetchData({ setIsLoading: listShowLoading, userId });
                 if (saveclick === true) {
                     setDrawer(false);
-                    informationModalBox({ icon: 'success', message: selectedRecord?.id ? informationMessage.updated : informationMessage.success, description: selectedRecord?.id ? informationMessage.updateGroup : informationMessage.createGroup, className: style.success, placement: 'topRight' });
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 } else {
                     setDrawer(true);
-                    informationModalBox({ icon: 'success', message: informationMessage.createGroupTitleOnSaveNew, className: style.success, placement: 'bottomRight' });
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
                 }
             };
 
             const onError = (message) => {
-                informationModalBox({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
+                showGlobalNotification({ message, placement: 'bottomRight' });
             };
 
             const requestData = {
@@ -425,6 +406,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
             </Row>
 
             <DrawerUtil
+                showGlobalNotification={showGlobalNotification}
                 deletedItemList={deletedItemList}
                 setDeletedItemList={setDeletedItemList}
                 setFormBtnDisable={setFormBtnDisable}
@@ -495,7 +477,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, use
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={!isDataLoaded} tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
