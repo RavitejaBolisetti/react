@@ -16,6 +16,7 @@ import { DataTable } from 'utils/dataTable';
 
 import styles from 'pages/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
+import { escapeRegExp } from 'utils/escapeRegExp';
 
 const { Search } = Input;
 
@@ -62,9 +63,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(data.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
-    const [drawerTitle, setDrawerTitle] = useState('');
     const [form] = Form.useForm();
-    const [searchData, setSearchdata] = useState('');
+    const [searchData, setSearchdata] = useState(criticalityGroupData);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
@@ -74,6 +74,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [deletedItemList, setDeletedItemList] = useState([]);
+    const [filterString, setFilterString] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     const errorAction = (message) => {
@@ -85,20 +86,30 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     }, [forceFormReset]);
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchData({ setIsLoading: listShowLoading, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
-    }, [criticalityGroupData]);
-
-    useEffect(() => {
-        fetchData({ setIsLoading: listShowLoading, errorAction, userId });
+        if (isDataLoaded && criticalityGroupData) {
+            if (filterString) {
+                const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            } else {
+                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+            }
+         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RefershData]);
+    }, [filterString, isDataLoaded, criticalityGroupData]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchData({ setIsLoading: listShowLoading, errorAction, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [RefershData, userId]);
 
     const onFinish = (values) => {
         const allowedTiming = values?.allowedTimings?.map((time) => {
@@ -267,34 +278,16 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setRefershData(!RefershData);
     };
 
-    const onChangeHandle = (e) => {
-        const newdata = [];
-        Object.keys(criticalityGroupData).map((keyname, i) => {
-            if (criticalityGroupData[keyname].critcltyGropCode === e) {
-                newdata.push(criticalityGroupData[keyname]);
-            } else if (criticalityGroupData[keyname].critcltyGropDesc === e) {
-                newdata.push(criticalityGroupData[keyname]);
-            }
-        });
-
-        if (e === '') {
-            setSearchdata(criticalityGroupData);
-        } else {
-            setSearchdata(newdata?.map((el, i) => ({ ...el, srl: i + 1 })));
-        }
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
-    const onChangeHandle2 = (e) => {
-        const getSearch = e.target.value;
-        if (e.target.value === '') {
-            const tempArr = criticalityGroupData;
-            setSearchdata(tempArr);
-            return;
-        }
-        if (getSearch.length > -1) {
-            const searchResult = criticalityGroupData.filter((record) => record.criticalityGroupCode.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.criticalityGroupName.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setSearchdata(searchResult);
-        }
+    const onSearchHandle = (value) => {
+        setFilterString(value);
+    };
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
     };
 
     const tableColumn = [];
@@ -379,8 +372,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                                                     width: 300,
                                                 }}
                                                 allowClear
-                                                onSearch={onChangeHandle}
-                                                onChange={onChangeHandle2}
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>
@@ -433,7 +426,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 formActionType={formActionType}
                 isReadOnly={isReadOnly}
                 setFormData={setFormData}
-                drawerTitle={drawerTitle}
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}

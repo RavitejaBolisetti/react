@@ -830,16 +830,6 @@ select.form-control:focus::-ms-value {
     margin-bottom: -10px !important;
 }
 
-.checkColors {
-    color: #ff3e5b;
-    font-size: 16px;
-    letter-spacing: 0.8px;
-}
-
-.checkColor {
-    color: #ffffff;
-    font-size: 16px;
-}
 
 .loginForm :global .ant-checkbox-disabled+span {
     color: #ffffff;
@@ -851,11 +841,29 @@ select.form-control:focus::-ms-value {
     text-align: center;
 }
 
+.otpVerificationContainer {
+    font-size: 14px;
+}
+
+.otpCounter {
+    color: #ffffff;
+    letter-spacing: 0.8px;
+}
+
+.otpTitle {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.otpNotReceive {
+    color: #ff3e5b;
+    letter-spacing: 0.8px;
+}
+
 .resendEnabled {
     color: white;
     float: right;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .resendDisabled {
@@ -875,8 +883,8 @@ select.form-control:focus::-ms-value {
 }
 
 .changer {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .changer input {

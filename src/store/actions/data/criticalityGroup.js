@@ -2,7 +2,6 @@ import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 import { BASE_URL_CRITICALITY_GROUP } from 'constants/routingApi';
-import { message } from 'antd';
 
 export const CRITICALITY_DATA_LOADED = 'CRITICALITY_DATA_LOADED';
 export const CRITICALITY_SET_FORM_DATA = 'CRITICALITY_SET_FORM_DATA';

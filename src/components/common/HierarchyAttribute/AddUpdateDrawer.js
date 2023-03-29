@@ -1,43 +1,42 @@
 import React, { useEffect } from 'react';
 import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
-import styles from '../Common.module.css';
-import style2 from './HierarchyAttribute.module.css';
-import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrashAlt } from 'react-icons/fa';
+import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable,setFormBtnDisable }) => {
+import styles from './HierarchyAttribute.module.css';
+
+const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
 
-    let drawerTitle = ''
-    if( formActionType === 'view'){
-        drawerTitle = 'View Hierarchy Attribute' ;
-    }else if(!!editRow?.id) {
-        drawerTitle = 'Edit Hierarchy Attribute' ;
-    }else{
-        drawerTitle = 'Add Hierarchy Attribute'
+    let drawerTitle = '';
+    if (formActionType === 'view') {
+        drawerTitle = 'View Hierarchy Attribute';
+    } else if (!!editRow?.id) {
+        drawerTitle = 'Edit Hierarchy Attribute';
+    } else {
+        drawerTitle = 'Add Hierarchy Attribute';
     }
 
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(editRow);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editRow]);
 
     const onClose = () => {
         setShowDrawer(false);
-        setIsReadOnly(false)
-        setFormBtnDisable(false)
-
+        setIsReadOnly(false);
+        setFormBtnDisable(false);
     };
     const handlesaveandnew = () => {
         setTimeout(() => {
             form.resetFields();
-            setEditRow({    
+            setEditRow({
                 duplicateAllowedAtAttributerLevelInd: true,
-                duplicateAllowedAtOtherParent: true,        
+                duplicateAllowedAtOtherParent: true,
                 isChildAllowed: true,
-                status: true
+                status: true,
             });
         }, 1000);
         setsaveclick(false);
@@ -47,7 +46,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
         setsaveclick(true);
         setsaveandnewclick(false);
     };
-    
+
     const handleFormSubmitBtn = () => {
         setFormBtnDisable(true);
     };
@@ -57,12 +56,12 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
             title={drawerTitle}
             footer={
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style2.drawerFooterButtons}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.drawerFooterButtons}>
                         <Button danger onClick={onClose}>
                             Cancel
                         </Button>
                     </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style2.drawerFooterButtons} style={{ textAlign: 'right' }}>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.drawerFooterButtons} style={{ textAlign: 'right' }}>
                         {formActionType === 'view' ? (
                             <Button onClick={handleEditView} type="primary">
                                 Edit
@@ -88,7 +87,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
             placement="right"
             onClose={onClose}
             open={showDrawer}
-            className={style2.editDrawer}
+            className={styles.editDrawer}
         >
             <Space
                 direction="vertical"
@@ -100,13 +99,13 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                 <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField("Code"), { validator: (rule, value) => !editRow['hierarchyAttribueCode'] ? tableData?.findIndex((el) =>  el['hierarchyAttribueCode']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve() :  Promise.resolve()  }]}>
-                                <Input placeholder={preparePlaceholderText("Code")} />
+                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField('Code'), { validator: (rule, value) => (!editRow['hierarchyAttribueCode'] ? (tableData?.findIndex((el) => el['hierarchyAttribueCode']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
+                                <Input placeholder={preparePlaceholderText('Code')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField("Name"), { validator: (rule, value) => ( !editRow['hierarchyAttribueName'] ? tableData?.findIndex((el) => el['hierarchyAttribueName']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve() :Promise.resolve() ) }]}>
-                                <Input placeholder={preparePlaceholderText("Name")} />
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name'), { validator: (rule, value) => (!editRow['hierarchyAttribueName'] ? (tableData?.findIndex((el) => el['hierarchyAttribueName']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
+                                <Input placeholder={preparePlaceholderText('Name')} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -124,17 +123,17 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item  initialValue={editRow?.isChildAllowed} label="Child Allowed?" name="isChildAllowed">
+                            <Form.Item initialValue={editRow?.isChildAllowed} label="Child Allowed?" name="isChildAllowed">
                                 <Switch defaultChecked={editRow?.isChildAllowed} checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.status } label="Status" name="status">
+                            <Form.Item initialValue={editRow?.status} label="Status" name="status">
                                 <Switch defaultChecked={editRow?.status} checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Form.Item initialValue={editRow?.id } hidden label="Status" name="id">
+                    <Form.Item initialValue={editRow?.id} hidden label="Status" name="id">
                         <Input />
                     </Form.Item>
                 </Form>

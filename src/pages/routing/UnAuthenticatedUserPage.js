@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import * as routing from 'constants/routing';
-import { LoginPage, LogoutPage, ForgotPasswordPage, UpdatePasswordPage, SSOLoginPage } from 'pages/auth';
+import { LoginPage, ForgotPasswordPage, UpdatePasswordPage, SSOLoginPage } from 'pages/auth';
 import { SplashPage } from 'pages/splash';
 import { DealerHierarchyPage } from 'pages/common/DealerHierarchy/DealerHierarchyPage';
 
