@@ -23,7 +23,7 @@ phases:
             - echo Compiling the dist folder
             #- npm run test --coverage --watchAll=false
             - ls -la
-            - cd build
+            - cd src
             - ls -la
             #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482
             - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=./ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
