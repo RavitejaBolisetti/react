@@ -35,7 +35,7 @@ phases:
             - npm run build
     post_build:
         commands:
-            - echo Build completed on `date` 
+            - echo Build completed on `date`
 # Include only the files required for your application to run.
 artifacts:
     files:
@@ -45,7 +45,7 @@ cache:
     paths:
         - 'node_modules/**/*'
 reports:
-    jest-reports:
+    reports-test:
         files:
-            - './coverage/clover.xml'
+            - 'coverage/clover.xml'
         file-format: 'CLOVERXML'
