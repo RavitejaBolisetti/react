@@ -31,7 +31,7 @@ const DashboardSkeltonBase = () => {
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.mb10}>
                     <CardSkeleton theme={'light'} content={false} />
-                    <ListSkeleton count={14} />
+                    <ListSkeleton  count={14} />
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.mb10}>
                     <CardSkeleton theme={'light'} />

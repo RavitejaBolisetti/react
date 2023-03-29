@@ -5,13 +5,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { doLogoutAPI } from 'store/actions/auth';
-import { Form, Row, Col, Button, Input, Checkbox, notification } from 'antd';
-import { UndoOutlined, CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
-import { showGlobalNotification } from 'store/actions/notification';
+import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
+import { UndoOutlined } from '@ant-design/icons';
+import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 
 import { BiUser } from 'react-icons/bi';
-import { CiCircleAlert } from 'react-icons/ci';
-import OTPTimer from 'otp-timer';
 
 import { ROUTING_LOGIN } from 'constants/routing';
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
@@ -22,25 +20,6 @@ import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { ButtonGroup } from 'react-bootstrap';
-
-const mapStateToProps = (state) => {
-    const {
-        auth: { token, isLoggedIn, userId },
-        data: {
-            ForgotPassword: { isLoading, isLoaded: isDataLoaded = false },
-        },
-    } = state;
-
-    return {
-        isDataLoaded,
-        token,
-        isLoggedIn,
-        userId,
-        isLoading,
-    };
-};
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
@@ -53,12 +32,13 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
             showGlobalNotification,
+            hideGlobalNotification,
         },
         dispatch
     ),
 });
 
-const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, listShowLoading }) => {
+const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
@@ -71,8 +51,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
 
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
-
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
         return () => {
@@ -82,7 +60,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     }, [counter]);
 
     const onError = (message) => {
-        showGlobalNotification({ title: 'Information', message: message[0] || message });
+        showGlobalNotification({ title: 'ERROR', message: message[0] || message });
     };
 
     const onVerifyUser = (values) => {
@@ -142,7 +120,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
             const onSuccess = (res) => {
                 setValidationKey(res?.data?.validationKey);
-                showGlobalNotification({ notificationType: 'success', title: 'OTP Sent', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'OTP Verified', message: res?.responseMessage });
                 setCurrentStep(4);
             };
 
@@ -190,7 +168,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         setOTPSentOnEmail(event.target.checked);
     };
 
-
     const validateOTPOption = (_, value) => {
         if (!(otpSentOnMobile || otpSentOnEmail)) {
             return Promise.reject(new Error('Please choose at least one option'));
@@ -224,7 +201,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     return (
         <>
-            {contextAlertNotification}
             <div className={styles.loginSection}>
                 <div className={styles.loginMnMlogo}>
                     <img src={IMAGES.MAH_WHITE_LOGO} alt="" />
@@ -349,11 +325,11 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
                                                     <h1>OTP Verification</h1>
-                                                    <div className={styles.loginSubHeading}>{otpMessage ? otpMessage : 'Please enter 6 digit OTP sent to your <br></br> registered mobile number +91-96 XXXX XXXX'}</div>
+                                                    <div className={styles.loginSubHeading}>{otpMessage}</div>
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.checkColor}> Enter OTP </div>
+                                                        <div className={styles.otpTitle}>Enter OTP </div>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
@@ -363,9 +339,9 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Row gutter={20}>
+                                                        <Row gutter={20} className={styles.otpVerificationContainer}>
                                                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                <div className={styles.checkColors}>{counter ? `${counter >= 10 ? counter : `0${counter}`}s` : "Didn't receive OTP?"}</div>
+                                                                {counter ? <div className={styles.otpCounter}>{`${counter >= 10 ? counter : `0${counter}`}s`}</div> : <div className={styles.otpNotReceive}>{"Didn't receive OTP?"}</div>}
                                                             </Col>
                                                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                                 <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">

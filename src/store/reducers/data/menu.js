@@ -1,3 +1,4 @@
+import { MenuConstant } from 'constants/MenuConstant';
 import { MENU_DATA_LOADED, MENU_DATA_FILTER, MENU_DATA_SHOW_LOADING } from 'store/actions/data/menu';
 
 const initialState = {
@@ -17,6 +18,7 @@ const generateList = (data) => {
         node &&
             dataList.push({
                 ...rest,
+                link: MenuConstant?.[node?.menuId?.toLowerCase()]?.link,
             });
         if (node.subMenu) {
             generateList(node.subMenu);

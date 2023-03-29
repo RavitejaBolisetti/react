@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { clearAllLocalStorage } from 'store/actions/auth';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
@@ -35,7 +34,6 @@ const baseAPICall = (params) => {
     };
 
     const onUnAuthenticated = (message) => {
-        clearAllLocalStorage();
         onError && onError(unAuthorizedMessage);
     };
     try {
@@ -60,7 +58,7 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: response?.data?.errors || response?.data?.responseMessage });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.data?.errors || response?.data?.responseMessage });
                     }
                 }
             })
@@ -68,17 +66,14 @@ const baseAPICall = (params) => {
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
-                    clearAllLocalStorage();
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                 } else if (error.code) {
                     // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
-                        clearAllLocalStorage();
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        clearAllLocalStorage();
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }
