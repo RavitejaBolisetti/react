@@ -3,6 +3,11 @@
      right: -10px !important;
  }
 
+ :global .ant-notification-notice {
+     width: 320px !important;
+     padding: 10px 10px !important;
+ }
+
  :global .ant-notification-bottomRight .ant-notification-notice {
      width: 475px !important;
      padding: 10px !important;

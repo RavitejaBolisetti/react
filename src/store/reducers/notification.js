@@ -4,7 +4,7 @@ const initialState = {
     visible: false,
     showTitle: true,
     notificationType: 'error',
-    title: 'Information',
+    title: 'ERROR',
     message: null,
     placement: null,
 };
