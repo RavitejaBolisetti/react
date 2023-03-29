@@ -6,6 +6,10 @@
     height: 64px;
 }
 
+.headerContainer {
+    font-family: 'Lato' !important;
+}
+
 .headerLeft {
     padding-left: 32px;
 }
@@ -13,7 +17,6 @@
 .userAvatar {
     padding-top: 12px;
 }
-
 
 .userAvatarSkeleton {
     padding-top: 0px;
@@ -34,6 +37,21 @@
     font-weight: 700;
 }
 
+.userText .userName {
+    max-width: 112px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dropdownArrow {
+    padding: 80%;
+}
+
+.dropdownArrow .navLink {
+    color: #FF3E5B !important;
+}
+
 .bellSkeleton {
     padding-top: 1px;
 }
@@ -41,7 +59,7 @@
 .userTypeSkeleton {
     float: right;
     padding-top: 7px;
-    color: #0B0B0C;
+    color: #342C2C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
@@ -50,25 +68,72 @@
 .userTextSkeleton {
     float: right;
     padding-top: 8px;
-    color: #0B0B0C;
+    color: #342C2C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
 }
 
 .dealerName {
-    color: #ea3434;
-    font-size: 20px;
+    color: #342C2C;
+    font-size: 16px;
     padding-bottom: 2px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+/* .userName {
+    max-width: 150px;
+    text-align: right;
+    text-overflow: ellipsis;
+} */
+
+.dealerLocation {
+    color: #FF3E5B;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.dropdownIcon {
+    color: #FF3E5B;
+    padding: 5px;
+}
+
+.dropdownIcon :hover {
+    color: #FF3E5B;
+}
+
+.seprator {
+    color: #342C2C;
+    padding-right: 5px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.dealerInfo {
+    margin-top: -5px;
+
 }
 
 .userServiceArea {
-    color: #6c757d;
+    color: #342C2C;
     font-size: 12px;
 }
 
+.userText .userServiceArea {
+    color: #858585;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
+    padding-left: 8px;
+}
+
 .navLink {
-    color: #0B0B0C;
+    color: #342C2C;
     padding: 5px;
 }
 
@@ -98,23 +163,22 @@
 }
 
 .navbarExpand .navbarNav .navLink {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 14px;
 }
 
-:global .ant-badge .ant-badge-count {
+.navLink :global .ant-badge .ant-badge-count {
     color: #fff;
     background-color: #ff3e5b;
     right: 5px;
     top: 4px;
 }
 
-
 .helpLineText {
     display: inline-block;
     font-size: 12px;
     line-height: 16px;
-    padding-left: 5px;
+    /* padding-left: 5px; */
     margin-left: 4px;
     text-align: left;
     font-weight: 700;
@@ -146,27 +210,65 @@
 }
 
 .welcomeUser .navLink {
-    color: #0B0B0C;
+    color: #342C2C;
     padding: 1px !important;
     float: right;
 }
 
-/* .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
-.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item, 
-.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title, 
-.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title{
-    margin:0px;
-    border-bottom: 1px solid #e5e7eb;
-    border-radius: 0px;
-} */
-
-
-
-.welcomeUser .userServiceArea {
-    float: right;
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
+    color: #342C2C;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 32px;
+    padding: 0;
 }
 
-.welcomeUser .navLink:hover {
+:global .ant-dropdown {
+    width: 170px;
+}
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon {
+    padding-right: 8px;
+}
+
+:global .ant-dropdown .ant-dropdown-menu,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu {
+    padding: 10px 16px;
+}
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-active,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item-active,
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active {
+    background-color: transparent;
+    color: #ff3e5b;
+}
+
+/* :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:last-child {
+    color: #ff3e5b !important;
+} */
+
+/* .welcomeUser .userServiceArea {
+    float: right;
+} */
+
+.headerRight :global .ant-btn-default {
+    background-color: #ffffff;
+    font-size: 16px;
+}
+
+.welcomeUser .navLink:hover,
+.welcomeUser .navLink .userServiceArea:hover,
+.welcomeUser .navLink:active {
     color: #ea3434 !important;
 }
 
@@ -186,6 +288,27 @@
 .displayNone,
 .menuIcon {
     display: none;
+}
+
+.confirmModal :global .ant-modal-confirm-confirm {
+    width: 316px !important;
+}
+
+.confirmModal :global .ant-modal-confirm-title {
+    font-weight: 700 !important;
+}
+
+.confirmModal :global .ant-modal-confirm-content {
+    text-align: center !important;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns button {
+    width: auto;
+    padding: 4px 16px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 700;
 }
 
 @media (min-width: 997px) and (max-width: 1280px) {

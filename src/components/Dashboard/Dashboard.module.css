@@ -1,3 +1,7 @@
+.dashboardContainer {
+  font-family: 'Lato' !important;
+}
+
 .dashboardContainer :global .ant-card .ant-card-head-title {
   font-size: 1rem;
   float: left;
@@ -89,6 +93,7 @@
   /* padding: 0px;
   padding-right: 0; */
   margin-bottom: 20px;
+  margin-top: 9px;
 }
 
 /* .directChatMessages {
@@ -209,6 +214,14 @@
   background-color: #dc3545;
 }
 
+.newsCard {
+  margin-bottom: 10px;
+}
+
+.newsCard :global .ant-carousel .slick-dots-bottom {
+  margin-bottom: 5px;
+}
+
 .newsCarsulalContaner {
   margin: 0px;
   padding: 20px;
@@ -230,18 +243,26 @@
   height: 130px;
 }
 
-.birthContaner {
-  min-height: 200px;
-  padding: 20px 0;
+.birthCalendarCard {
+  margin-bottom: 10px;
 }
 
-.birthContaner .birthdayImgcontaner {
+.birthCalendarCard :global .ant-carousel .slick-dots-bottom {
+  margin-bottom: 5px;
+}
+
+.birthContainer {
+  min-height: 200px;
+  padding: 10px 0;
+}
+
+.birthContainer .birthdayImgcontaner {
   margin: 0 10px;
   width: 25%;
   float: left;
 }
 
-.birthContaner .birthdayTxtcontaner {
+.birthContainer .birthdayTxtcontaner {
   margin: 0 10px;
   width: 60%;
   float: left;
@@ -255,6 +276,17 @@
 .birthdayTxtcontaner .birthdayCal {
   color: #343a40;
   font-size: 16px;
+}
+
+.separator {
+  display: inline-block;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.birthdayItem {
+  width: 100%;
 }
 
 @media (min-width: 997px) and (max-width: 1280px) {}

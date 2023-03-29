@@ -363,37 +363,3 @@
         width: '100%';
     }
 }
-/* Switch Design Changes */
-:global .ant-switch .ant-switch-inner {
-    display: block;
-    overflow: hidden;
-    border-radius: 100px;
-    height: 100%;
-    position: absolute;
-    /* color: black; */
-    margin-left: 35px;
-    margin-top: -12px;
-    padding-bottom: -200px;
-    /* margin-bottom: -295px; */
-}
-
-:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
-    margin-inline-start: 0px;
-    color: #00a310;
-    margin-inline-end: 9px;
-}
-
-:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
-    margin-top: -22px;
-    margin-inline-start: 16px;
-    color: #8e8585;
-    margin-inline-end: 9px;
-}
-
-:global .ant-switch.ant-switch-checked {
-    background: #00a310;
-}
-
-:global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background: #00a310;
-}
