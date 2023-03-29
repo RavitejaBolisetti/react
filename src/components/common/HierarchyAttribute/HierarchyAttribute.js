@@ -1,32 +1,28 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import { connect } from 'react-redux';
 
-import { ExclamationCircleFilled } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
-import { FaEdit } from 'react-icons/fa';
+import { TfiReload } from 'react-icons/tfi';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Modal, Form, Row, Select, Space, Switch } from 'antd';
-import { validateRequiredSelectField } from 'utils/validation';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { Button, Col, Modal, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 
-import styles from '../Common.module.css';
+import styles3 from 'pages/common/Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-
+import { showGlobalNotification } from 'store/actions/notification';
 import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 
 const { Option } = Select;
-const { confirm } = Modal;
-const { success: successModel, error: errorModel } = Modal;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isLoaded: isDataLoaded = false, data: geoData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [], detailData: detailData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [], detailData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -36,8 +32,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
-        isDataLoaded,
-        geoData,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
         detailData,
@@ -54,22 +48,29 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterActions.fetchDetailList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchList, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData }) => {
+export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
     const [showDrawer, setShowDrawer] = useState(false);
+    const [searchData, setSearchdata] = useState('');
     const [checkfields, setCheckFields] = useState(false);
     const [ForceReset, setForceReset] = useState();
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [saveclick, setsaveclick] = useState();
+    const [RefershData, setRefershData] = useState(false);
+
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [formActionType, setFormActionType] = useState('');
+    const [isReadOnly, setIsReadOnly] = useState(false);
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -86,40 +87,50 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         form.resetFields();
         setEditRow({});
     }, [ForceReset]);
+    useEffect(() => {
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
 
-    const showSuccessModel = ({ title, message }) => {
-        successModel({
-            title: title,
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
+        setSearchdata(detailData?.hierarchyAttribute);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [RefershData]);
+    useEffect(() => {
+        setSearchdata(detailData?.hierarchyAttribute);
+    }, [detailData]);
+
+    const handleEditView = () => {
+        setFormActionType('edit');
+        setIsReadOnly(false);
+        setFormBtnDisable(false);
     };
 
     const onError = (message) => {
-        errorModel({
-            title: 'Information',
-            icon: <ExclamationCircleFilled />,
-            content: message,
-        });
+        showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
     };
 
     const handleAdd = () => {
-        setEditRow({});
+        setFormActionType('add');
+        setEditRow({
+            duplicateAllowedAtAttributerLevelInd: true,
+            duplicateAllowedAtOtherParent: true,
+            isChildAllowed: true,
+            status: true,
+        });
         setShowDrawer(true);
     };
 
-    const edit = (record) => {
+    const edit = (record, type) => {
+        setFormActionType(type);
         setEditRow(record);
         setShowDrawer(true);
+        setFormBtnDisable(false);
+
+        if (type === 'view') {
+            setIsReadOnly(true);
+        }
     };
 
-    const deleteTableRows = (record, index) => {
-        const currentRows = form.getFieldsValue();
-        const updatedRows = Object.entries(currentRows)
-            .map(([key, value]) => key !== 'hierarchyAttribueType' && value)
-            .filter((v) => !!v)
-            .filter((el) => el?.id !== record?.id);
-        setRowsData([...updatedRows]);
+    const handleReferesh = () => {
+        setRefershData(!RefershData);
     };
 
     const tableColumn = [];
@@ -144,9 +155,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: (record, values) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -155,9 +164,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -165,9 +172,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -175,9 +180,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
-            },
+            render: (text, record) => <>{text ? <div className={style2.activeText}>Active</div> : <div className={style2.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -187,87 +190,154 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, geoData, fetchLis
             dataIndex: 'action',
             sorter: false,
             render: (text, record, index) => {
-                return <Space wrap>{<FaEdit onClick={() => edit(record)} />}</Space>;
+                return (
+                    <Space>
+                        {
+                            <Button className={style2.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
+                                <EditIcon />
+                            </Button>
+                        }
+                        {
+                            <Button className={style2.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
+                                <ViewEyeIcon />
+                            </Button>
+                        }
+                    </Space>
+                );
             },
         })
     );
 
     const onFinish = (values) => {
         form.validateFields();
-        const selectedHierarchyAttribue = selectedHierarchy;
 
         const onSuccess = (res) => {
             form.resetFields();
-            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchyAttribue });
-            showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+            // showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
+            setFormBtnDisable(false);
             if (saveclick === true) {
                 setShowDrawer(false);
+                showGlobalNotification({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'topRight' });
             } else {
                 setShowDrawer(true);
+                showGlobalNotification({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'bottomRight' });
             }
             forceUpdate();
         };
+        // const reqData = {
+        //     duplicateAllowedAtAttributerLevelInd: true,
+        //     duplicateAllowedAtOtherParent: true,
+        //     hierarchyAttribueCode: "MUUUI",
+        //     hierarchyAttribueId: "Product Hierarchy",
+        //     hierarchyAttribueName: "Mo Family",
+        //     hierarchyAttribueType: "Product Hierarchy",
+        //     isChildAllowed: false,
+        //     status: false
+        // }
 
-        hierarchyAttributeSaveData({ data: [{ ...values, hierarchyAttribueType: selectedHierarchy, hierarchyAttribueId: detailData?.hierarchyAttribueId }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
+        hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-    const handleReset = () => {
-        form.resetFields();
-    };
+
     const handleChange = (attributeType) => {
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
     };
     const TableProps = {
         isLoading: !isDataAttributeLoaded,
-        tableData: detailData?.hierarchyAttribute,
+        tableData: searchData,
         tableColumn: tableColumn,
     };
     return (
         <>
-            <Space
-                direction="vertical"
-                size="middle"
-                style={{
-                    display: 'flex',
-                }}
-            >
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                        <Form.Item labelCol={{ span: 24 }} layout="vertical" name="hierarchyAttribueType" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute')]}>
-                            <Select onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
-                                {attributeData?.map((item) => (
-                                    <Option value={item}>{item}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    {detailData?.hierarchyAttribueId && (
-                        <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                            <Button danger onClick={handleAdd} className={style2.floatRight}>
-                                <AiOutlinePlus className={styles.buttonIcon} />
-                                Add Attribute
-                            </Button>
-                        </Col>
-                    )}
-                </Row>
-
-                {detailData?.hierarchyAttribueId && (
-                    <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles3.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                {/* <Table loading={!isDataAttributeLoaded} dataSource={detailData?.hierarchyAttribute} pagination={{ pageSize: 20 }} columns={tableColumn} bordered /> */}
-                                <DataTable {...TableProps} />
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style2.subheading}>
+                                        Hierarchy Attribute Type
+                                    </Col>
+                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                        <Select className={style2.attributeSelet} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                            {attributeData?.map((item) => (
+                                                <Option value={item}>{item}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    {/* </div> */}
+                                </Row>
                             </Col>
+                            {detailData?.hierarchyAttributeType && (
+                                <Col className={styles3.addGroup} xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Button icon={<TfiReload />} className={style2.refreshBtn} onClick={handleReferesh} danger />
+                                    <Button icon={<PlusOutlined />} className={style2.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Attribute
+                                    </Button>
+                                </Col>
+                            )}
                         </Row>
-                    </>
-                )}
-            </Space>
-            <AddUpdateDrawer tableData={detailData?.hierarchyAttribute} setsaveclick={setsaveclick} setsaveandnewclick={setsaveandnewclick} selectedHierarchy={selectedHierarchy} onFinishFailed={onFinishFailed} onFinish={onFinish} setCheckFields={setCheckFields} setForceReset={setForceReset} setEditRow={setEditRow} editRow={editRow} showDrawer={showDrawer} setShowDrawer={setShowDrawer} setsaveandnewclick={setsaveandnewclick} saveandnewclick={saveandnewclick} />
+                    </div>
+                </Col>
+            </Row>
+
+            {/* {detailData?.hierarchyAttributeType && ( */}
+            <>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <ConfigProvider
+                            renderEmpty={() => (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 140,
+                                    }}
+                                    description={
+                                        !detailData?.length ? (
+                                            <span>
+                                                No records found. Please add new parameter <br />
+                                                using below button
+                                            </span>
+                                        ) : (
+                                            <span> No records found.</span>
+                                        )
+                                    }
+                                ></Empty>
+                            )}
+                        >
+                            <DataTable {...TableProps} />
+                        </ConfigProvider>
+                    </Col>
+                </Row>
+            </>
+            {/* )} */}
+            {/* </Space> */}
+            <AddUpdateDrawer
+                tableData={detailData?.hierarchyAttribute}
+                setsaveclick={setsaveclick}
+                setsaveandnewclick={setsaveandnewclick}
+                selectedHierarchy={selectedHierarchy}
+                onFinishFailed={onFinishFailed}
+                onFinish={onFinish}
+                setCheckFields={setCheckFields}
+                setForceReset={setForceReset}
+                setEditRow={setEditRow}
+                editRow={editRow}
+                showDrawer={showDrawer}
+                setShowDrawer={setShowDrawer}
+                saveandnewclick={saveandnewclick}
+                formActionType={formActionType}
+                handleEditView={handleEditView}
+                isReadOnly={isReadOnly}
+                setIsReadOnly={setIsReadOnly}
+                setFormBtnDisable={setFormBtnDisable}
+                formBtnDisable={formBtnDisable}
+            />
         </>
     );
 };

@@ -3,7 +3,6 @@ import React from 'react';
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
-import { AiOutlineCloseCircle, AiOutlineInfoCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -13,7 +12,7 @@ import style from './criticatiltyGroup.module.css';
 
 const { confirm } = Modal;
 
-const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -23,17 +22,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Criticality Group Details';
     }
-
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            placement,
-        });
-    };
-
     const onClose = () => {
         form.resetFields();
         setSelectedRecord(null);
@@ -71,18 +59,19 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
     const removeItem = (name) => {
         const formList = form.getFieldsValue();
         const formAllowedTiming = formList?.allowedTimings;
-        console.log('🚀 ~ file: DrawerUtil.js:74 ~ removeItem ~ formAllowedTiming:', formAllowedTiming, name);
         const deletedItem = formAllowedTiming?.find((item, index) => index === name);
-        console.log('🚀 ~ file: DrawerUtil.js:75 ~ removeItem ~ deletedItem:', deletedItem, name);
-
         if (deletedItem && deletedItem?.id) {
             const savedAllowedTiming = selectedRecord?.allowedTimings;
             if (savedAllowedTiming) {
                 const saveDeletedItem = savedAllowedTiming?.find((item) => item?.id === deletedItem?.id);
-                console.log('🚀 ~ file: DrawerUtil.js:80 ~ removeItem ~ saveDeletedItem:', saveDeletedItem);
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
+    };
+
+    const validatedDuplicateTime = (field) => (rule, value) => {
+        const overlapData = checkOverlap();
+        return field && overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.[field] ? Promise.reject('Time overlaps with other time') : Promise.resolve();
     };
 
     return (
@@ -90,6 +79,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
             title={drawerTitle}
             className={style.drawerCriticalityGrp}
             width="520"
+            maskClosable={false}
             footer={
                 <>
                     <Row gutter={20}>
@@ -100,14 +90,14 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
                             {saveBtn ? (
-                                <Button loading={!isDataLoaded} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
                                 </Button>
                             ) : (
                                 ''
                             )}
                             {saveAndSaveNew ? (
-                                <Button loading={!isDataLoaded} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Save & Add New
                                 </Button>
                             ) : (
@@ -200,15 +190,9 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                             {...restField}
                                                             name={[name, 'timeSlotFrom']}
                                                             rules={[
+                                                                validateRequiredInputField('Start Time'),
                                                                 {
-                                                                    required: true,
-                                                                    message: 'Missing Start Time',
-                                                                },
-                                                                {
-                                                                    validator: (rule, value) => {
-                                                                        const overlapData = checkOverlap();
-                                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotFrom ? Promise.reject('Time overlaps with other time') : Promise.resolve();
-                                                                    },
+                                                                    validator: validatedDuplicateTime('timeSlotFrom'),
                                                                 },
                                                             ]}
                                                         >
@@ -220,19 +204,12 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                             {...restField}
                                                             name={[name, 'timeSlotTo']}
                                                             rules={[
+                                                                validateRequiredInputField('End Time'),
                                                                 {
-                                                                    required: true,
-                                                                    message: 'Missing End Time',
-                                                                },
-                                                                {
-                                                                    validator: (rule, value) => {
-                                                                        const overlapData = checkOverlap();
-                                                                        return overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.timeSlotTo ? Promise.reject('Time overlaps with other time') : Promise.resolve();
-                                                                    },
+                                                                    validator: validatedDuplicateTime('timeSlotTo'),
                                                                 },
                                                             ]}
                                                         >
-                                                            {/* <TimePicker disabledHours={disabledHours} disabledMinutes={disabledMinutes} use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} disabled={(form.getFieldValue('allowedTimings')[key])?.timeSlotFrom === undefined ? Promise.resolve(true) : Promise.reject(false)} /> */}
                                                             <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                                         </Form.Item>
                                                     </Col>
@@ -252,6 +229,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, isDataLoaded, setsave
                                                             onClick={() => {
                                                                 removeItem(name);
                                                                 remove(name);
+                                                                showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
                                                                 // confirm({
                                                                 //     title: 'Allowed Timing',
                                                                 //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,

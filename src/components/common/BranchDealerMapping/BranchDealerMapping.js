@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Checkbox, Input, Select, Switch, Space, DatePicker, Collapse, Tree, Card, Modal, Divider, Table } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle, FaRegCheckCircle, FaBullhorn, FaLongArrowAltLeft } from 'react-icons/fa';
+import { Button, Col, Form, Row, Input, Select, Switch, Space, Collapse, Divider, Table } from 'antd';
+import { FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle, FaLongArrowAltLeft } from 'react-icons/fa';
 import { EditOutlined } from '@ant-design/icons';
 import { addToolTip } from 'utils/customMenuLink';
 import TreeView from 'components/common/TreeView';
@@ -11,61 +10,13 @@ import TreeView from 'components/common/TreeView';
 import styles from 'pages/common/Common.module.css';
 import styles2 from './BranchDealerMapping.module.css';
 
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { ChangeHistory } from '../ChangeHistory';
-import { DataTable } from 'utils/dataTable';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
 const { Option } = Select;
 const { Panel } = Collapse;
-const { success: successModel, error: errorModel } = Modal;
-const { RangePicker } = DatePicker;
-
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        isLoading,
-        collapsed,
-        userId,
-        isDataLoaded,
-        productHierarchyData,
-        isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchList: productHierarchyDataActions.fetchList,
-            saveData: productHierarchyDataActions.saveData,
-            listShowLoading: productHierarchyDataActions.listShowLoading,
-
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShformDataowLoading,
-        },
-        dispatch
-    ),
-});
 
 export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');

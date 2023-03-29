@@ -363,7 +363,7 @@
 }
 
 :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b ;
+    background-color: #ff3e5b;
     color: #ffffff !important;
 }
 
@@ -477,6 +477,6 @@
 
 
 
-.contentHeaderBackground  :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
+.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }

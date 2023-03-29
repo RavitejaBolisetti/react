@@ -1,6 +1,5 @@
 import { Table } from 'antd';
 import React from 'react';
-import styles from './DataTable.module.css';
 
 export default function DataTable({ isLoading, tableColumn, tableData }) {
     return (
