@@ -24,7 +24,7 @@ phases:
             #- npm cache clean --force
             #- npm install
             #- npm rebuild node-sass
-            - npm run test -- --coverage . --watchAll=false
+            - CI=true npm test
             #- ls -la
             #- cd build
             #- ls -la
