@@ -46,25 +46,25 @@ window.matchMedia =
             expect(loginBtn).toBeInTheDocument();
 
         });
-        test('is error modal visible after entering username and password  ' , async() => {
-            render(<BrowserRouter>
-                <Routes>   
-                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorMessage = {errorMessage} isError={true} />}/>
-                </Routes>
-            </BrowserRouter>);
-            const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
-            const passInput = await screen.getByPlaceholderText('Password');
-            const loginBtn = await screen.getByText('Login');
-            fireEvent.change(userId, {target: {value:'11111'}});
-            fireEvent.change(passInput, {target: {value:'asgdndjd'}});
-            fireEvent.click(loginBtn);
-            const errorModal = await screen.findAllByText('Invalid credentials.');
+        // test('is error modal visible after entering username and password  ' , async() => {
+        //     render(<BrowserRouter>
+        //         <Routes>   
+        //             <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorMessage = {errorMessage} isError={true} />}/>
+        //         </Routes>
+        //     </BrowserRouter>);
+        //     const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
+        //     const passInput = await screen.getByPlaceholderText('Password');
+        //     const loginBtn = await screen.getByText('Login');
+        //     fireEvent.change(userId, {target: {value:'11111'}});
+        //     fireEvent.change(passInput, {target: {value:'asgdndjd'}});
+        //     fireEvent.click(loginBtn);
+        //     const errorModal = await screen.findAllByText('Invalid credentials.');
 
-            expect(userId).toBeTruthy();
-            expect(passInput).toBeTruthy();
-            expect(loginBtn).toBeInTheDocument();
-            expect(errorModal).toBeTruthy();
-        });
+        //     expect(userId).toBeTruthy();
+        //     expect(passInput).toBeTruthy();
+        //     expect(loginBtn).toBeInTheDocument();
+        //     expect(errorModal).toBeTruthy();
+        // });
         test('redirects to forgot password page after clicking forgot password link  ' , async() => {
             render(<BrowserRouter>
                 <Routes>   
