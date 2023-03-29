@@ -1,3 +1,5 @@
+import { EN } from 'language/en';
+
 import axios from 'axios';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
@@ -27,15 +29,17 @@ const baseAPICall = (params) => {
         };
     }
 
-    const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
+    const unAuthorizedTtitle = EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
+    const unAuthorizedMessage = EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
 
-    const onUnAuthenticated = (message) => {
-        onError && onError(unAuthorizedMessage);
+    const onUnAuthenticated = () => {
+        onError && onError({ title: unAuthorizedTtitle, message: unAuthorizedMessage });
     };
+
     try {
         axios
             .request(axiosConfig)
@@ -73,6 +77,8 @@ const baseAPICall = (params) => {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: 'We are experiencing server issue, Please try again' });
+                    } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);

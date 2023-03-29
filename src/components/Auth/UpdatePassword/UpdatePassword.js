@@ -90,18 +90,18 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         console.log('🚀 ~ file: UpdatePassword.js:62 ~ onFinishFailed ~ errorInfo:', errorInfo);
     };
 
-    const validateToNextPassword = (rule, value, callback) => {
-        if (value && confirmDirty) {
+    const validateToNextPassword = (_, value) => {
+        if (value) {
             form.validateFields(['confirmNewPassword'], { force: true });
         }
-        callback();
+        return Promise.resolve();
     };
 
-    const compareToFirstPassword = (rule, value, callback) => {
+    const compareToFirstPassword = (_, value) => {
         if (value && value !== form.getFieldValue('newPassword')) {
-            callback("New Password and Confirm Password doesn't match!");
+            return Promise.reject(new Error("New Password and Confirm Password doesn't match"));
         } else {
-            callback();
+            return Promise.resolve();
         }
     };
 
@@ -147,15 +147,25 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New password'), validateFieldsPassword('New Password')]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="New password" visibilityToggle={true} />
+                                                        <Form.Item
+                                                            name="newPassword"
+                                                            rules={[
+                                                                validateRequiredInputField('New Password'),
+                                                                validateFieldsPassword('New Password'),
+                                                                {
+                                                                    validator: validateToNextPassword,
+                                                                },
+                                                            ]}
+                                                            className={`${styles.changer} ${styles.inputBox}`}
+                                                        >
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('Confirm password'), validateFieldsPassword('Confirm Password')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" allowClear placeholder="Confirm password" onBlur={handleConfirmBlur} visibilityToggle={true} />
+                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('New Password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
+                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={true} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>

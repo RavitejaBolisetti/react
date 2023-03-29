@@ -63,8 +63,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const pagePath = location.pathname;
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-    const [iUpdatePasswordModalOpen, setUpdatePasswordModalOpen] = useState(false);
-
+    
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
@@ -311,8 +310,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             )}
 
             <div style={{ clear: 'both' }}></div>
-            <ChangePassword title="Change Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => setChangePasswordModalOpen(false)} />
-            <ChangePassword title="Update Your Password" discreption="You have not updated your password from 90 days. Please change your password" isOpen={iUpdatePasswordModalOpen} onOk={() => setUpdatePasswordModalOpen(false)} onCancel={() => setUpdatePasswordModalOpen(false)} />
+            <ChangePassword title="Change Password" isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />
         </>
     );
 };

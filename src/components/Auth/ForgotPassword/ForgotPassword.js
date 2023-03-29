@@ -42,14 +42,16 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
+    const RESEND_OTP_TIME = 5;
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
     const [otpMessage, setOTPMessage] = useState();
     const [otpSentOnMobile, setOTPSentOnMobile] = useState(true);
     const [otpSentOnEmail, setOTPSentOnEmail] = useState(true);
-    const [counter, setCounter] = useState(30);
+    const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
+    const [confirmDirty, setConfirmDirty] = useState(false);
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -91,12 +93,13 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const handleSendOTP = () => {
+        setOTPInput();
         if (selectedUserId) {
             if (otpSentOnMobile || otpSentOnEmail) {
                 const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
 
                 const onSuccess = (res) => {
-                    setCounter(30);
+                    setCounter(RESEND_OTP_TIME);
                     showGlobalNotification({ notificationType: 'success', title: 'OTP Sent', message: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
                     setCurrentStep(3);
@@ -136,6 +139,10 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const onUpdatePassword = (values) => {
+        //    console.log("🚀 ~ file: ForgotPassword.js:141 ~ onUpdatePassword ~ values:", values);
+    };
+
+    const onUpdatePasswordFailed = ({ values, errorFields, outOfDate }) => {
         if (selectedUserId && values) {
             const data = { ...values, userId: selectedUserId, validationKey };
 
@@ -153,10 +160,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
             updatePassword(requestData);
         }
-    };
-
-    const onUpdatePasswordFailed = ({ values, errorFields, outOfDate }) => {
-        // handle invalid form submission
     };
 
     const otpSentOnMobileChange = (event) => {
@@ -178,7 +181,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const validateToNextPassword = (_, value) => {
         if (value) {
             form.validateFields(['confirmNewPassword'], { force: true });
-            return Promise.resolve();
         }
         return Promise.resolve();
     };
@@ -197,6 +199,11 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
         // handle invalid form submission
+    };
+
+    const handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        setConfirmDirty(confirmDirty || !!value);
     };
 
     return (
@@ -334,7 +341,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <OTPInput className={styles.changer} value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
+                                                        <OTPInput className={styles.changer} otpType="number" value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
@@ -378,9 +385,9 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                     rules={[
                                                                         validateRequiredInputField('New Password'),
                                                                         validateFieldsPassword('New Password'),
-                                                                        // {
-                                                                        //     validator: validateToNextPassword,
-                                                                        // },
+                                                                        {
+                                                                            validator: validateToNextPassword,
+                                                                        },
                                                                     ]}
                                                                     className={`${styles.changer} ${styles.inputBox}`}
                                                                 >

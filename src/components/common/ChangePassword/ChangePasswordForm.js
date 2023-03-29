@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -51,6 +51,11 @@ const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () 
     const onFinish = (errorInfo) => {
         // form.validateFields().then((values) => {});
     };
+
+    useEffect(() => {
+        form.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
 
     const successAction = (title, message) => {
         showGlobalNotification({ notificationType: 'success', title, message });
