@@ -234,7 +234,7 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
   border-inline-end: none;
   overflow-y: scroll;
-  max-height: 80vh;
+  max-height: 72vh;
   padding: 0px 14px;
 }
 
