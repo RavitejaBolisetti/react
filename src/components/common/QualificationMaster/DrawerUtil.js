@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
-import styles from '../Common.module.css';
-import style from '../DrawerAndTable.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
+import styles from '../DrawerAndTable.module.css';
 
 const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
     const disabledProps = { disabled: isReadOnly };
-    const [Edit, setEdit] = useState(true);
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -19,7 +18,6 @@ const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable
 
     const handleForm = () => {
         setFormBtnDisable(true);
-        console.log('hello from form');
     };
 
     const onClose = () => {
@@ -27,38 +25,22 @@ const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable
         setFormBtnDisable(false);
     };
 
-    useEffect(() => {
-        setForceFormReset(Math.random() * 1000);
-        if (Object.entries(formData).length) {
-            setEdit(false);
-        }
-    }, [formData]);
-
     return (
         <Drawer
             title={drawerTitle}
             placement="right"
             onClose={onClose}
             open={open}
-            className={style.drawer}
+            className={styles.drawer}
             width="540px"
             footer={
                 <Row>
-                    <Col xs={14} sm={14} md={14} lg={14} xl={14} className={style.drawerFooterButton}>
+                    <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.drawerFooterButton}>
                         <Button danger onClick={onClose}>
                             Cancel
                         </Button>
                     </Col>
-                    <Col xs={10} sm={10} md={10} lg={10} xl={10} style={{ textAlign: 'right' }} className={style.drawerFooterButtons}>
-                        {/* <Button form="myForm" onClick={() => (state.button = 1)} type="primary" htmlType="submit">
-                            Save
-                        </Button>
-                        {Edit && (
-                            <Button form="myForm" onClick={() => (state.button = 2)} type="primary" htmlType="submit">
-                                Save & Add New
-                            </Button>
-                        )} */}
-
+                    <Col xs={10} sm={10} md={10} lg={10} xl={10} styles={{ textAlign: 'right' }} className={styles.drawerFooterButtons}>
                         {saveBtn ? (
                             <Button disabled={!formBtnDisable} onClick={() => (state.button = 1)} form="myForm" key="submit" htmlType="submit" type="primary">
                                 Save
@@ -92,7 +74,7 @@ const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable
                 </Row>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item className={style.statusButton} labelCol={{ span: 24 }} normalize={(a, b) => (a ? 1 : 0)} initialValue={formData?.status === 1 ? 1 : 0} label="Status" name="status">
+                        <Form.Item className={styles.statusButton} labelCol={{ span: 24 }} normalize={(a, b) => (a ? 1 : 0)} initialValue={formData?.status === 1 ? 1 : 0} label="Status" name="status">
                             <Switch checkedChildren="Active" defaultChecked={formData?.status} unCheckedChildren="Inactive" {...disabledProps} />
                         </Form.Item>
                     </Col>

@@ -72,20 +72,24 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     // const delarAvtarData = dealerName?.split(' ');
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
-    const onError = (message) => {
-        showGlobalNotification({ message });
-    };
-
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchData({ setIsLoading: listShowLoading, userId, onError });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
-    const successAction = (title, message) => {
-        navigate(routing.ROUTING_LOGIN);
+    const onSuccess = (res) => {
+        if (res?.data) {
+            showGlobalNotification({ notificationType: 'success', title: 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
+            navigate(routing.ROUTING_LOGIN);
+        } else {
+            // onError({ message });
+        }
+    };
+
+    const onError = (message) => {
+        showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
     };
 
     const showConfirm = () => {
@@ -101,7 +105,8 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             closable: true,
             onOk() {
                 doLogout({
-                    successAction,
+                    onSuccess,
+                    onError,
                     userId,
                 });
             },
@@ -313,5 +318,3 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 };
 
 export const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderMain);
-
-//<

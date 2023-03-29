@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { addToolTip } from 'utils/customMenuLink';
-import { DeleteOutlined, EditOutlined, ExclamationCircleFilled, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { FaUserPlus, FaSave, FaUndo, FaEdit, FaTimes, FaTrash, FaPlus } from 'react-icons/fa';
-
-import { Button, Col, Row, Form, Select, Modal, Input, Table, Switch } from 'antd';
-import { Collapse, Space } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { FaTrash, FaPlus } from 'react-icons/fa';
+import { Button, Col, Row, Form, Select, Modal, Input, Table, Switch, Space } from 'antd';
 
 import styles from 'pages/common/Common.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
-const { Option } = Select;
 const { confirm } = Modal;
 
 export const EditableCell = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {

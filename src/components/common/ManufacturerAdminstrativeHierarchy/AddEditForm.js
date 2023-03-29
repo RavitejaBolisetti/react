@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import TreeSelectField from '../TreeSelectField';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';

@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Modal, Form, Switch, Space, Empty, ConfigProvider } from 'antd';
-import { AiOutlineEye, AiFillCheckCircle, AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { Button, Col, Row, Input, Form, Empty, ConfigProvider } from 'antd';
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
+import { EditIcon } from 'Icons';
 
-import { AiOutlinePlus } from 'react-icons/ai';
-import { FiEdit2 } from 'react-icons/fi';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { TfiReload } from 'react-icons/tfi';
 import { notification } from 'antd';
 
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from 'pages/common/Common.module.css';
 import style from '../DrawerAndTable.module.css';
@@ -27,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData: qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -60,10 +56,6 @@ const initialTableData = [];
 export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData }) => {
     const [form] = Form.useForm();
 
-    const [isFavourite, setFavourite] = useState(false);
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
-
-    const [searchInput, setSearchInput] = useState('');
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
@@ -72,8 +64,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
-    const [drawerTitle, setDrawerTitle] = useState('');
-    const [arrData, setArrData] = useState(qualificationData.data);
     const [searchData, setSearchdata] = useState();
     const [RefershData, setRefershData] = useState(false);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
@@ -95,11 +85,20 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        if (qualificationData?.data) {
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
+
+    useEffect(() => {
+        setSearchdata(qualificationData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [qualificationData]);
+
+    useEffect(() => {
+        fetchList({ setIsLoading: listShowLoading, userId });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [RefershData]);
+
+    const informationModalBox = ({ icon = 'error', message = 'ERROR', description, className, placement }) => {
         alertNotification.open({
             icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
             message,
@@ -108,13 +107,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             placement,
         });
     };
-
-    useEffect(() => {
-        setSearchdata(qualificationData);
-    }, [qualificationData]);
-    useEffect(() => {
-        fetchList({ setIsLoading: listShowLoading, userId });
-    }, [RefershData]);
 
     const tableColumn = [];
     tableColumn.push(
@@ -267,7 +259,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
     const onChangeHandle2 = (e) => {
         const getSearch = e.target.value;
-        if (e.target.value == '') {
+        if (e.target.value === '') {
             const tempArr = qualificationData;
             setSearchdata(tempArr);
             return;
@@ -296,8 +288,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
-                                                    // marginLeft: -40,
-                                                    // paddingBottom: '5px',
                                                 }}
                                                 allowClear
                                                 onSearch={onChangeHandle}
@@ -307,7 +297,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                                     </div>
                                 </Row>
                             </Col>
-                            {/* { searchKey && searchData?.length ? ( */}
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
@@ -323,7 +312,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                     </div>
                 </Col>
             </Row>
-            <DrawerUtil formBtnDisable={formBtnDisable} saveAndSaveNew={saveAndSaveNew} saveBtn={saveBtn} setFormBtnDisable={setFormBtnDisable} onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} drawerTitle={drawerTitle} />
+            <DrawerUtil formBtnDisable={formBtnDisable} saveAndSaveNew={saveAndSaveNew} saveBtn={saveBtn} setFormBtnDisable={setFormBtnDisable} onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider

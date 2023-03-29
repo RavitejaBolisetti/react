@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import { TfiReload } from 'react-icons/tfi';
-import { ExclamationCircleFilled, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { Button, Col, Modal, Form, Row, Select, Space, Switch, Input, notification, ConfigProvider, Empty } from 'antd';
-import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlinePlus } from 'react-icons/ai';
+import { Button, Col, Modal, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
-import styles from '../Common.module.css';
 import styles3 from 'pages/common/Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -19,15 +17,12 @@ import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 
 const { Option } = Select;
-const { Search } = Input;
-
-const { success: successModel, error: errorModel } = Modal;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [], detailData: detailData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [], detailData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -76,7 +71,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -108,24 +102,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         setIsReadOnly(false);
         setFormBtnDisable(false);
     };
-
-    const informationModalBox = ({ icon = 'error', message = 'Information', description, className, placement }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            placement,
-        });
-    };
-
-    // const showSuccessModel = ({ title, message }) => {
-    //     successModel({
-    //         title: title,
-    //         icon: <ExclamationCircleFilled />,
-    //         content: message,
-    //     });
-    // };
 
     const onError = (message) => {
         showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
@@ -278,19 +254,12 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
     return (
         <>
-            {contextAlertNotification}
-            {/* <Space
-                direction="vertical"
-                size="middle"
-               
-            > */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles3.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    {/* <div className={style2.searchAndLabelAlign}> */}
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style2.subheading}>
                                         Hierarchy Attribute Type
                                     </Col>

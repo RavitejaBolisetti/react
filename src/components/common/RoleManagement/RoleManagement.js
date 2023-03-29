@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Space, Table, List, Drawer, Switch, Checkbox, Card, Tree, Divider } from 'antd';
-
+import { Button, Col, Form, Row, Input, Space, List, Switch, Checkbox, Card, Tree, Divider } from 'antd';
 import { FaEdit, FaUserPlus, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
@@ -92,13 +91,13 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     }, [forceFormReset]);
     useEffect(() => {
         const SetRole = [];
-        const finalRoledata = RoleManagementData.map((e) => {
-            Object.keys(e).map((keyName, i) => {
-                if (keyName === 'roleName') {
-                    SetRole.push(e[keyName]);
-                }
-            });
-        });
+        // const finalRoledata = RoleManagementData.map((e) => {
+        //     Object.keys(e).map((keyName, i) => {
+        //         if (keyName === 'roleName') {
+        //             SetRole.push(e[keyName]);
+        //         }
+        //     });
+        // });
         setRoledataset(SetRole);
         setFormData(RoleManagementData);
     }, [RoleManagementData]);

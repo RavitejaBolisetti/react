@@ -81,12 +81,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [openKeys, setOpenKeys] = useState([]);
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         if (filter) {
@@ -148,14 +148,11 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         const newExpandedKeys = dataList
             .map((item) => {
                 if (item?.title?.indexOf(value) > -1) {
-                    console.log('🚀 ~ file: LeftSideBar.js:154 ~ .map ~ item?.id:', item?.id);
                     return getParentKey(item?.id, menuData);
                 }
                 return null;
             })
             .filter((item, i, self) => item && self?.indexOf(item) === i);
-
-        console.log(newExpandedKeys, 'LEFTOPENKEYS');
 
         setOpenKeys(value ? newExpandedKeys : []);
         setSearchValue(value);
@@ -177,15 +174,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     };
 
     const prepareMenuItem = (data) => {
-        return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
+        return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
             const isParentMenu = false; // parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <Item key={parentMenuId.concat(menuId)} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
