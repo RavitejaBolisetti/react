@@ -5,19 +5,18 @@ phases:
             nodejs: latest
     pre_build:
         commands:
-            - npm install
+            - npm i
             #- npm install -D typescript
             # - npm install -D ts-node
             - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
             - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
             - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-            - echo -e "sonar.host.url=http://10.168.11.44:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
+            - echo -e "sonar.host.url=http://10.168.11.44/:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
             - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
-            - npm install -D sonarqube-scanner
-            - ./node_modules/.bin/jest --coverage --coverageReporters=text-Icov | tee coverage/Icov.info
-            - ./node_modules/.bin/sonar-scanner -Dsonar.login=squ_4b6cc22fd033e0c0adecf98bbd633772b9d18482 -Dsonar.projectKey=dms-ui-application -Dsonar.sources=. -Dsonar.javascript.Icov.reportPaths=coverage/Icov.info 
+            #- npm install -D sonarqube-scanner
+            - npm install -D jest-sonar-reporter sonarqube-scanner
     build:
         commands:
             #- echo Build started on `date`
@@ -36,12 +35,12 @@ phases:
             - npm run build
     post_build:
         commands:
-            - echo Build completed on `date`
+            - echo Build completed on `date` 
 # Include only the files required for your application to run.
 artifacts:
     files:
         - '**/*'
-    base-directory: 'build/'
+    base-directory: 'build'
 cache:
     paths:
         - 'node_modules/**/*'
