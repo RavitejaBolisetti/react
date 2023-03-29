@@ -34,7 +34,22 @@ phases:
             - cd build
             - ls -la
             #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
-            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=src/ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860 -Dsonar.jascript.lcov.reportPaths=coverage/**/locov.info
+            #- sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=src/ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860 -Dsonar.jascript.lcov.reportPaths=coverage/**/locov.info
+             - const sonarqubeScanner = require('sonarqube-scanner');
+             - sonarqubeScanner({
+    serverUrl: 'http://10.168.11.44:9000/',
+    serverLogin: 'squ_f6a983ee477d7f3c0c4edee411537ff39bd92860'
+    options : {
+        'sonar.sources': '.',
+        'sonar.exclusions' : 'src/**/*.bak.*, src/**/*.bak, src/**/*.orig, **/*.test.*',
+        'sonar.inclusions' : 'src/**', 
+        'sonar.tests': "./src/__tests__",
+        "sonar.test.inclusions": "./src/__tests__/**/*.test.js, ./src/__tests__/*.test.js",
+        'sonar.javascript.lcov.reportPaths' : 'coverage/lcov.info',
+        "sonar.testExecutionReportPaths": "reports/test-report.xml",
+        "sonar.coverage.jacoco.xmlReportPaths" : "reports/test-report.xml"
+    }
+}, () => {});
             - ls -la
             #- npm run coverage
             # - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
