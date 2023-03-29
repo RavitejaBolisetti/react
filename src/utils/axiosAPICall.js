@@ -1,6 +1,7 @@
 import { EN } from 'language/en';
 
 import axios from 'axios';
+import { doLogout } from 'store/actions/auth';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
@@ -67,6 +68,7 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
+                console.log('🚀 ~ file: axiosAPICall.js:70 ~ baseAPICall ~ error:', error);
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
@@ -77,9 +79,10 @@ const baseAPICall = (params) => {
                         handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: 'We are experiencing server issue, Please try again' });
+                        doLogout();
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
                     } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: EN.GENERAL.NETWORK_ERROR.MESSAGE });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }

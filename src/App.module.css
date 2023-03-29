@@ -3,11 +3,6 @@
      right: -10px !important;
  }
 
- :global .ant-notification-notice {
-     width: 320px !important;
-     padding: 10px 10px !important;
- }
-
  :global .ant-notification-bottomRight .ant-notification-notice {
      width: 475px !important;
      padding: 10px !important;
@@ -15,11 +10,21 @@
      margin-top: 30px;
  }
 
+ :global .ant-notification-topRight .ant-notification-notice {
+     width: 320px !important;
+     padding: 10px !important;
+ }
+
  /*--------- Error Notification Start ---------*/
  .error {
      color: #ED302D;
      background-color: #FEE3D4;
      border: 1px solid #ED302D;
+ }
+
+ .error :global .ant-notification-notice {
+     width: 320px !important;
+     padding: 10px !important;
  }
 
  .error :global .ant-notification-notice-icon {
@@ -75,6 +80,14 @@
      background-color: transparent !important;
  }
 
+ .error :global .ant-btn.ant-btn-sm {
+     height: 28px !important;
+     padding: 4px 16px;
+     margin-bottom: 0px !important;
+     font-size: 12px !important;
+ }
+
+
  /*--------- Error Notification End ---------*/
 
  /*--------- Success Notification Start ---------*/
@@ -82,6 +95,11 @@
      color: #70C922;
      background-color: #EEFCD2;
      border: 1px solid #70C922;
+ }
+
+ .success :global .ant-notification-notice {
+     width: 320px !important;
+     padding: 10px !important;
  }
 
  .success :global .ant-notification-notice-icon {
@@ -117,6 +135,13 @@
      background-color: transparent !important;
  }
 
+ .success :global .ant-btn.ant-btn-sm {
+     height: 28px !important;
+     padding: 4px 16px;
+     margin-bottom: 0px !important;
+     font-size: 12px !important;
+ }
+
  /*--------- Success Notification End ---------*/
 
 
@@ -125,6 +150,11 @@
      color: #FF7A00;
      background-color: #FFEAD7;
      border: 1px solid #FF7A00;
+ }
+
+ .warning :global .ant-notification-notice {
+     width: 395px !important;
+     padding: 10px !important;
  }
 
  .warning :global .ant-notification-notice-icon {
@@ -180,5 +210,11 @@
      background-color: transparent !important;
  }
 
+ .warning :global .ant-btn.ant-btn-sm {
+     height: 28px !important;
+     padding: 4px 16px;
+     margin-bottom: 0px !important;
+     font-size: 12px !important;
+ }
 
  /*--------- Warning Notification End ---------*/

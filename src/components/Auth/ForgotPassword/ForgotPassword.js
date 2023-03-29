@@ -62,7 +62,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     }, [counter]);
 
     const onError = (message) => {
-        showGlobalNotification({ title: 'ERROR', message: message[0] || message });
+        showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
     };
 
     const onVerifyUser = (values) => {

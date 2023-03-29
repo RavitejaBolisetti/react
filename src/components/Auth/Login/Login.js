@@ -13,6 +13,7 @@ import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
+import notificationStyles from 'App.module.css';
 
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
@@ -161,7 +162,7 @@ const Login = (props) => {
             description: message,
             btn: btn(data),
             duration: 0,
-            className: status === 'E' ? styles.error : styles.warning,
+            className: status === 'E' ? notificationStyles.error : notificationStyles.warning,
         });
     };
 
