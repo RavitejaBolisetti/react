@@ -217,7 +217,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleAdd = () => {
