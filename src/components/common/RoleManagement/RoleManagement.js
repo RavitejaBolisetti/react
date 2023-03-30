@@ -17,8 +17,10 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
 import styles from 'pages/common/Common.module.css';
-import style from './RoleManagement.module';
+import style from './RoleManagement.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
+import { tblPrepareColumns } from 'utils/tableCloumn';
+import { DataTable } from 'utils/dataTable';
 
 const { Search } = Input;
 
@@ -62,17 +64,109 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+    const [filterString, setFilterString] = useState();
+    const [searchData, setSearchdata] = useState(RoleManagementData);
+    const [RefershData, setRefershData] = useState(false);
+
+const handleUpdate =  () => {
+
+}
+const handleView = () => {
+
+}
+const handleAdd = () => {
+    
+}
     useEffect(() => {
-        if (isDataLoaded && criticalityGroupData) {
+        if (isDataLoaded && RoleManagementData) {
             if (filterString) {
-                const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
+                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(RoleManagementData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, criticalityGroupData]);
+    }, [filterString, isDataLoaded, RoleManagementData]);
+
+    const handleReferesh = () => {
+        setRefershData(!RefershData);
+    };
+
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    };
+
+    const onSearchHandle = (value) => {
+        setFilterString(value);
+    };
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
+    };
+
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Criticality Group ID',
+            dataIndex: 'criticalityGroupCode',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Criticality Group Name',
+            dataIndex: 'criticalityGroupName',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Default Group',
+            dataIndex: 'criticalityDefaultGroup',
+            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Status',
+            dataIndex: 'activeIndicator',
+            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Actions',
+            sorter: false,
+            render: (text, record, index) => {
+                return (
+                    <Space>
+                        {
+                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                                <EditIcon />
+                            </Button>
+                        }
+                        {
+                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                                <ViewEyeIcon />
+                            </Button>
+                        }
+                    </Space>
+                );
+            },
+        })
+    );
+
     return (
         <>
             <Row gutter={20}>
@@ -100,7 +194,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                                 </Row>
                             </Col>
 
-                            {criticalityGroupData?.length ? (
+                            {RoleManagementData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
@@ -115,6 +209,44 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                             )}
                         </Row>
                     </div>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    !RoleManagementData?.length ? (
+                                        <span>
+                                            No records found. Please add new parameter <br />
+                                            using below button
+                                        </span>
+                                    ) : (
+                                        <span> No records found.</span>
+                                    )
+                                }
+                            >
+                                {!RoleManagementData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Group
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
+                            </Empty>
+                        )}
+                    >
+                        <DataTable  tableData={searchData} tableColumn={tableColumn} />
+                    </ConfigProvider>
                 </Col>
             </Row>
             <DrawerUtil />
