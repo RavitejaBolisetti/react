@@ -42,7 +42,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
-    const RESEND_OTP_TIME = 30;
+    const RESEND_OTP_TIME = 60;
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
     const [otpMessage, setOTPMessage] = useState();
@@ -163,7 +163,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const otpSentOnMobileChange = (event) => {
-        console.log(event.target.checked, 'Final Chek');
+        console.log(event.target.checked, 'Final Check');
         setOTPSentOnMobile(event.target.checked);
     };
 
@@ -234,7 +234,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Form.Item name="userId" rules={[validateRequiredInputField('User ID (mile id.parent id)')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                            <Form.Item name="userId" rules={[validateRequiredInputField('User ID')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
                                                                 <Input prefix={<BiUser size={18} style={{ color: '#ffffff' }} />} type="text" placeholder="User ID (mile id.parent id)" />
                                                             </Form.Item>
                                                         </Col>
@@ -264,7 +264,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 <div className={styles.loginForm}>
                                                     <div className={styles.loginHeading}>
                                                         <h1>Forgot Your Password</h1>
-                                                        <div className={styles.loginSubHeading}>User verified successfully</div>
+                                                        <div className={styles.loginSubHeading}>User credential verified successfully.</div>
                                                     </div>
                                                     <Form form={form} id="sendOTP" autoComplete="false" onFinish={onSentOTP} onFinishFailed={onFinishFailed}>
                                                         <Row gutter={20}>
@@ -277,7 +277,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <div className={styles.registered}> OTP will be sent on </div>
+                                                                <div className={styles.registered}>Please choose the option for getting the OTP</div>
                                                             </Col>
                                                         </Row>
 
@@ -285,7 +285,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item name="sentOnMobile" className={styles.fielderror}>
                                                                     <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnMobileChange}>
-                                                                        Registered Mobile Number
+                                                                        Registered mobile number
                                                                     </Checkbox>
                                                                 </Form.Item>
                                                             </Col>
@@ -302,7 +302,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                     ]}
                                                                 >
                                                                     <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnEmailChange}>
-                                                                        Registered Mail ID
+                                                                        Registered email ID
                                                                     </Checkbox>
                                                                 </Form.Item>
                                                             </Col>

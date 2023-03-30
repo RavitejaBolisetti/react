@@ -5,11 +5,16 @@ import { withAuthToken } from 'utils/withAuthToken';
 
 export const HEADER_USER_DATA_LOADED = 'HEADER_USER_DATA_LOADED';
 export const HEADER_USER_DATA_SHOW_LOADING = 'HEADER_USER_DATA_SHOW_LOADING';
+export const HEADER_USER_DATA_CLEAR = 'HEADER_USER_DATA_CLEAR';
 
 const receiveData = (data) => ({
     type: HEADER_USER_DATA_LOADED,
     isLoaded: true,
     data,
+});
+
+export const clearData = (data) => ({
+    type: HEADER_USER_DATA_CLEAR,
 });
 
 const headerDataActions = {};

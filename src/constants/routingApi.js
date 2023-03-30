@@ -27,8 +27,8 @@ export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hie
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 
+export const BASE_URL_CONFIG_PARAM_EDIT_TYPE = BASE_URL + 'configurableparametertypes';
 export const BASE_URL_QUALIFICATION_MASTER = BASE_URL + 'application/qualifications';
-
 export const BASE_URL_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
 
 export const BASE_URL_CONFIG_PARAM_EDIT = BASE_URL + 'configurableparameters';

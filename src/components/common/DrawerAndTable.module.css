@@ -1,4 +1,29 @@
+.allowedTiming {
+    background: #f4f4f4;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 0px 0px 20px;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.allowedTiming :global .ant-picker-input>input:placeholder-shown,
+.allowedTiming :global .ant-picker-input>input {
+    font-size: 14px;
+}
+
+.allowedTimingAlignment {
+    border-top: 1px solid #dedede;
+    padding-top: 24px;
+    padding-left: 0 !important;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
 .drawerFooterButtons button:not(:first-child) {
+    margin-right: 0px !important;
     margin-left: 10px !important;
 }
 
@@ -6,6 +31,7 @@
     margin-bottom: 0 !important;
     height: 34px;
     margin-left: 12px !important;
+    float: right;
 }
 
 .drawerFooterButtons :disabled {
@@ -14,19 +40,11 @@
     border-color: white;
 }
 
-.drawerFooterButton button:not(:first-child) {
-    margin-left: 10px !important;
-}
-
-.drawerFooterButton button {
-    margin-bottom: 0 !important;
-    height: 34px;
-}
-
-.drawerFooterButton :disabled {
-    background-color: #b5b5b6;
-    color: #ffffff;
+.deleteBtn :disabled {
+    background-color: #ffffff;
+    color: #b5b5b6;
     border-color: white;
+    /* text-align: right !important; */
 }
 
 .searchAndLabelAlign {
@@ -34,13 +52,9 @@
     align-items: center;
     margin-left: 20px;
     padding-right: 20px;
-
-    /* font-weight: 400 !important;
-    color: #0b0b0c !important;
-    font-size: 18px !important; */
 }
 
-.addBtn {
+.addTimeBtn {
     position: relative;
     top: -28px;
     margin-bottom: -10px;
@@ -48,22 +62,103 @@
     color: #ff3e5b;
 }
 
-.addBtn button {
+.addTimeBtn button {
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
     padding-right: 0px;
 }
 
-.drawer :global .ant-drawer-wrapper-body .ant-drawer-footer {
+.timingHeaderBackground {
+    border-radius: 8px;
+}
+
+.timingHeader {
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    color: #342C2C;
+}
+
+
+.activeText {
+    color: #00a310;
+}
+
+.InactiveText {
+    color: #8e8585;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    border: none;
+    padding-top: 0px;
+}
+
+.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    padding-left: 0px !important;
+}
+
+.tableIcons {
+    border: none;
+    padding: 0px;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
+    background-color: transparent;
+    color: #b5b5b6 !important;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled svg {
+    /* background-color: transparent; */
+    color: #b5b5b6 !important;
+}
+
+.drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous svg {
+    margin-right: 0px;
+    padding-top: 8px;
+    padding-left: 20px;
+    color: #ff3e5b;
+}
+
+.modalIconAlert {
+    color: #ff7a00;
+    padding-right: 8px;
+}
+
+.paddingLeft {
+    padding-left: 10px;
+}
+
+.paddingLeft2 {
+    padding-left: 10px;
+}
+
+.addMoreRomColumnTitle {
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+.ant-drawer .ant-drawer-body .allowedTiming .ant-space-item .ant-form-item {
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.drawerCriticalityGrp .allowedTiming :global .ant-space-item .ant-form-item {
+    margin-bottom: 0px !important;
+}
+
+.drawerCriticalityGrp :global .ant-drawer-wrapper-body .ant-drawer-footer {
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
     padding: 10px 20px;
 }
 
 .refreshBtn {
-    /* height : 28px !important ; */
     background-color: transparent;
-    /* padding : 0px 24px; */
     font-size: 18px;
     line-height: 18px;
     width: 60px !important;
@@ -82,6 +177,9 @@
 .subheading {
     font-size: 16px;
     color: #0b0c0c;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+
 }
 
 .srchbtn :global .ant-btn-default {
@@ -95,18 +193,33 @@
     font-size: 12px;
     line-height: 20px;
     font-weight: 500;
-    /* height: 28px; */
+}
+
+:global .ant-picker-large {
+    padding: 6.5px 11px 6.5px;
+    width: 180px;
+}
+
+:global .ant-btn-link {
+    color: #ff3e5b;
+}
+
+:global .ant-btn-link:not(:disabled):hover {
+    color: #ff3e5bda;
+}
+
+:global .ant-drawer .ant-drawer-header-title {
+    display: inline-block;
+}
+
+:global .ant-drawer-close {
+    float: right;
+    margin-top: 5px;
 }
 
 :global .ant-empty .ant-empty-footer {
     margin-top: 24px;
 }
-
-/* 
-.actionbtn svg {
-    margin-right: 6px !important;
-    font-size: 14px;
-} */
 
 :global .ant-empty-normal {
     color: #635d5d;
@@ -128,43 +241,8 @@
     padding-bottom: 16px;
 }
 
-.activeText {
-    color: #00a310;
-}
-
-.InactiveText {
-    color: #8e8585;
-}
-
-.drawer :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-    border: none;
-    padding-top: 0px;
-}
-
-.contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-    padding-left: 0px !important;
-}
-
-.tableIcons {
-    border: none;
-    padding: 0px;
-}
-
-.drawer :global .ant-btn-default.ant-btn-dangerous:disabled {
-    background-color: transparent;
-    color: #b5b5b6 !important;
-}
-
-.drawer :global .ant-btn-default.ant-btn-dangerous:disabled svg {
-    /* background-color: transparent; */
-    color: #b5b5b6 !important;
-}
-
-.drawer :global .ant-btn-default.ant-btn-dangerous svg {
-    margin-right: 0px;
-    padding-top: 8px;
-    padding-left: 20px;
-    color: #ff3e5b;
+.drawerConfigParam :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item {
+    padding-bottom: 0 !important;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
@@ -181,11 +259,10 @@
     background-color: #f4f4f4;
 }
 
-.modalIconAlert {
-    color: #ff7a00;
-    padding-right: 8px;
-}
-
 :global .ant-picker-focused .ant-picker-input span.ant-picker-suffix .anticon.anticon-clock-circle {
     color: #ff3e5b;
+}
+
+:global .ant-form-item-explain-error {
+    font-size: 12px !important;
 }

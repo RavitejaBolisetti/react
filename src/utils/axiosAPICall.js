@@ -57,6 +57,7 @@ const baseAPICall = (params) => {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         }
                     } else if (response?.statusCode === 401) {
+                        doLogout();
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
@@ -68,15 +69,14 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
-                console.log('🚀 ~ file: axiosAPICall.js:70 ~ baseAPICall ~ error:', error);
+                console.log("🚀 ~ file: axiosAPICall.js:72 ~ baseAPICall ~ error:", error)
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.ERROR.TITLE, errorMessage: EN.GENERAL.ERROR.MESSAGE });
                 } else if (error.code) {
-                    // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: 'We are experiencing server issue, Please try again' });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
                         doLogout();
@@ -88,19 +88,17 @@ const baseAPICall = (params) => {
                     }
                 } else if (error.request) {
                     // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
-                    onError(AXIOS_ERROR_NO_RESPONSE);
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: EN.GENERAL.NO_RESPONSE.MESSAGE });
                 } else {
                     // Something happened in setting up the request that triggered an Error
-                    onError(AXIOS_ERROR_INTERNAL);
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: EN.GENERAL.NO_RESPONSE.MESSAGE });
                 }
             })
             .finally(() => {
                 postRequest();
             });
     } catch (err) {
-        console.log('We are facing server issue!!');
+        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
     }
 };
 

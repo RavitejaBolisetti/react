@@ -7,6 +7,9 @@ import { withAuthToken } from 'utils//withAuthToken';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
 
+import { clearData as clearHeaderData } from 'store/actions/common/header';
+import { clearData as clearMenuData } from 'store/actions/data/menu';
+
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_PRE_SUCCESS = 'AUTH_LOGIN_PRE_SUCCESS';
 export const AUTH_LOGIN_ERROR = 'AUTH_LOGIN_ERROR';
@@ -62,18 +65,23 @@ const unAuthenticate = (message) => ({
     message,
 });
 
-export const doLogout = () => {
-    // dispatch(authDoLogout());
+export const logoutClearAllData = (message) => (dispatch) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
+
+    dispatch(authDoLogout());
 };
 
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
     dispatch(unAuthenticate(errorMessage));
-    dispatch(doLogout());
+    dispatch(logoutClearAllData());
 };
+
+export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
+    dispatch(logoutClearAllData());
+});
 
 const authPostLoginActions =
     ({ idToken, accessToken, userId, passwordStatus, saveTokenAndRoleRights = true }) =>
@@ -191,7 +199,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
 
     const onSuccessAction = (res) => {
         onSuccess && onSuccess(res);
-        doLogout();
+        dispatch(doLogout());
     };
 
     const apiCallParams = {
@@ -203,7 +211,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: { userId },
         onSuccess: onSuccessAction,
         onError: onError,
-        onTimeout: () => doLogout(),
+        onTimeout: () => dispatch(doLogout()),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),

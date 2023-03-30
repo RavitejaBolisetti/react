@@ -15,8 +15,10 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
 import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
+import { escapeRegExp } from 'utils/escapeRegExp';
 
 const { Option } = Select;
+const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -71,6 +73,9 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [filterString, setFilterString] = useState('');
+
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
         if (!isDataLoaded) {
@@ -84,6 +89,19 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
+        if (!isDataLoaded && detailData?.hierarchyAttribute) {
+            if (filterString) {
+                console.log("mein aagaya");
+                const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
+                setSearchdata(filterDataItem);
+            } else {
+                setSearchdata(detailData?.hierarchyAttribute);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute]);
+
+    useEffect(() => {
         form.resetFields();
         setEditRow({});
     }, [ForceReset]);
@@ -93,6 +111,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         setSearchdata(detailData?.hierarchyAttribute);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RefershData]);
+
     useEffect(() => {
         setSearchdata(detailData?.hierarchyAttribute);
     }, [detailData]);
@@ -117,7 +136,9 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         });
         setShowDrawer(true);
     };
-
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    };
     const edit = (record, type) => {
         setFormActionType(type);
         setEditRow(record);
@@ -131,6 +152,13 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
     const handleReferesh = () => {
         setRefershData(!RefershData);
+    };
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
+    };
+    const onSearchHandle = (value) => {
+        setFilterString(value);
     };
 
     const tableColumn = [];
@@ -214,27 +242,16 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         const onSuccess = (res) => {
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
-            // showSuccessModel({ title: 'SUCCESS', message: res?.responseMessage });
             setFormBtnDisable(false);
             if (saveclick === true) {
                 setShowDrawer(false);
-                showGlobalNotification({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'topRight' });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'topRight' });
             } else {
                 setShowDrawer(true);
-                showGlobalNotification({ icon: 'success', message: res?.responseMessage, className: style2.success, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
             forceUpdate();
         };
-        // const reqData = {
-        //     duplicateAllowedAtAttributerLevelInd: true,
-        //     duplicateAllowedAtOtherParent: true,
-        //     hierarchyAttribueCode: "MUUUI",
-        //     hierarchyAttribueId: "Product Hierarchy",
-        //     hierarchyAttribueName: "Mo Family",
-        //     hierarchyAttribueType: "Product Hierarchy",
-        //     isChildAllowed: false,
-        //     status: false
-        // }
 
         hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
     };
@@ -254,6 +271,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
     return (
         <>
+            {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles3.contentHeaderBackground}>
@@ -270,6 +288,19 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                             ))}
                                         </Select>
                                     </Col>
+                                    {detailData?.hierarchyAttributeType && (
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
+                                            />
+                                        </Col>
+                                    )}
                                     {/* </div> */}
                                 </Row>
                             </Col>
@@ -286,7 +317,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                 </Col>
             </Row>
 
-            {/* {detailData?.hierarchyAttributeType && ( */}
             <>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -315,8 +345,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                     </Col>
                 </Row>
             </>
-            {/* )} */}
-            {/* </Space> */}
             <AddUpdateDrawer
                 tableData={detailData?.hierarchyAttribute}
                 setsaveclick={setsaveclick}
