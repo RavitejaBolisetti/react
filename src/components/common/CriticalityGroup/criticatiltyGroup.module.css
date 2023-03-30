@@ -180,6 +180,10 @@
     padding-bottom: 16px;
 }
 
+.drawerConfigParam :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item {
+    padding-bottom: 0 !important;
+}
+
 .activeText {
     color: #00a310;
 }

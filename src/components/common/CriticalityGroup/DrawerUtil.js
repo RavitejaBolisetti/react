@@ -1,16 +1,13 @@
 import React from 'react';
 
-import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
+import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from 'pages/common/Common.module.css';
-import style from './criticatiltyGroup.module.css';
-
-const { confirm } = Modal;
+import style from 'components/common/DrawerAndTable.module.css';
 
 const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
