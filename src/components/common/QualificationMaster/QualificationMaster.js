@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Modal, Form, Switch, Space } from 'antd';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { FiEdit2 } from 'react-icons/fi';
+import { Button, Col, Row, Input, Form, Empty, ConfigProvider } from 'antd';
+import { EditIcon } from 'Icons';
+import { TfiReload } from 'react-icons/tfi';
+import { notification } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from '../QualificationMaster/QualificationMaster.module.css';
-import style from '../Common.module.css';
 import DataTable from 'utils/dataTable/DataTable';
-
+import { showGlobalNotification } from 'store/actions/notification';
+import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import DrawerUtil from './DrawerUtil';
+
+import styles from 'pages/common/Common.module.css';
+import style from '../DrawerAndTable.module.css';
 
 const { Search } = Input;
 
@@ -20,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData: qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -43,6 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -50,13 +54,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification }) => {
     const [form] = Form.useForm();
 
-    const [isFavourite, setFavourite] = useState(false);
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
-
-    const [searchInput, setSearchInput] = useState('');
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
@@ -65,9 +65,14 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
-    const [drawerTitle, setDrawerTitle] = useState('');
-    // const [arrData, setArrData] = useState(qualificationData.data);
-    const [Searchdata, setSearchdata] = useState();
+    const [searchData, setSearchdata] = useState();
+    const [refershData, setRefershData] = useState(false);
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
+    const [saveBtn, setSaveBtn] = useState(false);
+    const [filterString, setFilterString] = useState();
+
 
     const state = {
         button: 1,
@@ -80,40 +85,59 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     }, [forceFormReset]);
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        if (qualificationData?.data) {
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(qualificationData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
+
+    const onSuccess = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
+    useEffect(() => {
+        if (refershData && userId) {
+            fetchList({ setIsLoading: listShowLoading, onSuccess, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refershData, userId]);
+
+    useEffect(() => {
+        if (isDataLoaded && qualificationData) {
+            if (filterString) {
+                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.criticalityName));
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            } else {
+                setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, qualificationData]);
 
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
-            onFilter: (value, record) => record.qualificationCode.includes(value),
-            sortFn: (a, b) => a.code.localeCompare(b.code),
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
-            sortFn: (a, b) => a.name.localeCompare(b.name),
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+            render: (text, record) => {
+                return <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>;
             },
         })
     );
@@ -122,45 +146,38 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             title: 'Action',
             sorter: false,
             render: (record) => {
-                return (
-                    <Space style={{ display: 'flex' }}>
-                        <Button style={{ color: 'ff3e5b', cursor: 'pointer' }} aria-label="fi-edit" onClick={() => handleUpdate(record)} >
-                            <FiEdit2/>
-                        </Button>
-                    </Space>
-                );
+                return <Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)} />;
             },
         })
     );
     const tableProps = {
         isLoading: listShowLoading,
-        tableData: Searchdata,
+        tableData: searchData,
         tableColumn: tableColumn,
     };
 
     const onFinish = (values, e) => {
         if (state.button === 1) {
             const recordId = formData?.id || '';
-            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
-            let arrrData = [];
-            arrrData.push(data);
+            const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+
             const onSuccess = (res) => {
                 form.resetFields();
                 setForceFormReset(Math.random() * 10000);
                 setDrawer(false);
                 forceUpdate();
                 if (res?.data) {
-                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId });
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 }
             };
 
             const onError = (message) => {
-                handleErrorModal(message);
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
             };
 
             const requestData = {
-                data: arrrData,
+                data: [data],
                 setIsLoading: listShowLoading,
                 userId,
                 onError,
@@ -171,24 +188,24 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
         if (state.button === 2) {
             const recordId = formData?.id || '';
-            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
-            let arrrData = [];
-            arrrData.push(data);
+            const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+
             const onSuccess = (res) => {
                 if (res?.data) {
-                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId });
+
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottom-right' });
                     form.resetFields();
                     setFormData({});
                 }
             };
 
             const onError = (message) => {
-                handleErrorModal(message);
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
             };
 
             const requestData = {
-                data: arrrData,
+                data: [data],
                 setIsLoading: listShowLoading,
                 userId,
                 onError,
@@ -206,6 +223,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const handleAdd = () => {
         setForceFormReset(Math.random() * 10000);
         setFormData([]);
+        setSaveAndSaveNew(true);
+        setSaveBtn(true);
         setDrawer(true);
         setFormActionType('add');
         setIsReadOnly(false);
@@ -216,71 +235,113 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const handleUpdate = (record) => {
         setForceFormReset(Math.random() * 10000);
         setFormData(record);
+        setSaveAndSaveNew(false);
+        setSaveBtn(true);
         setDrawer(true);
         setFormActionType('update');
         setIsReadOnly(false);
         forceUpdate();
     };
+
+    const handleReferesh = (e) => {
+        setRefershData(!refershData);
+    };
+
     const onChange = (sorter, filters) => {
         form.resetFields();
     };
 
-    const onChangeHandle = (e) => {
-        const newdata = [];
-        Object.keys(qualificationData).map((keyname, i) => {
-            if (qualificationData[keyname].qualificationName === e) {
-                newdata.push(qualificationData[keyname]);
-            } else if (qualificationData[keyname].qualificationCode === e) {
-                newdata.push(qualificationData[keyname]);
-            }
-        });
-
-        if (e === '') {
-            setSearchdata(qualificationData);
-        } else {
-            setSearchdata(newdata);
-        }
+    const onSearchHandle = (value) => {
+        setFilterString(value);
     };
-    const onChangeHandle2 = (e) => {
-        const getSearch = e.target.value;
-        if (e.target.value == '') {
-            const tempArr = qualificationData;
-            setSearchdata(tempArr);
-            return;
-        }
-        if (getSearch.length > -1) {
-            const searchResult = qualificationData.filter((record) => record.qualificationName.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.qualificationCode.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setSearchdata(searchResult);
-        }
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
+    };
+
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
     return (
         <>
+            {contextAlertNotification}
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    <Search
-                        placeholder="Search"
-                        allowClear
-                        style={{
-                            width: 200,
-                        }}
-                        onSearch={onChangeHandle}
-                        onChange={onChangeHandle2}
-                    />
-                </Col>
-                <Col className={styles.addQualification} xs={16} sm={16} md={16} lg={16} xl={16}>
-                    <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} />
-                        Add Qualification
-                    </Button>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    <div className={style.searchAndLabelAlign}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                            Qualification List
+                                        </Col>
+                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
+                                            />
+                                        </Col>
+                                    </div>
+                                </Row>
+                            </Col>
+                            {qualificationData?.length ? (
+                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
+
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Qualification
+                                    </Button>
+                                </Col>
+                            ) : (
+                                ''
+                            )}
+                        </Row>
+                    </div>
                 </Col>
             </Row>
-            <Form preserve={false} form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <DrawerUtil state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} drawerTitle={drawerTitle} />
-            </Form>
+            <DrawerUtil formBtnDisable={formBtnDisable} saveAndSaveNew={saveAndSaveNew} saveBtn={saveBtn} setFormBtnDisable={setFormBtnDisable} onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DataTable {...tableProps} onChange={onChange} />
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    !qualificationData?.length ? (
+                                        <span>
+                                            No records found. Please add new parameter <br />
+                                            using below button
+                                        </span>
+                                    ) : (
+                                        <span> No records found.</span>
+                                    )
+                                }
+                            >
+                                {!qualificationData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Qualification
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
+                            </Empty>
+                        )}
+                    >
+                        <DataTable tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                    </ConfigProvider>
                 </Col>
             </Row>
         </>

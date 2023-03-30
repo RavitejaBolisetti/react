@@ -24,7 +24,6 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    console.log('🚀 ~ file: Geo.js:22 ~ mapStateToProps ~ attributeData:', attributeData);
 
     let returnValue = {
         collapsed,
@@ -33,7 +32,6 @@ const mapStateToProps = (state) => {
         geoData,
         isDataAttributeLoaded,
         attributeData,
-        // attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -75,16 +73,18 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded]);
+    }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        if (userId) {
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         form.resetFields();

@@ -24,18 +24,24 @@ phases:
             #- npm cache clean --force
             #- npm install
             #- npm rebuild node-sass
-            #- npm run test -- --coverage . --watchAll=false
+            - CI=true npm test
             #- ls -la
             #- cd build
             #- ls -la
-            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
-            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=. -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
-            - npm run coverage
-            # - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
+            #- npm run coverage --watchAll=false
             - npm run build
+            - ls -la
+            #- cd build
+            - ls -la
+            #- sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44/:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
+            - sonar-scanner -Dsonar.projectKey=dms-ui-application-sonar -Dsonar.sources=src/ -Dsonar.host.url=http://10.168.11.44:9000 -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860 -Dsonar.jascript.lcov.reportPaths=coverage/**/locov.info
+            - ls -la
+            #- npm run coverage
+            # - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.11.44:9000/ -Dsonar.login=squ_f6a983ee477d7f3c0c4edee411537ff39bd92860
+            #- npm run build
     post_build:
         commands:
-            - echo Build completed on `date` 
+            - echo Build completed on `date`
 # Include only the files required for your application to run.
 artifacts:
     files:
@@ -45,7 +51,7 @@ cache:
     paths:
         - 'node_modules/**/*'
 reports:
-    jest-reports:
+    reports-test:
         files:
-            - './coverage/clover.xml'
+            - 'coverage/**/locv.info'
         file-format: 'CLOVERXML'

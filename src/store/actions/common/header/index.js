@@ -5,11 +5,16 @@ import { withAuthToken } from 'utils/withAuthToken';
 
 export const HEADER_USER_DATA_LOADED = 'HEADER_USER_DATA_LOADED';
 export const HEADER_USER_DATA_SHOW_LOADING = 'HEADER_USER_DATA_SHOW_LOADING';
+export const HEADER_USER_DATA_CLEAR = 'HEADER_USER_DATA_CLEAR';
 
 const receiveData = (data) => ({
     type: HEADER_USER_DATA_LOADED,
     isLoaded: true,
     data,
+});
+
+export const clearData = (data) => ({
+    type: HEADER_USER_DATA_CLEAR,
 });
 
 const headerDataActions = {};
@@ -22,15 +27,14 @@ headerDataActions.listShowLoading = (isLoading) => ({
 });
 
 headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data } = params;
+    const { setIsLoading, onError, data } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
 
     const onSuccess = (res) => {
         if (res?.data) {
             dispatch(receiveData(res?.data));
         } else {
-            onError();
+            onError('Internal Error, Please try again');
         }
     };
 
@@ -43,7 +47,7 @@ headerDataActions.fetchData = withAuthToken((params) => ({ token, accessToken, u
         userId,
         onSuccess,
         onError,
-        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

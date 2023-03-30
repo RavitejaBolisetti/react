@@ -36,13 +36,14 @@ qualificationDataActions.setFormVisible = (isFormVisible) => ({
 });
 
 qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data } = params;
+    const { setIsLoading, onSuccess: onSuccessAction, data } = params;
 
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
         if (res?.data) {
+            onSuccessAction && onSuccessAction(res);
             dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');

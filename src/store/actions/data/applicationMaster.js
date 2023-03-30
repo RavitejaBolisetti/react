@@ -1,8 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-// import { BASE_URL_GEO_GRAPHY, BASE_URL_GEO_GRAPHY_CHANGE_HISTORY } from 'constants/routingApi';
-import { BASE_URL_APPLICATIONS, BASE_URL_APPLICATION_DETAILS, BASE_URL_APPLICATION_CRITICALITY_GROUP, BASE_URL_APPLICATION_ACTIONS, BASE_URL_DOCUMENT_TYPE, BASE_URL_APPLICATION_DEALER_LOCATION } from 'constants/routingApi';
+import { BASE_URL_APPLICATION_DETAILS, BASE_URL_APPLICATION_CRITICALITY_GROUP, BASE_URL_APPLICATION_ACTIONS, BASE_URL_APPLICATION_DEALER_LOCATION } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED = 'APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED';
@@ -37,7 +36,7 @@ const applicationMasterDataActions = {};
 const baseURLPath = BASE_URL_APPLICATION_DETAILS;
 
 applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, id } = params;
+    const { setIsLoading, data } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
