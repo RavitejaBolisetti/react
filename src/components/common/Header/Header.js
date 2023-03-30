@@ -63,7 +63,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const pagePath = location.pathname;
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-    
+
     const { firstName = '', lastName = '', mobileNo, dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
 
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
@@ -247,7 +247,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                 </div>
                             </Col>
                         )}
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>  
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>
@@ -262,6 +262,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </Badge>
                                             </Link>
                                         </div>
+
                                         <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                                 <Icon component={HeadPhoneIcon} />
