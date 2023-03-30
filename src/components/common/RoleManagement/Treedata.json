@@ -18,8 +18,24 @@
                 "key": "applicationcriticalitygroup",
                 "children": [
                     {
-                        "title": "dummy1",
-                        "key": "dummy1"
+                        "title": "Application Master",
+                        "key": "ApplicationMaster",
+                        "children": [
+                            {
+                                "title": "Sub Application Master",
+                                "key": "subapplicationmaster"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Application Criticality Group",
+                        "key": "applicationcriticalitygroup",
+                        "children": [
+                            {
+                                "title": "dummy1",
+                                "key": "dummy1"
+                            }
+                        ]
                     }
                 ]
             },
@@ -44,6 +60,49 @@
                 ]
             }
         ]
+    },
+    {
+        "title": "APPP",
+        "key": "apppi8",
+        "children": [
+            {
+                "title": "sub app",
+                "key": "sub ap78y8p",
+                "children": [
+                    {
+                        "title": "level 2 Application Master",
+                        "key": "sl2subapplicationmasr"
+                    }
+                ]
+            },
+            {
+                "title": "sub 2 Application CC GG",
+                "key": "67uhm",
+                "children": [
+                    {
+                        "title": "sub 2 Application Master",
+                        "key": "sub 2ApplicationMaster",
+                        "children": [
+                            {
+                                "title": "Sub Application Master",
+                                "key": "subapplicationmasterkjh"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Application Criticality Group",
+                        "key": "applicationcriticalitygroup",
+                        "children": [
+                            {
+                                "title": "dummy1",
+                                "key": "dummy1"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
+    
   
 ]

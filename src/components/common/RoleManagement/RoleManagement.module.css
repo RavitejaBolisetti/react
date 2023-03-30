@@ -26,3 +26,10 @@ p{
 {
     float: right !important;
 }
+:global( .ant-tree .ant-tree-list-holder-inner){
+    background: rgba(255, 0, 0, 0.271);
+}
+:global  .ant-collapse-content-box  {
+    background: rgba(255, 0, 0, 0.271);
+
+}

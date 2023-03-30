@@ -67,16 +67,13 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const [filterString, setFilterString] = useState();
     const [searchData, setSearchdata] = useState(RoleManagementData);
     const [RefershData, setRefershData] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
 
-const handleUpdate =  () => {
-
-}
-const handleView = () => {
-
-}
-const handleAdd = () => {
-    
-}
+    const handleUpdate = () => {};
+    const handleView = () => {};
+    const handleAdd = () => {
+        setOpenDrawer(true);
+    };
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
             if (filterString) {
@@ -105,6 +102,10 @@ const handleAdd = () => {
         setFilterString(e.target.value);
     };
 
+    const onClose = () => {
+        setOpenDrawer(false);
+    };
+
     const tableColumn = [];
 
     tableColumn.push(
@@ -116,31 +117,30 @@ const handleAdd = () => {
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Criticality Group ID',
-            dataIndex: 'criticalityGroupCode',
+            title: 'Role ID',
+            dataIndex: 'roleid',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Criticality Group Name',
-            dataIndex: 'criticalityGroupName',
+            title: 'Role Name',
+            dataIndex: 'roleName',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Default Group',
-            dataIndex: 'criticalityDefaultGroup',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            title: 'Role Description',
+            dataIndex: 'roleDescription',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            dataIndex: 'status',
+            render: (text, record) => <>{text ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -201,7 +201,7 @@ const handleAdd = () => {
                                     </Button>
 
                                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Group
+                                        Add Role
                                     </Button>
                                 </Col>
                             ) : (
@@ -223,7 +223,7 @@ const handleAdd = () => {
                                 description={
                                     !RoleManagementData?.length ? (
                                         <span>
-                                            No records found. Please add new parameter <br />
+                                            No records found. Please add new Role <br />
                                             using below button
                                         </span>
                                     ) : (
@@ -245,13 +245,13 @@ const handleAdd = () => {
                             </Empty>
                         )}
                     >
-                        <DataTable  tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil />
+            <DrawerUtil onClose={onClose} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
 
-export const RoleManagement = connect(null, null)(RoleManagementMain);
+export const RoleManagement = connect(mapStateToProps, mapDispatchToProps)(RoleManagementMain);
