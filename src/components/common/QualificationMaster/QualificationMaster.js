@@ -66,7 +66,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
-    const [arrData, setArrData] = useState(qualificationData.data);
+    // const [arrData, setArrData] = useState(qualificationData.data);
     const [Searchdata, setSearchdata] = useState();
 
     const state = {
@@ -123,8 +123,10 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             sorter: false,
             render: (record) => {
                 return (
-                    <Space wrap>
-                        <FiEdit2 style={{ color: 'ff3e5b', cursor: 'pointer' }} onClick={() => handleUpdate(record)} />
+                    <Space style={{ display: 'flex' }}>
+                        <Button style={{ color: 'ff3e5b', cursor: 'pointer' }} aria-label="fi-edit" onClick={() => handleUpdate(record)} >
+                            <FiEdit2/>
+                        </Button>
                     </Space>
                 );
             },
@@ -198,7 +200,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleAdd = () => {
