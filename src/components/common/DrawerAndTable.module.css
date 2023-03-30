@@ -22,23 +22,24 @@
     font-weight: 700;
 }
 
-.drawerFooterButtons button:not(:first-child) {
-    margin-right: 0px !important;
+.cancelBtn {
     margin-left: 10px !important;
+    float: left !important;
 }
 
-.drawerFooterButtons button {
-    margin-bottom: 0 !important;
-    height: 34px;
-    margin-left: 12px !important;
-    float: right;
+.saveBtn Button{
+    margin-left: 0px !important;
+    margin-right: 10px !important;
+    float: right !important;
 }
 
-.drawerFooterButtons :disabled {
+.cancelBtn :disabled,
+.saveBtn :disabled {
     background-color: #b5b5b6;
     color: #ffffff;
     border-color: white;
 }
+
 
 .deleteBtn :disabled {
     background-color: #ffffff;
