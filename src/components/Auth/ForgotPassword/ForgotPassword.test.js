@@ -1,5 +1,4 @@
 import { screen, render, fireEvent, findAllByText } from "@testing-library/react";
-import { Logins } from '../Login'; 
 import { ForgotPassword } from "./ForgotPassword";
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter,Route,Routes,MemoryRouter } from "react-router-dom"
@@ -30,19 +29,36 @@ window.matchMedia =
             render(
                 <BrowserRouter>
                 <Routes>   
-                    <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError}  />}/>
-                    <Route path="/forgot-password" element= {<ForgotPassword verifyUser = {verifyUser} sendOTP = {sendOTP} validateOTP = {validateOTP} updatePassword = {updatePassword} />}/>
+                    {/* <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError}  />}/> */}
+                    <Route path="*" element= {<ForgotPassword verifyUser = {verifyUser} sendOTP = {sendOTP} validateOTP = {validateOTP} updatePassword = {updatePassword} />}/>
                 </Routes>
             </BrowserRouter>);
              const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
-             const forgotPasswordLink = await screen.getByText('Forgot password?')
-             fireEvent.click(forgotPasswordLink);
-             const generateOtpBtn = await screen.getByText('Verify User')
+             const verifyUserBtn = await screen.getByText('Verify User')
+             fireEvent.change(userId, {target: {value:''}});
+             fireEvent.click(verifyUserBtn)
+             const validation =  screen.findByText('Please Enter User ID (mile id.parent id)')
              expect(userId).toBeTruthy();
-             expect(forgotPasswordLink).toBeTruthy();
-             expect(generateOtpBtn).toBeInTheDocument();
+             expect(verifyUserBtn).toBeInTheDocument();
+             expect(validation).toBeTruthy();
 
         });
+        test('verify otp', async () => {
+            render( <BrowserRouter>
+                <Routes>   
+                    <Route path="*" element= {<ForgotPassword verifyUser = {verifyUser} sendOTP = {sendOTP} validateOTP = {validateOTP} updatePassword = {updatePassword} />}/>
+                </Routes>
+            </BrowserRouter>);
+             const verifyUserBtn = await screen.getByText('Verify User')
+            expect(verifyUserBtn).toBeTruthy();
+            fireEvent.change(userId, {target: {value:'user1'}});
+            fireEvent.click(verifyUserBtn)
+            const mobilecheckBox = await screen.findByText('Registered Mobile Number');
+            const mailcheckBox = await screen.findByText('Registered Mail ID');
+
+            expect(mobilecheckBox).toBeTruthy();
+            expect(mailcheckBox).toBeTruthy();
+        })
         // test('is error modal visible after entering username and password  ' , async() => {
         //     render(<BrowserRouter>
         //         <Routes>   
@@ -81,6 +97,6 @@ window.matchMedia =
 
     <BrowserRouter>
     <Routes>   
-        <Route path="/login" element= {<Logins  />}/>
+        <Route path="/forgot-password" element= {<ForgotPassword  />}/>
     </Routes>
 </BrowserRouter>

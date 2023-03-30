@@ -7,6 +7,10 @@ jest.mock('react-redux', () => ({
     connect: () => (ManufacturerOrgHierarchy) => ManufacturerOrgHierarchy,
 }));
 
+jest.mock('react-redux', () => ({
+    connect: () => (ManufacturerOrgHierarchyChangeHistory) => ManufacturerOrgHierarchyChangeHistory,
+}));
+
 window.matchMedia =
     window.matchMedia ||
     function () {
@@ -366,26 +370,4 @@ describe('manufacturerorghierarchy component', () => {
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         expect(saveBtn).toBeTruthy();
     });
-
-    // test('Testing the edit function on page ', async () => {
-    //     render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
-    //     const editBtn = await screen.findByRole('button', { name: 'Edit' });
-    //     expect(editBtn).toBeTruthy();
-    //     fireEvent.click(editBtn);
-    //     const ShortDesc = screen.getByPlaceholderText('Please Enter Short Description');
-    //     const LongDesc = screen.getByPlaceholderText('Please Enter Long Descrition');
-    //     const codeInputCode = screen.getByPlaceholderText('Please Enter Attribute Code');
-    //     const ParentField = screen.getByRole('combobox', { name: '' });
-    //     const ManuOrgLevel = screen.getByRole('combobox', { name: 'Attribute Type Code' });
-    //     const codeSwitch = screen.getByRole('switch', { name: 'Status' });
-    //     fireEvent.change(ShortDesc, { target: { value: '23' } });
-    //     fireEvent.change(codeInputCode, { target: { value: '23' } });
-    //     fireEvent.change(LongDesc, { target: { value: '24' } });
-    //     fireEvent.keyDown(ParentField, { key: 'A', code: 'KeyA' });
-    //     fireEvent.keyDown(ManuOrgLevel, { key: 'A', code: 'KeyA' });
-    //     fireEvent.change(codeSwitch, { target: { value: false } });
-
-    //     const saveBtn = screen.getByRole('button', { name: 'Save' });
-    //     expect(saveBtn).toBeTruthy();
-    // });
 });
