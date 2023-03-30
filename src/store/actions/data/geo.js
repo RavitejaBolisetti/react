@@ -11,7 +11,7 @@ export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 export const GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: GEO_DATA_LOADED,
     isLoaded: true,
     data,
@@ -55,7 +55,7 @@ geoDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, user
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }

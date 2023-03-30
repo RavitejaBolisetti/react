@@ -8,17 +8,19 @@ const onFilterFn = (value, record) => {
     }
 };
 
-export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true }) => {
+export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, editable = false, width = undefined, sorter = true }) => {
     return {
         title,
         dataIndex,
+        width: width,
         ellipsis,
         filters,
         render,
         filterMode,
         filterSearch,
         onFilter: onFilterFn,
-        sorter: (a, b) => a[dataIndex].localeCompare(b[dataIndex], undefined, { sensitivity: 'base' }),
+        editable,
+        sorter: sorter && ((a, b) => (a && b ? a[dataIndex].localeCompare(b[dataIndex], undefined, { sensitivity: 'base' }) : a)),
         sortDirections: ['descend', 'ascend'],
     };
 };

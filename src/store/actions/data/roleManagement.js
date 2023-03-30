@@ -9,7 +9,7 @@ export const ROLE_MANAGEMENT_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
 export const ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
 export const ROLE_MANAGEMENT_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: ROLE_MANAGEMENT_DATA_LOADED,
     isLoaded: true,
     data,
@@ -42,7 +42,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => ({ token, access
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }

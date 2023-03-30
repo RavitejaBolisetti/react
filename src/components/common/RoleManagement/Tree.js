@@ -9,20 +9,16 @@ const Treedata = () => {
     const [selectedKeys, setSelectedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const onExpand = (expandedKeysValue) => {
-        console.log('onExpand', expandedKeysValue);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
         setAutoExpandParent(false);
     };
     const onCheck = (checkedKeysValue) => {
-        console.log('onCheck', checkedKeysValue);
         checkvals.push(checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
     };
     const onSelect = (selectedKeysValue, info) => {
-        console.log('onSelect', info);
-
         setSelectedKeys(selectedKeysValue);
     };
     return (
