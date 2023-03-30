@@ -413,13 +413,11 @@
     margin-left: 10px;
 }
 
-.contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
-    border-left: #ffffff ;
-    background-color: #ffffff ;
+    border-left: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
-    border-left:  #ff3e5b;
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+    border-left: #ff3e5b;
 }
-
