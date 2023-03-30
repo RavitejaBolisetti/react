@@ -201,10 +201,10 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         // handle invalid form submission
     };
 
-    const handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        setConfirmDirty(confirmDirty || !!value);
-    };
+    // const handleConfirmBlur = (e) => {
+    //     const value = e.target.value;
+    //     setConfirmDirty(confirmDirty || !!value);
+    // };
 
     return (
         <>
