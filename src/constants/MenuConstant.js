@@ -2,6 +2,7 @@ import { AiFillCar } from 'react-icons/ai';
 import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
+import { TbReport } from 'react-icons/tb';
 import { HomeIcon } from 'Icons';
 
 import { getMenyKey } from 'utils/menuKey';
@@ -112,7 +113,7 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-05',
     },
-    
+
 
 
     [getMenyKey('DBP')]: {
@@ -175,5 +176,17 @@ export const MenuConstant = {
         link: undefined,
         icon: <CrmIcon fontSize={22} />,
         parentMenuId: 'WEB',
+    },
+
+    [getMenyKey('RPT')]: {
+        link: undefined,
+        icon: <TbReport fontSize={22} />,
+        parentMenuId: 'WEB',
+    },
+    [getMenyKey('RPT-BI')]: {
+        key: 'RPT-BI',
+        link: routing.ROUTING_REPORT_BI_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
     },
 };
