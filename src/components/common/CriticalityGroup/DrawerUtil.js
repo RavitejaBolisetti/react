@@ -80,12 +80,12 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             footer={
                 <>
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
-                            <Button danger onClick={onClose}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button danger onClick={onClose} className={style.cancelBtn}>
                                 Cancel
                             </Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
                             {saveBtn ? (
                                 <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
