@@ -292,7 +292,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             </Col>
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
+                                    <Button icon={<TfiReload />} aria-label="fa-ref" className={style.refreshBtn} onClick={handleReferesh} danger></Button>
 
                                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add Qualification

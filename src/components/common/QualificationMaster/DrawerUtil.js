@@ -85,7 +85,7 @@ const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item className={styles.statusButton} labelCol={{ span: 24 }} normalize={(a, b) => (a ? 1 : 0)} initialValue={formData?.status === 1 ? 1 : 0} label="Status" name="status">
-                            <Switch checkedChildren="Active" defaultChecked={formData?.status} unCheckedChildren="Inactive" {...disabledProps} />
+                            <Switch aria-label="fa-switch" checkedChildren="Active" defaultChecked={formData?.status} unCheckedChildren="Inactive" {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
