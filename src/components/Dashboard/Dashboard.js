@@ -13,7 +13,7 @@ import moment from 'moment';
 
 const { Search } = Input;
 
-export const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
     const {
         common: {
             LeftSideBar: { collapsed = false },

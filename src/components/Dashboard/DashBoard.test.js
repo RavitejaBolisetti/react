@@ -15,15 +15,14 @@ import { geoDataActions } from 'store/actions/data/geo';
 jest.mock('react-redux', () => ({
     connect: () => (Dashboard) => Dashboard,
 }));
-jest.mock(mapStateToProps);
 
 window.matchMedia =
     window.matchMedia ||
     function () {
         return { matches: false, addListener: function () {}, removeListener: function () {} };
     };
-describe('Testing Header of every page', () => {
-    test('Testing image components in header', async () => {
+describe('Testing DashBoard', () => {
+    test('Testing image components in Dashboard', async () => {
         render(
             <BrowserRouter>
                 <Routes>
@@ -69,7 +68,7 @@ describe('Testing Header of every page', () => {
         expect(Today).toBeTruthy();
         expect(KnowledgeCenter).toBeTruthy();
     });
-    test('Testing Input field', async () => {
+    test('Testing Routing', async () => {
         render(
             <BrowserRouter>
                 <Routes>
