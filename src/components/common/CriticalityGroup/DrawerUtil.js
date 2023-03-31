@@ -1,16 +1,13 @@
 import React from 'react';
 
-import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal } from 'antd';
+import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from 'pages/common/Common.module.css';
-import style from './criticatiltyGroup.module.css';
-
-const { confirm } = Modal;
+import style from 'components/common/DrawerAndTable.module.css';
 
 const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
@@ -83,12 +80,12 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             footer={
                 <>
                     <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
-                            <Button danger onClick={onClose}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button danger onClick={onClose} className={style.cancelBtn}>
                                 Cancel
                             </Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
                             {saveBtn ? (
                                 <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save

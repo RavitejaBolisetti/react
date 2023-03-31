@@ -16,6 +16,7 @@ export const HierarchyAttributeMasterBase = (props) => {
         setFavourite,
         handleFavouriteClick,
         visibleChangeHistory: false,
+        canMarkFavourite: true,
     };
 
     return (

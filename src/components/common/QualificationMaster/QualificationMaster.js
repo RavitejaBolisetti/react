@@ -2,20 +2,20 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Form, Empty, ConfigProvider } from 'antd';
-import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { EditIcon } from 'Icons';
-
 import { TfiReload } from 'react-icons/tfi';
 import { notification } from 'antd';
-
 import { PlusOutlined } from '@ant-design/icons';
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from 'pages/common/Common.module.css';
-import style from '../DrawerAndTable.module.css';
-import DataTable from 'utils/dataTable/DataTable';
 
+import { tblPrepareColumns } from 'utils/tableCloumn';
+import DataTable from 'utils/dataTable/DataTable';
+import { showGlobalNotification } from 'store/actions/notification';
+import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import DrawerUtil from './DrawerUtil';
+
+import styles from 'pages/common/Common.module.css';
+import style from '../DrawerAndTable.module.css';
 
 const { Search } = Input;
 
@@ -46,6 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -53,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -65,11 +66,13 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
-    const [RefershData, setRefershData] = useState(false);
+    const [refershData, setRefershData] = useState(false);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
+    const [filterString, setFilterString] = useState();
+
 
     const state = {
         button: 1,
@@ -82,31 +85,39 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     }, [forceFormReset]);
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
 
-    useEffect(() => {
-        fetchList({ setIsLoading: listShowLoading, userId });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RefershData]);
-
-    const informationModalBox = ({ icon = 'error', message = 'ERROR', description, className, placement }) => {
-        alertNotification.open({
-            icon: icon === 'error' ? <AiOutlineCloseCircle /> : <AiOutlineCheckCircle />,
-            message,
-            description,
-            className,
-            placement,
-        });
+    const onSuccess = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
+
+    useEffect(() => {
+        if (refershData && userId) {
+            fetchList({ setIsLoading: listShowLoading, onSuccess, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refershData, userId]);
+
+    useEffect(() => {
+        if (isDataLoaded && qualificationData) {
+            if (filterString) {
+                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.criticalityName));
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            } else {
+                setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, qualificationData]);
 
     const tableColumn = [];
     tableColumn.push(
@@ -157,12 +168,12 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 forceUpdate();
                 if (res?.data) {
                     fetchList({ setIsLoading: listShowLoading, userId });
-                    informationModalBox({ icon: 'success', message: res?.message, className: style.success, placement: 'topRight' });
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 }
             };
 
             const onError = (message) => {
-                informationModalBox({ icon: 'error', message: message, className: style.error, placement: 'topRight' });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
             };
 
             const requestData = {
@@ -183,15 +194,14 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 if (res?.data) {
                     fetchList({ setIsLoading: listShowLoading, userId });
 
-                    informationModalBox({ icon: 'success', message: res?.message, className: style.success, placement: 'bottomRight' });
-
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottom-right' });
                     form.resetFields();
                     setFormData({});
                 }
             };
 
             const onError = (message) => {
-                informationModalBox({ icon: 'error', message: message, className: style.error, placement: 'bottomRight' });
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
             };
 
             const requestData = {
@@ -233,41 +243,24 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         forceUpdate();
     };
 
-    const handleReferesh = () => {
-        setRefershData(!RefershData);
+    const handleReferesh = (e) => {
+        setRefershData(!refershData);
     };
 
     const onChange = (sorter, filters) => {
         form.resetFields();
     };
 
-    const onChangeHandle = (e) => {
-        const newdata = [];
-        Object.keys(qualificationData).map((keyname, i) => {
-            if (qualificationData[keyname].qualificationName === e) {
-                newdata.push(qualificationData[keyname]);
-            } else if (qualificationData[keyname].qualificationCode === e) {
-                newdata.push(qualificationData[keyname]);
-            }
-        });
-
-        if (e === '') {
-            setSearchdata(qualificationData);
-        } else {
-            setSearchdata(newdata);
-        }
+    const onSearchHandle = (value) => {
+        setFilterString(value);
     };
-    const onChangeHandle2 = (e) => {
-        const getSearch = e.target.value;
-        if (e.target.value === '') {
-            const tempArr = qualificationData;
-            setSearchdata(tempArr);
-            return;
-        }
-        if (getSearch.length > -1) {
-            const searchResult = qualificationData.filter((record) => record.qualificationName.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.qualificationCode.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setSearchdata(searchResult);
-        }
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
+    };
+
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
     return (
@@ -280,18 +273,18 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
                                             Qualification List
                                         </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                             <Search
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
                                                 }}
                                                 allowClear
-                                                onSearch={onChangeHandle}
-                                                onChange={onChangeHandle2}
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>

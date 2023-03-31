@@ -4,6 +4,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from './HierarchyAttribute.module.css';
+import style from "../DrawerAndTable.module.css";
 
 const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable }) => {
     const [form] = Form.useForm();
@@ -26,6 +27,8 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
 
     const onClose = () => {
         setShowDrawer(false);
+        
+        form.resetFields();
         setIsReadOnly(false);
         setFormBtnDisable(false);
     };
@@ -56,12 +59,12 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
             title={drawerTitle}
             footer={
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.drawerFooterButtons}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons }>
                         <Button danger onClick={onClose}>
                             Cancel
                         </Button>
                     </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.drawerFooterButtons} style={{ textAlign: 'right' }}>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
                         {formActionType === 'view' ? (
                             <Button onClick={handleEditView} type="primary">
                                 Edit
@@ -100,12 +103,13 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField('Code'), { validator: (rule, value) => (!editRow['hierarchyAttribueCode'] ? (tableData?.findIndex((el) => el['hierarchyAttribueCode']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
-                                <Input placeholder={preparePlaceholderText('Code')} />
+                                <Input placeholder={preparePlaceholderText('Code')} {...disabledProps}/>
+                           
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name'), { validator: (rule, value) => (!editRow['hierarchyAttribueName'] ? (tableData?.findIndex((el) => el['hierarchyAttribueName']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
-                                <Input placeholder={preparePlaceholderText('Name')} />
+                                <Input placeholder={preparePlaceholderText('Name')}  {...disabledProps}/>
                             </Form.Item>
                         </Col>
                     </Row>

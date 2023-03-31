@@ -4,7 +4,7 @@ import { ConfigProvider, notification } from 'antd';
 import { MainPage } from './components/MainPage';
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { hideGlobalNotification } from 'store/actions/notification';
 
 import styles from './App.module.css';
@@ -28,6 +28,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
 
     const checkIcon = {
         success: <AiOutlineCheckCircle />,
+        warning: <AiOutlineInfoCircle />,
         error: <AiOutlineCloseCircle />,
     };
 

@@ -34,27 +34,37 @@ const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable
             className={styles.drawer}
             width="540px"
             footer={
-                <Row>
+                <Row >
                     <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.drawerFooterButton}>
                         <Button danger onClick={onClose}>
                             Cancel
                         </Button>
                     </Col>
-                    <Col xs={10} sm={10} md={10} lg={10} xl={10} styles={{ textAlign: 'right' }} className={styles.drawerFooterButtons}>
-                        {saveBtn ? (
-                            <Button disabled={!formBtnDisable} onClick={() => (state.button = 1)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                Save
-                            </Button>
-                        ) : (
-                            ''
-                        )}
-                        {saveAndSaveNew ? (
-                            <Button disabled={!formBtnDisable} onClick={() => (state.button = 2)} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+
+                    <Col
+                        xs={10}
+                        sm={10}
+                        md={10}
+                        lg={10}
+                        xl={10}
+                    
+                        className={styles.drawerFooterButtons}
+                    >
+                           {saveAndSaveNew ? (
+                            <Button className={styles.saveAndAddNew} disabled={!formBtnDisable} onClick={() => (state.button = 2)} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                 Save & Add New
                             </Button>
                         ) : (
                             ''
                         )}
+                        {saveBtn ? (
+                            <Button className={styles.saveBtn} disabled={!formBtnDisable} onClick={() => (state.button = 1)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                Save
+                            </Button>
+                        ) : (
+                            ''
+                        )}
+                     
                     </Col>
                 </Row>
             }
