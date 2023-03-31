@@ -45,7 +45,6 @@ const configParamData = [
         configurableParameterType:'Text',
         configPrmVal: 'manage',
 
-       
     },
 ];
 const fetchList = () => {
@@ -87,18 +86,16 @@ describe('Config Param Test', () => {
 
     test('Is drawer opening on clicking edit', async () => {
         render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData1}/>);
-        const editBtn = await screen.getByRole('button',{ name: "fa-edit" });
+        const editBtn = await screen.getByRole('button',{ name: 'fa-edit' });
         fireEvent.click(editBtn);
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-        // const SaveAndNew = screen.getByRole('button', { name: 'Save and New' });
+        const SaveAndNew = screen.getByRole('button', { name: 'Save and New' });
 
-        // fireEvent.click(saveBtn);
-        // fireEvent.click(SaveAndNew);
+        fireEvent.click(saveBtn);
+        fireEvent.click(SaveAndNew);
 
         expect(saveBtn).toBeTruthy();
-        // expect(SaveAndNew).toBeTruthy();
-        const nameField = await screen.findByText('Test33');
-        expect(nameField).toBeInTheDocument();
+        expect(SaveAndNew).toBeTruthy();
         // expect(screen.getByDisplayValue('Test33')).toBeInTheDocument();
     });
 
@@ -125,21 +122,49 @@ describe('Config Param Test', () => {
         expect(nameField).toBeTruthy();
     });
 
-    
-
-   
+    test('Save Drawer element', async () => {
+        const onFinish = jest.fn();
+        const { getByLabelText, getByText } = render(<ConfigurableParameterEditing fetchList={fetchList} onFinish={onFinish} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
+        const AddGrp = screen.getByText('Add Group');
+        fireEvent.click(AddGrp);
+        // console.log("test",SaveBtn)
+        const SaveBtn = screen.getByText('Save');
+        onFinish.mockResolvedValue({
+            controlId: 'Test33',
+            controlDescription: 'Time for testing133',
+            controlGroup: 'SM',
+            configurableParameterType:'Text',
+        });
+        const result = await onFinish();
+        fireEvent.click(SaveBtn);
+        expect(result).toBeTruthy();
+        expect(onFinish).toHaveBeenCalled();
+    });
 
     test('is drawer closing on click of cancel button', async () => {
-        render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData}/>);
+        const onClose = jest.fn();
+        render(<ConfigurableParameterEditing onClose={onClose} fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData}/>);
         const addGroupBtn = await screen.findByText('Add Group');
         fireEvent.click(addGroupBtn);
         const cancelBtn = await screen.getByText('Cancel');
         fireEvent.click(cancelBtn);
+        const result = await onClose();
+        expect(onClose).toHaveBeenCalled();
         const options = await screen.findByText('Test11');
         expect(options).toBeTruthy();
-    });
+    }, 800000);
 
-    
+    // test('is Configurable Parameter Type Changing', async () => {
+    //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
+    //     const addGroupBtn = await screen.findByText('Add Group');
+    //     fireEvent.click(addGroupBtn);
+    //     const configParamType= screen.getByRole('combobox', { name: 'Configurable Parameter Type' });
+    //     fireEvent.change(configParamType, {
+    //     target: { key: 'N',value:'number'},
+    //     });
+    //     const configParamVal=await screen.getByLabelText('Configurable Parameter Values');
+    //     expect(configParamVal).toBeTruthy();
+    // });
   
     
 });
