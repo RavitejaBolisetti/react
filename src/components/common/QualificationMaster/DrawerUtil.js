@@ -33,7 +33,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
             placement="right"
             onClose={onClose}
             open={open}
-            className={style.drawerCriticalityGrp}
+            className={footerEdit ?  style.viewMode : style.drawerCriticalityGrp}
             width="540px"
             footer={
                 <>

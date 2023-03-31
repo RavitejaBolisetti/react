@@ -90,7 +90,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
             placement="right"
             onClose={onClose}
             open={showDrawer}
-            className={styles.editDrawer}
+            className={formActionType === 'view' ? style.viewMode  : styles.editDrawer }
         >
             <Space
                 direction="vertical"

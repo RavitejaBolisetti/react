@@ -328,3 +328,7 @@
 :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
     border: transparent;
 }
+:global .ant-drawer-wrapper-body .ant-drawer-footer {
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
+    padding: 10px 20px;
+}
