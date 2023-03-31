@@ -4,7 +4,7 @@
   top: 3px;
   z-index: 1;
   height: 48px;
-  color: #ea2929;
+  color: #FF3E5B;
   line-height: 48px;
   text-align: center;
   background: #ffffff;
@@ -52,6 +52,7 @@
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
+  box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.15);
   /* box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important; */
   /* box-shadow: 0 0 #0000, 0 0 #0000, 0 0 3px rgba(0, 0, 0, .2) !important;
   background-color: #f4f4f4 !important; */
@@ -59,7 +60,7 @@
 }
 
 .leftMenuBoxLight {
-  background-color: #f4f4f4 !important;
+  background-color: #ffffff !important;
 }
 
 .leftMenuBoxDark {
@@ -74,11 +75,19 @@
   background: none !important;
 }
 
+.leftMenuBox li.subMenuItem {
+  min-height: 40px;
+}
+
+.leftMenuBox li.subMenuItem:hover {
+  background-color: #ffffff !important;
+}
+
 .closeButton {
   font-size: 30px;
   padding-top: 12px;
   text-align: right;
-  color: #ea2929;
+  color: #FF3E5B;
   cursor: pointer;
 }
 
@@ -90,11 +99,11 @@
 }
 
 :global .ant-menu-title-content a:hover {
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
 }
 
 :global .ant-menu-light .ant-menu-submenu-title:hover:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected) {
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
 }
 
 :global .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
@@ -111,7 +120,7 @@
   top: 23px;
   z-index: 1;
   /* height: 48px; */
-  color: #ea2929;
+  color: #FF3E5B;
   font-size: 18px;
   /* line-height: 48px; */
   text-align: center;
@@ -145,7 +154,7 @@
 /* font-family & size for sub-menu in left-menu text */
 :global .ant-menu .ant-menu-sub {
   font-size: 14px;
-  background-color: #f4f4f4 !important;
+  background-color: #ffffff !important;
 }
 
 :global .ant-menu .ant-menu-sub li {
@@ -164,7 +173,7 @@
 :global .ant-menu .ant-menu-item .anticon+span:hover,
 :global .ant-menu .ant-menu-submenu-title .anticon+span:hover {
   background: #f4f4f4 !important;
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
   width: 100%;
 } */
 
@@ -189,7 +198,7 @@
 /* changes on menu list items on hover */
 /* :global .ant-menu-submenu-title:hover {
   background-color: transparent !important;
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
 } */
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {
@@ -199,22 +208,24 @@
 }
 
 /* changes on menu list items on select/visited/focus */
-:global .ant-menu-light .ant-menu-item-selected {
+:global .ant-menu-light .ant-menu-item-selected,
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title span.ant-menu-title-content a {
   background-color: white;
   border-radius: 4px;
-  color: #ea2929;
+  color: #FF3E5B !important;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
-  background-color: #F4F4F4;
+  background-color: #FFFFFF;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
   width: 5px;
-  background-color: #F4F4F4;
+  background-color: #FFFFFF;
 }
 
 /* :global .ant-menu-light.ant-menu-root.ant-menu-inline:hover::-webkit-scrollbar,
@@ -341,7 +352,7 @@
   text-decoration: none;
   /* color: #000000; */
   /* background: #ffffff; */
-  color: #ea2929;
+  color: #FF3E5B;
 }
 
 /* :global .ant-menu-submenu-popup,
@@ -390,13 +401,14 @@
 .changeTheme {
   display: flex;
   position: absolute;
-  color: #ea2929 !important;
-  background: #F2F2F2;
+  color: #FF3E5B !important;
+  background: #FFFFFF;
   width: 100%;
   bottom: 0;
-  -webkit-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
-  -moz-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
-  box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
+  -webkit-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29); */
+  box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
 }
 
 .changeTheme :global .ant-btn-default {
@@ -478,19 +490,17 @@
 } */
 
 .leftMenuBox li.subMenuItemNew:hover {
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
   background: transparent !important;
 }
 
-/* .subMenuItem {
-  color: #0458f7 !important;
-} */
+
 .searchMenuContainer {
   padding-left: 8px !important;
 }
 
 .searchMenuTitle {
-  color: #ea2929;
+  color: #FF3E5B;
   padding-left: 0 !important;
 }
 

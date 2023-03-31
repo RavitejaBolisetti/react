@@ -31,12 +31,12 @@ const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true,
     id && getMenuValue(MenuConstant, id, 'link') ? (
         <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
+            {showTitle && <span className={styles.menuTitle}>{title}</span>}
         </Link>
     ) : (
         <Link to="#" title={tooltip ? title : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
+            {showTitle && <span className={styles.menuTitle}>{title}</span>}
         </Link>
     );
 
@@ -174,11 +174,11 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     };
 
     const prepareMenuItem = (data) => {
-        return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
-            const isParentMenu = false; // parentMenuId === 'Web';
+        return data?.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
+            const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={parentMenuId?.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
@@ -191,7 +191,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
 
     const finalMenuData = useMemo(() => {
         const loop = (data) =>
-            data.map((item) => {
+            data?.map((item) => {
                 const strTitle = item?.menuTitle;
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);
@@ -246,7 +246,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
+                    {!collapsed && <Input placeholder="Search" allowClear onChange={onSearch} />}
                 </div>
                 {!isLoading ? (
                     <>
@@ -258,12 +258,12 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             // defaultOpenKeys={defaultOpenKeys}
                             openKeys={openKeys}
                             onOpenChange={onExpand}
-                            collapsed={collapsed.toString()}
+                            collapsed={collapsed?.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
-                            <Item key={'home'} className={styles.subMenuItemNew}>
+                            <Item key={'home'} className={styles.subMenuParent}>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
                                         <HomeIcon />
