@@ -42,7 +42,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
-    const RESEND_OTP_TIME = 60;
+    const RESEND_OTP_TIME = 15;
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
     const [otpMessage, setOTPMessage] = useState();
@@ -52,6 +52,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
     const [confirmDirty, setConfirmDirty] = useState(false);
+    const [inValidOTP, setInValidOTP] = useState(false);
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -63,6 +64,10 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const onError = (message) => {
         showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
+        if (otpInput.length === 6) {
+            setCounter(0);
+        }
+        setInValidOTP(true);
     };
 
     const onVerifyUser = (values) => {
@@ -94,13 +99,15 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const handleSendOTP = () => {
         setOTPInput();
+        setInValidOTP(false);
+
         if (selectedUserId) {
             if (otpSentOnMobile || otpSentOnEmail) {
                 const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
 
                 const onSuccess = (res) => {
                     setCounter(RESEND_OTP_TIME);
-                    showGlobalNotification({ notificationType: 'success', title: 'OTP Sent', message: res?.responseMessage });
+                    showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
                     setOTPMessage(res?.data?.message);
                     setCurrentStep(3);
                 };
@@ -195,6 +202,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const handleOTPInput = (value) => {
         setOTPInput(value);
+        setInValidOTP(false);
     };
 
     const onFinishFailed = ({ values, errorFields, outOfDate }) => {
@@ -341,14 +349,26 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <OTPInput className={styles.changer} otpType="number" value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
+                                                        <OTPInput className={`${styles.changer} ${inValidOTP ? styles.otpFilled : styles.otpEmpty}`} otpType="number" value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Row gutter={20} className={styles.otpVerificationContainer}>
                                                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                {counter ? <div className={styles.otpCounter}>{`${counter >= 10 ? counter : `0${counter}`}s`}</div> : <div className={styles.otpNotReceive}>{"Didn't receive OTP?"}</div>}
+                                                                {counter ? (
+                                                                    <div className={styles.otpCounter}>
+                                                                        {`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className={styles.otpNotReceive}>
+                                                                        {inValidOTP ? (
+                                                                            <span>{"Incorrect code"}</span>
+                                                                        ) : (
+                                                                            <span>{"Didn't receive OTP?"}</span>
+                                                                        )}
+                                                                    </div>
+                                                                )}
                                                             </Col>
                                                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                                 <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
