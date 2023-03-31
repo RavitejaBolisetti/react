@@ -106,7 +106,7 @@
 }
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
-    background-color: transparent;
+    background-color: transparent !important;
     color: #b5b5b6 !important;
 }
 
@@ -278,14 +278,53 @@
     border-color: white !important;
 }
 
-
-
-.viewMode :global(.ant-switch.ant-switch-checked){
-    background: #0b0c0c !important;
+.viewMode :global(.ant-switch.ant-switch-checked) {
+    background: #b5b5b6 !important;
+    color: #b5b5b6;
 }
 
 .inputViewText {
-    color: #8E8585;
+    color: #8e8585;
     text-align: left;
     left: 0px;
+}
+/* .viewMode *{
+    color: black !important;
+} */
+:global(.ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before) {
+    margin-inline-end: 8px !important;
+}
+
+.viewMode :global(.ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before) {
+    color: #0b0c0c;
+}
+.viewMode :global(.ant-input-disabled .ant-input[disabled]) {
+    background-color: none !important;
+}
+
+.viewMode :global input[type="text"]:disabled{
+    background-color: #ffffff !important;
+    background: #ffffff;
+    border-color: transparent !important;
+    padding-left: 0px !important;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 0px;
+    cursor: default;
+
+}
+.viewMode :global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked{
+    color: #b5b5b6 !important;
+}
+.viewMode :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+    background: transparent;
+}
+/* .viewMode .allowedTimingAlignment {
+    position: relative;
+    top: -28px;
+    margin-bottom: -10px;
+} */
+
+:global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
+    border: transparent;
 }

@@ -119,13 +119,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
-                            {
-                                footerEdit ?
-                                <p className={style.inputViewText}>{form.getFieldValue("criticalityGroupCode")}</p>
-                                :
                                 <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
-
-                            }
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -155,7 +149,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
 
                 <Form.List name="allowedTimings">
                     {(fields, { add, remove, ...restP }) =>
-                        console.log(restP) || (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
@@ -233,22 +226,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                                 removeItem(name);
                                                                 remove(name);
                                                                 showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
-                                                                // confirm({
-                                                                //     title: 'Allowed Timing',
-                                                                //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
-                                                                //     content: 'Are you sure you want to Delete?',
-                                                                //     okText: 'Yes',
-                                                                //     okType: 'danger',
-                                                                //     cancelText: 'No',
-                                                                //     wrapClassName: styles.confirmModal,
-                                                                //     centered: true,
-                                                                //     closable: true,
-                                                                //     onOk() {
-                                                                //         remove(name);
-                                                                //         removeItem(name);
-                                                                //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
-                                                                //     },
-                                                                // });
+                                                               
                                                             }}
                                                         />
                                                     </Col>
@@ -258,7 +236,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                     ))}
                                 </>
                             </>
-                        )
+
                     }
                 </Form.List>
             </Form>
