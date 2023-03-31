@@ -99,6 +99,12 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-03',
     },
+    [getMenyKey('COMN-03.07')]: {
+        key: 'COMN-03.07',
+        link: routing.ROUTING_COMMON_CONFIG_PARAM_EDIT,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
 
     [getMenyKey('COMN-05.03')]: {
         key: 'COMN-05.03',
@@ -106,6 +112,8 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-05',
     },
+    
+
 
     [getMenyKey('DBP')]: {
         link: undefined,
