@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { doLogoutAPI } from 'store/actions/auth';
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
 import { UndoOutlined } from '@ant-design/icons';
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
@@ -29,7 +28,6 @@ const mapDispatchToProps = (dispatch) => ({
             sendOTP: forgotPasswordActions.sendOTP,
             validateOTP: forgotPasswordActions.validateOTP,
             updatePassword: forgotPasswordActions.updatePassword,
-            doLogout: doLogoutAPI,
             listShowLoading: forgotPasswordActions.listShowLoading,
             showGlobalNotification,
             hideGlobalNotification,
@@ -71,9 +69,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const onVerifyUser = (values) => {
+        hideGlobalNotification();
+
         const userId = values?.userId;
 
         if (userId) {
+            hideGlobalNotification();
             const data = { userId };
             setSelectedUserId(userId);
 
@@ -93,6 +94,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const onSentOTP = (values) => {
         if (values) {
+            hideGlobalNotification();
             handleSendOTP();
         }
     };
@@ -103,6 +105,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
         if (selectedUserId) {
             if (otpSentOnMobile || otpSentOnEmail) {
+                hideGlobalNotification();
                 const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
 
                 const onSuccess = (res) => {
@@ -126,6 +129,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const handleVerifyOTP = () => {
         if (selectedUserId) {
+            hideGlobalNotification();
             const data = { userId: selectedUserId, otp: otpInput };
 
             const onSuccess = (res) => {
@@ -151,9 +155,12 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const onUpdatePasswordFailed = ({ values, errorFields, outOfDate }) => {
         if (selectedUserId && values) {
+            hideGlobalNotification();
             const data = { ...values, userId: selectedUserId, validationKey };
 
             const onSuccess = (res) => {
+                form.resetFields();
+
                 showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
                 navigate(ROUTING_LOGIN);
             };
