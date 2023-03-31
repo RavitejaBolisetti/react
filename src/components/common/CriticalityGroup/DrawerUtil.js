@@ -74,7 +74,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
     return (
         <Drawer
             title={drawerTitle}
-            className={style.drawerCriticalityGrp}
+            className={footerEdit ? style.viewMode : style.drawerCriticalityGrp}
             width="520"
             maskClosable={false}
             footer={
@@ -119,7 +119,13 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+                            {
+                                footerEdit ?
+                                <p className={style.inputViewText}>{form.getFieldValue("criticalityGroupCode")}</p>
+                                :
+                                <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+
+                            }
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

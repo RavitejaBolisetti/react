@@ -8,8 +8,8 @@
     margin-bottom: 20px;
 }
 
-.allowedTiming :global .ant-picker-input>input:placeholder-shown,
-.allowedTiming :global .ant-picker-input>input {
+.allowedTiming :global .ant-picker-input > input:placeholder-shown,
+.allowedTiming :global .ant-picker-input > input {
     font-size: 14px;
 }
 
@@ -27,7 +27,7 @@
     float: left !important;
 }
 
-.saveBtn Button{
+.saveBtn Button {
     margin-left: 0px !important;
     margin-right: 10px !important;
     float: right !important;
@@ -39,7 +39,6 @@
     color: #ffffff;
     border-color: white;
 }
-
 
 .deleteBtn :disabled {
     background-color: #ffffff;
@@ -81,9 +80,8 @@
     margin-bottom: 10px;
     border-radius: 7px;
     font-size: 14px;
-    color: #342C2C;
+    color: #342c2c;
 }
-
 
 .activeText {
     color: #00a310;
@@ -143,7 +141,6 @@
     font-weight: 400;
 }
 
-
 .ant-drawer .ant-drawer-body .allowedTiming .ant-space-item .ant-form-item {
     margin-bottom: 0px !important;
     padding-bottom: 0px !important;
@@ -180,7 +177,6 @@
     color: #0b0c0c;
     padding-right: 0px !important;
     padding-left: 0px !important;
-
 }
 
 .srchbtn :global .ant-btn-default {
@@ -266,4 +262,30 @@
 
 :global .ant-form-item-explain-error {
     font-size: 12px !important;
+}
+
+.drawerFooterButtons button {
+    margin-bottom: 0 !important;
+    height: 34px;
+}
+
+.drawerFooterButtons button:not(:first-child) {
+    margin-left: 10px !important;
+}
+.drawerFooterButtons :disabled {
+    background-color: #b5b5b6 !important;
+    color: #ffffff !important;
+    border-color: white !important;
+}
+
+
+
+.viewMode :global(.ant-switch.ant-switch-checked){
+    background: #0b0c0c !important;
+}
+
+.inputViewText {
+    color: #8E8585;
+    text-align: left;
+    left: 0px;
 }
