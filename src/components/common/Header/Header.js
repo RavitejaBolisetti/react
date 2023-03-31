@@ -243,11 +243,11 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                         {pagePath === routing.ROUTING_DASHBOARD && (
                             <Col xs={24} sm={24} md={7} lg={7} xl={7} xxl={7}>
                                 <div className={styles.headerRight} style={{ width: '100%' }}>
-                                    <Search allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+                                    <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                 </div>
                             </Col>
                         )}
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>  
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
                                     <div className={styles.navbarNav}>

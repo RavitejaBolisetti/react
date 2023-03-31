@@ -61,7 +61,10 @@ describe('Testing Header of every page', () => {
         );
 
         const SearchBydoc = screen.findByPlaceholderText('Search by Doc ID');
+        console.log(SearchBydoc);
         expect(SearchBydoc).toBeTruthy();
+        await userEvent.click(SearchBydoc);
+        userEvent.type(SearchBydoc, 'Nikhil');
         // fireEvent.change(SearchBydoc, { target: { value: '11111' } });
 
         // expect(SearchBydoc).toBe('11111');
