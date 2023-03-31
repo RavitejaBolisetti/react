@@ -174,11 +174,11 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     };
 
     const prepareMenuItem = (data) => {
-        return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
+        return data?.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={parentMenuId?.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
@@ -191,7 +191,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
 
     const finalMenuData = useMemo(() => {
         const loop = (data) =>
-            data.map((item) => {
+            data?.map((item) => {
                 const strTitle = item?.menuTitle;
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);
@@ -258,7 +258,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             // defaultOpenKeys={defaultOpenKeys}
                             openKeys={openKeys}
                             onOpenChange={onExpand}
-                            collapsed={collapsed.toString()}
+                            collapsed={collapsed?.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}

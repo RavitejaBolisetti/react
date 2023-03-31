@@ -43,7 +43,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test --coverage",
         "eject": "react-scripts eject",
-        "coverage": "react-scripts test --coverage --watchAll --collectCoverageFrom='src/components/**/*.{js,.jsx}' --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+        "coverage": "react-scripts test --coverage --watchAll --collectCoverageFrom='src/components/**/*.{js,.jsx}'  --collectCoverageFrom!='src/components/pages/*.{js,.jsx}'  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
