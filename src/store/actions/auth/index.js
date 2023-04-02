@@ -1,14 +1,12 @@
 import jwtDecode from 'jwt-decode';
-import { message } from 'antd';
 import moment from 'moment';
+import { showGlobalNotification } from 'store/actions/notification';
 
-import { axiosAPICall } from 'utils//axiosAPICall';
 import { withAuthToken } from 'utils//withAuthToken';
+import { axiosAPICall } from 'utils//axiosAPICall';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
-
-import { clearData as clearHeaderData } from 'store/actions/common/header';
-import { clearData as clearMenuData } from 'store/actions/data/menu';
+import { EN } from 'language/en';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_PRE_SUCCESS = 'AUTH_LOGIN_PRE_SUCCESS';
@@ -65,23 +63,33 @@ const unAuthenticate = (message) => ({
     message,
 });
 
-export const logoutClearAllData = (message) => (dispatch) => {
+export const clearLocalStorageData = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ID_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_USER_ID);
     localStorage.removeItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
+};
 
+export const authUserLogout = (res) => (dispatch) => {
+    dispatch(doLogout());
+    dispatch(showGlobalNotification({ notificationType: 'success', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage }));
+};
+
+export const authUserTokenExpired = () => (dispatch) => {
+    clearLocalStorageData();
     dispatch(authDoLogout());
+    dispatch(showGlobalNotification({ notificationType: 'success', title: EN.GENERAL.SESSION_EXPIRED.TITLE, message: EN.GENERAL.SESSION_EXPIRED.MESSAGE }));
 };
 
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
     dispatch(unAuthenticate(errorMessage));
-    dispatch(logoutClearAllData());
+    dispatch(clearLocalStorageData());
 };
 
-export const doLogout = withAuthToken((params) => (token) => (dispatch) => {
-    dispatch(logoutClearAllData());
-});
+export const doLogout = (res) => (dispatch) => {
+    clearLocalStorageData();
+    dispatch(authDoLogout());
+};
 
 const authPostLoginActions =
     ({ idToken, accessToken, userId, passwordStatus, saveTokenAndRoleRights = true }) =>
@@ -106,7 +114,7 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
         const passwordStatus = localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_PASSWORD_STATUS);
 
         if (!idToken) {
-            dispatch(authDoLogout());
+            dispatch(doLogout());
         } else {
             const { exp } = jwtDecode(idToken);
             if (moment(exp * 1000).isAfter()) {
@@ -119,11 +127,11 @@ export const readFromStorageAndValidateAuth = () => (dispatch) => {
                     })
                 );
             } else {
-                dispatch(authDoLogout());
+                dispatch(authUserTokenExpired());
             }
         }
     } catch (e) {
-        dispatch(authDoLogout());
+        dispatch(doLogout());
     }
 };
 
@@ -198,8 +206,8 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
     const url = BASE_URL_LOGOUT;
 
     const onSuccessAction = (res) => {
+        dispatch(doLogout(res));
         onSuccess && onSuccess(res);
-        dispatch(doLogout());
     };
 
     const apiCallParams = {
@@ -211,7 +219,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         data: { userId },
         onSuccess: onSuccessAction,
         onError: onError,
-        onTimeout: () => dispatch(doLogout()),
+        onTimeout: () => dispatch(authUserLogout()),
         postRequest: () => {},
         onUnAuthenticated: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),
         onUnauthorized: (errorMessage) => dispatch(unAuthenticateUser(errorMessage)),

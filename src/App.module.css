@@ -195,6 +195,7 @@
  .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
      color: #FF7A00;
      border-color: #FF7A00;
+     background-color: transparent;
  }
 
  .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {

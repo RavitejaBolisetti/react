@@ -58,18 +58,34 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preLoginData]);
 
-    const onFinish = (values) => {
-        if (values) {
-            const data = { ...values };
-            const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
-                navigate(ROUTING_LOGIN);
-                form.resetFields();
-                doLogout();
-            };
+    const onFinish = (errorInfo) => {
+        // form.validateFields().then((values) => {});
+    };
+
+    const onFinishFailed = (values) => {
+        if (values.errorFields.length === 0) {
+            const data = { ...values.values };
 
             const onError = (message) => {
                 showGlobalNotification({ message: message[0] });
+            };
+
+            const onSuccess = (res) => {
+                if (res) {
+                    form.resetFields();
+                    showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
+                    navigate(ROUTING_LOGIN);
+                    
+                    // doLogout({
+                    //     onSuccess: (res) => {
+                    //         if (res?.data) {
+                    //             navigate(ROUTING_LOGIN);
+                    //         }
+                    //     },
+                    //     onError,
+                    //     userId,
+                    // });
+                }
             };
 
             const requestData = {
@@ -81,13 +97,10 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                 onSuccess,
                 onError,
             };
+            console.log('🚀 ~ file: UpdatePassword.js:99 ~ onFinishFailed ~ requestData:', requestData);
 
             saveData(requestData);
         }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('🚀 ~ file: UpdatePassword.js:62 ~ onFinishFailed ~ errorInfo:', errorInfo);
     };
 
     const validateToNextPassword = (_, value) => {

@@ -6,6 +6,6 @@ export const EN = {
         NO_RESPONSE: { TITLE: 'Error', MESSAGE: 'No response received from the server.' },
         ERROR: { TITLE: 'ERROR', MESSAGE: 'We are facing server issue. Please try again.' },
         INTERNAL_SERVER_ERROR: { TITLE: 'Server Error', MESSAGE: 'Internal server error. Please try again.' },
-        REQUEST_TIMEOUT: { TITLE: 'Request Timeout', MESSAGE: 'It is taking too long to respond. Please try again.' },
+        SESSION_EXPIRED: { TITLE: 'Session Expired', MESSAGE: 'Your session has been expired. Please login again' },
     },
 };
