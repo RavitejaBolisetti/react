@@ -91,7 +91,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     useEffect(() => {
         if (!isDataLoaded && detailData?.hierarchyAttribute) {
             if (filterString) {
-                console.log("mein aagaya");
+                console.log('mein aagaya');
                 const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
                 setSearchdata(filterDataItem);
             } else {

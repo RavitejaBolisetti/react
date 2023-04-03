@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Table } from 'antd';
 import userEvent from '@testing-library/user-event';
-import { HierarchyAttribute } from './HierarchyAttribute';
+import { HierarchyAttribute } from '../HierarchyAttribute/HierarchyAttribute';
 import DataTable from '../../../utils/dataTable/DataTable';
 
 jest.mock('react-redux', () => ({

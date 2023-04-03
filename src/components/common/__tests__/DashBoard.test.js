@@ -1,10 +1,10 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Dashboard } from './Dashboard';
+import { Dashboard } from '../../Dashboard/Dashboard';
 import { BrowserRouter, Route, Routes, MemoryRouter } from 'react-router-dom';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 import { FaChartPie, FaChartArea, FaClock, FaNewspaper, FaChalkboard, FaBirthdayCake } from 'react-icons/fa';
-import { mapStateToProps } from './Dashboard';
+import { mapStateToProps } from '../../Dashboard/Dashboard';
 
 import axios from 'axios';
 

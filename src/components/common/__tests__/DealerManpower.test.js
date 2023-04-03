@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { DealerManpower } from './DealerManpower';
+import { DealerManpower } from '../DealerManpower/DealerManpower';
 import LeftPanel from '../LeftPanel';
 import { Tree } from 'antd';
 
