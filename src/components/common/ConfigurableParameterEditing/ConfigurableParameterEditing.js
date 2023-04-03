@@ -205,7 +205,7 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
             width: '10%',
             render: (record) => [
                 <Space wrap>
-                    <Button icon={<EditIcon />} className={style.tableIcons} onClick={() => handleEditBtn(record)} />
+                    <Button data-testid="EditIcon" icon={<EditIcon />} className={style.tableIcons} onClick={() => handleEditBtn(record)} />
                 </Space>,
             ],
         }
