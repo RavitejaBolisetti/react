@@ -25,6 +25,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
     const onClose = () => {
         setDrawer(false);
         setFormBtnDisable(false);
+        form.resetFields();
     };
 
     return (
@@ -74,32 +75,21 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
-                       { 
-                        footerEdit 
-                        ? 
-                            <p>{form.getFieldValue('qualificationCode')}</p> 
-                        :
                             <Input maxLength={5} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
-                        }
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
-                        {
-                            footerEdit 
-                            ? 
-                                <p>{form.getFieldValue('qualificationName')}</p> 
-                            :
+                  
                             <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                        }
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
+                            <Switch  checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -71,16 +71,17 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                             </Button>
                         ) : (
                             <>
-                                <Button disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
                                 {formActionType === 'add' ? (
                                     <Button disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
-                                        Save and New
+                                        Save & Add New
                                     </Button>
                                 ) : (
                                     ''
                                 )}
+                                <Button disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
+                                </Button>
+                            
                             </>
                         )}
                     </Col>

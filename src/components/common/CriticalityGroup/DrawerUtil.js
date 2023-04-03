@@ -26,25 +26,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
         setFormBtnDisable(false);
     };
 
-    const checkOverlap = () => {
-        let timeSegments = form.getFieldValue('allowedTimings');
-        timeSegments = timeSegments?.map((time) => ({ timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'), timeSlotTo: time?.timeSlotTo?.format('HH:mm') }));
-        if (timeSegments?.length === 1) return false;
-
-        timeSegments?.sort((timeSegment1, timeSegment2) => timeSegment1['timeSlotFrom']?.localeCompare(timeSegment2['timeSlotFrom']));
-
-        for (let i = 0; i < timeSegments.length - 1; i++) {
-            const currentEndTime = timeSegments[i]['timeSlotTo'];
-            const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
-            if (currentEndTime > nextStartTime) {
-                console.log('yes');
-                return { isOverlap: true, ...timeSegments[i] };
-            }
-        }
-
-        return { isOverlap: false };
-    };
-
     const onOk = (value) => {
         // checkOverlap()
     };
@@ -64,11 +45,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
-    };
-
-    const validatedDuplicateTime = (field) => (rule, value) => {
-        const overlapData = checkOverlap();
-        return field && overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.[field] ? Promise.reject('Time overlaps with other time') : Promise.resolve();
     };
 
     return (
@@ -187,9 +163,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                             name={[name, 'timeSlotFrom']}
                                                             rules={[
                                                                 validateRequiredInputField('Start Time'),
-                                                                {
-                                                                    validator: validatedDuplicateTime('timeSlotFrom'),
-                                                                },
+                                                             
                                                             ]}
                                                         >
                                                             <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
@@ -201,9 +175,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                             name={[name, 'timeSlotTo']}
                                                             rules={[
                                                                 validateRequiredInputField('End Time'),
-                                                                {
-                                                                    validator: validatedDuplicateTime('timeSlotTo'),
-                                                                },
+                                                            
                                                             ]}
                                                         >
                                                             <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
