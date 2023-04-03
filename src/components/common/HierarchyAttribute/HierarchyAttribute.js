@@ -78,20 +78,23 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     useEffect(() => {
-        if (!isDataLoaded) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
-            forceUpdate(Math.random() * 1000);
+        if (userId) {
+            if (!isDataLoaded) {
+                hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
+                forceUpdate(Math.random() * 1000);
+            }
+            if (detailData?.hierarchyAttribute) {
+                forceUpdate(Math.random() * 1000);
+                setRowsData(detailData?.hierarchyAttribute);
+            }
         }
-        if (detailData?.hierarchyAttribute) {
-            forceUpdate(Math.random() * 1000);
-            setRowsData(detailData?.hierarchyAttribute);
-        }
-    }, [isDataLoaded, isDataAttributeLoaded]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        if (!isDataLoaded && detailData?.hierarchyAttribute) {
+        if (userId && !isDataLoaded && detailData?.hierarchyAttribute) {
             if (filterString) {
-                console.log("mein aagaya");
                 const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
                 setSearchdata(filterDataItem);
             } else {
@@ -99,21 +102,25 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute]);
+    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute, userId]);
 
     useEffect(() => {
         form.resetFields();
         setEditRow({});
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ForceReset]);
-    useEffect(() => {
-        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
 
+    useEffect(() => {
+        if (userId) {
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+            setSearchdata(detailData?.hierarchyAttribute);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [RefershData, userId]);
+
+    useEffect(() => {
         setSearchdata(detailData?.hierarchyAttribute);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RefershData]);
-
-    useEffect(() => {
-        setSearchdata(detailData?.hierarchyAttribute);
     }, [detailData]);
 
     const handleEditView = () => {
