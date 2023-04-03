@@ -1,5 +1,5 @@
 .loginSection :global .ant-form-item-explain-error {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 p {
@@ -532,7 +532,6 @@ p {
     line-height: 24px;
     font-weight: 400;
     text-align: right;
-    font-weight: normal;
     width: 100%;
     margin-top: -6px;
     margin-bottom: 10px;
@@ -549,17 +548,17 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
     color: #dedede;
     text-align: center;
-    font-weight: normal;
+    font-weight: 400;
     width: 100%;
     margin-top: 16px;
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
     color: #ED302D;
-    font-size: 16px !important;
-    line-height: 28px;
+    /* font-size: 16px; */
+    line-height: 18px;
     font-weight: 400;
-    letter-spacing: 0.8px;
+    /* letter-spacing: 0.8px; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
@@ -568,16 +567,15 @@ p {
     line-height: 24px;
     color: #DEDEDE;
     text-align: center;
-    font-weight: normal;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a:hover {
     text-decoration: underline;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .forgotOTPSec {
+/* .loginSection .loginWrap .loginHtml .loginForm .forgotOTPSec {
     display: none;
-}
+} */
 
 .form-control {
     display: block;
@@ -949,6 +947,16 @@ select.form-control:focus::-ms-value {
 .cursorPointer {
     cursor: pointer;
 }
+
+.otpFilled input {
+    border: solid 1px #ED302D !important;
+    margin-right: 17px !important;
+}
+
+.otpEmpty {
+    border: transparent;
+}
+
 
 @media (min-width: 997px) and (max-width: 1280px) {
     .loginSection .loginMnMlogo img {

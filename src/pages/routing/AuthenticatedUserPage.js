@@ -7,6 +7,7 @@ import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
+import { BiReportPage } from 'pages/report';
 
 import { CMSPage } from 'pages/cms';
 
@@ -36,6 +37,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
+            <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
             
             <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />
