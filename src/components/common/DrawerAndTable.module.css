@@ -313,8 +313,15 @@
     cursor: default;
 
 }
-.viewMode :global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked{
+.viewMode :global( .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked  ){
     color: #b5b5b6 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+.viewMode :global( .ant-switch .ant-switch-inner .ant-switch-inner-unchecked  ){
+    color: #b5b5b6 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
 }
 .viewMode :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
     background: transparent;

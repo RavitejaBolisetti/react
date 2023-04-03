@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -130,20 +132,20 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         };
 
         const isOverlapping = (allowedTimingSlots) => {
-            // const times = allowedTimingSlots?.map((slot) => {
-            //     const startTime = timeInMinutes(slot?.timeSlotFrom);
-            //     const endTime = timeInMinutes(slot?.timeSlotTo);
-            //     const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
-            //     return { startTime, endTime: adjustedTime };
-            // });
-            // times?.sort((a, b) => a?.startTime - b?.startTime);
-            // for (let i = 0; i < times?.length - 1; i++) {
-            //     const slot1 = times[i];
-            //     const slot2 = times[i + 1];
-            //     if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
-            //         return true;
-            //     }
-            // }
+            const times = allowedTimingSlots?.map((slot) => {
+                const startTime = timeInMinutes(slot?.timeSlotFrom);
+                const endTime = timeInMinutes(slot?.timeSlotTo);
+                const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
+                return { startTime, endTime: adjustedTime };
+            });
+            times?.sort((a, b) => a?.startTime - b?.startTime);
+            for (let i = 0; i < times?.length - 1; i++) {
+                const slot1 = times[i];
+                const slot2 = times[i + 1];
+                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
+                    return true;
+                }
+            }
             return false;
         };
 
@@ -208,8 +210,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         const momentTime = record?.allowedTimings?.map((i) => {
             return {
                 id: i?.id,
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
             };
         });
         setFormData(record);
@@ -234,8 +236,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setSaveBtn(true);
         const momentTime = selectedRecord?.allowedTimings?.map((i) => {
             return {
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
             };
         });
 
@@ -296,6 +298,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
+            sorter: false
         })
     );
 

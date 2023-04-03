@@ -113,7 +113,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
     useEffect(() => {
         if (isDataLoaded && qualificationData) {
             if (filterString) {
-                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.criticalityName));
+                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
