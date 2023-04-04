@@ -194,7 +194,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);

@@ -177,9 +177,9 @@
     margin-top: 6px;
 }
 
-:global .ant-drawer .ant-drawer-body .ant-form-item {
+/* :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;
-}
+} */
 
 .drawerConfigParam :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item {
     padding-bottom: 0 !important;

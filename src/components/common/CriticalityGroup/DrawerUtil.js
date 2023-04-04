@@ -99,9 +99,9 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    {footerEdit ?<Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
-                            <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />
-                        </Form.Item> : <p>{form.getFieldValue("criticalityGroupName")}</p>}
+                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
+                            {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />}
+                        </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>

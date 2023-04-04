@@ -13,9 +13,9 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
     if (formActionType === 'add') {
         drawerTitle = 'Add Qualification Details';
     } else if (formActionType === 'update') {
-        drawerTitle = 'Edit Application Criticality Group Details';
+        drawerTitle = 'Edit Qualification Details';
     } else if (formActionType === 'view') {
-        drawerTitle = 'View Application Criticality Group Details';
+        drawerTitle = 'View Qualification Details';
     }
 
     const handleForm = () => {
