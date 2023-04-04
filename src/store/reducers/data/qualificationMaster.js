@@ -1,4 +1,4 @@
-import { QUALIFICATION_DATA_LOADED, QUALIFICATION_SET_FORM_DATA, QUALIFICATION_SET_FORM_IS_VISIBLE, QUALIFICATION_DATA_SHOW_LOADING } from 'store/actions/data/qualificationMaster';
+import { QUALIFICATION_DATA_LOADED, QUALIFICATION_SET_FORM_DATA, QUALIFICATION_SET_FORM_IS_VISIBLE, QUALIFICATION_DATA_SHOW_LOADING, QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING } from 'store/actions/data/qualificationMaster';
 
 const initialState = {
     isLoaded: false,
@@ -7,6 +7,7 @@ const initialState = {
     formData: undefined,
     isFormVisible: false,
     isLoading: false,
+    isLoadingOnSave: false,
 };
 
 export const QualificationMaster = (state = initialState, action) => {
@@ -19,6 +20,8 @@ export const QualificationMaster = (state = initialState, action) => {
             return { ...state, isFormVisible: true };
         case QUALIFICATION_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
+        case QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING:
+            return { ...state, isLoadingOnSave: action.isLoading };
         default:
             return { ...state };
     }

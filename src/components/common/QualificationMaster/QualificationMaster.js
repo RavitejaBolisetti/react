@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, isLoading, qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -36,6 +36,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         qualificationData,
+        isLoading,
+        isLoadingOnSave,
+        isFormDataLoaded
     };
     return returnValue;
 };
@@ -47,6 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
+            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -55,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification }) => {
+export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded,isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -99,13 +103,10 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
 
-    const onSuccess = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
 
     useEffect(() => {
-        if (refershData && userId) {
-            fetchList({ setIsLoading: listShowLoading, onSuccess, userId });
+        if ( userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -113,7 +114,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
     useEffect(() => {
         if (isDataLoaded && qualificationData) {
             if (filterString) {
-                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.criticalityName));
+                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -122,17 +123,30 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
 
+
+
     const tableColumn = [];
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+            width:'6%',
+            sorter: false
+        })
+    );
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
+            width:'17%'
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
+            width:'40%'
         })
     );
     tableColumn.push(
@@ -147,6 +161,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
+            width:'15%',
             sorter: false,
             render: (text, record, index) => {
                 return (
@@ -167,7 +182,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
         })
     );
     const tableProps = {
-        isLoading: listShowLoading,
+        isLoading: isLoading,
         tableData: searchData,
         tableColumn: tableColumn,
     };
@@ -177,6 +192,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
+                onSaveShowLoading(false)
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
@@ -190,7 +206,9 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
             }
         };
 
+      
         const onError = (message) => {
+            onSaveShowLoading(false)
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
         };
 

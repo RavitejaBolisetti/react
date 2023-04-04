@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -24,7 +26,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
+            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -37,6 +39,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         criticalityGroupData,
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -48,13 +51,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchData: criticalityDataActions.fetchData,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
+            onSaveShowLoading: criticalityDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification }) => {
+export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
@@ -130,20 +134,20 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         };
 
         const isOverlapping = (allowedTimingSlots) => {
-            // const times = allowedTimingSlots?.map((slot) => {
-            //     const startTime = timeInMinutes(slot?.timeSlotFrom);
-            //     const endTime = timeInMinutes(slot?.timeSlotTo);
-            //     const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
-            //     return { startTime, endTime: adjustedTime };
-            // });
-            // times?.sort((a, b) => a?.startTime - b?.startTime);
-            // for (let i = 0; i < times?.length - 1; i++) {
-            //     const slot1 = times[i];
-            //     const slot2 = times[i + 1];
-            //     if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
-            //         return true;
-            //     }
-            // }
+            const times = allowedTimingSlots?.map((slot) => {
+                const startTime = timeInMinutes(slot?.timeSlotFrom);
+                const endTime = timeInMinutes(slot?.timeSlotTo);
+                const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
+                return { startTime, endTime: adjustedTime };
+            });
+            times?.sort((a, b) => a?.startTime - b?.startTime);
+            for (let i = 0; i < times?.length - 1; i++) {
+                const slot1 = times[i];
+                const slot2 = times[i + 1];
+                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
+                    return true;
+                }
+            }
             return false;
         };
 
@@ -154,6 +158,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
             const onSuccess = (res) => {
+                onSaveShowLoading(false)
                 form.resetFields();
                 setSelectedRecord({});
                 setSuccessAlert(true);
@@ -168,12 +173,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             };
 
             const onError = (message) => {
+                onSaveShowLoading(false)
                 showGlobalNotification({ message, placement: 'bottomRight' });
             };
 
             const requestData = {
                 data: [data],
-                setIsLoading: listShowLoading,
+                setIsLoading: onSaveShowLoading,
                 userId,
                 onError,
                 onSuccess,
@@ -192,7 +198,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
@@ -208,8 +213,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         const momentTime = record?.allowedTimings?.map((i) => {
             return {
                 id: i?.id,
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
             };
         });
         setFormData(record);
@@ -234,8 +239,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setSaveBtn(true);
         const momentTime = selectedRecord?.allowedTimings?.map((i) => {
             return {
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
             };
         });
 
@@ -296,6 +301,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
+            sorter: false
         })
     );
 
@@ -432,7 +438,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 saveandnewclick={saveandnewclick}
                 alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
-                isDataLoaded={isDataLoaded}
+                isDataLoaded={isLoadingOnSave}
+                isLoading={isLoadingOnSave}
             />
 
             <Row gutter={20}>

@@ -9,7 +9,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -37,7 +37,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
-                console.log('yes');
                 return { isOverlap: true, ...timeSegments[i] };
             }
         }
@@ -66,11 +65,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
         }
     };
 
-    const validatedDuplicateTime = (field) => (rule, value) => {
-        const overlapData = checkOverlap();
-        return field && overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.[field] ? Promise.reject('Time overlaps with other time') : Promise.resolve();
-    };
-
     return (
         <Drawer
             title={drawerTitle}
@@ -86,16 +80,16 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {saveBtn ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
+                            {saveAndSaveNew ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Save & Add New
                                 </Button>
                             ) : (
                                 ''
                             )}
-                            {saveAndSaveNew ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
+                            {saveBtn ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
                                 </Button>
                             ) : (
                                 ''
@@ -119,12 +113,12 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
-                                <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
-                            <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />
+                            {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />}
                         </Form.Item>
                     </Col>
                 </Row>
@@ -226,7 +220,22 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                                 removeItem(name);
                                                                 remove(name);
                                                                 showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
-                                                               
+                                                                // confirm({
+                                                                //     title: 'Allowed Timing',
+                                                                //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
+                                                                //     content: 'Are you sure you want to Delete?',
+                                                                //     okText: 'Yes',
+                                                                //     okType: 'danger',
+                                                                //     cancelText: 'No',
+                                                                //     wrapClassName: styles.confirmModal,
+                                                                //     centered: true,
+                                                                //     closable: true,
+                                                                //     onOk() {
+                                                                //         remove(name);
+                                                                //         removeItem(name);
+                                                                //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                                //     },
+                                                                // });
                                                             }}
                                                         />
                                                     </Col>
@@ -236,7 +245,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                     ))}
                                 </>
                             </>
-
                     }
                 </Form.List>
             </Form>

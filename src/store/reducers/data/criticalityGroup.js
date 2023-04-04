@@ -1,4 +1,4 @@
-import { CRITICALITY_DATA_LOADED, CRITICALITY_SET_FORM_DATA, CRITICALITY_DATA_SHOW_LOADING } from 'store/actions/data/criticalityGroup';
+import { CRITICALITY_DATA_LOADED, CRITICALITY_SET_FORM_DATA, CRITICALITY_DATA_SHOW_LOADING, CRITICALITY_ON_SAVE_DATA_SHOW_LOADING } from 'store/actions/data/criticalityGroup';
 
 const initialState = {
     isLoaded: false,
@@ -6,6 +6,7 @@ const initialState = {
     isFormDataLoaded: false,
     formData: undefined,
     isLoading: false,
+    isLoadingOnSave: false,
 };
 
 export const criticalityGroup = (state = initialState, action) => {
@@ -16,6 +17,8 @@ export const criticalityGroup = (state = initialState, action) => {
             return { ...state, isFormDataLoaded: action.isFormDataLoaded, formData: action.formData };
         case CRITICALITY_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading, };
+        case CRITICALITY_ON_SAVE_DATA_SHOW_LOADING:
+            return {...state, isLoadingOnSave: action.isLoading} 
         default:
             return { ...state };
     }
