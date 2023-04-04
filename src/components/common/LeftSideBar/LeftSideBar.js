@@ -19,6 +19,7 @@ import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
 import { HomeIcon } from 'Icons';
+import { showGlobalNotification } from 'store/actions/notification';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -82,7 +83,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
         return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,6 +102,9 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
+    const errorAction = (message) => {
+        showGlobalNotification(message);
+    };
     // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
 
     const handleThemeChange = () => {
