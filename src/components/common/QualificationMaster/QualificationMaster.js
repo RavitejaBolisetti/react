@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -35,6 +35,9 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         qualificationData,
+        isLoading,
+        isLoadingOnSave,
+        isFormDataLoaded
     };
     return returnValue;
 };
@@ -46,6 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
+            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -54,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded,isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -72,7 +76,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
     const [filterString, setFilterString] = useState();
-
 
     const state = {
         button: 1,
@@ -96,13 +99,10 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
 
-    const onSuccess = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
 
     useEffect(() => {
-        if (refershData && userId) {
-            fetchList({ setIsLoading: listShowLoading, onSuccess, userId });
+        if ( userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -151,7 +151,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         })
     );
     const tableProps = {
-        isLoading: listShowLoading,
+        isLoading: isLoading,
         tableData: searchData,
         tableColumn: tableColumn,
     };
@@ -162,6 +162,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
             const onSuccess = (res) => {
+                onSaveShowLoading(false)
                 form.resetFields();
                 setForceFormReset(Math.random() * 10000);
                 setDrawer(false);
@@ -173,12 +174,13 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             };
 
             const onError = (message) => {
+                onSaveShowLoading(false)
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
             };
 
             const requestData = {
                 data: [data],
-                setIsLoading: listShowLoading,
+                setIsLoading: onSaveShowLoading,
                 userId,
                 onError,
                 onSuccess,
@@ -305,7 +307,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                     </div>
                 </Col>
             </Row>
-            <DrawerUtil formBtnDisable={formBtnDisable} saveAndSaveNew={saveAndSaveNew} saveBtn={saveBtn} setFormBtnDisable={setFormBtnDisable} onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} />
+            <DrawerUtil formBtnDisable={formBtnDisable} saveAndSaveNew={saveAndSaveNew} saveBtn={saveBtn} setFormBtnDisable={setFormBtnDisable} onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} isLoadingOnSave={isLoadingOnSave} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider

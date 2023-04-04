@@ -7,6 +7,8 @@ import { message } from 'antd';
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED';
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING';
 export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED';
+export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING';
+export const HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING';
 
 const receiveData = (data) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED,
@@ -26,6 +28,16 @@ const baseURLPath = BASE_URL_ATTRIBUTE_MASTER;
 
 hierarchyAttributeMasterActions.listShowLoading = (isLoading) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING,
+    isLoading,
+});
+
+hierarchyAttributeMasterActions.detailDataListShowLoading = (isLoading) => ({
+    type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING,
+    isLoading,
+});
+
+hierarchyAttributeMasterActions.onSaveShowLoading = (isLoading) => ({
+    type: HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING,
     isLoading,
 });
 
@@ -63,9 +75,13 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
 hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({ token, accessToken }) => (dispatch) => {
     const { setIsLoading, data, userId, type = '' } = params;
     setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
+    const onError = (errorMessage) =>{
+        setIsLoading(false);
+         message.error(errorMessage)
+        };
 
     const onSuccess = (res) => {
+        setIsLoading(false);
         if (res?.data) {
             dispatch(receiveHeirarchyDetailData(res?.data));
         } else {
@@ -91,7 +107,7 @@ hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({ t
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken }) => (dispatch) => {
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, userId, onSuccess } = params;
     setIsLoading(true);
 
@@ -100,7 +116,7 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, a
         method: 'post',
         url: baseURLPath,
         token,
-
+        accessToken,
         userId,
         onSuccess,
         onError,

@@ -9,7 +9,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isDataLoaded, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -37,7 +37,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
-                console.log('yes');
                 return { isOverlap: true, ...timeSegments[i] };
             }
         }
@@ -149,7 +148,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
 
                 <Form.List name="allowedTimings">
                     {(fields, { add, remove, ...restP }) =>
-                        console.log(restP) || (
                             <>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
@@ -252,7 +250,6 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                     ))}
                                 </>
                             </>
-                        )
                     }
                 </Form.List>
             </Form>

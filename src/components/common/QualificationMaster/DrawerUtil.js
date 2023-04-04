@@ -6,7 +6,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from '../DrawerAndTable.module.css';
 
-const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
+const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
 
     let drawerTitle = '';
@@ -51,14 +51,14 @@ const DrawerUtil = ({ formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable
                         className={styles.drawerFooterButtons}
                     >
                            {saveAndSaveNew ? (
-                            <Button className={styles.saveAndAddNew} disabled={!formBtnDisable} onClick={() => (state.button = 2)} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                            <Button loading={isLoadingOnSave}  className={styles.saveAndAddNew} disabled={!formBtnDisable} onClick={() => (state.button = 2)} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                 Save & Add New
                             </Button>
                         ) : (
                             ''
                         )}
                         {saveBtn ? (
-                            <Button className={styles.saveBtn} disabled={!formBtnDisable} onClick={() => (state.button = 1)} form="myForm" key="submit" htmlType="submit" type="primary">
+                            <Button loading={isLoadingOnSave} className={styles.saveBtn} disabled={!formBtnDisable} onClick={() => (state.button = 1)} form="myForm" key="submit" htmlType="submit" type="primary">
                                 Save
                             </Button>
                         ) : (
