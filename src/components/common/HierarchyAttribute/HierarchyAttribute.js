@@ -127,7 +127,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
         setSearchdata(detailData?.hierarchyAttribute);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ForceReset]);
+    }, [ForceReset, RefershData]);
 
     const handleEditView = () => {
         setFormActionType('edit');
@@ -290,7 +290,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
 
 
-    const TableProps = {
+    const tableProps = {
         isLoading: isDataLoading,
         tableData: searchData,
         tableColumn: tableColumn,

@@ -8,7 +8,7 @@ import style from 'components/common/DrawerAndTable.module.css';
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
-
+    console.log("isLoadingOnSave",isLoadingOnSave)
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Qualification Details';
@@ -79,7 +79,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
+                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name'), validationFieldLetterAndNumber('Qualification Name')]}>
                      {!footerEdit ?
                             <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                             : <p className={style.viewModeText}>{form.getFieldValue("qualificationName")}</p>}

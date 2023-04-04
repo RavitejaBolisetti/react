@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded,isLoadingOnSave, onSaveShowLoading }) => {
+export const QualificationMasterMain = ({  saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded,isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -214,7 +214,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
 
         const requestData = {
             data: [data],
-            setIsLoading: listShowLoading,
+            setIsLoading: onSaveShowLoading,
             userId,
             onError,
             onSuccess,
@@ -378,6 +378,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
                 setForceFormReset={setForceFormReset}
                 footerEdit={footerEdit}
                 handleUpdate2={handleUpdate2}
+                isLoadingOnSave={isLoadingOnSave}
             />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

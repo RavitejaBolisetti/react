@@ -106,10 +106,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    const errorAction = (message) => {
-        showGlobalNotification(message);
-    };
-    // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
+ 
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';

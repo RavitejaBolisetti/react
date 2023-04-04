@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
 const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
+    const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(Math.random() * 1000);
+    const [TimeTrack, setTimeTrack] = useState(true);
+    const [DisableAddtime, setDisableAddtime] = useState(false);
+
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Application Criticality Group Details';
@@ -19,6 +23,25 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Criticality Group Details';
     }
+
+    useEffect(() => {
+        if (formActionType === 'update') {
+            setDisableAddtime(false);
+        }
+        if (formActionType === 'view') {
+            setDisableAddtime(true);
+        }
+        let timeSegments = form.getFieldValue('allowedTimings');
+        if (timeSegments?.length === 1) {
+            console.log('The length is 1');
+            setTimeTrack(false);
+            console.log(TimeTrack);
+        } else {
+            setTimeTrack(true);
+            console.log(TimeTrack);
+        }
+    }, [TimesegmentLengthTracker]);
+
     const onClose = () => {
         form.resetFields();
         setSelectedRecord(null);
@@ -28,8 +51,11 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
 
     const checkOverlap = () => {
         let timeSegments = form.getFieldValue('allowedTimings');
+        let StoreOldTimeSegment = form.getFieldValue('allowedTimings');
         timeSegments = timeSegments?.map((time) => ({ timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'), timeSlotTo: time?.timeSlotTo?.format('HH:mm') }));
-        if (timeSegments?.length === 1) return false;
+        if (timeSegments?.length === 1) {
+            return false;
+        }
 
         timeSegments?.sort((timeSegment1, timeSegment2) => timeSegment1['timeSlotFrom']?.localeCompare(timeSegment2['timeSlotFrom']));
 
@@ -37,7 +63,9 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
+                console.log('yes');
                 return { isOverlap: true, ...timeSegments[i] };
+                // return {isOverlap: true}
             }
         }
 
@@ -50,6 +78,20 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
 
     const handleForm = () => {
         setFormBtnDisable(true);
+        let timeSegments = form.getFieldValue('allowedTimings');
+        let flag = 1;
+        timeSegments = timeSegments?.map((time) => ({ timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'), timeSlotTo: time?.timeSlotTo?.format('HH:mm') }));
+        timeSegments?.map((time) => {
+            if (time?.timeSlotFrom === undefined || time?.timeSlotTo === undefined) {
+                flag = 0;
+                return;
+            }
+        });
+        if (flag === 1) {
+            setDisableAddtime(false);
+        } else {
+            setDisableAddtime(true);
+        }
     };
 
     const removeItem = (name) => {
@@ -63,6 +105,13 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
+        form.validateFields();
+    };
+    const validatedDuplicateTime = (field) => (rule, value) => {
+        const overlapData = checkOverlap();
+        console.log('TimeTrack', TimeTrack);
+        return overlapData?.isOverlap && TimeTrack ? Promise.reject('Time overlaps with other time') : Promise.resolve();
+        // return field && overlapData?.isOverlap && value?.format('HH:mm') === overlapData?.[field] ? Promise.reject('Time overlaps with other time') : Promise.resolve();
     };
 
     return (
@@ -112,12 +161,12 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             <Form form={form} id="myForm" layout="vertical" colon={false} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
+                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code'), validationFieldLetterAndNumber('Criticality Group Code')]}>
                             <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
+                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name'), validationFieldLetterAndNumber('Criticality Group Code')]}>
                             {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />}
                         </Form.Item>
                     </Col>
@@ -142,110 +191,113 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 </Row>
 
                 <Form.List name="allowedTimings">
-                    {(fields, { add, remove, ...restP }) =>
-                            <>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
-                                        <Button type="link" color="#FF3E5B" {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
-                                            Add Time
-                                        </Button>
-                                    </Col>
-                                </Row>
-                                <div>
-                                    {fields.length > 0 ? (
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={style.timingHeader}>
-                                                    <Row gutter={20}>
-                                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                            <div className={style.paddingLeft}>Start Time</div>
-                                                        </Col>
-                                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                            <div className={style.paddingLeft2}> End Time</div>
-                                                        </Col>
-                                                    </Row>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    ) : null}
-                                </div>
-
-                                <>
-                                    {fields.map(({ key, name, ...restField }) => (
-                                        <div key={key} className={style.allowedTiming}>
-                                            <Space size="middle">
+                    {(fields, { add, remove, ...restP }) => (
+                        <>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
+                                    <Button
+                                        type="link"
+                                        color="#FF3E5B"
+                                        disabled={DisableAddtime}
+                                        //  {...disabledProps}
+                                        onClick={() => {
+                                            add();
+                                            setTimesegmentLengthTracker(Math.random() * 10000);
+                                        }}
+                                        icon={<PlusOutlined />}
+                                    >
+                                        Add Time
+                                    </Button>
+                                </Col>
+                            </Row>
+                            <div>
+                                {fields.length > 0 ? (
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <div className={style.timingHeader}>
                                                 <Row gutter={20}>
                                                     <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                        <Form.Item
-                                                            {...restField}
-                                                            name={[name, 'timeSlotFrom']}
-                                                            rules={[
-                                                                validateRequiredInputField('Start Time'),
-                                                                {
-                                                                    validator: validatedDuplicateTime('timeSlotFrom'),
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
-                                                        </Form.Item>
+                                                        <div className={style.paddingLeft}>Start Time</div>
                                                     </Col>
-                                                    <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                        <Form.Item
-                                                            {...restField}
-                                                            name={[name, 'timeSlotTo']}
-                                                            rules={[
-                                                                validateRequiredInputField('End Time'),
-                                                                {
-                                                                    validator: validatedDuplicateTime('timeSlotTo'),
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
-                                                        </Form.Item>
-                                                    </Col>
-                                                    <Form.Item hidden {...restField} name={[name, 'id']}>
-                                                        <Input />
-                                                    </Form.Item>
-                                                    <Form.Item hidden {...restField} name={[name, 'isDeleted']} initialValue="N">
-                                                        <Input />
-                                                    </Form.Item>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                                        <Button
-                                                            icon={<LinearTrash />}
-                                                            className={style.deleteBtn}
-                                                            {...disabledProps}
-                                                            danger
-                                                            ghost
-                                                            onClick={() => {
-                                                                removeItem(name);
-                                                                remove(name);
-                                                                showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
-                                                                // confirm({
-                                                                //     title: 'Allowed Timing',
-                                                                //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
-                                                                //     content: 'Are you sure you want to Delete?',
-                                                                //     okText: 'Yes',
-                                                                //     okType: 'danger',
-                                                                //     cancelText: 'No',
-                                                                //     wrapClassName: styles.confirmModal,
-                                                                //     centered: true,
-                                                                //     closable: true,
-                                                                //     onOk() {
-                                                                //         remove(name);
-                                                                //         removeItem(name);
-                                                                //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
-                                                                //     },
-                                                                // });
-                                                            }}
-                                                        />
+                                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                                        <div className={style.paddingLeft2}> End Time</div>
                                                     </Col>
                                                 </Row>
-                                            </Space>
-                                        </div>
-                                    ))}
-                                </>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                ) : null}
+                            </div>
+
+                            <>
+                                {fields.map(({ key, name, ...restField }) => (
+                                    <div key={key} className={style.allowedTiming}>
+                                        <Space size="middle">
+                                            <Row gutter={20}>
+                                                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                    <Form.Item {...restField} name={[name, 'timeSlotFrom']} rules={[validateRequiredInputField('Start Time'), { validator: TimesegmentLengthTracker && validatedDuplicateTime('timeSlotFrom') }]}>
+                                                        <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                    <Form.Item
+                                                        {...restField}
+                                                        name={[name, 'timeSlotTo']}
+                                                        rules={[
+                                                            validateRequiredInputField('End Time'),
+                                                            {
+                                                                validator: TimesegmentLengthTracker && validatedDuplicateTime('timeSlotTo'),
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Form.Item hidden {...restField} name={[name, 'id']}>
+                                                    <Input />
+                                                </Form.Item>
+                                                <Form.Item hidden {...restField} name={[name, 'isDeleted']} initialValue="N">
+                                                    <Input />
+                                                </Form.Item>
+                                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                                    <Button
+                                                        icon={<LinearTrash />}
+                                                        className={style.deleteBtn}
+                                                        {...disabledProps}
+                                                        danger
+                                                        ghost
+                                                        onClick={() => {
+                                                            removeItem(name);
+                                                            remove(name);
+                                                            setTimesegmentLengthTracker(Math.random() * 1000);
+
+                                                            showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
+                                                            // confirm({
+                                                            //     title: 'Allowed Timing',
+                                                            //     icon: <AiOutlineInfoCircle size={22} className={style.modalIconAlert} />,
+                                                            //     content: 'Are you sure you want to Delete?',
+                                                            //     okText: 'Yes',
+                                                            //     okType: 'danger',
+                                                            //     cancelText: 'No',
+                                                            //     wrapClassName: styles.confirmModal,
+                                                            //     centered: true,
+                                                            //     closable: true,
+                                                            //     onOk() {
+                                                            //         remove(name);
+                                                            //         removeItem(name);
+                                                            //         informationModalBox({ icon: 'success', message: 'Group Timing has been deleted Successfully', description: '', className: style.success, placement: 'bottomRight' });
+                                                            //     },
+                                                            // });
+                                                        }}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        </Space>
+                                    </div>
+                                ))}
                             </>
-                    }
+                        </>
+                    )}
                 </Form.List>
             </Form>
         </Drawer>
