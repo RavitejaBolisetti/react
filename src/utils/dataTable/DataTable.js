@@ -2,10 +2,10 @@ import { Table } from 'antd';
 import { useState } from 'react';
 
 export default function DataTable({ isLoading, tableColumn, tableData }) {
-    const [tablePagination, setPagination] = useState({pageSize: 20, current: 1})
+    const [tablePagination, setPagination] = useState({ pageSize: 20, current: 1, position: ['bottomRight'], showSizeChanger: true });
 
     const handleTableChange = (pagination, filters, sorter) => {
-        setPagination(pagination)
+        setPagination(pagination);
     };
 
     return (
@@ -14,11 +14,7 @@ export default function DataTable({ isLoading, tableColumn, tableData }) {
             columns={tableColumn}
             dataSource={tableData}
             onChange={handleTableChange}
-            pagination={{
-                position: ['bottomRight'],
-                showSizeChanger: true,
-                ...tablePagination
-            }}
+            pagination={tableData?.length > 10 ? tablePagination : false}
             scroll={{
                 x: 'auto',
             }}
