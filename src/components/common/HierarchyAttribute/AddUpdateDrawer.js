@@ -16,7 +16,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
     } else if (!!editRow?.id) {
         drawerTitle = 'Edit Hierarchy Attribute';
     } else {
-        drawerTitle = 'Add Hierarchy Attribute';
+        drawerTitle = 'Add Hierarchy';
     }
 
     useEffect(() => {
@@ -71,6 +71,9 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                             </Button>
                         ) : (
                             <>
+                                <Button disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
+                                </Button>
                                 {formActionType === 'add' ? (
                                     <Button disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
                                         Save & Add New
@@ -78,9 +81,6 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                                 ) : (
                                     ''
                                 )}
-                                <Button disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
                             
                             </>
                         )}
@@ -104,13 +104,13 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField('Code'), { validator: (rule, value) => (!editRow['hierarchyAttribueCode'] ? (tableData?.findIndex((el) => el['hierarchyAttribueCode']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
-                                <Input placeholder={preparePlaceholderText('Code')} {...disabledProps}/>
+                                <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps}/>
                            
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name'), { validator: (rule, value) => (!editRow['hierarchyAttribueName'] ? (tableData?.findIndex((el) => el['hierarchyAttribueName']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
-                                <Input placeholder={preparePlaceholderText('Name')}  {...disabledProps}/>
+                                {formActionType === 'view' ? <p className={style.viewModeText} >{editRow?.hierarchyAttribueName}</p> :<Input maxLength={50} placeholder={preparePlaceholderText('Name')}  {...disabledProps}/>}
                             </Form.Item>
                         </Col>
                     </Row>

@@ -168,9 +168,10 @@
     padding: 16px 20px;
 }
 
-:global .ant-drawer .ant-drawer-body {
+/* :global .ant-drawer .ant-drawer-body {
     padding: 20px;
-}
+} */
+
 
 :global .ant-drawer .ant-drawer-body .ant-input {
     margin-top: 6px;

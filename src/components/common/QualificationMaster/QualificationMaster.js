@@ -122,17 +122,30 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
 
+
+
     const tableColumn = [];
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+            width:'6%',
+            sorter: false
+        })
+    );
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
+            width:'17%'
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
+            width:'40%'
         })
     );
     tableColumn.push(
@@ -147,6 +160,7 @@ export const QualificationMasterMain = ({ isLoading, saveData, userId, isDataLoa
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
+            width:'15%',
             sorter: false,
             render: (text, record, index) => {
                 return (

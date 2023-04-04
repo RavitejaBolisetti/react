@@ -80,9 +80,13 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
 
+    const errorAction = (message) => {
+        console.log('success');
+    };
+
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps

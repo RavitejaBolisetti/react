@@ -45,13 +45,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {saveBtn ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
-                            ) : (
-                                ''
-                            )}
                             {saveAndSaveNew ? (
                                 <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Save & Add New
@@ -59,6 +52,13 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                             ) : (
                                 ''
                             )}
+                            {saveBtn ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
+                                </Button>
+                            ) : (
+                                ''
+                                )}
                             {footerEdit ? (
                                 <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Edit
@@ -75,13 +75,14 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
-                            <Input maxLength={5} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
-                  
+                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
+                     {!footerEdit ?
                             <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                            : <p className={style.viewModeText}>{form.getFieldValue("qualificationName")}</p>}
                         </Form.Item>
                     </Col>
                 </Row>

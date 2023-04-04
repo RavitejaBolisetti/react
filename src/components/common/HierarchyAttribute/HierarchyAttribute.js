@@ -93,35 +93,29 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        if (userId && !isDataLoaded && detailData?.hierarchyAttribute) {
+        if (!selectedHierarchy) {
+            setSearchdata([]);
+        } else if (RefershData) {
+            if (userId) {
+                hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
+                setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
+            }
+        } else if (detailData?.hierarchyAttribute) {
             if (filterString) {
                 const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
-                setSearchdata(filterDataItem);
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(detailData?.hierarchyAttribute);
+                setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute, userId]);
+    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute, RefershData, selectedHierarchy]);
 
     useEffect(() => {
         form.resetFields();
         setEditRow({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ForceReset]);
-
-    useEffect(() => {
-        if (userId) {
-            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
-            setSearchdata(detailData?.hierarchyAttribute);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RefershData, userId]);
-
-    useEffect(() => {
-        setSearchdata(detailData?.hierarchyAttribute);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [detailData]);
 
     const handleEditView = () => {
         setFormActionType('edit');
@@ -169,6 +163,14 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
 
     const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+            sorter: false,
+        })
+    );
 
     tableColumn.push(
         tblPrepareColumns({
@@ -271,7 +273,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
     };
-    const TableProps = {
+    const tableProps = {
         isLoading: !isDataAttributeLoaded,
         tableData: searchData,
         tableColumn: tableColumn,
@@ -347,7 +349,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                 ></Empty>
                             )}
                         >
-                            <DataTable {...TableProps} />
+                            <DataTable {...tableProps} />
                         </ConfigProvider>
                     </Col>
                 </Row>

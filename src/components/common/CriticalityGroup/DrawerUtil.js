@@ -62,16 +62,16 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {saveBtn ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
+                            {saveAndSaveNew ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Save & Add New
                                 </Button>
                             ) : (
                                 ''
                             )}
-                            {saveAndSaveNew ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
+                            {saveBtn ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
                                 </Button>
                             ) : (
                                 ''
@@ -95,13 +95,13 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code')]}>
-                                <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
+                    {footerEdit ?<Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
                             <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />
-                        </Form.Item>
+                        </Form.Item> : <p>{form.getFieldValue("criticalityGroupName")}</p>}
                     </Col>
                 </Row>
                 <Row gutter={20}>
@@ -124,92 +124,76 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 </Row>
 
                 <Form.List name="allowedTimings">
-                    {(fields, { add, remove, ...restP }) =>
-                            <>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
-                                        <Button type="link" color="#FF3E5B" {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
-                                            Add Time
-                                        </Button>
-                                    </Col>
-                                </Row>
-                                <div>
-                                    {fields.length > 0 ? (
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={style.timingHeader}>
-                                                    <Row gutter={20}>
-                                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                            <div className={style.paddingLeft}>Start Time</div>
-                                                        </Col>
-                                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                            <div className={style.paddingLeft2}> End Time</div>
-                                                        </Col>
-                                                    </Row>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    ) : null}
-                                </div>
-
-                                <>
-                                    {fields.map(({ key, name, ...restField }) => (
-                                        <div key={key} className={style.allowedTiming}>
-                                            <Space size="middle">
+                    {(fields, { add, remove, ...restP }) => (
+                        <>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
+                                    <Button type="link" color="#FF3E5B" {...disabledProps} onClick={() => add()} icon={<PlusOutlined />}>
+                                        Add Time
+                                    </Button>
+                                </Col>
+                            </Row>
+                            <div>
+                                {fields.length > 0 ? (
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <div className={style.timingHeader}>
                                                 <Row gutter={20}>
                                                     <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                        <Form.Item
-                                                            {...restField}
-                                                            name={[name, 'timeSlotFrom']}
-                                                            rules={[
-                                                                validateRequiredInputField('Start Time'),
-                                                             
-                                                            ]}
-                                                        >
-                                                            <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
-                                                        </Form.Item>
+                                                        <div className={style.paddingLeft}>Start Time</div>
                                                     </Col>
-                                                    <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                        <Form.Item
-                                                            {...restField}
-                                                            name={[name, 'timeSlotTo']}
-                                                            rules={[
-                                                                validateRequiredInputField('End Time'),
-                                                            
-                                                            ]}
-                                                        >
-                                                            <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
-                                                        </Form.Item>
-                                                    </Col>
-                                                    <Form.Item hidden {...restField} name={[name, 'id']}>
-                                                        <Input />
-                                                    </Form.Item>
-                                                    <Form.Item hidden {...restField} name={[name, 'isDeleted']} initialValue="N">
-                                                        <Input />
-                                                    </Form.Item>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                                        <Button
-                                                            icon={<LinearTrash />}
-                                                            className={style.deleteBtn}
-                                                            {...disabledProps}
-                                                            danger
-                                                            ghost
-                                                            onClick={() => {
-                                                                removeItem(name);
-                                                                remove(name);
-                                                                showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
-                                                               
-                                                            }}
-                                                        />
+                                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                                        <div className={style.paddingLeft2}> End Time</div>
                                                     </Col>
                                                 </Row>
-                                            </Space>
-                                        </div>
-                                    ))}
-                                </>
-                            </>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                ) : null}
+                            </div>
 
-                    }
+                            <>
+                                {fields.map(({ key, name, ...restField }) => (
+                                    <div key={key} className={style.allowedTiming}>
+                                        <Space size="middle">
+                                            <Row gutter={20}>
+                                                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                    <Form.Item {...restField} name={[name, 'timeSlotFrom']} rules={[validateRequiredInputField('Start Time')]}>
+                                                        <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                    <Form.Item {...restField} name={[name, 'timeSlotTo']} rules={[validateRequiredInputField('End Time')]}>
+                                                        <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
+                                                    </Form.Item>
+                                                </Col>
+                                                <Form.Item hidden {...restField} name={[name, 'id']}>
+                                                    <Input />
+                                                </Form.Item>
+                                                <Form.Item hidden {...restField} name={[name, 'isDeleted']} initialValue="N">
+                                                    <Input />
+                                                </Form.Item>
+                                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                                    <Button
+                                                        icon={<LinearTrash />}
+                                                        className={style.deleteBtn}
+                                                        {...disabledProps}
+                                                        danger
+                                                        ghost
+                                                        onClick={() => {
+                                                            removeItem(name);
+                                                            remove(name);
+                                                            showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
+                                                        }}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        </Space>
+                                    </div>
+                                ))}
+                            </>
+                        </>
+                    )}
                 </Form.List>
             </Form>
         </Drawer>
