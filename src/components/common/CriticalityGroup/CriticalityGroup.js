@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
+            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         criticalityGroupData,
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -50,13 +51,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchData: criticalityDataActions.fetchData,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
+            onSaveShowLoading: criticalityDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification }) => {
+export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
@@ -156,6 +158,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
             const onSuccess = (res) => {
+                onSaveShowLoading(false)
                 form.resetFields();
                 setSelectedRecord({});
                 setSuccessAlert(true);
@@ -170,12 +173,13 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             };
 
             const onError = (message) => {
+                onSaveShowLoading(false)
                 showGlobalNotification({ message, placement: 'bottomRight' });
             };
 
             const requestData = {
                 data: [data],
-                setIsLoading: listShowLoading,
+                setIsLoading: onSaveShowLoading,
                 userId,
                 onError,
                 onSuccess,
@@ -434,7 +438,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 saveandnewclick={saveandnewclick}
                 alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
-                isDataLoaded={isDataLoaded}
+                isDataLoaded={isLoadingOnSave}
+                isLoading={isLoadingOnSave}
             />
 
             <Row gutter={20}>

@@ -6,7 +6,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from './HierarchyAttribute.module.css';
 import style from "../DrawerAndTable.module.css";
 
-const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable }) => {
+const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
 
@@ -71,12 +71,12 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                             </Button>
                         ) : (
                             <>
-                                <Button disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
+                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
                                 </Button>
                                 {formActionType === 'add' ? (
-                                    <Button disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
-                                        Save & Add New
+                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
+                                        Save and New
                                     </Button>
                                 ) : (
                                     ''
