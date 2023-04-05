@@ -1,9 +1,7 @@
 import { screen, render, fireEvent, findAllByText } from '@testing-library/react';
-import { Logins } from './Login';
-import { ForgotPassword } from '../ForgotPassword';
-import { act } from 'react-dom/test-utils';
-import { BrowserRouter, Route, Routes, MemoryRouter } from 'react-router-dom';
-import { async } from 'sonarqube-scanner';
+import { Logins } from '../../Auth/Login/Login';
+import { ForgotPassword } from '../../Auth/ForgotPassword';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 jest.mock('react-redux', () => ({
     connect: () => (Logins) => Logins,
@@ -46,25 +44,6 @@ describe('Login component', () => {
         expect(validation2).toBeTruthy();
         expect(loginBtn).toBeInTheDocument();
     });
-    // test('is error modal visible after entering username and password  ' , async() => {
-    //     render(<BrowserRouter>
-    //         <Routes>
-    //             <Route path="*" element= {<Logins doCloseLoginError={doCloseLoginError} errorMessage = {errorMessage} isError={true} />}/>
-    //         </Routes>
-    //     </BrowserRouter>);
-    //     const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
-    //     const passInput = await screen.getByPlaceholderText('Password');
-    //     const loginBtn = await screen.getByText('Login');
-    //     fireEvent.change(userId, {target: {value:'11111'}});
-    //     fireEvent.change(passInput, {target: {value:'asgdndjd'}});
-    //     fireEvent.click(loginBtn);
-    //     const errorModal = await screen.findAllByText('Invalid credentials.');
-
-    //     expect(userId).toBeTruthy();
-    //     expect(passInput).toBeTruthy();
-    //     expect(loginBtn).toBeInTheDocument();
-    //     expect(errorModal).toBeTruthy();
-    // });
     test('redirects to forgot password page after clicking forgot password link  ', async () => {
         render(
             <BrowserRouter>
@@ -95,8 +74,3 @@ describe('Login component', () => {
     });
 });
 
-<BrowserRouter>
-    <Routes>
-        <Route path="/login" element={<Logins />} />
-    </Routes>
-</BrowserRouter>;

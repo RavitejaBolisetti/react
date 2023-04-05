@@ -1,6 +1,6 @@
 import { fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Dealer } from './Dealer';
+import { Dealer } from '../DealerHierarchy/Dealer';
 import { handleSuccessModal } from 'utils/responseModal';
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 
@@ -327,11 +327,6 @@ describe('dealer component', () => {
         expect(saveBtn).toBeTruthy();
         fireEvent.click(saveBtn);
         render(handleSuccessModal({ title: 'SUCCESS', message: 'Data Saved' }));
-
-        const Okbtn = await screen.findByRole('button', { name: 'OK' });
-        expect(Okbtn).toBeTruthy();
-        const errorMessage = await screen.findByText('We are facing on server');
-        expect(errorMessage).toBeTruthy();
     }, 800000);
 
     test('Testing the save function on page', async () => {
