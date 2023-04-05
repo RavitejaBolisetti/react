@@ -7,6 +7,7 @@ export const PRODUCT_HIERARCHY_DATA_LOADED = 'PRODUCT_HIERARCHY_DATA_LOADED';
 export const PRODUCT_HIERARCHY_DATA_SHOW_LOADING = 'PRODUCT_HIERARCHY_DATA_SHOW_LOADING';
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
+export const PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
@@ -25,6 +26,11 @@ const productHierarchyDataActions = {};
 productHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
     isLoading,
+});
+
+productHierarchyDataActions.changeHistoryVisible = (visible) => ({
+    type: PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: true,
 });
 
 productHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({

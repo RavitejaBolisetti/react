@@ -14,11 +14,9 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistory } from '../ChangeHistory';
 import LeftPanel from '../LeftPanel';
 import { DataTable } from 'utils/dataTable';
-import { TfiReload } from 'react-icons/tfi';
-import { FaHistory } from 'react-icons/fa';
+
 
 const { Panel } = Collapse;
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -60,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ProductHierarchyMain = ({ isChangeHistoryVisible, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -79,8 +77,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
-
-    const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -335,10 +331,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         form.resetFields();
     };
 
-    const handleChangeHistoryClick = (e) => {
-        setChangeHistoryVisible(!isChangeHistoryVisible);
-    };
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -373,40 +365,11 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
             <div className={styles.geoSection}>
                 {isChildAllowed}
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={12} lg={16} xl={16} xxl={16}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
-                                    Hierarchy
-                                    <Search
-                                        placeholder="Search"
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        allowClear
-                                        // onSearch={onSearchHandle}
-                                        // onChange={onChangeHandle}
-                                    />
-                                    <Row gutter={20}>
-                                        <div className={style.searchAndLabelAlign}>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}></Col>
-                                            <Col xs={14} sm={14} md={14} lg={14} xl={14}></Col>
-                                        </div>
-                                    </Row>
-                                </Col>
-
-                                <Col className={styles.buttonContainer} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button type="primary" onClick={handleChangeHistoryClick}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </div>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <LeftPanel {...myProps} />
                     </Col>
 
-                    <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
+                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
                             <ChangeHistory />
                         ) : isCollapsableView ? (

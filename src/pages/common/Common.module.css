@@ -70,17 +70,17 @@
     color: #ff3e5b;
 }
 
-.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
+.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
     border-inline-end-width: 1px;
     border-start-end-radius: 4px;
     border-end-end-radius: 4px;
     height: 36px;
 }
 
-.geoSection :global .ant-form-item .ant-form-item-label > label {
+.geoSection :global .ant-form-item .ant-form-item-label>label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -306,6 +306,26 @@
   margin-bottom: 8px;
 } */
 
+
+.buttonContainer {
+    text-align: right;
+}
+
+.buttonContainer button {
+    margin-left: 14px;
+    color: #ffffff !important;
+}
+
+.buttonContainer .buttonIcon {
+    margin-right: 6px;
+    padding-top: 2px;
+}
+
+.buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ff3e5b;
+    color: #ffffff !important;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
 
@@ -363,6 +383,7 @@
         width: '100%';
     }
 }
+
 /* Switch Design Changes */
 :global .ant-switch .ant-switch-inner {
     display: block;
@@ -372,7 +393,7 @@
     position: absolute;
     margin-left: 35px;
     margin-top: -12px;
-   
+
 }
 
 
@@ -397,28 +418,31 @@
 :global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
     background: #00a310;
 }
+
 .contentHeaderBackground {
     background-color: #f4f4f4;
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 7px;
 }
+
 .addGroup {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0px !important;
 }
+
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }

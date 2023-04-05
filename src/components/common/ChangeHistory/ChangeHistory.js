@@ -7,19 +7,23 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
+import { withDrawer } from 'components/withDrawer';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
+
+    console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
 
     let returnValue = {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
+        isVisible: changeHistoryVisible,
         changeHistoryData,
     };
     return returnValue;
@@ -31,6 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
@@ -43,7 +48,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
-
     const tableColumn = [];
 
     tableColumn.push(
@@ -127,4 +131,4 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ChangeHistoryMain);
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History' }));
