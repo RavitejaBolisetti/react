@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_CONFIG_PARAM_EDIT } from 'constants/routingApi';
+import { BASE_URL_CONFIG_PARAM_EDIT, BASE_URL_CONFIG_PARAM_EDIT_TYPE } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const CONFIG_PARAM_EDIT_DATA_LOADED = 'CONFIG_PARAM_EDIT_DATA_LOADED';
@@ -9,10 +9,11 @@ export const CONFIG_PARAM_EDIT_SHOW_LOADING = 'CONFIG_PARAM_EDIT_SHOW_LOADING';
 export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const CONFIG_PARAM_EDIT_DATA_SHOW_LOADING = 'CONFIG_PARAM_EDIT_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveParametersData = (data, parameterType) => ({
     type: CONFIG_PARAM_DATA_LOADED,
     isLoaded: true,
     data,
+    parameterType,
 });
 
 const receiveData = (data) => ({
@@ -23,6 +24,8 @@ const receiveData = (data) => ({
 
 const configParamEditActions = {};
 
+const baseURLType = BASE_URL_CONFIG_PARAM_EDIT_TYPE;
+// const baseURLType = BASE_URL_CONFIG_PARAM_EDIT;
 const baseURLPath = BASE_URL_CONFIG_PARAM_EDIT;
 
 configParamEditActions.listShowLoading = (isLoading) => ({
@@ -36,13 +39,13 @@ configParamEditActions.changeHistoryShowLoading = (isLoading) => ({
 });
 
 configParamEditActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, parameterType = '' } = params;
+    const { setIsLoading, data, parameterType } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveParametersData(res?.data, parameterType));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -51,7 +54,7 @@ configParamEditActions.fetchList = withAuthToken((params) => ({ token, accessTok
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + (parameterType ? '?parameterType=' + parameterType : ''),
+        url: baseURLType + (parameterType ? '?parameterType=' + parameterType : ''),
         token,
         accessToken,
         userId,

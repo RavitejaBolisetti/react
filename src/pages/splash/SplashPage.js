@@ -5,14 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { Splash } from 'components/Splash';
 import { LoginPage } from 'pages/auth/Login';
 import { ROUTING_DASHBOARD, ROUTING_LOGIN } from 'constants/routing';
+import { LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN, LOCAL_STORAGE_KEY_AUTH_USER_ID } from 'store/actions/auth';
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
 });
 
-const SplashPageBase = ({ isLoggedIn }) => {
+const SplashPageBase = (props) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+
+    const isLoggedIn = !!(localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_ACCESS_TOKEN) && localStorage.getItem(LOCAL_STORAGE_KEY_AUTH_USER_ID));
 
     useEffect(() => {
         setTimeout(() => {

@@ -1,7 +1,6 @@
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { connect } from 'react-redux';
 
-
 import { Col, Form, Row } from 'antd';
 import { Input, Select, Switch } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -10,7 +9,6 @@ const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
-        auth: { userId },
         data: {
             Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], favouriteMenu = [] },
             ApplicationMaster: { applicationCriticalityGroupData:criticalityGroup, applicationDetailsData=[], }
@@ -21,7 +19,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         criticalityGroup: criticalityGroup?.filter(i => i?.critcltyGropDesc && i?.critcltyGropCode ),
         applicationDetailsData,
-        userId,
         menuData: menuData?.filter((el) => el?.menuId !== 'FAV'),
     };
     return returnValue;
@@ -52,13 +49,12 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
         form.validateFields().then((values) => {});
     };
 
-    const onFinish =(values) => {
-        console.log("Values", values)
+    const onFinish = (values) => {
+        // console.log('Values', values);
     };
 
     const handleChangeLocatons = (value) => {
-        console.log(value)
-        setSelectedLocaationAccessiblity(value)
+        setSelectedLocaationAccessiblity(value);
     };
 
     return (
@@ -129,11 +125,11 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item name="accessibleLocations" label="Accessible Locations" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            <Select onChange={handleChangeLocatons} selected="" {...disabledProps} placeholder={preparePlaceholderSelect("Accessible Location")} >
+                            <Select onChange={handleChangeLocatons} selected="" {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
                                 <Option value="">Select</Option>
-                                <Option value='all'>Accessible to all</Option>
-                                <Option value='notAccessable' >Not accessible to all</Option>
-                                <Option value='restrictedAccessible'>Restricted Accessible</Option>
+                                <Option value="all">Accessible to all</Option>
+                                <Option value="notAccessable">Not accessible to all</Option>
+                                <Option value="restrictedAccessible">Restricted Accessible</Option>
                             </Select>
                         </Form.Item>
                     </Col>
@@ -155,4 +151,4 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
     );
 };
 
-export  const ApplicationDetails = connect(mapStateToProps, null)(ApplicationDetailsMain);
+export const ApplicationDetails = connect(mapStateToProps, null)(ApplicationDetailsMain);

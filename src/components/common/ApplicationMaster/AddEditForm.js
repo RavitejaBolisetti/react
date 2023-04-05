@@ -23,7 +23,7 @@ const AddEditForm = ({
     isReadOnly, 
 }) => {
     const [selectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState('');
-    
+
     const handleCollapse = (key) => {
         setOpenAccordian(prev => prev===key ? "" : key);
     };

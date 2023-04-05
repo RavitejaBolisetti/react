@@ -6,9 +6,18 @@ import { message } from 'antd';
 
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED';
 export const HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING';
+export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED';
+export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING';
+export const HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING';
 
-const receiveHeaderData = (data) => ({
+const receiveData = (data) => ({
     type: HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+
+const receiveHeirarchyDetailData = (data) => ({
+    type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED,
     isLoaded: true,
     data,
 });
@@ -22,6 +31,16 @@ hierarchyAttributeMasterActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
+hierarchyAttributeMasterActions.detailDataListShowLoading = (isLoading) => ({
+    type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING,
+    isLoading,
+});
+
+hierarchyAttributeMasterActions.onSaveShowLoading = (isLoading) => ({
+    type: HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING,
+    isLoading,
+});
+
 hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, type = '' } = params;
     setIsLoading(true);
@@ -29,7 +48,7 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -53,19 +72,44 @@ hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, 
     axiosAPICall(apiCallParams);
 });
 
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data } = params;
+hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({ token, accessToken }) => (dispatch) => {
+    const { setIsLoading, data, userId, type = '' } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
+    const onError = (errorMessage) =>{
+        setIsLoading(false);
+         message.error(errorMessage)
+        };
 
     const onSuccess = (res) => {
+        setIsLoading(false);
         if (res?.data) {
-            setIsLoading();
-            // dispatch(receiveHeaderData(res?.data));
+            dispatch(receiveHeirarchyDetailData(res?.data));
         } else {
-            onError();
+            onError('Internal Error, Please try again');
         }
     };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: baseURLPath + (type ? '?type=' + type : ''),
+        token,
+        userId,
+        accessToken,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, userId, onSuccess } = params;
+    setIsLoading(true);
 
     const apiCallParams = {
         data,
@@ -76,7 +120,7 @@ hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, a
         userId,
         onSuccess,
         onError,
-        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

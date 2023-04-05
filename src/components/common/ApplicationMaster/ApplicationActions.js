@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Row, Col, Table, Button, Input, Switch, Space, Modal, Form } from 'antd';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import {  ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
@@ -87,7 +87,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
         }else{
             setRowsData(datainitial);
         }
-    },[formActionType])
+    }, [formActionType]);
 
     const showConfirm = (record, index) => {
         confirm({
@@ -97,9 +97,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
             onOk() {
                 deleteTableRows(record, index);
             },
-            onCancel() {
-                console.log('Cancel');
-            },
+            onCancel() {},
         });
     };
 
@@ -212,17 +210,15 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
                             <DataTable isLoading={false} tableColumn={tableColumn} tableData={data} />
                         </Col>
                     </Row>
-                    
-                    {
-                        !isReadOnly 
-                        &&
+
+                    {!isReadOnly && (
                         <Row justify="end" gutter={20} style={{ marginTop: '20px', marginRight: '2px' }}>
                             <Button danger onClick={handleAdd}>
                                 <FaPlus className={styles.buttonIcon} />
                                 Add Row
                             </Button>
                         </Row>
-                    }
+                    )}
                 </>
             </Form>
         </>

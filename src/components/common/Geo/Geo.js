@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         geoData,
         isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
+        attributeData,
     };
     return returnValue;
 };
@@ -73,16 +73,18 @@ export const GeoMain = ({ isChangeHistoryVisible, userId, isDataLoaded, geoData,
     const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded]);
+    }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        if (userId) {
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         form.resetFields();

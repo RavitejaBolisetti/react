@@ -1,20 +1,24 @@
 :global .ant-layout .ant-layout-footer {
     height: 32px;
-    padding: 5px 20px !important;
+    padding: 0px 20px !important;
     background: transparent;
-    border-top: 1px solid #DEDEDE;
+    /* border-top: 1px solid #DEDEDE; */
 }
 
 .footerText {
     text-align: center;
-    /* color: #8E8585; */
-    font-size: 14px;
+    color: #8E8585 !important;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .footerRight {
     text-align: right;
-    /* color: #8E8585; */
-    font-size: 14px;
+    color: #8E8585;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 /* .footerLink {

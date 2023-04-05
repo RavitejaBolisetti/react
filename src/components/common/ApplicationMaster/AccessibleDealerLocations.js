@@ -11,7 +11,6 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { DataTable } from 'utils/dataTable';
 
-const { Option } = Select;
 const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
@@ -67,7 +66,7 @@ export const EditableCell = ({ editing, dataIndex, title, inputType, record, ind
                         optionFilterProp="children"
                         fieldNames={fieldNames}
                         style={{
-                          width: '140px',
+                            width: '140px',
                         }}
                         // onChange={onChange}
                         // onSearch={onSearch}
@@ -211,7 +210,7 @@ const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, deale
                 return (
                     <Space wrap>
                         {/* {!record?.deletable && <FaEdit onClick={() => edit(record)} />} */}
-                        { <FaTrash onClick={() => showConfirm(record, index)} />}
+                        {<FaTrash onClick={() => showConfirm(record, index)} />}
                     </Space>
                 );
             },
@@ -227,15 +226,14 @@ const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, deale
                         <DataTable isLoading={false} tableColumn={tableColumn} tableData={data} />
                     </Col>
                 </Row>
-                {
-                    !isReadOnly &&
+                {!isReadOnly && (
                     <Row justify="end" gutter={20} style={{ marginTop: '20px', marginRight: '2px' }}>
                         <Button danger onClick={handleAdd}>
                             <FaPlus className={styles.buttonIcon} />
                             Add Row
                         </Button>
                     </Row>
-                }
+                )}
             </Form>
         </>
     );

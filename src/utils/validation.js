@@ -34,6 +34,6 @@ export const validateMobileNoField = (fieldName) => ({
 });
 
 export const validateFieldsPassword = (fieldName) => ({
-    message: fieldName + ' should contain 1 lowercase,1 uppercase,1 numeric,1 special character and should be of min 8 characters in length',
+    message: fieldName + ' should contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and should be of minimum 8 characters in length',
     pattern: '^(?!.* )(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}',
 });

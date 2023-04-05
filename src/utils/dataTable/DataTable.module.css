@@ -56,6 +56,11 @@
   margin-inline-start: 0;
 }
 
+:global .ant-pagination .ant-pagination-options .ant-select-focused {
+  outline-style: none !important;
+  outline-color: transparent !important;
+}
+
 /* :global .ant-table-wrapper .ant-table-pagination.ant-pagination {
   margin: 0;
   padding: 16px;

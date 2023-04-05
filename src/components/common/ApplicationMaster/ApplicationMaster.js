@@ -5,20 +5,16 @@ import { Button, Col, Form, Row, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
 import styles from 'pages/common/Common.module.css';
-import { addToolTip } from 'utils/customMenuLink';
-import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { menuDataActions } from 'store/actions/data/menu';
 
 // import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-// import { ParentHierarchy } from '../parentHierarchy';
 import AddEditForm from './AddEditForm';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import LeftPanel from '../LeftPanel';
 
 const mapStateToProps = (state) => {
-    console.log("STATE==>", state)
     const {
         auth: { userId },
         data: {
@@ -64,6 +60,37 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
+const mockgeoData = [
+    {
+        id: '067c09fd-c6d2-4962-8743-76b553d71d5e',
+        geoCode: 'GJ',
+        geoName: 'Appl 1',
+        attributeKey: '0eb57e6b-af05-4689-8e61-c9db39b6e85d',
+        geoParentCode: 'APE',
+        isActive: 'N',
+        subGeo: [
+            {
+                id: '861c41f4-d831-4dff-b6a4-04678b4f7d17',
+                geoCode: 'SUR',
+                geoName: 'MEE',
+                attributeKey: '0eb57e6b-af05-4689-8e61-c9db39b6e85d',
+                geoParentCode: '067c09fd-c6d2-4962-8743-76b553d71d5e',
+                isActive: 'N',
+                subGeo: [
+                    {
+                        id: 'bc386fc4-a79b-4b68-b05c-5f769d431a2e',
+                        geoCode: '677677',
+                        geoName: '677677',
+                        attributeKey: 'a9999d08-b89e-4806-beed-efa0a14b4cc1',
+                        geoParentCode: '861c41f4-d831-4dff-b6a4-04678b4f7d17',
+                        isActive: 'N',
+                        subGeo: [],
+                    },
+                ],
+            },
+        ],
+    },
+];
 
 export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations, }) => {
     const [applicationform] = Form.useForm();
