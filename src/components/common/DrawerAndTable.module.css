@@ -107,6 +107,32 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
     padding-left: 0px !important;
 }
+.contentHeaderBackground {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
+.addGroup {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0px !important;
+}
+.contentHeaderBackground .addGroup button {
+    margin-bottom: 0px !important;
+    margin-left: 10px;
+}
+
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+    background-color: #ffffff;
+    background-color: #ffffff;
+    border-left: #ffffff;
+    background-color: #ffffff;
+}
+
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+    border-left: #ff3e5b;
+}
 
 .tableIcons {
     border: none;

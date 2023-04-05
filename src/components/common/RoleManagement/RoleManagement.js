@@ -16,13 +16,13 @@ import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
-import styles from 'pages/common/Common.module.css';
+import styles from '../DrawerAndTable.module.css'
 import style from './RoleManagement.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 
-const { Search } = Input;
+const { Search } = Input;   
 
 const mapStateToProps = (state) => {
     const {
@@ -175,11 +175,11 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                         <Row gutter={20}>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={styles.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={styles.subheading}>
-                                            Criticality Group List
+                                    <div className={style.searchAndLabelAlign}>
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} className={style.subheading}>
+                                           Role List
                                         </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                        <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                             <Search
                                                 placeholder="Search"
                                                 style={{
