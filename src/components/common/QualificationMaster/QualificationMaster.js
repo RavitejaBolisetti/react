@@ -36,7 +36,6 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         qualificationData,
-        isLoading,
         isLoadingOnSave,
         isFormDataLoaded
     };
