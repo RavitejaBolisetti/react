@@ -5,31 +5,31 @@
         "children": [
             {
                 "title": "Application Master",
-                "key": "ApplicationMaster",
+                "key": "ApplicationMaster1",
                 "children": [
                     {
                         "title": "Sub Application Master",
-                        "key": "subapplicationmaster"
+                        "key": "subApplicationMaster1"
                     }
                 ]
             },
             {
                 "title": "Application Criticality Group",
-                "key": "applicationcriticalitygroup",
+                "key": "applicationCriticalityGroup1",
                 "children": [
                     {
                         "title": "Application Master",
-                        "key": "ApplicationMaster",
+                        "key": "ApplicationMaster2",
                         "children": [
                             {
                                 "title": "Sub Application Master",
-                                "key": "subapplicationmaster"
+                                "key": "subApplicationMaster2"
                             }
                         ]
                     },
                     {
                         "title": "Application Criticality Group",
-                        "key": "applicationcriticalitygroup",
+                        "key": "applicationCriticalityGroup2",
                         "children": [
                             {
                                 "title": "dummy1",
@@ -41,7 +41,7 @@
             },
             {
                 "title": "Geographical Hierarchy",
-                "key": "GeographicalHierarchy",
+                "key": "geographicalHierarchy",
                 "children": [
                     {
                         "title": "dummy2",
@@ -51,7 +51,7 @@
             },
             {
                 "title": "Product Hierarchy",
-                "key": "common-ProductHierarchy",
+                "key": "commonProductHierarchy",
                 "children": [
                     {
                         "title": "dummy3",
