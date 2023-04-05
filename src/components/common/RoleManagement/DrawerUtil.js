@@ -36,21 +36,26 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
             let subdata = subt;
             console.log(subt);
             return (
-                <Collapse style={{ marginBottom: '10px' }} size="small" expandIcon={() => <PlusOutlined />} expandIconPosition="start">
+                <Collapse 
+                //inline style to be removed  
+                style={{ marginBottom: '10px' }}
+                 //inline style to be removed  
+                 size="small" expandIcon={() => <PlusOutlined />} expandIconPosition="start">
                     <Panel header={subt?.title} key={subt?.key}>
-                        <Tree
-                            // checkable
-                            // onExpand={onExpand}
-                            // expandedKeys={expandedKeys}
-                            // autoExpandParent={autoExpandParent}
-                            // onCheck={onCheck}
-                            // checkedKeys={checkedKeys}
-                            // onSelect={onSelect}
-                            // selectedKeys={selectedKeys}
+                        {/* <Tree
+                            checkable
+                            onExpand={onExpand}
+                            expandedKeys={expandedKeys}
+                            autoExpandParent={autoExpandParent}
+                            onCheck={onCheck}
+                            checkedKeys={checkedKeys}
+                            onSelect={onSelect}
+                            selectedKeys={selectedKeys}
                             treeData={[subdata]}
                             showLine
                             showIcon
-                        />
+                        /> */}
+                        
                     </Panel>
                 </Collapse>
             );
