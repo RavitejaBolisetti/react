@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Form, Empty, ConfigProvider } from 'antd';
-import { EditIcon } from 'Icons';
+import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 import { TfiReload } from 'react-icons/tfi';
 import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -15,7 +15,7 @@ import { qualificationDataActions } from 'store/actions/data/qualificationMaster
 import DrawerUtil from './DrawerUtil';
 
 import styles from 'pages/common/Common.module.css';
-import style from '../DrawerAndTable.module.css';
+import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -34,7 +34,11 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
+        isLoading,
         qualificationData,
+        isLoading,
+        isLoadingOnSave,
+        isFormDataLoaded
     };
     return returnValue;
 };
@@ -46,6 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
+            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -54,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification }) => {
+export const QualificationMasterMain = ({  saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded,isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -69,14 +74,16 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [refershData, setRefershData] = useState(false);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [filterString, setFilterString] = useState();
+    const [footerEdit, setFooterEdit] = useState(false);
+    const [selectedRecord, setSelectedRecord] = useState(null);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
-    const [filterString, setFilterString] = useState();
+    const [saveclick, setsaveclick] = useState();
+    const [saveandnewclick, setsaveandnewclick] = useState();
+    const [successAlert, setSuccessAlert] = useState(false);
 
-
-    const state = {
-        button: 1,
-    };
+  
 
     useEffect(() => {
         form.resetFields();
@@ -96,13 +103,10 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
 
-    const onSuccess = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
 
     useEffect(() => {
-        if (refershData && userId) {
-            fetchList({ setIsLoading: listShowLoading, onSuccess, userId });
+        if ( userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -110,7 +114,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     useEffect(() => {
         if (isDataLoaded && qualificationData) {
             if (filterString) {
-                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.criticalityName));
+                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -119,17 +123,30 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
 
+
+
     const tableColumn = [];
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+            width:'6%',
+            sorter: false
+        })
+    );
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
+            width:'17%'
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
+            width:'40%'
         })
     );
     tableColumn.push(
@@ -144,76 +161,66 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
+            width:'15%',
             sorter: false,
-            render: (record) => {
-                return <Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)} />;
+            render: (text, record, index) => {
+                return (
+                    <Space>
+                        {
+                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                                <EditIcon />
+                            </Button>
+                        }
+                        {
+                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                                <ViewEyeIcon />
+                            </Button>
+                        }
+                    </Space>
+                );
             },
         })
     );
     const tableProps = {
-        isLoading: listShowLoading,
+        isLoading: isLoading,
         tableData: searchData,
         tableColumn: tableColumn,
     };
 
     const onFinish = (values, e) => {
-        if (state.button === 1) {
-            const recordId = formData?.id || '';
-            const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+        const recordId = selectedRecord?.id || '';
+        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
-            const onSuccess = (res) => {
-                form.resetFields();
-                setForceFormReset(Math.random() * 10000);
+        const onSuccess = (res) => {
+                onSaveShowLoading(false)
+            form.resetFields();
+            setSelectedRecord({});
+            setSuccessAlert(true);
+            fetchList({ setIsLoading: listShowLoading, userId });
+            if (saveclick === true) {
                 setDrawer(false);
-                forceUpdate();
-                if (res?.data) {
-                    fetchList({ setIsLoading: listShowLoading, userId });
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                }
-            };
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setDrawer(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
+        };
 
-            const onError = (message) => {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
-            };
+      
+        const onError = (message) => {
+            onSaveShowLoading(false)
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
+        };
 
-            const requestData = {
-                data: [data],
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-            saveData(requestData);
-        }
+        const requestData = {
+            data: [data],
+            setIsLoading: onSaveShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
 
-        if (state.button === 2) {
-            const recordId = formData?.id || '';
-            const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
-
-            const onSuccess = (res) => {
-                if (res?.data) {
-                    fetchList({ setIsLoading: listShowLoading, userId });
-
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottom-right' });
-                    form.resetFields();
-                    setFormData({});
-                }
-            };
-
-            const onError = (message) => {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
-            };
-
-            const requestData = {
-                data: [data],
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-        }
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -221,26 +228,67 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     };
 
     const handleAdd = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData([]);
+        setFormActionType('add');
         setSaveAndSaveNew(true);
         setSaveBtn(true);
+        setFooterEdit(false);
+
         setDrawer(true);
-        setFormActionType('add');
         setIsReadOnly(false);
-        form.resetFields();
-        forceUpdate();
+        setsaveclick(false);
+        setsaveandnewclick(true);
     };
 
     const handleUpdate = (record) => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData(record);
-        setSaveAndSaveNew(false);
-        setSaveBtn(true);
-        setDrawer(true);
         setFormActionType('update');
+        setSaveAndSaveNew(false);
+        setFooterEdit(false);
+        setSaveBtn(true);
+        setSelectedRecord(record);
+
+        setFormData(record);
+
+        form.setFieldsValue({
+            qualificationCode: record.qualificationCode,
+            qualificationName: record.qualificationName,
+            status: record.status,
+        });
+
+        setDrawer(true);
         setIsReadOnly(false);
-        forceUpdate();
+    };
+
+    const handleUpdate2 = () => {
+        setFormActionType('update');
+
+        setSaveAndSaveNew(false);
+        setFooterEdit(false);
+        setSaveBtn(true);
+
+        form.setFieldsValue({
+            qualificationCode: selectedRecord.qualificationCode,
+            qualificationName: selectedRecord.qualificationName,
+            status: selectedRecord.status,
+        });
+        setsaveclick(true);
+        setIsReadOnly(false);
+    };
+
+    const handleView = (record) => {
+        setFormActionType('view');
+
+        setSelectedRecord(record);
+        setSaveAndSaveNew(false);
+        setFooterEdit(true);
+        setSaveBtn(false);
+
+        form.setFieldsValue({
+            qualificationCode: record.qualificationCode,
+            qualificationName: record.qualificationName,
+            status: record.status,
+        });
+        setDrawer(true);
+        setIsReadOnly(true);
     };
 
     const handleReferesh = (e) => {
@@ -305,7 +353,33 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                     </div>
                 </Col>
             </Row>
-            <DrawerUtil formBtnDisable={formBtnDisable} saveAndSaveNew={saveAndSaveNew} saveBtn={saveBtn} setFormBtnDisable={setFormBtnDisable} onFinishFailed={onFinishFailed} onFinish={onFinish} form={form} state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} />
+            <DrawerUtil
+                saveclick={saveclick}
+                setsaveclick={setsaveclick}
+                setsaveandnewclick={setsaveandnewclick}
+                saveandnewclick={saveandnewclick}
+                formBtnDisable={formBtnDisable}
+                saveAndSaveNew={saveAndSaveNew}
+                saveBtn={saveBtn}
+                setFormBtnDisable={setFormBtnDisable}
+                onFinishFailed={onFinishFailed}
+                onFinish={onFinish}
+                form={form}
+                handleAdd={handleAdd}
+                open={drawer}
+                data={data}
+                setDrawer={setDrawer}
+                isChecked={isChecked}
+                formData={formData}
+                setIsChecked={setIsChecked}
+                formActionType={formActionType}
+                isReadOnly={isReadOnly}
+                setFormData={setFormData}
+                setForceFormReset={setForceFormReset}
+                footerEdit={footerEdit}
+                handleUpdate2={handleUpdate2}
+                isLoadingOnSave={isLoadingOnSave}
+            />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -340,7 +414,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
                     </ConfigProvider>
                 </Col>
             </Row>

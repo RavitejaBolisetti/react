@@ -52,22 +52,21 @@ const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () 
         // form.validateFields().then((values) => {});
     };
 
-    useEffect(() => {
-        form.resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    });
-
-    const successAction = (title, message) => {
-        showGlobalNotification({ notificationType: 'success', title, message });
-        navigate(ROUTING_LOGIN);
-    };
     const onFinishFailed = (values) => {
         if (values.errorFields.length === 0) {
             const data = { ...values.values };
             const onSuccess = (res) => {
                 form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
+
                 doLogout({
-                    successAction,
+                    onSuccess: (res) => {
+                        if (res?.data) {
+                            navigate(ROUTING_LOGIN);
+                        }
+                    },
+                    onError,
+                    userId,
                 });
             };
 

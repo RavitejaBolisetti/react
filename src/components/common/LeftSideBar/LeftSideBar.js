@@ -19,6 +19,7 @@ import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
 import { HomeIcon } from 'Icons';
+import { showGlobalNotification } from 'store/actions/notification';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -27,16 +28,16 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
-const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true, captlized = false }) =>
+const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, captlized = false }) =>
     id && getMenuValue(MenuConstant, id, 'link') ? (
-        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
+        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
+            {showTitle && <span className={styles.menuTitle}>{title}</span>}
         </Link>
     ) : (
-        <Link to="#" title={tooltip ? title : ''}>
+        <Link to="#" title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
+            {showTitle && <span className={styles.menuTitle}>{title}</span>}
         </Link>
     );
 
@@ -80,11 +81,15 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
 
+    const errorAction = (message) => {
+        console.log('success');
+    };
+
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -101,7 +106,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
+ 
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -174,16 +179,16 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
     };
 
     const prepareMenuItem = (data) => {
-        return data.map(({ menuId, menuTitle, parentMenuId = '', subMenu = [] }) => {
-            const isParentMenu = false; // parentMenuId === 'Web';
+        return data.map(({ menuId, menuTitle, menuOrgTitle = '', parentMenuId = '', subMenu = [] }) => {
+            const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
                 <Item key={parentMenuId.concat(menuId)} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
@@ -193,7 +198,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         const loop = (data) =>
             data.map((item) => {
                 const strTitle = item?.menuTitle;
-                const index = strTitle?.indexOf(searchValue);
+                const index = strTitle?.toLowerCase()?.indexOf(searchValue?.toLowerCase());
                 const beforeStr = strTitle?.substring(0, index);
                 const afterStr = strTitle?.slice(index + searchValue.length);
                 const menuTitle =
@@ -212,11 +217,13 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                     return {
                         ...item,
                         menuTitle,
+                        menuOrgTitle: item?.menuTitle,
                         subMenu: loop(item?.subMenu),
                     };
                 }
                 return {
                     ...item,
+                    menuOrgTitle: item?.menuTitle,
                     menuTitle,
                 };
             });
@@ -246,7 +253,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
+                    {!collapsed && <Input placeholder="Search" allowClear onChange={onSearch} />}
                 </div>
                 {!isLoading ? (
                     <>
@@ -263,7 +270,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
-                            <Item key={'home'} className={styles.subMenuItemNew}>
+                            <Item key={'home'} className={styles.subMenuParent}>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
                                         <HomeIcon />

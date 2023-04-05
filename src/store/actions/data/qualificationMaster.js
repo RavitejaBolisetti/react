@@ -8,6 +8,7 @@ export const QUALIFICATION_DATA_LOADED = 'QUALIFICATION_DATA_LOADED';
 export const QUALIFICATION_SET_FORM_DATA = 'QUALIFICATION_SET_FORM_DATA';
 export const QUALIFICATION_SET_FORM_IS_VISIBLE = 'QUALIFICATION_SET_FORM_IS_VISIBLE';
 export const QUALIFICATION_DATA_SHOW_LOADING = 'QUALIFICATION_DATA_SHOW_LOADING';
+export const QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING = 'QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING';
 
 const receiveData = (data) => ({
     type: QUALIFICATION_DATA_LOADED,
@@ -21,6 +22,11 @@ const baseURLPath = BASE_URL_QUALIFICATION_MASTER;
 
 qualificationDataActions.listShowLoading = (isLoading) => ({
     type: QUALIFICATION_DATA_SHOW_LOADING,
+    isLoading,
+});
+
+qualificationDataActions.onSaveShowLoading = (isLoading) => ({
+    type: QUALIFICATION_DATA_ON_SAVE_SHOW_LOADING,
     isLoading,
 });
 
@@ -39,9 +45,13 @@ qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessT
     const { setIsLoading, onSuccess: onSuccessAction, data } = params;
 
     setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
+    const onError = (errorMessage) => {
+        setIsLoading(false);
+        message.error(errorMessage)
+    };
 
     const onSuccess = (res) => {
+        setIsLoading(false)
         if (res?.data) {
             onSuccessAction && onSuccessAction(res);
             dispatch(receiveData(res?.data));
@@ -69,8 +79,9 @@ qualificationDataActions.fetchList = withAuthToken((params) => ({ token, accessT
 });
 
 qualificationDataActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { onError, data, onSuccess } = params;
-
+    const { onError, data, onSuccess, setIsLoading } = params;
+    setIsLoading(true);
+    
     const apiCallParams = {
         data,
         method: 'post',

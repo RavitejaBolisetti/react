@@ -168,17 +168,18 @@
     padding: 16px 20px;
 }
 
-:global .ant-drawer .ant-drawer-body {
+/* :global .ant-drawer .ant-drawer-body {
     padding: 20px;
-}
+} */
+
 
 :global .ant-drawer .ant-drawer-body .ant-input {
     margin-top: 6px;
 }
 
-:global .ant-drawer .ant-drawer-body .ant-form-item {
+/* :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;
-}
+} */
 
 .drawerConfigParam :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item {
     padding-bottom: 0 !important;
