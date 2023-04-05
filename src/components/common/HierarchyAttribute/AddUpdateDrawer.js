@@ -109,7 +109,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[ { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name'), validationFieldLetterAndNumber('Name'), { validator: (rule, value) => (!editRow['hierarchyAttribueName'] ? (tableData?.findIndex((el) => el['hierarchyAttribueName']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[ { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name'), { validator: (rule, value) => (!editRow['hierarchyAttribueName'] ? (tableData?.findIndex((el) => el['hierarchyAttribueName']?.toLowerCase() === value?.toLowerCase()) !== -1 ? Promise.reject('Duplicate not allowed') : Promise.resolve()) : Promise.resolve()) }]}>
                                 {formActionType === 'view' ? <p className={style.viewModeText} >{editRow?.hierarchyAttribueName}</p> :<Input maxLength={50} placeholder={preparePlaceholderText('Name')}  {...disabledProps}/>}
                             </Form.Item>
                         </Col>

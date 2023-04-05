@@ -13,7 +13,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
     const disabledProps = { disabled: isReadOnly };
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(Math.random() * 1000);
     const [TimeTrack, setTimeTrack] = useState(true);
-    const [DisableAddtime, setDisableAddtime] = useState(false);
+    // const [DisableAddtime, setDisableAddtime] = useState(false);
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -26,10 +26,10 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
 
     useEffect(() => {
         if (formActionType === 'update') {
-            setDisableAddtime(false);
+            // setDisableAddtime(false);
         }
         if (formActionType === 'view') {
-            setDisableAddtime(true);
+            // setDisableAddtime(true);
         }
         let timeSegments = form.getFieldValue('allowedTimings');
         if (timeSegments?.length === 1) {
@@ -44,6 +44,9 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
 
     const onClose = () => {
         form.resetFields();
+        form.setFieldsValue({
+            allowedTimings: [],
+        });
         setSelectedRecord(null);
         setDrawer(false);
         setFormBtnDisable(false);
@@ -88,13 +91,16 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             }
         });
         if (flag === 1) {
-            setDisableAddtime(false);
+            // setDisableAddtime(false);
         } else {
-            setDisableAddtime(true);
+            // setDisableAddtime(true);
         }
     };
+    const onValuesChange = (values) => {
+        console.log(values);
+    };
 
-    const removeItem = (name) => {
+    const removeItem = (name, fields) => {
         const formList = form.getFieldsValue();
         const formAllowedTiming = formList?.allowedTimings;
         const deletedItem = formAllowedTiming?.find((item, index) => index === name);
@@ -105,7 +111,10 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
-        form.validateFields();
+        // fields.map(({ key, name, ...restField }) => {
+        //     console.log('Key:', key, ' Name:', name);
+        //     form.validateFields([key]);
+        // });
     };
     const validatedDuplicateTime = (field) => (rule, value) => {
         const overlapData = checkOverlap();
@@ -158,7 +167,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
             onClose={onClose}
             open={open}
         >
-            <Form form={form} id="myForm" layout="vertical" colon={false} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" layout="vertical" colon={false} onValuesChange={onValuesChange} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code'), validationFieldLetterAndNumber('Criticality Group Code')]}>
@@ -166,7 +175,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name'), validationFieldLetterAndNumber('Criticality Group Code')]}>
+                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
                             {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />}
                         </Form.Item>
                     </Col>
@@ -198,8 +207,8 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                     <Button
                                         type="link"
                                         color="#FF3E5B"
-                                        disabled={DisableAddtime}
-                                        //  {...disabledProps}
+                                        // disabled={DisableAddtime}
+                                        {...disabledProps}
                                         onClick={() => {
                                             add();
                                             setTimesegmentLengthTracker(Math.random() * 10000);
@@ -267,7 +276,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                                                         danger
                                                         ghost
                                                         onClick={() => {
-                                                            removeItem(name);
+                                                            removeItem(name, fields);
                                                             remove(name);
                                                             setTimesegmentLengthTracker(Math.random() * 1000);
 
