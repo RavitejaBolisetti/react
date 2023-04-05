@@ -104,7 +104,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
-         }
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, criticalityGroupData]);
 
@@ -158,7 +158,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
             const onSuccess = (res) => {
-                onSaveShowLoading(false)
+                onSaveShowLoading(false);
                 form.resetFields();
                 setSelectedRecord({});
                 setSuccessAlert(true);
@@ -173,7 +173,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             };
 
             const onError = (message) => {
-                onSaveShowLoading(false)
+                onSaveShowLoading(false);
                 showGlobalNotification({ message, placement: 'bottomRight' });
             };
 
@@ -186,6 +186,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             };
 
             saveData(requestData);
+            setForceFormReset(Math.Random() * 1000);
         }
     };
 
@@ -284,7 +285,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     };
 
     const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+        const filterStringNew = filterString.trim();
+        return title && title.match(new RegExp(escapeRegExp(filterStringNew), 'i'));
     };
 
     const onSearchHandle = (value) => {
@@ -301,7 +303,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
-            sorter: false
+            sorter: false,
         })
     );
 
