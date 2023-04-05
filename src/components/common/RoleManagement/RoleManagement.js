@@ -175,8 +175,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                         <Row gutter={20}>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
+                                    <div className={styles.searchAndLabelAlign}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={styles.subheading}>
                                             Criticality Group List
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
