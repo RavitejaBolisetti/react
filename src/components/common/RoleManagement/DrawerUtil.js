@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree } from 'antd';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree,Checkbox  } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
@@ -31,37 +31,58 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
     const onFinish = () => {};
     const onFinishFailed = () => {};
 
-    const accordianTreeUtils = (data) => {
-        return data.map((subt, i) => {
-            let subdata = subt;
-            console.log(subt);
-            return (
-                <Collapse 
-                //inline style to be removed  
-                style={{ marginBottom: '10px' }}
-                 //inline style to be removed  
-                 size="small" expandIcon={() => <PlusOutlined />} expandIconPosition="start">
-                    <Panel header={subt?.title} key={subt?.key}>
-                        {/* <Tree
-                            checkable
-                            onExpand={onExpand}
-                            expandedKeys={expandedKeys}
-                            autoExpandParent={autoExpandParent}
-                            onCheck={onCheck}
-                            checkedKeys={checkedKeys}
-                            onSelect={onSelect}
-                            selectedKeys={selectedKeys}
-                            treeData={[subdata]}
-                            showLine
-                            showIcon
-                        /> */}
-                        
-                    </Panel>
-                </Collapse>
-            );
-        });
-    };
+    // const accordianTreeUtils = (data) => {
+        // return data.map((subt, i) => {
+        //     let subdata = subt;
+        //     console.log(subt);
+        //     return (
+        // <Collapse
+        // //inline style to be removed
+        // style={{ marginBottom: '10px' }}
+        //  //inline style to be removed
+        //  size="small" expandIcon={() => <PlusOutlined />} expandIconPosition="start">
+        //     <Panel header={subt?.title} key={subt?.key}>
+        //         <Tree
+        //             checkable
+        //             onExpand={onExpand}
+        //             expandedKeys={expandedKeys}
+        //             autoExpandParent={autoExpandParent}
+        //             onCheck={onCheck}
+        //             checkedKeys={checkedKeys}
+        //             onSelect={onSelect}
+        //             selectedKeys={selectedKeys}
+        //             treeData={[subdata]}
+        //             showLine
+        //             showIcon
+        //         />
 
+        //     </Panel>
+        // </Collapse>
+
+        //     {
+
+        //     }
+        // }
+        //             );
+        //         });
+        //     };
+
+        let i = 0;
+        const mapDataToCollapse = (data, i) => {
+            if (mockTreeData?.children === null) {
+                return <Checkbox />;
+            }
+            if (mockTreeData?.children.at(0).children === null) {
+                return <Panel />;
+            } else if (i === 0 && mockTreeData.children.length != 0) {
+                <Collapse> {mapDataToCollapse(mockTreeData.children, (i = 1))}</Collapse>;
+            } else if (i === 1 && mockTreeData.children.length != 0) {
+                mapDataToCollapse(mockTreeData.children, (i = 2));
+            } else if (i === 2 && mockTreeData.children.length != 0) {
+                mapDataToCollapse(mockTreeData.children, (i = 3));
+            }
+        };
+    // };
     return (
         <Drawer
             title={'Role Management'}
@@ -150,7 +171,8 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
 
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {accordianTreeUtils(mockTreeData)}
+                            {/* {accordianTreeUtils(mockTreeData)} */}
+                            {mapDataToCollapse(mockTreeData)}
                         </Col>
                     </Row>
                 </Form>
