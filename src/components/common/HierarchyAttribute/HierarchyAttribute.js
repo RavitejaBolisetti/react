@@ -275,6 +275,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             }
             forceUpdate();
         };
+        const onError = (message) => {
+            onSaveShowLoading(false)
+            showGlobalNotification({ message, placement: 'bottomRight' });
+        };
 
         hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: onSaveShowLoading, userId, onError, onSuccess });
     };
