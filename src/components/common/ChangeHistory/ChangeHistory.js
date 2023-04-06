@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
-            onCloseAction: productHierarchyDataActions.changeHistoryVisible,
+            onCloseAction: productHierarchyDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
@@ -131,4 +131,4 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));

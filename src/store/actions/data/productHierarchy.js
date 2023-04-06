@@ -28,9 +28,14 @@ productHierarchyDataActions.listShowLoading = (isLoading) => ({
     isLoading,
 });
 
-productHierarchyDataActions.changeHistoryVisible = (visible) => ({
+productHierarchyDataActions.changeHistoryModelOpen = (visible) => ({
     type: PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE,
     visible: true,
+});
+
+productHierarchyDataActions.changeHistoryModelClose = (visible) => ({
+    type: PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: false,
 });
 
 productHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
