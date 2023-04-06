@@ -190,6 +190,10 @@
 .srchbtn :global .ant-btn-default {
     background-color: #ffffff;
 }
+.addGroup {
+    display: flex;
+    justify-content: right;
+}
 
 .actionbtn {
     background-color: #ff3e5b;
@@ -404,3 +408,4 @@
     margin-inline-end: 0px;
     padding-right: 0px;
 }
+

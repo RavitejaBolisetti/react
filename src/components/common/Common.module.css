@@ -67,17 +67,17 @@
     color: #ff3e5b;
 }
 
-.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
+.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
     border-inline-end-width: 1px;
     border-start-end-radius: 4px;
     border-end-end-radius: 4px;
     height: 36px;
 }
 
-.geoSection :global .ant-form-item .ant-form-item-label>label {
+.geoSection :global .ant-form-item .ant-form-item-label > label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -337,12 +337,12 @@
 }
 
 :global .ant-modal .ant-modal-title {
-    border-bottom: 1px solid #DEDEDE;
+    border-bottom: 1px solid #dedede;
     padding-bottom: 16px;
     line-height: 24px;
     font-weight: 700;
     font-size: 16px;
-    color: #342C2C;
+    color: #342c2c;
 }
 
 /* :global .ant-modal .ant-modal-body {
@@ -479,8 +479,40 @@
     }
 }
 
-
-
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
+}
+
+.contentHeader {
+    background-color: #f4f4f4;
+    padding: 10px;
+    /* margin-bottom: 20px; */
+    border-radius: 4px;
+    border: 1px solid #E6E6E6;
+}
+
+.actionbtn {
+    background-color: #ff3e5b;
+    border-radius: 5px;
+    padding: 4px 16px;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.addGroup {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0px !important;
+}
+.content{
+    border: 1px solid rgba(200, 200, 200, 0.55);
+    border-top: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    overflow: auto;
+    height: calc(100vh - 240px);
+    width: 100%;
+    padding: 4% 2%;
+    /* margin-left: 12px; */
 }
