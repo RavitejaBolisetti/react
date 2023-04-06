@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree,Checkbox  } from 'antd';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
@@ -32,57 +32,94 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
     const onFinishFailed = () => {};
 
     // const accordianTreeUtils = (data) => {
-        // return data.map((subt, i) => {
-        //     let subdata = subt;
-        //     console.log(subt);
-        //     return (
-        // <Collapse
-        // //inline style to be removed
-        // style={{ marginBottom: '10px' }}
-        //  //inline style to be removed
-        //  size="small" expandIcon={() => <PlusOutlined />} expandIconPosition="start">
-        //     <Panel header={subt?.title} key={subt?.key}>
-        //         <Tree
-        //             checkable
-        //             onExpand={onExpand}
-        //             expandedKeys={expandedKeys}
-        //             autoExpandParent={autoExpandParent}
-        //             onCheck={onCheck}
-        //             checkedKeys={checkedKeys}
-        //             onSelect={onSelect}
-        //             selectedKeys={selectedKeys}
-        //             treeData={[subdata]}
-        //             showLine
-        //             showIcon
-        //         />
+    // return data.map((subt, i) => {
+    //     let subdata = subt;
+    //     console.log(subt);
+    //     return (
+    // <Collapse
+    // //inline style to be removed
+    // style={{ marginBottom: '10px' }}
+    //  //inline style to be removed
+    //  size="small" expandIcon={() => <PlusOutlined />} expandIconPosition="start">
+    //     <Panel header={subt?.title} key={subt?.key}>
+    //         <Tree
+    //             checkable
+    //             onExpand={onExpand}
+    //             expandedKeys={expandedKeys}
+    //             autoExpandParent={autoExpandParent}
+    //             onCheck={onCheck}
+    //             checkedKeys={checkedKeys}
+    //             onSelect={onSelect}
+    //             selectedKeys={selectedKeys}
+    //             treeData={[subdata]}
+    //             showLine
+    //             showIcon
+    //         />
 
-        //     </Panel>
-        // </Collapse>
+    //     </Panel>
+    // </Collapse>
 
-        //     {
+    //     {
 
-        //     }
-        // }
-        //             );
-        //         });
-        //     };
+    //     }
+    // }
+    //             );
+    //         });
+    //     };
 
-        let i = 0;
-        const mapDataToCollapse = (data, i) => {
-            if (mockTreeData?.children === null) {
-                return <Checkbox />;
-            }
-            if (mockTreeData?.children.at(0).children === null) {
-                return <Panel />;
-            } else if (i === 0 && mockTreeData.children.length != 0) {
-                <Collapse> {mapDataToCollapse(mockTreeData.children, (i = 1))}</Collapse>;
-            } else if (i === 1 && mockTreeData.children.length != 0) {
-                mapDataToCollapse(mockTreeData.children, (i = 2));
-            } else if (i === 2 && mockTreeData.children.length != 0) {
-                mapDataToCollapse(mockTreeData.children, (i = 3));
-            }
-        };
+    // let i = 0;
+    // const mapDataToCollapse = (data, i) => {
+    //     if (mockTreeData?.children === null) {
+    //         return <Checkbox >hello</Checkbox>;
+    //     }
+    //     if (mockTreeData?.children?.at(0)?.children === null) {
+    //         return <Panel />;
+    //     } else if (i === 0 && mockTreeData?.children?.length != 0) {
+    //         <Collapse> {mapDataToCollapse(mockTreeData?.children, (i = 1))}</Collapse>;
+    //     } else if (i === 1 && mockTreeData.children?.length != 0) {
+    //         mapDataToCollapse(mockTreeData?.children, (i = 2));
+    //     } else if (i === 2 && mockTreeData?.children?.length != 0) {
+    //         mapDataToCollapse(mockTreeData?.children, (i = 3));
+    //     }
     // };
+    // };
+
+    const mapDataToCollapse = (data) => {
+        console.log('data', data, 'index', data?.title, 'children', data?.children);
+
+        return data?.map((item, index) => {
+            console.log('item in map', item, 'index in map ', index);
+            return (
+                <>
+                    <Collapse>
+                        <Panel header={item?.title} key={item?.key}>
+                            {console.log(item?.children, 'inside')}
+                            {item?.children?.map((item, index) => {
+                                console.log('item in map in map', item, 'index in map in map', index);
+
+                                return (
+                                    <Collapse>
+                                        <Panel header={item?.title} key={item?.key}>
+                                            {item?.children?.map((item, index) => {
+                                                console.log('in the endgame');
+
+                                                return (
+                                                    <Collapse expandIcon={() => <Checkbox/>}>
+                                                       {/* <Checkbox/>  */}
+                                                       <Panel header={item?.title} key={item?.key}></Panel>
+                                                     </Collapse>
+                                                );
+                                            })}
+                                        </Panel>
+                                    </Collapse>
+                                );
+                            })}
+                        </Panel>
+                    </Collapse>
+                </>
+            );
+        });
+    };
     return (
         <Drawer
             title={'Role Management'}

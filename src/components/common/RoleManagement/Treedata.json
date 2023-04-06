@@ -8,8 +8,16 @@
                 "key": "ApplicationMaster1",
                 "children": [
                     {
-                        "title": "Sub Application Master",
-                        "key": "subApplicationMaster1"
+                        "title": "Sub Application Master 1",
+                        "key": "subApplicationMaster1",
+                        "actions": [
+                            {
+                                 "read": 1 
+                            },
+                            {
+                                "write": 0
+                            }
+                        ]
                     }
                 ]
             },
@@ -22,7 +30,7 @@
                         "key": "ApplicationMaster2",
                         "children": [
                             {
-                                "title": "Sub Application Master",
+                                "title": "Sub Application Master 2",
                                 "key": "subApplicationMaster2"
                             }
                         ]
@@ -103,6 +111,4 @@
             }
         ]
     }
-    
-  
 ]
