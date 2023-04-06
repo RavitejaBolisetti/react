@@ -1,234 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
+import { Drawer, Input, Form, Col, Collapse, Card, Row, Switch, Button, Select, Space } from 'antd';
+import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { Row, Col, Table, Button, Input, Switch, Space, Modal, Form } from 'antd';
-import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import style from 'components/common/DrawerAndTable.module.css';
 
-import styles from 'pages/common/Common.module.css';
-import { validateRequiredInputField } from 'utils/validation';
-import { DataTable } from 'utils/dataTable';
+const DocumentTypes = ({ form, footerEdit = false, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable }) => {
+    const disabledProps = { disabled: isReadOnly };
 
-const { confirm } = Modal;
-
-export const EditableCell = ({ editing, dataIndex, title, inputType, record, index, children, form, ...restProps }) => {
-    let inputField = '';
-    switch (inputType) {
-        case 'switch':
-            inputField = (
-                <Form.Item
-                    normalize={(a, b) => (a ? 'Y' : 'N')}
-                    style={{
-                        margin: 0,
-                    }}
-                    key={record.id + index + dataIndex + 'swi'}
-                    name={[index, dataIndex]}
-                    initialValue={record[dataIndex]}
-                >
-                    <Switch defaultChecked={record[dataIndex] === 'Y'} readOnly={!record?.isEditable && !record.deletable} disabled={!record?.isEditable && !record.deletable} checkedChildren="Active" unCheckedChildren="Inactive" />
-                </Form.Item>
-            );
-            break;
-        default:
-            inputField = (
-                <Form.Item
-                    style={{
-                        margin: 0,
-                    }}
-                    key={record.id + index + dataIndex + 'swi'}
-                    name={[index, dataIndex]}
-                    rules={[validateRequiredInputField(`${title}`)]}
-                    initialValue={record[dataIndex]}
-                >
-                    <Input readOnly={!record?.isEditable && !record.deletable} disabled={!record?.isEditable && !record.deletable} />
-                </Form.Item>
-            );
-            break;
-    }
-    return <td key={record.id + index + dataIndex + 'swi'}>{inputField}</td>;
-};
-
-const datainitial = [
-    {
-        key: Math.random() * 1000,
-        id: Math.random() * 1000,
-        documentTypeCode: 'Enter Code',
-        documentTypeDescription: 'Descrption',
-        termsandcondition: 'Y',
-        digitalsignature: 'N',
-    },
-    {
-        key: Math.random() * 1000,
-        id: Math.random() * 1000,
-        documentTypeCode: 'Enter Code',
-        documentTypeDescription: 'Enter description Data',
-        termsandcondition: 'Y',
-        digitalsignature: 'N',
-    },
-];
-
-const editRowData = [
-    {
-        key: Math.random() * 1000,
-        id: Math.random() * 1000,
-        documentTypeCode: '',
-        documentTypeDescription: '',
-        termsandcondition: 'Y',
-        digitalsignature: 'Y',
-        deletable: true,
-        isEditable: true,
-    },
-];
-
-const ApplicationActions = ({form, isReadOnly, formActionType}) => {
-    const [data, setRowsData] = useState(datainitial);
-
-    useEffect(() => {
-        if(formActionType !== "view"){
-            setRowsData(editRowData)
-        }else{
-            setRowsData(datainitial);
-        }
-    }, [formActionType]);
-
-    const showConfirm = (record, index) => {
-        confirm({
-            title: 'Delete Document Type',
-            icon: <ExclamationCircleFilled />,
-            content: 'Are you sure you want to delete this document type?',
-            onOk() {
-                deleteTableRows(record, index);
-            },
-            onCancel() {},
-        });
-    };
-
-    const handleAdd = () => {
-        const currentlyFormDataObj = form.getFieldsValue();
-        const newData = {
-            id: Math.random() * 1000,
-            key: Math.random() * 1000,
-            documentTypeCode: '',
-            documentTypeDescription: '',
-            termsandcondition: 'Y',
-            digitalsignature: 'Y',
-            deletable: true,
-        };
-        const newlyAddedRow = Object.entries(currentlyFormDataObj)
-            .map(([key, value]) => value)
-            .filter((v) => !!v);
-        setRowsData([...newlyAddedRow, { ...newData }]);
-    };
-
-    const edit = (record) => {
-        const updatedDataItem = data && data.map((item) => (+item?.id === +record?.id ? { ...item, isEditable: true } : item));
-        setRowsData(updatedDataItem);
-    };
-
-    const deleteTableRows = (record, index) => {
-        const currentRows = form.getFieldsValue();
-        const updatedRows = Object.entries(currentRows)
-            .map(([key, value]) => value)
-            // .filter((v) => !!v)
-            .filter((el) => el?.id !== record?.id);
-        setRowsData([...updatedRows]);
-    };
-
-    const tableColumn = [];
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Code',
-            dataIndex: 'documentTypeCode',
-            render: (text, record, index) => {
-                return <Space wrap>{EditableCell({ record, index, title: 'Code', dataIndex: 'documentTypeCode', inputType: 'text', form })}</Space>;
-            },
-        })
-    );
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Description',
-            dataIndex: 'documentTypeDiscription',
-            render: (text, record, index) => {
-                return <Space wrap>{EditableCell({ record, index, title: 'Description', dataIndex: 'documentTypeDescription', inputType: 'text', form })}</Space>;
-            },
-        })
-    );
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'T&C Required',
-            dataIndex: 'termAndConRequired',
-            render: (text, record, index) => {
-                return <Space wrap>{EditableCell({ index, record, title: 'T&C Required', dataIndex: 'termsandcondition', inputType: 'switch', form })}</Space>;
-            },
-        })
-    );
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Digital Signature Required',
-            dataIndex: 'digitalSignatureRequired',
-            render: (text, record, index) => {
-                return (
-                    <Space wrap>
-                        {EditableCell({ index, record, title: 'Digital Signature Required', dataIndex: 'digitalsignature', inputType: 'switch', form })}
-
-                        <Form.Item hidden initialValue={record.key} name={[index, 'key']}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item hidden initialValue={record.id} name={[index, 'id']}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item hidden initialValue={record.deletable} name={[index, 'deletable']}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item hidden initialValue={record.isEditable} name={[index, 'isEditable']}>
-                            <Input />
-                        </Form.Item>
-                    </Space>
-                );
-            },
-        })
-    );
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Action',
-            dataIndex: 'action',
-            // editable: false,
-            render: (text, record, index) => {
-                return (
-                    <Space wrap>
-                        {!record?.deletable && <FaEdit onClick={() => edit(record)} />}
-                        {record?.deletable && <FaTrash onClick={() => showConfirm(record, index)} />}
-                    </Space>
-                );
-            },
-        })
-    );
-
-    const onFinish = (values) => {};
-
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
-    };
+    const handleAdd = () => {};
 
     return (
-        <>
+        <Fragment>
+            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Code" name="ApplicationCode" rules={[validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code')]}>
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
+                        </Form.Item>
+                    </Col>
 
-            <Form scrollToFirstError={true} preserve={false} form={form} layout="vertical" onFinish={onFinish}  onFinishFailed={onFinishFailed}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {/* <Table dataSource={[...data]} pagination={false} columns={tableColumn}  /> */}
-                            <DataTable isLoading={false} tableColumn={tableColumn} tableData={data} />
-                        </Col>
-                    </Row>
-                )}
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Document Name" name="DocumentName" rules={[validateRequiredInputField('Document Name'), validationFieldLetterAndNumber('Document Name')]}>
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="doc" label="T&C Required" valuePropName="checked">
+                            <Switch checkedChildren="Yes" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Digital Signature Required" valuePropName="checked">
+                            <Switch style={{}} checkedChildren="Yes" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Button icon={<PlusOutlined />} style={{ width: '450px' }} type="primary" danger onClick={handleAdd}>
+                    Add Application Action
+                </Button>
             </Form>
-        </>
+        </Fragment>
     );
 };
 
-export default ApplicationActions;
+export default DocumentTypes;

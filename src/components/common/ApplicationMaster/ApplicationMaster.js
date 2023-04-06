@@ -14,9 +14,7 @@ import { menuDataActions } from 'store/actions/data/menu';
 // import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import DrawerUtil from './DrawerUtil';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import AddEditForm from './AddEditForm';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
-import LeftPanel from '../LeftPanel';
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -136,194 +134,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
 
-    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
-
-    const resetAllFormFields = () => {
-        applicationform.resetFields();
-        applicationActionsform.resetFields();
-        documentTypesform.resetFields();
-        accessibleDealerLocationsform.resetFields();
-    };
-
-    const handleTreeViewClick = (keys) => {
-        console.log('handletreeviewclick', keys);
-        setForceFormReset(Math.random() * 10000);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
-        // form.resetFields();
-        setFormVisible(false);
-        setFormData([]);
-
-        if (keys && keys.length > 0) {
-            setFormActionType('view');
-            fetchApplication({ id: keys[0], setIsLoading: applicationMasterDataShowLoading });
-            fetchDealerLocations({ applicationId: keys[0], setIsLoading: applicationMasterDataShowLoading });
-            fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-            fetchApplicationAction({ appId: keys[0], setIsLoading: applicationMasterDataShowLoading });
-            fetchApplication({ id: keys[0], setIsLoading: applicationMasterDataShowLoading });
-            //set application field detail value
-            // const {documentTypeRequest, accessibleLocationRequest, applicationActionRequest, ...rest} = fetchData[0];
-            // applicationform.setFieldsValue({...rest})
-
-            // const formData = flatternData.find((i) => keys[0] === i.key);
-            // formData && setFormData(formData?.data);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            forceUpdate();
-            setReadOnly(true);
-        } else {
-            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
-            setReadOnly(false);
-        }
-        setSelectedTreeKey(keys);
-    };
-
-    const handleSelectTreeClick = (value) => {
-        console.log('handleSelectTreeClick', value);
-        // setSelectedTreeKey([value]);
-        setSelectedTreeSelectKey(value);
-    };
-
-    const onFinish = (values) => {
-        let detailApplicationformValues;
-        let applicationActionsformValues;
-        let documentTypesformValues;
-        let accessibleDealerLocationsformValues;
-
-        applicationform
-            .validateFields()
-            .then((values) => {
-                detailApplicationformValues = values;
-
-                applicationActionsform
-                    .validateFields()
-                    .then((values) => {
-                        if (!values[0]) return setOpenAccordian('2');
-                        applicationActionsformValues = Object.entries(values).map(([key, val]) => ({ actionName: val?.actionName, status: val?.status, actionId: val?.actionId, createdBy: userId }));
-
-                        documentTypesform
-                            .validateFields()
-                            .then((values) => {
-                                if (!values[0]) return setOpenAccordian('3');
-                                documentTypesformValues = Object.entries(values).map(([key, val]) => ({ ...val }));
-
-                                accessibleDealerLocationsform
-                                    .validateFields()
-                                    .then((values) => {
-                                        // if( !values[0] ) setOpenAccordian("4");
-                                        accessibleDealerLocationsformValues = Object.entries(values).map(([key, val]) => ({ ...val }));
-
-                                        const onSuccess = (res) => {
-                                            resetAllFormFields();
-                                            setForceFormReset(Math.random() * 10000);
-
-                                            setReadOnly(true);
-                                            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-                                            setFormVisible(true);
-
-                                            if (res?.data) {
-                                                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                                                fetchList({ setIsLoading: listShowLoading, userId });
-                                                formData && setFormData(res?.data);
-                                                setSelectedTreeKey([res?.data?.id]);
-                                                setFormActionType('view');
-                                            }
-                                        };
-                                        const onError = (message) => {
-                                            handleErrorModal(message);
-                                        };
-
-                                        const reqData = [
-                                            {
-                                                ...detailApplicationformValues,
-                                                documentTypeRequest: documentTypesformValues,
-                                                accessibleLocationRequest: accessibleDealerLocationsformValues,
-                                                applicationActionRequest: applicationActionsformValues,
-                                            },
-                                        ];
-
-                                        console.log('<<== SUBMITTED ==>>', reqData);
-
-                                        return;
-                                        saveApplicationDetails({ data: reqData, setIsLoading: listShowLoading, userId, onSuccess, onError });
-                                    })
-                                    .catch((err) => {
-                                        if (err.errorFields.length) setOpenAccordian('4');
-                                    });
-                            })
-                            .catch((err) => {
-                                if (err.errorFields.length) setOpenAccordian('3');
-                            });
-                    })
-                    .catch((err) => {
-                        if (err.errorFields.length) setOpenAccordian('2');
-                    });
-            })
-            .catch((err) => {
-                if (err.errorFields.length) return setOpenAccordian('1');
-            });
-    };
-
-    const handleEditBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-
-        // const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        // formData && setFormData(formData?.data);
-        setFormActionType('edit');
-
-        setReadOnly(false);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true });
-    };
-
-    const handleRootChildBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormActionType('rootChild');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        // form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
-    };
-
-    const handleChildBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormActionType('child');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        // form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
-    };
-
-    const handleSiblingBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-
-        setFormActionType('sibling');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        // form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
-    };
-
-    const handleResetBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        resetAllFormFields();
-    };
-
-    const handleBack = () => {
-        setReadOnly(true);
-        setForceFormReset(Math.random() * 10000);
-        if (selectedTreeKey && selectedTreeKey.length > 0) {
-            // const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-            // formData && setFormData(formData?.data);
-            setFormActionType('view');
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-        } else {
-            setFormActionType('');
-            setFormVisible(false);
-            setButtonData({ ...defaultBtnVisiblity });
-        }
-    };
 
     const handleAdd = () => {
         setDrawer(true);
@@ -365,7 +175,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
                     <div className={styled.content}>
                         {/* <Row gutter={20}> */}
-                        {!treedata ? (
+                        {treedata ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
