@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
-import { Drawer, Input, Form, Col, Collapse, Card, Row, Switch, Button, Select, Space } from 'antd';
-import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import React, { Fragment } from 'react';
+import { Input, Form, Col, Card, Row, Switch, Button, Select, Space } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 import CardApplicationAction from './CardApplicationAction';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
