@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Drawer, Input, Form, Col, Collapse, Card, Row, Switch, Button, Select, Space } from 'antd';
 import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
+import CardApplicationAction from './CardApplicationAction';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -36,14 +37,7 @@ const ApplicationActions = ({ form, footerEdit = false, onFinish = () => {}, onF
                     <Button icon={<PlusOutlined />} style={{ width: '450px' }} type="primary" danger onClick={handleAdd}>
                         Add Application Action
                     </Button>
-                    {/* <Card
-                                        style={{
-                                            width: 300,
-                                        }}
-                                    >
-                                        <p>Status: Active</p>
-                                        <p>Employee Empowerment</p>
-                                    </Card> */}
+                    <CardApplicationAction/>
                 </Col>
             </Form>
         </Fragment>
