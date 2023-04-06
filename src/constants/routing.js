@@ -16,6 +16,7 @@ export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('product-h
 export const ROUTING_COMMON_APPLICATION_MASTER = ROUTING_COMMON.concat('application-master');
 export const ROUTING_COMMON_CRITICALITY_GROUP = ROUTING_COMMON.concat('criticality-group');
 export const ROUTING_COMMON_ROLE_MANAGEMENT = ROUTING_COMMON.concat('role-management');
+export const ROUTING_COMMON_USER_MANAGEMENT = ROUTING_COMMON.concat('user-management');
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
 export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branch-dealer-mapping');
 
