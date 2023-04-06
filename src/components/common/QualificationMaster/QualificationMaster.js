@@ -191,7 +191,7 @@ export const QualificationMasterMain = ({  saveData, userId, isDataLoaded, fetch
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
-                onSaveShowLoading(false)
+            onSaveShowLoading(false)
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);

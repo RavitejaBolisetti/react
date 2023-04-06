@@ -127,33 +127,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
 
-        //code for overlapping check on save
-        const timeInMinutes = (time) => {
-            const [hours, minutes] = time?.split(':').map(Number);
-            return hours * 60 + minutes;
-        };
-
-        const isOverlapping = (allowedTimingSlots) => {
-            const times = allowedTimingSlots?.map((slot) => {
-                const startTime = timeInMinutes(slot?.timeSlotFrom);
-                const endTime = timeInMinutes(slot?.timeSlotTo);
-                const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
-                return { startTime, endTime: adjustedTime };
-            });
-            times?.sort((a, b) => a?.startTime - b?.startTime);
-            for (let i = 0; i < times?.length - 1; i++) {
-                const slot1 = times[i];
-                const slot2 = times[i + 1];
-                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        if (isOverlapping(finalAllowedTimingList)) {
-            showGlobalNotification({ title: 'Warning', message: 'The selected allowed timing slots are overlapping', placement: 'bottomRight' });
-        } else {
+      
             const recordId = selectedRecord?.id || '';
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
@@ -187,7 +161,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
             saveData(requestData);
             setForceFormReset(Math.Random() * 1000);
-        }
+        
     };
 
     const onFinishFailed = (errorInfo) => {
