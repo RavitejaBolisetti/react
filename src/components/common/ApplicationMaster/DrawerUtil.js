@@ -8,6 +8,9 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
+import ApplicationDetails from './ApplicationDetails';
+import ApplicationActions from './ApplicationActions';
+import DocumentTypes from './DocumentTypes';
 
 
 const { Panel } = Collapse;
@@ -35,10 +38,6 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
         setFormBtnDisable(false);
         form.
             resetFields();
-    };
-
-    const handleChangeLocations = (value) => {
-        setSelectedLocaationAccessiblity(value);
     };
 
 
@@ -88,165 +87,25 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                         display: 'flex',
                     }}
                 >
-                    <Collapse expandIcon={({ isActive }) => isActive ? < MinusOutlined /> : <PlusOutlined />}>
-                        <Panel header="Application Details" key="1">
-                            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Application ID" name="ApplicationId" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
-                                            {!footerEdit ?
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                                : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Application Name" name="ApplicationName" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
-                                            {!footerEdit ?
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                                : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Application Title" name="ApplicationTitle" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
-                                            {!footerEdit ?
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                                : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item>
-                                    </Col>
-
-
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Application Type" name="ApplicationType" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
-                                            {!footerEdit ?
-                                                <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                                : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item name="ParentApplication" label="Parent Application ID" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                                            <Select  {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
-                                                <Option value="all"></Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item name="accessibleLocations" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                                            <Select onChange={handleChangeLocations}  {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
-                                                <Option value="all">Accessible to all</Option>
-                                                <Option value="notAccessable">Not accessible to all</Option>
-                                                <Option value="restrictedAccessible">Restricted Accessible</Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Application Criticality Group" name="ApplicationCriticalityGroup" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item name="MenuType" label="Menu Type" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                                            <Select  {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
-                                            </Select>
-                                        </Form.Item>
-
-                                    </Col>
-                                </Row>
-
-
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="doc" label="Document not to be generated" valuePropName="checked">
-                                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </Panel>
-                    </Collapse>
+                    {/* <Collapse expandIcon={({ isActive }) => isActive ? < MinusOutlined /> : <PlusOutlined />}>
+                        <Panel header="Application Details" key="1"> */}
+                           {/* application Details */}
+                            <ApplicationDetails />
+                        {/* </Panel>
+                    </Collapse> */}
 
                     <Collapse expandIcon={({ isActive }) => isActive ? <MinusOutlined /> : <PlusOutlined />}  >
-
                         <Panel header="Application Actions" key="2">
-                            <Form className={styles.contentHeaderBackground} form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Action" name="ApplicationAction" rules={[validateRequiredInputField('Application Action'), validationFieldLetterAndNumber('Application Action')]}>
-                                            <Select maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Button icon={<PlusOutlined />} style={{ width: "450px" }} type="primary" danger onClick={handleAdd}>
-                                        Add Application Action
-                                    </Button>
-                                    {/* <Card
-                                        style={{
-                                            width: 300,
-                                        }}
-                                    >
-                                        <p>Status: Active</p>
-                                        <p>Employee Empowerment</p>
-                                    </Card> */}
-                                </Col>
-                            </Form>
+                           
+                           <ApplicationActions />
                         </Panel>
                     </Collapse>
 
                     <Collapse expandIcon={({ isActive }) => isActive ? <MinusOutlined /> : <PlusOutlined />} >
                         <Panel header="Document Type" key="3">
-                            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Code" name="ApplicationCode" rules={[validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code')]}>
-                                            {!footerEdit ?
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                                : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item>
-                                    </Col>
+                            
+                        <DocumentTypes />
 
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item label="Document Name" name="DocumentName" rules={[validateRequiredInputField('Document Name'), validationFieldLetterAndNumber('Document Name')]}>
-                                            {!footerEdit ?
-                                                <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                                : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item> 
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="doc" label="T&C Required" valuePropName="checked">
-                                            <Switch checkedChildren="Yes" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Digital Signature Required" valuePropName="checked">
-                                            <Switch style={{}} checkedChildren="Yes" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Button icon={<PlusOutlined />} style={{ width: "450px" }} type="primary" danger onClick={handleAdd}>
-                                    Add Application Action
-                                </Button>
-                            </Form>
                         </Panel>
                     </Collapse>
                     {selectedLocaationAccessiblity === 'restrictedAccessible' &&
