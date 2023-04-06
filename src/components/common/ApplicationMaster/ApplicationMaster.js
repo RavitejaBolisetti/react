@@ -1,19 +1,26 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { Button, Col, Form, Row, Empty, Input, ConfigProvider } from 'antd';
+import { FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
+import style from 'components/common/DrawerAndTable.module.css';
+
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { menuDataActions } from 'store/actions/data/menu';
 
 // import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
+import DrawerUtil from './DrawerUtil';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import AddEditForm from './AddEditForm';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import LeftPanel from '../LeftPanel';
 
+
+const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -90,7 +97,9 @@ const mockgeoData = [
             },
         ],
     },
+
 ];
+
 
 export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations, }) => {
     const [applicationform] = Form.useForm();
@@ -115,17 +124,23 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const [openAccordian, setOpenAccordian] = useState('');
+    const [drawer, setDrawer] = useState(false);
+
+
 
     useEffect(() => {
-        if ( !criticalityGroupData?.length ){
+        if (!criticalityGroupData?.length) {
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
         }
-        if(formActionType === 'rootChild' ){
+        if (formActionType === 'rootChild') {
             fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
         }
 
 
-    }, [formActionType ]);
+        // fetchList({ setIsLoading: applicationMasterDataShowLoading, userId });//fetch menu data
+        // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
 
     useEffect(() => {
         // form.resetFields();
@@ -178,7 +193,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
             fetchApplicationAction({ appId: keys[0], setIsLoading: applicationMasterDataShowLoading });
             fetchApplication({ id: keys[0], setIsLoading: applicationMasterDataShowLoading });
-//set application field detail value 
+            //set application field detail value 
             // const {documentTypeRequest, accessibleLocationRequest, applicationActionRequest, ...rest} = fetchData[0];
             // applicationform.setFieldsValue({...rest})
 
@@ -233,11 +248,11 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         const onSuccess = (res) => {
                                             resetAllFormFields();
                                             setForceFormReset(Math.random() * 10000);
-                                
+
                                             setReadOnly(true);
                                             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
                                             setFormVisible(true);
-                                
+
                                             if (res?.data) {
                                                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                                                 fetchList({ setIsLoading: listShowLoading, userId });
@@ -259,11 +274,11 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                             },
                                         ];
 
-                                        console.log('<<== SUBMITTED ==>>',reqData );
+                                        console.log('<<== SUBMITTED ==>>', reqData);
 
                                         return;
                                         saveApplicationDetails({ data: reqData, setIsLoading: listShowLoading, userId, onSuccess, onError });
-                                        
+
                                     })
                                     .catch((err) => {
                                         if (err.errorFields.length) setOpenAccordian('4');
@@ -344,99 +359,173 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         }
     };
 
+    const handleAdd = () => {
+        setDrawer(true);
+    };
+
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     return (
+        // <>
+        //     <div className={styles.geoSection}>
+        //         <Row gutter={20}>
+        //             <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+        //                 <LeftPanel handleTreeViewVisiblity={handleTreeViewVisiblity} isTreeViewVisible={isTreeViewVisible} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} treeData={menuData} />
+        //             </Col>
+
+        //             <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
+        //                 {isFormVisible && (
+        //                     <AddEditForm
+        //                         setOpenAccordian={setOpenAccordian}
+        //                         openAccordian={openAccordian}
+        //                         applicationform={applicationform}
+        //                         applicationActionsform={applicationActionsform}
+        //                         documentTypesform={documentTypesform}
+        //                         accessibleDealerLocationsform={accessibleDealerLocationsform}
+        //                         formActionType={formActionType}
+        //                         selectedTreeKey={selectedTreeKey}
+        //                         selectedTreeSelectKey={selectedTreeSelectKey}
+        //                         isReadOnly={isReadOnly}
+        //                         formData={formData}
+        //                         isDataAttributeLoaded={isDataAttributeLoaded}
+        //                         attributeData={attributeData}
+        //                     //  setSelectedTreeKey={setSelectedTreeKey}
+        //                     //  isChecked={isChecked} setIsChecked={setIsChecked}
+        //                     //  flatternData={flatternData}
+        //                     //  geoData={menuData}
+        //                     //  handleSelectTreeClick={handleSelectTreeClick}
+        //                     //  setIsModalOpen={setIsModalOpen}
+        //                     />
+        //                 )}
+
+
+        //                 {/* <Row gutter={20}>
+        //                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+        //                         {buttonData?.editBtn && (
+        //                             <Button danger onClick={() => handleEditBtn()}>
+        //                                 <FaEdit className={styles.buttonIcon} />
+        //                                 Edit
+        //                             </Button>
+        //                         )}
+
+        //                         {buttonData?.rootChildBtn && (
+        //                             <Button danger onClick={() => handleRootChildBtn()}>
+        //                                 <FaUserPlus className={styles.buttonIcon} />
+        //                                 Add Child
+        //                             </Button>
+        //                         )}
+
+        //                         {buttonData?.childBtn && (
+        //                             <Button danger onClick={() => handleChildBtn()}>
+        //                                 <FaUserPlus className={styles.buttonIcon} />
+        //                                 Add Child
+        //                             </Button>
+        //                         )}
+
+        //                         {buttonData?.siblingBtn && (
+        //                             <Button danger onClick={() => handleSiblingBtn()}>
+        //                                 <FaUserFriends className={styles.buttonIcon} />
+        //                                 Add Sibling
+        //                             </Button>
+        //                         )}
+
+        //                         {!isFormVisible && <Empty imageStyle={{ marginTop: '24vh' }} image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+
+        //                         {/* {isFormVisible && (
+        //                             <>
+        //                                 {buttonData?.saveBtn && (
+        //                                     <Button onClick={onFinish} danger>
+        //                                         <FaSave className={styles.buttonIcon} />
+        //                                         Save
+        //                                     </Button>
+        //                                 )}
+        //                                 {buttonData?.resetBtn && (
+        //                                     <Button danger onClick={handleResetBtn}>
+        //                                         <FaUndo className={styles.buttonIcon} />
+        //                                         Reset
+        //                                     </Button>
+        //                                 )}
+        //                                 {buttonData?.cancelBtn && (
+        //                                     <Button danger onClick={() => handleBack()}>
+        //                                         <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+        //                                         Cancel
+        //                                     </Button>
+        //                                 )}
+        //                             </>
+        //                         )} */}
+        //                 {/* </Col>
+        //                 </Row> */}
+        //             </Col>
+        //         </Row>
+        //     </div>
+        // </>
         <>
-            <div className={styles.geoSection}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <LeftPanel handleTreeViewVisiblity={handleTreeViewVisiblity} isTreeViewVisible={isTreeViewVisible} selectedTreeKey={selectedTreeKey} selectedTreeSelectKey={selectedTreeSelectKey} fieldNames={fieldNames} handleTreeViewClick={handleTreeViewClick} treeData={menuData} />
-                    </Col>
-
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
-                        {isFormVisible && (
-                            <AddEditForm
-                                setOpenAccordian={setOpenAccordian}
-                                openAccordian={openAccordian}
-                                applicationform={applicationform}
-                                applicationActionsform={applicationActionsform}
-                                documentTypesform={documentTypesform}
-                                accessibleDealerLocationsform={accessibleDealerLocationsform}
-                                formActionType={formActionType}
-                                selectedTreeKey={selectedTreeKey}
-                                selectedTreeSelectKey={selectedTreeSelectKey}
-                                isReadOnly={isReadOnly}
-                                formData={formData}
-                                isDataAttributeLoaded={isDataAttributeLoaded}
-                                attributeData={attributeData}
-                                //  setSelectedTreeKey={setSelectedTreeKey}
-                                //  isChecked={isChecked} setIsChecked={setIsChecked}
-                                //  flatternData={flatternData}
-                                //  geoData={menuData}
-                                //  handleSelectTreeClick={handleSelectTreeClick}
-                                //  setIsModalOpen={setIsModalOpen}
-                            />
-                        )}
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                {buttonData?.editBtn && (
-                                    <Button danger onClick={() => handleEditBtn()}>
-                                        <FaEdit className={styles.buttonIcon} />
-                                        Edit
-                                    </Button>
-                                )}
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    <div className={style.searchAndLabelAlign}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                            Application List
+                                        </Col>
+                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                            // onSearch={onSearchHandle}
+                                            // onChange={onChangeHandle}
+                                            />
+                                        </Col>
+                                    </div>
+                                </Row>
+                            </Col>
+                            <Col className={style.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    Add Application
+                                </Button>
+                            </Col>
 
-                                {buttonData?.rootChildBtn && (
-                                    <Button danger onClick={() => handleRootChildBtn()}>
-                                        <FaUserPlus className={styles.buttonIcon} />
-                                        Add Child
-                                    </Button>
-                                )}
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+            <DrawerUtil
+                open={drawer}
+                setDrawer={setDrawer}
+            />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
 
-                                {buttonData?.childBtn && (
-                                    <Button danger onClick={() => handleChildBtn()}>
-                                        <FaUserPlus className={styles.buttonIcon} />
-                                        Add Child
-                                    </Button>
-                                )}
-
-                                {buttonData?.siblingBtn && (
-                                    <Button danger onClick={() => handleSiblingBtn()}>
-                                        <FaUserFriends className={styles.buttonIcon} />
-                                        Add Sibling
-                                    </Button>
-                                )}
-
-                                {!isFormVisible && <Empty imageStyle={{ marginTop: '24vh' }} image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-
-                                {isFormVisible && (
-                                    <>
-                                        {buttonData?.saveBtn && (
-                                            <Button onClick={onFinish} danger>
-                                                <FaSave className={styles.buttonIcon} />
-                                                Save
-                                            </Button>
-                                        )}
-                                        {buttonData?.resetBtn && (
-                                            <Button danger onClick={handleResetBtn}>
-                                                <FaUndo className={styles.buttonIcon} />
-                                                Reset
-                                            </Button>
-                                        )}
-                                        {buttonData?.cancelBtn && (
-                                            <Button danger onClick={() => handleBack()}>
-                                                <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                Cancel
-                                            </Button>
-                                        )}
-                                    </>
-                                )}
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        imageStyle={{
+                            height: 60,
+                        }}
+                        description={
+                            <>
+                                <span>
+                                    No records found. <br/> Please "Add Application" 
+                                    using below button
+                                </span>
+                            </>
+                        }
+                    >
+                        <Row>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    Add Application
+                                </Button>
                             </Col>
                         </Row>
-                    </Col>
-                </Row>
-            </div>
+                    </Empty>
+
+                </Col>
+            </Row>
         </>
     );
 };
