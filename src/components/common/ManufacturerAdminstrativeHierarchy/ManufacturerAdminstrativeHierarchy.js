@@ -71,16 +71,17 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
-
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
+        if (userId) {
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
