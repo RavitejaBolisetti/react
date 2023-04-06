@@ -484,3 +484,8 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }
+
+.heading {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
