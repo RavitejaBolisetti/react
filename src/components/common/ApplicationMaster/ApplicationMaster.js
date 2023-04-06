@@ -2,9 +2,8 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty, Input, ConfigProvider } from 'antd';
-import { FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
@@ -21,6 +20,7 @@ import LeftPanel from '../LeftPanel';
 
 
 const { Search } = Input;
+const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -506,7 +506,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                         description={
                             <>
                                 <span>
-                                    No records found. <br/> Please "Add Application" 
+                                    No records found. <br/> Please <Text strong>"Add Application" </Text>
                                     using below button
                                 </span>
                             </>

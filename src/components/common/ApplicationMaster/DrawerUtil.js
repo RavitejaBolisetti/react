@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Drawer, Input, Form, Col, Collapse, Card, Row, Switch, Button, Select, Space } from 'antd';
+import { Drawer, Input, Form, Col, Collapse, Card, Checkbox, Row, Switch, Button, Select, Space } from 'antd';
 import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
@@ -8,10 +9,12 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
+import { FiEdit } from 'react-icons/fi';
 
 
 const { Panel } = Collapse;
 const { Option } = Select;
+const { Title, Text } = Typography;
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState('');
@@ -180,11 +183,14 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                     <Collapse expandIcon={({ isActive }) => isActive ? <MinusOutlined /> : <PlusOutlined />}  >
 
                         <Panel header="Application Actions" key="2">
-                            <Form className={styles.contentHeaderBackground} form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                            <Form className={styles.contentHeaderBackground} form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                         <Form.Item label="Action" name="ApplicationAction" rules={[validateRequiredInputField('Application Action'), validationFieldLetterAndNumber('Application Action')]}>
-                                            <Select maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                                            <Select maxLength={6} placeholder={preparePlaceholderSelect('Action')} {...disabledProps} >
+                                                <Option value="employeeEmpowerment">Employee Empowerment</Option>
+                                                <Option value="customerEmpowerment">Claim/Customer Empowerment</Option>
+                                            </Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -195,17 +201,59 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                 </Row>
 
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Button icon={<PlusOutlined />} style={{ width: "450px" }} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} style={{ width: "450px", backgroundColor: "#FF3E5B" }} type="primary" danger onClick={handleAdd}>
                                         Add Application Action
                                     </Button>
-                                    {/* <Card
+                                    <Card
                                         style={{
-                                            width: 300,
+                                            width: 440,
+                                            backgroundColor: "#BEBEBE1A",
+
                                         }}
                                     >
-                                        <p>Status: Active</p>
-                                        <p>Employee Empowerment</p>
-                                    </Card> */}
+                                        <Row>
+                                            <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} >
+                                                <Text type="secondary">Status: </Text> <Text type="success">Active</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} >
+                                                <p></p>
+                                                <Text strong>Employee Empowerment</Text>
+                                                <p></p>
+                                                <Text type="secondary">Action ID: B6G431</Text>
+                                            </Col>
+
+                                            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
+                                                <FiEdit style={{ cursor: "pointer", color: "#FF3E5B" }} />
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                    <Card
+                                        style={{
+                                            width: 440,
+                                            backgroundColor: "#BEBEBE1A",
+
+                                        }}
+                                    >
+                                        <Row>
+                                            <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} >
+                                                <Text type="secondary">Status: </Text> <Text type="success">Active</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} >
+                                                <p></p>
+                                                <Text strong>Claim/Customer Empowerment</Text>
+                                                <p></p>
+                                                <Text type="secondary">Action ID: B6G431</Text>
+                                            </Col>
+
+                                            <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
+                                                <FiEdit style={{ cursor: "pointer", color: "#FF3E5B" }} />
+                                            </Col>
+                                        </Row>
+                                    </Card>
                                 </Col>
                             </Form>
                         </Panel>
@@ -228,7 +276,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                             {!footerEdit ?
                                                 <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                                                 : <p className={style.viewModeText}>{form.getFieldValue("ApplicationName")}</p>}
-                                        </Form.Item> 
+                                        </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
@@ -243,19 +291,25 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Button icon={<PlusOutlined />} style={{ width: "450px" }} type="primary" danger onClick={handleAdd}>
+                                <Button icon={<PlusOutlined />} style={{ width: "450px", backgroundColor: "#FF3E5B" }} type="primary" danger onClick={handleAdd}>
                                     Add Application Action
                                 </Button>
                             </Form>
                         </Panel>
                     </Collapse>
-                    {selectedLocaationAccessiblity === 'restrictedAccessible' &&
+                    {
+                        selectedLocaationAccessiblity === 'restrictedAccessible' &&
                         (<Collapse expandIcon={({ isActive }) => isActive ? <MinusOutlined /> : <PlusOutlined />} >
                             <Panel header="Accessible Dealer Locations" key="4">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                         <Form.Item label="Application Type" name="ApplicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
-                                            <Select placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                                            <Select placeholder={preparePlaceholderText('Code')} {...disabledProps}>
+                                                <Option>
+                                                    <Checkbox>Dealer Location 1</Checkbox>
+                                                    <Checkbox>Dealer Location 2</Checkbox>
+                                                </Option>
+                                            </Select>
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -263,9 +317,9 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                         </Collapse>)
                     }
 
-                </Space>
+                </Space >
             </>
-        </Drawer>
+        </Drawer >
     );
 };
 
