@@ -105,6 +105,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, criticalityGroupData]);
 
