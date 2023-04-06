@@ -124,12 +124,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
         }
 
-        // fetchApplicationAction({ appId: '1', setIsLoading: applicationMasterDataShowLoading });
-        // fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: '1' });
 
-        // fetchList({ setIsLoading: applicationMasterDataShowLoading, userId });//fetch menu data
-        // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType ]);
 
     useEffect(() => {
