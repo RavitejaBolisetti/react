@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 // import { FaSearch } from 'react-icons/fa';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -12,6 +12,8 @@ const { TextArea } = Input;
 
 const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+    const [isChildAllowed, setIsChildAllowed] = useState(true);
+
 
     const disabledProps = { disabled: isReadOnly };
 
@@ -48,16 +50,17 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
+    useEffect(()=>{
+        const selectedAttribute = attributeData?.find((i) => i.id === formData?.attributeKey);  
+        setIsChildAllowed(selectedAttribute?.hierarchyAttribueName)
+    })
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographìl Attribute Level')]}>
-                        <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} showSearch allowClear>
-                            {attributeData?.map((item) => (
-                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
-                            ))}
-                        </Select>
+                        
+                        {isChildAllowed}
                     </Form.Item>
                 </Col>
             </Row>
@@ -71,22 +74,20 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                        <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                    </Form.Item>
+                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>                        {formData.prodctCode}  </Form.Item>
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
+                    {formData?.prodctShrtName}
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
-                        <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} {...disabledProps} />
+                    {formData?.prodctLongName}
                     </Form.Item>
                 </Col>
             </Row>
