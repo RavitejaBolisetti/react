@@ -51,8 +51,8 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
     return (
         <>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographìl Attribute Level')]}>
                         <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} showSearch allowClear>
                             {attributeData?.map((item) => (
                                 <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
@@ -60,8 +60,9 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
                         </Select>
                     </Form.Item>
                 </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
@@ -69,25 +70,28 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                         <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('Short Description')]}>
                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('Long Description')]}>
                         <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} {...disabledProps} />
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                     <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
                         <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                     </Form.Item>
