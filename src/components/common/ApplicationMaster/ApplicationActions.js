@@ -1,9 +1,9 @@
-import React, { Fragment, useState } from 'react';
-import { Drawer, Input, Form, Col, Collapse, Card, Row, Switch, Button, Select, Space } from 'antd';
-import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import React, { Fragment } from 'react';
+import { Input, Form, Col, Card, Row, Switch, Button, Select, Space } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredInputField, validationFieldLetterAndNumber} from 'utils/validation';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'pages/common/Common.module.css';
 
