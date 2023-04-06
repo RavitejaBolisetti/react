@@ -1,10 +1,12 @@
-/* .geoSection :global .ant-btn-default {
-  /* border-color: #ff3e5b; 
-} */
+/* :global CSS for Antd CSS Overrides */
 
 .geoSection :global .ant-tree {
     background: #f4f4f4;
 }
+
+/* .geoSection :global .ant-btn-default {
+    border-color: #ff3e5b; 
+} */
 
 .geoSection :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     position: relative;
@@ -86,6 +88,8 @@
     color: #0b0b0c;
     font-size: 14px;
 }
+
+/* Custom CSS */
 
 .container {
     padding: 20px;
