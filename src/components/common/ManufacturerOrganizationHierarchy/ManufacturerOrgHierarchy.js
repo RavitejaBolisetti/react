@@ -12,7 +12,7 @@ import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizati
 
 import LeftPanel from '../LeftPanel';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -179,7 +179,7 @@ export const ManufacturerOrgHierarchyMain = ({ isChangeHistoryVisible, userId, i
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleEditBtn = () => {

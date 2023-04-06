@@ -8,7 +8,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
-import styles3 from 'pages/common/Common.module.css';
+import styles3 from 'components/common/Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -280,7 +280,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleChange = (attributeType) => {
