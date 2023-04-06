@@ -122,9 +122,9 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     };
     return (
         <div className={styles.changeHistoryContainer}>
-            <div>
+            {/* <div>
                 <h3>Change History</h3>
-            </div>
+            </div> */}
 
             <DataTable {...tableProps} />
         </div>
