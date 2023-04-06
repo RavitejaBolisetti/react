@@ -57,6 +57,9 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+
+            onCloseAction: productHierarchyDataActions.changeHistoryVisible,
+            // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),

@@ -67,7 +67,7 @@
 
 .geoSection :global .ant-btn {
     line-height: 1.5;
-    color: #ff3e5b;
+    color: #ff3e5b !important;
 }
 
 .geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
