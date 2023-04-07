@@ -193,11 +193,127 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
-    border-top: 1px solid red;
+    border-top: 1px solid #E6E6E6;
 }
 
 .errorDisplay .subheading {
     margin-top: 10px;
+    margin-left: 10px;
+    color: #ED302D;
+}
+
+.errorDisplay .subheading svg {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.errorDisplay .subheading span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.successDisplay {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #E6E6E6;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th,
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>td {
+    position: relative;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: 600;
+    text-align: start;
+    border-bottom: none;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>td {
+    padding: 0;
+    background: #f4f4f4;
+    border-bottom: none;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #747474;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>td,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>th.ant-table-cell-row-hover>td.ant-table-cell-row-hover {
+    background: #f4f4f4;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background-color: transparent;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>td {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.successDisplay .subheading button {
+    float: right;
+    margin-top: 5px;
+}
+
+.userManagementDrawer :global .ant-card {
+    background: rgba(190, 190, 190, 0.1);
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.userManagementDrawer :global .ant-card-bordered {
+    border: 1px solid rgba(62, 62, 62, 0.1);
+}
+
+.userManagementDrawer :global .ant-card .ant-card-body {
+    padding: 10px 20px;
+}
+
+.userManagementDrawer :global .ant-card .ant-card-meta-detail>div:not(:last-child) {
+    margin-bottom: 0;
+}
+
+.userManagementDrawer :global .ant-card .ant-card-meta-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.userManagementDrawer :global .ant-card .ant-card-meta-description {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #545454;
+}
+
+.manageAccessHeader {
+    border-top: 1px solid red;
+    margin-bottom: 20px;
+}
+
+.manageAccessHeader p {
+    padding-left: 0 !important;
+    margin-top: 20px !important;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.manageAccessHeader p>span {
+    color: #ff4d4f;
 }
 
 .subheading .userManagement {
@@ -391,7 +507,6 @@
     padding-bottom: 0px !important;
 }
 
-
 :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
     border: transparent;
 }
@@ -412,7 +527,6 @@
     background-color: #FFFFFF;
 }
 
-
 :global .ant-drawer-body::-webkit-scrollbar-thumb,
 :global .ant-drawer-body::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34);
@@ -424,20 +538,23 @@
     padding-right: 0px;
 }
 
-:global .ant-table-wrapper .ant-table-expanded-row-fixed {
+.userManagementTable :global .ant-table-wrapper .ant-table-expanded-row-fixed {
     width: max-content !important;
     margin: auto;
 }
 
-
-:global .ant-table-wrapper .ant-table-tbody>tr>td {
+.userManagementTable :global .ant-table-wrapper .ant-table-tbody>tr>td {
     /* border-top: 1px solid #f0f0f0; */
     border-bottom: none;
     padding: 16px !important;
     border-radius: 8px !important;
 }
 
-:global .ant-table-wrapper .ant-table {
-    border: 1px solid #f0f0f0;
+.userManagementTable :global .ant-table-wrapper .ant-table {
+    border: 1px solid red;
     border-radius: 8px !important;
+}
+
+:global .ant-drawer-wrapper-body .ant-drawer-footer .ant-btn-default.ant-btn-dangerous {
+    margin-bottom: 0;
 }

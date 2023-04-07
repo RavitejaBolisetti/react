@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 import { TfiReload } from 'react-icons/tfi';
+import { IoBanOutline } from 'react-icons/io5';
 import { notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -81,6 +82,8 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
+    const [error, setError] = useState(false);
+    const [valid, setValid] = useState(false);
 
 
 
@@ -122,7 +125,60 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
 
+    const tableDetails = [];
+    tableDetails.push(
+        tblPrepareColumns({
+            title: 'Token No.',
+            dataIndex: 'tokenNo',
+            width: '12%',
+            sorter: false
+        })
+    );
+    tableDetails.push(
+        tblPrepareColumns({
+            title: 'User Name',
+            dataIndex: 'userName',
+            width: '18%',
+            sorter: false
+        })
+    );
+    tableDetails.push(
+        tblPrepareColumns({
+            title: 'Designation',
+            dataIndex: 'designation',
+            width: '22%',
+            sorter: false
+        })
+    );
+    tableDetails.push(
+        tblPrepareColumns({
+            title: 'Mobile Number',
+            dataIndex: 'mobileNumber',
+            width: '16%',
+            sorter: false
+        })
+    );
+    tableDetails.push(
+        tblPrepareColumns({
+            title: 'Email ID',
+            dataIndex: 'emailID',
+            width: '32%',
+            sorter: false
+        })
+    );
 
+    const tableDetailData = [{
+        tokenNo: "B6G433",
+        userName: "John Doe",
+        designation: "Chief Sales Officer",
+        mobileNumber: "9664321226",
+        emailID: "john.doe@mahindra.com",
+    },]
+
+    const tableDetailProps = {
+        tableColumn: tableDetails,
+        tableData: tableDetailData,
+    };
 
     const tableColumn = [];
     tableColumn.push(
@@ -317,6 +373,14 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     };
 
     const onSearchHandle = (value) => {
+        if (value === 'B6G431') {
+            setError(true);
+            setValid(false);
+        }
+        else if (value === 'B6G433') {
+            setError(false);
+            setValid(true);
+        }
         setFilterString(value);
     };
 
@@ -356,7 +420,6 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                                                 }}
                                                 allowClear
                                                 onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>
@@ -374,19 +437,38 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                                 ''
                             )}
                         </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className={style.errorDisplay}>
-                                    <Row gutter={20}>
-                                        <div className={style.searchAndLabelAlign}>
+                        {error && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={style.errorDisplay}>
+                                        <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
-                                                <span>This is an error text.</span>
+                                                <IoBanOutline />
+                                                <span>User token number "B6G431" does not exist. Try again with valid token number.</span>
                                             </Col>
-                                        </div>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                        )}
+                        {valid && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={style.successDisplay}>
+                                        <Row gutter={20}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                    Manage Access
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                        )}
                     </div>
                 </Col>
             </Row>
@@ -420,6 +502,7 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
+                        className={style.userManagementTable}
                         renderEmpty={() => (
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}

@@ -1,21 +1,23 @@
 import React from 'react';
-import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Card } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
+const { Meta } = Card;
+
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     console.log("isLoadingOnSave", isLoadingOnSave)
     let drawerTitle = '';
     if (formActionType === 'add') {
-        drawerTitle = 'Add Qualification Details';
+        drawerTitle = 'Manage User Access';
     } else if (formActionType === 'update') {
-        drawerTitle = 'Edit Qualification Details';
+        drawerTitle = 'Edit User Access';
     } else if (formActionType === 'view') {
-        drawerTitle = 'View Qualification Details';
+        drawerTitle = 'View User Access';
     }
 
     const handleForm = () => {
@@ -45,13 +47,13 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {saveAndSaveNew ? (
+                            {/* {saveAndSaveNew ? (
                                 <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Save & Add New
                                 </Button>
                             ) : (
                                 ''
-                            )}
+                            )} */}
                             {saveBtn ? (
                                 <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                                     Save
@@ -71,7 +73,26 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 </>
             }
         >
-            <Form form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} className={style.userManagementDrawer} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Card>
+                            <Meta
+                                title="Sandeep Lad"
+                                description="Token No.: B6G433"
+                            />
+                        </Card>
+                    </Col>
+                </Row>
+
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <div className={style.manageAccessHeader}>
+                            <p>Access Management <span>*</span></p>
+                        </div>
+                    </Col>
+                </Row>
+
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
