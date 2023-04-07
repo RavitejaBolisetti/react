@@ -313,6 +313,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         handleRootChildBtn,
         handleBack,
         buttonData,
+        titleOverride: formData?.id ? 'Edit ' : 'Add '.concat('Product Detail'),
     };
     const treeSelectFieldProps = {
         treeFieldNames,

@@ -1,69 +1,17 @@
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button, Collapse, Table, Empty } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
-import { DataTable } from 'utils/dataTable';
-import { TfiReload } from 'react-icons/tfi';
-import { FaHistory } from 'react-icons/fa';
+import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
+import { FaSave, FaRegTimesCircle } from 'react-icons/fa';
 import { withDrawer } from 'components/withDrawer';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import styles from 'pages/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 const { TextArea } = Input;
-
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], changeHistoryVisible },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    let returnValue = {
-        isLoading,
-        collapsed,
-        userId,
-        isChangeHistoryVisible: changeHistoryVisible,
-        // isVisible: true,
-        isDataLoaded,
-        productHierarchyData,
-        isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            // fetchList: productHierarchyDataActions.fetchList,
-            // saveData: productHierarchyDataActions.saveData,
-            // listShowLoading: productHierarchyDataActions.listShowLoading,
-            // changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
-            // hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            // hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            // hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-            // onCloseAction: productHierarchyDataActions.changeHistoryVisible,
-            // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
-        },
-        dispatch
-    ),
-});
-
-const AddEditFormMain = ({ buttonData, handleResetBtn, handleBack, isChecked, setIsChecked, handleAttributeChange, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
+const AddEditFormMain = ({ buttonData, handleResetBtn, handleBack, onCloseAction, isChecked, setIsChecked, handleAttributeChange, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
 
@@ -185,7 +133,7 @@ const AddEditFormMain = ({ buttonData, handleResetBtn, handleBack, isChecked, se
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                        <Button danger onClick={() => handleBack()}>
+                        <Button danger onClick={onCloseAction}>
                             <FaRegTimesCircle size={15} className={styles.buttonIcon} />
                             Cancel
                         </Button>
@@ -201,4 +149,4 @@ const AddEditFormMain = ({ buttonData, handleResetBtn, handleBack, isChecked, se
     );
 };
 
-export const AddEditForm = connect(mapStateToProps, mapDispatchToProps)(withDrawer(AddEditFormMain, { title: 'Product Detail' }));
+export const AddEditForm = withDrawer(AddEditFormMain, {});
