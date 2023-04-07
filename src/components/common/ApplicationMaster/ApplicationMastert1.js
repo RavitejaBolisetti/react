@@ -98,6 +98,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations }) => {
+   
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };

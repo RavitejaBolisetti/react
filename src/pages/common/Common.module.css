@@ -400,7 +400,7 @@
 .contentHeaderBackground {
     background-color: #f4f4f4;
     padding: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     border-radius: 7px;
 }
 .addGroup {

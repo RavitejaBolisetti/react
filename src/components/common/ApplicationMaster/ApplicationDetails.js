@@ -20,7 +20,7 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onF
             <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="ApplicationId" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
+                        <Form.Item label="Application ID" name="ApplicationId" rules={[validateRequiredInputField('Application ID'), validationFieldLetterAndNumber('Application ID')]}>
                             {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
                         </Form.Item>
                     </Col>
@@ -32,21 +32,22 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onF
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Title" name="ApplicationTitle" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
+                        <Form.Item label="Application Title" name="ApplicationTitle" rules={[validateRequiredInputField('Application Title'), validationFieldLetterAndNumber('Application Title')]}>
                             {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Type" name="ApplicationType" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
+                        <Form.Item label="Application Type" name="ApplicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
                             {!footerEdit ? <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="ParentApplication" label="Parent Application ID" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
+                        {/* parent application id */}
+                        <Form.Item name="parentApplication" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')}>
                                 <Option value="all"></Option>
                             </Select>
                         </Form.Item>
@@ -65,10 +66,15 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onF
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Criticality Group" name="ApplicationCriticalityGroup" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
+                        <Form.Item label="Application Criticality Group" name="applicationCriticalityGroup" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
+                    {/* <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item name="MenuType" label="Menu Type" rules={[validateRequiredSelectField('Accessible Locations')]}>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}></Select>
+                        </Form.Item>
+                    </Col> */}
                 </Row>
 
                 <Row gutter={20}>
