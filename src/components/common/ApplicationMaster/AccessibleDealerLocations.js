@@ -50,20 +50,22 @@ const existingLocation = [
 ];
 
 const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, dealerLocations }) => {
+    const [locationData, setLocationData] = useState([]);
+
     const fieldNames = { label: 'locationName', value: 'locationCode' };
 
     const handleSelect = ( value ) => {
-        console.log('value', value)
+        setLocationData(prev => [...prev, {locationCode: value?.key, locationName: value?.label}])
     };
-    const onchange =(e)=>{
-        console.log('onchange',e)
-    };
+    console.log('value', locationData)
+
 
     return (
         <Fragment>
             <Row>
                 <Select
                     // defaultValue={record[dataIndex]}
+                    labelInValue
                     showSearch
                     placeholder="Select accesable location"
                     optionFilterProp="children"
@@ -72,14 +74,19 @@ const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, deale
                         width: '100%',
                     }}
                     onSelect={handleSelect}
-                    onChange={onchange}
                     // onSearch={onSearch}
                     filterOption={(input, option) => (option?.locationName ?? '').toLowerCase().includes(input.toLowerCase())}
                     options={existingLocation}
                 />
             </Row>
             <Row>
-                <LocationCard /> 
+                {
+                    locationData.length ? locationData.map((location) => {
+
+                        return <LocationCard {...location}/> 
+                    })
+                    :''
+                }
             </Row>
         </Fragment>
     );
