@@ -69,11 +69,6 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onF
                             <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="MenuType" label="Menu Type" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}></Select>
-                        </Form.Item>
-                    </Col>
                 </Row>
 
                 <Row gutter={20}>

@@ -1,10 +1,15 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Empty, Input, Tree } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Card, Collapse, Form, Row, Empty, Input, Tree, Space, Switch } from 'antd';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 
+
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
+
+import CardView from './CardView';
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import styled from '../Common.module.css';
@@ -18,6 +23,7 @@ import { applicationMasterDataActions } from 'store/actions/data/applicationMast
 
 const { Search } = Input;
 const { Text } = Typography;
+const { Panel } = Collapse;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -119,6 +125,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const [openAccordian, setOpenAccordian] = useState('');
+    const disabledProps = { disabled: isReadOnly };
     const [drawer, setDrawer] = useState(false);
 
     useEffect(() => {
@@ -155,15 +162,29 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
                                             Application List
                                         </Col>
-                                        <Col xs={10} sm={10} md={10} lg={16} xl={16}>
+                                        <Row gutter={20} style={{ border: "1px" }}>
+  
+                                            <Space>
+                                              
+                                                    <Button type="primary" danger>
+                                                        Web
+                                                    </Button>
+
+                                                    <Button type="secondary" danger >
+                                                        Mobile
+                                                    </Button>
+                                            </Space>
+                                           
+                                        </Row>
+                                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                                             <Search
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
                                                 }}
                                                 allowClear
-                                                // onSearch={onSearchHandle}
-                                                // onChange={onChangeHandle}
+                                            // onSearch={onSearchHandle}
+                                            // onChange={onChangeHandle}
                                             />
                                         </Col>
                                     </div>
@@ -185,7 +206,9 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     description={
                                         <>
                                             <span>
-                                                No records found. <br /> Please "Add Application" using below button
+                                                No records found. <br /> Please
+                                                 <Text strong>"Add Application"</Text>
+                                                  using below button
                                             </span>
                                         </>
                                     }
@@ -222,20 +245,126 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                 </Col>
 
                 {true && (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                    <p style={{ fontSize: '16px', padding: '6px' }}> Application Details</p>
-                                </Col>
-                            </Row>
-                        </div>
-                        <div className={styled.content}>
-                            <Row>werty</Row>
-                        </div>
-                    </Col>
+                    <>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8}  >
+                            {/* <div className={styles.contentHeaderBackground}>
+                                <Row gutter={20}>
+                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                        <p style={{ fontSize: '16px', padding: '6px' }}> Application Details</p>
+                                    </Col>
+                                </Row>
+                            </div> */}
+                            <Card
+                                title="Application Details"
+                                className={styles.contentHeaderBackground}
+                                // bordered={false}
+                                style={{
+                                    width: "100%",
+                                    height: '55px'
+                                }}
+                                actions={[
+                                    <>
+                                        <Button danger className={style.cancelBtn}>
+                                            Edit
+                                        </Button>
+                                        <Space >
+                                            <Button key="addChild" htmlType="submit" type="primary">
+                                                Add Child
+                                            </Button>
+                                            <Button key="addSibling" htmlType="submit" type="primary">
+                                                Add Sibling
+                                            </Button>
+                                        </Space>
+                                    </>
+
+                                ]}
+                            >
+
+                                <div className={styled.content} >
+
+                                    <Space
+                                        direction="vertical"
+                                        style={{
+                                            display: 'flex',
+                                        }}
+                                    >
+                                        <Row gutter={20}>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                <Text strong> Application ID</Text>
+                                                <Text type="secondary"> AP0001</Text>
+                                            </Col>
+                                            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                                                <Text strong> Application Name</Text>
+
+                                                <Text type="secondary">Employee Empowerment</Text>
+                                            </Col>
+                                        </Row>
+
+                                        <Row gutter={20}>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                <Text strong> Application Title</Text>
+
+                                                <Text type="secondary">Employee Title</Text>
+                                            </Col>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                <Text strong>Application Type</Text>
+
+                                                <Text type="secondary"> Transaction</Text>
+                                            </Col>
+                                        </Row>
+
+                                        <Row gutter={20}>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                <Text strong>Parent Application ID</Text>
+                                                <br></br>
+                                                <Text type="secondary">Geo Product</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                <Text strong>Accessible Location</Text>
+                                                <br></br>
+                                                <Text type="secondary">Restricted Access</Text>
+                                            </Col>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                                <Text type="secondary">Status: </Text>
+                                                <Text type="success">Active</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                                                <Text strong>Application Criticality Group</Text>
+                                                <br></br>
+                                                <Text type="secondary">Application Criticality</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                                <Text strong>Document not to be generated</Text>
+                                                <br></br>
+                                                <Text type="success">Active</Text>
+                                            </Col>
+                                        </Row>
+
+                                        <Collapse expandIcon={({ isActive }) => isActive ? <MinusOutlined /> : <PlusOutlined />}  >
+                                            <Panel header="Application Actions" key="2">
+
+                                                <CardView />
+                                            </Panel>
+                                        </Collapse>
+                                        <Collapse expandIcon={({ isActive }) => isActive ? <MinusOutlined /> : <PlusOutlined />}  >
+                                            <Panel header="Document Types" key="3">
+
+                                                <CardView />
+                                            </Panel>
+                                        </Collapse>
+                                    </Space>
+                                </div>
+                            </Card>
+                        </Col>
+                    </>
                 )}
-            </Row>
+            </Row >
 
             <DrawerUtil open={drawer} setDrawer={setDrawer} />
         </>
