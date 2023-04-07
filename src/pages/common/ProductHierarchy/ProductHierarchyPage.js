@@ -10,8 +10,8 @@ export const ProductHierarchyBase = () => {
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        showChangeHisoty: true,
-        visibleChangeHistory: true,
+        showChangeHisoty: false,
+        visibleChangeHistory: false,
         visibleSampleBtn: true,
         handleSample: () => setAttributeVisible(!isAttributeVisible),
     };

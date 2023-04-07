@@ -6,9 +6,9 @@
 }
 
 .myDrawerStyle :global .ant-drawer-title {
-    font-size: 24px;
-    font-weight: normal;
-    color: #484549;
+    font-size: 20px;
+    font-weight: 500;
+    color: #262626;
 }
 
 /* 

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Collapse, Table, Input, Empty } from 'antd';
+import { Button, Col, Form, Row, Collapse, Descriptions, Input, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -214,6 +214,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     };
 
     const handleEditBtn = () => {
+        setIsVisible(true);
         setForceFormReset(Math.random() * 10000);
 
         const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
@@ -225,6 +226,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     };
 
     const handleRootChildBtn = () => {
+        setIsVisible(true);
         setForceFormReset(Math.random() * 10000);
         setFormActionType('rootChild');
         setFormVisible(true);
@@ -235,6 +237,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     };
 
     const handleChildBtn = () => {
+        setIsVisible(true);
         setForceFormReset(Math.random() * 10000);
         setFormActionType('child');
         setFormVisible(true);
@@ -245,6 +248,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     };
 
     const handleSiblingBtn = () => {
+        setIsVisible(true);
         setForceFormReset(Math.random() * 10000);
 
         setFormActionType('sibling');
@@ -347,6 +351,12 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                                     </Col>
                                 </Row>
                             </Col>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Button type="primary" >
+                                    <FaHistory className={styles.buttonIcon} />
+                                    Change History
+                                </Button>
+                            </Col>
                         </Row>
                     </div>
                     <div className={styles.content}>
@@ -402,56 +412,61 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
 
                     {true && (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={styles.contentHeaderBackground}>
+                            {/* <div className={styles.contentHeaderBackground}>
                                 <Row gutter={20}>
                                     <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                         <p style={{ fontSize: '16px', padding: '6px' }}>Hierarchy Details</p>
                                     </Col>
                                 </Row>
+                            </div> */}
+
+                            <div>
+                                <Descriptions title="Hierarchy Details" bordered colon={true} column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}>
+                                    <Descriptions.Item label="Attribute Level">{isChildAllowed}</Descriptions.Item>
+                                    <Descriptions.Item label="Parent">Parent Name</Descriptions.Item>
+                                    <Descriptions.Item label="Code">{formData.prodctCode}</Descriptions.Item>
+                                    <Descriptions.Item label="Short Description">{formData?.prodctShrtName}</Descriptions.Item>
+                                    <Descriptions.Item label="Long Description">{formData?.prodctLongName}</Descriptions.Item>
+                                    <Descriptions.Item label="Status">{formData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
+                                </Descriptions>
                             </div>
 
                             <div className={styles.content}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level">
-                                            {isChildAllowed}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
-                                            <TreeSelectField {...treeSelectFieldProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                        {buttonData?.editBtn && (
+                                            <Button danger onClick={() => handleEditBtn()}>
+                                                <FaEdit className={styles.buttonIcon} />
+                                                Edit
+                                            </Button>
+                                        )}
 
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode}>
-                                            {formData.prodctCode}{' '}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName}>
-                                            {formData?.prodctShrtName}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName}>
-                                            {formData?.prodctLongName}
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                                        <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                                            <div className={styles.activeText}>Active</div>
-                                        </Form.Item>
+                                        {buttonData?.rootChildBtn && (
+                                            <Button danger onClick={() => handleRootChildBtn()}>
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        )}
+
+                                        {buttonData?.childBtn && (
+                                            <Button
+                                                danger
+                                                onClick={() => {
+                                                    handleChildBtn();
+                                                    setClosePanels(['1']);
+                                                }}
+                                            >
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        )}
+
+                                        {buttonData?.siblingBtn && (
+                                            <Button danger onClick={() => handleSiblingBtn()}>
+                                                <FaUserFriends className={styles.buttonIcon} />
+                                                Add Sibling
+                                            </Button>
+                                        )}
                                     </Col>
                                 </Row>
                             </div>
