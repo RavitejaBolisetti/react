@@ -11,7 +11,7 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
 import LeftPanel from '../LeftPanel';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -179,7 +179,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleEditBtn = () => {

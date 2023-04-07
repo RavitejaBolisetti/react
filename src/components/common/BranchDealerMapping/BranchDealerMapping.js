@@ -7,7 +7,7 @@ import { EditOutlined } from '@ant-design/icons';
 import { addToolTip } from 'utils/customMenuLink';
 import TreeView from 'components/common/TreeView';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import styles2 from './BranchDealerMapping.module.css';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';

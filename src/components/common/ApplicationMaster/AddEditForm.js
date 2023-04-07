@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Col, Row } from 'antd';
 import { Collapse, Space } from 'antd';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { ApplicationDetails } from './ApplicationDetails';
 import DocumentTypes from './DocumentTypes';
 import ApplicationActions from './ApplicationActions';
