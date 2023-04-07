@@ -285,3 +285,7 @@ p{
 :global .ant-form-item-explain-error {
     font-size: 12px !important;
 }
+.placement
+{
+    border: 1px solid blue;
+}
