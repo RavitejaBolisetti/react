@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         isHistoryLoading,
         isHistoryLoaded,
         isVisible: changeHistoryVisible,
-        changeHistoryData: changeHistoryData,
+        changeHistoryData,
     };
     return returnValue;
 };
@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryShowLoading,
-            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
@@ -161,4 +161,4 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     );
 };
 
-export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Change History' }));
+export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Change History',width: '90%'  }));
