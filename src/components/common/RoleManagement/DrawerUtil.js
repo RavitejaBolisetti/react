@@ -54,7 +54,33 @@ const mockTreeData = [
                     {
                         title: 'Sub Application Master',
                         key: 'subApplicationMaster1',
-                        isLeaf: true,
+                        children: [
+                            {
+                                title: 'Upload',
+                                key: 'Upload',
+                            },
+                            {
+                                title: 'View',
+                                key: 'View',
+                            },
+
+                            {
+                                title: 'Delete',
+                                key: 'Delete',
+                            },
+                            {
+                                title: 'Read',
+                                key: 'Read',
+                            },
+                            {
+                                title: 'Create',
+                                key: 'Create',
+                            },
+                            {
+                                title: 'Update',
+                                key: 'Update',
+                            },
+                        ],
                     },
                 ],
             },
@@ -311,43 +337,16 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
             <Tree
                 checkable
                 showIcon
+                className={style.roleManagement}
                 defaultExpandAll
                 switcherIcon={<PlusOutlined />}
                 treeData={mockTreeData}
                 titleRender={(nodeData) => {
-                    if (nodeData.isLeaf) {
-                        return (
-                            <>
-                                <Checkbox.Group
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    
-                                >
-                                    <Row>
-                                        <Col span={8}>
-                                            <Checkbox value="A">A</Checkbox>
-                                        </Col>
-                                        <Col span={8}>
-                                            <Checkbox value="B">B</Checkbox>
-                                        </Col>
-                                        <Col span={8}>
-                                            <Checkbox value="C">C</Checkbox>
-                                        </Col>
-                                        <Col span={8}>
-                                            <Checkbox value="D">D</Checkbox>
-                                        </Col>
-                                        <Col span={8}>
-                                            <Checkbox value="E">E</Checkbox>
-                                        </Col>
-                                    </Row>
-                                </Checkbox.Group>
-                            </>
-                        );
+                    if (nodeData.children) {
+                        return <div>{nodeData.title}</div>;
                     }
-                    return <>{nodeData.title}</>;
 
-                    // return <Title title={nodeData.title} />;
+                    return nodeData.title;
                 }}
             />
         </>
