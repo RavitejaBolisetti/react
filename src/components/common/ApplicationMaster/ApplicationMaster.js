@@ -8,6 +8,7 @@ import { Typography } from 'antd';
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import styled from '../Common.module.css';
+import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
 
@@ -102,14 +103,12 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [documentTypesform] = Form.useForm();
     const [accessibleDealerLocationsform] = Form.useForm();
 
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
-    const [formData, setFormData] = useState({});
 
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
@@ -120,6 +119,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const [openAccordian, setOpenAccordian] = useState('');
     const [drawer, setDrawer] = useState(false);
+
+    const [viewDetail, setViewDetail] = useState(false);
 
     useEffect(() => {
         if (!criticalityGroupData?.length) {
@@ -133,7 +134,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
-
 
     const handleAdd = () => {
         setDrawer(true);
@@ -231,7 +231,28 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             </Row>
                         </div>
                         <div className={styled.content}>
-                            <Row>werty</Row>
+                            {!treedata ? (
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 60,
+                                        }}
+                                        description={
+                                            <>
+                                                <span>Select Tree Leaf to view Details.</span>
+                                            </>
+                                        }
+                                    ></Empty>
+                                </Col>
+                            ) : (
+
+
+
+                                'DATA'
+
+
+                            )}
                         </div>
                     </Col>
                 )}
