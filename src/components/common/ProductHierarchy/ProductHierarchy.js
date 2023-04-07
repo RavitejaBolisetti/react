@@ -2,8 +2,9 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Collapse, Table, Input } from 'antd';
+import { Button, Col, Form, Row, Collapse, Table, Input, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'pages/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
@@ -16,6 +17,8 @@ import LeftPanel from '../LeftPanel';
 import { DataTable } from 'utils/dataTable';
 import { TfiReload } from 'react-icons/tfi';
 import { FaHistory } from 'react-icons/fa';
+import { validateRequiredSelectField } from 'utils/validation';
+import TreeSelectField from '../TreeSelectField';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -67,10 +70,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
-    const [isCollapsableView, setCollapsableView] = useState(false);
+    const [isCollapsableView, setCollapsableView] = useState(true);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [openPanels, setOpenPanels] = React.useState([]);
+    const [drawer, setDrawer] = useState(false);
 
     const [closePanels, setClosePanels] = React.useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -88,6 +92,10 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
+    let treeCodeId = '';
+    let treeCodeReadOnly = false;
 
     const fnCanAddChild = (value) => value === 'Y';
 
@@ -200,6 +208,10 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
+    const handleAdd = () =>{
+        console.log('hello')
+        setDrawer(true);
+    }
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -319,6 +331,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     };
 
     const formProps = {
+        
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
@@ -336,122 +349,179 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         setSelectedTreeSelectKey,
         handleAttributeChange,
     };
-
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: treeCodeId,
+    };
     return (
         <>
-            <div className={styles.geoSection}>
-                {isChildAllowed}
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={12} lg={16} xl={16} xxl={16}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16} >
-                                    Hierarchy
-                                    <Search
-                                        placeholder="Search"
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        // onChange={onChange}
-                                        allowClear
-                                        className={styles.searchField}
-                                    />
-                                
-                                </Col>
+                                         <AddEditForm {...formProps} open={drawer} handleAdd={handleAdd} setDrawer={setDrawer} />
 
-                                <Col className={styles.buttonContainer} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
+            {isChildAllowed}
+            <Row gutter={20} span={24}>
+                <Col Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                        <Col xs={10} sm={10} md={10} lg={16} xl={16}>
+                                        Hierarchy<Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                                // onSearch={onSearchHandle}
+                                                // onChange={onChangeHandle}
+                                            />
+                                        </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className={styles.content}>
+                        {productHierarchyData ? (
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <>
+                                            <span>
+                                                No records found. <br />
+                                                Please add New Product Details using below button
+                                            </span>
+                                        </>
+                                    }
+                                >
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Child
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Empty>
+                            </Col>
+                        ) : (
+                            <>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <LeftPanel {...myProps} />
+                                </Col>
+                            </>
+                        )}
+                    </div>
+                </Col>
+
+                <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
+                    {isCollapsableView ? (
+                        <>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.subheading}>
+                                <div className={styles.contentHeaderBackground}>
+                                    <Row gutter={20}>
+                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                            Hierarchy Details
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Col>
+                           
+                        </>
+                    ) : null}
+                
+                {true && (
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <div className={styles.contentHeaderBackground}>
+                            <Row gutter={20}>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                    <p style={{ fontSize: '16px', padding: '6px' }}>Hierarchy Details</p>
                                 </Col>
                             </Row>
                         </div>
-                        <LeftPanel {...myProps} />
-                    </Col>
 
-                    <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
-                        {isCollapsableView ? (
-                            <>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.subheading}>
-                                    <div className={styles.contentHeaderBackground}>
-                                        <Row gutter={20} >
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} >
-                                                Hierarchy Details
-                                            </Col>
-                                        </Row>
-                                    </div>
+                        <div className={styles.content}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level">
+                                        {isChildAllowed}
+                                    </Form.Item>
                                 </Col>
-                                <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    {isFormVisible && <AddEditForm {...formProps} />}
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                            {buttonData?.editBtn && (
-                                                <Button danger onClick={() => handleEditBtn()}>
-                                                    <FaEdit className={styles.buttonIcon} />
-                                                    Edit
-                                                </Button>
-                                            )}
+                            </Row>
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
+                                        <TreeSelectField {...treeSelectFieldProps} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                                            {buttonData?.rootChildBtn && (
-                                                <Button danger onClick={() => handleRootChildBtn()}>
-                                                    <FaUserPlus className={styles.buttonIcon} />
-                                                    Add Child
-                                                </Button>
-                                            )}
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode}>
+                                        {formData.prodctCode}{' '}
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName}>
+                                        {formData?.prodctShrtName}
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName}>
+                                        {formData?.prodctLongName}
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                                    <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
+                                      <div className={styles.activeText}>Active</div>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </div>
+                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                        
+                                            <Button danger onClick={() => handleEditBtn()}>
+                                                <FaEdit className={styles.buttonIcon} />
+                                                Edit
+                                            </Button>
+                                        
 
-                                            {buttonData?.childBtn && (
-                                                <Button
-                                                    danger
-                                                    onClick={() => {
-                                                        handleChildBtn();
-                                                        setClosePanels(['1']);
-                                                    }}
-                                                >
-                                                    <FaUserPlus className={styles.buttonIcon} />
-                                                    Add Child
-                                                </Button>
-                                            )}
+                                            <Button danger onClick={() => handleRootChildBtn()}>
+                                                <FaUserPlus className={styles.buttonIcon} />
+                                                Add Child
+                                            </Button>
+                                        
 
-                                            {buttonData?.siblingBtn && (
-                                                <Button danger onClick={() => handleSiblingBtn()}>
-                                                    <FaUserFriends className={styles.buttonIcon} />
-                                                    Add Sibling
-                                                </Button>
-                                            )}
+                                            <Button danger onClick={() => handleSiblingBtn()}>
+                                                <FaUserFriends className={styles.buttonIcon} />
+                                                Add Sibling
+                                            </Button>
+                                        
 
-                                            {isFormVisible && (
-                                                <>
-                                                    {buttonData?.saveBtn && (
-                                                        <Button htmlType="submit" danger>
-                                                            <FaSave className={styles.buttonIcon} />
-                                                            Save
-                                                        </Button>
-                                                    )}
-
-                                                    {buttonData?.resetBtn && (
-                                                        <Button danger onClick={handleResetBtn}>
-                                                            <FaUndo className={styles.buttonIcon} />
-                                                            Reset
-                                                        </Button>
-                                                    )}
-
-                                                    {buttonData?.cancelBtn && (
-                                                        <Button danger onClick={() => handleBack()}>
-                                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                                            Cancel
-                                                        </Button>
-                                                    )}
-                                                </>
-                                            )}
-                                        </Col>
-                                    </Row>
-                                </Form>
-                            </>
-                        ) : null}
+                                        
+                                    </Col>
+                                </Row>
+                            </Form>
                     </Col>
-                </Row>
-            </div>
+                    
+                )}
+                </Col>
+            </Row>
+            {/* <DrawerUtil  open={drawer} setDrawer={setDrawer} /> */}
             <ChangeHistory />
         </>
     );
