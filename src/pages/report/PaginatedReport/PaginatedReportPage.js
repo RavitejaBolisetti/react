@@ -5,7 +5,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 const PaginatedReportPageBase = (props) => {
     const reportLink = process.env.REACT_APP_POWER_BI_PAGINATED_REPORT;
     const pageHeaderData = {
-        pageTitle: 'Bi Report',
+        pageTitle: 'Paginated Report',
         showChangeHisoty: true,
         canMarkFavourite: true,
         visibleChangeHistory: false,
