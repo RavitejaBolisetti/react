@@ -446,3 +446,9 @@
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
+
+.buttonContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
