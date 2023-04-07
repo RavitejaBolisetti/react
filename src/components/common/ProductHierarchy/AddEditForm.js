@@ -6,6 +6,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import styles from 'pages/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { withDrawer } from 'components/withDrawer';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -13,7 +14,7 @@ const { TextArea } = Input;
 const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSelectedTreeKey, setSelectedTreeSelectKey, flatternData, formActionType, fieldNames, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, productHierarchyData }) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [isChildAllowed, setIsChildAllowed] = useState(true);
-
+    const [isVisible,setIsVisible] = useState(false)
 
     const disabledProps = { disabled: isReadOnly };
 
@@ -50,6 +51,15 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
+    const onCloseAction = () => {
+        console.log("hello")
+    }
+    // const isVisible = () => {
+    //     console.log("hello")
+    // }
+    const onOpenAction = () => {
+        console.log("hello")
+    }
     useEffect(()=>{
         const selectedAttribute = attributeData?.find((i) => i.id === formData?.attributeKey);  
         setIsChildAllowed(selectedAttribute?.hierarchyAttribueName)
@@ -58,8 +68,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Geographìl Attribute Level')]}>
-                        
+                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                         {isChildAllowed}
                     </Form.Item>
                 </Col>
@@ -94,7 +103,7 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                     <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                        <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                       {formActionType === 'edit' ?<Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} /> : <div className={styles.activeText}>Active</div> } 
                     </Form.Item>
                 </Col>
             </Row>
@@ -102,4 +111,4 @@ const AddEditFormMain = ({ isChecked, setIsChecked, handleAttributeChange, setSe
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export const AddEditForm =(AddEditFormMain);

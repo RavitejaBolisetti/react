@@ -4,3 +4,8 @@
     font-weight: 600;
     color: #000;
 }
+
+.subheading {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}

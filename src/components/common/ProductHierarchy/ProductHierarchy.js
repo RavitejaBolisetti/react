@@ -345,7 +345,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                     <Col xs={24} sm={24} md={12} lg={16} xl={16} xxl={16}>
                         <div className={styles.contentHeaderBackground}>
                             <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16} >
                                     Hierarchy
                                     <Search
                                         placeholder="Search"
@@ -356,12 +356,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                                         allowClear
                                         className={styles.searchField}
                                     />
-                                    <Row gutter={20}>
-                                        <div className={style.searchAndLabelAlign}>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}></Col>
-                                            <Col xs={14} sm={14} md={14} lg={14} xl={14}></Col>
-                                        </div>
-                                    </Row>
+                                
                                 </Col>
 
                                 <Col className={styles.buttonContainer} xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -378,10 +373,10 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                     <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
                         {isCollapsableView ? (
                             <>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.subheading}>
                                     <div className={styles.contentHeaderBackground}>
-                                        <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                        <Row gutter={20} >
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} >
                                                 Hierarchy Details
                                             </Col>
                                         </Row>
