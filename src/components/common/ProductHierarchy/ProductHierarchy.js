@@ -74,7 +74,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [openPanels, setOpenPanels] = React.useState([]);
-    const [drawer, setDrawer] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     const [closePanels, setClosePanels] = React.useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -208,49 +208,9 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
-    const handleAdd = () =>{
-        console.log('hello')
-        setDrawer(true);
-    }
-
-    const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
-        const onSuccess = (res) => {
-            form.resetFields();
-            setForceFormReset(Math.random() * 10000);
-
-            setReadOnly(true);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-
-            if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data);
-                setSelectedTreeKey([res?.data?.id]);
-                setFormActionType('view');
-            }
-        };
-
-        const onError = (message) => {
-            handleErrorModal(message);
-        };
-
-        const requestData = {
-            data: data,
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        //form.validateFields().then((values) => {});
+    const handleAdd = () => {
+        console.log('hello');
+        setIsVisible(true);
     };
 
     const handleEditBtn = () => {
@@ -331,7 +291,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     };
 
     const formProps = {
-        
         isChecked,
         setIsChecked,
         setSelectedTreeKey,
@@ -348,6 +307,12 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         fieldNames,
         setSelectedTreeSelectKey,
         handleAttributeChange,
+        isVisible,
+        onCloseAction: () => setIsVisible(false),
+        handleResetBtn,
+        handleRootChildBtn,
+        handleBack,
+        buttonData,
     };
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -357,10 +322,9 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         handleSelectTreeClick,
         defaultValue: treeCodeId,
     };
+
     return (
         <>
-                                         <AddEditForm {...formProps} open={drawer} handleAdd={handleAdd} setDrawer={setDrawer} />
-
             {isChildAllowed}
             <Row gutter={20} span={24}>
                 <Col Col xs={16} sm={16} md={16} lg={16} xl={16}>
@@ -368,17 +332,18 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                         <Row gutter={20}>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                        <Col xs={10} sm={10} md={10} lg={16} xl={16}>
-                                        Hierarchy<Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                // onSearch={onSearchHandle}
-                                                // onChange={onChangeHandle}
-                                            />
-                                        </Col>
+                                    <Col xs={10} sm={10} md={10} lg={16} xl={16}>
+                                        Hierarchy
+                                        <Search
+                                            placeholder="Search"
+                                            style={{
+                                                width: 300,
+                                            }}
+                                            allowClear
+                                            // onSearch={onSearchHandle}
+                                            // onChange={onChangeHandle}
+                                        />
+                                    </Col>
                                 </Row>
                             </Col>
                         </Row>
@@ -431,98 +396,70 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                                     </Row>
                                 </div>
                             </Col>
-                           
                         </>
                     ) : null}
-                
-                {true && (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                    <p style={{ fontSize: '16px', padding: '6px' }}>Hierarchy Details</p>
-                                </Col>
-                            </Row>
-                        </div>
 
-                        <div className={styles.content}>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level">
-                                        {isChildAllowed}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
-                                        <TreeSelectField {...treeSelectFieldProps} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode}>
-                                        {formData.prodctCode}{' '}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName}>
-                                        {formData?.prodctShrtName}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName}>
-                                        {formData?.prodctLongName}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                                    <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                                      <div className={styles.activeText}>Active</div>
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </div>
-                        <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    {true && (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className={styles.contentHeaderBackground}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                        
-                                            <Button danger onClick={() => handleEditBtn()}>
-                                                <FaEdit className={styles.buttonIcon} />
-                                                Edit
-                                            </Button>
-                                        
-
-                                            <Button danger onClick={() => handleRootChildBtn()}>
-                                                <FaUserPlus className={styles.buttonIcon} />
-                                                Add Child
-                                            </Button>
-                                        
-
-                                            <Button danger onClick={() => handleSiblingBtn()}>
-                                                <FaUserFriends className={styles.buttonIcon} />
-                                                Add Sibling
-                                            </Button>
-                                        
-
-                                        
+                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                        <p style={{ fontSize: '16px', padding: '6px' }}>Hierarchy Details</p>
                                     </Col>
                                 </Row>
-                            </Form>
-                    </Col>
-                    
-                )}
+                            </div>
+
+                            <div className={styles.content}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level">
+                                            {isChildAllowed}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
+                                            <TreeSelectField {...treeSelectFieldProps} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode}>
+                                            {formData.prodctCode}{' '}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName}>
+                                            {formData?.prodctShrtName}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName}>
+                                            {formData?.prodctLongName}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                                        <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
+                                            <div className={styles.activeText}>Active</div>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Col>
+                    )}
                 </Col>
             </Row>
-            {/* <DrawerUtil  open={drawer} setDrawer={setDrawer} /> */}
             <ChangeHistory />
+            <AddEditForm {...formProps} />
         </>
     );
 };
