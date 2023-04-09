@@ -61,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
 
-            onCloseAction: productHierarchyDataActions.changeHistoryVisible,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
@@ -73,29 +72,27 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [openPanels, setOpenPanels] = React.useState([]);
     const [isVisible, setIsVisible] = useState(false);
 
+    const [openPanels, setOpenPanels] = React.useState([]);
     const [closePanels, setClosePanels] = React.useState([]);
+
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
-
     const [isFormVisible, setFormVisible] = useState(false);
+
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
-    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
 
-    let treeCodeId = '';
-    let treeCodeReadOnly = false;
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const fnCanAddChild = (value) => value === 'Y';
 
@@ -103,33 +100,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         setCollapsableView(!isChildAllowed);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChildAllowed]);
-
-    const tblPrepareColumns = ({ title, dataIndex }) => {
-        return {
-            title,
-            dataIndex,
-        };
-    };
-
-    const tableColumn = [];
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'Srl',
-        })
-    );
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Attribute Name',
-            dataIndex: 'AttributeName',
-        })
-    );
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Attribute Value',
-            dataIndex: 'AttributeValue',
-        })
-    );
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -208,8 +178,8 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
+
     const handleAdd = () => {
-        console.log('hello');
         setIsVisible(true);
     };
 
@@ -284,6 +254,41 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         form.resetFields();
     };
 
+    const onFinish = (values) => {
+        const recordId = formData?.id || '';
+        const codeToBeSaved = selectedTreeSelectKey || '';
+        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const onSuccess = (res) => {
+            form.resetFields();
+            setForceFormReset(Math.random() * 10000);
+            setReadOnly(true);
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+            setFormVisible(true);
+            if (res?.data) {
+                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId });
+                formData && setFormData(res?.data);
+                setSelectedTreeKey([res?.data?.id]);
+                setFormActionType('view');
+            }
+        };
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
+        const requestData = {
+            data: data,
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        //form.validateFields().then((values) => {});
+    };
+
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -318,14 +323,8 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         handleBack,
         buttonData,
         titleOverride: formData?.id ? 'Edit ' : 'Add '.concat('Product Detail'),
-    };
-    const treeSelectFieldProps = {
-        treeFieldNames,
-        treeData: productHierarchyData,
-        treeDisabled: treeCodeReadOnly || isReadOnly,
-        selectedTreeSelectKey,
-        handleSelectTreeClick,
-        defaultValue: treeCodeId,
+        onFinish,
+        onFinishFailed,
     };
 
     return (
@@ -334,25 +333,21 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
             <Row gutter={20} span={24}>
                 <Col Col xs={16} sm={16} md={16} lg={16} xl={16}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                <Row gutter={20}>
-                                    <Col xs={10} sm={10} md={10} lg={16} xl={16}>
-                                        Hierarchy
-                                        <Search
-                                            placeholder="Search"
-                                            style={{
-                                                width: 300,
-                                            }}
-                                            allowClear
-                                            // onSearch={onSearchHandle}
-                                            // onChange={onChangeHandle}
-                                        />
-                                    </Col>
-                                </Row>
+                        <Row gutter={20} className={styles.searchAndLabelAlign}>
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                Hierarchy
+                                <Search
+                                    placeholder="Search"
+                                    style={{
+                                        width: 300,
+                                    }}
+                                    allowClear
+                                    // onSearch={onSearchHandle}
+                                    // onChange={onChangeHandle}
+                                />
                             </Col>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                <Button type="primary" >
+                            <Col className={styles.buttonContainer} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Button type="primary" onClick={changeHistoryModelOpen}>
                                     <FaHistory className={styles.buttonIcon} />
                                     Change History
                                 </Button>
@@ -362,28 +357,30 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                     <div className={styles.content}>
                         {productHierarchyData ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <>
-                                            <span>
-                                                No records found. <br />
-                                                Please add New Product Details using below button
-                                            </span>
-                                        </>
-                                    }
-                                >
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Child
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Empty>
+                                <div className={styles.emptyContainer}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 60,
+                                        }}
+                                        description={
+                                            <>
+                                                <span>
+                                                    No records found. <br />
+                                                    Please add New Product Details using below button
+                                                </span>
+                                            </>
+                                        }
+                                    >
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                    Add Child
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Empty>
+                                </div>
                             </Col>
                         ) : (
                             <>

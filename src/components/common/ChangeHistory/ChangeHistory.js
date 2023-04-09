@@ -17,8 +17,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
-
     let returnValue = {
         userId,
         isHistoryLoading,
@@ -122,10 +120,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     };
     return (
         <div className={styles.changeHistoryContainer}>
-            {/* <div>
-                <h3>Change History</h3>
-            </div> */}
-
             <DataTable {...tableProps} />
         </div>
     );

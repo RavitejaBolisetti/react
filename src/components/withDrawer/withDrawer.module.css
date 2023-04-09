@@ -11,10 +11,14 @@
     color: #262626;
 }
 
-/* 
+.myDrawerStyle :global .ant-drawer-header {
+    height: 60px;
+}
+
 .myDrawerStyle :global .ant-drawer-close {
-    color: #0193e1;
-} */
+    color: #000000;
+}
+
 @media screen and (max-width: 1199px) {
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;

@@ -326,6 +326,44 @@
     color: #ffffff !important;
 }
 
+.formFooter {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    background: #FFFFFF;
+    left: 10px;
+    bottom: 0px;
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.formFooter .footerBtnLeft {
+    text-align: left;
+}
+
+.formFooter .footerBtnRight {
+    text-align: right;
+    right: 10px;
+}
+
+.formFooter button {
+    margin-left: 14px;
+}
+
+.formFooter .buttonIcon {
+    margin-right: 6px;
+    padding-top: 2px;
+}
+
+/* 
+.formFooter :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ff3e5b;
+    color: #ffffff !important;
+} */
+
 @media (max-width: 768px) {
     /* For mobile phones: */
 
@@ -445,10 +483,4 @@
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
-}
-
-.buttonContainer {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
 }
