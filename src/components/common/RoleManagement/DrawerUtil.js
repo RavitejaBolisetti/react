@@ -54,33 +54,7 @@ const mockTreeData = [
                     {
                         title: 'Sub Application Master',
                         key: 'subApplicationMaster1',
-                        children: [
-                            {
-                                title: 'Upload',
-                                key: 'Upload',
-                            },
-                            {
-                                title: 'View',
-                                key: 'View',
-                            },
-
-                            {
-                                title: 'Delete',
-                                key: 'Delete',
-                            },
-                            {
-                                title: 'Read',
-                                key: 'Read',
-                            },
-                            {
-                                title: 'Create',
-                                key: 'Create',
-                            },
-                            {
-                                title: 'Update',
-                                key: 'Update',
-                            },
-                        ],
+                        isLeaf: true,
                     },
                 ],
             },
@@ -228,6 +202,9 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
         //     </Collapse>
         // );
     };
+    const CheckboxUti =({})=>{
+
+    }
     const AccordianTreeUtils = ({ data }) => {
         return (
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -341,12 +318,24 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
                 defaultExpandAll
                 switcherIcon={<PlusOutlined />}
                 treeData={mockTreeData}
-                titleRender={(nodeData) => {
-                    if (nodeData.children) {
-                        return <div>{nodeData.title}</div>;
+                titleRender={(treeNode) => {
+                    if (treeNode.isLeaf) {
+                        return (
+                            <>
+                                <span className="title">
+                                    <span className="text">{treeNode.title}</span>
+                                </span>
+                                <div className="Placement">
+                                    <Collapse defaultActiveKey={['1']} accordion>
+                                        <Panel header="This is panel header 1" key="1">
+                                            <p>This is the Action accordion</p>
+                                        </Panel>
+                                    </Collapse>
+                                </div>
+                            </>
+                        );
                     }
-
-                    return nodeData.title;
+                    return <>{treeNode.title}</>;
                 }}
             />
         </>
