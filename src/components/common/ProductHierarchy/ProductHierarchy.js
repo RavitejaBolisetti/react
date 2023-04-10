@@ -2,24 +2,24 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Collapse, Descriptions, Input, Empty } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
+import { Button, Col, Form, Row, Collapse, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
+import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ChangeHistory } from '../ChangeHistory';
 import LeftPanel from '../LeftPanel';
-import { DataTable } from 'utils/dataTable';
-import { TfiReload } from 'react-icons/tfi';
+
 import { FaHistory } from 'react-icons/fa';
-import { validateRequiredSelectField } from 'utils/validation';
+
 import { ViewProductDetail } from './ViewProductDetail';
-import TreeSelectField from '../TreeSelectField';
+
 import { EN } from 'language/en';
 
 const { Panel } = Collapse;
@@ -78,9 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
 export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [isVisible, setIsVisible] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [openPanels, setOpenPanels] = React.useState([]);
     const [closePanels, setClosePanels] = React.useState([]);
@@ -92,15 +91,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
-    const [isFormVisible, setFormVisible] = useState(false);
+
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
-    const [isReadOnly, setReadOnly] = useState(false);
-    const [forceFormReset, setForceFormReset] = useState(false);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
 
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, enable: false };
+    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
@@ -125,11 +122,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-
-    useEffect(() => {
-        form.resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -160,30 +152,26 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     const flatternData = generateList(finalGeoData);
 
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(Math.random() * 10000);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         form.resetFields();
-        setFormVisible(false);
         setFormData([]);
+        setSelectedTreeData([]);
 
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
-            formData && setFormData(formData?.data);
-            formData && setSelectedTreeData(formData?.data);
 
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            forceUpdate();
-            setReadOnly(true);
+            if (formData) {
+                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                formData && setFormData({ ...formData?.data, isChildAllowed });
 
-            if (formData?.data) {
-                const selectedAttribute = attributeData?.find((i) => i.id === formData?.data?.attributeKey);
-                setIsChildAllowed(fnCanAddChild(selectedAttribute?.isChildAllowed));
+                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
             }
+
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         } else {
             setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
-            setReadOnly(false);
             setIsChildAllowed(true);
         }
 
@@ -196,64 +184,18 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     };
 
     const handleAdd = () => {
-        setIsVisible(true);
+        setIsFormVisible(true);
     };
 
-    const handleEditBtn = () => {
-        setIsVisible(true);
-        setForceFormReset(Math.random() * 10000);
-
-        const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        formData && setFormData(formData?.data);
-        setFormActionType('edit');
-
-        setReadOnly(false);
-    };
-
-    const handleRootChildBtn = () => {
-        setIsVisible(true);
-        setForceFormReset(Math.random() * 10000);
-        setFormActionType('rootChild');
-        setFormVisible(true);
-        setReadOnly(false);
+    const handleButtonClick = (type) => {
         setFormData([]);
         form.resetFields();
-    };
-
-    const handleChildBtn = () => {
-        setIsVisible(true);
-        setForceFormReset(Math.random() * 10000);
-        setFormActionType('child');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        form.resetFields();
-    };
-
-    const handleSiblingBtn = () => {
-        setIsVisible(true);
-        setForceFormReset(Math.random() * 10000);
-
-        setFormActionType('sibling');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        form.resetFields();
-    };
-
-    const handleBack = () => {
-        setReadOnly(true);
-        setForceFormReset(Math.random() * 10000);
-        if (selectedTreeKey && selectedTreeKey.length > 0) {
+        if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);
-            setFormActionType('view');
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-        } else {
-            setFormActionType('');
-            setFormVisible(false);
-            setButtonData({ ...defaultBtnVisiblity });
         }
+        setIsFormVisible(true);
+        setFormActionType(type);
     };
 
     const handleAttributeChange = (value) => {
@@ -262,7 +204,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     };
 
     const handleResetBtn = () => {
-        setForceFormReset(Math.random() * 10000);
         form.resetFields();
     };
 
@@ -272,10 +213,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
-            setForceFormReset(Math.random() * 10000);
-            setReadOnly(true);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
@@ -321,7 +260,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         formActionType,
         selectedTreeKey,
         selectedTreeSelectKey,
-        isReadOnly,
         formData,
         productHierarchyData,
         handleSelectTreeClick,
@@ -330,11 +268,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         fieldNames,
         setSelectedTreeSelectKey,
         handleAttributeChange,
-        isVisible,
-        onCloseAction: () => setIsVisible(false),
+        isVisible: isFormVisible,
+        onCloseAction: () => setIsFormVisible(false),
         handleResetBtn,
-        handleRootChildBtn,
-        handleBack,
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -347,10 +283,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         buttonData,
         attributeData,
         selectedTreeData,
-        handleEditBtn,
-        handleRootChildBtn,
-        handleChildBtn,
-        handleSiblingBtn,
+        handleButtonClick,
         setClosePanels,
         styles,
         viewTitle,
@@ -360,6 +293,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
 
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+
     return (
         <>
             <Row gutter={20} span={24}>
@@ -419,6 +353,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewProductDetail {...viewProps} />
+                            <HierarchyFormButton {...viewProps} />
                         </Col>
                     ) : (
                         <div className={styles.emptyContainer}>
