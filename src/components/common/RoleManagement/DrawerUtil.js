@@ -10,7 +10,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
 
-// import mockTreeData from './Treedata.json';
+// import mocktreeData from './treeData.json';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -41,32 +41,99 @@ const children = [
         key: 'Update-1',
     },
 ];
-const options = [
-    {
-        label: 'Read',
-        value: 'Read',
-    },
-    {
-        label: 'View',
-        value: 'View',
-    },
-    {
-        label: 'Update',
-        value: 'Update',
-    },
-    {
-        label: 'Delete',
-        value: 'Delete',
-    },
-    {
-        label: 'Create',
-        value: 'Create',
-    },
-    {
-        label: 'Upload',
-        value: 'Upload',
-    },
-];
+const options = {
+    ApplicationMaster1: [
+        {
+            label: 'Read',
+            value: 'Read',
+            Read: true
+        },
+        {
+            label: 'View',
+            value: 'View',
+            View: true
+        },
+        {
+            label: 'Update',
+            value: 'Update',
+            Update: false
+
+        },
+        {
+            label: 'Delete',
+            value: 'Delete',
+        },
+        {
+            label: 'Create',
+            value: 'Create',
+        },
+        {
+            label: 'Upload',
+            value: 'Upload',
+        },
+    ],
+    applicationCriticalityGroup1: [
+        {
+            label: 'Read',
+            value: 'Read',
+            Read: true
+        },
+        {
+            label: 'View',
+            value: 'View',
+            View: true
+        },
+        {
+            label: 'Update',
+            value: 'Update',
+            Update: false
+        },
+        {
+            label: 'Delete',
+            value: 'Delete',
+        },
+        {
+            label: 'Create',
+            value: 'Create',
+        },
+        {
+            label: 'Upload',
+            value: 'Upload',
+        },
+    ],
+    subApplicationMaster2: [
+        {
+            label: 'Read',
+            value: 'Read',
+            Read: true
+        },
+        {
+            label: 'View',
+            value: 'View',
+            View: true
+        },
+        {
+            label: 'Update',
+            value: 'Update',
+            Update: false
+        },
+        {
+            label: 'Delete',
+            value: 'Delete',
+            Delete: true
+
+        },
+        {
+            label: 'Create',
+            value: 'Create',
+        },
+        {
+            label: 'Upload',
+            value: 'Upload',
+        },
+    ],
+};
+
 const options2 = [
     {
         label: 'Delete',
@@ -81,7 +148,7 @@ const options2 = [
         value: 'Upload',
     },
 ];
-const mockTreeData = [
+const mocktreeData = [
     {
         title: 'Common',
         key: 'common',
@@ -94,12 +161,12 @@ const mockTreeData = [
                     {
                         title: 'Sub Application Master',
                         key: 'subApplicationMaster1',
-                        children: [
-                            {
-                                isLeaf: true,
-                                checkable: false,
-                            },
-                        ],
+                        // children: [
+                        //     {
+                        //         isLeaf: true,
+                        //         checkable: false,
+                        //     },
+                        // ],
                     },
                 ],
             },
@@ -114,12 +181,12 @@ const mockTreeData = [
                             {
                                 title: 'Sub Application Master',
                                 key: 'subApplicationMaster2',
-                                children: [
-                                    {
-                                        isLeaf: true,
-                                        checkable: false,
-                                    },
-                                ],
+                                // children: [
+                                //     {
+                                //         isLeaf: true,
+                                //         checkable: false,
+                                //     },
+                                // ],
                             },
                         ],
                     },
@@ -141,7 +208,7 @@ const mockTreeData = [
                 children: [
                     {
                         title: 'dummy2',
-                        key: 'dummy2',
+                        key: 'dummy990',
                     },
                 ],
             },
@@ -159,13 +226,13 @@ const mockTreeData = [
     },
 ];
 
-const insertionData =  {
+const insertionData = {
     children: [
         {
             isLeaf: true,
             checkable: false,
         },
-    ]
+    ],
 };
 
 const mockData = [
@@ -181,7 +248,6 @@ const mockData = [
                     {
                         title: 'Sub Application Master',
                         key: 'subApplicationMaster1',
-                        
                     },
                 ],
             },
@@ -196,7 +262,6 @@ const mockData = [
                             {
                                 title: 'Sub Application Master',
                                 key: 'subApplicationMaster2',
-                               
                             },
                         ],
                     },
@@ -211,68 +276,81 @@ const mockData = [
                         ],
                     },
                 ],
-            }
-        ]
-    }
-]
-
-
-
+            },
+        ],
+    },
+];
 
 const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
     const [form] = Form.useForm();
+    // const [selectedActions, setSelectedActions] = useState({})
     const Mychildren = [
         {
-            title: 'Upload',
-            key: 'Upload',
+            label: 'Read',
+            value: 'Read',
         },
         {
-            title: 'View',
-            key: 'View',
-        },
-
-        {
-            title: 'Delete',
-            key: 'Delete',
+            label: 'View',
+            value: 'View',
         },
         {
-            title: 'Read',
-            key: 'Read',
+            label: 'Update',
+            value: 'Update',
         },
         {
-            title: 'Create',
-            key: 'Create',
+            label: 'Delete',
+            value: 'Delete',
         },
         {
-            title: 'Update',
-            key: 'Update',
+            label: 'Create',
+            value: 'Create',
+        },
+        {
+            label: 'Upload',
+            value: 'Upload',
         },
     ];
     const disabledProps = { disabled: false };
-    const [TreeData, setTreeData] = useState(mockTreeData);
+    const [treeData, settreeData] = useState([]);
 
     useEffect(() => {
-        function Subpanel(node) {
-            if (!node?.children) {
-                // setTreeData([{ ...node, children: Mychildren }]);
-                console.log("node==>",node);
-                node.children=insertionData;
-                return;
-            }
-            if (node?.children) {
-                node?.children.forEach((child) => {
-                    Subpanel(child);
-                });
-            }
+        if (!treeData.length) {
+            Subpanel(mocktreeData);
         }
-        Subpanel(mockData);
+
+        console.log('treeData', treeData);
     }, []);
 
-    console.log('insertionData', mockData)
+    function Subpanel(arr) {
+        const result = arr.map((row) => {
+            if (row.children && row.children.length) {
+                const children = Subpanel(row.children);
+                return { ...row, children };
+            } else {
+                console.log('key', row);
+                return {
+                    ...row,
+                    checkable: true,
+                    children: [
+                        {
+                            isLeaf: true,
+                            checkable: false,
+                            dataIndex: row.key,
+                        },
+                    ],
+                };
+            }
+        });
+        settreeData(result);
+        return result;
+    }
+
+    console.log('mockData insertionData', mockData);
 
     const handleFormSubmitBtn = () => {
         // setFormBtnDisable(true);
     };
+
     const handleAdd = () => {};
     const handleUpdate2 = () => {};
     const onClose = () => {
@@ -316,8 +394,38 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
         //     </Collapse>
         // );
     };
-    const onChange = (checkedValues) => {
-        console.log('checked = ', checkedValues);
+
+    function updatedTreeData(arr, key) {
+        const result = arr.map((row) => {
+            if (row.children && row.children.length && row.children.key === key) {
+                const children = updatedTreeData(row.children);
+                return { ...row, children };
+            } else {
+                console.log('key', row);
+                return {
+                    ...row,
+                    checkable: true,
+                    children: [
+                        {
+                            isLeaf: true,
+                            checkable: false,
+                            key: row.key,
+                        },
+                    ],
+                };
+            }
+        });
+        settreeData(result);
+        return result;
+    }
+
+    const onChange = (checkedValues, key) => {
+        // let slectedData = treeData;
+
+        console.log('checked = ', checkedValues, key);
+    };
+    const onTreeSelect = (data) => {
+        console.log('onTreeSelect', data);
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
@@ -447,16 +555,22 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
                                     selectable={false}
                                     defaultExpandAll
                                     switcherIcon={<PlusOutlined />}
-                                    treeData={mockTreeData}
-                                    titleRender={(treeNode, key) => {
+                                    treeData={treeData}
+                                    treeLine={true}
+                                    treeIcon={true}
+                                    onCheck={onTreeSelect}
+                                    titleRender={(treeNode) => {
                                         if (treeNode.isLeaf) {
+                                            console.log('treeNode', treeNode);
                                             return (
                                                 <div className="LeafDiv">
                                                     <span className="title">
                                                         <span className="text">{treeNode.title}</span>
                                                     </span>
                                                     <div className="Placement">
-                                                        <Checkbox.Group key={key} options={options} defaultValue={['Apple']} onChange={onChange} />
+                                                        {console.log("Value yeh hai",options[treeNode.dataIndex])}
+                                                        {/* <Checkbox.Group defaultValue={[options[treeNode.dataIndex]]}  options={options[treeNode.dataIndex] ? options[treeNode.dataIndex] : options.ApplicationMaster1} onChange={(data) => onChange(data, treeNode.dataIndex)} /> */}
+                                                        {options[treeNode.dataIndex]?.length>0 && options[treeNode.dataIndex].map(op => <Checkbox checked={op[op?.value]} defaultValue={op[op?.value]} onChange={(data) => onChange(data, treeNode.dataIndex)}>{op.label}</Checkbox>)}
                                                     </div>
                                                 </div>
                                             );
