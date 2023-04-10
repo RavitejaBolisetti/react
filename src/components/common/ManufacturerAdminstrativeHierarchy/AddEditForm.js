@@ -3,7 +3,7 @@ import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import TreeSelectField from '../TreeSelectField';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { TextArea } = Input;

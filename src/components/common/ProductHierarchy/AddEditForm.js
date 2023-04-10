@@ -3,7 +3,7 @@ import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { FaSave, FaRegTimesCircle } from 'react-icons/fa';
 import { withDrawer } from 'components/withDrawer';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
