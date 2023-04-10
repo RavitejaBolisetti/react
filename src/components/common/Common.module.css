@@ -65,17 +65,17 @@
     color: #ff3e5b;
 }
 
-.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
+.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
     border-inline-end-width: 1px;
     border-start-end-radius: 4px;
     border-end-end-radius: 4px;
     height: 36px;
 }
 
-.geoSection :global .ant-form-item .ant-form-item-label>label {
+.geoSection :global .ant-form-item .ant-form-item-label > label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -209,7 +209,10 @@
     margin-right: 6px;
     padding-top: 2px;
 }
-.hyrbuttonContainer{border: 1px solid #E8E8E8; border-top:0px solid #E8E8E8 ;}
+.hyrbuttonContainer {
+    border: 1px solid #e8e8e8;
+    border-top: 0px solid #e8e8e8;
+}
 
 .buttonContainer {
     margin-top: 10px;
@@ -338,12 +341,12 @@
 }
 
 :global .ant-modal .ant-modal-title {
-    border-bottom: 1px solid #DEDEDE;
+    border-bottom: 1px solid #dedede;
     padding-bottom: 16px;
     line-height: 24px;
     font-weight: 700;
     font-size: 16px;
-    color: #342C2C;
+    color: #342c2c;
 }
 
 /* :global .ant-modal .ant-modal-body {
@@ -501,17 +504,17 @@
     color: #ff3e5b;
 }
 
-.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
+.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
+.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
     border-inline-end-width: 1px;
     border-start-end-radius: 4px;
     border-end-end-radius: 4px;
     height: 36px;
 }
 
-.geoSection :global .ant-form-item .ant-form-item-label>label {
+.geoSection :global .ant-form-item .ant-form-item-label > label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -717,8 +720,6 @@
     color: #ffffff !important;
 }
 
-
-
 .formFooter {
     width: 100%;
     position: absolute;
@@ -727,7 +728,7 @@
     justify-content: center;
     align-items: center;
     padding: 12px 0px;
-    background: #FFFFFF;
+    background: #ffffff;
     left: 10px;
     bottom: 0px;
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
@@ -751,7 +752,6 @@
     padding-top: 2px;
 }
 
-
 /* Switch Design Changes */
 :global .ant-switch .ant-switch-inner {
     display: block;
@@ -761,10 +761,7 @@
     position: absolute;
     margin-left: 35px;
     margin-top: -12px;
-
 }
-
-
 
 :global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
     margin-inline-start: 0px;
@@ -787,13 +784,11 @@
     background: #00a310;
 }
 
-
 .addGroup {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0px !important;
 }
-
 
 .contentHeaderBackground {
     background-color: #f4f4f4;
@@ -801,36 +796,42 @@
     border-radius: 7px 7px 0px 0px;
     -moz-border-radius: 7px 7px 0px 0px;
     -webkit-border-radius: 7px 7px 0px 0px;
-    border: 1px solid #E8E8E8;
+    border: 1px solid #e8e8e8;
 }
 
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
     padding: 13px 20px;
     border-radius: 7px 7px 0px 0px;
--moz-border-radius: 7px 7px 0px 0px;
--webkit-border-radius: 7px 7px 0px 0px;
-border: 1px solid #E8E8E8;
+    -moz-border-radius: 7px 7px 0px 0px;
+    -webkit-border-radius: 7px 7px 0px 0px;
+    border: 1px solid #e8e8e8;
 }
-.searchAndLabelAlign{    padding-left: 0px !important; padding-right: 0px !important; margin-left: 0px !important;
-    margin-right: 0px !important; vertical-align: middle;}
-.searchField{vertical-align: middle; margin: 0 5px;}
+.searchAndLabelAlign {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    vertical-align: middle;
+}
+.searchField {
+    vertical-align: middle;
+    margin: 0 5px;
+}
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
-
 }
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
-
 
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
@@ -846,7 +847,7 @@ border: 1px solid #E8E8E8;
 }
 
 .content {
-    border: 1px solid #E8E8E8;
+    border: 1px solid #e8e8e8;
     /* border: 1px solid rgba(200, 200, 200, 0.55);
     border-top: none;
     border-bottom-left-radius: 4px;
@@ -870,17 +871,16 @@ border: 1px solid #E8E8E8;
     padding-bottom: 0px !important;
 } */
 
-
 .viewContainer :global .ant-descriptions-view table tbody tr th {
-    padding:5px 10px 3px!important;
+    padding: 5px 10px 3px !important;
     color: rgba(11, 11, 12, 1) !important;
-    font-size: 14px!important; 
-        }
+    font-size: 14px !important;
+}
 .viewContainer :global .ant-descriptions-view table tbody tr td {
-    padding:2px 10px 5px!important;  
-    color:rgba(142, 133, 133, 1) !important;
-    font-size: 14px !important; 
-        }
+    padding: 2px 10px 5px !important;
+    color: rgba(142, 133, 133, 1) !important;
+    font-size: 14px !important;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */
