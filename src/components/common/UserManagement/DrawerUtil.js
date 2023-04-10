@@ -1,12 +1,16 @@
 import React from 'react';
-import { Drawer, Input, Form, Col, Row, Switch, Button, Card } from 'antd';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Card, Collapse, Select } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
+import { IoTrashOutline } from 'react-icons/io5';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
 const { Meta } = Card;
+const { Panel } = Collapse;
+const { Option } = Select;
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
@@ -88,33 +92,42 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <div className={style.manageAccessHeader}>
-                            <p>Access Management <span>*</span></p>
+                            <p>Access Management<span>*</span></p>
                         </div>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
-                            {!footerEdit ?
-                                <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                                : <p className={style.viewModeText}>{form.getFieldValue("qualificationName")}</p>}
-                        </Form.Item>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Collapse>
+                            <Panel header="Assign User Roles*" key="1">
+                                <Form.Item name="userRole" label="User Role">
+                                    <Select loading={!isDataAttributeLoaded} placeholder={'Select User Role'} showSearch allowClear>
+                                        {attributeData?.map((item) => (
+                                            <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                                <Card title="Manager" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                    Role ID: B6G433
+                                </Card>
+                                <Card title="Sales Executive" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                    Role ID: B6G433
+                                </Card>
+                                <Card title="Financial Executive" extra={<><a href="#">Application Access</a><a href="#"><IoTrashOutline /></a></>}>
+                                    Role ID: B6G433
+                                </Card>
+                            </Panel>
+                            <Panel header="Administrative Hierarchy Mapping*" key="2">
+                                <p>This is panel contents 2</p>
+                            </Panel>
+                            <Panel header="Product Mapping*" key="3">
+                                <p>This is panel contents 3</p>
+                            </Panel>
+                        </Collapse>
                     </Col>
                 </Row>
 
-                <Row gutter={20}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
             </Form>
         </Drawer>
     );
