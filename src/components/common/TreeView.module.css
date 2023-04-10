@@ -11,8 +11,6 @@
 }
 
 .panelVisible {
-    background: #f4f4f4;
-    box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
     min-height: 66vh;
 }
 
@@ -64,8 +62,8 @@
 
 .scrollTreeData {
     width: 100%;
-    overflow: scroll;
-    height: 46vh;
+    overflow: auto;
+    max-height: 66vh;
 }
 
 .scrollTreeData::-webkit-scrollbar-track {

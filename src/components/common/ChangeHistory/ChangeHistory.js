@@ -7,12 +7,13 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
+import { withDrawer } from 'components/withDrawer';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
 
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
+        isVisible: changeHistoryVisible,
         changeHistoryData,
     };
     return returnValue;
@@ -31,6 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: productHierarchyDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
@@ -43,7 +46,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
-
     const tableColumn = [];
 
     tableColumn.push(
@@ -118,13 +120,9 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
     };
     return (
         <div className={styles.changeHistoryContainer}>
-            <div>
-                <h3>Change History</h3>
-            </div>
-
             <DataTable {...tableProps} />
         </div>
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ChangeHistoryMain);
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));

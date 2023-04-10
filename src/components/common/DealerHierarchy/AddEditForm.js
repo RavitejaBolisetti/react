@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateMobileNoField, validateEmailField, validatePanField } from 'utils/validation';
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -21,7 +21,7 @@ const checkType = (type) => {
 };
 
 const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
-      const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
+    const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
     const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
@@ -40,14 +40,14 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
     let treeCodeReadOnly = false;
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.parentId;
-       // console.log(treeCodeId,'IDCHECKKKKKKKKK')
+        // console.log(treeCodeId,'IDCHECKKKKKKKKK')
     } else if (formActionType === 'child') {
         treeCodeId = selectedTreeKey;
         // && selectedTreeKey[0];
-        console.log(selectedTreeKey,'check_24-03-2022')
+        console.log(selectedTreeKey, 'check_24-03-2022')
         treeCodeReadOnly = true;
         //console.log(treeCodeId,'IDCHECKKKKKKKKK11111')
-    } else if (formActionType === 'sibling') { 
+    } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         treeCodeId = treeCodeData && treeCodeData?.data?.parentId;
@@ -325,7 +325,7 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
                             <Form.Item initialValue={formData?.taxPayerType} label="Taxpayer Type" name={[gstinGroupForm, 'taxPayerType']} rules={[validateRequiredInputField('Taxpayer Type')]}>
                                 <Input placeholder={preparePlaceholderText('Taxpayer Type')} className={styles.inputBox} {...disabledProps} />

@@ -8,7 +8,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
-import styles3 from 'pages/common/Common.module.css';
+import styles3 from 'components/common/Common.module.css';
 import style2 from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -98,23 +98,24 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        if (!selectedHierarchy) {
-            setSearchdata([]);
-        } else if (RefershData) {
-            if (userId) {
+        if (userId) {
+            if (!selectedHierarchy) {
+                setSearchdata([]);
+            } else if (RefershData) {
+                setRefershData((prev) => !prev);
                 hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
                 setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
-            }
-        } else if (detailData?.hierarchyAttribute) {
-            if (filterString) {
-                const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-            } else {
-                setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
+            } else if (detailData?.hierarchyAttribute) {
+                if (filterString) {
+                    const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
+                    setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                } else {
+                    setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
+                }
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute, RefershData, selectedHierarchy]);
+    }, [filterString, isDataLoaded, detailData?.hierarchyAttribute, selectedHierarchy]);
 
     useEffect(() => {
         form.resetFields();
@@ -122,10 +123,16 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     }, [ForceReset]);
 
     useEffect(() => {
-        if (!selectedHierarchy) return;
+        if (!selectedHierarchy || !RefershData) return;
+        setRefershData((prev) => !prev);
         hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
+        if (filterString) {
+            const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
+            setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+        } else {
+            setSearchdata(detailData?.hierarchyAttribute);
+        }
 
-        setSearchdata(detailData?.hierarchyAttribute);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ForceReset, RefershData]);
 
@@ -136,7 +143,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
 
     const onError = (message) => {
-        onSaveShowLoading(false)
+        onSaveShowLoading(false);
         showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: style2.error, placement: 'bottomRight' });
     };
 
@@ -262,7 +269,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         form.validateFields();
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false)
+            onSaveShowLoading(false);
             form.resetFields();
             hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
             setFormBtnDisable(false);
@@ -275,20 +282,22 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             }
             forceUpdate();
         };
+        const onError = (message) => {
+            onSaveShowLoading(false);
+            showGlobalNotification({ message, placement: 'bottomRight' });
+        };
 
         hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: onSaveShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleChange = (attributeType) => {
         hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
     };
-
-
 
     const tableProps = {
         isLoading: isDataLoading,

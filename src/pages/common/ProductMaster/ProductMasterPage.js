@@ -7,7 +7,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 import { ChangeHistory } from 'components/common/ChangeHistory';
 
-import styles from '../Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -29,8 +29,8 @@ export const ProductMasterPageBase = () => {
     };
     const onSubmit = (e) => {
         form.validateFields()
-            .then((err, values) => {})
-            .catch((errorInfo) => {});
+            .then((err, values) => { })
+            .catch((errorInfo) => { });
     };
 
     const tblPrepareColumns = ({ title, dataIndex }) => {
@@ -138,7 +138,7 @@ export const ProductMasterPageBase = () => {
                                                             type="primary"
                                                             id="hierarchyChange"
                                                             className="btn btn-outline srchbtn mr0 boxShdwNon"
-                                                            // disabled={props.editableFormContent.editParent}
+                                                        // disabled={props.editableFormContent.editParent}
                                                         >
                                                             <FaSearch />
                                                         </Button>

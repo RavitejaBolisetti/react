@@ -8,19 +8,24 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
+import { withDrawer } from 'components/withDrawer';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
+
+    console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
+
     let returnValue = {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        changeHistoryData: changeHistoryData,
+        isVisible: changeHistoryVisible,
+        changeHistoryData,
     };
     return returnValue;
 };
@@ -31,6 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
@@ -155,4 +161,4 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     );
 };
 
-export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ManufacturerAdminHierarchyChangeHistoryMain);
+export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Change History',width: '90%'  }));
