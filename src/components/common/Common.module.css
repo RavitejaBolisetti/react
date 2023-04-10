@@ -882,6 +882,14 @@
     font-size: 14px !important;
 }
 
+.hierarchyRightContaner {
+    border-radius: 7px 7px 0px 0px;
+    -moz-border-radius: 7px 7px 0px 0px;
+    -webkit-border-radius: 7px 7px 0px 0px;
+    border: 1px solid #e8e8e8;
+    min-height: 72vh;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
 
