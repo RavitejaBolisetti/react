@@ -150,7 +150,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(productHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         form.resetFields();
