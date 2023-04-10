@@ -62,8 +62,8 @@
 
 .scrollTreeData {
     width: 100%;
-    overflow: scroll;
-    height: 46vh;
+    overflow: auto;
+    max-height: 66vh;
 }
 
 .scrollTreeData::-webkit-scrollbar-track {

@@ -18,7 +18,9 @@ import { DataTable } from 'utils/dataTable';
 import { TfiReload } from 'react-icons/tfi';
 import { FaHistory } from 'react-icons/fa';
 import { validateRequiredSelectField } from 'utils/validation';
+import { ViewProductDetail } from './ViewProductDetail';
 import TreeSelectField from '../TreeSelectField';
+import { EN } from 'language/en';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -36,6 +38,9 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'Product Detail';
+    const viewTitle = 'Hierarchy Details';
+
     let returnValue = {
         isLoading,
         collapsed,
@@ -44,7 +49,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         productHierarchyData,
         // productHierarchyData: [],
-        isDataAttributeLoaded,
+        moduleTitle,
+        viewTitle,
+        // isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -69,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -212,7 +219,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, enable: false });
     };
 
     const handleChildBtn = () => {
@@ -223,7 +229,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, enable: true });
     };
 
     const handleSiblingBtn = () => {
@@ -235,7 +240,6 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         setReadOnly(false);
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, enable: false });
     };
 
     const handleBack = () => {
@@ -333,14 +337,30 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
         handleRootChildBtn,
         handleBack,
         buttonData,
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat('Product Detail'),
+        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
     };
+
+    const viewProps = {
+        buttonData,
+        attributeData,
+        selectedTreeData,
+        handleEditBtn,
+        handleRootChildBtn,
+        handleChildBtn,
+        handleSiblingBtn,
+        setClosePanels,
+        styles,
+        viewTitle,
+    };
     const leftCol = productHierarchyData.length > 0 ? 16 : 24;
     const rightCol = productHierarchyData.length > 0 ? 8 : 24;
+
+    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     return (
         <>
             <Row gutter={20} span={24}>
@@ -389,21 +409,14 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                                         height: 60,
                                     }}
                                     description={
-                                        <>
-                                            <span>
-                                                No records found. <br />
-                                                Please add New Product Details using below button
-                                            </span>
-                                        </>
+                                        <span>
+                                            {noDataTitle} <br /> {noDataMessage}
+                                        </span>
                                     }
                                 >
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Child
-                                            </Button>
-                                        </Col>
-                                    </Row>
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add
+                                    </Button>
                                 </Empty>
                             </div>
                         ) : (
@@ -417,61 +430,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
 
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div>
-                                <Descriptions title={<div className={styles.contentHeaderRightBackground}>Hierarchy Details</div>} bordered={true} colon={true} column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}>
-                                    <div className={styles.leftContanier}>
-                                    <Descriptions.Item label="Attribute Level">{attributeData?.find((attribute) => attribute.id === selectedTreeData?.attributeKey)?.hierarchyAttribueName}</Descriptions.Item>
-                                    <Descriptions.Item label="Parent">Parent Name</Descriptions.Item>
-                                    <Descriptions.Item label="Code">{selectedTreeData.prodctCode}</Descriptions.Item>
-                                    <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
-                                    <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
-                                    <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
-                                    </div>
-                                </Descriptions>
-                            </div>
-                            <div className={styles.content}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                                        <div className={styles.btnLeft}>
-                                            {buttonData?.editBtn && (
-                                                <Button danger onClick={() => handleEditBtn()}>
-                                                    <FaEdit className={styles.buttonIcon} />
-                                                    Edit
-                                                </Button>
-                                            )}
-                                        </div>
-
-                                        <div className={styles.btnRight}>
-                                            {buttonData?.rootChildBtn && (
-                                                <Button danger onClick={() => handleRootChildBtn()}>
-                                                    <FaUserPlus className={styles.buttonIcon} />
-                                                    Add Child
-                                                </Button>
-                                            )}
-
-                                            {buttonData?.childBtn && (
-                                                <Button
-                                                    danger
-                                                    onClick={() => {
-                                                        handleChildBtn();
-                                                        setClosePanels(['1']);
-                                                    }}
-                                                >
-                                                    <FaUserPlus className={styles.buttonIcon} />
-                                                    Add Child
-                                                </Button>
-                                            )}
-
-                                            {buttonData?.siblingBtn && (
-                                                <Button danger onClick={() => handleSiblingBtn()}>
-                                                    <FaUserFriends className={styles.buttonIcon} />
-                                                    Add Sibling
-                                                </Button>
-                                            )}
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </div>
+                            <ViewProductDetail {...viewProps} />
                         </Col>
                     ) : (
                         <div className={styles.emptyContainer}>
