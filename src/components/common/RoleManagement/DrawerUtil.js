@@ -41,6 +41,46 @@ const children = [
         key: 'Update-1',
     },
 ];
+const options = [
+    {
+        label: 'Read',
+        value: 'Read',
+    },
+    {
+        label: 'View',
+        value: 'View',
+    },
+    {
+        label: 'Update',
+        value: 'Update',
+    },
+    {
+        label: 'Delete',
+        value: 'Delete',
+    },
+    {
+        label: 'Create',
+        value: 'Create',
+    },
+    {
+        label: 'Upload',
+        value: 'Upload',
+    },
+];
+const options2 = [
+    {
+        label: 'Delete',
+        value: 'Delete',
+    },
+    {
+        label: 'Create',
+        value: 'Create',
+    },
+    {
+        label: 'Upload',
+        value: 'Upload',
+    },
+];
 const mockTreeData = [
     {
         title: 'Common',
@@ -54,7 +94,12 @@ const mockTreeData = [
                     {
                         title: 'Sub Application Master',
                         key: 'subApplicationMaster1',
-                        isLeaf: true,
+                        children: [
+                            {
+                                isLeaf: true,
+                                checkable: false,
+                            },
+                        ],
                     },
                 ],
             },
@@ -69,6 +114,12 @@ const mockTreeData = [
                             {
                                 title: 'Sub Application Master',
                                 key: 'subApplicationMaster2',
+                                children: [
+                                    {
+                                        isLeaf: true,
+                                        checkable: false,
+                                    },
+                                ],
                             },
                         ],
                     },
@@ -108,6 +159,66 @@ const mockTreeData = [
     },
 ];
 
+const insertionData =  {
+    children: [
+        {
+            isLeaf: true,
+            checkable: false,
+        },
+    ]
+};
+
+const mockData = [
+    {
+        title: 'Common',
+        key: 'common',
+
+        children: [
+            {
+                title: 'Application Master',
+                key: 'ApplicationMaster1',
+                children: [
+                    {
+                        title: 'Sub Application Master',
+                        key: 'subApplicationMaster1',
+                        
+                    },
+                ],
+            },
+            {
+                title: 'Application Criticality Group',
+                key: 'applicationCriticalityGroup1',
+                children: [
+                    {
+                        title: 'Application Master',
+                        key: 'ApplicationMaster2',
+                        children: [
+                            {
+                                title: 'Sub Application Master',
+                                key: 'subApplicationMaster2',
+                               
+                            },
+                        ],
+                    },
+                    {
+                        title: 'Application Criticality Group',
+                        key: 'applicationCriticalityGroup2',
+                        children: [
+                            {
+                                title: 'dummy1',
+                                key: 'dummy-1',
+                            },
+                        ],
+                    },
+                ],
+            }
+        ]
+    }
+]
+
+
+
+
 const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
     const [form] = Form.useForm();
     const Mychildren = [
@@ -139,22 +250,25 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
     ];
     const disabledProps = { disabled: false };
     const [TreeData, setTreeData] = useState(mockTreeData);
-    // useEffect(() => {
-    //     function Subpanel(node) {
-    //         if (!node?.children) {
-    //             // setTreeData([{ ...node, children: Mychildren }]);
-    //             console.log(node.title);
-    //             node.children=Mychildren;
-    //             return;
-    //         }
-    //         if (node?.children) {
-    //             node?.children.forEach((child) => {
-    //                 Subpanel(child);
-    //             });
-    //         }
-    //     }
-    //     Subpanel(mockTreeData);
-    // }, []);
+
+    useEffect(() => {
+        function Subpanel(node) {
+            if (!node?.children) {
+                // setTreeData([{ ...node, children: Mychildren }]);
+                console.log("node==>",node);
+                node.children=insertionData;
+                return;
+            }
+            if (node?.children) {
+                node?.children.forEach((child) => {
+                    Subpanel(child);
+                });
+            }
+        }
+        Subpanel(mockData);
+    }, []);
+
+    console.log('insertionData', mockData)
 
     const handleFormSubmitBtn = () => {
         // setFormBtnDisable(true);
@@ -202,9 +316,26 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
         //     </Collapse>
         // );
     };
-    const CheckboxUti =({})=>{
-
-    }
+    const onChange = (checkedValues) => {
+        console.log('checked = ', checkedValues);
+    };
+    const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
+        return (
+            <>
+                {' '}
+                <Form.Item
+                    name="remember"
+                    wrapperCol={{
+                        offset: 8,
+                        span: 16,
+                    }}
+                >
+                    <Checkbox>Remember me</Checkbox>
+                    {console.log('Mein aagaya')}
+                </Form.Item>
+            </>
+        );
+    };
     const AccordianTreeUtils = ({ data }) => {
         return (
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -307,37 +438,37 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
 
                         <hr />
 
-                        <Row>{/* <AccordianTreeUtils data={mockTreeData} /> */}</Row>
+                        <Row>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Tree
+                                    checkable
+                                    showIcon
+                                    className={style.roleManagement}
+                                    selectable={false}
+                                    defaultExpandAll
+                                    switcherIcon={<PlusOutlined />}
+                                    treeData={mockTreeData}
+                                    titleRender={(treeNode, key) => {
+                                        if (treeNode.isLeaf) {
+                                            return (
+                                                <div className="LeafDiv">
+                                                    <span className="title">
+                                                        <span className="text">{treeNode.title}</span>
+                                                    </span>
+                                                    <div className="Placement">
+                                                        <Checkbox.Group key={key} options={options} defaultValue={['Apple']} onChange={onChange} />
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                        return <>{treeNode.title}</>;
+                                    }}
+                                />
+                            </Col>
+                        </Row>
                     </Form>
                 </Space>
             </Drawer>
-            <Tree
-                checkable
-                showIcon
-                className={style.roleManagement}
-                defaultExpandAll
-                switcherIcon={<PlusOutlined />}
-                treeData={mockTreeData}
-                titleRender={(treeNode) => {
-                    if (treeNode.isLeaf) {
-                        return (
-                            <>
-                                <span className="title">
-                                    <span className="text">{treeNode.title}</span>
-                                </span>
-                                <div className="Placement">
-                                    <Collapse defaultActiveKey={['1']} accordion>
-                                        <Panel header="This is panel header 1" key="1">
-                                            <p>This is the Action accordion</p>
-                                        </Panel>
-                                    </Collapse>
-                                </div>
-                            </>
-                        );
-                    }
-                    return <>{treeNode.title}</>;
-                }}
-            />
         </>
     );
 };

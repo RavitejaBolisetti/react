@@ -291,3 +291,14 @@ p {
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
 }
+:global .ant-checkbox-group-item {
+    margin-inline-end: 30px;
+    width: 64px;
+}
+
+:global .ant-checkbox-group {
+    display: inline-block;
+}
+:global .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-inline-start: 0px;
+}
