@@ -13,6 +13,7 @@ import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import styled from '../Common.module.css';
 import ApplicationStyle from './ApplicationMaster.module.css';
+import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
 
@@ -117,6 +118,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [openAccordian, setOpenAccordian] = useState('');
     const disabledProps = { disabled: isReadOnly };
     const [drawer, setDrawer] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [FinalFormdata, setFinalFormdata] = useState({
         ApplicationDetails: [],
         ApplicationActions: [],
@@ -143,7 +145,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         console.log('This is Finish Data', FinalFormdata);
     }, [FinalFormdata]);
 
-    const handleAddRoot = () => {
+    const handleAdd = () => {
         setDrawer(true);
     };
 
@@ -155,6 +157,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     };
     const onAddClick = () => {
         setDrawer(true);
+    };
+
+    const handleClick = () => {
+        setIsActive((current) => !current);
     };
 
     const onFinish = (values) => {
@@ -176,31 +182,51 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
                                             Application List
-                                        </Col>
+                                        </Col> */}
                                         <Row gutter={20} style={{ border: '1px' }}>
                                             <Space>
-                                                <Button type="primary" danger>
-                                                    Web
-                                                </Button>
+                                                <div className={styl.changeThemeBorder}>
+                                                    <Button
+                                                        type="secondary"
+                                                        danger
+                                                        onClick={handleClick}
+                                                        style={{
+                                                            backgroundColor: isActive ? '' : '#ff3e5b',
+                                                            color: isActive ? '' : 'white',
+                                                        }}
+                                                    >
+                                                        Web
+                                                    </Button>
 
-                                                <Button type="secondary" danger>
-                                                    Mobile
-                                                </Button>
+                                                    <Button
+                                                        type="secondary"
+                                                        danger
+                                                        onClick={handleClick}
+                                                        style={{
+                                                            backgroundColor: isActive ? '#ff3e5b' : '',
+                                                            color: isActive ? 'white' : '',
+                                                        }}
+                                                    >
+                                                        Mobile
+                                                    </Button>
+                                                </div>
                                             </Space>
+
+                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                                <Search
+                                                    placeholder="Search"
+                                                    style={{
+                                                        width: 300,
+                                                        borderColor: 'red',
+                                                    }}
+                                                    allowClear
+                                                    // onSearch={onSearchHandle}
+                                                    // onChange={onChangeHandle}
+                                                />
+                                            </Col>
                                         </Row>
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                // onSearch={onSearchHandle}
-                                                // onChange={onChangeHandle}
-                                            />
-                                        </Col>
                                     </div>
                                 </Row>
                             </Col>
@@ -223,14 +249,16 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                 No records found. <br /> Please
                                                 <Text strong>"Add Application"</Text>
                                                 using below button
+                                                <Text strong>"Add Application"</Text>
+                                                using below button
                                             </span>
                                         </>
                                     }
                                 >
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAddRoot}>
-                                                Add Application
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add
                                             </Button>
                                         </Col>
                                     </Row>
@@ -331,7 +359,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                 <span>Restricted Access</span>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <p>Status: </p>
+                                                <p>Status </p>
                                                 <span className={ApplicationStyle.activeText}>Active</span>
                                             </Col>
                                         </Row>

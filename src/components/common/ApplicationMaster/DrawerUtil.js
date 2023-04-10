@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Input, Form, Col, Collapse, Card, Checkbox, Row, Switch, Button, Select, Space, Typography } from 'antd';
-import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Drawer, Form, Col, Collapse, Checkbox, Row, Button, Select, Space, Typography } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
@@ -10,6 +9,8 @@ import { validateRequiredInputField, validationFieldLetterAndNumber, validateReq
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
+import styles from 'pages/common/Common.module.css';
+
 import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './ApplicationActions';
 import DocumentTypes from './DocumentTypes';
@@ -17,7 +18,7 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState('');
 
@@ -50,17 +51,67 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
             width="540px"
             footer={
                 <>
-                    <Row gutter={20} justify="space-between">
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                            <Button danger onClick={onClose} className={style.cancelBtn}>
-                                Cancel
-                            </Button>
-                        </Col>
-                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                            <Button htmlType="submit" danger form="myForm" key="applicatonMaster" type="primary" className={style.saveBtn}>
-                                <FaSave className={style.buttonIcon} />
-                                Save
-                            </Button>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                            {buttonData?.editBtn && (
+                                <Button danger onClick={() => console.log('hh')}>
+                                    <FaEdit className={styles.buttonIcon} />
+                                    Edit
+                                </Button>
+                            )}
+
+                            {/* {buttonData?.rootChildBtn && (
+                                <Button danger onClick={() => console.log('hh')}>
+                                    <FaUserPlus className={styles.buttonIcon} />
+                                    Add Child
+                                </Button>
+                            )} */}
+
+                            {buttonData?.childBtn && (
+                                <Button danger onClick={() => console.log('hh')}>
+                                    <FaUserPlus className={styles.buttonIcon} />
+                                    Add Child
+                                </Button>
+                            )}
+
+                            {buttonData?.siblingBtn && (
+                                <Button danger onClick={() => console.log('hh')}>
+                                    <FaUserFriends className={styles.buttonIcon} />
+                                    Add Sibling
+                                </Button>
+                            )}
+
+                            {true && (
+                                <>
+                                    {buttonData?.saveBtn && (
+                                        <Button htmlType="submit" danger>
+                                            <FaSave className={styles.buttonIcon} />
+                                            Save
+                                        </Button>
+                                    )}
+
+                                    {buttonData?.resetBtn && (
+                                        <Button danger onClick={() => console.log('hh')}>
+                                            <FaUndo className={styles.buttonIcon} />
+                                            Reset
+                                        </Button>
+                                    )}
+
+                                    {buttonData?.cancelBtn && (
+                                        <Button danger onClick={() => console.log('hh')}>
+                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                            Cancel
+                                        </Button>
+                                    )}
+
+                                    <Button danger className={style.cancelBtn} onClick={onClose}>
+                                        Cancel
+                                    </Button>
+                                    <Button form="myForm" key="saveBtm" htmlType="submit" type="primary">
+                                        Save
+                                    </Button>
+                                </>
+                            )}
                         </Col>
                     </Row>
                 </>
