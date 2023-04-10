@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Input, Form, Col, Collapse, Card, Checkbox, Row, Switch, Button, Select, Space, Typography } from 'antd';
-import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Drawer, Form, Col, Collapse, Checkbox, Row, Button, Select, Space, Typography } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
@@ -89,12 +88,12 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                 </Button>
                             )}
 
-                            {buttonData?.rootChildBtn && (
+                            {/* {buttonData?.rootChildBtn && (
                                 <Button danger onClick={() => console.log('hh')}>
                                     <FaUserPlus className={styles.buttonIcon} />
                                     Add Child
                                 </Button>
-                            )}
+                            )} */}
 
                             {buttonData?.childBtn && (
                                 <Button danger onClick={() => console.log('hh')}>
@@ -132,6 +131,14 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                             Cancel
                                         </Button>
                                     )}
+
+                                    <Button danger className={style.cancelBtn} onClick={onClose}>
+                                        Cancel
+                                    </Button>
+                                    <Button key="saveBtm" htmlType="submit" type="primary">
+                                        Save
+                                    </Button>
+
                                 </>
                             )}
                         </Col>

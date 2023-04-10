@@ -5,7 +5,6 @@ import { Button, Col, Card, Collapse, Form, Row, Empty, Input, Tree, Space, Swit
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 
-
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
@@ -126,6 +125,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [openAccordian, setOpenAccordian] = useState('');
     const disabledProps = { disabled: isReadOnly };
     const [drawer, setDrawer] = useState(false);
+    const [isActive, setIsActive] = useState(false);
 
     const [viewDetail, setViewDetail] = useState(false);
 
@@ -145,6 +145,11 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const handleAdd = () => {
         setDrawer(true);
     };
+
+
+    const handleClick = () => {
+        setIsActive(current => !current);
+    };
     const fieldNames = { title: 'geoCode', key: 'id', children: 'subGeo' };
 
     // const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
@@ -159,34 +164,50 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
                                             Application List
-                                        </Col>
+                                        </Col> */}
                                         <Row gutter={20} style={{ border: "1px" }}>
-  
+
                                             <Space>
-                                              
-                                                    <Button type="primary" danger>
+                                                <div className={styl.changeThemeBorder} >
+
+                                                    <Button type="secondary" danger onClick={handleClick} 
+                                                    style={{
+                                                        backgroundColor: isActive ? '' : '#ff3e5b',
+                                                        color: isActive ? '' : 'white',
+                                                    }}
+                                                    >
                                                         Web
                                                     </Button>
 
-                                                    <Button type="secondary" danger >
+                                                    <Button type="secondary" danger onClick={handleClick} 
+                                                    style={{
+                                                        backgroundColor: isActive ? '#ff3e5b' : '',
+                                                        color: isActive ? 'white' : '',
+                                                    }}
+                                                    >
                                                         Mobile
                                                     </Button>
+
+                                                </div>
                                             </Space>
-                                           
+
+                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+
+                                                <Search
+                                                    placeholder="Search"
+                                                    style={{
+                                                        width: 300,
+                                                        borderColor: "red",
+                                                    }}
+
+                                                    allowClear
+                                                // onSearch={onSearchHandle}
+                                                // onChange={onChangeHandle}
+                                                />
+                                            </Col>
                                         </Row>
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                            // onSearch={onSearchHandle}
-                                            // onChange={onChangeHandle}
-                                            />
-                                        </Col>
                                     </div>
                                 </Row>
                             </Col>
@@ -207,8 +228,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         <>
                                             <span>
                                                 No records found. <br /> Please
-                                                 <Text strong>"Add Application"</Text>
-                                                  using below button
+                                                <Text strong>"Add Application"</Text>
+                                                using below button
                                             </span>
                                         </>
                                     }
@@ -216,7 +237,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Application
+                                                Add
                                             </Button>
                                         </Col>
                                     </Row>
@@ -264,7 +285,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                 }}
                                 actions={[
                                     <>
-                                        <Button danger className={style.cancelBtn}>
+                                        <Button danger className={style.cancelBtn} onClick={handleAdd}>
                                             Edit
                                         </Button>
                                         <Space >
@@ -289,21 +310,21 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         }}
                                     >
                                         <Row gutter={20}>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
                                                 <Text strong> Application ID</Text>
                                                 <Text type="secondary"> AP0001</Text>
                                             </Col>
-                                            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
                                                 <Text strong> Application Name</Text>
-
+                                                <br></br>
                                                 <Text type="secondary">Employee Empowerment</Text>
                                             </Col>
                                         </Row>
 
                                         <Row gutter={20}>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                            <Col  xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
                                                 <Text strong> Application Title</Text>
-
+                                                <br></br>
                                                 <Text type="secondary">Employee Title</Text>
                                             </Col>
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
@@ -314,17 +335,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         </Row>
 
                                         <Row gutter={20}>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                <Text strong>Parent Application ID</Text>
+                                            <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                                                <Text strong>Parent Application</Text>
                                                 <br></br>
                                                 <Text type="secondary">Geo Product</Text>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                <Text strong>Accessible Location</Text>
-                                                <br></br>
-                                                <Text type="secondary">Restricted Access</Text>
                                             </Col>
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
                                                 <Text type="secondary">Status: </Text>
@@ -333,13 +347,20 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                                                <Text strong>Accessible Location</Text>
+                                                <br></br>
+                                                <Text type="secondary">Restricted Access</Text>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
                                                 <Text strong>Application Criticality Group</Text>
                                                 <br></br>
                                                 <Text type="secondary">Application Criticality</Text>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
                                                 <Text strong>Document not to be generated</Text>
                                                 <br></br>
                                                 <Text type="success">Active</Text>

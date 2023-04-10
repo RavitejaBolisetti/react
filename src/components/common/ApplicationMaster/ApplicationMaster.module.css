@@ -11,7 +11,7 @@
     width: 16px;
 } */
 :global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-text){
-    color: #E31837;
+    /* color: #E31837; */
     font-weight: 600;
     font-size: 16px;
 }
@@ -19,3 +19,12 @@
     background: #f2f2f2;
 }
 
+.changeThemeBorder {
+    display: flex;
+    width: 100%;
+    border: 1px solid #DEDEDE;
+    border-radius: 4px;
+    padding: 1px;
+  }
+
+  
