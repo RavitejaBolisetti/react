@@ -3,7 +3,7 @@ import { Drawer, Input, Form, Col, Collapse, Card, Checkbox, Row, Switch, Button
 import { DownOutlined, UpOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import { PlusBorderedIcon, MinusBorderedIcon  } from 'Icons'
+import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
@@ -15,7 +15,6 @@ import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './ApplicationActions';
 import DocumentTypes from './DocumentTypes';
 import { AccessibleDealerLocations } from './AccessibleDealerLocations';
-
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -46,9 +45,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
         form.resetFields();
     };
 
-
     return (
-
         <Drawer
             title={drawerTitle}
             placement="right"
@@ -86,28 +83,28 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
                             {buttonData?.editBtn && (
-                                <Button danger onClick={() => (console.log("hh"))}>
+                                <Button danger onClick={() => console.log('hh')}>
                                     <FaEdit className={styles.buttonIcon} />
                                     Edit
                                 </Button>
                             )}
 
                             {buttonData?.rootChildBtn && (
-                                <Button danger onClick={() => (console.log("hh"))}>
+                                <Button danger onClick={() => console.log('hh')}>
                                     <FaUserPlus className={styles.buttonIcon} />
                                     Add Child
                                 </Button>
                             )}
 
                             {buttonData?.childBtn && (
-                                <Button danger onClick={() => (console.log("hh"))}>
+                                <Button danger onClick={() => console.log('hh')}>
                                     <FaUserPlus className={styles.buttonIcon} />
                                     Add Child
                                 </Button>
                             )}
 
                             {buttonData?.siblingBtn && (
-                                <Button danger onClick={() => (console.log("hh"))}>
+                                <Button danger onClick={() => console.log('hh')}>
                                     <FaUserFriends className={styles.buttonIcon} />
                                     Add Sibling
                                 </Button>
@@ -123,23 +120,24 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                     )}
 
                                     {buttonData?.resetBtn && (
-                                        <Button danger onClick={()=>console.log("hh")}>
+                                        <Button danger onClick={() => console.log('hh')}>
                                             <FaUndo className={styles.buttonIcon} />
                                             Reset
                                         </Button>
                                     )}
 
                                     {buttonData?.cancelBtn && (
-                                        <Button danger onClick={() => (console.log("hh"))}>
+                                        <Button danger onClick={() => console.log('hh')}>
                                             <FaRegTimesCircle size={15} className={styles.buttonIcon} />
                                             Cancel
                                         </Button>
                                     )}
                                 </>
-                            )}  
+                            )}
                         </Col>
                     </Row>
-                </>}
+                </>
+            }
         >
             <>
                 <Space
@@ -150,25 +148,24 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                 >
                     {/* <Collapse expandIcon={({ isActive }) => isActive ? < MinusOutlined /> : <PlusOutlined />}>
                         <Panel header="Application Details" key="1"> */}
-                           {/* application Details */}
-                            <ApplicationDetails />
-                        {/* </Panel>
+                    {/* application Details */}
+                    <ApplicationDetails />
+                    {/* </Panel>
                     </Collapse> */}
 
-                    <Collapse expandIcon={({ isActive }) => isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />}  >
+                    <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header="Application Actions" key="2">
-                           <ApplicationActions />
+                            <ApplicationActions />
                         </Panel>
                     </Collapse>
 
-                    <Collapse expandIcon={({ isActive }) => isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />} >
+                    <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header="Document Type" key="3">
                             <DocumentTypes />
                         </Panel>
                     </Collapse>
-                    {
-                        selectedLocaationAccessiblity === 'restrictedAccessible' &&
-                        (<Collapse expandIcon={({ isActive }) => isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />} >
+                    {selectedLocaationAccessiblity === 'restrictedAccessible' && (
+                        <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                             <Panel header="Accessible Dealer Locations" key="4">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -183,18 +180,17 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, openAccordian, is
                                     </Col>
                                 </Row>
                             </Panel>
-                        </Collapse>)
-                    }
+                        </Collapse>
+                    )}
 
-                    <Collapse expandIcon={({ isActive }) => isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />}  >
+                    <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header="Accessible Dealer Location" key="2">
                             <AccessibleDealerLocations />
                         </Panel>
                     </Collapse>
-
-                </Space >
+                </Space>
             </>
-        </Drawer >
+        </Drawer>
     );
 };
 
