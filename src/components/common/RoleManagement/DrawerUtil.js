@@ -46,18 +46,17 @@ const options = {
         {
             label: 'Read',
             value: 'Read',
-            Read: true
+            Read: true,
         },
         {
             label: 'View',
             value: 'View',
-            View: true
+            View: true,
         },
         {
             label: 'Update',
             value: 'Update',
-            Update: false
-
+            Update: false,
         },
         {
             label: 'Delete',
@@ -76,17 +75,17 @@ const options = {
         {
             label: 'Read',
             value: 'Read',
-            Read: true
+            Read: true,
         },
         {
             label: 'View',
             value: 'View',
-            View: true
+            View: true,
         },
         {
             label: 'Update',
             value: 'Update',
-            Update: false
+            Update: false,
         },
         {
             label: 'Delete',
@@ -105,23 +104,22 @@ const options = {
         {
             label: 'Read',
             value: 'Read',
-            Read: true
+            Read: true,
         },
         {
             label: 'View',
             value: 'View',
-            View: true
+            View: true,
         },
         {
             label: 'Update',
             value: 'Update',
-            Update: false
+            Update: false,
         },
         {
             label: 'Delete',
             value: 'Delete',
-            Delete: true
-
+            Delete: true,
         },
         {
             label: 'Create',
@@ -281,7 +279,7 @@ const mockData = [
     },
 ];
 
-const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
+const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const [form] = Form.useForm();
     // const [selectedActions, setSelectedActions] = useState({})
     const Mychildren = [
@@ -312,10 +310,32 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
     ];
     const disabledProps = { disabled: false };
     const [treeData, settreeData] = useState([]);
-
+    let drawerTitle = '';
+    if (formActionType === 'add') {
+        drawerTitle = 'Add New Role';
+    } else if (formActionType === 'update') {
+        drawerTitle = 'Edit Role Details';
+    } else if (formActionType === 'view') {
+        drawerTitle = 'View Role Details';
+    }
     useEffect(() => {
         if (!treeData.length) {
             Subpanel(mocktreeData);
+        }
+    }, []);
+
+    useEffect(() => {
+        function Subpanel(node) {
+            if (!node?.children) {
+                // setTreeData([{ ...node, children: Mychildren }]);
+                console.log('node==>', node);
+                return;
+            }
+            if (node?.children) {
+                node?.children.forEach((child) => {
+                    Subpanel(child);
+                });
+            }
         }
 
         console.log('treeData', treeData);
@@ -459,10 +479,11 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
         //     console.log('Keyname', key, ' Name:', val);
         // });
     };
+
     return (
         <>
             <Drawer
-                title={'Role Management'}
+                title={drawerTitle}
                 width="540"
                 placement="right"
                 onClose={onClose}
@@ -473,19 +494,24 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
                         <Row gutter={20}>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <Button danger onClick={onClose} className={styles.cancelBtn}>
-                                    Cancel
+                                    {formActionType === 'view' ? 'Close' : 'Cancel'}
                                 </Button>
                             </Col>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.saveBtn}>
-                                <Button onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
-                                </Button>
-                                <Button onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
-                                {/* <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                Edit
-                            </Button> */}
+                                {!footerEdit ? (
+                                    <Button onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                        Save
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
+                                {footerEdit ? (
+                                    <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                        Edit
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
                             </Col>
                         </Row>
                     </>
@@ -501,45 +527,35 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
                     <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="hierarchyAttribueCode" label="Code" rules={[{ max: 5, message: 'Code must be  5 characters long.' }, { min: 5, message: 'Code must be  5 characters long .' }, validateRequiredInputField('Code')]}>
-                                    <Input placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                                <Form.Item name="roleId" label="Role Id" rules={[{ max: 6, message: 'Code must be  6 characters long.' }, validateRequiredInputField('Code')]}>
+                                    <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="hierarchyAttribueName" label="Name" rules={[{ min: 2, message: 'Name must contain 2 characters.' }, { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name')]}>
-                                    <Input placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                                <Form.Item name="roleName" label="Role Name" rules={[{ max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name')]}>
+                                    <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                                 </Form.Item>
                             </Col>
-                            {/* </Row> */}
-                            {/* <Row > */}
+
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item
                                     label="Role Description"
                                     name="roleDescription"
                                     rules={[
-                                        { min: 50, message: 'Role Description must contain 2 characters.' },
-                                        { max: 250, message: 'Role Description must be less than 50 characters.' },
+                                        { max: 250, message: 'Role Description cannot be more than 250 characters.' },
                                         {
                                             required: true,
                                         },
                                     ]}
                                 >
                                     <TextArea
-                                        // value={value}
-                                        // onChange={(e) => setValue(e.target.value)}
-                                        placeholder=""
+                                        placeholder={preparePlaceholderText('Name')}
                                         autoSize={{
                                             minRows: 2,
                                             maxRows: 5,
                                         }}
+                                        maxLength={250}
                                     />
-                                </Form.Item>
-                            </Col>
-                            {/* </Row> */}
-                            {/* <Row gutter={20}> */}
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Duplicate Allowed?" name="duplicateAllowedAtAttributerLevelInd">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -568,9 +584,14 @@ const DrawerUtil = ({ openDrawer, setOpenDrawer, setsaveclick }) => {
                                                         <span className="text">{treeNode.title}</span>
                                                     </span>
                                                     <div className="Placement">
-                                                        {console.log("Value yeh hai",options[treeNode.dataIndex])}
+                                                        {console.log('Value yeh hai', options[treeNode.dataIndex])}
                                                         {/* <Checkbox.Group defaultValue={[options[treeNode.dataIndex]]}  options={options[treeNode.dataIndex] ? options[treeNode.dataIndex] : options.ApplicationMaster1} onChange={(data) => onChange(data, treeNode.dataIndex)} /> */}
-                                                        {options[treeNode.dataIndex]?.length>0 && options[treeNode.dataIndex].map(op => <Checkbox checked={op[op?.value]} defaultValue={op[op?.value]} onChange={(data) => onChange(data, treeNode.dataIndex)}>{op.label}</Checkbox>)}
+                                                        {options[treeNode.dataIndex]?.length > 0 &&
+                                                            options[treeNode.dataIndex].map((op) => (
+                                                                <Checkbox checked={op[op?.value]} defaultValue={op[op?.value]} onChange={(data) => onChange(data, treeNode.dataIndex)}>
+                                                                    {op.label}
+                                                                </Checkbox>
+                                                            ))}
                                                     </div>
                                                 </div>
                                             );

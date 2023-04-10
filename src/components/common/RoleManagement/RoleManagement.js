@@ -16,13 +16,15 @@ import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
-import styles from '../DrawerAndTable.module.css'
+import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 
-const { Search } = Input;   
+const { Search } = Input;
+
+const initialTableData = [{}];
 
 const mapStateToProps = (state) => {
     const {
@@ -68,11 +70,25 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const [searchData, setSearchdata] = useState(RoleManagementData);
     const [RefershData, setRefershData] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [formActionType, setFormActionType] = useState('');
+    const [footerEdit, setFooterEdit] = useState(false);
 
-    const handleUpdate = () => {};
-    const handleView = () => {};
+
+    const handleUpdate = (record) => {
+        setFormActionType('update');
+        setOpenDrawer(true);
+        setFooterEdit(false)
+    };
+    const handleView = (record) => {
+        setFormActionType('view');
+        setOpenDrawer(true);
+        setFooterEdit(true)
+
+    };
     const handleAdd = () => {
         setOpenDrawer(true);
+        setFooterEdit(false)
+
     };
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
@@ -151,16 +167,8 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
             render: (text, record, index) => {
                 return (
                     <Space>
-                        {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                                <EditIcon />
-                            </Button>
-                        }
-                        {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
+                        {<Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)} />}
+                        {<Button icon={<ViewEyeIcon />} className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)} />}
                     </Space>
                 );
             },
@@ -177,7 +185,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6} className={style.subheading}>
-                                           Role List
+                                            Role List
                                         </Col>
                                         <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                             <Search
@@ -197,7 +205,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                             {RoleManagementData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button className={style.refreshBtn} onClick={handleReferesh} danger>
-                                        <TfiReload />   
+                                        <TfiReload />
                                     </Button>
 
                                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
@@ -245,11 +253,11 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil onClose={onClose} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil footerEdit={footerEdit} formActionType={formActionType} onClose={onClose} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
