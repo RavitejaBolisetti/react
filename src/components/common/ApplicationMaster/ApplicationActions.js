@@ -24,7 +24,7 @@ const applicationData = [
     },
 ];
 
-const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable }) => {
+const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, FinalFormdata }) => {
     const [actionsList, setApplicationList] = useState([]);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [actionForm] = Form.useForm();
@@ -33,9 +33,10 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
         console.log('value', val);
         const { value, label } = val?.applicationAction;
         setApplicationList((prev) => [...prev, { applicationName: label, id: value, status: val.status }]);
+        setFinalFormdata({ ...FinalFormdata, ApplicationActions: [...FinalFormdata.ApplicationActions, val] });
+
         actionForm.resetFields();
     };
-
 
     return (
         <Fragment>

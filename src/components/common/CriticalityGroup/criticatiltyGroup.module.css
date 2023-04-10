@@ -8,8 +8,8 @@
     margin-bottom: 20px;
 }
 
-.allowedTiming :global .ant-picker-input>input:placeholder-shown,
-.allowedTiming :global .ant-picker-input>input {
+.allowedTiming :global .ant-picker-input > input:placeholder-shown,
+.allowedTiming :global .ant-picker-input > input {
     font-size: 14px;
 }
 
@@ -76,7 +76,7 @@
     margin-bottom: 10px;
     border-radius: 7px;
     font-size: 14px;
-    color: #342C2C;
+    color: #342c2c;
 }
 
 :global .ant-btn-link {
@@ -172,7 +172,6 @@
     padding: 20px;
 } */
 
-
 :global .ant-drawer .ant-drawer-body .ant-input {
     margin-top: 6px;
 }
@@ -250,3 +249,4 @@
 :global .ant-form-item-explain-error {
     font-size: 12px !important;
 }
+

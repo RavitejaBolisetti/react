@@ -49,16 +49,16 @@ const existingLocation = [
     },
 ];
 
-const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, dealerLocations }) => {
+const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLocations, setFinalFormdata, FinalFormdata }) => {
     const [locationData, setLocationData] = useState([]);
 
     const fieldNames = { label: 'locationName', value: 'locationCode' };
 
-    const handleSelect = ( value ) => {
-        setLocationData(prev => [...prev, {locationCode: value?.key, locationName: value?.label}])
+    const handleSelect = (value) => {
+        setLocationData((prev) => [...prev, { locationCode: value?.key, locationName: value?.label }]);
+        setFinalFormdata({ ...FinalFormdata, AccessibleDealerLocation: [...FinalFormdata.AccessibleDealerLocation, value] });
     };
-    console.log('value', locationData)
-
+    console.log('value', locationData);
 
     return (
         <Fragment>
@@ -80,16 +80,14 @@ const AccessibleDealerLocationsMain = ({ form, isReadOnly, formActionType, deale
                 />
             </Row>
             <Row>
-                {
-                    locationData.length ? locationData.map((location) => {
-
-                        return <LocationCard {...location}/> 
-                    })
-                    :''
-                }
+                {locationData.length
+                    ? locationData.map((location) => {
+                          return <LocationCard {...location} />;
+                      })
+                    : ''}
             </Row>
         </Fragment>
     );
 };
 
-export const AccessibleDealerLocations = connect(mapStateToProps, null)(AccessibleDealerLocationsMain);
+export default AccessibleDealerLocations;

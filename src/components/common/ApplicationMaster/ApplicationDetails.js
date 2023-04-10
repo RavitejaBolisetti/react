@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Input, Form, Col, Row, Switch, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -8,12 +8,15 @@ import style from 'components/common/DrawerAndTable.module.css';
 
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setSelectedLocaationAccessiblity }) => {
+const ApplicationDetails = ({ form, setFinalFormdata, FinalFormdata, footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, onFinish }) => {
     const disabledProps = { disabled: isReadOnly };
-
+    const [SelectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState();
     const handleChangeLocations = (value) => {
         setSelectedLocaationAccessiblity(value);
     };
+    // const onFinish = (values) => {
+    //     setFinalFormdata({ ...FinalFormdata, ApplicationDetails: values });
+    // };
 
     return (
         <Fragment>
@@ -39,7 +42,11 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onF
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Type" name="ApplicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
-                            {!footerEdit ? <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
+                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps}>
+                                <Option value="all">Mah1</Option>
+                                <Option value="notAccessable">Mah2</Option>
+                                <Option value="restrictedAccessible">Mah3</Option>
+                            </Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -67,7 +74,11 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinish = () => {}, onF
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Criticality Group" name="applicationCriticalityGroup" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
-                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps}>
+                                <Option value="all">Mah1</Option>
+                                <Option value="notAccessable">Mah2</Option>
+                                <Option value="restrictedAccessible">Mah3</Option>
+                            </Select>
                         </Form.Item>
                     </Col>
                     {/* <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

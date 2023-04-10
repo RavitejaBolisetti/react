@@ -9,27 +9,28 @@ import style from 'components/common/DrawerAndTable.module.css';
 import CardDocumentType from './CardDocumentType';
 import DocumentTypesForm from './DocumentTypesForm';
 
-const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable }) => {
+const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, FinalFormdata }) => {
     const [docData, setDocData] = useState([]);
     const [DocumentTypesList, setDocumentTypesList] = useState([]);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
 
     const [actionForm] = Form.useForm();
 
     const [form] = Form.useForm();
 
     const handleAdd = (value) => {
-        setDocData(prev => [...prev, value]);
+        setDocData((prev) => [...prev, value]);
         form.resetFields();
     };
 
     const onActionFormFinish = (val) => {
         console.log('value', val);
-        setDocumentTypesList((prev) => [...prev, {...val}]);
+        setDocumentTypesList((prev) => [...prev, { ...val }]);
+        setFinalFormdata({ ...FinalFormdata, DocumentType: DocumentTypesList });
+        setFinalFormdata({ ...FinalFormdata, DocumentType: [...FinalFormdata.DocumentType, val] });
+
         actionForm.resetFields();
     };
-
 
     return (
         <Fragment>
@@ -41,7 +42,6 @@ const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed
                 })}
         </Fragment>
     );
-
 };
 
 export default DocumentTypes;
