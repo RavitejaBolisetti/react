@@ -7,21 +7,24 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
         bordered: false,
         colon: false,
         layout: 'vertical',
-        title: <div className={styles.contentHeaderBackground}>{viewTitle}</div>,
+        title: <div className={styles.contentHeaderRightBackground}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
         <div>
-            <div className={styles.viewContainer}>
-                <Descriptions {...viewProps}>
+            <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
+                <Descriptions {...viewProps} >
+                    
                     <Descriptions.Item label="Attribute Level">{attributeData?.find((attribute) => attribute.id === selectedTreeData?.attributeKey)?.hierarchyAttribueName}</Descriptions.Item>
                     <Descriptions.Item label="Parent">Parent Name</Descriptions.Item>
                     <Descriptions.Item label="Code">{selectedTreeData.prodctCode}</Descriptions.Item>
                     <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                     <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
                     <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
+                   
                 </Descriptions>
             </div>
+            <div className={styles.hyrbuttonContainer}>
             <div className={styles.buttonContainer}>
                 <div className={styles.btnLeft}>
                     {buttonData?.editBtn && (
@@ -34,15 +37,14 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
 
                 <div className={styles.btnRight}>
                     {buttonData?.rootChildBtn && (
-                        <Button danger onClick={() => handleRootChildBtn()}>
+                        <Button danger type="primary" onClick={() => handleRootChildBtn()}>
                             <FaUserPlus className={styles.buttonIcon} />
                             Add Child
                         </Button>
                     )}
 
                     {buttonData?.childBtn && (
-                        <Button
-                            danger
+                        <Button danger type="primary"
                             onClick={() => {
                                 handleChildBtn();
                                 setClosePanels(['1']);
@@ -60,6 +62,7 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
                         </Button>
                     )}
                 </div>
+            </div>
             </div>
         </div>
     );

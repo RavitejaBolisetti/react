@@ -199,6 +199,17 @@
     text-align: left;
     padding-left: 18px;
 }
+.buttonHeadingContainer {
+    /* margin-top: 10px; */
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+}
+.buttonHeadingContainer .buttonIcon {
+    margin-right: 6px;
+    padding-top: 2px;
+}
+.hyrbuttonContainer{border: 1px solid #E8E8E8; border-top:0px solid #E8E8E8 ;}
 
 .buttonContainer {
     margin-top: 10px;
@@ -817,11 +828,17 @@ border: 1px solid #E8E8E8;
     border-radius: 7px 7px 0px 0px;
 -moz-border-radius: 7px 7px 0px 0px;
 -webkit-border-radius: 7px 7px 0px 0px;
-border: 1px solid #E8E8E8;
+border: 1px solid #E8E8E8; 
 }
+
+.hierarchyRightContaner{border-radius: 7px 7px 0px 0px;
+    -moz-border-radius: 7px 7px 0px 0px;
+    -webkit-border-radius: 7px 7px 0px 0px;
+    border: 1px solid #E8E8E8; min-height: 72vh;}
+
 .searchAndLabelAlign{    padding-left: 0px !important; padding-right: 0px !important; margin-left: 0px !important;
     margin-right: 0px !important; vertical-align: middle;}
-.searchField{vertical-align: middle; margin: 0 5px;}
+.searchField{vertical-align: middle; margin: 0 10px;}
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
@@ -872,10 +889,22 @@ border: 1px solid #E8E8E8;
     height: calc(100vh - 400px);
 }
 
-.viewContainer :global .ant-descriptions .ant-descriptions-row>td,
+/* .viewContainer :global .ant-descriptions .ant-descriptions-row>td,
 .viewContainer :global .ant-descriptions .ant-descriptions-item {
     padding-bottom: 0px !important;
-}
+} */
+
+
+.viewContainer :global .ant-descriptions-view table tbody tr th {
+    padding:5px 10px 3px!important;
+    color: rgba(11, 11, 12, 1) !important;
+    font-size: 14px!important; 
+        }
+.viewContainer :global .ant-descriptions-view table tbody tr td {
+    padding:2px 10px 5px!important;  
+    color:rgba(142, 133, 133, 1) !important;
+    font-size: 14px !important; 
+        }
 
 @media (max-width: 768px) {
     /* For mobile phones: */

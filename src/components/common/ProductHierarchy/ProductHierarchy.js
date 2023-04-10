@@ -367,15 +367,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={style.subheading}>
                                 Hierarchy
                                 <Select
                                     placeholder="Select a option"
-                                    disabled
                                     allowClear
                                     className={styles.searchField}
                                     style={{
-                                        width: '43%',
+                                        width: '42%',
                                     }}
                                 >
                                     <Option value="hyr">Hyr</Option>
@@ -383,7 +382,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                 <Search
                                     placeholder="Search"
                                     style={{
-                                        width: '43%',
+                                        width: '41%',
                                     }}
                                     allowClear
                                     onChange={onChange}
@@ -391,7 +390,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                 />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
+                                <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
