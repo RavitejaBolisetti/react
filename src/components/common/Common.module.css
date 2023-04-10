@@ -201,8 +201,15 @@
 }
 
 .buttonContainer {
-    padding-right: 18px;
+    margin-top: 10px;
     display: inline-block;
+    width: 100%;
+    padding: 0;
+}
+
+.buttonContainer .buttonIcon {
+    margin-right: 6px;
+    padding-top: 2px;
 }
 
 .buttonContainer .btnLeft {
@@ -215,41 +222,13 @@
     float: right;
 }
 
-/* 
-.buttonContainer button {
-    margin-left: 14px;
-} */
-
-.buttonContainer .buttonIcon {
-    margin-right: 6px;
-    padding-top: 2px;
-}
-
-.btnContainer {
-    margin-top: 10px;
-}
-
-.btnContainer button {
+.buttonContainer .btnRight button {
     margin-left: 14px;
 }
 
-.btnContainer .buttonIcon {
-    margin-right: 6px;
-    padding-top: 2px;
-}
-
-.btnContainer .btnLeft {
-    text-align: left;
-    padding-left: 18px;
-}
-
-.btnContainer .btnLeft button {
-    margin-left: 0px;
-}
-
-.btnContainer .btnRight {
-    text-align: right;
-    padding-left: 18px;
+.buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ff3e5b;
+    color: #ffffff !important;
 }
 
 .leftpanel {
@@ -261,7 +240,7 @@
     border-radius: 10px;
     border-top-left-radius: 0;
     margin-bottom: 20px;
-    height: 66vh;
+    height: 90vh;
     /* overflow-y: scroll; */
     white-space: nowrap;
     margin-top: 5px;
@@ -631,22 +610,6 @@
     color: #ffffff !important;
 }
 
-.buttonContainer {
-    text-align: right;
-    /* padding: 0px !important; */
-    padding-right: 18px;
-    margin-top: 8px;
-}
-
-.buttonContainer button {
-    margin-left: 14px;
-}
-
-.buttonContainer .buttonIcon {
-    margin-right: 6px;
-    padding-top: 2px;
-}
-
 .leftpanel {
     padding: 0.2em;
     width: 99%;
@@ -744,25 +707,6 @@
 }
 
 
-
-.buttonContainer {
-    text-align: right;
-}
-
-.buttonContainer button {
-    margin-left: 14px;
-    /* color: #ffffff !important; */
-}
-
-.buttonContainer .buttonIcon {
-    margin-right: 6px;
-    padding-top: 2px;
-}
-
-.buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b;
-    color: #ffffff !important;
-}
 
 .formFooter {
     width: 100%;
@@ -892,6 +836,11 @@
     align-items: center;
     text-align: center;
     height: calc(100vh - 400px);
+}
+
+.viewContainer :global .ant-descriptions .ant-descriptions-row>td,
+.viewContainer :global .ant-descriptions .ant-descriptions-item {
+    padding-bottom: 0px !important;
 }
 
 @media (max-width: 768px) {
