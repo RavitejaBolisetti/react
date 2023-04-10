@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
+    // console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
 
     let returnValue = {
         userId,
@@ -107,25 +107,25 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         })
     );
 
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Parent',
-            dataIndex: 'parent',
-        })
-    );
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Short Description',
-            dataIndex: 'shortDescript',
-        })
-    );
+    // tableColumn.push(
+    //     tblPrepareColumns({
+    //         title: 'Parent',
+    //         dataIndex: 'parent',
+    //     })
+    // );
+    // tableColumn.push(
+    //     tblPrepareColumns({
+    //         title: 'Short Description',
+    //         dataIndex: 'shortDescript',
+    //     })
+    // );
 
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Long Description',
-            dataIndex: 'longDescript',
-        })
-    );
+    // tableColumn.push(
+    //     tblPrepareColumns({
+    //         title: 'Long Description',
+    //         dataIndex: 'longDescript',
+    //     })
+    // );
 
     tableColumn.push(
         tblPrepareColumns({
@@ -152,9 +152,9 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     };
     return (
         <div className={styles.changeHistoryContainer}>
-            <div>
+            {/* <div>
                 <h3>Change History</h3>
-            </div>
+            </div> */}
 
             <DataTable {...tableProps} />
         </div>

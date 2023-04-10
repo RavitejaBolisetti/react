@@ -31,8 +31,8 @@ const ManufacturerAdministrativeHierarchyPageBase = () => {
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        showChangeHisoty: true,
-        visibleChangeHistory: true,
+        showChangeHisoty: false,
+        visibleChangeHistory: false,
         // handleChangeHistoryClick,
         isChangeHistoryVisible,
         // isUploadVisible: true,
