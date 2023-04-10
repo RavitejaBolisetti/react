@@ -2,10 +2,9 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Empty, Form, Row, Select } from 'antd';
-import { FaEdit, FaUserPlus,FaHistory, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaUserPlus, FaHistory, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
-
 
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -20,8 +19,6 @@ import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import Search from 'antd/es/input/Search';
-
-
 
 const { Option } = Select;
 
@@ -68,10 +65,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,moduleTitle,viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData,ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading }) => {
+export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, moduleTitle, viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -83,10 +79,8 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [closePanels, setClosePanels] = React.useState([]);
-
-    const [forceFormReset, setForceFormReset] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -108,7 +102,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
 
     useEffect(() => {
         if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical Hierarchy' });
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Geographical' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -155,8 +149,8 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const geoName = flatternData.find((i) => formData?.data?.geoParentCode === i.key)?.data?.geoParentCode;
-                
+                const geoName = flatternData.find((i) => formData?.data?.geoParentCode === i.key)?.data?.geoName;
+
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: geoName });
             }
 
@@ -194,24 +188,22 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
         setIsChildAllowed(fnCanAddChild(selectedAttribute?.isChildAllowed));
     };
 
-    const handleResetBtn = () => {
-        form.resetFields();
-    };
-
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const data = { ...values, id: recordId, isActive: values?.isActive ? true : false, geoParentCode: codeToBeSaved };
+
         const onSuccess = (res) => {
             form.resetFields();
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setSelectedTreeData(formData?.data);
+                res?.data && setSelectedTreeData(res?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setIsFormVisible(false);
             }
         };
         const onError = (message) => {
@@ -264,13 +256,14 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
         attributeData,
         fieldNames,
         setSelectedTreeSelectKey,
+        isFormBtnActive,
+        setFormBtnActive,
     };
     const viewProps = {
         buttonData,
         attributeData,
         selectedTreeData,
         handleButtonClick,
-        setClosePanels,
         styles,
         viewTitle,
     };
@@ -287,7 +280,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
                                 Hierarchy
-                                    <Option value="hyr">Hyr</Option>
+                                <Option value="hyr">Hyr</Option>
                                 <Search
                                     placeholder="Search"
                                     style={{
@@ -366,4 +359,3 @@ export const GeoMain = ({ isChangeHistoryGeoVisible,changeHistoryModelOpen,modul
 };
 
 export const Geo = connect(mapStateToProps, mapDispatchToProps)(GeoMain);
-

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Descriptions } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { Descriptions } from 'antd';
 
 export const ViewGeoDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -14,11 +13,11 @@ export const ViewGeoDetailMain = ({ viewTitle, buttonData, attributeData, select
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Geographical Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData.geoParentCode}</Descriptions.Item>
-                <Descriptions.Item label="Code">{selectedTreeData.geoCode}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Code">{selectedTreeData?.geoCode}</Descriptions.Item>
                 <Descriptions.Item label="Name">{selectedTreeData?.geoName}</Descriptions.Item>
-                <Descriptions.Item label="Status">{selectedTreeData?.isActive === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label="Status">{selectedTreeData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );
