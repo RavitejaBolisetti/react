@@ -358,33 +358,35 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                    {isCollapsableView ? <></> : null}
+                {productHierarchyData.length > 0 && (
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                        {isCollapsableView ? <></> : null}
 
-                    {selectedTreeData && selectedTreeData?.id ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <ViewProductDetail {...viewProps} />
-                            <div className={styles.hyrbuttonContainer}>
-                                <HierarchyFormButton {...viewProps} />
+                        {selectedTreeData && selectedTreeData?.id ? (
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <ViewProductDetail {...viewProps} />
+                                <div className={styles.hyrbuttonContainer}>
+                                    <HierarchyFormButton {...viewProps} />
+                                </div>
+                            </Col>
+                        ) : (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            Please select product from left <br />
+                                            side hierarchy to view “Hierarchy Details”
+                                        </span>
+                                    }
+                                ></Empty>
                             </div>
-                        </Col>
-                    ) : (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Hierarchy Details”
-                                    </span>
-                                }
-                            ></Empty>
-                        </div>
-                    )}
-                </Col>
+                        )}
+                    </Col>
+                )}
             </Row>
             <ChangeHistory />
             <AddEditForm {...formProps} />

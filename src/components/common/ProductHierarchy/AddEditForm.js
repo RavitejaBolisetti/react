@@ -13,13 +13,14 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
+    
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData } = props;
-    console.log('🚀 ~ file: AddEditForm.js:17 ~ AddEditFormMain ~ formActionType:', formActionType);
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
+    
+    const [form] = Form.useForm();
     const { onFinish, onFinishFailed } = props;
 
-    const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
 
     const disabledProps = { disabled: isReadOnly };
@@ -63,6 +64,7 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
+    
     return (
         <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
@@ -92,7 +94,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} {...disabledProps} />
+                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -100,7 +102,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
-                        <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
+                        <TextArea rows={2} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} {...disabledProps} />
                     </Form.Item>
                 </Col>
 
