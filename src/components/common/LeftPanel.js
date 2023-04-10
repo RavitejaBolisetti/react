@@ -1,33 +1,6 @@
-// import { Tree } from 'antd';
-// import styles from './TreeView.module.css';
-
-// const LeftPanel = (props) => {
-//     const { expandedKeys, autoExpandParent, finalTreeData, selectedTreeKey, onExpand, handleTreeViewClick, isOpenInModal } = props;
-//     const panelParentClass = styles.panelVisible;
-
-//     return (
-//         <div className={`${styles.leftpanel} ${panelParentClass}`}>
-//             <div className={styles.treeViewContainer}>
-//                 <div className={styles.treemenu}>
-//                     <div className={isOpenInModal ? styles.modalView : ''}>
-//                         <div className={styles.scrollTreeData}>
-//                             <Tree expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-// export default LeftPanel;
-
-import { Tree, Input } from 'antd';
+import { Tree } from 'antd';
 import { useMemo, useState, useEffect } from 'react';
-import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
-import { addToolTip } from 'utils/customMenuLink';
 import styles from './TreeView.module.css';
-
-const { Search } = Input;
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
@@ -35,7 +8,6 @@ const LeftPanel = (props) => {
     const { searchValue, setSearchValue } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
-    // const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
 
     const onExpand = (newExpandedKeys) => {
@@ -89,23 +61,6 @@ const LeftPanel = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
 
-    const onChange = (e) => setSearchValue(e.target.value);
-    // const onChange = (e) => {
-    //     const { value } = e.target;
-
-    //     const newExpandedKeys = dataList
-    //         .map((item) => {
-    //             if (item?.title?.indexOf(value) > -1) {
-    //                 return getParentKey(item?.id, treeData);
-    //             }
-    //             return null;
-    //         })
-    //         .filter((item, i, self) => item && self?.indexOf(item) === i);
-    //     setExpandedKeys(value ? newExpandedKeys : []);
-    //     setSearchValue(value);
-    //     setAutoExpandParent(true);
-    // };
-
     const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
     const finalTreeData = useMemo(() => {
@@ -144,7 +99,7 @@ const LeftPanel = (props) => {
 
     return (
         <div className={`${styles.leftpanel} ${panelParentClass}`}>
-           {isTreeViewVisible ? (
+            {isTreeViewVisible ? (
                 <div className={styles.treeViewContainer}>
                     <div className={styles.treemenu}>
                         <div className={isOpenInModal ? styles.modalView : ''}>
