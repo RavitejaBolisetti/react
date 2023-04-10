@@ -110,7 +110,7 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
         hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Organization' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         form.resetFields();
@@ -184,19 +184,20 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved };
+        const data = { ...values, id: recordId, active: values?.active ? true : false, manufactureOrgParntId: codeToBeSaved };
 
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setIsFormVisible(true);
 
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setSelectedTreeData(formData?.data);
+                res?.data && setSelectedTreeData(res?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setIsFormVisible(false);
+
             }
         };
 
@@ -204,6 +205,7 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
             handleErrorModal(message);
         };
 
+        
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
