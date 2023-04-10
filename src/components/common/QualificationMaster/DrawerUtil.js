@@ -1,7 +1,7 @@
 import React from 'react';
 import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
@@ -79,7 +79,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
+                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name'),validateAlphanumericWithSpaceHyphenPeriod('Qualification Name')]}>
                      {!footerEdit ?
                             <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                             : <p className={style.viewModeText}>{form.getFieldValue("qualificationName")}</p>}

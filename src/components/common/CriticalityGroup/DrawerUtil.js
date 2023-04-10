@@ -4,7 +4,7 @@ import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space } from
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
@@ -175,7 +175,7 @@ const DrawerUtil = ({ deletedItemList, setDeletedItemList, showGlobalNotificatio
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name')]}>
+                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name'),validateAlphanumericWithSpace('Criticality Group Name')]}>
                             {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />}
                         </Form.Item>
                     </Col>
