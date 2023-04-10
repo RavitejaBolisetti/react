@@ -635,7 +635,7 @@
     text-align: right;
     /* padding: 0px !important; */
     padding-right: 18px;
-    margin-top: 8px;
+    /* margin-top: 8px; */
 }
 
 .buttonContainer button {
@@ -842,13 +842,27 @@
 
 .contentHeaderBackground {
     background-color: #f4f4f4;
-    padding: 10px;
-    border-radius: 7px;
+    padding: 8px 20px;
+    border-radius: 7px 7px 0px 0px;
+-moz-border-radius: 7px 7px 0px 0px;
+-webkit-border-radius: 7px 7px 0px 0px;
+border: 1px solid #E8E8E8;
 }
-
+.contentHeaderRightBackground {
+    background-color: #f4f4f4;
+    padding: 13px 20px;
+    border-radius: 7px 7px 0px 0px;
+-moz-border-radius: 7px 7px 0px 0px;
+-webkit-border-radius: 7px 7px 0px 0px;
+border: 1px solid #E8E8E8;
+}
+.searchAndLabelAlign{    padding-left: 0px !important; padding-right: 0px !important; margin-left: 0px !important;
+    margin-right: 0px !important; vertical-align: middle;}
+.searchField{vertical-align: middle; margin: 0 5px;}
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
+    
 }
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
@@ -876,6 +890,7 @@
 }
 
 .content {
+    border: 1px solid #E8E8E8;
     /* border: 1px solid rgba(200, 200, 200, 0.55);
     border-top: none;
     border-bottom-left-radius: 4px;

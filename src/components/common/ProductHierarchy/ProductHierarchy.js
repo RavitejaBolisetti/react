@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Button, Col, Form, Row, Collapse, Descriptions, Input, Empty } from 'antd';
+import { Button, Col, Form, Row, Collapse, Descriptions, Input, Empty, Select } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -22,6 +22,7 @@ import TreeSelectField from '../TreeSelectField';
 
 const { Panel } = Collapse;
 const { Search } = Input;
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -346,12 +347,23 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
                                 Hierarchy
+                                <Select
+                                    placeholder="Select a option"
+                                    disabled
+                                    allowClear
+                                    className={styles.searchField}
+                                    style={{
+                                        width: '43%',
+                                    }}
+                                >
+                                    <Option value="hyr">Hyr</Option>
+                                </Select>
                                 <Search
                                     placeholder="Search"
                                     style={{
-                                        width: 300,
+                                        width: '43%',
                                     }}
                                     allowClear
                                     onChange={onChange}
@@ -359,7 +371,7 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                                 />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonContainer} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
@@ -406,13 +418,15 @@ export const ProductHierarchyMain = ({ userId, isDataLoaded, productHierarchyDat
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div>
-                                <Descriptions title={<div className={styles.contentHeaderBackground}>Hierarchy Details</div>} bordered={true} colon={true} column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}>
+                                <Descriptions title={<div className={styles.contentHeaderRightBackground}>Hierarchy Details</div>} bordered={true} colon={true} column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}>
+                                    <div className={styles.leftContanier}>
                                     <Descriptions.Item label="Attribute Level">{attributeData?.find((attribute) => attribute.id === selectedTreeData?.attributeKey)?.hierarchyAttribueName}</Descriptions.Item>
                                     <Descriptions.Item label="Parent">Parent Name</Descriptions.Item>
                                     <Descriptions.Item label="Code">{selectedTreeData.prodctCode}</Descriptions.Item>
                                     <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                                     <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
                                     <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
+                                    </div>
                                 </Descriptions>
                             </div>
                             <div className={styles.content}>
