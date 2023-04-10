@@ -5,7 +5,7 @@ export const validateRequiredInputField = (fieldName) => ({
 
 export const validateRequiredSelectField = (fieldName) => ({
     required: true,
-    message: 'Please eelect ' + fieldName,
+    message: 'Please select ' + fieldName,
 });
 
 export const validateEmailField = (fieldName) => ({

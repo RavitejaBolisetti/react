@@ -21,13 +21,26 @@
 // };
 // export default LeftPanel;
 
-import { Tree, Input } from 'antd';
 import { useMemo, useState, useEffect } from 'react';
-import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
-import { addToolTip } from 'utils/customMenuLink';
+import { Tree, Input } from 'antd';
 import styles from './TreeView.module.css';
 
 const { Search } = Input;
+
+const getParentKey = (key, tree, fieldNames) => {
+    let parentKey;
+    for (let i = 0; i < tree.length; i++) {
+        const node = tree[i];
+        if (node[fieldNames?.children]) {
+            if (node[fieldNames?.children].some((item) => item[fieldNames?.key] === key)) {
+                parentKey = node[fieldNames?.key];
+            } else if (getParentKey(key, node[fieldNames?.children])) {
+                parentKey = getParentKey(key, node[fieldNames?.children]);
+            }
+        }
+    }
+    return parentKey;
+};
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
@@ -35,42 +48,11 @@ const LeftPanel = (props) => {
     const { searchValue, setSearchValue } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
-    // const [searchValue, setSearchValue] = useState('');
     const [autoExpandParent, setAutoExpandParent] = useState(true);
 
     const onExpand = (newExpandedKeys) => {
         setExpandedKeys(newExpandedKeys);
         setAutoExpandParent(false);
-    };
-
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
-            dataList.push({
-                id: node[fieldNames?.key],
-                title: node[fieldNames?.title],
-            });
-            if (node[fieldNames?.children]) {
-                generateList(node[fieldNames?.children]);
-            }
-        }
-    };
-
-    treeData && generateList(treeData);
-    const getParentKey = (key, tree) => {
-        let parentKey;
-        for (let i = 0; i < tree.length; i++) {
-            const node = tree[i];
-            if (node[fieldNames?.children]) {
-                if (node[fieldNames?.children].some((item) => item[fieldNames?.key] === key)) {
-                    parentKey = node[fieldNames?.key];
-                } else if (getParentKey(key, node[fieldNames?.children])) {
-                    parentKey = getParentKey(key, node[fieldNames?.children]);
-                }
-            }
-        }
-        return parentKey;
     };
 
     useEffect(() => {
@@ -88,23 +70,23 @@ const LeftPanel = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
+    
+    const dataList = [];
 
-    const onChange = (e) => setSearchValue(e.target.value);
-    // const onChange = (e) => {
-    //     const { value } = e.target;
+    const generateList = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            const node = data[i];
+            dataList.push({
+                id: node[fieldNames?.key],
+                title: node[fieldNames?.title],
+            });
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
+            }
+        }
+    };
 
-    //     const newExpandedKeys = dataList
-    //         .map((item) => {
-    //             if (item?.title?.indexOf(value) > -1) {
-    //                 return getParentKey(item?.id, treeData);
-    //             }
-    //             return null;
-    //         })
-    //         .filter((item, i, self) => item && self?.indexOf(item) === i);
-    //     setExpandedKeys(value ? newExpandedKeys : []);
-    //     setSearchValue(value);
-    //     setAutoExpandParent(true);
-    // };
+    treeData && generateList(treeData);
 
     const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
@@ -144,17 +126,15 @@ const LeftPanel = (props) => {
 
     return (
         <div className={`${styles.leftpanel} ${panelParentClass}`}>
-           {isTreeViewVisible ? (
-                <div className={styles.treeViewContainer}>
-                    <div className={styles.treemenu}>
-                        <div className={isOpenInModal ? styles.modalView : ''}>
-                            <div className={styles.scrollTreeData}>
-                                <Tree expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
-                            </div>
+            <div className={styles.treeViewContainer}>
+                <div className={styles.treemenu}>
+                    <div className={isOpenInModal ? styles.modalView : ''}>
+                        <div className={styles.scrollTreeData}>
+                            <Tree expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
                         </div>
                     </div>
                 </div>
-            ) : undefined}
+            </div>
         </div>
     );
 };

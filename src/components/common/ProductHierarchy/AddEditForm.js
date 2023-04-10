@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
-import { FaSave, FaRegTimesCircle } from 'react-icons/fa';
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'components/common/Common.module.css';
@@ -16,6 +15,7 @@ const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly, formData, isDataAttributeLoaded, attributeData, productHierarchyData } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { buttonData, setButtonData, handleResetBtn, handleBack, isChecked, setIsChecked, setFieldValue, onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive } = props;
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -55,9 +55,16 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('parent'),
     };
 
+    const handleFormValueChange = () => {
+        setFormBtnActive(true);
+    };
+
+    const handleFormFieldChange = () => {
+        setFormBtnActive(true);
+    };
     return (
         <>
-            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
@@ -89,28 +96,30 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
+
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
+                    
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
                             <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
+
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                         <Button danger onClick={onCloseAction}>
-                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
                             Cancel
                         </Button>
                     </Col>
+
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger>
-                            <FaSave className={styles.buttonIcon} />
+                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>
