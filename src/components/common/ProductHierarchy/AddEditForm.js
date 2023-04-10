@@ -4,6 +4,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -12,10 +13,11 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly, formData, isDataAttributeLoaded, attributeData, productHierarchyData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData } = props;
+    console.log('🚀 ~ file: AddEditForm.js:17 ~ AddEditFormMain ~ formActionType:', formActionType);
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
-    const { buttonData, setButtonData, handleResetBtn, handleBack, isChecked, setIsChecked, setFieldValue, onFinish, onFinishFailed } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
+    const { onFinish, onFinishFailed } = props;
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -25,22 +27,21 @@ const AddEditFormMain = (props) => {
     let treeCodeId = '';
     let treeCodeReadOnly = false;
 
-    if (formActionType === 'edit' || formActionType === 'view') {
+    if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.parntProdctId;
-    } else if (formActionType === 'child') {
+    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
-    } else if (formActionType === 'sibling') {
+    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
     }
 
     useEffect(() => {
-        if (formActionType === 'sibling') {
+        if (formActionType === FROM_ACTION_TYPE.SIBLING) {
             setSelectedTreeKey([treeCodeId]);
         }
-
         setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
@@ -103,7 +104,7 @@ const AddEditFormMain = (props) => {
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
-                    
+
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
                             <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />

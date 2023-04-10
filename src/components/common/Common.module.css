@@ -621,25 +621,6 @@
     color: #ffffff !important;
 }
 
-<<<<<<< HEAD
-.buttonContainer {
-    text-align: right;
-    /* padding: 0px !important; */
-    padding-right: 18px;
-    /* margin-top: 8px; */
-}
-
-.buttonContainer button {
-    margin-left: 14px;
-}
-
-.buttonContainer .buttonIcon {
-    margin-right: 6px;
-    padding-top: 2px;
-}
-
-=======
->>>>>>> 54d622a6981bb03016b59bd1cd195a1e046fac54
 .leftpanel {
     padding: 0.2em;
     width: 99%;
@@ -818,31 +799,26 @@
     background-color: #f4f4f4;
     padding: 8px 20px;
     border-radius: 7px 7px 0px 0px;
--moz-border-radius: 7px 7px 0px 0px;
--webkit-border-radius: 7px 7px 0px 0px;
-border: 1px solid #E8E8E8;
+    -moz-border-radius: 7px 7px 0px 0px;
+    -webkit-border-radius: 7px 7px 0px 0px;
+    border: 1px solid #E8E8E8;
 }
+
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
     padding: 13px 20px;
     border-radius: 7px 7px 0px 0px;
 -moz-border-radius: 7px 7px 0px 0px;
 -webkit-border-radius: 7px 7px 0px 0px;
-border: 1px solid #E8E8E8; 
+border: 1px solid #E8E8E8;
 }
-
-.hierarchyRightContaner{border-radius: 7px 7px 0px 0px;
-    -moz-border-radius: 7px 7px 0px 0px;
-    -webkit-border-radius: 7px 7px 0px 0px;
-    border: 1px solid #E8E8E8; min-height: 72vh;}
-
 .searchAndLabelAlign{    padding-left: 0px !important; padding-right: 0px !important; margin-left: 0px !important;
     margin-right: 0px !important; vertical-align: middle;}
-.searchField{vertical-align: middle; margin: 0 10px;}
+.searchField{vertical-align: middle; margin: 0 5px;}
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
-    
+
 }
 
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
