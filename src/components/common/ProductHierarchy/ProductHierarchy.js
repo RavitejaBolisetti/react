@@ -364,7 +364,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewProductDetail {...viewProps} />
-                            <HierarchyFormButton {...viewProps} />
+                            <div className={styles.hyrbuttonContainer}>
+                                <HierarchyFormButton {...viewProps} />
+                            </div>
                         </Col>
                     ) : (
                         <div className={styles.emptyContainer}>
