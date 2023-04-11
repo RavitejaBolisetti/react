@@ -257,7 +257,6 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
     const viewProps = {
         buttonData,
         attributeData,
-        onFinish,
         selectedTreeData,
         handleButtonClick,
         styles,
