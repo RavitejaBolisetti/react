@@ -14,12 +14,12 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData.attributeKey}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData.manufactureOrgParntId}</Descriptions.Item>
-                <Descriptions.Item label="Code">{selectedTreeData.manufactureOrgCode}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Code">{selectedTreeData?.manufactureOrgCode}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureOrgShrtName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureOrgLongName}</Descriptions.Item>
-                <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label="Status">{selectedTreeData?.active ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );

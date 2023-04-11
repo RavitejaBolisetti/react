@@ -168,8 +168,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
-                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
+                const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.manufactureOrgShrtName;
+                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
             }
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -213,7 +213,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         // const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
-        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const data = { ...values, id: recordId, active: values?.active ? true : false, manufactureOrgParntId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
             // setForceFormReset(Math.random() * 10000);
@@ -229,6 +229,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 formData && setSelectedTreeData(formData?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setIsFormVisible(false);
             }
         };
 
