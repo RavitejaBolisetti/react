@@ -13,6 +13,7 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistoryGeo } from '../ChangeHistory';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewGeoDetail } from './ViewGeoDetails';
 import LeftPanel from '../LeftPanel';
@@ -60,12 +61,14 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            showGlobalNotification,
+            
         },
         dispatch
     ),
 });
 
-export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, moduleTitle, viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading }) => {
+export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, moduleTitle, viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading,showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -191,14 +194,14 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, isActive: values?.isActive ? true : false, geoParentCode: codeToBeSaved };
+        const data = { ...values, id: recordId, isActive: values?.isActive, geoParentCode: codeToBeSaved };
 
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
                 res?.data && setSelectedTreeData(res?.data);
                 setSelectedTreeKey([res?.data?.id]);
@@ -207,7 +210,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
             }
         };
         const onError = (message) => {
-            handleErrorModal(message);
+            showGlobalNotification({ message });
         };
         const requestData = {
             data: data,
