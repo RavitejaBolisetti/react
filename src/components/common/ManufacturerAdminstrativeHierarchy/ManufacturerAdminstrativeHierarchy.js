@@ -1,17 +1,21 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
+import { Button, Col, Form, Row, Input } from 'antd';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle, FaHistory } from 'react-icons/fa';
 
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
+
 import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
+import style from '../ProductHierarchy/producthierarchy.module.css';
+
+const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -42,16 +46,19 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: manufacturerAdminHierarchyDataActions.fetchList,
             saveData: manufacturerAdminHierarchyDataActions.saveData,
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
+            changeHistoryModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryModelOpen,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -59,6 +66,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
+    const [closePanels, setClosePanels] = React.useState([]);
 
     const [formData, setFormData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
@@ -66,21 +74,24 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
+    const [isChildAllowed, setIsChildAllowed] = useState(true);
+    const [isCollapsableView, setCollapsableView] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
 
-
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded]);
 
     useEffect(() => {
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
+        if (userId) {
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -274,7 +285,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
 
     return (
         <>
-            <div className={styles.geoSection}>
+            {/* <div className={styles.geoSection}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <LeftPanel {...myProps} />
@@ -345,7 +356,120 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ isChangeHistoryVisible,
                         )}
                     </Col>
                 </Row>
+            </div> */}
+            <div className={styles.geoSection}>
+                {/* {isChildAllowed} */}
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={12} lg={16} xl={16} xxl={16}>
+                        <div className={styles.contentHeaderBackground}>
+                            <Row gutter={20} className={styles.searchAndLabelAlign}>
+                                <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                    Hierarchy
+                                    <Search
+                                        placeholder="Search"
+                                        style={{
+                                            width: 300,
+                                        }}
+                                        // onChange={onChange}
+                                        allowClear
+                                        className={styles.searchField}
+                                    />
+                                </Col>
+
+                                <Col className={styles.buttonContainer} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Button type="primary" onClick={changeHistoryModelOpen}>
+                                        <FaHistory className={styles.buttonIcon} />
+                                        Change History
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </div>
+                        <LeftPanel {...myProps} />
+                    </Col>
+
+                    <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={8} className={styles.padRight0}>
+                        {isCollapsableView ? (
+                            <>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.subheading}>
+                                    <div className={styles.contentHeaderBackground}>
+                                        <Row gutter={20}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                                Hierarchy Details
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Col>
+                                <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    {isFormVisible && <AddEditForm {...formProps} />}
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
+                                            {buttonData?.editBtn && (
+                                                <Button danger onClick={() => handleEditBtn()}>
+                                                    <FaEdit className={styles.buttonIcon} />
+                                                    Edit
+                                                </Button>
+                                            )}
+
+                                            {buttonData?.rootChildBtn && (
+                                                <Button danger onClick={() => handleRootChildBtn()}>
+                                                    <FaUserPlus className={styles.buttonIcon} />
+                                                    Add Child
+                                                </Button>
+                                            )}
+
+                                            {buttonData?.childBtn && (
+                                                <Button
+                                                    danger
+                                                    onClick={() => {
+                                                        handleChildBtn();
+                                                        setClosePanels(['1']);
+                                                    }}
+                                                >
+                                                    <FaUserPlus className={styles.buttonIcon} />
+                                                    Add Child
+                                                </Button>
+                                            )}
+
+                                            {buttonData?.siblingBtn && (
+                                                <Button danger onClick={() => handleSiblingBtn()}>
+                                                    <FaUserFriends className={styles.buttonIcon} />
+                                                    Add Sibling
+                                                </Button>
+                                            )}
+
+                                            {isFormVisible && (
+                                                <>
+                                                    {buttonData?.saveBtn && (
+                                                        <Button htmlType="submit" danger>
+                                                            <FaSave className={styles.buttonIcon} />
+                                                            Save
+                                                        </Button>
+                                                    )}
+
+                                                    {buttonData?.resetBtn && (
+                                                        <Button danger onClick={handleResetBtn}>
+                                                            <FaUndo className={styles.buttonIcon} />
+                                                            Reset
+                                                        </Button>
+                                                    )}
+
+                                                    {buttonData?.cancelBtn && (
+                                                        <Button danger onClick={() => handleBack()}>
+                                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
+                                                            Cancel
+                                                        </Button>
+                                                    )}
+                                                </>
+                                            )}
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </>
+                        ) : null}
+                    </Col>
+                </Row>
             </div>
+            <ManufacturerAdminHierarchyChangeHistory />
         </>
     );
 };
