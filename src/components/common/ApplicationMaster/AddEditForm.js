@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Col, Row } from 'antd';
 import { Collapse, Space } from 'antd';
 
-import styles from 'pages/common/Common.module.css';
 
 import DrawerUtil from './DrawerUtil';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';

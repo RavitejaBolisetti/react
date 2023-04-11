@@ -1,61 +1,110 @@
 import React from 'react';
-import { Button, Col, Form, Row, Empty, Input, Tree } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
+import { Button, Col, Form, Row, Empty, Input, Tree, Card, Space, Collapse } from 'antd';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import styles from 'pages/common/Common.module.css';
-import styled from '../Common.module.css';
+import styles from './ApplicationMaster.module.css';
+import style from 'components/common/DrawerAndTable.module.css';
 
+import CardView from './CardView';
 
-let treedata = [];
+const { Panel } = Collapse;
 
-const ViewApplicationDetails = () => {
+const ViewApplicationDetails = ({ onEditApplication, onAddChild, onAddClick }) => {
+    return (
+        <Card
+            title="Application Details"
+            // bordered={false}
+            className={styles.viewCardSize}
+            actions={[
+                <>
+                    <Button onClick={onEditApplication} className={style.cancelBtn} type="primary">
+                        Edit
+                    </Button>
+                    <Space>
+                        <Button onClick={onAddChild} key="addChild" type="primary">
+                            Add Child
+                        </Button>
+                        <Button onClick={onAddClick} key="addSibling" type="primary">
+                            Add Sibling
+                        </Button>
+                    </Space>
+                </>,
+            ]}
+        >
+            <div className={styles.cardBody}>
+                <Space direction="vertical">
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                            <p> Application ID </p>
+                            <span> AP0001</span>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                            <p>Application Name</p>
+                            <span>Employee Empowerment</span>
+                        </Col>
+                    </Row>
 
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                            <p> Application Title</p>
 
-  return (
-    <div>
-         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20}>
-                                <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                    <p style={{ fontSize: '16px', padding: '6px' }}> Application Details</p>
-                                </Col>
-                            </Row>
-                        </div>
-                        <div className={styled.content}>
-                            {!treedata ? (
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <>
-                                                <span>Select Tree Leaf to view Details.</span>
-                                            </>
-                                        }
-                                    ></Empty>
-                                </Col>
-                            ) : (
-                                // <Row>
-                                //     <Col>
-                                //     </Col>
-                                // </Row>
-                                // <Row>
+                            <span>Employee Title</span>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                            <p>Application Type</p>
 
-                                // </Row>
+                            <span> Transaction</span>
+                        </Col>
+                    </Row>
 
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <p>Parent Application ID</p>
+                            <span>Geo Product</span>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                            <p>Accessible Location</p>
+                            <span>Restricted Access</span>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                            <p>Status </p>
+                            <span className={styles.activeText}>Active</span>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <p>Application Criticality Group</p>
+                            <span>Application Criticality</span>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <p>Document no. to be generated</p>
+                            <span className={styles.activeText}>Active</span>
+                        </Col>
+                    </Row>
+                    <Row>
+                    {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}> */}
 
+                        <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
+                            <Panel header="Application Actions" key="2">
+                                <CardView />
+                            </Panel>
+                        </Collapse>
+                        <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
+                            <Panel header="Document Types" key="3">
+                                <CardView />
+                            </Panel>
+                        </Collapse>
+                        
+                    {/* </Col> */}
+                    </Row>
+                </Space>
+            </div>
+        </Card>
+    );
+};
 
-                                'DATA'
-
-
-                            )}
-                        </div>
-                    </Col>
-    </div>
-  )
-}
-
-export default ViewApplicationDetails
+export default ViewApplicationDetails;

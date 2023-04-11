@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_APPLICATION_DETAILS, BASE_URL_APPLICATION_CRITICALITY_GROUP, BASE_URL_APPLICATION_ACTIONS, BASE_URL_APPLICATION_DEALER_LOCATION } from 'constants/routingApi';
+import { BASE_URL_APPLICATION_DETAILS, BASE_URL_APPLICATION_CRITICALITY_GROUP, BASE_URL_APPLICATION_ACTIONS, BASE_URL_APPLICATION_DEALER_LOCATION, BASE_URL_MENU } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED = 'APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED';
@@ -10,6 +10,7 @@ export const APPLICATION_CRITICALITY_GROUP_LOADED = 'APPLICATION_CRITICALITY_GRO
 export const DEALER_LOCATIONS_LOADED = 'DEALER_LOCATIONS_LOADED';
 export const APPLICATION_ACTON_DATA_LOADED = 'APPLICATION_ACTON_DATA_LOADED';
 export const APPLICATION_MASTER_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DATA_SHOW_LOADING';
+export const APPLICATION_DATA_LOADED = 'APPLICATION_DATA_LOADED';
 
 const receiveApplicationDetailsData = (data) => ({
     type: APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED,
@@ -28,6 +29,11 @@ const receiveDealerLocationsData = (data) => ({
 });
 const receiveApplicationActionData = (data) => ({
     type: APPLICATION_ACTON_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+const receiveMenuData = (data) => ({
+    type: APPLICATION_DATA_LOADED,
     isLoaded: true,
     data,
 });
@@ -180,6 +186,37 @@ applicationMasterDataActions.fetchApplicationCriticalityGroup = withAuthToken((p
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+applicationMasterDataActions.fetchMenuList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data, userId } = params;
+    setIsLoading(true);
+    const onError = () => errorAction('Internal Error, Please try again');
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveMenuData(res?.data));
+        } else {
+            onError();
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_MENU+ '?type=w' ,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => errorAction('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

@@ -21,6 +21,7 @@ import { menuDataActions } from 'store/actions/data/menu';
 import DrawerUtil from './DrawerUtil';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import ViewApplicationDetails from './ViewApplicationDetails';
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -56,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
 
-            fetchList: menuDataActions.fetchList,
+            fetchList: applicationMasterDataActions.fetchMenuList,
             listShowLoading: menuDataActions.listShowLoading,
 
             // fetchList: geoDataActions.fetchList,
@@ -120,6 +121,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const disabledProps = { disabled: isReadOnly };
     const [drawer, setDrawer] = useState(false);
     const [isActive, setIsActive] = useState(false);
+    const [menuType, setMenuType] = useState('w')
     const [FinalFormdata, setFinalFormdata] = useState({
         ApplicationDetails: [],
         ApplicationActions: [],
@@ -137,7 +139,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
         }
 
-        // fetchList({ setIsLoading: applicationMasterDataShowLoading, userId });//fetch menu data
+        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, menuType }); //fetch menu data
         // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
@@ -232,7 +234,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                     {/* </Col> */}
 
                     <div className={styled.content}>
-                        {treedata ? (
+                        {!treedata ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -305,9 +307,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     </>,
                                 ]}
                             >
-                                <div
-                                className={ApplicationStyle.cardBody}
-                                >
+                                <div className={ApplicationStyle.cardBody}>
                                     <Space direction="vertical">
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
