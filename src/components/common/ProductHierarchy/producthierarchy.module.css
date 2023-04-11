@@ -9,3 +9,7 @@
     padding-left: 0px !important;
     padding-right: 0px !important;
 }
+.searchField {
+    vertical-align: middle;
+    margin: 0 10px;
+}

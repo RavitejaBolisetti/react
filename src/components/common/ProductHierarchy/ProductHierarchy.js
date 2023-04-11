@@ -301,7 +301,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={style.subheading}>
+                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={styles.subheading}>
                                 Hierarchy
                                 <Select
                                     placeholder="Select a option"
