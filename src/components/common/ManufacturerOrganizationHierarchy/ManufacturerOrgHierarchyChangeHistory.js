@@ -123,10 +123,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     };
     return (
         <div className={styles.changeHistoryContainer}>
-            <div>
-                <h3>Change History</h3>
-            </div>
-
+        
             <DataTable {...tableProps} />
         </div>
     );
