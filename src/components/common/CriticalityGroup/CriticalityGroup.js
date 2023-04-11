@@ -16,7 +16,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { DataTable } from 'utils/dataTable';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
@@ -128,7 +128,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
 
-      
+
             const recordId = selectedRecord?.id || '';
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
@@ -166,7 +166,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleAdd = () => {

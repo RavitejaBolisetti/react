@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import AddEditForm from './AddEditForm';
