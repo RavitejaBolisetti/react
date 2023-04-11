@@ -12,7 +12,7 @@ export const ViewManufacturerOrgtDetailMain = ({ viewTitle, buttonData, attribut
     };
 
     return (
-        <div className={styles.viewContainer}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData.parentName}</Descriptions.Item>
