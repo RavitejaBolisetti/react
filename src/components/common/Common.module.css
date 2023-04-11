@@ -84,7 +84,23 @@
     color: #0b0b0c;
     font-size: 14px;
 }
+:global .ant-tree .ant-tree-switcher-leaf-line:before{border-inline-end: 1px dashed #d9d9d9;}
+:global .ant-tree .ant-tree-switcher-leaf-line:after{border-bottom: 1px dashed #d9d9d9;}
+.content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg{width:1.25em; height: 1.25em;}
+:global .anticon svg{width:1.25em; height: 1.25em;}
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher-leaf-line:before{border-inline-end: 1px dashed #d9d9d9;}
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher-leaf-line:after{border-bottom: 1px dashed #d9d9d9;}
 
+:global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary), 
+:global .ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {color: #FF3E5B;}
+/* :global .ant-input-search .ant-input:hover, 
+:global .ant-input-search .ant-input:focus{border-color: #e31837; border-right: none;}
+:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px;}
+:global .ant-btn-default:not(:disabled):hover{border-color: #e31837;} */
+:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px;}
+:global .ant-input-search .ant-input:hover + .ant-btn-default:not(:disabled):hover{
+    border-color: #e31837; 
+}
 /* Custom CSS */
 
 .container {
@@ -739,7 +755,7 @@
     background: #ffffff;
     left: 10px;
     bottom: 0px;
-    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15); */
 }
 
 .formFooter .footerBtnLeft {
@@ -773,7 +789,7 @@
 
 :global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
     margin-inline-start: 0px;
-    color: #00a310;
+    color: #70C922;
     /* margin-inline-end: 9px; */
 }
 
@@ -785,11 +801,11 @@
 }
 
 :global .ant-switch.ant-switch-checked {
-    background: #00a310;
+    background: #70C922;
 }
 
 :global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background: #00a310;
+    background: #70C922;
 }
 
 .addGroup {
@@ -867,6 +883,7 @@
 .content {
     border: 1px solid #e8e8e8;
     margin-top: 0px;
+    overflow-y: hidden;
 }
 
 .emptyContainer {
