@@ -12,12 +12,27 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     
-    const { onCloseAction, isChecked, handleAttributeChange,setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, manufacturerOrgHierarchyData} = props;
+    const { onCloseAction, isChecked, handleAttributeChange,setSelectedTreeKey, unFilteredAttributeData,selectedTreeData,setSelectedTreeSelectKey, setIsChecked, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, manufacturerOrgHierarchyData} = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
+    
+    let attributeHierarchyFieldValidation = {
+         rules: [validateRequiredSelectField('attribute level')],
+         };
+         if (attributeData && formData?.attributeKey) {      
+         if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {     
+         attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;     
+         } else {     
+         const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);    
+         if (Attribute) {   
+         attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName; 
+         attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
+         }
+         }
+         }
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
@@ -66,7 +81,8 @@ const AddEditFormMain = (props) => {
                         
                         <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                    <Option value={item?.id} disabled={selectedTreeData?.attributeKey === item?.id ? true : false}>
+                                    {item?.hierarchyAttribueName}</Option>
                                 ))}
                             </Select>
                     </Form.Item>
