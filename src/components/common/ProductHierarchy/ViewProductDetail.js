@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Descriptions } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { Descriptions } from 'antd';
 
 export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -13,8 +12,8 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{attributeData?.find((attribute) => attribute.id === selectedTreeData?.attributeKey)?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">Parent Name</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData.parentName}</Descriptions.Item>
                 <Descriptions.Item label="Code">{selectedTreeData.prodctCode}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>

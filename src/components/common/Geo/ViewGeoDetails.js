@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-export const ViewGeoDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
+export const ViewGeoDetailMain = ({ viewTitle,selectedTreeData,styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,

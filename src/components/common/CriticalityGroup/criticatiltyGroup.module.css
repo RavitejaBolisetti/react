@@ -162,6 +162,8 @@
 
 :global .ant-empty-normal {
     color: #635d5d;
+    align-items: center;
+    padding: 8vh 8vh;
 }
 
 :global .ant-drawer .ant-drawer-header {

@@ -300,31 +300,23 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={styles.subheading}>
+                            <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
                                 Hierarchy
                                 <Select
                                     placeholder="Select Hierarchy"
                                     allowClear
-                                    className={styles.searchField}
+                                    className={styles.headerSelectField}
                                     style={{
                                         width: '42%',
                                     }}
                                 >
                                     <Option value="hyr">Hyr</Option>
                                 </Select>
-                                <Search
-                                    placeholder="Search"
-                                    style={{
-                                        width: '41%',
-                                    }}
-                                    allowClear
-                                    onChange={onChange}
-                                    className={styles.searchField}
-                                />
+                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
+                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>
@@ -360,7 +352,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                 </Col>
 
                 {productHierarchyData.length > 0 && (
-                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
                         {isCollapsableView ? <></> : null}
 
                         {selectedTreeData && selectedTreeData?.id ? (

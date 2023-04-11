@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './HierarchyFormButton.module.css';
 
 export const HierarchyFormButton = ({ buttonData, handleButtonClick}) => {
@@ -17,12 +17,7 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick}) => {
 
             <div className={styles.btnRight}>
                 {buttonData?.childBtn && (
-                    <Button
-                        danger type="primary"
-                        onClick={() => {
-                            handleButtonClick(FROM_ACTION_TYPE.CHILD);
-                        }}
-                    >
+                    <Button danger type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
                         Add Child
                     </Button>
                 )}

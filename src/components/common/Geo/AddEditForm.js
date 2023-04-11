@@ -27,14 +27,14 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.parntProdctId;
+        treeCodeId = formData?.geoParentCode;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+        treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
     }
 
     useEffect(() => {
@@ -100,56 +100,10 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item label="Status" name="isActive">
-                            <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                            <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
-                {/* <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Geographical Attribute Level" rules={[validateRequiredSelectField('Geographical Attribute Level')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
-                                {attributeData?.map((item) => (
-                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="geoParentCode">
-                            <TreeSelectField {...treeSelectFieldProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                            <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
-                            <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                            <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row> */}
-
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                         <Button danger onClick={onCloseAction}>

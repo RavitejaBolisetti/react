@@ -199,15 +199,18 @@
     text-align: left;
     padding-left: 18px;
 }
+
 .buttonHeadingContainer {
-    /* margin-top: 10px; */
+    margin-top: 0px;
     display: inline-block;
     width: 100%;
     padding: 0;
+    text-align: left;
 }
 .buttonHeadingContainer .buttonIcon {
     margin-right: 6px;
     padding-top: 2px;
+    float: none;
 }
 .hyrbuttonContainer {
     border: 1px solid #e8e8e8;
@@ -220,8 +223,10 @@
     width: 100%;
     padding: 0;
 }
-:global .ant-btn-primary.ant-btn-dangerous:disabled, 
-:global .ant-btn-primary:disabled{border-color: #B5B5B6;}
+:global .ant-btn-primary.ant-btn-dangerous:disabled,
+:global .ant-btn-primary:disabled {
+    border-color: #b5b5b6;
+}
 .buttonContainer .buttonIcon {
     margin-right: 6px;
     padding-top: 2px;
@@ -821,6 +826,16 @@
     vertical-align: middle;
     margin: 0 8px;
 }
+.headerSearchField {
+    vertical-align: middle;
+    margin: 0 5px;
+    width: 41%;
+}
+.headerSelectField {
+    vertical-align: middle;
+    margin: 0 5px;
+    width: 41%;
+}
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
@@ -851,14 +866,7 @@
 
 .content {
     border: 1px solid #e8e8e8;
-    /* border: 1px solid rgba(200, 200, 200, 0.55);
-    border-top: none;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    /* overflow: auto; */
-    /* height: calc(100vh - 240px);
-    width: 100%;
-    padding: 4% 2%; */
+    margin-top: 0px;
 }
 
 .emptyContainer {
@@ -876,11 +884,9 @@
 
 .viewContainer :global .ant-descriptions-view table tbody tr th {
     padding: 8px 10px 2px !important;
-    
 }
 .viewContainer :global .ant-descriptions-view table tbody tr td {
     padding: 3px 10px 9px !important;
-
 }
 .viewContainer :global .ant-descriptions .ant-descriptions-item-label {
     color: rgba(11, 11, 12, 1) !important;
@@ -898,12 +904,66 @@
     -moz-border-radius: 7px 7px 0px 0px;
     -webkit-border-radius: 7px 7px 0px 0px;
     border: 1px solid #e8e8e8;
-    min-height: 72vh;
+    height: calc(100vh - 234px);
+    overflow-y: auto;
+    margin-top: 0px;
+}
+.hierarchyRightContaner::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+    background-color: #f4f4f4;
+}
+
+.hierarchyRightContaner::-webkit-scrollbar {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+    background-color: #f4f4f4;
+    width: 5px;
+}
+
+.hierarchyRightContaner:hover::-webkit-scrollbar {
+    width: 5px !important;
+}
+.hierarchyRightContaner::-webkit-scrollbar-thumb {
+  background-color: rgba(52, 44, 44, 0.34);
+  border-radius: 10px;
+  /* border: 2px solid ; */
 }
 
 @media (max-width: 768px) {
     /* For mobile phones: */
+    /* .contentHeaderBackground{text-align: center;} */
 
+    .headerSearchField {
+        vertical-align: middle;
+        margin: 0 0px;
+        width: 100%;
+    }
+    .headerSearchField span {
+        width: 100%;
+    }
+    .headerSelectField {
+        vertical-align: middle;
+        margin: 5px 0px 0;
+        width: 100%;
+    }
+    .buttonHeadingContainer {
+        margin-top: 10px;
+        display: inline-block;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+         padding-right: 0px!important;
+    }
+    .hierarchyRightContaner {
+        margin-top: 10px;
+    }
+    .content {
+        margin-top: 10px;
+    }
+    .buttonHeadingContainer .buttonIcon {
+        margin-right: 6px;
+        padding-top: 2px;
+        float: none;
+    }
     .leftpanel {
         height: auto;
         margin-left: 4px;
@@ -994,6 +1054,9 @@
 
     .padRight0 {
         padding-right: 0px !important;
+    }
+    .pad0 {
+        padding: 0px !important;
     }
 
     .gap {
