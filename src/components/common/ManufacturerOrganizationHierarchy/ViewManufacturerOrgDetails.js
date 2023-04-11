@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Descriptions } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { Descriptions } from 'antd';
 
 export const ViewManufacturerOrgtDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -14,9 +13,9 @@ export const ViewManufacturerOrgtDetailMain = ({ viewTitle, buttonData, attribut
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData.parentName}</Descriptions.Item>
-                <Descriptions.Item label="Code">{selectedTreeData.manufactureOrgCode}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Code">{selectedTreeData?.manufactureOrgCode}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureOrgShrtName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureOrgLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>

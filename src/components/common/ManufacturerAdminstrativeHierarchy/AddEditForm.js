@@ -14,7 +14,6 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
-    console.log('🚀 ~ file: AddEditForm.js:17 ~ AddEditFormMain ~ formActionType:', formActionType);
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
@@ -68,8 +67,8 @@ const AddEditFormMain = (props) => {
             <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Hierarchy Attribute Type" rules={[validateRequiredSelectField('Hierarchy Attribute Type')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Hierarchy Attribute Type')} {...disabledProps} showSearch allowClear>
+                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
+                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                 ))}
@@ -106,8 +105,8 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                            <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                        <Form.Item initialValue={formData?.active} label="Status" name="active">
+                            <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>

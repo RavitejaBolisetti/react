@@ -304,7 +304,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                             <Col xs={19} sm={19} md={19} lg={19} xl={19} className={styles.subheading}>
                                 Hierarchy
                                 <Select
-                                    placeholder="Select a option"
+                                    placeholder="Select Hierarchy"
                                     allowClear
                                     className={styles.searchField}
                                     style={{
