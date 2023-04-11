@@ -176,6 +176,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
             formData && setFormData(formData?.data);
         }
         setIsFormVisible(true);
+        setFormBtnActive(false);
         setFormActionType(type);
     };
 
@@ -256,6 +257,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
     const viewProps = {
         buttonData,
         attributeData,
+        onFinish,
         selectedTreeData,
         handleButtonClick,
         styles,
