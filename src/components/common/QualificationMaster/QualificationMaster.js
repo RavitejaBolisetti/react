@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
         isLoading,
         qualificationData,
         isLoadingOnSave,
-        isFormDataLoaded
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -82,8 +82,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
 
-  
-
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
@@ -101,7 +99,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
-
 
     useEffect(() => {
         if (userId) {
@@ -122,15 +119,13 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
 
-
-
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             width: '6%',
-            sorter: false
+            sorter: false,
         })
     );
 
@@ -138,14 +133,14 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
-            width: '17%'
+            width: '17%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
-            width: '40%'
+            width: '40%',
         })
     );
     tableColumn.push(
@@ -191,7 +186,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false)
+            onSaveShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
@@ -205,9 +200,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             }
         };
 
-      
         const onError = (message) => {
-            onSaveShowLoading(false)
+            onSaveShowLoading(false);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
         };
 
@@ -386,7 +380,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
                                 description={
                                     !qualificationData?.length ? (
