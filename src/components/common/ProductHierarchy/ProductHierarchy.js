@@ -47,8 +47,8 @@ const mapStateToProps = (state) => {
         userId,
         isChangeHistoryVisible: changeHistoryVisible,
         isDataLoaded,
-        productHierarchyData,
-        // productHierarchyData: [],
+        //productHierarchyData,
+        productHierarchyData: [],
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
@@ -347,9 +347,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.floatRight}`} type="primary" danger onClick={handleAdd}>
+                                    <div>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
+                                    </div>
                                 </Empty>
                             </div>
                         ) : (

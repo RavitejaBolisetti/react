@@ -221,9 +221,9 @@
     margin-top: 5px;
 }
 
-:global .ant-empty .ant-empty-footer {
+/* :global .ant-empty .ant-empty-footer {
     margin-top: 24px;
-}
+} */
 
 :global .ant-empty-normal {
     color: #635d5d;

@@ -317,7 +317,9 @@
     border-radius: 6px;
     box-shadow: none;
 }
-
+:global .ant-empty .ant-empty-footer {
+    margin-top: 12px;
+}
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
@@ -863,7 +865,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: calc(100vh - 400px);
+    height: calc(100vh - 230px);
 }
 
 /* .viewContainer :global .ant-descriptions .ant-descriptions-row>td,
