@@ -7,7 +7,7 @@ export const ViewManufacturerOrgtDetailMain = ({ viewTitle, buttonData, attribut
         bordered: false,
         colon: false,
         layout: 'vertical',
-        title: <div className={styles.contentHeaderBackground}>{viewTitle}</div>,
+        title: <div className={styles.contentHeaderRightBackground}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 

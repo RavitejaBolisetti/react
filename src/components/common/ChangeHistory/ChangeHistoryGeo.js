@@ -7,18 +7,20 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
+import { withDrawer } from 'components/withDrawer';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            Geo: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
 
     let returnValue = {
         userId,
         isHistoryLoading,
+        isVisible: changeHistoryVisible,
         isHistoryLoaded,
         changeHistoryData: changeHistoryData,
     };
@@ -31,6 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: geoDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: geoDataActions.changeHistoryShowLoading,
+            onCloseAction: geoDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
@@ -109,4 +112,4 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
     );
 };
 
-export const ChangeHistoryGeo = connect(mapStateToProps, mapDispatchToProps)(ChangeHistoryGeoMain);
+export const ChangeHistoryGeo = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryGeoMain, {title: 'Change History', width: '90%'}));

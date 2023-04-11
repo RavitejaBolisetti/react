@@ -10,10 +10,11 @@ import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { showGlobalNotification } from 'store/actions/notification';
+
 import { AddEditForm } from './AddEditForm';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ChangeHistory } from '../ChangeHistory';
+import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
 
 import { FaHistory } from 'react-icons/fa';
@@ -69,14 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-
+            showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -102,8 +103,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
-
-    const fnCanAddChild = (value) => value === 'Y';
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
@@ -201,7 +200,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
-        setIsChildAllowed(fnCanAddChild(selectedAttribute?.isChildAllowed));
+        setIsChildAllowed(selectedAttribute?.isChildAllowed);
     };
 
     const handleResetBtn = () => {
@@ -211,21 +210,22 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
                 formData && setSelectedTreeData(formData?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setIsFormVisible(false);
             }
         };
         const onError = (message) => {
-            handleErrorModal(message);
+            showGlobalNotification({ message });
         };
         const requestData = {
             data: data,
@@ -342,9 +342,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                     }
                                 >
                                     <div>
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add
-                                    </Button>
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            Add
+                                        </Button>
                                     </div>
                                 </Empty>
                             </div>

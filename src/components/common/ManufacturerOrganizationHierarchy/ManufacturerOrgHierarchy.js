@@ -159,7 +159,7 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.manufactureOrgShrtName;
+                const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
                
             }
@@ -306,7 +306,7 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.contentHeaderRightBackground}>
                                 Hierarchy
                                
                                 <Search
@@ -316,11 +316,11 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
                                     }}
                                     allowClear
                                     onChange={onChange}
-                                    className={styles.searchField}
+                                    className={style.searchField}
                                 />
                             </Col>
                             {manufacturerOrgHierarchyData.length > 0 && (
-                                <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
+                                <Col className={styles.buttonHeadingContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History

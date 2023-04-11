@@ -1,4 +1,4 @@
-import { GEO_DATA_LOADED, GEO_SET_FORM_IS_VISIBLE, GEO_SET_FORM_DATA, GEO_DATA_SHOW_LOADING, GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING } from 'store/actions/data/geo';
+import { GEO_DATA_LOADED, GEO_SET_FORM_IS_VISIBLE, GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_VISIBLE, GEO_SET_FORM_DATA, GEO_DATA_SHOW_LOADING, GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING } from 'store/actions/data/geo';
 
 const initialState = {
     isLoaded: false,
@@ -10,6 +10,7 @@ const initialState = {
     isHistoryLoaded: false,
     historyData: [],
     isHistoryLoading: false,
+    changeHistoryVisible: false,
 };
 
 export const Geo = (state = initialState, action) => {
@@ -26,6 +27,8 @@ export const Geo = (state = initialState, action) => {
             return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
         case GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
+            case GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_VISIBLE:
+            return { ...state, changeHistoryVisible: action.visible };
         default:
             return { ...state };
     }
