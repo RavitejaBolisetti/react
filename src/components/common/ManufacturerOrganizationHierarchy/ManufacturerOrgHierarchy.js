@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
         manufacturerOrgHierarchyData,
         isDataAttributeLoaded,
         viewTitle,
-        attributeData: attributeData?.filter((i) => i),
+        attributeData: attributeData?.filter((i) => i?.status),
     };
     return returnValue;
 };
@@ -144,12 +144,14 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
                 const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
             }
-
+            else{
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            }
         }
 
         setSelectedTreeKey(keys);
