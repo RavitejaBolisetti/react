@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Descriptions } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { Descriptions } from 'antd';
 
 export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {

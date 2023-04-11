@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Select, Input, Empty} from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle, FaHistory } from 'react-icons/fa';
+// import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle, FaHistory } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css'
@@ -20,6 +20,7 @@ import { ViewDealerDetails } from './ViewDealerDetails';
 import { HierarchyFormButton } from 'components/common/Button';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { showGlobalNotification } from 'store/actions/notification';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -56,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: dealerHierarchyDataActions.saveData,
             listShowLoading: dealerHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: dealerHierarchyDataActions.changeHistoryModelOpen,
+            showGlobalNotification,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -65,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading,changeHistoryModelOpen }) => {
+export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading,changeHistoryModelOpen,showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -150,8 +152,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     const flatternData = generateList(finaldealerHierarchyData);
 
     // const handleTreeViewClick = (keys) => {
-    //     setForceFormReset(Math.random() * 10000);
-    //     setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
+    //     // setForceFormReset(Math.random() * 10000);
+    //     // setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
     //     form.resetFields();
     //     setIsFormVisible(false);
     //     setFormData([]);
@@ -182,11 +184,11 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             const formData = flatternData.find((i) => keys[0] === i.key);
 
             if (formData) {
-                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
-                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.hierarchyAttribueName;
+                const prodctShrtName = flatternData.find((i) => formData?.data?.parentId === i.key)?.data?.prodctShrtName;
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
             }
 
@@ -266,7 +268,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
                 formData && setSelectedTreeData(formData?.data);
                 setSelectedTreeKey([res?.data?.id]);
@@ -274,7 +276,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             }
         };
         const onError = (message) => {
-            handleErrorModal(message);
+            showGlobalNotification({ message });
         };
         const requestData = {
             data: data,
@@ -289,6 +291,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => { });
     };
+
 
     const handleButtonClick = (type) => {
         setFormData([]);
