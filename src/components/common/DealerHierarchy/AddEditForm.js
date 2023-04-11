@@ -61,13 +61,13 @@ const AddEditFormMain = (props) => {
         treeCodeId = treeCodeData && treeCodeData?.data?.parentId;
     }
 
-    // useEffect(() => {
+    useEffect(() => {
     //     if (formActionType === 'sibling') {
     //         setSelectedTreeKey([treeCodeId]);
     //     }
-    //     setSelectedTreeSelectKey(treeCodeId);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [treeCodeId]);
+        setSelectedTreeSelectKey(treeCodeId);
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
 
     const handleChange = (event) => {
         const formInputType = attributeData?.find((i) => i.id === event)?.hierarchyAttribueCode;
