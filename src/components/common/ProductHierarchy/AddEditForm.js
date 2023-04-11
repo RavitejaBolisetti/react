@@ -13,11 +13,10 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    
+
     const [form] = Form.useForm();
     const { onFinish, onFinishFailed } = props;
 
@@ -64,7 +63,7 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
-    
+
     return (
         <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
@@ -107,8 +106,8 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                    <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                        <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                    <Form.Item initialValue={formData?.active} label="Status" name="active">
+                        <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
