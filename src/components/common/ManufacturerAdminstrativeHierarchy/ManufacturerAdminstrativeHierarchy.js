@@ -88,7 +88,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
 
     const [searchValue, setSearchValue] = useState('');
 
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
+    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
@@ -106,11 +106,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-
-    useEffect(() => {
-        form.resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -142,7 +137,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
 
     const handleTreeViewClick = (keys) => {
         setForceFormReset(Math.random() * 10000);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
+        setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
@@ -161,8 +156,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             }
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-        } else {
-            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
         }
 
         setSelectedTreeKey(keys);
@@ -175,6 +168,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
 
     const handleAdd = () => {
         setIsFormVisible(true);
+        setFormBtnActive(false);
     };
 
     const handleButtonClick = (type) => {
@@ -186,6 +180,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         }
         setIsFormVisible(true);
         setFormActionType(type);
+        setFormBtnActive(false);
     };
 
     const handleAttributeChange = (value) => {
@@ -204,7 +199,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         const onSuccess = (res) => {
             form.resetFields();
 
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             formData && setFormData(data);
 
             if (res?.data) {
@@ -213,6 +208,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 formData && setSelectedTreeData(formData?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setFormBtnActive(false);
                 setIsFormVisible(false);
             }
         };
