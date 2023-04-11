@@ -70,31 +70,26 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, moduleTitle, viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading,showGlobalNotification }) => {
     const [form] = Form.useForm();
-    const [isCollapsableView, setCollapsableView] = useState(true);
-    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [isFormVisible, setIsFormVisible] = useState(false);
+        const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+        const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
-    const [formActionType, setFormActionType] = useState('');
-    const [selectedTreeData, setSelectedTreeData] = useState([]);
+        const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+        const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
+        const [formActionType, setFormActionType] = useState('');
 
-    const [formData, setFormData] = useState([]);
-    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
-    const [isChildAllowed, setIsChildAllowed] = useState(true);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
+        const [formData, setFormData] = useState([]);
+        const [selectedTreeData, setSelectedTreeData] = useState([]);
 
-    const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+        const [isFormBtnActive, setFormBtnActive] = useState(false);
+        const [searchValue, setSearchValue] = useState('');
+
+        const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
+
+        const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+        const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     const fnCanAddChild = (value) => value === 'Y';
 
-    useEffect(() => {
-        setCollapsableView(!isChildAllowed);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isChildAllowed]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -160,7 +155,6 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         } else {
             setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
-            setIsChildAllowed(true);
         }
 
         setSelectedTreeKey(keys);
@@ -172,6 +166,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
     };
 
     const handleAdd = () => {
+        setFormBtnActive(false);
         setIsFormVisible(true);
     };
 
@@ -188,7 +183,6 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
-        setIsChildAllowed(fnCanAddChild(selectedAttribute?.isChildAllowed));
     };
 
     const onFinish = (values) => {
@@ -206,6 +200,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
                 res?.data && setSelectedTreeData(res?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setFormBtnActive(false);
                 setIsFormVisible(false);
             }
         };
@@ -239,8 +234,6 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
     };
 
     const formProps = {
-        isChecked,
-        setIsChecked,
         setSelectedTreeKey,
         handleAttributeChange,
         flatternData,
@@ -330,7 +323,6 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                    {isCollapsableView ? <></> : null}
 
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
