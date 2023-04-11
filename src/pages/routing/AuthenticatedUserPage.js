@@ -7,7 +7,7 @@ import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
-import { BiReportPage } from 'pages/report';
+import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 
 import { CMSPage } from 'pages/cms';
 
