@@ -219,6 +219,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
             console.log(formData?.data);
         }
         setIsFormVisible(true);
+        setFormBtnActive(false);
         setFormActionType(type);
     };
 

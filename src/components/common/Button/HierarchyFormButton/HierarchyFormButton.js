@@ -4,7 +4,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from './HierarchyFormButton.module.css';
 
-export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
+export const HierarchyFormButton = ({ buttonData, handleButtonClick}) => {
     return (
         <div className={styles.hierarchyButtonContainer}>
             <div className={styles.btnLeft}>
