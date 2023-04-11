@@ -65,6 +65,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLoc
             <Row>
                 <Select
                     // defaultValue={record[dataIndex]}
+                    getPopupContainer={triggerNode => triggerNode.parentElement}
                     labelInValue
                     showSearch
                     placeholder="Select accesable location"

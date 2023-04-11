@@ -384,3 +384,7 @@
     padding-right: 0px;
 }
 
+/* .collapseContent :global(.ant-collapse .ant-collapse-content>.ant-collapse-content-box){
+    padding: 2px 16px 16px 16px;
+} */
+

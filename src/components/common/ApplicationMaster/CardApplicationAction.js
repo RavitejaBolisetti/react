@@ -12,7 +12,7 @@ import { Fragment } from 'react';
 const { Text } = Typography;
 
 const CardApplicationAction = (props) => {
-    const { status, applicationName, id, setApplicationList, forceUpdate } = props;
+    const { status, applicationName, id, setApplicationList, forceUpdate, setIsBtnDisabled, isBtnDisabled } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -27,6 +27,7 @@ const CardApplicationAction = (props) => {
             status: values.status,
         });
         setIsEditing(true);
+        setIsBtnDisabled(true)
     };
 
     // on clicking save button updates data
@@ -42,6 +43,7 @@ const CardApplicationAction = (props) => {
             return newList;
         });
         setIsEditing(false);
+        setIsBtnDisabled(false)
         form.resetFields();
         forceUpdate()
     };
@@ -49,6 +51,7 @@ const CardApplicationAction = (props) => {
     // on cancel editing
     const onCancel = () => {
         setIsEditing(false);
+        setIsBtnDisabled(false);
     };
 
     return (
@@ -78,7 +81,7 @@ const CardApplicationAction = (props) => {
                         <Row justify="end">
                             {!isEditing ? (
                                 <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Button type="link" icon={<FiEdit />} onClick={() => onEdit({ status, applicationName, id })} />
+                                    <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, applicationName, id })} />
                                 </Col>
                             ) : (
                                 <>

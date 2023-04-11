@@ -7,7 +7,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'pages/common/Common.module.css';
 
-function DocumentTypesForm({ form, onFinish, isEditing }) {
+function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled }) {
 
     
 
@@ -46,7 +46,7 @@ function DocumentTypesForm({ form, onFinish, isEditing }) {
                 </Col>
             </Row>
             {!isEditing && (
-                <Button icon={<PlusOutlined />} type="primary" danger htmlType="submit">
+                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit">
                     Add
                 </Button>
             )}

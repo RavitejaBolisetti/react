@@ -12,7 +12,7 @@ import DocumentTypesForm from './DocumentTypesForm';
 const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, FinalFormdata }) => {
     const [docData, setDocData] = useState([]);
     const [DocumentTypesList, setDocumentTypesList] = useState([]);
-    const [isdisable, setIsDisabled] = useState(false)
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false)
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const [actionForm] = Form.useForm();
@@ -34,11 +34,11 @@ const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed
 
     return (
         <Fragment>
-            <DocumentTypesForm form={actionForm} onFinish={onActionFormFinish} />
+            <DocumentTypesForm form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled}  isBtnDisabled={isBtnDisabled}/>
 
             {DocumentTypesList.length > 0 &&
                 DocumentTypesList.map((action) => {
-                    return <CardDocumentType {...action} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} />;
+                    return <CardDocumentType {...action} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled}  isBtnDisabled={isBtnDisabled}/>;
                 })}
         </Fragment>
     );

@@ -6,11 +6,12 @@ import { Typography } from 'antd';
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
+import { FaLessThanEqual } from 'react-icons/fa';
 
 const { Text } = Typography;
 
 const CardDocumentType = (prop) => {
-    const {tncReq, signatureReq, documentName, docCode,setDocumentTypesList,forceUpdate} = prop;
+    const {tncReq, signatureReq, documentName, docCode,setDocumentTypesList,forceUpdate, setIsBtnDisabled,  isBtnDisabled } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -25,6 +26,7 @@ const CardDocumentType = (prop) => {
             status: values.status,
         });
         setIsEditing(true);
+        setIsBtnDisabled(true);
     };
 
     // on clicking save button updates data
@@ -39,6 +41,7 @@ const CardDocumentType = (prop) => {
             return newList;
         });
         setIsEditing(false);
+        setIsBtnDisabled(false)
         form.resetFields();
         forceUpdate()
     };
@@ -46,6 +49,7 @@ const CardDocumentType = (prop) => {
     // on cancel editing
     const onCancel = () => {
         setIsEditing(false);
+        setIsBtnDisabled(false)
     };
 
 
@@ -58,7 +62,7 @@ const CardDocumentType = (prop) => {
                 border: '1px solid rgba(62, 62, 62, 0.1)',
             }}
         >
-            <Row >
+            <Row align='middle' >
                 <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                     <Row align="middle">
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} >
@@ -82,7 +86,7 @@ const CardDocumentType = (prop) => {
                     <Row justify="end">
                             {!isEditing ? (
                                 <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Button type="link" icon={<FiEdit />} onClick={() => onEdit(tncReq, signatureReq, documentName, docCode)} />
+                                    <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(tncReq, signatureReq, documentName, docCode)} />
                                 </Col>
                             ) : (
                                 <>
