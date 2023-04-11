@@ -213,7 +213,7 @@
     border: 1px solid #e8e8e8;
     border-top: 0px solid #e8e8e8;
 }
-
+:global .ant-btn-primary:disabled{border-color: #B5B5B6;}
 .buttonContainer {
     margin-top: 10px;
     display: inline-block;
@@ -801,7 +801,7 @@
 
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
-    padding: 13px 20px;
+    padding: 13px;
     border-radius: 7px 7px 0px 0px;
     -moz-border-radius: 7px 7px 0px 0px;
     -webkit-border-radius: 7px 7px 0px 0px;
@@ -872,16 +872,17 @@
 } */
 
 .viewContainer :global .ant-descriptions-view table tbody tr th {
-    padding: 8px 10px 3px !important;
+    padding: 8px 10px 2px !important;
     
 }
 .viewContainer :global .ant-descriptions-view table tbody tr td {
-    padding: 3px 10px 8px !important;
+    padding: 3px 10px 9px !important;
 
 }
 .viewContainer :global .ant-descriptions .ant-descriptions-item-label {
     color: rgba(11, 11, 12, 1) !important;
     font-size: 14px !important;
+    font-weight: 500;
 }
 
 .viewContainer :global .ant-descriptions .ant-descriptions-item-content {
