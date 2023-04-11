@@ -10,10 +10,10 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, geoData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, selectedTreeData, isDataAttributeLoaded, attributeData, unFilteredAttributeData, geoData } = props;
+    console.log('🚀 ~ file: AddEditForm.js:16 ~ AddEditFormMain ~ selectedTreeData:', selectedTreeData, formData);
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
@@ -22,6 +22,22 @@ const AddEditFormMain = (props) => {
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
 
     const disabledProps = { disabled: isReadOnly };
+
+    let attributeHierarchyFieldValidation = {
+        rules: [validateRequiredSelectField('attribute level')],
+    };
+
+    if (attributeData && formData?.attributeKey) {
+        if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
+            attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
+        } else {
+            const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);
+            if (Attribute) {
+                attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
+                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
+            }
+        }
+    }
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
@@ -67,10 +83,12 @@ const AddEditFormMain = (props) => {
             <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
+                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" {...attributeHierarchyFieldValidation}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                    <Option value={item?.id} disabled={selectedTreeData?.attributeKey === item?.id ? true : false}>
+                                        {item?.hierarchyAttribueName}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
