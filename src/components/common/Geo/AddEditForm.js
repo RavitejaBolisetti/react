@@ -10,11 +10,10 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, geoData } = props;
-    const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, selectedTreeData, isDataAttributeLoaded, attributeData, unFilteredAttributeData, geoData } = props;
+    const { selectedTreeKey, selectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
 
@@ -23,8 +22,25 @@ const AddEditFormMain = (props) => {
 
     const disabledProps = { disabled: isReadOnly };
 
+    let attributeHierarchyFieldValidation = {
+        rules: [validateRequiredSelectField('attribute level')],
+    };
+
+    if (attributeData && formData?.attributeKey) {
+        if (attributeData.find((attribute) => attribute.id === formData?.attributeKey)) {
+            attributeHierarchyFieldValidation.initialValue = formData?.attributeKey;
+        } else {
+            const Attribute = unFilteredAttributeData.find((attribute) => attribute.id === formData?.attributeKey);
+            if (Attribute) {
+                attributeHierarchyFieldValidation.initialValue = Attribute?.hierarchyAttribueName;
+                attributeHierarchyFieldValidation.rules.push({ type: 'number', message: Attribute?.hierarchyAttribueName + ' is not active anymore. Please select a different attribute. ' });
+            }
+        }
+    }
+
     let treeCodeId = '';
     let treeCodeReadOnly = false;
+    let selectedAttribute = selectedTreeData?.attributeKey;
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.geoParentCode;
@@ -33,17 +49,20 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+
+        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
+        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    useEffect(() => {
-        if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-            setSelectedTreeKey([treeCodeId]);
-        }
-        setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    // useEffect(() => {
+    //     if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    //         setSelectedTreeKey([treeCodeId]);
+    //     }
+    //     setSelectedTreeSelectKey(treeCodeId);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -67,10 +86,12 @@ const AddEditFormMain = (props) => {
             <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
+                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" {...attributeHierarchyFieldValidation}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                    <Option value={item?.id} disabled={selectedAttribute === item?.id ? true : false}>
+                                        {item?.hierarchyAttribueName}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
