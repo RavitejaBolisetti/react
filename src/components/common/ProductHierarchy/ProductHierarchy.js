@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
         isChangeHistoryVisible: changeHistoryVisible,
         isDataLoaded,
         productHierarchyData,
-        // productHierarchyData: [],
+        //productHierarchyData: [],
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
@@ -324,9 +324,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                 />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
+                                <Col className={styles.buttonHeadingContainer}  xs={5} sm={5} md={5} lg={5} xl={5}>
+                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`}>
+                                        <FaHistory className={styles.buttonIcon}  />
                                         Change History
                                     </Button>
                                 </Col>
@@ -347,9 +347,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <div>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
+                                    </div>
                                 </Empty>
                             </div>
                         ) : (
