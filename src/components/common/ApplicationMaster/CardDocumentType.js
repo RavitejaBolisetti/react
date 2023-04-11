@@ -52,7 +52,7 @@ const CardDocumentType = (prop) => {
     return <>
         <Card
             style={{
-                width: 440,
+                // width: 440,
                 backgroundColor: "#BEBEBE1A",
                 marginTop: '12px',
                 border: '1px solid rgba(62, 62, 62, 0.1)',

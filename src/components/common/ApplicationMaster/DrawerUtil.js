@@ -18,9 +18,10 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState('');
+    const [applicationForm] = Form.useForm();
 
     let drawerTitle = 'Add Application Details';
     if (formActionType === 'add') {
@@ -38,7 +39,7 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
     const onClose = () => {
         setDrawer(false);
         setFormBtnDisable(false);
-        form.resetFields();
+        applicationForm.resetFields();
     };
 
     return (
@@ -59,13 +60,6 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
                                     Edit
                                 </Button>
                             )}
-
-                            {/* {buttonData?.rootChildBtn && (
-                                <Button danger onClick={() => console.log('hh')}>
-                                    <FaUserPlus className={styles.buttonIcon} />
-                                    Add Child
-                                </Button>
-                            )} */}
 
                             {buttonData?.childBtn && (
                                 <Button danger onClick={() => console.log('hh')}>
@@ -97,12 +91,12 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
                                         </Button>
                                     )}
 
-                                    {buttonData?.cancelBtn && (
+                                    {/* {buttonData?.cancelBtn && (
                                         <Button danger onClick={() => console.log('hh')}>
                                             <FaRegTimesCircle size={15} className={styles.buttonIcon} />
                                             Cancel
                                         </Button>
-                                    )}
+                                    )} */}
 
                                     <Button danger className={style.cancelBtn} onClick={onClose}>
                                         Cancel
@@ -125,7 +119,7 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
                     }}
                 >
                     {/*Application Details  */}
-                    <ApplicationDetails setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} onFinish={onFinish} />
+                    <ApplicationDetails setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} onFinish={onFinish} form={applicationForm} />
 
                     <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header="Application Actions" key="1">

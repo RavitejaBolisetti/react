@@ -9,11 +9,11 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
 import CardView from './CardView';
+
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import styled from '../Common.module.css';
 import ApplicationStyle from './ApplicationMaster.module.css';
-import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
 
@@ -170,55 +170,51 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const fieldNames = { title: 'geoCode', key: 'id', children: 'subGeo' };
 
-    // const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
-
     return (
         <>
             <Row span={24} gutter={20}>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}> */}
                 <Col Col xs={16} sm={16} md={16} lg={16} xl={16}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
-                                            Application List
-                                        </Col> */}
                                         <Row gutter={20} style={{ border: '1px' }}>
-                                            <Space>
-                                                <div className={styl.changeThemeBorder}>
-                                                    <Button
-                                                        type="secondary"
-                                                        danger
-                                                        onClick={handleClick}
-                                                        style={{
-                                                            backgroundColor: isActive ? '' : '#ff3e5b',
-                                                            color: isActive ? '' : 'white',
-                                                        }}
-                                                    >
-                                                        Web
-                                                    </Button>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                                <Space>
+                                                    <div className={ApplicationStyle.changeThemeBorder}>
+                                                        <Button
+                                                            type="secondary"
+                                                            danger
+                                                            onClick={handleClick}
+                                                            style={{
+                                                                backgroundColor: isActive ? '' : '#ff3e5b',
+                                                                color: isActive ? '' : 'white',
+                                                            }}
+                                                        >
+                                                            Web
+                                                        </Button>
 
-                                                    <Button
-                                                        type="secondary"
-                                                        danger
-                                                        onClick={handleClick}
-                                                        style={{
-                                                            backgroundColor: isActive ? '#ff3e5b' : '',
-                                                            color: isActive ? 'white' : '',
-                                                        }}
-                                                    >
-                                                        Mobile
-                                                    </Button>
-                                                </div>
-                                            </Space>
+                                                        <Button
+                                                            type="secondary"
+                                                            danger
+                                                            onClick={handleClick}
+                                                            style={{
+                                                                backgroundColor: isActive ? '#ff3e5b' : '',
+                                                                color: isActive ? 'white' : '',
+                                                            }}
+                                                        >
+                                                            Mobile
+                                                        </Button>
+                                                    </div>
+                                                </Space>
+                                            </Col>
 
-                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                            <Col xs={18} sm={18} md={18} lg={18} xl={12}>
                                                 <Search
                                                     placeholder="Search"
                                                     style={{
-                                                        width: 300,
+                                                        width: '100%',
                                                         borderColor: 'red',
                                                     }}
                                                     allowClear
@@ -235,7 +231,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                     {/* </Col> */}
 
                     <div className={styled.content}>
-                        {/* <Row gutter={20}> */}
                         {treedata ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Empty
@@ -289,13 +284,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                 {true && (
                     <>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                            {/* <div className={styles.contentHeaderBackground}>
-                                <Row gutter={20}>
-                                    <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                        <p style={{ fontSize: '16px', padding: '6px' }}> Application Details</p>
-                                    </Col>
-                                </Row>
-                            </div> */}
                             <Card
                                 title="Application Details"
                                 // bordered={false}
@@ -316,31 +304,28 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     </>,
                                 ]}
                             >
-                                <div>
-                                    <Space
-                                        direction="vertical"
-                                        style={{
-                                            display: 'flex',
-                                        }}
-                                    >
+                                <div
+                                className={ApplicationStyle.cardBody}
+                                >
+                                    <Space direction="vertical">
                                         <Row gutter={20}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                <p> Application ID</p>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+                                                <p> Application ID </p>
                                                 <span> AP0001</span>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
                                                 <p>Application Name</p>
                                                 <span>Employee Empowerment</span>
                                             </Col>
                                         </Row>
 
                                         <Row gutter={20}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
                                                 <p> Application Title</p>
 
                                                 <span>Employee Title</span>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
                                                 <p>Application Type</p>
 
                                                 <span> Transaction</span>
@@ -354,11 +339,11 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
                                                 <p>Accessible Location</p>
                                                 <span>Restricted Access</span>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
                                                 <p>Status </p>
                                                 <span className={ApplicationStyle.activeText}>Active</span>
                                             </Col>

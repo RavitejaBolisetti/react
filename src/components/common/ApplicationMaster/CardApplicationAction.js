@@ -55,7 +55,7 @@ const CardApplicationAction = (props) => {
         <>
             <Card
                 style={{
-                    width: 440,
+                    // width: 440,
                     backgroundColor: '#BEBEBE1A',
                     marginTop: '12px',
                 }}
