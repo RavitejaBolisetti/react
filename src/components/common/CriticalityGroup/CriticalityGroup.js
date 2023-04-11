@@ -449,7 +449,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
                                 description={
                                     !criticalityGroupData?.length ? (

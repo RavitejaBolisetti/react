@@ -16,7 +16,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
     } else if (!!editRow?.id) {
         drawerTitle = 'Edit Hierarchy Attribute';
     } else {
-        drawerTitle = 'Add Hierarchy';
+        drawerTitle = 'Add Hierarchy Attribute';
     }
 
     useEffect(() => {
