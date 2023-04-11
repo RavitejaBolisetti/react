@@ -313,7 +313,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={style.subheading}>
                                 Hierarchy
                                 {/* <Select
                                     placeholder="Select a option"
@@ -337,8 +337,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                                 />
                             </Col>
                             {manufacturerAdminHierarchyData.length > 0 && (
-                                <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
+                                <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
+                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>
@@ -377,7 +377,9 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewProductDetail {...viewProps} />
-                            <HierarchyFormButton {...viewProps} />
+                            <div className={styles.hyrbuttonContainer}>
+                                <HierarchyFormButton {...viewProps} />
+                            </div>
                         </Col>
                     ) : (
                         <div className={styles.emptyContainer}>
