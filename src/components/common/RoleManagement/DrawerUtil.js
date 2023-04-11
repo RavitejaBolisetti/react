@@ -42,21 +42,21 @@ const children = [
     },
 ];
 const options = {
-    ApplicationMaster1: [
+    subApplicationMaster1: [
         {
             label: 'Read',
             value: 'Read',
-            Read: true,
+            checkable: false,
         },
         {
             label: 'View',
             value: 'View',
-            View: true,
+            checkable: true,
         },
         {
             label: 'Update',
             value: 'Update',
-            Update: false,
+            checkable: true,
         },
         {
             label: 'Delete',
@@ -105,16 +105,19 @@ const options = {
             label: 'Read',
             value: 'Read',
             Read: true,
+            checkable: true,
         },
         {
             label: 'View',
             value: 'View',
             View: true,
+            checkable: true,
         },
         {
             label: 'Update',
             value: 'Update',
             Update: false,
+            checkable: true,
         },
         {
             label: 'Delete',
@@ -282,6 +285,7 @@ const mockData = [
 const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const [form] = Form.useForm();
     // const [selectedActions, setSelectedActions] = useState({})
+    const [DefaultcheckboxSelect, setDefaultcheckboxSelect] = useState();
     const Mychildren = [
         {
             label: 'Read',
@@ -464,11 +468,67 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
             </>
         );
     };
-    const AccordianTreeUtils = ({ data }) => {
+    const AccordianTreeUtils = () => {
         return (
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                {Paneldata(data)}
-            </Col>
+            <Tree
+                checkable
+                showIcon
+                className={style.roleManagement}
+                selectable={false}
+                defaultExpandAll
+                switcherIcon={<PlusOutlined />}
+                treeData={treeData}
+                treeLine={true}
+                treeIcon={true}
+                onCheck={onTreeSelect}
+                titleRender={(treeNode) => {
+                    if (treeNode.isLeaf) {
+                        console.log('treeNode', treeNode);
+                        return (
+                            <div className="LeafDiv">
+                                <span className="title">
+                                    <span className="text">{treeNode.title}</span>
+                                </span>
+                                <div className="Placement">
+                                    {(() => {
+                                        if (options[treeNode.dataIndex]) {
+                                            // console.log('Treenode DataIndex', treeNode.dataIndex);
+                                            const DefaultSelect = [];
+                                            options[treeNode.dataIndex].map((e) => {
+                                                if (e.checkable === true) {
+                                                    console.log('The saga', e.value);
+                                                    DefaultSelect.push(e.value);
+                                                    return e.value;
+                                                }
+                                            });
+                                            console.log('DefaultSelect', DefaultSelect);
+
+                                            return <Checkbox.Group defaultValue={DefaultSelect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
+
+                                            // console.log('Value yeh hai', options[treeNode.dataIndex]);
+
+                                            // options[treeNode.dataIndex]?.map((e) => {
+                                            //     if(e.checkable===true)
+                                            //     {
+                                            //         setDefaultcheckboxSelect([...DefaultcheckboxSelect,e]);
+                                            //     }
+                                            // });
+                                        }
+                                    })()}
+
+                                    {/* {options[treeNode.dataIndex]?.length > 0 &&
+                                                            options[treeNode.dataIndex].map((op) => (
+                                                                <Checkbox checked={op[op?.value]} defaultValue={op[op?.value]} onChange={(data) => onChange(data, treeNode.dataIndex)}>
+                                                                    {op.label}
+                                                                </Checkbox>
+                                                            ))} */}
+                                </div>
+                            </div>
+                        );
+                    }
+                    return <>{treeNode.title}</>;
+                }}
+            />
         );
         //  data.map((subt, i) => {
         //     let subdata = subt;
@@ -564,41 +624,7 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
 
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Tree
-                                    checkable
-                                    showIcon
-                                    className={style.roleManagement}
-                                    selectable={false}
-                                    defaultExpandAll
-                                    switcherIcon={<PlusOutlined />}
-                                    treeData={treeData}
-                                    treeLine={true}
-                                    treeIcon={true}
-                                    onCheck={onTreeSelect}
-                                    titleRender={(treeNode) => {
-                                        if (treeNode.isLeaf) {
-                                            console.log('treeNode', treeNode);
-                                            return (
-                                                <div className="LeafDiv">
-                                                    <span className="title">
-                                                        <span className="text">{treeNode.title}</span>
-                                                    </span>
-                                                    <div className="Placement">
-                                                        {console.log('Value yeh hai', options[treeNode.dataIndex])}
-                                                        {/* <Checkbox.Group defaultValue={[options[treeNode.dataIndex]]}  options={options[treeNode.dataIndex] ? options[treeNode.dataIndex] : options.ApplicationMaster1} onChange={(data) => onChange(data, treeNode.dataIndex)} /> */}
-                                                        {options[treeNode.dataIndex]?.length > 0 &&
-                                                            options[treeNode.dataIndex].map((op) => (
-                                                                <Checkbox checked={op[op?.value]} defaultValue={op[op?.value]} onChange={(data) => onChange(data, treeNode.dataIndex)}>
-                                                                    {op.label}
-                                                                </Checkbox>
-                                                            ))}
-                                                    </div>
-                                                </div>
-                                            );
-                                        }
-                                        return <>{treeNode.title}</>;
-                                    }}
-                                />
+                                <AccordianTreeUtils />
                             </Col>
                         </Row>
                     </Form>
