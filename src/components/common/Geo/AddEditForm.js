@@ -13,8 +13,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, selectedTreeData, isDataAttributeLoaded, attributeData, unFilteredAttributeData, geoData } = props;
-    console.log('🚀 ~ file: AddEditForm.js:16 ~ AddEditFormMain ~ selectedTreeData:', selectedTreeData, formData);
-    const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { selectedTreeKey, selectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
 
@@ -41,6 +40,7 @@ const AddEditFormMain = (props) => {
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
+    let selectedAttribute = selectedTreeData?.attributeKey;
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.geoParentCode;
@@ -49,17 +49,20 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
+
+        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
+        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    useEffect(() => {
-        if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-            setSelectedTreeKey([treeCodeId]);
-        }
-        setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    // useEffect(() => {
+    //     if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    //         setSelectedTreeKey([treeCodeId]);
+    //     }
+    //     setSelectedTreeSelectKey(treeCodeId);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -86,7 +89,7 @@ const AddEditFormMain = (props) => {
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" {...attributeHierarchyFieldValidation}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option value={item?.id} disabled={selectedTreeData?.attributeKey === item?.id ? true : false}>
+                                    <Option value={item?.id} disabled={selectedAttribute === item?.id ? true : false}>
                                         {item?.hierarchyAttribueName}
                                     </Option>
                                 ))}

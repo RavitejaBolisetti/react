@@ -254,6 +254,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
         isFormBtnActive,
         setFormBtnActive,
     };
+    
     const viewProps = {
         buttonData,
         attributeData,
