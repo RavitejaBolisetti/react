@@ -10,8 +10,12 @@
     margin-top: 4px;
 }
 
+/* .panelVisible {
+    height: 68vh;
+} */
+
 .panelVisible {
-    min-height: 66vh;
+    height: calc(100vh - 274px);
 }
 
 .panelHidden {
@@ -186,13 +190,22 @@
 }
 
 @media (max-width: 576px) {
+
     .scrollTreeData {
         width: 100%;
         overflow: scroll;
-        height: 12vh;
+        /* height: 12vh; */
+        height: calc(100vh - 350px);
+        /* border:1px solid red; */
+    }
+
+    .panelVisible {
+        height: calc(100vh - 368px);
     }
 
     :global .ant-input {
         padding: 4px 27px;
     }
 }
+
+@media (max-width: 768px) {}

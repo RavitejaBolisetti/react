@@ -1,4 +1,4 @@
-.producthierarchy :global .ant-collapse-header .ant-collapse-header-text  {
+.producthierarchy :global .ant-collapse-header .ant-collapse-header-text {
     margin-inline-end: auto;
     font-size: 16px;
     font-weight: 600;
@@ -8,4 +8,9 @@
 .subheading {
     padding-left: 0px !important;
     padding-right: 0px !important;
+}
+
+.searchField {
+    vertical-align: middle;
+    margin: 0 8px;
 }

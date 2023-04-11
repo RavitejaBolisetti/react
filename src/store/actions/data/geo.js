@@ -10,6 +10,7 @@ export const GEO_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
 export const GEO_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
 export const GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
+export const GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_VISIBLE';
 
 const receiveData = (data) => ({
     type: GEO_DATA_LOADED,
@@ -48,6 +49,16 @@ geoDataActions.changeHistoryShowLoading = (isLoading) => ({
     isLoading,
 });
 
+geoDataActions.changeHistoryModelOpen = (visible) => ({
+    type: GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: true,
+    });
+geoDataActions.changeHistoryModelClose = (visible) => ({
+
+    type: GEO_GRAPHY_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: false,
+    
+    });
 geoDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data } = params;
     setIsLoading(true);

@@ -55,9 +55,8 @@ const LeftPanel = (props) => {
             })
             .filter((item, i, self) => item && self?.indexOf(item) === i);
         setExpandedKeys(searchValue ? newExpandedKeys : []);
-       // setSearchValue(searchValue); 
+        setSearchValue(searchValue);
         setAutoExpandParent(true);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
 

@@ -10,10 +10,11 @@ import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { showGlobalNotification } from 'store/actions/notification';
+
 import { AddEditForm } from './AddEditForm';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ChangeHistory } from '../ChangeHistory';
+import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
 
 import { FaHistory } from 'react-icons/fa';
@@ -48,7 +49,7 @@ const mapStateToProps = (state) => {
         isChangeHistoryVisible: changeHistoryVisible,
         isDataLoaded,
         productHierarchyData,
-        // productHierarchyData: [],
+        //productHierarchyData: [],
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
@@ -69,14 +70,14 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-
+            showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -102,8 +103,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
-
-    const fnCanAddChild = (value) => value === 'Y';
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
@@ -201,7 +200,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
-        setIsChildAllowed(fnCanAddChild(selectedAttribute?.isChildAllowed));
+        setIsChildAllowed(selectedAttribute?.isChildAllowed);
     };
 
     const handleResetBtn = () => {
@@ -211,21 +210,22 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const data = { ...values, id: recordId, parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
                 formData && setSelectedTreeData(formData?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setIsFormVisible(false);
             }
         };
         const onError = (message) => {
-            handleErrorModal(message);
+            showGlobalNotification({ message });
         };
         const requestData = {
             data: data,
@@ -301,32 +301,16 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                            <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
                                 Hierarchy
-                                <Select
-                                    placeholder="Select a option"
-                                    disabled
-                                    allowClear
-                                    className={styles.searchField}
-                                    style={{
-                                        width: '43%',
-                                    }}
-                                >
+                                <Select placeholder="Select a option" allowClear className={styles.headerSelectField}>
                                     <Option value="hyr">Hyr</Option>
                                 </Select>
-                                <Search
-                                    placeholder="Search"
-                                    style={{
-                                        width: '43%',
-                                    }}
-                                    allowClear
-                                    onChange={onChange}
-                                    className={styles.searchField}
-                                />
+                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
+                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>
@@ -348,9 +332,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add
-                                    </Button>
+                                    <div>
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            Add
+                                        </Button>
+                                    </div>
                                 </Empty>
                             </div>
                         ) : (
@@ -359,31 +345,35 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                    {isCollapsableView ? <></> : null}
+                {productHierarchyData.length > 0 && (
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
+                        {isCollapsableView ? <></> : null}
 
-                    {selectedTreeData && selectedTreeData?.id ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <ViewProductDetail {...viewProps} />
-                            <HierarchyFormButton {...viewProps} />
-                        </Col>
-                    ) : (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Hierarchy Details”
-                                    </span>
-                                }
-                            ></Empty>
-                        </div>
-                    )}
-                </Col>
+                        {selectedTreeData && selectedTreeData?.id ? (
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <ViewProductDetail {...viewProps} />
+                                <div className={styles.hyrbuttonContainer}>
+                                    <HierarchyFormButton {...viewProps} />
+                                </div>
+                            </Col>
+                        ) : (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            Please select product from left <br />
+                                            side hierarchy to view “Hierarchy Details”
+                                        </span>
+                                    }
+                                ></Empty>
+                            </div>
+                        )}
+                    </Col>
+                )}
             </Row>
             <ChangeHistory />
             <AddEditForm {...formProps} />

@@ -114,8 +114,6 @@ export const MenuConstant = {
         parentMenuId: 'COMN-05',
     },
 
-
-
     [getMenyKey('DBP')]: {
         link: undefined,
         icon: <FaAddressBook fontSize={22} />,
@@ -183,9 +181,17 @@ export const MenuConstant = {
         icon: <TbReport fontSize={22} />,
         parentMenuId: 'WEB',
     },
+
     [getMenyKey('RPT-BI')]: {
         key: 'RPT-BI',
         link: routing.ROUTING_REPORT_BI_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+    },
+    
+    [getMenyKey('RPT-PG')]: {
+        key: 'RPT-PG',
+        link: routing.ROUTING_REPORT_PAGINATED_REPORT,
         icon: undefined,
         parentMenuId: 'RPT',
     },
