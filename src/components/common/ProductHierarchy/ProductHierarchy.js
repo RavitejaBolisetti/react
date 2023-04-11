@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
         isChangeHistoryVisible: changeHistoryVisible,
         isDataLoaded,
         productHierarchyData,
-        // productHierarchyData: [],
+        //productHierarchyData: [],
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
@@ -301,15 +301,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={style.subheading}>
                                 Hierarchy
                                 <Select
                                     placeholder="Select a option"
-                                    disabled
                                     allowClear
                                     className={styles.searchField}
                                     style={{
-                                        width: '43%',
+                                        width: '42%',
                                     }}
                                 >
                                     <Option value="hyr">Hyr</Option>
@@ -317,7 +316,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                 <Search
                                     placeholder="Search"
                                     style={{
-                                        width: '43%',
+                                        width: '41%',
                                     }}
                                     allowClear
                                     onChange={onChange}
@@ -325,9 +324,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                 />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
+                                <Col className={styles.buttonHeadingContainer}  xs={5} sm={5} md={5} lg={5} xl={5}>
+                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`}>
+                                        <FaHistory className={styles.buttonIcon}  />
                                         Change History
                                     </Button>
                                 </Col>
@@ -348,9 +347,11 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <div>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
+                                    </div>
                                 </Empty>
                             </div>
                         ) : (
@@ -359,31 +360,35 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                    {isCollapsableView ? <></> : null}
+                {productHierarchyData.length > 0 && (
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                        {isCollapsableView ? <></> : null}
 
-                    {selectedTreeData && selectedTreeData?.id ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <ViewProductDetail {...viewProps} />
-                            <HierarchyFormButton {...viewProps} />
-                        </Col>
-                    ) : (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Hierarchy Details”
-                                    </span>
-                                }
-                            ></Empty>
-                        </div>
-                    )}
-                </Col>
+                        {selectedTreeData && selectedTreeData?.id ? (
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <ViewProductDetail {...viewProps} />
+                                <div className={styles.hyrbuttonContainer}>
+                                    <HierarchyFormButton {...viewProps} />
+                                </div>
+                            </Col>
+                        ) : (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            Please select product from left <br />
+                                            side hierarchy to view “Hierarchy Details”
+                                        </span>
+                                    }
+                                ></Empty>
+                            </div>
+                        )}
+                    </Col>
+                )}
             </Row>
             <ChangeHistory />
             <AddEditForm {...formProps} />

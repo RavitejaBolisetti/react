@@ -11,7 +11,7 @@
 }
 
 .panelVisible {
-    min-height: 66vh;
+    height: 68vh;
 }
 
 .panelHidden {
