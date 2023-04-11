@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateMobileNoField, validateEmailField, validatePanField } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { withDrawer } from 'components/withDrawer';
 
 const { Option } = Select;
 
@@ -20,11 +21,14 @@ const checkType = (type) => {
     }
 };
 
-const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, geoData, fieldNames }) => {
+const AddEditFormMain = (props) => {
+    const { isChecked, treeData, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, fieldNames,onCloseAction } = props;
     const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
     const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const disabledProps = { disabled: isReadOnly };
+
+    const { isFormBtnActive, setFormBtnActive } = props;
 
     useEffect(() => {
         if (formData) {
@@ -78,6 +82,14 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
         placeholder: preparePlaceholderSelect('Parent', 'select'),
     };
 
+    const handleFormValueChange = () => {
+        setFormBtnActive(true);
+    };
+
+    const handleFormFieldChange = () => {
+        setFormBtnActive(true);
+    };
+
     const parentGroupForm = 'parentGroup';
     const companyGroupForm = 'companyGroup';
     const gstinGroupForm = 'gstinGroup';
@@ -88,13 +100,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
     const defaultForm = (
         <div>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.code} label="Code" name="code" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                         <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.shortDescription} label="Short Description" name="shortDescription" rules={[validateRequiredInputField('Short Description')]}>
                         <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
@@ -102,12 +114,12 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.longDescription} label="Long Description" name="longDescription" rules={[validateRequiredInputField('Long Description')]}>
                         <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Status" name="status">
                         <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} value={(formData?.status === 'Y' ? 1 : 0) || isChecked} unCheckedChildren="Inactive" {...disabledProps} />
                     </Form.Item>
@@ -117,10 +129,10 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
     );
 
     return (
-        <>
+        <Form layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
             {/* {formData?.attributeId} */}
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.attributeId} name="attributeId" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>
                         <Select loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Level')} {...disabledProps} onChange={handleChange} showSearch allowClear>
                             {attributeData?.map((item) => (
@@ -130,7 +142,7 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Form.Item>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={treeCodeId} label="Parent" name={[parentIdFormName, 'parentId']}>
                         {/* {treeCodeId} */}
                         <TreeSelectField {...treeSelectFieldProps} />
@@ -142,13 +154,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                 <div>
                     {/* {JSON.stringify(formData)} */}
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code || formData?.parentGroupCode} label="Code" name={[parentGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[parentGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
                                 <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -156,13 +168,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[parentGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
                                 <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.ownerName} label="Owner Name" name={[parentGroupForm, 'ownerName']} rules={[validateRequiredInputField('Owner Name')]}>
                                 <Input placeholder={preparePlaceholderText('Owner Name')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -170,12 +182,12 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.contactNo} label="Contact Number" name={[parentGroupForm, 'contactNumber']} rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
                                 <Input placeholder={preparePlaceholderText('Contact Number')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.emailId} label="Email ID" name={[parentGroupForm, 'emailId']} rules={[validateRequiredInputField('Email ID'), validateEmailField('Email ID')]}>
                                 <Input placeholder={preparePlaceholderText('Email ID')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -202,13 +214,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
             {seletedAttribute === DEALER_HIERARCHY.COMP.KEY ? (
                 <div>
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[companyGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[companyGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
                                 <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -216,13 +228,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[companyGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
                                 <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.registeredAddressOfCompany} label="Registered Address of the Company" name={[companyGroupForm, 'registeredAddressOfCompany']} rules={[validateRequiredInputField('Registered Address of the Company')]}>
                                 <Input placeholder={preparePlaceholderText('Registered Address of the Company')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -230,12 +242,12 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.tinNumber} label="TIN Number" name={[companyGroupForm, 'tinNumber']} rules={[validateRequiredInputField('TIN Number')]}>
                                 <Input placeholder={preparePlaceholderText('TIN Number')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.tanNumber} label="TAN Number" name={[companyGroupForm, 'tanNumber']} rules={[validateRequiredInputField('TAN Number')]}>
                                 <Input placeholder={preparePlaceholderText('TAN Number')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -243,7 +255,7 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.panNumber} label="PAN Number" name={[companyGroupForm, 'panNumber']} rules={[validateRequiredInputField('PAN Number'), validatePanField('PAN Number')]}>
                                 <Input placeholder={preparePlaceholderText('PAN Number')} maxLength={10} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -268,13 +280,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
             {seletedAttribute === DEALER_HIERARCHY.GSTIN.KEY ? (
                 <div>
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[gstinGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[gstinGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
                                 <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -282,13 +294,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[gstinGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
                                 <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.gstinNumber} label="GSTIN Number" name={[gstinGroupForm, 'gstinNumber']} rules={[validateRequiredInputField('GSTIN Number')]}>
                                 <Input placeholder={preparePlaceholderText('GSTIN Number')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -296,13 +308,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.centerJurisdiction} label="Centre Jurisdiction" name={[gstinGroupForm, 'centerJurisdiction']} rules={[validateRequiredInputField('Centre Jurisdiction')]}>
                                 <Input placeholder={preparePlaceholderText('Centre Jurisdiction')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.stateJurisdiction} label="State Jurisdiction" name={[gstinGroupForm, 'stateJurisdiction']} rules={[validateRequiredInputField('State Jurisdiction')]}>
                                 <Input placeholder={preparePlaceholderText('State Jurisdiction')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -310,13 +322,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.dateOfRegistertion} label="Date of Registration" name={[gstinGroupForm, 'dateOfRegistertion']} rules={[validateRequiredInputField('Date of Registration')]}>
                                 <Input placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.consitutionOfBusiness} label="Constitution of Business" name={[gstinGroupForm, 'consitutionOfBusiness']} rules={[validateRequiredInputField('Constitution of Business')]}>
                                 <Input placeholder={preparePlaceholderText('Constitution of Business')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -326,7 +338,7 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
 
                     <Row gutter={20}>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.taxPayerType} label="Taxpayer Type" name={[gstinGroupForm, 'taxPayerType']} rules={[validateRequiredInputField('Taxpayer Type')]}>
                                 <Input placeholder={preparePlaceholderText('Taxpayer Type')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -353,13 +365,13 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
             {seletedAttribute === DEALER_HIERARCHY.LOCTN.KEY ? (
                 <div>
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.geoCode} label="Code" name={[branchGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                                 <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[branchGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
                                 <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -367,12 +379,12 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[branchGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
                                 <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.branchAddress} label="Branch Address" name={[branchGroupForm, 'branchAddress']} rules={[validateRequiredInputField('Branch Address')]}>
                                 <Input placeholder={preparePlaceholderText('Branch Address')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -380,12 +392,12 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.locality} label="Locality" name={[branchGroupForm, 'locality']}>
                                 <Input placeholder={preparePlaceholderText('Locality')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.city} label="City/District" name={[branchGroupForm, 'city']} rules={[validateRequiredInputField('City')]}>
                                 <Input placeholder={preparePlaceholderText('City/District')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -393,12 +405,12 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.state} label="State" name={[branchGroupForm, 'state']} rules={[validateRequiredInputField('State')]}>
                                 <Input placeholder={preparePlaceholderText('State')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.cityClassification} label="City Classification" name={[branchGroupForm, 'cityClassification']} rules={[validateRequiredInputField('City Classification')]}>
                                 <Input placeholder={preparePlaceholderText('City Classification')} maxLength={6} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
@@ -429,8 +441,22 @@ const AddEditFormMain = ({ isChecked, treeData, form, setSelectedTreeKey, setSel
                     </Form.Item>
                 </Col>
             </Row>
-        </>
+
+            <Row gutter={20} className={styles.formFooter}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                        <Button danger onClick={onCloseAction}>
+                            Cancel
+                        </Button>
+                    </Col>
+
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                            Save
+                        </Button>
+                    </Col>
+                </Row>
+        </Form>
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export const AddEditForm =  withDrawer(AddEditFormMain,{});

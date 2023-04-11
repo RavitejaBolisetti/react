@@ -55,7 +55,7 @@ const LeftPanel = (props) => {
             })
             .filter((item, i, self) => item && self?.indexOf(item) === i);
         setExpandedKeys(searchValue ? newExpandedKeys : []);
-        setSearchValue(searchValue);
+       // setSearchValue(searchValue); 
         setAutoExpandParent(true);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +69,7 @@ const LeftPanel = (props) => {
                 const strTitle = item[fieldNames?.title];
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);
-                const afterStr = strTitle?.slice(index + searchValue.length);
+                const afterStr = strTitle?.slice(index + searchValue?.length);
                 const title =
                     index > -1 ? (
                         <span>

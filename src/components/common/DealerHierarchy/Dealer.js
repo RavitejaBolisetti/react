@@ -1,9 +1,11 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
+import { Button, Col, Form, Row, Select, Input, Empty} from 'antd';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle, FaHistory } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
+import style from '../ProductHierarchy/producthierarchy.module.css'
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
@@ -11,6 +13,17 @@ import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 import LeftPanel from 'components/common/LeftPanel';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+
+import { EN } from 'language/en';
+
+import { ViewDealerDetails } from './ViewDealerDetails';
+import { HierarchyFormButton } from 'components/common/Button';
+
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+const { Search } = Input;
+const { Option } = Select;
+
 
 const mapStateToProps = (state) => {
     const {
@@ -42,6 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerHierarchyDataActions.fetchList,
             saveData: dealerHierarchyDataActions.saveData,
             listShowLoading: dealerHierarchyDataActions.listShowLoading,
+            changeHistoryModelOpen: dealerHierarchyDataActions.changeHistoryModelOpen,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -51,34 +65,57 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading,changeHistoryModelOpen }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [isCollapsableView, setCollapsableView] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
     const [formData, setFormData] = useState([]);
+    const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
-    const [isFormVisible, setFormVisible] = useState(true);
+   // const [isFormVisible, setIsFormVisible] = useState(true);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
+
+    const [searchValue, setSearchValue] = useState('');
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
+
+    const [isChildAllowed, setIsChildAllowed] = useState(true);
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const fieldNames = { title: 'shortDescription', key: 'id', children: 'children' };
 
+    const onChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+    const handleAdd = () => {
+        setIsFormVisible(true);
+    };
+
     useEffect(() => {
-        if (!isDataLoaded) {
+        setCollapsableView(!isChildAllowed);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isChildAllowed]);
+
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded]);
+    }, [isDataLoaded, isDataAttributeLoaded,userId]);
 
     useEffect(() => {
+        if(userId)
         hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES.DEALER_HIERARCHY.KEY });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -112,27 +149,54 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
     const flatternData = generateList(finaldealerHierarchyData);
 
+    // const handleTreeViewClick = (keys) => {
+    //     setForceFormReset(Math.random() * 10000);
+    //     setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
+    //     form.resetFields();
+    //     setIsFormVisible(false);
+    //     setFormData([]);
+
+    //     if (keys && keys.length > 0) {
+    //         setFormActionType('view');
+    //         const formData = flatternData.find((i) => keys[0] === i.key);
+    //         formData && setFormData(formData?.data);
+
+    //         setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+    //         setIsFormVisible(true);
+    //         forceUpdate();
+    //         setReadOnly(true);
+    //     } else {
+    //         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
+    //         setReadOnly(false);
+    //     }
+    //     setSelectedTreeKey(keys && keys.length > 0 ? keys[0] : undefined);
+    // };
+
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(Math.random() * 10000);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         form.resetFields();
-        setFormVisible(false);
         setFormData([]);
+        setSelectedTreeData([]);
 
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
-            formData && setFormData(formData?.data);
 
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
-            forceUpdate();
-            setReadOnly(true);
+            if (formData) {
+                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                formData && setFormData({ ...formData?.data, isChildAllowed });
+
+                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
+            }
+
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         } else {
             setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
-            setReadOnly(false);
+            setIsChildAllowed(true);
         }
-        setSelectedTreeKey(keys && keys.length > 0 ? keys[0] : undefined);
+
+        setSelectedTreeKey(keys);
     };
 
     const handleSelectTreeClick = (value) => {
@@ -140,51 +204,80 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         setSelectedTreeSelectKey(value);
     };
 
+    // const onFinish = (values) => {
+
+    //     console.log(values, 'Initial Data');
+
+    //     const recordId = formData?.id || '';
+    //     const codeToBeSaved = selectedTreeSelectKey || '';
+
+    //     const parentGroupForm = 'parentGroup';
+    //     const companyGroupForm = 'companyGroup';
+    //     const gstinGroupForm = 'gstinGroup';
+    //     const branchGroupForm = 'branchGroup';
+
+    //     const customFormInput = { [parentGroupForm]: null, [companyGroupForm]: null, [gstinGroupForm]: null, [branchGroupForm]: null };
+
+    //     const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: 'Y' } };
+
+    //     console.log(data, 'Final Data');
+
+    //     const onSuccess = (res) => {
+    //         form.resetFields();
+    //         setForceFormReset(Math.random() * 10000);
+
+    //         setReadOnly(true);
+    //         setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
+    //         setIsFormVisible(true);
+
+    //         if (res?.data) {
+    //             handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
+    //             fetchList({ setIsLoading: listShowLoading, userId });
+    //             formData && setFormData(res?.data[values?.inputFormType]);
+    //             setSelectedTreeKey([res?.data[values?.inputFormType]?.id]);
+    //             setFormActionType('view');
+    //         }
+    //     };
+
+    //     const onError = (message) => {
+    //         handleErrorModal(message);
+    //     };
+
+    //     delete data.inputFormType;
+    //     delete data.parentId;
+
+    //     const requestData = {
+    //         data: data,
+    //         method: 'post',
+    //         setIsLoading: listShowLoading,
+    //         userId,
+    //         onError,
+    //         onSuccess,
+    //     };
+    //     saveData(requestData);
+    // };
+
     const onFinish = (values) => {
-
-        console.log(values, 'Initial Data');
-
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-
-        const parentGroupForm = 'parentGroup';
-        const companyGroupForm = 'companyGroup';
-        const gstinGroupForm = 'gstinGroup';
-        const branchGroupForm = 'branchGroup';
-
-        const customFormInput = { [parentGroupForm]: null, [companyGroupForm]: null, [gstinGroupForm]: null, [branchGroupForm]: null };
-
-        const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: 'Y' } };
-
-        console.log(data, 'Final Data');
-
+        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', parentCode: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
-            setForceFormReset(Math.random() * 10000);
-
-            setReadOnly(true);
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-            setFormVisible(true);
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
                 handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setFormData(res?.data[values?.inputFormType]);
-                setSelectedTreeKey([res?.data[values?.inputFormType]?.id]);
+                formData && setSelectedTreeData(formData?.data);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
             }
         };
-
         const onError = (message) => {
             handleErrorModal(message);
         };
-
-        delete data.inputFormType;
-        delete data.parentId;
-
         const requestData = {
             data: data,
-            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -197,67 +290,19 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         form.validateFields().then((values) => { });
     };
 
-    const handleEditBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-
-        const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        formData && setFormData(formData?.data);
-        setFormActionType('edit');
-
-        setReadOnly(false);
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: false, cancelBtn: true });
-    };
-
-    const handleRootChildBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormActionType('rootChild');
-        setFormVisible(true);
-        setReadOnly(false);
+    const handleButtonClick = (type) => {
         setFormData([]);
         form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
-    };
-
-    const handleChildBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormActionType('child');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
-    };
-
-    const handleSiblingBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-
-        setFormActionType('sibling');
-        setFormVisible(true);
-        setReadOnly(false);
-        setFormData([]);
-        form.resetFields();
-        setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false, childBtn: false, saveBtn: true, resetBtn: true, cancelBtn: true });
-    };
-
-    const handleResetBtn = () => {
-        setForceFormReset(Math.random() * 10000);
-        form.resetFields();
-    };
-
-    const handleBack = () => {
-        setReadOnly(true);
-        setForceFormReset(Math.random() * 10000);
-        if (selectedTreeKey && selectedTreeKey.length > 0) {
+        if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);
-            setFormActionType('view');
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
-        } else {
-            setFormActionType('');
-            setFormVisible(false);
-            setButtonData({ ...defaultBtnVisiblity });
         }
+        setIsFormVisible(true);
+        setFormActionType(type);
     };
+
+    const moduleTitle = 'Dealer Detail';
+    const viewTitle = 'Hierarchy Details';
 
     const myProps = {
         isTreeViewVisible,
@@ -268,6 +313,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         treeData: dealerHierarchyData,
         fieldNames,
         form,
+        searchValue,
+        setSearchValue,
     };
 
     const formProps = {
@@ -286,17 +333,102 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         attributeData,
         fieldNames,
         setSelectedTreeSelectKey,
+        isVisible: isFormVisible,
+        onCloseAction: () => setIsFormVisible(false),
+        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        onFinish,
+        onFinishFailed,
+        isFormBtnActive,
+        setFormBtnActive,
     };
+
+    const viewProps = {
+        buttonData,
+        attributeData,
+        selectedTreeData,
+        handleButtonClick,
+        setClosePanels,
+        styles,
+        viewTitle,
+    };
+
+    const leftCol = dealerHierarchyData.length > 0 ? 16 : 24;
+    const rightCol = dealerHierarchyData.length > 0 ? 8 : 24;
+
+    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
     return (
         <>
-            <div className={styles.geoSection}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <LeftPanel {...myProps} />
+            
+                <Row gutter={20} span={24}>
+
+                    <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                        <div className={styles.contentHeaderBackground}>
+                            <Row gutter={20} className={styles.searchAndLabelAlign}>
+                                <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                                    Hierarchy
+                                    {/* <Select
+                                        placeholder="Select a option"
+                                        disabled
+                                        allowClear
+                                        className={styles.searchField}
+                                        style={{
+                                            width: '43%',
+                                        }}
+                                    >
+                                        <Option value="hyr">Hyr</Option>
+                                    </Select> */}
+                                    <Search
+                                        placeholder="Search"
+                                        style={{
+                                            width: '43%',
+                                        }}
+                                        allowClear
+                                        onChange={onChange}
+                                        className={styles.searchField}
+                                    />
+                                </Col>
+                                {/* {dealerHierarchyData.length > 0 && (
+                                    <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        <Button type="primary" onClick={changeHistoryModelOpen}>
+                                            <FaHistory className={styles.buttonIcon} />
+                                            Change History
+                                        </Button>
+                                    </Col>
+                                )} */}
+                            </Row>
+                        </div>
+                        <div className={styles.content}>
+                            {dealerHierarchyData.length <= 0 ? (
+                                <div className={styles.emptyContainer}>
+                                    <Empty
+                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                        imageStyle={{
+                                            height: 60,
+                                        }}
+                                        description={
+                                            <span>
+                                                {noDataTitle} <br /> {noDataMessage}
+                                            </span>
+                                        }
+                                    >
+                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            Add
+                                        </Button>
+                                    </Empty>
+                                </div>
+                            ) : (
+                                <LeftPanel {...myProps} />
+                            )}
+                        </div>
                     </Col>
 
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                    {/* <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                        <LeftPanel {...myProps} />
+                    </Col> */}
+
+                    {/* <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {isFormVisible && <AddEditForm {...formProps} />}
                             <Row gutter={20}>
@@ -356,9 +488,36 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                                 </Col>
                             </Row>
                         </Form>
-                    </Col>
+                    </Col> */}
+
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                    {isCollapsableView ? <></> : null}
+
+                    {selectedTreeData && selectedTreeData?.id ? (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <ViewDealerDetails {...viewProps} />
+                            <HierarchyFormButton {...viewProps} />
+                        </Col>
+                    ) : (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        Please select product from left <br />
+                                        side hierarchy to view “Hierarchy Details”
+                                    </span>
+                                }
+                            ></Empty>
+                        </div>
+                    )}
+                </Col>
+
                 </Row>
-            </div>
+                <AddEditForm {...formProps} />
         </>
     );
 };
