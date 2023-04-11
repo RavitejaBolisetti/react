@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Descriptions } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends } from 'react-icons/fa';
+import { Descriptions } from 'antd';
 
 export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -14,71 +13,53 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData.attributeId}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData.parentName}</Descriptions.Item>
-                { selectedTreeData.type === "Parent" ?  
+                <Descriptions.Item label="Attribute Level">{selectedTreeData?.attributeId}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Code">{selectedTreeData?.code}</Descriptions.Item>
+                <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
+                <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
+                {selectedTreeData?.type === 'Parent' && (
                     <>
-                        <Descriptions.Item label="Code">{selectedTreeData.code}</Descriptions.Item>
-                        <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
-                        <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
-
                         <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNumber}</Descriptions.Item>
                         <Descriptions.Item label="Email ID">{selectedTreeData?.emailId}</Descriptions.Item>
                         <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
-                    </>  
-                : 
-                selectedTreeData.type === "Company" ? 
-                    <>
-                        <Descriptions.Item label="Code">{selectedTreeData.code}</Descriptions.Item>
-                        <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
-                        <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
+                    </>
+                )}
 
+                {selectedTreeData?.type === 'Company' && (
+                    <>
                         <Descriptions.Item label="Registered Address of the Company">{selectedTreeData?.registeredAddressOfCompany}</Descriptions.Item>
                         <Descriptions.Item label="TIN Number">{selectedTreeData?.tinNumber}</Descriptions.Item>
                         <Descriptions.Item label="TAN Number">{selectedTreeData?.tanNumber}</Descriptions.Item>
                         <Descriptions.Item label="PAN Number">{selectedTreeData?.panNumber}</Descriptions.Item>
                         <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
-                    </> 
-                : 
-                selectedTreeData.type === "Gstin" ?
-                    <>
-                        <Descriptions.Item label="Code">{selectedTreeData.code}</Descriptions.Item>
-                        <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
-                        <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
+                    </>
+                )}
 
+                {selectedTreeData?.type === 'Gstin' && (
+                    <>
                         <Descriptions.Item label="GSTIN Number">{selectedTreeData?.gstinNumber}</Descriptions.Item>
                         <Descriptions.Item label="Centre Jurisdiction">{selectedTreeData?.centerJurisdiction}</Descriptions.Item>
                         <Descriptions.Item label="State Jurisdiction">{selectedTreeData?.stateJurisdiction}</Descriptions.Item>
                         <Descriptions.Item label="Date of Registration">{selectedTreeData?.dateOfRegistertion}</Descriptions.Item>
-
                         <Descriptions.Item label="Constitution of Business">{selectedTreeData?.consitutionOfBusiness}</Descriptions.Item>
                         <Descriptions.Item label="Taxpayer Type">{selectedTreeData?.taxPayerType}</Descriptions.Item>
                         <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
-                :
-                selectedTreeData.type === "Branch" ?
-                    <>
-                        <Descriptions.Item label="Code">{selectedTreeData.code}</Descriptions.Item>
-                        <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
-                        <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
+                )}
 
+                {selectedTreeData?.type === 'Branch' && (
+                    <>
                         <Descriptions.Item label="Branch Address">{selectedTreeData?.branchAddress}</Descriptions.Item>
                         <Descriptions.Item label="Locality">{selectedTreeData?.locality}</Descriptions.Item>
                         <Descriptions.Item label="City/District">{selectedTreeData?.city}</Descriptions.Item>
                         <Descriptions.Item label="State">{selectedTreeData?.state}</Descriptions.Item>
-
                         <Descriptions.Item label="City Classification">{selectedTreeData?.cityClassification}</Descriptions.Item>
                         <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
-
                     </>
-                
-                : null
-
-                }
-                
+                )}
             </Descriptions>
         </div>
-      
     );
 };
 
