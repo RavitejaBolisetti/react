@@ -13,7 +13,7 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData?.attributeId}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{selectedTreeData?.type}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
                 <Descriptions.Item label="Code">{selectedTreeData?.code}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>

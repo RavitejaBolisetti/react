@@ -22,7 +22,8 @@ const checkType = (type) => {
 };
 
 const AddEditFormMain = (props) => {
-    const { isChecked, treeData, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, fieldNames,onCloseAction } = props;
+    const { isChecked, treeData, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, fieldNames,onCloseAction ,
+        onFinish, onFinishFailed } = props;
     const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
     const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -34,6 +35,7 @@ const AddEditFormMain = (props) => {
         if (formData) {
             const formInputType = attributeData?.find((i) => i.id === formData?.attributeId)?.hierarchyAttribueCode;
             formInputType && setSeletedAttribute(formInputType);
+            console.log(DEALER_HIERARCHY[formInputType]?.FORM_NAME,"FourmCheck")
             formInputType && setInputFormType(DEALER_HIERARCHY[formInputType]?.FORM_NAME);
         }
 
@@ -46,11 +48,11 @@ const AddEditFormMain = (props) => {
         treeCodeId = formData?.parentId;
         // console.log(treeCodeId,'IDCHECKKKKKKKKK')
     } else if (formActionType === 'child') {
-        treeCodeId = selectedTreeKey;
+        treeCodeId = selectedTreeKey[0];
         // && selectedTreeKey[0];
-        console.log(selectedTreeKey, 'check_24-03-2022')
+        //console.log(selectedTreeKey, 'check_24-03-2022')
         treeCodeReadOnly = true;
-        //console.log(treeCodeId,'IDCHECKKKKKKKKK11111')
+        //console.log(treeCodeId[0],'IDCHECKKKKKKKKK11111')
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
@@ -69,6 +71,7 @@ const AddEditFormMain = (props) => {
         // form.resetFields();
         const formInputType = attributeData?.find((i) => i.id === event)?.hierarchyAttribueCode;
         setSeletedAttribute(formInputType);
+        console.log(DEALER_HIERARCHY[formInputType]?.FORM_NAME,"FourmCheck222")
         setInputFormType(DEALER_HIERARCHY[formInputType].FORM_NAME);
     };
 
@@ -129,7 +132,7 @@ const AddEditFormMain = (props) => {
     );
 
     return (
-        <Form layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
+        <Form layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {/* {formData?.attributeId} */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -434,6 +437,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             )}
+
             <Row gutter={20}>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} className={styles.padLeft10}>
                     <Form.Item label="" name={'inputFormType'} initialValue={inputFormType}>
