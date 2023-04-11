@@ -7,18 +7,21 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from './ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
+import { withDrawer } from 'components/withDrawer';
+
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerOrgHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [] },
+            ManufacturerOrgHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [],changeHistoryVisible},
         },
     } = state;
 
     let returnValue = {
         userId,
         isHistoryLoading,
+        isVisible: changeHistoryVisible,
         isHistoryLoaded,
         changeHistoryData: changeHistoryData,
     };
@@ -31,6 +34,8 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: manufacturerOrgHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: manufacturerOrgHierarchyDataActions.changeHistoryModelClose,
+
         },
         dispatch
     ),
@@ -127,4 +132,4 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     );
 };
 
-export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(ManufacturerOrgHierarchyChangeHistoryMain);
+export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerOrgHierarchyChangeHistoryMain, { title: 'Change History', width: '90%' }));
