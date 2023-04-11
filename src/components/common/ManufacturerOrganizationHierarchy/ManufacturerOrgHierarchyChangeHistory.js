@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from './ChangeHistory.module.css';
+import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 

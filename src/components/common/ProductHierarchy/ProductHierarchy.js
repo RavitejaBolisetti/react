@@ -171,7 +171,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         } else {
-            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
             setIsChildAllowed(true);
         }
 
