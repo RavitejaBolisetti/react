@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         geoData,
         isDataAttributeLoaded,
-        attributeData,
+        attributeData: attributeData?.filter((item) => item?.status),
     };
     return returnValue;
 };
@@ -62,34 +62,32 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
             showGlobalNotification,
-            
         },
         dispatch
     ),
 });
 
-export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, moduleTitle, viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading,showGlobalNotification }) => {
+export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, moduleTitle, viewTitle, userId, isDataLoaded, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, ChangeHistoryGeoModelOpen, hierarchyAttributeListShowLoading, showGlobalNotification }) => {
     const [form] = Form.useForm();
-        const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-        const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
-        const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-        const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
-        const [formActionType, setFormActionType] = useState('');
+    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
+    const [formActionType, setFormActionType] = useState('');
 
-        const [formData, setFormData] = useState([]);
-        const [selectedTreeData, setSelectedTreeData] = useState([]);
+    const [formData, setFormData] = useState([]);
+    const [selectedTreeData, setSelectedTreeData] = useState([]);
 
-        const [isFormBtnActive, setFormBtnActive] = useState(false);
-        const [searchValue, setSearchValue] = useState('');
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
 
-        const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
+    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
 
-        const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-        const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const fieldNames = { title: 'geoName', key: 'id', children: 'subGeo' };
 
     const fnCanAddChild = (value) => value === 'Y';
-
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -144,15 +142,18 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
 
             if (formData) {
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                console.log('🚀 ~ file: Geo.js:145 ~ handleTreeViewClick ~ isChildAllowed:', isChildAllowed);
                 formData && setFormData({ ...formData?.data, isChildAllowed });
+
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
                 const geoName = flatternData.find((i) => formData?.data?.geoParentCode === i.key)?.data?.geoName;
 
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: geoName });
+            } else {
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
-
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         }
 
         setSelectedTreeKey(keys);
@@ -322,12 +323,11 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewGeoDetail {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>
-                            <HierarchyFormButton {...viewProps} />
+                                <HierarchyFormButton {...viewProps} />
                             </div>
                         </Col>
                     ) : (
