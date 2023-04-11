@@ -18,9 +18,8 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
-    const disabledProps = { disabled: isReadOnly };
-    const [selectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState('');
+const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
+    const [openAccordian, setOpenAccordian] = useState(1)
     const [applicationForm] = Form.useForm();
 
     let drawerTitle = 'Add Application Details';
@@ -31,6 +30,10 @@ const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Details';
     }
+
+    const handleCollapse = (key) => {
+        setOpenAccordian(prev => prev === key ? "" : key);
+    };
 
     const handleForm = () => {
         setFormBtnDisable(true);
@@ -55,50 +58,8 @@ const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata
                 <>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
-                            {buttonData?.editBtn && (
-                                <Button danger onClick={() => console.log('hh')}>
-                                    <FaEdit className={styles.buttonIcon} />
-                                    Edit
-                                </Button>
-                            )}
-
-                            {buttonData?.childBtn && (
-                                <Button danger onClick={() => console.log('hh')}>
-                                    <FaUserPlus className={styles.buttonIcon} />
-                                    Add Child
-                                </Button>
-                            )}
-
-                            {buttonData?.siblingBtn && (
-                                <Button danger onClick={() => console.log('hh')}>
-                                    <FaUserFriends className={styles.buttonIcon} />
-                                    Add Sibling
-                                </Button>
-                            )}
-
                             {true && (
                                 <>
-                                    {buttonData?.saveBtn && (
-                                        <Button htmlType="submit" danger>
-                                            <FaSave className={styles.buttonIcon} />
-                                            Save
-                                        </Button>
-                                    )}
-
-                                    {buttonData?.resetBtn && (
-                                        <Button danger onClick={() => console.log('hh')}>
-                                            <FaUndo className={styles.buttonIcon} />
-                                            Reset
-                                        </Button>
-                                    )}
-
-                                    {/* {buttonData?.cancelBtn && (
-                                        <Button danger onClick={() => console.log('hh')}>
-                                            <FaRegTimesCircle size={15} className={styles.buttonIcon} />
-                                            Cancel
-                                        </Button>
-                                    )} */}
-
                                     <Button danger className={style.cancelBtn} onClick={onClose}>
                                         Cancel
                                     </Button>
@@ -117,24 +78,24 @@ const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata
                     direction="vertical"
                     style={{
                         display: 'flex',
+                        paddingBottom: '10px'
                     }}
                 >
-                    {/*Application Details  */}
                     <ApplicationDetails setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} onFinish={onFinish} form={applicationForm} />
 
-                    <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
+                    <Collapse onChange={() => handleCollapse('1')} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header="Application Actions" key="1">
                             <ApplicationActions setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
+                    <Collapse onChange={() => handleCollapse('2')} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header="Document Type" key="2">
                             <DocumentTypes setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
                         </Panel>
                     </Collapse>
 
-                    <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
+                    <Collapse onChange={() => handleCollapse('3')} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header="Accessible Dealer Location" key="3">
                             <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
                         </Panel>

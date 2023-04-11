@@ -86,7 +86,7 @@ const ViewApplicationDetails = ({ onEditApplication, onAddChild, onAddClick }) =
                         </Col>
                     </Row>
                     <Row>
-                    {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}> */}
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}> */}
 
                         <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
                             <Panel header="Application Actions" key="2">
@@ -98,8 +98,8 @@ const ViewApplicationDetails = ({ onEditApplication, onAddChild, onAddClick }) =
                                 <CardView />
                             </Panel>
                         </Collapse>
-                        
-                    {/* </Col> */}
+
+                        {/* </Col> */}
                     </Row>
                 </Space>
             </div>

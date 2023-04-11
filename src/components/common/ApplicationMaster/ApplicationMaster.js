@@ -192,8 +192,9 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         setDrawer(true);
     };
 
-    const handleClick = () => {
+    const handleClick = (type) => {
         setIsActive((current) => !current);
+        setMenuType(type)
     };
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
@@ -293,7 +294,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                         <Button
                                                             type="secondary"
                                                             danger
-                                                            onClick={handleClick}
+                                                            onClick={()=>handleClick('w')}
                                                             style={{
                                                                 backgroundColor: isActive ? '' : '#ff3e5b',
                                                                 color: isActive ? '' : 'white',
@@ -305,7 +306,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                         <Button
                                                             type="secondary"
                                                             danger
-                                                            onClick={handleClick}
+                                                            onClick={()=>handleClick('m')}
                                                             style={{
                                                                 backgroundColor: isActive ? '#ff3e5b' : '',
                                                                 color: isActive ? 'white' : '',

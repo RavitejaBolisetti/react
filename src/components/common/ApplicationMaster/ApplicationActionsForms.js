@@ -23,7 +23,7 @@ const applicationData = [
     },
 ];
 
-const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing }) => {
+const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, isBtnDisabled }) => {
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -37,23 +37,24 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing })
 
     return (
         <>
-            <Row style={{ marginTop: '20px' }} gutter={20}>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form form={form} onFieldsChange={handleForm} id="applicationAction" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Action" name="applicationAction" rules={[validateRequiredSelectField('Application Action')]}>
+                                <Form.Item get label="Action" name="applicationAction" rules={[validateRequiredSelectField('Application Action')]}>
                                     <Select
+                                        getPopupContainer={triggerNode => triggerNode.parentElement}
                                         labelInValue
                                         // defaultValue={name || ''}
-                                        showSearch
+                                        // showSearch
                                         placeholder="Select Application Action"
-                                        optionFilterProp="children"
+                                        // optionFilterProp="children"
                                         fieldNames={fieldNames}
                                         style={{
                                             width: '100%',
                                         }}
-                                        filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
+                                        // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
                                         options={applicationData}
                                     />
                                 </Form.Item>
@@ -65,7 +66,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing })
                             </Col>
                             { !isEditing && (
                                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                    <Button disabled={isEditing} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
+                                    <Button disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
                                         Add
                                     </Button>
                                 </Col>
