@@ -205,7 +205,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setSelectedTreeData(formData?.data);
+                res?.data && setSelectedTreeData(res?.data);
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
                 setFormBtnActive(false);
