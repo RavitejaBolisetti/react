@@ -15,18 +15,21 @@ import style from 'components/common/DrawerAndTable.module.css';
 import styled from '../Common.module.css';
 import ApplicationStyle from './ApplicationMaster.module.css';
 
+import { ViewApplicationDetail } from './ViewApplicationDetailMain';
+
 import { menuDataActions } from 'store/actions/data/menu';
 
 // import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import DrawerUtil from './DrawerUtil';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
-import ViewApplicationDetails from './ViewApplicationDetails';
+// import ViewApplicationDetails from './ViewApplicationDetails';
 
 const { Search } = Input;
 const { Text } = Typography;
 const { Panel } = Collapse;
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
@@ -105,6 +108,9 @@ const treedata = [
 ];
 
 export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations }) => {
+    const [form] = Form.useForm();
+    const [formData, setFormData] = useState([]);
+
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
@@ -124,7 +130,22 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+    const [closePanels, setClosePanels] = React.useState([]);
+    const [selectedTreeData, setSelectedTreeData] = useState([]);
+    const [isChildAllowed, setIsChildAllowed] = useState(true);
 
+    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+
+    // const handleButtonClick = (type) => {
+    //     setFormData([]);
+    //     form.resetFields();
+    //     if (type === FROM_ACTION_TYPE.EDIT) {
+    //         const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+    //         formData && setFormData(formData?.data);
+    //     }
+    //     setIsFormVisible(true);
+    //     setFormActionType(type);
+    // };
 
     const [FinalFormdata, setFinalFormdata] = useState({
         ApplicationDetails: [],
@@ -143,7 +164,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
         }
 
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type:menuType }); //fetch menu data
+        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
         // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
@@ -154,7 +175,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     useEffect(() => {
         setSearchValue(menuData);
-        console.log('menuData', menuData)
+        console.log('menuData', menuData);
     }, [menuData]);
 
     const handleAdd = () => {
@@ -176,15 +197,65 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     };
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
-    const handleTreeViewClick = () => {
-        return;
-    };
     const onFinish = (values) => {
         console.log(values);
         setFinalFormdata({ ...FinalFormdata, ApplicationDetails: values });
     };
+    const dataList = [];
 
-    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+    const generateList = (data) => {
+        for (let i = 0; i < data?.length; i++) {
+            const node = data[i];
+            const { id: key } = node;
+            dataList.push({
+                key,
+                data: node,
+            });
+            if (node[fieldNames?.children]) {
+                generateList(node[fieldNames?.children]);
+            }
+        }
+        return dataList;
+    };
+
+    const applicationCall = (key) => {
+        fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: `${key}` });
+    };
+    const flatternData = generateList(applicationDetailsData);
+    console.log('menuData flatternData', flatternData);
+
+    const handleTreeViewClick = (keys) => {
+        console.log('keys', keys);
+        form.resetFields();
+
+        setFormData([]);
+        setSelectedTreeData([]);
+
+        if (keys && keys.length > 0) {
+            setFormActionType('view');
+
+            applicationCall(keys[0]);
+            const formData = flatternData.find((i) => keys[0] === i.data.applicationId);
+            console.log('formData', formData);
+            setSelectedTreeData(formData);
+            return;
+            if (formData) {
+                console.log('formData', formData);
+                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                formData && setFormData({ ...formData?.data, isChildAllowed });
+
+                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
+            }
+
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+        } else {
+            setIsChildAllowed(true);
+        }
+
+        setSelectedTreeKey(keys);
+    };
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
@@ -195,6 +266,15 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         treeData: menuData,
         setSearchValue,
         searchValue,
+    };
+    const viewProps = {
+        buttonData,
+        attributeData,
+        selectedTreeData,
+        // handleButtonClick,
+        setClosePanels,
+        styles,
+        viewTitle: 'Application Master',
     };
 
     return (
@@ -308,8 +388,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                         {/* </Row> */}
                     </div>
                 </Col>
-
-                {true && (
+                {<ViewApplicationDetail {...viewProps} />}
+                {false && (
                     <>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                             <Card
