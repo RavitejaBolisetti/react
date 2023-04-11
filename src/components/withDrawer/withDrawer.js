@@ -4,7 +4,7 @@ import { Drawer } from 'antd';
 import styles from './withDrawer.module.css';
 
 export const withDrawer =
-    (InputComponent, { title = 'default title', width = 520 }) =>
+    (InputComponent, { title = 'default title', width = 540 }) =>
     (props) => {
         const { onCloseAction, isVisible, titleOverride, onOpenAction, footer } = props;
         return (

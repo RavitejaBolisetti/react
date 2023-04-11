@@ -9,6 +9,7 @@ import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
+import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
 
 import LeftPanel from 'components/common/LeftPanel';
 
@@ -74,8 +75,6 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
-    const [isReadOnly, setReadOnly] = useState(false);
-
     const [searchValue, setSearchValue] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
@@ -137,6 +136,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
+            console.log('🚀 ~ file: Dealer.js:138 ~ handleTreeViewClick ~ formData:', formData);
 
             if (formData) {
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.isChildAllowed;
@@ -158,33 +158,36 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinish = (values) => {
-        console.log(values,"ValueCheCK")
+        console.log(values, 'ValueCheCK');
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
-        const parentGroupForm = 'parentGroup';
-        const companyGroupForm = 'companyGroup';
-        const gstinGroupForm = 'gstinGroup';
-        const branchGroupForm = 'branchGroup';
+        const parentGroupForm = DEALER_HIERARCHY?.PARNT?.FORM_NAME;
+        const companyGroupForm = DEALER_HIERARCHY?.COMP?.FORM_NAME;
+        const gstinGroupForm = DEALER_HIERARCHY?.GSTIN?.FORM_NAME;
+        const branchGroupForm = DEALER_HIERARCHY?.LOCTN?.FORM_NAME;
 
         const customFormInput = { [parentGroupForm]: null, [companyGroupForm]: null, [gstinGroupForm]: null, [branchGroupForm]: null };
 
-        const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: 'Y' } };
+        const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId } };
 
-        console.log(data,'ThisIsBusi');
+        console.log(data, 'ThisIsBusi');
 
         const onSuccess = (res) => {
             form.resetFields();
-            setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setIsFormVisible(true);
 
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setSelectedTreeData(formData?.data);
+              
+                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === res?.data?.attributeId)?.hierarchyAttribueName;
+                formData && setSelectedTreeData({ type: values?.inputFormType, ...res?.data[values?.inputFormType], hierarchyAttribueName });
+
                 setSelectedTreeKey([res?.data[values?.inputFormType]?.id]);
                 setFormActionType('view');
+                setIsFormVisible(false);
             }
         };
 
@@ -245,7 +248,6 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         formActionType,
         selectedTreeKey,
         selectedTreeSelectKey,
-        isReadOnly,
         formData,
         treeData: dealerHierarchyData,
         handleSelectTreeClick,
@@ -285,7 +287,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
                                 Hierarchy
-                                                               <Search
+                                <Search
                                     placeholder="Search"
                                     style={{
                                         width: '43%',
@@ -345,7 +347,6 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                         </div>
                     )}
                 </Col>
-                
             </Row>
             <AddEditForm {...formProps} />
         </>
