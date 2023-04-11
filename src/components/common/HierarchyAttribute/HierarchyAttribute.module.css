@@ -44,7 +44,7 @@
 }
 
 .InactiveText {
-    color: #8E8585;
+    color: #8e8585;
 }
 
 .tableIcons {
@@ -73,8 +73,9 @@
     color: #0b0c0c;
     display: flex;
     align-items: center;
-    justify-content: center;
-
+    padding-left: 16px !important;
+    justify-content: start;
+    padding-bottom: 4px;
 }
 
 .refreshBtn {
@@ -112,3 +113,5 @@
     width: 100%;
     margin-left: -30px;
 }
+
+

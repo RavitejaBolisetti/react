@@ -196,7 +196,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
-            width: '17%',
+            width: '12%',
         })
     );
 
@@ -362,19 +362,34 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                                     imageStyle={{
-                                        height: 140,
+                                        height: '20%',
+                                      
                                     }}
                                     description={
-                                        !detailData?.length ? (
-                                            <span>
+                                        selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
+                                            <span className={style2.descriptionText}>
                                                 No records found. Please add new parameter <br />
                                                 using below button
                                             </span>
+                                        ) : !selectedHierarchy ? (
+                                            <span className={style2.descriptionText}>Please select hierarchy type to view records.</span>
                                         ) : (
-                                            <span> No records found.</span>
+                                            <span className={style2.descriptionText}> No records found.</span>
                                         )
                                     }
-                                ></Empty>
+                                >
+                                    {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button icon={<PlusOutlined />} className={style2.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                    Add Attribute
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    ) : (
+                                        ''
+                                    )}
+                                </Empty>
                             )}
                         >
                             <DataTable {...tableProps} />

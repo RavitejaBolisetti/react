@@ -37,3 +37,17 @@ export const validateFieldsPassword = (fieldName) => ({
     message: fieldName + ' should contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and should be of minimum 8 characters in length',
     pattern: '^(?!.* )(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}',
 });
+
+
+
+export const validateAlphanumericWithSpaceHyphenPeriod = (fieldName) => ({
+    message: fieldName + ' can contain only hyphen, period and space',
+    pattern:  /^[\w\-.\s]+$/,
+});
+
+
+
+export const validateAlphanumericWithSpace = (fieldName) => ({
+    message: fieldName + ' can contain only alphanumeric characters with space',
+    pattern:  /^[a-zA-Z0-9 ]*$/,
+});
