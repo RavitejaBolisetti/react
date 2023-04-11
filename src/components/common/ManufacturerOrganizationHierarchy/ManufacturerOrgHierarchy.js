@@ -159,7 +159,7 @@ export const ManufacturerOrgHierarchyMain = ({moduleTitle, isChangeHistoryVisibl
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.manufactureOrgShrtName;
+                const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
                
             }
