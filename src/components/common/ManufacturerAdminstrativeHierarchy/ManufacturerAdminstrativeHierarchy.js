@@ -213,7 +213,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         // const codeToBeSaved = Array.isArray(values?.manufacturerAdminHierarchyParentCode) ? values?.manufacturerAdminHierarchyParentCode[0] : values?.manufacturerAdminHierarchyParentCode || '';
-        const data = { ...values, id: recordId, active: values?.active ? true : false, manufactureOrgParntId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
+        const data = { ...values, id: recordId, active: values?.active ? 'Y' : 'N', manufactureOrgParntId: codeToBeSaved, otfAmndmntAlwdInd: values?.otfAmndmntAlwdInd || 'N' };
         const onSuccess = (res) => {
             form.resetFields();
             // setForceFormReset(Math.random() * 10000);
