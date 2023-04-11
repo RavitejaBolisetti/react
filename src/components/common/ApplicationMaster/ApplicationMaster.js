@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Card, Collapse, Form, Row, Empty, Input, Tree, Space, Switch } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
-
+import LeftPanel from '../LeftPanel';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
@@ -41,7 +41,6 @@ const mapStateToProps = (state) => {
         dealerLocations,
         userId,
         menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
-
     };
     return returnValue;
 };
@@ -117,12 +116,16 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
+    const [TheFinalMenudata, setTheFinalMenudata] = useState(menuData);
     const [openAccordian, setOpenAccordian] = useState('');
     const disabledProps = { disabled: isReadOnly };
     const [drawer, setDrawer] = useState(false);
     const [isActive, setIsActive] = useState(false);
-    const [menuType, setMenuType] = useState('w')
+    const [menuType, setMenuType] = useState('W');
+    const [searchValue, setSearchValue] = useState('');
+    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
+
+
     const [FinalFormdata, setFinalFormdata] = useState({
         ApplicationDetails: [],
         ApplicationActions: [],
@@ -140,7 +143,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
         }
 
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, menuType }); //fetch menu data
+        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type:menuType }); //fetch menu data
         // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType]);
@@ -148,6 +151,11 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     useEffect(() => {
         console.log('This is Finish Data', FinalFormdata);
     }, [FinalFormdata]);
+
+    useEffect(() => {
+        setSearchValue(menuData);
+        console.log('menuData', menuData)
+    }, [menuData]);
 
     const handleAdd = () => {
         setDrawer(true);
@@ -167,13 +175,28 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         setIsActive((current) => !current);
         setMenuType(type)
     };
+    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
+    const handleTreeViewClick = () => {
+        return;
+    };
     const onFinish = (values) => {
         console.log(values);
         setFinalFormdata({ ...FinalFormdata, ApplicationDetails: values });
     };
 
-    const fieldNames = { title: 'geoCode', key: 'id', children: 'subGeo' };
+    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+    const myProps = {
+        isTreeViewVisible,
+        handleTreeViewVisiblity,
+        selectedTreeKey,
+        selectedTreeSelectKey,
+        fieldNames,
+        handleTreeViewClick,
+        treeData: menuData,
+        setSearchValue,
+        searchValue,
+    };
 
     return (
         <>
@@ -267,7 +290,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                         ) : (
                             <>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Tree
+                                    {/* <Tree
                                         checkable
                                         //  onExpand={onExpand}
                                         //  expandedKeys={expandedKeys}
@@ -278,7 +301,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                         //  selectedKeys={selectedKeys}
                                         treeData={treedata}
                                         fieldNames={fieldNames}
-                                    />
+                                    /> */}
+                                    <LeftPanel {...myProps} />
                                 </Col>
                             </>
                         )}
