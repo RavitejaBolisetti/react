@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
@@ -142,7 +142,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
     const onFinish = (values) => {
 
-        console.log(values,'Initial Data');
+        console.log(values, 'Initial Data');
 
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
@@ -156,7 +156,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
         const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: 'Y' } };
 
-        console.log(data,'Final Data');
+        console.log(data, 'Final Data');
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -194,7 +194,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleEditBtn = () => {

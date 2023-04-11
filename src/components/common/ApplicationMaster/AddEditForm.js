@@ -7,6 +7,7 @@ import styles from 'pages/common/Common.module.css';
 
 import DrawerUtil from './DrawerUtil';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import styles from 'components/common/Common.module.css';
 import { ApplicationDetails } from './ApplicationDetails';
 import DocumentTypes from './DocumentTypes';
 import ApplicationActions from './ApplicationActions';

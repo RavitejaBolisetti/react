@@ -20,7 +20,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { EditIcon } from 'Icons';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import style from '../DrawerAndTable.module.css';
 
 const { Option } = Select;
@@ -77,7 +77,7 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
     useEffect(() => {
         setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
         setConfigdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
-    }, [configData,RefershData]);
+    }, [configData, RefershData]);
 
     const loadDependendData = () => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
@@ -88,7 +88,7 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
     useEffect(() => {
         loadDependendData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId,RefershData]);
+    }, [userId, RefershData]);
 
     const showDrawer = () => {
         setFormData([]);
@@ -276,7 +276,7 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const disabledProps = { disabled: true };
@@ -453,7 +453,7 @@ export const ConfigurableParameterEditingBase = ({ fetchdataList, saveData, fetc
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                         <Form.Item label="To Number" initialValue={formData?.toNumber} name="toNumber" rules={[validateRequiredInputField('Number')]}>
-                                            <InputNumber min={1} max={100} placeholder="To Number"  style={{ display: 'auto', width: '100%' }} />
+                                            <InputNumber min={1} max={100} placeholder="To Number" style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

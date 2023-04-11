@@ -16,7 +16,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { DataTable } from 'utils/dataTable';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
@@ -104,7 +104,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             } else {
                 setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
-         }
+        }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, criticalityGroupData]);
 
@@ -127,38 +128,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
 
-        //code for overlapping check on save
-        const timeInMinutes = (time) => {
-            const [hours, minutes] = time?.split(':').map(Number);
-            return hours * 60 + minutes;
-        };
 
-        const isOverlapping = (allowedTimingSlots) => {
-            const times = allowedTimingSlots?.map((slot) => {
-                const startTime = timeInMinutes(slot?.timeSlotFrom);
-                const endTime = timeInMinutes(slot?.timeSlotTo);
-                const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
-                return { startTime, endTime: adjustedTime };
-            });
-            times?.sort((a, b) => a?.startTime - b?.startTime);
-            for (let i = 0; i < times?.length - 1; i++) {
-                const slot1 = times[i];
-                const slot2 = times[i + 1];
-                if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        if (isOverlapping(finalAllowedTimingList)) {
-            showGlobalNotification({ title: 'Warning', message: 'The selected allowed timing slots are overlapping', placement: 'bottomRight' });
-        } else {
             const recordId = selectedRecord?.id || '';
             const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
             const onSuccess = (res) => {
-                onSaveShowLoading(false)
+                onSaveShowLoading(false);
                 form.resetFields();
                 setSelectedRecord({});
                 setSuccessAlert(true);
@@ -173,7 +148,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             };
 
             const onError = (message) => {
-                onSaveShowLoading(false)
+                onSaveShowLoading(false);
                 showGlobalNotification({ message, placement: 'bottomRight' });
             };
 
@@ -186,11 +161,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             };
 
             saveData(requestData);
-        }
+            setForceFormReset(Math.Random() * 1000);
+        
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleAdd = () => {
@@ -233,7 +209,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleUpdate2 = () => {
         setFormActionType('update');
-
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
@@ -284,7 +259,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     };
 
     const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+        const filterStringNew = filterString.trim();
+        return title && title.match(new RegExp(escapeRegExp(filterStringNew), 'i'));
     };
 
     const onSearchHandle = (value) => {
@@ -301,7 +277,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
-            sorter: false
+            sorter: false,
         })
     );
 

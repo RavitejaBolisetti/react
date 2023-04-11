@@ -11,7 +11,7 @@ import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { ChangeHistoryGeo } from '../ChangeHistory';
 
 import LeftPanel from 'components/common/LeftPanel';
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

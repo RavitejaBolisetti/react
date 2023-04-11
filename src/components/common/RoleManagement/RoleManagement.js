@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Space, List, Switch, Checkbox, Card, Tree, Divider } from 'antd';
 import { FaEdit, FaUserPlus, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';

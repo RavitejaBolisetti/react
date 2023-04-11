@@ -6,7 +6,7 @@ import { FaTrash, FaPlus } from 'react-icons/fa';
 
 import { Button, Col, Row, Form, Select, Modal, Input, Switch, Space } from 'antd';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { DataTable } from 'utils/dataTable';

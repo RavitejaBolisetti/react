@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -61,7 +61,7 @@ const AddEditFormMain = ({ isChecked, setSelectedTreeKey, setSelectedTreeSelectK
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padRight18}>
-                    <Form.Item initialValue={treeCodeId} label="Parent"name="geoParentCode">
+                    <Form.Item initialValue={treeCodeId} label="Parent" name="geoParentCode">
                         <TreeSelectField {...treeSelectFieldProps} />
                     </Form.Item>
                 </Col>
