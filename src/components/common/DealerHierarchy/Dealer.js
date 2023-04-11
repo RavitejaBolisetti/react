@@ -1,11 +1,11 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Select, Input, Empty} from 'antd';
+import { Button, Col, Form, Row, Select, Input, Empty } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle, FaHistory } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
-import style from '../ProductHierarchy/producthierarchy.module.css'
+import style from '../ProductHierarchy/producthierarchy.module.css';
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
@@ -23,7 +23,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 const { Option } = Select;
-
 
 const mapStateToProps = (state) => {
     const {
@@ -65,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading,changeHistoryModelOpen }) => {
+export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, changeHistoryModelOpen }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -79,7 +78,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
 
-   // const [isFormVisible, setIsFormVisible] = useState(true);
+    // const [isFormVisible, setIsFormVisible] = useState(true);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
 
@@ -112,13 +111,12 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded,userId]);
+    }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        if(userId)
-        hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES.DEALER_HIERARCHY.KEY });
+        if (userId) hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES.DEALER_HIERARCHY.KEY });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         form.resetFields();
@@ -287,7 +285,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleButtonClick = (type) => {
@@ -360,15 +358,13 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
     return (
         <>
-            
-                <Row gutter={20} span={24}>
-
-                    <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
-                                    Hierarchy
-                                    {/* <Select
+            <Row gutter={20} span={24}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20} className={styles.searchAndLabelAlign}>
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                                Hierarchy
+                                {/* <Select
                                         placeholder="Select a option"
                                         disabled
                                         allowClear
@@ -379,17 +375,17 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                                     >
                                         <Option value="hyr">Hyr</Option>
                                     </Select> */}
-                                    <Search
-                                        placeholder="Search"
-                                        style={{
-                                            width: '43%',
-                                        }}
-                                        allowClear
-                                        onChange={onChange}
-                                        className={styles.searchField}
-                                    />
-                                </Col>
-                                {/* {dealerHierarchyData.length > 0 && (
+                                <Search
+                                    placeholder="Search"
+                                    style={{
+                                        width: '43%',
+                                    }}
+                                    allowClear
+                                    onChange={onChange}
+                                    className={styles.searchField}
+                                />
+                            </Col>
+                            {/* {dealerHierarchyData.length > 0 && (
                                     <Col className={styles.buttonContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <Button type="primary" onClick={changeHistoryModelOpen}>
                                             <FaHistory className={styles.buttonIcon} />
@@ -397,38 +393,38 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                                         </Button>
                                     </Col>
                                 )} */}
-                            </Row>
-                        </div>
-                        <div className={styles.content}>
-                            {dealerHierarchyData.length <= 0 ? (
-                                <div className={styles.emptyContainer}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br /> {noDataMessage}
-                                            </span>
-                                        }
-                                    >
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            Add
-                                        </Button>
-                                    </Empty>
-                                </div>
-                            ) : (
-                                <LeftPanel {...myProps} />
-                            )}
-                        </div>
-                    </Col>
+                        </Row>
+                    </div>
+                    <div className={styles.content}>
+                        {dealerHierarchyData.length <= 0 ? (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            {noDataTitle} <br /> {noDataMessage}
+                                        </span>
+                                    }
+                                >
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add
+                                    </Button>
+                                </Empty>
+                            </div>
+                        ) : (
+                            <LeftPanel {...myProps} />
+                        )}
+                    </div>
+                </Col>
 
-                    {/* <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
+                {/* <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 8} xxl={!isTreeViewVisible ? 1 : 8}>
                         <LeftPanel {...myProps} />
                     </Col> */}
 
-                    {/* <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
+                {/* <Col xs={24} sm={24} md={!isTreeViewVisible ? 24 : 12} lg={!isTreeViewVisible ? 24 : 16} xl={!isTreeViewVisible ? 24 : 16} xxl={!isTreeViewVisible ? 24 : 16} className={styles.padRight0}>
                         <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             {isFormVisible && <AddEditForm {...formProps} />}
                             <Row gutter={20}>
@@ -515,9 +511,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                         </div>
                     )}
                 </Col>
-
-                </Row>
-                <AddEditForm {...formProps} />
+            </Row>
+            <AddEditForm {...formProps} />
         </>
     );
 };
