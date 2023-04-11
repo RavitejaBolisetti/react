@@ -98,7 +98,7 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
                             </Button>
                         )} */}
 
-                        {visibleChangeHistory &&
+                        {/* {visibleChangeHistory &&
                             (isChangeHistoryVisible ? (
                                 <Button type="primary" onClick={handleChangeHistoryClick}>
                                     <FaHistory className={styles.buttonIcon} />
@@ -109,7 +109,7 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
                                     <FaHistory className={styles.buttonIcon} />
                                     Change History
                                 </Button>
-                            ))}
+                            ))} */}
 
                         {isUploadVisible ? (
                             <Button danger onClick={handleUploadClick}>
