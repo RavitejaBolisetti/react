@@ -2,28 +2,27 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from './ChangeHistory.module.css';
+import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
-
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerOrgHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [],changeHistoryVisible},
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
 
     let returnValue = {
         userId,
         isHistoryLoading,
-        isVisible: changeHistoryVisible,
         isHistoryLoaded,
-        changeHistoryData: changeHistoryData,
+        isVisible: changeHistoryVisible,
+        changeHistoryData,
     };
     return returnValue;
 };
@@ -32,28 +31,26 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: manufacturerOrgHierarchyDataActions.changeHistoryShowLoading,
-            onCloseAction: manufacturerOrgHierarchyDataActions.changeHistoryModelClose,
-
+            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: productHierarchyDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
 });
 
-const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
         if (!isHistoryLoaded) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
-
     const tableColumn = [];
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Changed Date ',
+            title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
         })
@@ -69,32 +66,32 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     tableColumn.push(
         tblPrepareColumns({
             title: 'Attribute',
-            dataIndex: 'attributeCode',
+            dataIndex: 'parentAttributeName',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
-            dataIndex: 'hierarchyCode',
+            dataIndex: 'prodctCode',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parentManufactOrgHie',
+            dataIndex: 'parntHeirarchyCode',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
-            dataIndex: 'shortDescript',
+            dataIndex: 'prodctShrtDescription',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
             title: 'Long Description',
-            dataIndex: 'longDescript',
+            dataIndex: 'prodctLongDiscription',
         })
     );
 
@@ -123,10 +120,9 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     };
     return (
         <div className={styles.changeHistoryContainer}>
-        
             <DataTable {...tableProps} />
         </div>
     );
 };
 
-export const ManufacturerOrgHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerOrgHierarchyChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
