@@ -18,7 +18,7 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
+const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, openAccordian, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const [selectedLocaationAccessiblity, setSelectedLocaationAccessiblity] = useState('');
     const [applicationForm] = Form.useForm();
@@ -37,9 +37,10 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
     };
 
     const onClose = () => {
+        applicationForm.resetFields();
         setDrawer(false);
         setFormBtnDisable(false);
-        applicationForm.resetFields();
+        forceUpdate()
     };
 
     return (
@@ -132,25 +133,6 @@ const DrawerUtil = ({ handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit
                             <DocumentTypes setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
                         </Panel>
                     </Collapse>
-
-                    {/* {selectedLocaationAccessiblity === 'restrictedAccessible' && (
-                        <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
-                            <Panel header="Accessible Dealer Locations" key="3">
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Form.Item label="Application Type" name="ApplicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
-                                            <Select placeholder={preparePlaceholderText('Code')} {...disabledProps}>
-                                                <Option>
-                                                    <Checkbox>Dealer Location 1</Checkbox>
-                                                    <Checkbox>Dealer Location 2</Checkbox>
-                                                </Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse>
-                    )} */}
 
                     <Collapse expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header="Accessible Dealer Location" key="3">

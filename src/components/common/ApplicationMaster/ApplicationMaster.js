@@ -111,6 +111,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [isFormVisible, setFormVisible] = useState(false);
     const [isReadOnly, setReadOnly] = useState(false);
     const [forceFormReset, setForceFormReset] = useState(false);
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -210,7 +211,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                 </Space>
                                             </Col>
 
-                                            <Col xs={18} sm={18} md={18} lg={18} xl={12}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={12}>
                                                 <Search
                                                     placeholder="Search"
                                                     style={{
@@ -379,7 +380,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                 )}
             </Row>
 
-            <DrawerUtil open={drawer} FinalFormdata={FinalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} />
+            <DrawerUtil open={drawer} FinalFormdata={FinalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} />
         </>
     );
 };

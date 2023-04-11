@@ -16,11 +16,9 @@ const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed
 
     const [actionForm] = Form.useForm();
 
-    const [form] = Form.useForm();
-
     const handleAdd = (value) => {
         setDocData((prev) => [...prev, value]);
-        form.resetFields();
+        actionForm.resetFields();
     };
 
     const onActionFormFinish = (val) => {
@@ -30,11 +28,12 @@ const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed
         setFinalFormdata({ ...FinalFormdata, DocumentType: [...FinalFormdata.DocumentType, val] });
 
         actionForm.resetFields();
+        forceUpdate()
     };
 
     return (
         <Fragment>
-            <DocumentTypesForm form={form} onFinish={onActionFormFinish} />
+            <DocumentTypesForm form={actionForm} onFinish={onActionFormFinish} />
 
             {DocumentTypesList.length > 0 &&
                 DocumentTypesList.map((action) => {
