@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -80,6 +80,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [deletedItemList, setDeletedItemList] = useState([]);
     const [filterString, setFilterString] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const errorAction = (message) => {
         showGlobalNotification(message);
@@ -416,6 +417,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 contextAlertNotification={contextAlertNotification}
                 isDataLoaded={isLoadingOnSave}
                 isLoading={isLoadingOnSave}
+                forceUpdate={forceUpdate}
             />
 
             <Row gutter={20}>
