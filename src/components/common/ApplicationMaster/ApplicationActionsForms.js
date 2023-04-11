@@ -65,7 +65,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing })
                             </Col>
                             { !isEditing && (
                                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                    <Button icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
+                                    <Button disabled={isEditing} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
                                         Add
                                     </Button>
                                 </Col>

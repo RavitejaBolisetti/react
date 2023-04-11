@@ -8,8 +8,8 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import style from 'pages/common/Common.module.css';
 
 function DocumentTypesForm({ form, onFinish, isEditing }) {
-    // this is for edit and view modes
-    const footerEdit = false;
+
+    
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -24,12 +24,12 @@ function DocumentTypesForm({ form, onFinish, isEditing }) {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Code" name="docCode" rules={[validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code')]}>
-                        {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Name')} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Document Name" name="documentName" rules={[validateRequiredInputField('Document Name'), validationFieldLetterAndNumber('Document Name')]}>
-                        {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>}
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Name')} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -41,7 +41,7 @@ function DocumentTypesForm({ form, onFinish, isEditing }) {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="signatureReq" label="Digital Signature Required" valuePropName="checked">
-                        <Switch style={{}} checkedChildren="Yes" unCheckedChildren="Inactive" valuePropName="checked" />
+                        <Switch checkedChildren="Yes" unCheckedChildren="Inactive" valuePropName="checked" />
                     </Form.Item>
                 </Col>
             </Row>

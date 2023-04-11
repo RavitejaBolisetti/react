@@ -197,7 +197,7 @@ applicationMasterDataActions.fetchApplicationCriticalityGroup = withAuthToken((p
 applicationMasterDataActions.fetchMenuList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, errorAction, data, userId } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
+    const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
         if (res?.data) {

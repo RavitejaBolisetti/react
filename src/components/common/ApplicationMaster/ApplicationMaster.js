@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Menu: { isLoaded: isDataLoaded = false, filter, data: menuData = [], favouriteMenu = [] },
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations },
+            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData },
         },
     } = state;
 
@@ -40,7 +40,8 @@ const mapStateToProps = (state) => {
         applicationDetailsData,
         dealerLocations,
         userId,
-        menuData: menuData?.filter((el) => el?.menuId !== 'FAV'),
+        menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
+
     };
     return returnValue;
 };
