@@ -101,9 +101,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         if (isDataLoaded && criticalityGroupData) {
             if (filterString) {
                 const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(criticalityGroupData);
             }
         }
         
@@ -279,6 +279,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            render: ((_t, _r, i) => i+1 ),
         })
     );
 
