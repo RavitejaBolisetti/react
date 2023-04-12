@@ -157,17 +157,18 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [viewDetail, setViewDetail] = useState(false);
 
     useEffect(() => {
-        if (!criticalityGroupData?.length) {
-            fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-        }
-        if (formActionType === 'rootChild') {
-            fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
-        }
+        if (userId) {
+            if (!criticalityGroupData?.length) {
+                fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
+            }
 
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
-        // hierarchyAttributeFetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: 'Geographical' });
+            if (formActionType === 'rootChild') {
+                fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, applicationId: 'Web' });
+            }
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
+    }, [formActionType, userId]);
 
     useEffect(() => {
         console.log('This is Finish Data', FinalFormdata);
@@ -194,7 +195,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const handleClick = (type) => {
         setIsActive((current) => !current);
-        setMenuType(type)
+        setMenuType(type);
     };
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
@@ -294,7 +295,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                         <Button
                                                             type="secondary"
                                                             danger
-                                                            onClick={()=>handleClick('w')}
+                                                            onClick={() => handleClick('w')}
                                                             style={{
                                                                 backgroundColor: isActive ? '' : '#ff3e5b',
                                                                 color: isActive ? '' : 'white',
@@ -306,7 +307,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                         <Button
                                                             type="secondary"
                                                             danger
-                                                            onClick={()=>handleClick('m')}
+                                                            onClick={() => handleClick('m')}
                                                             style={{
                                                                 backgroundColor: isActive ? '#ff3e5b' : '',
                                                                 color: isActive ? 'white' : '',
