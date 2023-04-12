@@ -107,15 +107,33 @@
 .contentHeaderBackground :global .ant-input-search .ant-input:focus,
 .contentHeaderBackground :global .ant-input-affix-wrapper-focused{    border-color: transparent;}
 .contentHeaderBackground :global .ant-input-group{border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;  border: 1px solid #d9d9d9;}
-.contentHeaderBackground :global .ant-input-group:hover{border: 1px solid #ff3e5b;}
+.contentHeaderBackground :global .ant-input-group:hover{border: 1px solid #0B0B0C;}
 .contentHeaderBackground :global .ant-input-group .ant-input:focus,
 .contentHeaderBackground :global .ant-input-group .ant-input:hover{border-inline-end-width: 0;}
 .contentHeaderBackground :global .ant-input-affix-wrapper:focus, 
 .contentHeaderBackground :global .ant-input-affix-wrapper-focused{box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);}
+:global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{border-color: #0B0B0C; box-shadow: none;}
+ :global .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+ :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected, 
+  :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
+    background-color: transparent !important; color: #FF3E5B; font-size: 14px;
+  } 
+  :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
+  :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span:hover{
+    background-color: transparent !important;
+  }
+  :global .ant-select-dropdown, 
+  :global .ant-input:hover,
+  :global .ant-input:focus, 
+  :global .ant-input-focused{border:1px solid #0B0B0C; box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);}
+  :global .ant-select .ant-select-arrow {color: #FF3E5B;}
 
-/* :global .ant-select-selection {
-    background-color: green;
-  } */
+  :global .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: transparent; color: #FF3E5B;}
+  :global .ant-select-focused:where(.css-dev-only-do-not-override-18twuw5).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
+    border-color:#0B0B0C;
+    box-shadow:none;
+}
+  
 /* Custom CSS */
 
 .container {

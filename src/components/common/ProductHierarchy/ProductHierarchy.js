@@ -309,6 +309,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                     >
                                     <Option value="hyr">Hyr</Option>
                                 </Select>
+                                
                                 <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                             </Col>
                             {productHierarchyData.length > 0 && (
