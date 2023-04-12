@@ -57,7 +57,7 @@
 .searchAndLabelAlign {
     display: flex;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 6px;
     padding-right: 20px;
 }
 
@@ -184,6 +184,9 @@
     color: #0b0c0c;
     padding-right: 0px !important;
     padding-left: 0px !important;
+    display: flex;
+    justify-content: start;
+
 }
 
 .srchbtn :global .ant-btn-default {
