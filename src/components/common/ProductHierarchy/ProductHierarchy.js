@@ -149,7 +149,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
         return dataList;
     };
 
-    const flatternData = generateList(finalGeoData);
+    const flatternData = generateList(productHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         form.resetFields();
@@ -171,7 +171,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         } else {
-            setButtonData({ ...defaultBtnVisiblity, rootChildBtn: true });
             setIsChildAllowed(true);
         }
 
@@ -304,23 +303,21 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
                                 Hierarchy
                                 <Select
-                                    placeholder="Select a option"
+                                    placeholder="Select Hierarchy"
                                     allowClear
-                                    className={styles.headerSelectField}  
+                                    className={styles.headerSelectField}
+                                    style={{
+                                        width: '42%',
+                                    }}
                                 >
                                     <Option value="hyr">Hyr</Option>
                                 </Select>
-                                <Search
-                                    placeholder="Search"
-                                    allowClear
-                                    onChange={onChange}
-                                    className={styles.headerSearchField}
-                                />
+                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                             </Col>
                             {productHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer}  xs={24} sm={24} md={5} lg={5} xl={5}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
                                     <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon}  />
+                                        <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>
                                 </Col>
