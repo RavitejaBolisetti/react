@@ -134,7 +134,7 @@ const options = {
         },
     ],
 };
-const Allselect = ['Read','View','Update','Delete','Create','Upload'];
+const Allselect = ['Read', 'View', 'Update', 'Delete', 'Create', 'Upload'];
 
 const options2 = [
     {
@@ -315,6 +315,7 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
     ];
     const disabledProps = { disabled: false };
     const [treeData, settreeData] = useState([]);
+    const [SelectedKeys, setSelectedKeys] = useState();
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add New Role';
@@ -450,7 +451,7 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
         console.log('checked = ', checkedValues, key);
     };
     const onTreeSelect = (data) => {
-        setParentCheck(data);
+        setSelectedKeys(data);
         console.log('onTreeSelect', data);
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
@@ -481,6 +482,7 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
                 treeData={treeData}
                 treeLine={true}
                 treeIcon={true}
+                checkedKeys={SelectedKeys}
                 onCheck={onTreeSelect}
                 titleRender={(treeNode) => {
                     if (treeNode.isLeaf) {
@@ -492,16 +494,14 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
                                 </span>
                                 <div className="Placement">
                                     {(() => {
-                                        if (ParentCheck) {
-                                            if (treeNode.dataIndex === ParentCheck[0]) {
-                                                return <Checkbox.Group defaultValue={Allselect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
-                                            }
-                                            return <Checkbox.Group  options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
-
+                                        const DefaultSelect = [];
+                                        if (SelectedKeys) {
+                                            DefaultSelect.push(Allselect);
+                                            console.log('DefaultSelect', DefaultSelect);
+                                            return <Checkbox.Group defaultValue={Allselect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
                                         } else {
                                             if (options[treeNode.dataIndex]) {
                                                 // console.log('Treenode DataIndex', treeNode.dataIndex);
-                                                const DefaultSelect = [];
                                                 options[treeNode.dataIndex].map((e) => {
                                                     if (e.checkable === true) {
                                                         console.log('The saga', e.value);
@@ -510,7 +510,6 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
                                                     }
                                                 });
                                                 console.log('DefaultSelect', DefaultSelect);
-                                                return <Checkbox.Group defaultValue={DefaultSelect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
 
                                                 // console.log('Value yeh hai', options[treeNode.dataIndex]);
 
@@ -520,6 +519,7 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
                                                 //         setDefaultcheckboxSelect([...DefaultcheckboxSelect,e]);
                                                 //     }
                                                 // });
+                                                return <Checkbox.Group defaultValue={DefaultSelect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
                                             }
                                         }
                                     })()}
