@@ -97,10 +97,25 @@
 :global .ant-input-search .ant-input:focus{border-color: #e31837; border-right: none;}
 :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px;}
 :global .ant-btn-default:not(:disabled):hover{border-color: #e31837;} */
-:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px;}
-:global .ant-input-search .ant-input:hover + .ant-btn-default:not(:disabled):hover{
-    border-color: #e31837; 
-}
+.contentHeaderBackground :global .ant-input-affix-wrapper, 
+.contentHeaderBackground :global .ant-btn-default,
+.contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px; border-color: transparent;}
+.contentHeaderBackground :global .ant-btn-default:not(:disabled):active, 
+.contentHeaderBackground :global .ant-btn-default:not(:disabled):hover,
+.contentHeaderBackground :global .ant-input-search .ant-input:focus{    border-color: transparent;}
+.contentHeaderBackground :global .ant-btn-default,
+.contentHeaderBackground :global .ant-input-search .ant-input:focus,
+.contentHeaderBackground :global .ant-input-affix-wrapper-focused{    border-color: transparent;}
+.contentHeaderBackground :global .ant-input-group{border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;  border: 1px solid #d9d9d9;}
+.contentHeaderBackground :global .ant-input-group:hover{border: 1px solid #ff3e5b;}
+.contentHeaderBackground :global .ant-input-group .ant-input:focus,
+.contentHeaderBackground :global .ant-input-group .ant-input:hover{border-inline-end-width: 0;}
+.contentHeaderBackground :global .ant-input-affix-wrapper:focus, 
+.contentHeaderBackground :global .ant-input-affix-wrapper-focused{box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);}
+
+/* :global .ant-select-selection {
+    background-color: green;
+  } */
 /* Custom CSS */
 
 .container {
@@ -323,9 +338,9 @@
     color: #ff3e5b;
 } */
 
-:global .ant-btn-default {
+/* :global .ant-btn-default {
     border-color: #d9d9d9;
-}
+} */
 
 :global .ant-tree {
     background: #f4f4f4;
@@ -710,9 +725,7 @@
     padding-right: 8px;
 }
 
-:global .ant-btn-default {
-    border-color: #d9d9d9;
-}
+
 
 :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     position: relative;

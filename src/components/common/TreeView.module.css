@@ -140,9 +140,7 @@
 /* :global .ant-tree .ant-tree-node-content-wrapper:hover, :global .ant-tree .ant-tree-checkbox+span:hover{
     background-color: transparent;
     color: #FF3E5B;} */
-:global .ant-select-selection {
-    background-color: green;
-  }
+    
 :global .ant-tree .ant-tree-node-content-wrapper,
 :global .ant-tree .ant-tree-checkbox+span {
     position: relative;
@@ -157,8 +155,8 @@
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
 :global .ant-tree .ant-tree-checkbox+span:hover {
-    background-color: #ff3e5b;
-    color: #ffffff;
+    background-color: transparent;
+    color: #FF3E5B;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
 }
