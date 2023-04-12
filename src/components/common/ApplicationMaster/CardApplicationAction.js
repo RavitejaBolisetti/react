@@ -33,12 +33,10 @@ const CardApplicationAction = (props) => {
     // on clicking save button updates data
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
-        console.log('fod', newFormData);
         const { value, label } = newFormData?.applicationAction;
         setApplicationList((prev) => {
             const newList = prev;
             const indx = prev.findIndex((el) => el.id === id);
-            console.log('newList', newList, 'indx', indx);
             newList.splice(indx, 1, { applicationName: label, id: value, status: newFormData.status });
             return newList;
         });

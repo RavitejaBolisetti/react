@@ -28,7 +28,6 @@
     width: 16px;
 } */
 :global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-text){
-    /* color: #E31837; */
     font-weight: 600;
     font-size: 16px;
 }

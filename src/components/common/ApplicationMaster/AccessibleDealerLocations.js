@@ -52,11 +52,11 @@ const existingLocation = [
 const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLocations, setFinalFormdata, FinalFormdata }) => {
     const [locationData, setLocationData] = useState([]);
 
-    const fieldNames = { label: 'locationName', value: 'locationCode' };
+    const fieldNames = { label: 'locationName', value: 'id' };
 
     const handleSelect = (value) => {
-        setLocationData((prev) => [...prev, { locationCode: value?.key, locationName: value?.label }]);
-        setFinalFormdata({ ...FinalFormdata, AccessibleDealerLocation: [...FinalFormdata.AccessibleDealerLocation, value] });
+        setLocationData((prev) => [...prev, { id: value?.key, locationName: value?.label }]);
+        setFinalFormdata({ ...FinalFormdata, AccessibleDealerLocation: [...FinalFormdata.AccessibleDealerLocation, { id: value?.key, locationName: value?.label }] });
     };
     const handleDeleteLocation =(values) => {
         setLocationData(prev =>{
@@ -64,7 +64,6 @@ const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLoc
             let index = prevData.findIndex(el => el.locationCode === values.locationCode)
             prevData.splice(index, 1)
         })
-        console.log(values)
     }
 
     return (
@@ -89,8 +88,8 @@ const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLoc
                     />
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {locationData.length
-                        ? locationData.map((location) => {
+                    {FinalFormdata.AccessibleDealerLocation.length
+                        ? FinalFormdata?.AccessibleDealerLocation?.map((location) => {
                               return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
                           })
                         : ''

@@ -8,7 +8,8 @@ import { validateRequiredInputField, validationFieldLetterAndNumber, validateReq
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import style from 'components/common/DrawerAndTable.module.css';
+// import style from 'components/common/DrawerAndTable.module.css';
+import style from '../../common/DrawerAndTable.module.css'
 import styles from 'pages/common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
@@ -18,8 +19,10 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
-    const [openAccordian, setOpenAccordian] = useState(1)
+const DrawerUtil = ({ forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
+    const [openAccordian, setOpenAccordian] = useState(1);
+    const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
+    const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
     const [applicationForm] = Form.useForm();
 
     let drawerTitle = 'Add Application Details';
@@ -30,9 +33,8 @@ const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata
     } else if (formActionType === 'view') {
         drawerTitle = 'View Application Details';
     }
-
     const handleCollapse = (key) => {
-        setOpenAccordian(prev => prev === key ? "" : key);
+        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const handleForm = () => {
@@ -43,8 +45,9 @@ const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata
         applicationForm.resetFields();
         setDrawer(false);
         setFormBtnDisable(false);
-        forceUpdate()
+        forceUpdate();
     };
+
 
     return (
         <Drawer
@@ -78,28 +81,30 @@ const DrawerUtil = ({forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata
                     direction="vertical"
                     style={{
                         display: 'flex',
-                        paddingBottom: '10px'
+                        paddingBottom: '10px',
                     }}
                 >
-                    <ApplicationDetails setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} onFinish={onFinish} form={applicationForm} />
+                    <ApplicationDetails setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} />
 
-                    <Collapse onChange={() => handleCollapse('1')} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                        <Panel header="Application Actions" key="1">
+                    <Collapse className={openAccordian === 1 ? style.accordianHeader : '' } onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                        <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : '' }>Application Actions</span>} key="1">
                             <ApplicationActions setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
                         </Panel>
                     </Collapse>
-
-                    <Collapse onChange={() => handleCollapse('2')} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                        <Panel header="Document Type" key="2">
-                            <DocumentTypes setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
-                        </Panel>
-                    </Collapse>
-
-                    <Collapse onChange={() => handleCollapse('3')} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                        <Panel header="Accessible Dealer Location" key="3">
-                            <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
-                        </Panel>
-                    </Collapse>
+                    {isDocumentToGenerate && (
+                        <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                            <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : '' }>Document Type </span>}  key="2">
+                                <DocumentTypes setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
+                            </Panel>
+                        </Collapse>
+                    )}
+                    {isRestrictedLocation && (
+                        <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                            <Panel header={<span className={openAccordian === 3 ? style.accordianHeader : '' }>Accessible Dealer Location</span>} key="3">
+                                <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
+                            </Panel>
+                        </Collapse>
+                    )}
                 </Space>
             </>
         </Drawer>

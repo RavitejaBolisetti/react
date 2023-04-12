@@ -23,7 +23,6 @@ const DocumentTypes = ({ footerEdit = false, onFinish = () => {}, onFinishFailed
     };
 
     const onActionFormFinish = (val) => {
-        console.log('value', val);
         setDocumentTypesList((prev) => [...prev, { ...val }]);
         setFinalFormdata({ ...FinalFormdata, DocumentType: DocumentTypesList });
         setFinalFormdata({ ...FinalFormdata, DocumentType: [...FinalFormdata.DocumentType, val] });

@@ -6,7 +6,6 @@ const { Text } = Typography;
 
 function LocationCard(props) {
     let { locationName,locationCode, handleDeleteLocation } = props;
-console.log('prop', props)
 
     return (
         <Card

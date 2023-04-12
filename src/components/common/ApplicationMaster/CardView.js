@@ -16,7 +16,7 @@ const CardView = () => {
                 backgroundColor: "#BEBEBE1A",           
             }}
         >
-            <Row>
+            {/* <Row>
                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10} >
                     <Text type="secondary">Status: </Text> <Text type="success">Active</Text>
                 </Col>
@@ -28,14 +28,23 @@ const CardView = () => {
                     <p></p>
                     <Text type="secondary">Action ID: B6G431</Text>
                 </Col>
+            </Row>         */}
 
 
-                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                    <Button style={{backgroundColor: "#BEBEBE1A", border: 0}} icon={<FiEdit />}>
-                        {/* <FiEdit style={{ cursor: "pointer", color: "#FF3E5B" }} /> */}
-                    </Button>
-                </Col>
-            </Row>        
+            <Row align="middle">
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Text type="secondary">Status: </Text> {'true' ? <Text type="success">Active</Text> : <Text>Inactive</Text>}
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Text strong>{'Employee Empowerment'}</Text>
+                        {/* <Text type="secondary">Action ID: {id || 'B6G431'}</Text> */}
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {/* <Text strong>{applicationName || 'Employee Empowerment'}</Text> */}
+                        <Text type="secondary">Action ID: {'id' || 'B6G431'}</Text>
+                    </Col>
+            </Row>
+
         </Card>
         
     </>

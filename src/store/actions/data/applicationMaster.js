@@ -64,7 +64,7 @@ applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) =>
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + '?id='+ id,
+        url: baseURLPath + '?appId='+ id,
         token,
         accessToken,
         userId,
@@ -117,7 +117,7 @@ applicationMasterDataActions.fetchDealerLocations = withAuthToken((params) => ({
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_DEALER_LOCATION + '?applicationId=' + applicationId,
+        url: BASE_URL_APPLICATION_DEALER_LOCATION ,
         token,
         accessToken,
         userId,

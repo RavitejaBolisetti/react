@@ -1,5 +1,10 @@
 import React from 'react';
-import { Descriptions } from 'antd';
+import { Collapse, Descriptions } from 'antd';
+import CardView from './CardView';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+
+
+const {Panel} = Collapse;
 
 const ViewApplicationDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -23,6 +28,16 @@ const ViewApplicationDetailMain = ({ viewTitle, buttonData, attributeData, selec
                 <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                 <Descriptions.Item label="Application Criticality Group">{selectedTreeData?.prodctLongName}</Descriptions.Item>
                 <Descriptions.Item label="Document no. to be generated">{selectedTreeData?.prodctLongName}</Descriptions.Item> */}
+                                        <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
+                            <Panel header="Application Actions" key="2">
+                                <CardView />
+                            </Panel>
+                        </Collapse>
+                        <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
+                            <Panel header="Document Types" key="3">
+                                <CardView />
+                            </Panel>
+                        </Collapse>
             </Descriptions>
         </div>
     );
