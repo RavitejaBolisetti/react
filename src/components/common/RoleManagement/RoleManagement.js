@@ -8,7 +8,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { showGlobalNotification } from 'store/actions/notification';
 import { EditIcon, ViewEyeIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
