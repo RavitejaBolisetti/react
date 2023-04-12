@@ -10,10 +10,12 @@
     margin-top: 4px;
 }
 
+/* .panelVisible {
+    height: 68vh;
+} */
+
 .panelVisible {
-    background: #f4f4f4;
-    box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
-    min-height: 66vh;
+    height: calc(100vh - 274px);
 }
 
 .panelHidden {
@@ -64,8 +66,8 @@
 
 .scrollTreeData {
     width: 100%;
-    overflow: scroll;
-    height: 46vh;
+    overflow: auto;
+    max-height: 66vh;
 }
 
 .scrollTreeData::-webkit-scrollbar-track {
@@ -124,19 +126,22 @@
     padding: 0px 14px;
     padding-bottom: 0px;
 }
-
 :global .ant-tree-show-line .ant-tree-switcher-line-icon {
     vertical-align: -0.28em;
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
 :global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
-    background-color: #ff3e5b;
-    color: #ffffff;
+    background-color: transparent;
+    color: #FF3E5B;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
+    font-weight: 500;
 }
-
+/* :global .ant-tree .ant-tree-node-content-wrapper:hover, :global .ant-tree .ant-tree-checkbox+span:hover{
+    background-color: transparent;
+    color: #FF3E5B;} */
+    
 :global .ant-tree .ant-tree-node-content-wrapper,
 :global .ant-tree .ant-tree-checkbox+span {
     position: relative;
@@ -151,8 +156,8 @@
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
 :global .ant-tree .ant-tree-checkbox+span:hover {
-    background-color: #ff3e5b;
-    color: #ffffff;
+    background-color: transparent;
+    color: #FF3E5B;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
 }
@@ -182,19 +187,25 @@
     user-select: none;
 }
 
-:global .ant-input-search .ant-input:hover,
-:global .ant-input-search .ant-input:focus {
-    border-color: #e31837;
-}
+
 
 @media (max-width: 576px) {
+
     .scrollTreeData {
         width: 100%;
         overflow: scroll;
-        height: 12vh;
+        /* height: 12vh; */
+        height: calc(100vh - 350px);
+        /* border:1px solid red; */
+    }
+
+    .panelVisible {
+        height: calc(100vh - 368px);
     }
 
     :global .ant-input {
         padding: 4px 27px;
     }
 }
+
+@media (max-width: 768px) {}

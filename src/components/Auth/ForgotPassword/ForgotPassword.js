@@ -40,7 +40,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
-    const RESEND_OTP_TIME = 15;
+    const RESEND_OTP_TIME = 60;
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
     const [otpMessage, setOTPMessage] = useState();

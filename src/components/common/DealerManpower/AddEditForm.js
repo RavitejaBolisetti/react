@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, TreeSelect } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
