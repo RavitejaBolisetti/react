@@ -36,6 +36,8 @@ const AddEditFormMain = (props) => {
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
+    let selectedAttribute = selectedTreeData?.attributeKey;
+
     if (formActionType === 'edit' || formActionType === 'view') {
         treeCodeId = formData?.manufactureOrgParntId;
     } else if (formActionType === 'child') {
@@ -43,17 +45,20 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
     } else if (formActionType === 'sibling') {
         treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
+
+        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
+        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    useEffect(() => {
-        if (formActionType === 'sibling') {
-            setSelectedTreeKey([treeCodeId]);
-        }
-        setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    // useEffect(() => {
+    //     if (formActionType === 'sibling') {
+    //         setSelectedTreeKey([treeCodeId]);
+    //     }
+    //     setSelectedTreeSelectKey(treeCodeId);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
