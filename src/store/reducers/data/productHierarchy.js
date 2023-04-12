@@ -1,4 +1,4 @@
-import { PRODUCT_HIERARCHY_DATA_LOADED, PRODUCT_HIERARCHY_DATA_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING } from 'store/actions/data/productHierarchy';
+import { PRODUCT_HIERARCHY_DATA_LOADED, PRODUCT_HIERARCHY_DATA_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE } from 'store/actions/data/productHierarchy';
 
 const initialState = {
     isLoaded: false,
@@ -7,6 +7,7 @@ const initialState = {
     isHistoryLoaded: false,
     historyData: [],
     isHistoryLoading: false,
+    changeHistoryVisible: false,
 };
 
 export const ProductHierarchy = (state = initialState, action) => {
@@ -19,6 +20,8 @@ export const ProductHierarchy = (state = initialState, action) => {
             return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
         case PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
+        case PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE:
+            return { ...state, changeHistoryVisible: action.visible };
         default:
             return { ...state };
     }

@@ -7,5 +7,6 @@ export const EN = {
         ERROR: { TITLE: 'ERROR', MESSAGE: 'We are facing server issue. Please try again.' },
         INTERNAL_SERVER_ERROR: { TITLE: 'Server Error', MESSAGE: 'Internal server error. Please try again.' },
         SESSION_EXPIRED: { TITLE: 'Session Expired', MESSAGE: 'Your session has been expired. Please login again' },
+        NO_DATA_EXIST: { TITLE: 'No records found', MESSAGE: 'Please add New "{NAME}" using below button' },
     },
 };

@@ -9,6 +9,8 @@ export const MANUFACTURER_ORG_HIERARCHY_SET_FORM_IS_VISIBLE = 'MANUFACTURER_ORG_
 export const MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA = 'MANUFACTURER_ORG_HIERARCHY_SET_FORM_DATA';
 export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
+export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE';
+
 
 const receiveManufacturerOrgHierarchyData = (data) => ({
     type: MANUFACTURER_ORG_HIERARCHY_DATA_LOADED,
@@ -27,6 +29,16 @@ const manufacturerOrgHierarchyDataActions = {};
 manufacturerOrgHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
     isLoading,
+});
+
+manufacturerOrgHierarchyDataActions.changeHistoryModelOpen = (visible) => ({
+    type: MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: true,
+});
+
+manufacturerOrgHierarchyDataActions.changeHistoryModelClose = (visible) => ({
+    type: MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: false,
 });
 
 manufacturerOrgHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({

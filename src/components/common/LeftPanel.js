@@ -2,7 +2,7 @@ import { Tree } from 'antd';
 import { useMemo, useState, useEffect } from 'react';
 import styles from './TreeView.module.css';
 
-const   LeftPanel = (props) => {
+const LeftPanel = (props) => {
     const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
     const { isTreeViewVisible, handleTreeViewVisiblity } = props;
     const { searchValue, setSearchValue } = props;
@@ -57,7 +57,6 @@ const   LeftPanel = (props) => {
         setExpandedKeys(searchValue ? newExpandedKeys : []);
         setSearchValue(searchValue);
         setAutoExpandParent(true);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
 
