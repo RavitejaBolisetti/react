@@ -306,10 +306,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, userId, isDataLoa
                                     placeholder="Select Hierarchy"
                                     allowClear
                                     className={styles.headerSelectField}
-                                    style={{
-                                        width: '42%',
-                                    }}
-                                >
+                                    >
                                     <Option value="hyr">Hyr</Option>
                                 </Select>
                                 <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
