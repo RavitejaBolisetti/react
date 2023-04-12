@@ -58,34 +58,44 @@ const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLoc
         setLocationData((prev) => [...prev, { locationCode: value?.key, locationName: value?.label }]);
         setFinalFormdata({ ...FinalFormdata, AccessibleDealerLocation: [...FinalFormdata.AccessibleDealerLocation, value] });
     };
-    console.log('value', locationData);
+    const handleDeleteLocation =(values) => {
+        setLocationData(prev =>{
+            let prevData = prev;
+            let index = prevData.findIndex(el => el.locationCode === values.locationCode)
+            prevData.splice(index, 1)
+        })
+        console.log(values)
+    }
 
     return (
         <Fragment>
-            <Row>
-                <Select
-                    // defaultValue={record[dataIndex]}
-                    getPopupContainer={triggerNode => triggerNode.parentElement}
-                    labelInValue
-                    showSearch
-                    placeholder="Select accesable location"
-                    optionFilterProp="children"
-                    fieldNames={fieldNames}
-                    style={{
-                        width: '100%',
-                    }}
-                    onSelect={handleSelect}
-                    // onSearch={onSearch}
-                    filterOption={(input, option) => (option?.locationName ?? '').toLowerCase().includes(input.toLowerCase())}
-                    options={existingLocation}
-                />
-            </Row>
-            <Row>
-                {locationData.length
-                    ? locationData.map((location) => {
-                          return <LocationCard {...location} />;
-                      })
-                    : ''}
+            <Row gap={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Select
+                        // defaultValue={record[dataIndex]}
+                        getPopupContainer={(triggerNode) => triggerNode.parentElement}
+                        labelInValue
+                        showSearch
+                        placeholder="Select accesable location"
+                        optionFilterProp="children"
+                        fieldNames={fieldNames}
+                        style={{
+                            width: '100%',
+                        }}
+                        onSelect={handleSelect}
+                        // onSearch={onSearch}
+                        filterOption={(input, option) => (option?.locationName ?? '').toLowerCase().includes(input.toLowerCase())}
+                        options={existingLocation}
+                    />
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    {locationData.length
+                        ? locationData.map((location) => {
+                              return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
+                          })
+                        : ''
+                        }
+                </Col>
             </Row>
         </Fragment>
     );

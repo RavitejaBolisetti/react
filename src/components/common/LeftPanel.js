@@ -2,7 +2,7 @@ import { Tree } from 'antd';
 import { useMemo, useState, useEffect } from 'react';
 import styles from './TreeView.module.css';
 
-const LeftPanel = (props) => {
+const   LeftPanel = (props) => {
     const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
     const { isTreeViewVisible, handleTreeViewVisiblity } = props;
     const { searchValue, setSearchValue } = props;

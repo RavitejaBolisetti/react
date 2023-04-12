@@ -40,16 +40,12 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
 
     return (
         <Fragment>
-            <Row>
-                <Col>
-                    <ApplicationActionsForm form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />
+            <ApplicationActionsForm form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />
 
-                    {actionsList.length > 0 &&
-                        actionsList.map((action) => {
-                            return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setApplicationList={setApplicationList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
-                        })}
-                </Col>
-            </Row>
+            {actionsList.length > 0 &&
+                actionsList.map((action) => {
+                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setApplicationList={setApplicationList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
+                })}
         </Fragment>
     );
 };

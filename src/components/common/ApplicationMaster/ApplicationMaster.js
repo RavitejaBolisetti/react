@@ -29,7 +29,7 @@ const { Search } = Input;
 const { Text } = Typography;
 const { Panel } = Collapse;
 const mapStateToProps = (state) => {
-    console.log('state', state);
+    console.log('state===>', state);
     const {
         auth: { userId },
         data: {
@@ -75,37 +75,37 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const treedata = [
-    {
-        id: '067c09fd-c6d2-4962-8743-76b553d71d5e',
-        geoCode: 'GJ',
-        geoName: 'Appl 1',
-        attributeKey: '0eb57e6b-af05-4689-8e61-c9db39b6e85d',
-        geoParentCode: 'APE',
-        isActive: 'N',
-        subGeo: [
-            {
-                id: '861c41f4-d831-4dff-b6a4-04678b4f7d17',
-                geoCode: 'SUR',
-                geoName: 'MEE',
-                attributeKey: '0eb57e6b-af05-4689-8e61-c9db39b6e85d',
-                geoParentCode: '067c09fd-c6d2-4962-8743-76b553d71d5e',
-                isActive: 'N',
-                subGeo: [
-                    {
-                        id: 'bc386fc4-a79b-4b68-b05c-5f769d431a2e',
-                        geoCode: '677677',
-                        geoName: '677677',
-                        attributeKey: 'a9999d08-b89e-4806-beed-efa0a14b4cc1',
-                        geoParentCode: '861c41f4-d831-4dff-b6a4-04678b4f7d17',
-                        isActive: 'N',
-                        subGeo: [],
-                    },
-                ],
-            },
-        ],
-    },
-];
+// const treedata = [
+//     {
+//         id: '067c09fd-c6d2-4962-8743-76b553d71d5e',
+//         geoCode: 'GJ',
+//         geoName: 'Appl 1',
+//         attributeKey: '0eb57e6b-af05-4689-8e61-c9db39b6e85d',
+//         geoParentCode: 'APE',
+//         isActive: 'N',
+//         subGeo: [
+//             {
+//                 id: '861c41f4-d831-4dff-b6a4-04678b4f7d17',
+//                 geoCode: 'SUR',
+//                 geoName: 'MEE',
+//                 attributeKey: '0eb57e6b-af05-4689-8e61-c9db39b6e85d',
+//                 geoParentCode: '067c09fd-c6d2-4962-8743-76b553d71d5e',
+//                 isActive: 'N',
+//                 subGeo: [
+//                     {
+//                         id: 'bc386fc4-a79b-4b68-b05c-5f769d431a2e',
+//                         geoCode: '677677',
+//                         geoName: '677677',
+//                         attributeKey: 'a9999d08-b89e-4806-beed-efa0a14b4cc1',
+//                         geoParentCode: '861c41f4-d831-4dff-b6a4-04678b4f7d17',
+//                         isActive: 'N',
+//                         subGeo: [],
+//                     },
+//                 ],
+//             },
+//         ],
+//     },
+// ];
 
 export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations }) => {
     const [form] = Form.useForm();
@@ -130,7 +130,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [closePanels, setClosePanels] = React.useState([]);
+    const [closePanels, setClosePanels] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
 
@@ -336,10 +336,9 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             </Col>
                         </Row>
                     </div>
-                    {/* </Col> */}
 
                     <div className={styled.content}>
-                        {!treedata ? (
+                        {menuData ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -386,11 +385,12 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                 </Col>
                             </>
                         )}
-                        {/* </Row> */}
                     </div>
                 </Col>
-                {<ViewApplicationDetail {...viewProps} />}
-                {false && (
+                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                    {<ViewApplicationDetail {...viewProps} />}
+                </Col>
+                {/* {false && (
                     <>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                             <Card
@@ -483,7 +483,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             </Card>
                         </Col>
                     </>
-                )}
+                )} */}
             </Row>
 
             <DrawerUtil open={drawer} FinalFormdata={FinalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} />
