@@ -27,6 +27,7 @@ const { Search } = Input;
 const initialTableData = [{}];
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
@@ -56,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: rolemanagementDataActions.fetchList,
             saveData: rolemanagementDataActions.saveData,
             listShowLoading: rolemanagementDataActions.listShowLoading,
+            onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -65,35 +67,46 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+    const [form] = Form.useForm();
+
     const [filterString, setFilterString] = useState();
     const [searchData, setSearchdata] = useState(RoleManagementData);
-    const [RefershData, setRefershData] = useState(false);
+    const [refreshData, setRefreshData] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [formActionType, setFormActionType] = useState('');
     const [footerEdit, setFooterEdit] = useState(false);
+    const [selectedRecord, setSelectedRecord] = useState(null);
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
+    const [viewData,setViewData] = useState({})
+    const [successAlert, setSuccessAlert] = useState(false);
+    const [isReadOnly, setIsReadOnly] = useState(false);
 
 
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setOpenDrawer(true);
-        setFooterEdit(false)
-    };
-    const handleView = (record) => {
-        setFormActionType('view');
-        setOpenDrawer(true);
-        setFooterEdit(true)
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
 
-    };
-    const handleAdd = () => {
-        setOpenDrawer(true);
-        setFooterEdit(false)
+    useEffect(() => {
+        setSearchdata(RoleManagementData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [RoleManagementData]);
 
-    };
+    useEffect(() => {
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refreshData, userId]);
+
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
             if (filterString) {
-                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
+                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.roleManagementId) || filterFunction(filterString)(item?.roleManagementName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(RoleManagementData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -102,8 +115,89 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, RoleManagementData]);
 
+    const onFinish = (values) => {
+        const recordId = selectedRecord?.id || '';
+        const data = { ...values, id: recordId };
+
+        const onSuccess = (res) => {
+            onSaveShowLoading(false);
+            form.resetFields();
+            setSelectedRecord({});
+            setSuccessAlert(true);
+            fetchList({ setIsLoading: listShowLoading, userId });
+            setOpenDrawer(false);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+
+        const onError = (message) => {
+            onSaveShowLoading(false);
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
+        };
+
+        const requestData = {
+            data: [data],
+            setIsLoading: onSaveShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    };
+
+    const viewProps = {
+        viewData,
+        setClosePanels,
+        styles,
+        viewTitle: 'Role Management',
+    };
+
+    const handleUpdate = (record) => {
+        setFormActionType('update');
+        setOpenDrawer(true);
+        setFooterEdit(false);
+        
+        form.setFieldsValue({
+            roleId: record.roleId,
+            roleName: record.roleName,
+            roleDesceription: record.roleDesceription,
+            activeIndicator: record.activeIndicator,
+        });
+
+    };
+    const handleView = (record) => {
+        setFormActionType('view');
+        setOpenDrawer(true);
+        setFooterEdit(true);
+        setViewData(record);
+        form.setFieldsValue({
+            roleId: record.roleId,
+            roleName: record.roleName,
+            roleDesceription: record.roleDesceription,
+            activeIndicator: record.activeIndicator,
+        });
+        setIsReadOnly(true);
+
+    };
+    const handleAdd = () => {
+        setOpenDrawer(true);
+        setFooterEdit(false);
+    };
+
+    const handleUpdate2 = () => {
+        setFormActionType('update');
+        setOpenDrawer(true);
+        setFooterEdit(false);
+        form.setFieldsValue({
+            roleId: selectedRecord.roleId,
+            roleName: selectedRecord.roleName,
+            roleDesceription: selectedRecord.roleDesceription,
+            activeIndicator: selectedRecord.activeIndicator,
+        });
+    };
+
     const handleReferesh = () => {
-        setRefershData(!RefershData);
+        setRefreshData(!refreshData);
     };
 
     const filterFunction = (filterString) => (title) => {
@@ -118,10 +212,6 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
         setFilterString(e.target.value);
     };
 
-    const onClose = () => {
-        setOpenDrawer(false);
-    };
-
     const tableColumn = [];
 
     tableColumn.push(
@@ -134,7 +224,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     tableColumn.push(
         tblPrepareColumns({
             title: 'Role ID',
-            dataIndex: 'roleid',
+            dataIndex: 'roleId',
         })
     );
 
@@ -148,7 +238,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     tableColumn.push(
         tblPrepareColumns({
             title: 'Role Description',
-            dataIndex: 'roleDescription',
+            dataIndex: 'roleDesceription',
         })
     );
 
@@ -253,11 +343,11 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil footerEdit={footerEdit} formActionType={formActionType} onClose={onClose} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} formBtnDisable={formBtnDisable} setFormBtnDisable={setFormBtnDisable} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType}  openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };

@@ -282,7 +282,7 @@ const mockData = [
     },
 ];
 
-const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const DrawerUtil = ({ setIsReadOnly,handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const [form] = Form.useForm();
     // const [selectedActions, setSelectedActions] = useState({})
     const [DefaultcheckboxSelect, setDefaultcheckboxSelect] = useState();
@@ -375,13 +375,6 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
         // setFormBtnDisable(true);
     };
 
-    const handleAdd = () => {};
-    const handleUpdate2 = () => {};
-    const onClose = () => {
-        setOpenDrawer(false);
-        form.resetFields();
-    };
-    const onFinish = () => {};
     const onFinishFailed = () => {};
     const Title = (props) => {
         console.log('render');
@@ -539,6 +532,13 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
         //     console.log('Keyname', key, ' Name:', val);
         // });
     };
+    const onClose = () => {
+        setOpenDrawer(false);
+        setFormBtnDisable(false);
+        setIsReadOnly(false);
+
+        form.resetFields();
+    };
 
     return (
         <>
@@ -586,21 +586,22 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
                 >
                     <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="roleId" label="Role Id" rules={[{ max: 6, message: 'Code must be  6 characters long.' }, validateRequiredInputField('Code')]}>
                                     <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="roleName" label="Role Name" rules={[{ max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('roleName')}</p>}
                                 </Form.Item>
                             </Col>
-
+                        </Row>
+                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item
                                     label="Role Description"
-                                    name="roleDescription"
+                                    name="roleDesceription"
                                     rules={[
                                         { max: 250, message: 'Role Description cannot be more than 250 characters.' },
                                         {
@@ -608,14 +609,26 @@ const DrawerUtil = ({ formActionType, openDrawer, setOpenDrawer, setsaveclick, f
                                         },
                                     ]}
                                 >
-                                    <TextArea
-                                        placeholder={preparePlaceholderText('Name')}
-                                        autoSize={{
-                                            minRows: 2,
-                                            maxRows: 5,
-                                        }}
-                                        maxLength={250}
-                                    />
+                                    {!footerEdit ? (
+                                        <TextArea
+                                            placeholder={preparePlaceholderText('Name')}
+                                            autoSize={{
+                                                minRows: 2,
+                                                maxRows: 5,
+                                            }}
+                                            maxLength={250}
+                                            {...disabledProps}
+                                        />
+                                    ) : (
+                                        <p className={style.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
+                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                                 </Form.Item>
                             </Col>
                         </Row>

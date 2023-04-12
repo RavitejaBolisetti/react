@@ -8,6 +8,8 @@ export const ROLE_MANAGEMENT_DATA_LOADED = 'ROLE_MANAGEMENT_DATA_LOADED';
 export const ROLE_MANAGEMENT_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
 export const ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
 export const ROLE_MANAGEMENT_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
+export const ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING = 'ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING';
+
 
 const receiveData = (data) => ({
     type: ROLE_MANAGEMENT_DATA_LOADED,
@@ -35,6 +37,11 @@ rolemanagementDataActions.setFormVisible = (isFormVisible) => ({
     isFormVisible,
 });
 
+rolemanagementDataActions.onSaveShowLoading = (isLoading) => ({
+    type: ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING,
+    isLoading,
+});
+
 rolemanagementDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
     setIsLoading(true);
@@ -51,7 +58,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => ({ token, access
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + '?id=Mn',
+        url: baseURLPath,
         token,
         accessToken,
         userId,
