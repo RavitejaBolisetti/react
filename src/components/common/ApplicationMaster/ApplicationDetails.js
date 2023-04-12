@@ -12,11 +12,11 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
     const disabledProps = { disabled: isReadOnly };
 
     const handleChangeLocations = (value) => {
-        setIsRestrictedLocation(value === "restrictedAccessible");
+        setIsRestrictedLocation(value === 'restrictedAccessible');
     };
     const handleDocReq = (val) => {
         setIsDocumentToGenerate(val);
-    }
+    };
 
     return (
         <Fragment>
@@ -24,7 +24,7 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID'), validationFieldLetterAndNumber('Application ID')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> 
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
@@ -36,13 +36,13 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('Application Title'), validationFieldLetterAndNumber('Application Title')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('ApplicationName')}</p>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
-                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps}>
                                 <Option value="all">Mah1</Option>
                                 <Option value="notAccessable">Mah2</Option>
                                 <Option value="restrictedAccessible">Mah3</Option>
@@ -54,7 +54,7 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {/* parent application id */}
                         <Form.Item name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')}>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all"></Option>
                             </Select>
                         </Form.Item>
@@ -64,7 +64,7 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="accessibleLocations" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            <Select onChange={handleChangeLocations} {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
+                            <Select onChange={handleChangeLocations} {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all">Accessible to all</Option>
                                 <Option value="notAccessable">Not accessible to all</Option>
                                 <Option value="restrictedAccessible">Restricted Accessible</Option>
@@ -74,20 +74,19 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Criticality Group" name="applicationCriticalityGroup" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
-                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps}>
+                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all">Mah1</Option>
                                 <Option value="notAccessable">Mah2</Option>
                                 <Option value="restrictedAccessible">Mah3</Option>
                             </Select>
                         </Form.Item>
                     </Col>
-
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document not to be generated" valuePropName="checked">
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq}  {...disabledProps} />
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
