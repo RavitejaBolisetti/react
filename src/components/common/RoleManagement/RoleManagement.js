@@ -180,12 +180,16 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
 
     };
     const handleAdd = () => {
+        setFormActionType('add');
+
         setOpenDrawer(true);
         setFooterEdit(false);
     };
 
     const handleUpdate2 = () => {
         setFormActionType('update');
+        setIsReadOnly(false)
+
         setOpenDrawer(true);
         setFooterEdit(false);
         form.setFieldsValue({
@@ -196,7 +200,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
         });
     };
 
-    const handleReferesh = () => {
+    const handleRefresh = () => {
         setRefreshData(!refreshData);
     };
 
@@ -293,15 +297,15 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                                     </div>
                                 </Row>
                             </Col>
-
-                            {RoleManagementData?.length ? (
+{/*code to be changed once API is integrated */}
+                            {true ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button className={style.refreshBtn} onClick={handleReferesh} danger>
-                                        <TfiReload />
-                                    </Button>
+                                    <Button icon={ <TfiReload />} className={style.refreshBtn} onClick={handleRefresh} danger />
+                                       
+                                   
 
                                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Role
+                                        Add New Role
                                     </Button>
                                 </Col>
                             ) : (
@@ -335,7 +339,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add Role
                                             </Button>
                                         </Col>
                                     </Row>
@@ -345,11 +349,11 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} formBtnDisable={formBtnDisable} setFormBtnDisable={setFormBtnDisable} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType}  openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} formBtnDisable={formBtnDisable} setFormBtnDisable={setFormBtnDisable} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType}  openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
