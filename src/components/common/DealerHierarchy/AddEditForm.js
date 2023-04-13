@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
     const [seletedAttribute, setSeletedAttribute] = useState(checkType(formData?.type));
     const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    console.log('🚀 ~ file: AddEditForm.js:31 ~ AddEditFormMain ~ inputFormType:', inputFormType);
+    //console.log('🚀 ~ file: AddEditForm.js:31 ~ AddEditFormMain ~ inputFormType:', inputFormType);
     const disabledProps = { disabled: false };
     const [form] = Form.useForm();
 
@@ -38,6 +38,9 @@ const AddEditFormMain = (props) => {
             const formInputType = attributeData?.find((i) => i.id === formData?.attributeId)?.hierarchyAttribueCode;
             formInputType && setSeletedAttribute(formInputType);
             formInputType && setInputFormType(DEALER_HIERARCHY[formInputType]?.FORM_NAME);
+            form.setFieldValue('inputFormType', DEALER_HIERARCHY[formInputType]?.FORM_NAME);
+            // console.log(DEALER_HIERARCHY[formInputType]?.FORM_NAME,'First Value');
+            // console.log( inputFormType, 'Second Value' )
             // form.setFieldValue('inputFormType', 'parentGroup');
             // form.setFieldValue('inputFormType', 'companyGroup');
             // form.setFieldValue('inputFormType', 'gstinGroup');
@@ -154,7 +157,7 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 {/* <Col xs={0} sm={0} md={0} lg={0} xl={0} className={styles.padLeft10}> */}
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} className={styles.padLeft10}> 
                     <Form.Item label="" name={'inputFormType'} initialValue={inputFormType}>
                         <Input />
                     </Form.Item>
