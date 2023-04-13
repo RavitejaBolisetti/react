@@ -136,14 +136,20 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         if (keys && keys.length > 0) {
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
-            console.log('🚀 ~ file: Dealer.js:138 ~ handleTreeViewClick ~ formData:', formData);
+            //console.log('🚀 ~ file: Dealer.js:138 ~ handleTreeViewClick ~ formData:', formData);
 
             if (formData) {
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.hierarchyAttribueName;
-                const prodctShrtName = flatternData.find((i) => formData?.data?.parentId === i.key)?.data?.prodctShrtName;
+
+                console.log( flatternData, 'FlatData'  );
+                console.log( formData, 'FormData'  );
+
+                const prodctShrtName = flatternData.find((i) => formData?.data?.parentId === i.key)?.data?.shortDescription;
+
+                console.log( prodctShrtName, 'SHORTNAMEEE'  )
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
             }
 
@@ -158,7 +164,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinish = (values) => {
-        console.log(values, 'ValueCheCK');
+        //console.log(values, 'ValueCheCK');
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
@@ -171,7 +177,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
         const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId } };
 
-        console.log(data, 'ThisIsBusi');
+        //console.log(data, 'ThisIsBusi');
 
         const onSuccess = (res) => {
             form.resetFields();
