@@ -1,14 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Card, Collapse, Form, Row, Empty, Input, Tree, Space, Switch } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Form, Row, Empty, Input } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import LeftPanel from '../LeftPanel';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
-
-import CardView from './CardView';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
@@ -16,20 +12,15 @@ import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
 
-// import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
 import DrawerUtil from './DrawerUtil';
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
 import { HierarchyFormButton } from '../Button';
-import { ViewGeoDetail } from '../Geo/ViewGeoDetails';
 import ViewApplicationDetail from './ViewApplicationDetails';
-// import ViewApplicationDetails from './ViewApplicationDetails';
 
 const { Search } = Input;
-const { Text } = Typography;
-const { Panel } = Collapse;
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -67,9 +58,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-
 export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations }) => {
     const [form] = Form.useForm();
+    const [applicationForm] = Form.useForm();
+
     const [formData, setFormData] = useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -85,12 +77,11 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [closePanels, setClosePanels] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
-    const [viewDetail, setViewDetail] = useState(false);
-    const [FinalFormdata, setFinalFormdata] = useState({
-        ApplicationDetails: [],
-        ApplicationActions: [],
-        DocumentType: [],
-        AccessibleDealerLocation: [],
+    const [finalFormdata, setFinalFormdata] = useState({
+        applicationDetails: [],
+        applicationAction: [],
+        documentType: [],
+        accessibleLocation: [],
     });
 
     console.log('applicationDetailsData', applicationDetailsData);
@@ -110,7 +101,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
         fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType, menuType]);
+    }, [userId, formActionType, menuType]);
 
     useEffect(() => {
         setSearchValue(menuData);
@@ -121,7 +112,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         setDrawer(true);
     };
 
-    const handleClick = (type) => {
+    const handleTypeClick = (type) => {
         setIsActive((current) => !current);
         setMenuType(type);
     };
@@ -129,30 +120,14 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const onFinish = (values) => {
         console.log(values);
-        setFinalFormdata({ ...FinalFormdata, ApplicationDetails: values });
-    };
-    const dataList = [];
-
-    const generateList = (data) => {
-        for (let i = 0; i < data?.length; i++) {
-            const node = data[i];
-            const { id: key } = node;
-            dataList.push({
-                key,
-                data: node,
-            });
-            if (node[fieldNames?.children]) {
-                generateList(node[fieldNames?.children]);
-            }
-        }
-        return dataList;
+        setFinalFormdata({ ...finalFormdata, ApplicationDetails: values });
     };
 
     const applicationCall = (key) => {
         // console.log('key', key);
         fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: '8c9c2231-166f-43aa-8633-3c3c795047fc' });
     };
-    const flatternData = generateList(menuData);
+    // const flatternData = generateList(menuData);
     // console.log('menuData flatternData', flatternData);
 
     const handleTreeViewClick = (keys) => {
@@ -160,26 +135,34 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         form.resetFields();
 
         setFormData([]);
-        setSelectedTreeData([]);
-
+        // setSelectedTreeData([]);
+        setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
             setFormActionType('view');
-
             applicationCall(keys[0]);
-            const formData = flatternData.find((i) => keys[0] === i.data.applicationId);
+            // const formData = flatternData.find((i) => keys[0] === i.data.applicationId);
             // console.log('formData', formData);
-            setSelectedTreeData(formData);
+            // setSelectedTreeData(formData);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            setSelectedTreeKey(keys);
         } else {
             setIsChildAllowed(true);
         }
-
-        setSelectedTreeKey(keys);
     };
 
+    //view card footer button
     const handleButtonClick = (type) => {
-        // console.log('type', type);
-        setFormData([]);
+        if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
+            const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
+            applicationForm.setFieldValue({...rest});
+            setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+           console.log("rest", rest)
+forceUpdate();
+        } else {
+            // parent data only
+            setFinalFormdata();
+        }
+        // setFormData([]);
         setDrawer(true);
         setFormActionType(type);
     };
@@ -212,90 +195,57 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
     return (
-            <>
-                <Row gutter={20} span={24}>
-                    <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20} className={styles.searchAndLabelAlign}>
-                                <Col xs={18} sm={18} md={18} lg={18} xl={18}>
-                                    <Row gutter={20} style={{ border: '1px' }} align='middle'>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={8}>
-                                            <div className={styl.changeThemeBorder}>
-                                                <Button
-                                                    type="secondary"
-                                                    danger
-                                                    onClick={() => handleClick('w')}
-                                                    style={{
-                                                        backgroundColor: isActive ? '' : '#ff3e5b',
-                                                        color: isActive ? '' : 'white',
-                                                    }}
-                                                >
-                                                    Web
-                                                </Button>
-
-                                                <Button
-                                                    type="secondary"
-                                                    danger
-                                                    onClick={() => handleClick('m')}
-                                                    style={{
-                                                        backgroundColor: isActive ? '#ff3e5b' : '',
-                                                        color: isActive ? 'white' : '',
-                                                    }}
-                                                >
-                                                    Mobile
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search
-                                                placeholder="Search"
+        <>
+            <Row gutter={20} span={24}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20} className={styles.searchAndLabelAlign}>
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18}>
+                                <Row gutter={20} style={{ border: '1px' }} align="middle">
+                                    <Col xs={10} sm={10} md={10} lg={10} xl={8}>
+                                        <div className={styl.changeThemeBorder}>
+                                            <Button
+                                                type="secondary"
+                                                danger
+                                                onClick={() => handleTypeClick('w')}
                                                 style={{
-                                                    width: '100%',
+                                                    backgroundColor: isActive ? '' : '#ff3e5b',
+                                                    color: isActive ? '' : 'white',
                                                 }}
-                                                allowClear
-                                                // onChange={onChange}
-                                                className={styles.searchField}
-                                            />
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </div>
-                        <div className={styles.content}>
-                            {menuData?.length <= 0 ? (
-                                <div className={styles.emptyContainer}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br /> {noDataMessage}
-                                            </span>
-                                        }
-                                    >
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            Add
-                                        </Button>
-                                    </Empty>
-                                </div>
-                            ) : (
-                                <LeftPanel {...myProps} />
-                            )}
-                        </div>
-                    </Col>
+                                            >
+                                                Web
+                                            </Button>
 
-                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                        {!selectedTreeData && !selectedTreeData?.id ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <ViewApplicationDetail {...viewProps} />
-
-                                <div className={styles.hyrbuttonContainer}>
-                                    <HierarchyFormButton {...viewProps} />
-                                </div>
+                                            <Button
+                                                type="secondary"
+                                                danger
+                                                onClick={() => handleTypeClick('m')}
+                                                style={{
+                                                    backgroundColor: isActive ? '#ff3e5b' : '',
+                                                    color: isActive ? 'white' : '',
+                                                }}
+                                            >
+                                                Mobile
+                                            </Button>
+                                        </div>
+                                    </Col>
+                                    <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                        <Search
+                                            placeholder="Search"
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            allowClear
+                                            // onChange={onChange}
+                                            className={styles.searchField}
+                                        />
+                                    </Col>
+                                </Row>
                             </Col>
-                        ) : (
+                        </Row>
+                    </div>
+                    <div className={styles.content}>
+                        {menuData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -304,17 +254,50 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     }}
                                     description={
                                         <span>
-                                            Please select product from left <br />
-                                            side hierarchy to view “Application Details”
+                                            {noDataTitle} <br /> {noDataMessage}
                                         </span>
                                     }
-                                ></Empty>
+                                >
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add
+                                    </Button>
+                                </Empty>
                             </div>
+                        ) : (
+                            <LeftPanel {...myProps} />
                         )}
-                    </Col>
-                </Row>
+                    </div>
+                </Col>
 
-            <DrawerUtil open={drawer} FinalFormdata={FinalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} />
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                    {selectedTreeKey?.length && applicationDetailsData?.length ? (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <ViewApplicationDetail applicationDetailsData={applicationDetailsData} />
+
+                            <div className={styles.hyrbuttonContainer}>
+                                <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
+                            </div>
+                        </Col>
+                    ) : (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        Please select product from left <br />
+                                        side hierarchy to view “Application Details”
+                                    </span>
+                                }
+                            ></Empty>
+                        </div>
+                    )}
+                </Col>
+            </Row>
+
+            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} />
         </>
     );
 };

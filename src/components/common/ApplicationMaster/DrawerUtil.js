@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import { Drawer, Form, Col, Collapse, Checkbox, Row, Button, Select, Space, Typography } from 'antd';
-import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
+import { Drawer, Form, Col, Collapse, Row, Button, Space } from 'antd';
 
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
-
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
-// import style from 'components/common/DrawerAndTable.module.css';
 import style from '../../common/DrawerAndTable.module.css'
 import styles from 'pages/common/Common.module.css';
 
@@ -19,11 +13,10 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({ forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
+const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
-    const [applicationForm] = Form.useForm();
 
     let drawerTitle = 'Add Application Details';
     if (formActionType === 'add') {
@@ -84,24 +77,24 @@ const DrawerUtil = ({ forceUpdate, handleUpdate2, setFinalFormdata, FinalFormdat
                         paddingBottom: '10px',
                     }}
                 >
-                    <ApplicationDetails setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} />
+                    <ApplicationDetails setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} />
 
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : '' } onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : '' }>Application Actions</span>} key="1">
-                            <ApplicationActions setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
+                            <ApplicationActions setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
                         <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                             <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : '' }>Document Type </span>}  key="2">
-                                <DocumentTypes setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
+                                <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                             </Panel>
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
                         <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                             <Panel header={<span className={openAccordian === 3 ? style.accordianHeader : '' }>Accessible Dealer Location</span>} key="3">
-                                <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} FinalFormdata={FinalFormdata} />
+                                <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                             </Panel>
                         </Collapse>
                     )}

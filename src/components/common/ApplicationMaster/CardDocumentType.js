@@ -6,7 +6,6 @@ import { Typography } from 'antd';
 import styles from 'pages/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
-import { FaLessThanEqual } from 'react-icons/fa';
 
 const { Text } = Typography;
 

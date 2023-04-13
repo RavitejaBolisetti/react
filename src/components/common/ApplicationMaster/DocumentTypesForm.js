@@ -1,15 +1,12 @@
-import React, { Fragment, useState, useReducer } from 'react';
-import { Input, Form, Col, Card, Row, Switch, Button, Select } from 'antd';
+import React from 'react';
+import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import style from 'pages/common/Common.module.css';
 
 function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled }) {
-
-    
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -24,12 +21,12 @@ function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnD
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Code" name="docCode" rules={[validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Name')} />
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Application Code')} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Document Name" name="documentName" rules={[validateRequiredInputField('Document Name'), validationFieldLetterAndNumber('Document Name')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Name')} />
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Document Name')} />
                     </Form.Item>
                 </Col>
             </Row>

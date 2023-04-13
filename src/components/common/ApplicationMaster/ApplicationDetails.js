@@ -1,15 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
-import style from 'components/common/DrawerAndTable.module.css';
-
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate }) => {
+const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata }) => {
     const disabledProps = { disabled: isReadOnly };
+    console.log('form ===11', form.getFieldsValue(), finalFormdata);
+
+    useEffect(() => {
+        form.setFieldsValue(finalFormdata?.applicationDetails);
+    }, [form, finalFormdata]);
 
     const handleChangeLocations = (value) => {
         setIsRestrictedLocation(value === 'restrictedAccessible');
@@ -24,25 +27,25 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID'), validationFieldLetterAndNumber('Application ID')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Application ID')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Application Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('Application Title'), validationFieldLetterAndNumber('Application Title')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Application Title')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Application Type')} {...disabledProps}>
                                 <Option value="all">Mah1</Option>
                                 <Option value="notAccessable">Mah2</Option>
                                 <Option value="restrictedAccessible">Mah3</Option>
@@ -73,8 +76,8 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Criticality Group" name="applicationCriticalityGroup" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
-                            <Select maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                        <Form.Item label="Application Criticality Group" name="criticalityGroupCode" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
+                            <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all">Mah1</Option>
                                 <Option value="notAccessable">Mah2</Option>
                                 <Option value="restrictedAccessible">Mah3</Option>
