@@ -85,10 +85,9 @@ const AddEditFormMain = (props) => {
                     <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type Code" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                         
                         <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} {...disabledProps} showSearch allowClear>
-                                {attributeData?.map((item) => (
-                                    <Option value={item?.id} disabled={selectedTreeData?.attributeKey === item?.id ? true : false}>
-                                    {item?.hierarchyAttribueName}</Option>
-                                ))}
+                        {attributeData?.map((item) => (
+                                <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                            ))}
                             </Select>
                     </Form.Item>
                 </Col>
@@ -118,7 +117,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                        <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} {...disabledProps} />
+                        <TextArea rows={2} placeholder={preparePlaceholderText('Long Description')}showCount maxLength={100} {...disabledProps} />
                     </Form.Item>
                 </Col>
 
