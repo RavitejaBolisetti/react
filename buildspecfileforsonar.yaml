@@ -1,8 +1,5 @@
 version: 0.2
 phases:
-    install:
-        runtime-versions:
-            nodejs: latest
     pre_build:
         commands:
             - npm i          
@@ -11,10 +8,10 @@ phases:
             # - codebuild-breakpoint   
             # - npm run coverage
             - npm run build
-             - sonar-scanner \
-                    -Dsonar.projectKey=dms-ui-application \
-                    -Dsonar.host.url=http://10.168.15.236:9000/ \
-                    -Dsonar.login=squ_f9e7dfe0aeeff99754b4cb402800e65b4fb37d0f
+            - sonar-scanner \
+                -Dsonar.projectKey=dms-ui-application \
+                -Dsonar.host.url=http://10.168.15.236:9000/ \
+                -Dsonar.login=squ_f9e7dfe0aeeff99754b4cb402800e65b4fb37d0f
             # - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.15.236:9000/ -Dsonar.login=squ_f9e7dfe0aeeff99754b4cb402800e65b4fb37d0f
     post_build:
         commands:
