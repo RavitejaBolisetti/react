@@ -42,8 +42,6 @@ const AddEditFormMain = (props) => {
             // form.setFieldValue('inputFormType', 'companyGroup');
             // form.setFieldValue('inputFormType', 'gstinGroup');
             // form.setFieldValue('inputFormType', 'branchGroup');
-            form.setFieldValue('inputFormType', 'branchGroup');
-
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
@@ -230,7 +228,8 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[companyGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
+                                {/* disabled={formData?.id || isReadOnly} */}
                             </Form.Item>
                         </Col>
 
@@ -296,7 +295,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[gstinGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
@@ -377,8 +376,8 @@ const AddEditFormMain = (props) => {
                 <div>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.geoCode} label="Code" name={[branchGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                            <Form.Item initialValue={formData?.code} label="Code" name={[branchGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 

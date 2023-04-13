@@ -18,7 +18,7 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                 <Descriptions.Item label="Code">{selectedTreeData?.code}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
-                {(selectedTreeData?.type === 'Parent' || selectedTreeData?.type === 'parentGroup') && (
+                {(selectedTreeData?.type === 'PARNT' || selectedTreeData?.type === 'parentGroup') && (
                     <>
                         <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNumber}</Descriptions.Item>
                         <Descriptions.Item label="Email ID">{selectedTreeData?.emailId}</Descriptions.Item>
@@ -26,7 +26,7 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                     </>
                 )}
 
-                {(selectedTreeData?.type === 'Company' || selectedTreeData?.type === 'companyGroup') && (
+                {(selectedTreeData?.type === 'COMP' || selectedTreeData?.type === 'companyGroup') && (
                     <>
                         <Descriptions.Item label="Registered Address of the Company">{selectedTreeData?.registeredAddressOfCompany}</Descriptions.Item>
                         <Descriptions.Item label="TIN Number">{selectedTreeData?.tinNumber}</Descriptions.Item>
@@ -36,7 +36,7 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                     </>
                 )}
 
-                {(selectedTreeData?.type === 'Gstin' || selectedTreeData?.type === 'gstinGroup') && (
+                {(selectedTreeData?.type === 'GSTIN' || selectedTreeData?.type === 'gstinGroup') && (
                     <>
                         <Descriptions.Item label="GSTIN Number">{selectedTreeData?.gstinNumber}</Descriptions.Item>
                         <Descriptions.Item label="Centre Jurisdiction">{selectedTreeData?.centerJurisdiction}</Descriptions.Item>
@@ -48,7 +48,7 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                     </>
                 )}
 
-                {(selectedTreeData?.type === 'Branch' || selectedTreeData?.type === 'branchGroup') && (
+                {(selectedTreeData?.type === 'LOCTN' || selectedTreeData?.type === 'branchGroup') && (
                     <>
                         <Descriptions.Item label="Branch Address">{selectedTreeData?.branchAddress}</Descriptions.Item>
                         <Descriptions.Item label="Locality">{selectedTreeData?.locality}</Descriptions.Item>
