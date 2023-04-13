@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, Search } from 'antd';
+import { Input, Menu, Layout, Row, Col, Search, AutoComplete } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -91,7 +91,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -108,6 +108,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
+
     // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
 
     const handleThemeChange = () => {
@@ -115,16 +116,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         localStorage.setItem('theme', changeTheme);
         setTheme(changeTheme);
     };
-    const onSearch = (e) => {
-        if (e.target.value === '') {
-            setmainKeys([]);
-        } else if (MenuSearch(e.target.value) === true) {
-            console.log('we Found the Menu');
-            return;
-        }
-        setFilter(e);
-        setSearchValue(e.target.value);
-    };
+    
 
     // const onExpand = (newExpandedKeys) => {
     //     setexpandedKeys(newExpandedKeys);
@@ -142,61 +134,26 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
 
     const Saveopenkeys = (keys) => {
         Object.entries(keys).map(([keyname, value]) => {
-            console.log(value);
+
             values.push(value);
         });
     };
-    const rootSubmenuKeys = menuData.map((e) => {
-        return e.menuId;
-    });
-
-    function MenuSearch(target) {
-        // let flag = true;
-        setOpenKeys([]);
-        function subMenuSearch(TopMenu) {
-            for (let i = 0; i < TopMenu.length; i++) {
-                // console.log(TopMenu[i].menuTitle)
-                expandedkeys.push(TopMenu[i].menuId);
-                let title = TopMenu[i].menuTitle;
-                let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
-                if (strTitle.toLowerCase() === target.toLowerCase()) {
-                    // expanded.push(expandedkeys);
-                    // setOpenKeys(expandedkeys?.toString());
-                    // console.log(expandedkeys);
-
-                    Saveopenkeys(expandedkeys);
-                    // openKeys=>{
-                    //     expandedkeys?.map((i)=>{ return i.toString()})
-                    // }
-                    //setexpandedKeys(expanded[0]);
-                } else if (TopMenu[i].subMenu) {
-                    subMenuSearch(TopMenu[i].subMenu);
-                }
-
-                expandedkeys.pop();
-            }
-        }
-        //setexpandedKeys(mainkeys)
-        // console.log(expanded);
-        subMenuSearch(menuData);
-        setmainKeys(values);
-    }
-
+    
+   
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
-    //   console.log(menuData);
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
     };
 
-    const onOpenChange = (keys) => {
-        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKeys(keys);
-        } else {
-            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-        }
-    };
+    // const onOpenChange = (keys) => {
+    //     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    //     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //         setOpenKeys(keys);
+    //     } else {
+    //         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    //     }
+    // };
 
     const prepareMenuItem = (data) => {
         return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
@@ -220,42 +177,35 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         setOpenKeys(mainKeys);
     }, [mainKeys]);
 
-    const finalTreeData = useMemo(() => {
-        const loop = (data) =>
-            data.map((item) => {
-                console.log('🚀 ~ file: LeftSideBar.js:224 ~ data.map ~ item:', item);
-                const strTitle = item?.menuTitle;
-                const index = strTitle?.indexOf(searchValue);
-                const beforeStr = strTitle?.substring(0, index);
-                const afterStr = strTitle?.slice(index + searchValue.length);
-                const menuTitle =
-                    index > -1 ? (
-                        <span>
-                            {beforeStr}
-                            <span className="site-tree-search-value" style={{ color: 'red' }}>
-                                {searchValue}
-                            </span>
-                            {afterStr}
-                        </span>
-                    ) : (
-                        <span>{strTitle}</span>
-                    );
-                if (item?.subMenu) {
-                    return {
-                        ...item,
-                        menuTitle,
-                        subMenu: loop(item?.subMenu),
-                    };
-                }
-                return {
-                    ...item,
-                    menuTitle,
-                };
-            });
-        return loop(menuData);
-    }, [searchValue, menuData]);
+    
 
-    console.log('searchValue', searchValue, 'finalTreeData', finalTreeData);
+    const searchResult = (value) => {
+        if(value?.length <3) return;
+        console.log(value);
+       const val = flatternData.map((i) => {
+            if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())){
+                // console.log("yes i am in the loop")
+                console.log(i.menuTitle)
+   return( {
+                    label: 
+                                i.menuTitle
+                })
+            }
+                
+        });
+        setOptions(val.filter(i => i))
+        // return val;
+    }
+
+    const [options, setOptions] = useState([]);
+    const handleSearch = (value) => {
+        setOptions(value ? searchResult(value).filter(i=>i) : []);
+        console.log("options",options);
+    };
+    console.log("options", options)
+    const onSelect = (value) => {
+        console.log('onSelect', value);
+    };
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -272,7 +222,23 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search menu.." allowClear onChange={onSearch} />}
+
+{/* autocomplete of the the searchBox */}
+
+                    {!collapsed && <AutoComplete
+                        dropdownMatchSelectWidth={200}
+                        reset
+                        style={{
+                            width: '200px',
+                            color: 'red',
+                        }}
+                        options={options}
+                        onSelect={onSelect}
+                        onSearch={handleSearch}
+                        getPopupContainer = {triggerNode => triggerNode.parentElement}
+                    >
+                        <Input.Search size="large" placeholder="input here" enterButton />
+                    </AutoComplete>}
                     {/* <Row>
                         <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                             <span className={styles.menuIcon}><HomeIcon /></span>
@@ -289,7 +255,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             defaultSelectedKeys={[defaultSelectedKeys]}
                             // defaultOpenKeys={defaultOpenKeys}
                             openKeys={openKeys}
-                            onOpenChange={onOpenChange}
+                            // onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
@@ -303,7 +269,7 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                                     HOME
                                 </Link>
                             </Row>
-                            {prepareMenuItem(finalTreeData)}
+                            {prepareMenuItem(menuData)}
                         </Menu>
                     </>
                 ) : (
