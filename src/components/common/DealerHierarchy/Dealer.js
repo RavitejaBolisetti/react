@@ -144,12 +144,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.hierarchyAttribueName;
 
-                console.log( flatternData, 'FlatData'  );
-                console.log( formData, 'FormData'  );
-
                 const prodctShrtName = flatternData.find((i) => formData?.data?.parentId === i.key)?.data?.shortDescription;
-
-                console.log( prodctShrtName, 'SHORTNAMEEE'  )
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
             }
 
