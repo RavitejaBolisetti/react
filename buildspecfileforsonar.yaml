@@ -13,6 +13,7 @@ phases:
             - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
             - echo -e "sonar.host.url=http://10.168.15.236:9000/ \n  sonar.sourceEncoding=UTF-8 \n sonar.qualitygate.wait=true " >> /opt/sonar-scanner/conf/sonar-scanner.properties
             - echo -e "#/bin/bash \n export PATH='$PATH:/opt/sonar-scanner/bin'" >> /etc/profile.d/sonar-scanner.sh
+            - codebuild-breakpoint
             - source /etc/profile.d/sonar-scanner.sh
             - pwd
             #- npm install -D sonarqube-scanner
