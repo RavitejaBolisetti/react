@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
+import { Col, Input, Form, Row, Select, Switch, Button, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import AuthorityDetail from './AuthorityDetail';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import AuthorityForm from './AuthorityForm';
 
 const { Option } = Select;
 const { TextArea } = Input;
+const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
@@ -118,11 +121,6 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        
-                    </Col>
-                </Row>
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -138,6 +136,15 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             </Form>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Collapse style={{ marginBottom: '100px' }}>
+                        <Panel header="Authority Details">
+                            <AuthorityDetail />
+                        </Panel>
+                    </Collapse>
+                </Col>
+            </Row>
         </>
     );
 };
