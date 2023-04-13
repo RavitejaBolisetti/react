@@ -70,12 +70,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-
 const LeftSideBarMain = (props) => {
-
     const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
     const location = useLocation();
-    //const pagePath = location.pathname;
+    const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
     //const [FilterMenudata, setFilterMenudata] = useState(menuData);
@@ -90,7 +88,7 @@ const LeftSideBarMain = (props) => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
@@ -134,37 +132,37 @@ const LeftSideBarMain = (props) => {
         return e.menuId;
     });
 
-    function MenuSearch(target) {
-        // let flag = true;
-        setOpenKeys([]);
-        function subMenuSearch(TopMenu) {
-            for (let i = 0; i < TopMenu.length; i++) {
-                // console.log(TopMenu[i].menuTitle)
-                expandedkeys.push(TopMenu[i].menuId);
-                let title = TopMenu[i].menuTitle;
-                let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
-                if (strTitle.toLowerCase() === target.toLowerCase()) {
-                    // expanded.push(expandedkeys);
-                    // setOpenKeys(expandedkeys?.toString());
-                    // console.log(expandedkeys);
+    // function MenuSearch(target) {
+    //     // let flag = true;
+    //     setOpenKeys([]);
+    //     function subMenuSearch(TopMenu) {
+    //         for (let i = 0; i < TopMenu.length; i++) {
+    //             // console.log(TopMenu[i].menuTitle)
+    //             expandedkeys.push(TopMenu[i].menuId);
+    //             let title = TopMenu[i].menuTitle;
+    //             let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
+    //             if (strTitle.toLowerCase() === target.toLowerCase()) {
+    //                 // expanded.push(expandedkeys);
+    //                 // setOpenKeys(expandedkeys?.toString());
+    //                 // console.log(expandedkeys);
 
-                    Saveopenkeys(expandedkeys);
-                    // openKeys=>{
-                    //     expandedkeys?.map((i)=>{ return i.toString()})
-                    // }
-                    //setexpandedKeys(expanded[0]);
-                } else if (TopMenu[i].subMenu) {
-                    subMenuSearch(TopMenu[i].subMenu);
-                }
+    //                 Saveopenkeys(expandedkeys);
+    //                 // openKeys=>{
+    //                 //     expandedkeys?.map((i)=>{ return i.toString()})
+    //                 // }
+    //                 //setexpandedKeys(expanded[0]);
+    //             } else if (TopMenu[i].subMenu) {
+    //                 subMenuSearch(TopMenu[i].subMenu);
+    //             }
 
-                expandedkeys.pop();
-            }
-        }
-        //setexpandedKeys(mainkeys)
-        // console.log(expanded);
-        subMenuSearch(menuData);
-        setmainKeys(values);
-    }
+    //             expandedkeys.pop();
+    //         }
+    //     }
+    //     //setexpandedKeys(mainkeys)
+    //     // console.log(expanded);
+    //     subMenuSearch(menuData);
+    //     setmainKeys(values);
+    // }
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
@@ -195,191 +193,191 @@ const LeftSideBarMain = (props) => {
 
     const customData = [
         {
-            "menuId": "COMN",
-            "menuTitle": "Common",
-            "parentMenuId": "Web",
-            "menuIconUrl": "icon",
-            "isFavourite": "1",
-            "accessType": "R",
-            "displayOrder": "1",
-            "subMenu": [
+            menuId: 'COMN',
+            menuTitle: 'Common',
+            parentMenuId: 'Web',
+            menuIconUrl: 'icon',
+            isFavourite: '1',
+            accessType: 'R',
+            displayOrder: '1',
+            subMenu: [
                 {
-                    "menuId": "COMN-11",
-                    "menuTitle": "Vehicle Related",
-                    "parentMenuId": "COMN",
-                    "menuIconUrl": "icon",
-                    "isFavourite": "0",
-                    "accessType": "R",
-                    "displayOrder": "1",
-                    "subMenu": [
+                    menuId: 'COMN-11',
+                    menuTitle: 'Vehicle Related',
+                    parentMenuId: 'COMN',
+                    menuIconUrl: 'icon',
+                    isFavourite: '0',
+                    accessType: 'R',
+                    displayOrder: '1',
+                    subMenu: [
                         {
-                            "menuId": "COMN-11.05",
-                            "menuTitle": "Theft Vehicle Flag Update",
-                            "parentMenuId": "COMN-11",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
+                            menuId: 'COMN-11.05',
+                            menuTitle: 'Theft Vehicle Flag Update',
+                            parentMenuId: 'COMN-11',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
                         },
                         {
-                            "menuId": "COMN-11.02",
-                            "menuTitle": "Customer ID/Registration No. Change Requisition",
-                            "parentMenuId": "COMN-11",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
+                            menuId: 'COMN-11.02',
+                            menuTitle: 'Customer ID/Registration No. Change Requisition',
+                            parentMenuId: 'COMN-11',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
                         },
                         {
-                            "menuId": "COMN-11.01",
-                            "menuTitle": "Vehicle Details",
-                            "parentMenuId": "COMN-11",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
+                            menuId: 'COMN-11.01',
+                            menuTitle: 'Vehicle Details',
+                            parentMenuId: 'COMN-11',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
                         },
                         {
-                            "menuId": "COMN-11.04",
-                            "menuTitle": "Customer ID/Registration No. Change Report",
-                            "parentMenuId": "COMN-11",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
-                        }
-                    ]
+                            menuId: 'COMN-11.04',
+                            menuTitle: 'Customer ID/Registration No. Change Report',
+                            parentMenuId: 'COMN-11',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
+                        },
+                    ],
                 },
                 {
-                    "menuId": "COMN-10",
-                    "menuTitle": "Customer Related",
-                    "parentMenuId": "COMN",
-                    "menuIconUrl": "icon",
-                    "isFavourite": "0",
-                    "accessType": "R",
-                    "displayOrder": "1",
-                    "subMenu": [
+                    menuId: 'COMN-10',
+                    menuTitle: 'Customer Related',
+                    parentMenuId: 'COMN',
+                    menuIconUrl: 'icon',
+                    isFavourite: '0',
+                    accessType: 'R',
+                    displayOrder: '1',
+                    subMenu: [
                         {
-                            "menuId": "COMN-10.01",
-                            "menuTitle": "Customer Master",
-                            "parentMenuId": "COMN-10",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
+                            menuId: 'COMN-10.01',
+                            menuTitle: 'Customer Master',
+                            parentMenuId: 'COMN-10',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
                         },
                         {
-                            "menuId": "COMN-10.b",
-                            "menuTitle": "Key Account",
-                            "parentMenuId": "COMN-10",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": [
+                            menuId: 'COMN-10.b',
+                            menuTitle: 'Key Account',
+                            parentMenuId: 'COMN-10',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [
                                 {
-                                    "menuId": "COMN-10.06",
-                                    "menuTitle": "Key Account Creation",
-                                    "parentMenuId": "COMN-10.b",
-                                    "menuIconUrl": "icon",
-                                    "isFavourite": "0",
-                                    "accessType": "R",
-                                    "displayOrder": "1",
-                                    "subMenu": []
+                                    menuId: 'COMN-10.06',
+                                    menuTitle: 'Key Account Creation',
+                                    parentMenuId: 'COMN-10.b',
+                                    menuIconUrl: 'icon',
+                                    isFavourite: '0',
+                                    accessType: 'R',
+                                    displayOrder: '1',
+                                    subMenu: [],
                                 },
                                 {
-                                    "menuId": "COMN-10.05",
-                                    "menuTitle": "Key Account Type",
-                                    "parentMenuId": "COMN-10.b",
-                                    "menuIconUrl": "icon",
-                                    "isFavourite": "0",
-                                    "accessType": "R",
-                                    "displayOrder": "1",
-                                    "subMenu": []
+                                    menuId: 'COMN-10.05',
+                                    menuTitle: 'Key Account Type',
+                                    parentMenuId: 'COMN-10.b',
+                                    menuIconUrl: 'icon',
+                                    isFavourite: '0',
+                                    accessType: 'R',
+                                    displayOrder: '1',
+                                    subMenu: [],
                                 },
                                 {
-                                    "menuId": "COMN-10.08",
-                                    "menuTitle": "Key Account Transaction Report",
-                                    "parentMenuId": "COMN-10.b",
-                                    "menuIconUrl": "icon",
-                                    "isFavourite": "0",
-                                    "accessType": "R",
-                                    "displayOrder": "1",
-                                    "subMenu": []
+                                    menuId: 'COMN-10.08',
+                                    menuTitle: 'Key Account Transaction Report',
+                                    parentMenuId: 'COMN-10.b',
+                                    menuIconUrl: 'icon',
+                                    isFavourite: '0',
+                                    accessType: 'R',
+                                    displayOrder: '1',
+                                    subMenu: [],
                                 },
                                 {
-                                    "menuId": "COMN-10.07",
-                                    "menuTitle": "Key Account Company Mapping/Un-Mapping",
-                                    "parentMenuId": "COMN-10.b",
-                                    "menuIconUrl": "icon",
-                                    "isFavourite": "0",
-                                    "accessType": "R",
-                                    "displayOrder": "1",
-                                    "subMenu": []
-                                }
-                            ]
+                                    menuId: 'COMN-10.07',
+                                    menuTitle: 'Key Account Company Mapping/Un-Mapping',
+                                    parentMenuId: 'COMN-10.b',
+                                    menuIconUrl: 'icon',
+                                    isFavourite: '0',
+                                    accessType: 'R',
+                                    displayOrder: '1',
+                                    subMenu: [],
+                                },
+                            ],
                         },
                         {
-                            "menuId": "COMN-10.02",
-                            "menuTitle": "Party Master",
-                            "parentMenuId": "COMN-10",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
+                            menuId: 'COMN-10.02',
+                            menuTitle: 'Party Master',
+                            parentMenuId: 'COMN-10',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
                         },
                         {
-                            "menuId": "COMN-10.01a",
-                            "menuTitle": "Financier Master",
-                            "parentMenuId": "COMN-10",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": []
+                            menuId: 'COMN-10.01a',
+                            menuTitle: 'Financier Master',
+                            parentMenuId: 'COMN-10',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [],
                         },
                         {
-                            "menuId": "COMN-10.a",
-                            "menuTitle": "Lessor Company",
-                            "parentMenuId": "COMN-10",
-                            "menuIconUrl": "icon",
-                            "isFavourite": "0",
-                            "accessType": "R",
-                            "displayOrder": "1",
-                            "subMenu": [
+                            menuId: 'COMN-10.a',
+                            menuTitle: 'Lessor Company',
+                            parentMenuId: 'COMN-10',
+                            menuIconUrl: 'icon',
+                            isFavourite: '0',
+                            accessType: 'R',
+                            displayOrder: '1',
+                            subMenu: [
                                 {
-                                    "menuId": "COMN-10.03",
-                                    "menuTitle": "Lessor Company Master (M&M)",
-                                    "parentMenuId": "COMN-10.a",
-                                    "menuIconUrl": "icon",
-                                    "isFavourite": "0",
-                                    "accessType": "R",
-                                    "displayOrder": "1",
-                                    "subMenu": []
+                                    menuId: 'COMN-10.03',
+                                    menuTitle: 'Lessor Company Master (M&M)',
+                                    parentMenuId: 'COMN-10.a',
+                                    menuIconUrl: 'icon',
+                                    isFavourite: '0',
+                                    accessType: 'R',
+                                    displayOrder: '1',
+                                    subMenu: [],
                                 },
                                 {
-                                    "menuId": "COMN-10.04",
-                                    "menuTitle": "Lessor Customer Creation",
-                                    "parentMenuId": "COMN-10.a",
-                                    "menuIconUrl": "icon",
-                                    "isFavourite": "0",
-                                    "accessType": "R",
-                                    "displayOrder": "1",
-                                    "subMenu": []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                                    menuId: 'COMN-10.04',
+                                    menuTitle: 'Lessor Customer Creation',
+                                    parentMenuId: 'COMN-10.a',
+                                    menuIconUrl: 'icon',
+                                    isFavourite: '0',
+                                    accessType: 'R',
+                                    displayOrder: '1',
+                                    subMenu: [],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
 
     const onExpand = (newExpandedKeys) => {
         setExpandedKeys(newExpandedKeys);
@@ -389,7 +387,6 @@ const LeftSideBarMain = (props) => {
 
     const dataList = [];
     const generateList = (data) => {
-
         for (let i = 0; i < data.length; i++) {
             const node = data[i];
             dataList.push({
@@ -403,8 +400,6 @@ const LeftSideBarMain = (props) => {
     };
 
     customData && generateList(customData);
-
-
 
     const getParentKey = (key, tree) => {
         let parentKey;
@@ -421,8 +416,7 @@ const LeftSideBarMain = (props) => {
         }
         return parentKey;
     };
-     
-    
+
     const onChange = (e) => {
         const { value } = e.target;
 
@@ -433,9 +427,8 @@ const LeftSideBarMain = (props) => {
                 }
                 return null;
             })
-            .filter((item, i, self) => item && self?.indexOf(item) === i)
+            .filter((item, i, self) => item && self?.indexOf(item) === i);
 
-            
         //console.log(newExpandedKeys, "LEFTOPENKEYS")
 
         setOpenKeys(value ? newExpandedKeys : []);
@@ -446,32 +439,29 @@ const LeftSideBarMain = (props) => {
 
     // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
-    
-
     const searchResult = (value) => {
-        if(value?.length <3) return;
+        if (value?.length < 3) return;
         console.log(value);
-       const val = flatternData.map((i) => {
-            if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())){
+        const val = flatternData.map((i) => {
+            if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())) {
                 // console.log("yes i am in the loop")
-                console.log(i.menuTitle)
-   return( {
-                    label: 
-                                i.menuTitle
-                })
+                console.log(i.menuTitle);
+                return {
+                    value: i.menuId,
+                    label: i.menuTitle,
+                };
             }
-                
         });
-        setOptions(val.filter(i => i))
+        setOptions(val.filter((i)=>i));
         // return val;
-    }
+    };
 
     const [options, setOptions] = useState([]);
     const handleSearch = (value) => {
-        setOptions(value ? searchResult(value).filter(i=>i) : []);
-        console.log("options",options);
+        setOptions(value ? searchResult(value).filter((i) => i) : []);
+        console.log('options', options);
     };
-    console.log("options", options)
+    console.log('options', options);
     const onSelect = (value) => {
         console.log('onSelect', value);
     };
@@ -491,23 +481,24 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
 
+                    {/* autocomplete of the the searchBox */}
 
-{/* autocomplete of the the searchBox */}
-
-                    {!collapsed && <AutoComplete
-                        dropdownMatchSelectWidth={200}
-                        reset
-                        style={{
-                            width: '200px',
-                            color: 'red',
-                        }}
-                        options={options}
-                        onSelect={onSelect}
-                        onSearch={handleSearch}
-                        getPopupContainer = {triggerNode => triggerNode.parentElement}
-                    >
-                        <Input.Search size="large" placeholder="input here" enterButton />
-                    </AutoComplete>}
+                    {!collapsed && (
+                        <AutoComplete
+                            dropdownMatchSelectWidth={200}
+                            reset
+                            style={{
+                                width: '200px',
+                                color: 'red',
+                            }}
+                            options={options}
+                            onSelect={onSelect}
+                            onSearch={handleSearch}
+                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
+                        >
+                            <Input.Search size="large" placeholder="input here" enterButton />
+                        </AutoComplete>
+                    )}
                     {/* <Row>
                         <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                             <span className={styles.menuIcon}><HomeIcon /></span>
@@ -531,12 +522,11 @@ const LeftSideBarMain = (props) => {
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
-                        // expandedKeys={expandedKeys}
-                         //selectedKeys={selectedTreeKey}
-                        // onSelect={handleTreeViewClick}
-                         autoExpandParent={autoExpandParent}
+                            // expandedKeys={expandedKeys}
+                            //selectedKeys={selectedTreeKey}
+                            // onSelect={handleTreeViewClick}
+                            autoExpandParent={autoExpandParent}
                         >
-
                             <Row>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
