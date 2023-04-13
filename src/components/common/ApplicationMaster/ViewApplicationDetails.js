@@ -82,7 +82,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                             {rest?.documentNumRequired === 'Y'|| rest?.documentNumRequired === true ? <Text className={styles.activeText}> 'Active' </Text> : <Text>Inactive</Text>}
                         </Col>
                     </Row>
-                    <Row gutter={20}>
+                    <Row gutter={20} className={styles.viewCollapse }>
                         {applicationAction.length > 0 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                                 <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
@@ -97,7 +97,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
 
                         {documentType.length > 0 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                                <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
+                                <Collapse  expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
                                     <Panel header="Document Types" key="3">
                                         {documentType.map((el) => (
                                             <CardDocument {...el} />
@@ -108,7 +108,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         )}
                         {accessibleLocation?.length > 0 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                                <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
+                                <Collapse  expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
                                     <Panel header="Accessible Dealer Location" key="3">
                                         {accessibleLocation.map((el) => (
                                             <CardLocation {...el} />

@@ -1,14 +1,13 @@
 import React from 'react';
 import { Card, Row, Col, Typography } from 'antd';
 
+import style from "./ApplicationMaster.module.css"
 const { Text } = Typography;
 
 const CardAction = ({ isDeleted, actionName, actionId }) => {
     return (
         <Card
-            style={{
-                backgroundColor: '#BEBEBE1A',
-            }}
+           className={style.viewCardSize}
         >
             <Row align="middle">
                 <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>

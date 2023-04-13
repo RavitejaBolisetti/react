@@ -1,9 +1,11 @@
 :global(.ant-collapse .ant-collapse-content > .ant-collapse-content-box) {
     background: #f2f2f2;
 }
+
 .viewCardSize {
     width: 100%;
 }
+
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item span {
     font-weight: 400;
@@ -11,10 +13,12 @@
     font-size: 14px;
     color: #8e8585;
 }
+
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p {
     color: #0b0b0c !important;
     padding-left: 0px !important;
 }
+
 .viewCardSize span.activeText {
     color: #70c922 !important;
 }
@@ -27,24 +31,28 @@
     height: 16px;
     width: 16px;
 } */
-:global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-text){
+:global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-text) {
     font-weight: 600;
     font-size: 16px;
 }
+
 :global(.ant-collapse) {
     background: #f2f2f2;
 }
+
 :global .ant-card .ant-card-body {
-    padding: 20px;
-    background: #BEBEBE1A;
+    padding: 6px 20px;
+    gap: 10px;
     border-radius: 0 0 8px 8px;
     overflow-y: auto;
     /* height: 400px; */
 }
+
 :global .ant-card .ant-card-head {
     padding: 0 20px;
     background: #f4f4f4;
 }
+
 :global .ant-card .ant-card-body::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34) !important;
     border-radius: 10px;
@@ -58,18 +66,40 @@
 :global .ant-card .ant-card-body::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
+
 .changeThemeBorder {
-    display: flex;
-    width: 100%;
+
     border: 1px solid #dedede;
     border-radius: 4px;
     padding: 1px;
 }
-.cardBody{
+
+.cardBody {
     display: flex;
     height: 50vh;
 }
 
-.viewCardSize :global( .ant-card-body) {
-    /* margin-bottom: 10px; */
+.viewCardSize :global(.ant-card-body) {
+    border: 1px solid rgba(62, 62, 62, 0.1);
+    border-radius: 6px;
+    background-color: #3E3E3E1A;
+}
+
+.viewCollapse {
+    gap: 10px;
+}
+
+.viewDocType{
+width: 100%;
+
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 22px;
+/* identical to box height, or 183% */
+
+display: flex;
+align-items: center;
 }
