@@ -282,20 +282,21 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.contentHeaderRightBackground}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18} className={style.contentHeaderRightBackground}>
                                 Hierarchy
                                 <Search
                                     placeholder="Search"
-                                    style={{
-                                        width: '43%',
-                                    }}
+                                    // style={{
+                                    //     width: '43%',
+                                    // }}
+                                    className={styles.headerSelectField}
                                     allowClear
                                     onChange={onChange}
-                                    className={style.searchField}
+                                    // className={style.searchField}
                                 />
                             </Col>
                             {manufacturerOrgHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
@@ -329,7 +330,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewManufacturerOrgDetail {...viewProps} />

@@ -1074,7 +1074,7 @@
 
     .headerSelectField {
         vertical-align: middle;
-        margin: 5px 0px 0;
+        margin: 0;
         width: 100%;
     }
 
@@ -1205,9 +1205,9 @@
         top: 184px;
     }
 
-    :global .ant-input-group {
+    /* :global .ant-input-group {
         width: auto;
-    }
+    } */
 
     .TreeView_searchField__jn\+nY {
         padding: 0 8px;
