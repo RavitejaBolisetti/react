@@ -84,24 +84,24 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
     const [isReadOnly, setIsReadOnly] = useState(false);
 
 
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         fetchList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(RoleManagementData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RoleManagementData]);
 
-    useEffect(() => {
-        if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshData, userId]);
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetchList({ setIsLoading: listShowLoading, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [refreshData, userId]);
 
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
@@ -142,7 +142,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
             onSuccess,
         };
 
-        saveData(requestData);
+        // saveData(requestData);
     };
 
     const viewProps = {
@@ -218,6 +218,8 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
+            sorter: false
+
         })
     );
 
