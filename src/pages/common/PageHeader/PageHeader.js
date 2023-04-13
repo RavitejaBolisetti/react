@@ -81,7 +81,7 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
     return (
         <>
             <Row gutter={20} className={styles.pageHeader}>
-                <Col xs={visibleChangeHistory ? 12 : 16} sm={visibleChangeHistory ? 12 : 16} md={12} lg={14} xl={14} xxl={14}>
+                <Col xs={visibleChangeHistory ? 24 : 16} sm={visibleChangeHistory ? 24 : 16} md={12} lg={14} xl={14} xxl={14}>
                     <Space>
                         <div>
                             <span className={styles.headingGradient}>{pageTitle}</span>

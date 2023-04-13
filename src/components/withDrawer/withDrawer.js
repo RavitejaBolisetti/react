@@ -8,7 +8,7 @@ export const withDrawer =
     (props) => {
         const { onCloseAction, isVisible, titleOverride, onOpenAction, footer } = props;
         return (
-            <Drawer title={titleOverride || title} width={width} open={onOpenAction} footer={footer} onClose={onCloseAction} visible={isVisible} className={styles.myDrawerStyle} keyboard={false} maskClosable={false}>
+            <Drawer title={titleOverride || title} open={onOpenAction} footer={footer} onClose={onCloseAction} visible={isVisible} className={styles.myDrawerStyle} keyboard={false} maskClosable={false}>
                 {isVisible && <InputComponent {...props} />}
             </Drawer>
         );
