@@ -101,6 +101,7 @@
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
     border: none;
     padding-top: 0px;
+    box-shadow: none !important;
 }
 
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
@@ -110,6 +111,8 @@
 .tableIcons {
     border: none;
     padding: 0px;
+    box-shadow: transparent !important;
+    width: 18px !important;
 }
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
@@ -298,7 +301,6 @@
     text-align: left;
     left: 0px;
 }
-
 
 .viewMode :global(.ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before) {
     color: #0b0c0c;
