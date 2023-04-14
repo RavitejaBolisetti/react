@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Collapse, Form, Row, Empty, Input } from 'antd';
+import { Button, Col, Form, Row, Empty, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
 import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
@@ -46,7 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
-            // fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
+            fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
 
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
@@ -100,6 +99,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         }
 
         fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
+        fetchApplicationAction({setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac'})
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, formActionType, menuType]);
 
@@ -126,6 +127,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const applicationCall = (key) => {
         // console.log('key', key);
         fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: '8c9c2231-166f-43aa-8633-3c3c795047fc' });
+
     };
     // const flatternData = generateList(menuData);
     // console.log('menuData flatternData', flatternData);
@@ -156,8 +158,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
             applicationForm.setFieldValue({...rest});
             setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
-           console.log("rest", rest)
-forceUpdate();
+            forceUpdate();
         } else {
             // parent data only
             setFinalFormdata();
@@ -297,7 +298,7 @@ forceUpdate();
                 </Col>
             </Row>
 
-            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} />
+            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData}/>
         </>
     );
 };

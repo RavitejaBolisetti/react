@@ -42,7 +42,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
                     <Form form={form} onFieldsChange={handleForm} id="applicationAction" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item get label="Action" name="applicationAction" rules={[validateRequiredSelectField('Application Action')]}>
+                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('Application Action')]}>
                                     <Select
                                         getPopupContainer={triggerNode => triggerNode.parentElement}
                                         labelInValue
@@ -56,12 +56,13 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
                                         }}
                                         // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
                                         options={applicationData}
+                                        disabled={isBtnDisabled}
                                     />
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                                    <Switch disabled={isBtnDisabled}  checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
                                 </Form.Item>
                             </Col>
                             { !isEditing && (

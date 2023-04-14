@@ -49,22 +49,24 @@ const existingLocation = [
     },
 ];
 
-const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLocations, setFinalFormdata, FinalFormdata }) => {
-    const [locationData, setLocationData] = useState([]);
+const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLocations, setFinalFormdata, finalFormdata }) => {
+    // const [locationData, setLocationData] = useState([]);
 
     const fieldNames = { label: 'locationName', value: 'id' };
 
     const handleSelect = (value) => {
-        setLocationData((prev) => [...prev, { id: value?.key, locationName: value?.label }]);
-        setFinalFormdata({ ...FinalFormdata, AccessibleDealerLocation: [...FinalFormdata.AccessibleDealerLocation, { id: value?.key, locationName: value?.label }] });
+        // setLocationData((prev) => [...prev, { id: value?.key, locationName: value?.label }]);
+        setFinalFormdata(prev => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { id: value?.key, locationName: value?.label }] }));
     };
     const handleDeleteLocation =(values) => {
-        setLocationData(prev =>{
-            let prevData = prev;
-            let index = prevData.findIndex(el => el.locationCode === values.locationCode)
-            prevData.splice(index, 1)
+
+        setFinalFormdata(prev =>{
+            const prevData = prev;
+            const index = prev?.accessibleLocation?.findIndex(el => el.locationCode === values.locationCode);
+            prevData?.accessibleLocation?.splice(index, 1);
+            return prevData;
         })
-    }
+    };
 
     return (
         <Fragment>
@@ -88,8 +90,8 @@ const AccessibleDealerLocations = ({ form, isReadOnly, formActionType, dealerLoc
                     />
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {FinalFormdata.AccessibleDealerLocation.length
-                        ? FinalFormdata?.AccessibleDealerLocation?.map((location) => {
+                    {finalFormdata?.accessibleLocation?.length > 0
+                        ? finalFormdata?.accessibleLocation?.map((location) => {
                               return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
                           })
                         : ''
