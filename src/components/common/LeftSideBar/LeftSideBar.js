@@ -132,37 +132,7 @@ const LeftSideBarMain = (props) => {
         return e.menuId;
     });
 
-    // function MenuSearch(target) {
-    //     // let flag = true;
-    //     setOpenKeys([]);
-    //     function subMenuSearch(TopMenu) {
-    //         for (let i = 0; i < TopMenu.length; i++) {
-    //             // console.log(TopMenu[i].menuTitle)
-    //             expandedkeys.push(TopMenu[i].menuId);
-    //             let title = TopMenu[i].menuTitle;
-    //             let strTitle = TopMenu[i].menuTitle.substring(0, target.length);
-    //             if (strTitle.toLowerCase() === target.toLowerCase()) {
-    //                 // expanded.push(expandedkeys);
-    //                 // setOpenKeys(expandedkeys?.toString());
-    //                 // console.log(expandedkeys);
-
-    //                 Saveopenkeys(expandedkeys);
-    //                 // openKeys=>{
-    //                 //     expandedkeys?.map((i)=>{ return i.toString()})
-    //                 // }
-    //                 //setexpandedKeys(expanded[0]);
-    //             } else if (TopMenu[i].subMenu) {
-    //                 subMenuSearch(TopMenu[i].subMenu);
-    //             }
-
-    //             expandedkeys.pop();
-    //         }
-    //     }
-    //     //setexpandedKeys(mainkeys)
-    //     // console.log(expanded);
-    //     subMenuSearch(menuData);
-    //     setmainKeys(values);
-    // }
+   
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
@@ -462,8 +432,19 @@ const LeftSideBarMain = (props) => {
         console.log('options', options);
     };
     console.log('options', options);
-    const onSelect = (value) => {
-        console.log('onSelect', value);
+    const onSelect = (value,label) => {
+        if (value && getMenuValue(MenuConstant, value, 'link') ){
+            <Link to={getMenuValue(MenuConstant, value, 'link')} label={label}>
+                {/* <span className={styles.menuIcon}>{getMenuValue(MenuConstant, value, 'link')}</span>
+                <span className={styles.menuTitle}>{label?.toUpperCase()}</span> */}
+            </Link>
+        }
+            
+    //     if(value && getMenuValue(MenuConstant, value, 'link') )
+    // {<Link to=
+    //     {getMenuValue(MenuConstant, value, 'link')}
+    // ></Link>}
+        console.log('onSelect', value,'label',label);
     };
     return (
         <>
@@ -481,8 +462,8 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
 
-                    {/* autocomplete of the the searchBox */}
-
+        
+                    
                     {!collapsed && (
                         <AutoComplete
                             dropdownMatchSelectWidth={200}
@@ -498,6 +479,7 @@ const LeftSideBarMain = (props) => {
                         >
                             <Input.Search size="large" placeholder="input here" enterButton />
                         </AutoComplete>
+        
                     )}
                     {/* <Row>
                         <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
