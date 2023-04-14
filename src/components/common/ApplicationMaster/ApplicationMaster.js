@@ -241,7 +241,7 @@ forceUpdate();
                             </Col>
                         </Row>
                     </div>
-                    <div className={styles.content}>
+                    <div className={styl.contentLeftPanel} >
                         {menuData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
@@ -261,14 +261,16 @@ forceUpdate();
                                 </Empty>
                             </div>
                         ) : (
+                            <div className={` ${styl.leftPanelScroll}`}>
                             <LeftPanel {...myProps} />
+                            </div>
                         )}
                     </div>
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
                     {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} >
                             <ViewApplicationDetail applicationDetailsData={applicationDetailsData} />
 
                             <div className={styles.hyrbuttonContainer}>

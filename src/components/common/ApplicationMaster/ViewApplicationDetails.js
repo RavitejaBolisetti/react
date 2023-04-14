@@ -5,7 +5,7 @@ import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 
 import styles from './ApplicationMaster.module.css';
-import style from '../../common/DrawerAndTable.module.css'
+
 
 import CardDocument from './CardDocument';
 import CardLocation from './CardLocation';
