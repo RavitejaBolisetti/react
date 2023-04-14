@@ -5,6 +5,9 @@ import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox, Tabs } from 'antd';
 import { PlusOutlined, MinusOutlined, DownOutlined, SmileOutlined, MehOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
+import { FaSquare } from 'react-icons/fa';
+import { BiCheckboxSquare } from 'react-icons/bi';
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineCheck, AiOutlineBorder } from 'react-icons/ai';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -557,7 +560,26 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <CheckboxTree nodes={[el]} expanded={ExpandedKeys} checked={CheckedKeys} onCheck={onTreeCheck} onExpand={OnExpanded} onMoveNode={OnChanges} />
+                                            <CheckboxTree
+                                                nodes={[el]}
+                                                expanded={ExpandedKeys}
+                                                checked={CheckedKeys}
+                                                onCheck={onTreeCheck}
+                                                onExpand={OnExpanded}
+                                                onMoveNode={OnChanges}
+                                                icons={{
+                                                    check: <AiOutlineCheck style={{ width: '8px', height: '8px', color: '#EA3A51', border: ' 1px solid #B5B5B6', padding: '3px', borderRadius: '5px' }} />,
+                                                    uncheck: <div style={{ width: '14px', height: '14px', color: '#EA3A51', border: ' 1px solid #B5B5B6', borderRadius: '4px' }} />,
+                                                    halfCheck: <FaSquare style={{ width: '10px', height: '10px', color: '#FF3E5B', border: ' 1px solid #B5B5B6', borderRadius: '5px', padding: '2px' }} />,
+                                                    expandClose: <AiOutlinePlusSquare style={{ width: '18px', height: '18px', color: '#EA3A51' }} />,
+                                                    expandOpen: <AiOutlineMinusSquare style={{ width: '18px', height: '18px', color: '#EA3A51' }} />,
+                                                    expandAll: <span className="rct-icon rct-icon-expand-all" />,
+                                                    collapseAll: <span className="rct-icon rct-icon-collapse-all" />,
+                                                    parentClose: '',
+                                                    parentOpen: '',
+                                                    leaf: '',
+                                                }}
+                                            />
                                         </Col>
                                     </Row>
                                 </Space>
