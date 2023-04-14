@@ -408,3 +408,8 @@
     margin-inline-end: 0px;
     padding-right: 0px;
 }
+:global .rct-icon .rct-icon-half-check{
+    height: 20px !important;
+    width: 20px !important;
+    display: none;
+}

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import CheckboxTree from 'react-checkbox-tree';
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox } from 'antd';
-import { PlusOutlined, DownOutlined, SmileOutlined, MehOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
+import { PlusOutlined, MinusOutlined, DownOutlined, SmileOutlined, MehOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -14,6 +16,8 @@ import style from './RoleManagement.module.css';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
+const { Search } = Input;
+
 const children = [
     {
         title: 'Upload',
@@ -282,8 +286,57 @@ const mockData = [
         ],
     },
 ];
-
-const DrawerUtil = ({ setIsReadOnly,handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const FinalTreedata = [
+    {
+        value: 'Common',
+        label: 'Common',
+        children: [
+            {
+                label: 'Application Master',
+                value: 'ApplicationMaster1',
+                children: [
+                    {
+                        label: 'Sub Application Master',
+                        value: 'subApplicationMaster1',
+                        children: [
+                            { value: 'Upload', label: 'Upload' },
+                            { value: 'Delete', label: 'Delete' },
+                            { value: 'Read', label: 'Read' },
+                            { value: 'Create', label: 'Create' },
+                            { value: 'Update', label: 'Update' },
+                            { value: 'View', label: 'View' },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: 'Common1',
+        label: 'Financial Accounting',
+        children: [
+            {
+                label: 'Application Master-1',
+                value: 'ApplicationMaster1-1',
+                children: [
+                    {
+                        label: 'Sub Application Master-1',
+                        value: 'subApplicationMaster1-1',
+                        children: [
+                            { value: 'Upload-1', label: 'Upload-1' },
+                            { value: 'Delete-1', label: 'Delete-1' },
+                            { value: 'Read-1', label: 'Read-1' },
+                            { value: 'Create-1', label: 'Create-1' },
+                            { value: 'Update-1', label: 'Update-1' },
+                            { value: 'View-1', label: 'View-1' },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+];
+const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const [form] = Form.useForm();
     // const [selectedActions, setSelectedActions] = useState({})
     const [ParentCheck, setParentCheck] = useState();
@@ -313,9 +366,15 @@ const DrawerUtil = ({ setIsReadOnly,handleUpdate2, setFormBtnDisable, onFinish, 
             value: 'Upload',
         },
     ];
+    const StateMangement = {
+        Common:[],
+        Common1:[],
+    }
     const disabledProps = { disabled: false };
     const [treeData, settreeData] = useState([]);
     const [SelectedKeys, setSelectedKeys] = useState();
+    const [CheckedKeys, setCheckedKeys] = useState();
+    const [ExpandedKeys, setExpandedKeys] = useState();
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add New Role';
@@ -438,14 +497,27 @@ const DrawerUtil = ({ setIsReadOnly,handleUpdate2, setFormBtnDisable, onFinish, 
         return result;
     }
 
-    const onChange = (checkedValues, key) => {
-        // let slectedData = treeData;
-
-        console.log('checked = ', checkedValues, key);
+    
+    const onTreeCheck = (checked, targetNode) => {
+        setCheckedKeys(checked);
+        console.log('onTreeSelect', checked, targetNode);
     };
-    const onTreeSelect = (data) => {
-        setSelectedKeys(data);
-        console.log('onTreeSelect', data);
+    const OnChanges =(value)=>{
+        console.log("this is the Change in the Tree =>>>>>",value)
+    }
+    const OnExpanded = (expanded, targetNode) => {
+        //  StateMangement.expanded[0]=expanded;
+        let ExpandVals=[];
+        for (const [key, value] of Object.entries(expanded)) {
+            if(key===0)
+            {
+                ExpandVals.push(value)
+            }
+          }
+        console.log('This is the data : ', typeof(expanded),'dasdasd');
+
+        setExpandedKeys(expanded);
+        console.log('This is the data : ', typeof(expanded),'dasdasd');
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
@@ -464,81 +536,37 @@ const DrawerUtil = ({ setIsReadOnly,handleUpdate2, setFormBtnDisable, onFinish, 
             </>
         );
     };
-    const AccordianTreeUtils = () => {
+    const AccordianTreeUtils = (data) => {
         return (
-            <Tree
-                checkable
-                showIcon
-                className={style.roleManagement}
-                defaultExpandAll
-                switcherIcon={<PlusOutlined />}
-                treeData={treeData}
-                treeLine={true}
-                treeIcon={true}
-                checkedKeys={SelectedKeys}
-                onCheck={onTreeSelect}
-                titleRender={(treeNode) => {
-                    if (treeNode.isLeaf) {
-                        console.log('treeNode', treeNode);
-                        return (
-                            <div className="LeafDiv">
-                                <span className="title">
-                                    <span className="text">{treeNode.title}</span>
-                                </span>
-                                <div className="Placement">
-                                    {(() => {
-                                        const DefaultSelect = [];
-                                        if (SelectedKeys) {
-                                            DefaultSelect.push(Allselect);
-                                            console.log('DefaultSelect', DefaultSelect);
-                                            return <Checkbox.Group defaultValue={Allselect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
-                                        } else {
-                                            if (options[treeNode.dataIndex]) {
-                                                // console.log('Treenode DataIndex', treeNode.dataIndex);
-                                                options[treeNode.dataIndex].map((e) => {
-                                                    if (e.checkable === true) {
-                                                        console.log('The saga', e.value);
-                                                        DefaultSelect.push(e.value);
-                                                        return e.value;
-                                                    }
-                                                });
-                                                console.log('DefaultSelect', DefaultSelect);
-
-                                                // console.log('Value yeh hai', options[treeNode.dataIndex]);
-
-                                                // options[treeNode.dataIndex]?.map((e) => {
-                                                //     if(e.checkable===true)
-                                                //     {
-                                                //         setDefaultcheckboxSelect([...DefaultcheckboxSelect,e]);
-                                                //     }
-                                                // });
-                                                return <Checkbox.Group defaultValue={DefaultSelect} options={options[treeNode.dataIndex]} onChange={(data) => onChange(data, treeNode.dataIndex)} />;
-                                            }
-                                        }
-                                    })()}
-
-                                    {/* {options[treeNode.dataIndex]?.length > 0 &&
-                                                            options[treeNode.dataIndex].map((op) => (
-                                                                <Checkbox checked={op[op?.value]} defaultValue={op[op?.value]} onChange={(data) => onChange(data, treeNode.dataIndex)}>
-                                                                    {op.label}
-                                                                </Checkbox>
-                                                            ))} */}
-                                </div>
-                            </div>
-                        );
-                    }
-                    return <>{treeNode.title}</>;
-                }}
-            />
+            <>
+                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                    {data?.map((el) => (
+                        <Collapse expandIcon={() => <PlusOutlined />}>
+                            <Panel header={el?.label}>
+                                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: '100%',
+                                                }}
+                                                allowClear
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <CheckboxTree nodes={[el]} expanded={ExpandedKeys} checked={CheckedKeys} onCheck={onTreeCheck} onExpand={OnExpanded} onMoveNode={OnChanges} />
+                                        </Col>
+                                    </Row>
+                                </Space>
+                            </Panel>
+                        </Collapse>
+                    ))}
+                </Space>
+            </>
         );
-        //  data.map((subt, i) => {
-        //     let subdata = subt;
-        //     console.log(subt);
-        // });
-        // console.log(typeof data);
-        // Object.entries(data).map(([key, val], i) => {
-        //     console.log('Keyname', key, ' Name:', val);
-        // });
     };
     const onClose = () => {
         setOpenDrawer(false);
@@ -645,7 +673,7 @@ const DrawerUtil = ({ setIsReadOnly,handleUpdate2, setFormBtnDisable, onFinish, 
 
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <AccordianTreeUtils />
+                                {AccordianTreeUtils(FinalTreedata)}
                             </Col>
                         </Row>
                     </Form>

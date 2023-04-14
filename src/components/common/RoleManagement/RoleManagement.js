@@ -79,10 +79,9 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
-    const [viewData,setViewData] = useState({})
+    const [viewData, setViewData] = useState({});
     const [successAlert, setSuccessAlert] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
-
 
     // useEffect(() => {
     //     if (!isDataLoaded && userId) {
@@ -156,14 +155,13 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
         setFormActionType('update');
         setOpenDrawer(true);
         setFooterEdit(false);
-        
+
         form.setFieldsValue({
             roleId: record.roleId,
             roleName: record.roleName,
             roleDesceription: record.roleDesceription,
             activeIndicator: record.activeIndicator,
         });
-
     };
     const handleView = (record) => {
         setFormActionType('view');
@@ -177,9 +175,10 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
             activeIndicator: record.activeIndicator,
         });
         setIsReadOnly(true);
-
     };
     const handleAdd = () => {
+        setFormActionType('add');
+
         setOpenDrawer(true);
         setFooterEdit(false);
     };
@@ -218,8 +217,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
-            sorter: false
-
+            sorter: false,
         })
     );
 
@@ -335,7 +333,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add Role
                                             </Button>
                                         </Col>
                                     </Row>
@@ -349,7 +347,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} formBtnDisable={formBtnDisable} setFormBtnDisable={setFormBtnDisable} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType}  openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} formBtnDisable={formBtnDisable} setFormBtnDisable={setFormBtnDisable} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
