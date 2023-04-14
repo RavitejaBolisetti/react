@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
-import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox } from 'antd';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox, Tabs } from 'antd';
 import { PlusOutlined, MinusOutlined, DownOutlined, SmileOutlined, MehOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
@@ -336,7 +336,7 @@ const FinalTreedata = [
         ],
     },
 ];
-const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
 
@@ -369,10 +369,10 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
         },
     ];
     const StateMangement = {
-        Common:[],
-        Common1:[],
-    }
-    const disabledProps = { disabled: false };
+        Common: [],
+        Common1: [],
+    };
+    // const disabledProps = { disabled: false };
     const [treeData, settreeData] = useState([]);
     const [SelectedKeys, setSelectedKeys] = useState();
     const [CheckedKeys, setCheckedKeys] = useState();
@@ -499,27 +499,25 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
         return result;
     }
 
-    
     const onTreeCheck = (checked, targetNode) => {
         setCheckedKeys(checked);
         console.log('onTreeSelect', checked, targetNode);
     };
-    const OnChanges =(value)=>{
-        console.log("this is the Change in the Tree =>>>>>",value)
-    }
+    const OnChanges = (value) => {
+        console.log('this is the Change in the Tree =>>>>>', value);
+    };
     const OnExpanded = (expanded, targetNode) => {
         //  StateMangement.expanded[0]=expanded;
-        let ExpandVals=[];
+        let ExpandVals = [];
         for (const [key, value] of Object.entries(expanded)) {
-            if(key===0)
-            {
-                ExpandVals.push(value)
+            if (key === 0) {
+                ExpandVals.push(value);
             }
-          }
-        console.log('This is the data : ', typeof(expanded),'dasdasd');
+        }
+        console.log('This is the data : ', typeof expanded, 'dasdasd');
 
         setExpandedKeys(expanded);
-        console.log('This is the data : ', typeof(expanded),'dasdasd');
+        console.log('This is the data : ', typeof expanded, 'dasdasd');
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
@@ -587,7 +585,7 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
                 onClose={onClose}
                 open={openDrawer}
                 maskClosable={false}
-                className={footerEdit ?  styles.viewMode : styles.drawerCriticalityGrp}
+                className={footerEdit ? styles.viewMode : styles.drawerCriticalityGrp}
                 footer={
                     <>
                         <Row gutter={20}>
@@ -616,11 +614,7 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
                     </>
                 }
             >
-                <Space
-                    direction="vertical"
-                    size="small"
-                    
-                >
+                <Space direction="vertical" size="small" style={{ display: 'flex' }}>
                     <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -671,12 +665,28 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
                         </Row>
 
                         <hr />
+                        <Tabs
+                            defaultActiveKey="1"
+                            items={[
+                                {
+                                    label: 'Web',
+                                    key: '1',
+                                    children: AccordianTreeUtils(FinalTreedata),
+                                },
 
-                        <Row>
+                                {
+                                    label: 'Mobile',
+                                    key: '2',
+                                    children: '',
+                                },
+                            ]}
+                        />
+
+                        {/* <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 {AccordianTreeUtils(FinalTreedata)}
                             </Col>
-                        </Row>
+                        </Row> */}
                     </Form>
                 </Space>
             </Drawer>
