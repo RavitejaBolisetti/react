@@ -1,5 +1,5 @@
 .loginSection :global .ant-form-item-explain-error {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 p {
@@ -410,23 +410,58 @@ p {
 }
 
 .registered {
+    padding: 16px 0 8px;
+    color: #DEDEDE;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+}
+
+.fielderror .registered {
     padding: 8px 0;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.fielderror .registered :global .ant-checkbox-checked:checked {
+    background-color: transparent !important;
 }
 
 .registered :global .ant-checkbox .ant-checkbox-inner {
-
     width: 18px;
     height: 18px;
     background-color: transparent;
-    border: 1px solid #B5B5B5;
-
+    border: 1px solid #838383;
 }
 
 .registered :global .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: transparent;
-    border-color: #b5b5b5 !important;
+    border-color: #838383 !important;
+}
+
+.registered :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
+.registered :global .ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+    background-color: transparent !important;
+}
+
+.registered :global .ant-checkbox .ant-checkbox-inner:after {
+    top: 48%;
+    inset-inline-start: 35%;
+    width: 4px;
+    height: 7px;
+    border: 1px solid red;
+    border-top: 0;
+    border-inline-start: 0;
+}
+
+.registered :global .ant-checkbox-checked:after {
+    border: 1px solid #ff3e5b !important;
+    background-color: transparent !important;
+}
+
+:global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+    background-color: transparent !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {
@@ -497,7 +532,6 @@ p {
     line-height: 24px;
     font-weight: 400;
     text-align: right;
-    font-weight: normal;
     width: 100%;
     margin-top: -6px;
     margin-bottom: 10px;
@@ -514,15 +548,17 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
     color: #dedede;
     text-align: center;
-    font-weight: normal;
+    font-weight: 400;
     width: 100%;
-    margin-top: 12px;
+    margin-top: 16px;
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
-    color: #FF3E5B;
-    font-size: 12px;
-    padding-top: 2px;
+    color: #ED302D;
+    /* font-size: 16px; */
+    line-height: 18px;
+    font-weight: 400;
+    /* letter-spacing: 0.8px; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
@@ -531,16 +567,15 @@ p {
     line-height: 24px;
     color: #DEDEDE;
     text-align: center;
-    font-weight: normal;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a:hover {
     text-decoration: underline;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .forgotOTPSec {
+/* .loginSection .loginWrap .loginHtml .loginForm .forgotOTPSec {
     display: none;
-}
+} */
 
 .form-control {
     display: block;
@@ -663,97 +698,10 @@ select.form-control:focus::-ms-value {
 }
 
 /*--------- Warning Notification End ---------*/
-.errorTitle {
-    margin-left: 5px;
-    padding-left: 5px;
-}
-
-.errorBoxContainer {
-    /* width: 25%;
-    */
-    width: 320px;
-    max-height: 90%;
-    /* margin: 3% auto;
-    */
-    padding: 10px 16px;
-    background: #FEE3D4;
-    color: #dedede;
-    font-size: 16px;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border: 1px solid #ED302D;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-    overflow: auto;
-    position: fixed;
-    top: 16px;
-    right: 16px;
-}
-
-.toastmessage :global .ant-notification-notice .ant-notification-notice-with-icon .ant-notification-notice-message {
-    margin-bottom: 8px;
-    margin-inline-start: 28px;
-    font-size: 16px
-}
-
-.errorBoxContainer h5 {
-    margin: 0;
-    padding: 0px;
-    /* border-bottom: 1px solid #ea3434;
-    */
-    font-size: 16px;
-    color: #EF0000;
-    padding-bottom: 5px !important;
-}
-
-.errorBoxContainer h5 .icon {
-    color: #ED302D;
-    /* padding-bottom: 5px;
-    */
-}
-
-.errorBoxContainer h5 .infoIcon {
-    color: #ffffff;
-}
-
-.errorBoxContainer h5 .loginErrorClose {
-    float: right;
-    cursor: pointer;
-}
 
 .loginSection :global .g-recaptcha>div>div {
     /* transform:scale(1.77); -webkit-transform:scale(1.77); transform-origin:0 0; -webkit-transform-origin:0 0; */
     margin: 0px auto;
-}
-
-:global .ant-btn.ant-btn-sm {
-    height: 28px !important;
-    padding: 4px 16px;
-    margin-bottom: 0px !important;
-    font-size: 12px !important;
-}
-
-:global .ant-btn-default {
-    background-color: transparent;
-}
-
-:global .ant-notification {
-    top: 26px !important;
-    margin-inline-end: 16px !important;
-}
-
-:global .ant-notification-notice {
-    width: 395px !important;
-    padding: 10px !important;
-}
-
-:global .ant-notification-notice-close {
-    top: 10px !important;
-    right: 15px !important;
-}
-
-:global .ant-notification-notice-close:hover {
-    background-color: transparent !important;
 }
 
 /*--------- Warning Notification Start ---------*/
@@ -807,7 +755,13 @@ select.form-control:focus::-ms-value {
     background-color: #FF7A00 !important;
 }
 
+.warning :global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
 /*--------- Warning Notification End ---------*/
+
 /*--------- Error Notification Start ---------*/
 .error {
     color: #ED302D;
@@ -859,7 +813,15 @@ select.form-control:focus::-ms-value {
     background-color: #ea3434 !important;
 }
 
+
+
+.error :global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
 /*--------- Error Notification End ---------*/
+
 /*--------- Success Notification Start ---------*/
 .success {
     color: #70C922;
@@ -891,22 +853,18 @@ select.form-control:focus::-ms-value {
     padding-right: 20px;
 }
 
+.success :global .ant-notification-notice-close {
+    top: 10px !important;
+    right: 15px !important;
+}
+
 /*--------- Success Notification End ---------*/
+
 /* New css */
 .ant-form-item .ant-form-item-control-input-content {
     margin-bottom: -10px !important;
 }
 
-.checkColors {
-    color: #ff3e5b;
-    font-size: 16px;
-    letter-spacing: 0.8px;
-}
-
-.checkColor {
-    color: #ffffff;
-    font-size: 16px;
-}
 
 .loginForm :global .ant-checkbox-disabled+span {
     color: #ffffff;
@@ -918,11 +876,29 @@ select.form-control:focus::-ms-value {
     text-align: center;
 }
 
+.otpVerificationContainer {
+    font-size: 14px;
+}
+
+.otpCounter {
+    color: #ffffff;
+    letter-spacing: 0.8px;
+}
+
+.otpTitle {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.otpNotReceive {
+    color: #ff3e5b;
+    letter-spacing: 0.8px;
+}
+
 .resendEnabled {
     color: white;
     float: right;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .resendDisabled {
@@ -942,8 +918,8 @@ select.form-control:focus::-ms-value {
 }
 
 .changer {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .changer input {
@@ -971,6 +947,16 @@ select.form-control:focus::-ms-value {
 .cursorPointer {
     cursor: pointer;
 }
+
+.otpFilled input {
+    border: solid 1px #ED302D !important;
+    margin-right: 17px !important;
+}
+
+.otpEmpty {
+    border: transparent;
+}
+
 
 @media (min-width: 997px) and (max-width: 1280px) {
     .loginSection .loginMnMlogo img {

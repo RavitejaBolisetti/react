@@ -23,19 +23,19 @@ const mapStateToProps = (state) => {
 const ManufacturerAdministrativeHierarchyPageBase = () => {
     const [isChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
-    const handleChangeHistoryClick = (e) => {
-        setChangeHistoryVisible(!isChangeHistoryVisible);
-    };
+    // const handleChangeHistoryClick = (e) => {
+    //     setChangeHistoryVisible(!isChangeHistoryVisible);
+    // };
 
     const pageTitle = 'Manufacturer Adminstrative Hierarchy';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        showChangeHisoty: true,
-        visibleChangeHistory: true,
-        handleChangeHistoryClick,
+        showChangeHisoty: false,
+        visibleChangeHistory: false,
+        // handleChangeHistoryClick,
         isChangeHistoryVisible,
-        isUploadVisible: true,
+        // isUploadVisible: true,
     };
     return (
         <>

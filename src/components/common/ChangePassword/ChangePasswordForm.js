@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -52,17 +52,21 @@ const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () 
         // form.validateFields().then((values) => {});
     };
 
-    const successAction = (title, message) => {
-        showGlobalNotification({ notificationType: 'success', title, message });
-        navigate(ROUTING_LOGIN);
-    };
     const onFinishFailed = (values) => {
         if (values.errorFields.length === 0) {
             const data = { ...values.values };
             const onSuccess = (res) => {
                 form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
+
                 doLogout({
-                    successAction,
+                    onSuccess: (res) => {
+                        if (res?.data) {
+                            navigate(ROUTING_LOGIN);
+                        }
+                    },
+                    onError,
+                    userId,
                 });
             };
 
@@ -102,7 +106,7 @@ const ChangePasswordBase = ({ showGlobalNotification, isOpen = false, onOk = () 
         setConfirmDirty(confirmDirty || !!value);
     };
     return (
-        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed} className={styles.changePassword}>
+        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>

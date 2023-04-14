@@ -31,21 +31,21 @@
 .userText {
     float: right;
     padding-top: 16px;
-    color: #342C2C;
+    color: #0B0B0C;
     line-height: 20px;
     font-size: 14px;
     font-weight: 700;
 }
 
 .userText .userName {
-    max-width: 120px;
+    max-width: 112px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .dropdownArrow {
-    padding: 100%;
+    padding: 80%;
 }
 
 .dropdownArrow .navLink {
@@ -82,11 +82,11 @@
     line-height: 24px;
 }
 
-.userName {
+/* .userName {
     max-width: 150px;
     text-align: right;
     text-overflow: ellipsis;
-}
+} */
 
 .dealerLocation {
     color: #FF3E5B;
@@ -121,6 +121,17 @@
     font-size: 12px;
 }
 
+.userText .userServiceArea {
+    color: #858585;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
+    padding-left: 8px;
+}
+
 .navLink {
     color: #342C2C;
     padding: 5px;
@@ -152,17 +163,16 @@
 }
 
 .navbarExpand .navbarNav .navLink {
-    padding-left: 16px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 14px;
 }
 
-:global .ant-badge .ant-badge-count {
+.navLink :global .ant-badge .ant-badge-count {
     color: #fff;
     background-color: #ff3e5b;
     right: 5px;
     top: 4px;
 }
-
 
 .helpLineText {
     display: inline-block;
@@ -217,7 +227,12 @@
 }
 
 :global .ant-dropdown {
-    width: 162px;
+    width: 170px;
+}
+
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon,
+:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon {
+    padding-right: 8px;
 }
 
 :global .ant-dropdown .ant-dropdown-menu,

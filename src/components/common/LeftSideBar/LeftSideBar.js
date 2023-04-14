@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, Search, AutoComplete } from 'antd';
+import { Input, Menu, Layout, Row, Col, Search, AutoComplete,Button } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -19,7 +19,8 @@ import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
 import { HomeIcon } from 'Icons';
-import { useMemo } from 'react';
+import { showGlobalNotification } from 'store/actions/notification';
+
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -28,16 +29,16 @@ const filterFunction = (filterString) => (menuTitle) => {
     return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
 };
 
-const prepareLink = ({ title, id, tooltip = true, icon = true, showTitle = true, captlized = false }) =>
+const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, captlized = false }) =>
     id && getMenuValue(MenuConstant, id, 'link') ? (
-        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? title : ''}>
+        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
+            {showTitle && <span className={styles.menuTitle}>{title}</span>}
         </Link>
     ) : (
-        <Link to="#" title={tooltip ? title : ''}>
+        <Link to="#" title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {showTitle && <span className={styles.menuTitle}>{captlized ? title?.toUpperCase() : title}</span>}
+            {showTitle && <span className={styles.menuTitle}>{title}</span>}
         </Link>
     );
 
@@ -77,25 +78,29 @@ const LeftSideBarMain = (props) => {
     const [current, setCurrent] = useState('mail');
     const [filterMenuList, setFilterMenuList] = useState();
     //const [FilterMenudata, setFilterMenudata] = useState(menuData);
-    const [expandedKeys, setExpandedKeys] = useState([]);
-    const [mainKeys, setmainKeys] = useState([]);
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [openKeys, setOpenKeys] = useState([]);
-    const [searchValue, setSearchValue] = useState('');
+
     const expandedkeys=[];
     const navigate = useNavigate();
 
-
+    const [mainKeys,setmainKeys]=useState([])
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [searchValue, setSearchValue] = useState('');
+    const [expandedKeys, setExpandedKeys] = useState([]);
+    const [autoExpandParent, setAutoExpandParent] = useState(true);
+    const [openKeys, setOpenKeys] = useState([]);
+
+    const errorAction = (message) => {
+        console.log('success');
+    };
 
     useEffect(() => {
-        if (!isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
         setOpenKeys()
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         if (filter) {
@@ -110,7 +115,7 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    // const checkData = (menuId) => filterMenuList && filterMenuList.includes(menuId);
+ 
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -134,20 +139,56 @@ const LeftSideBarMain = (props) => {
     };
 
     const prepareMenuItem = (data) => {
-        return data.map(({ menuId, menuTitle, parentMenuId, subMenu = [] }) => {
-            const isParentMenu = false; // parentMenuId === 'Web';
+        return data.map(({ menuId, menuTitle, menuOrgTitle = '', parentMenuId = '', subMenu = [] }) => {
+            const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                <Item key={parentMenuId.concat(menuId)} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
     };
+
+    const finalMenuData = useMemo(() => {
+        const loop = (data) =>
+            data.map((item) => {
+                const strTitle = item?.menuTitle;
+                const index = strTitle?.toLowerCase()?.indexOf(searchValue?.toLowerCase());
+                const beforeStr = strTitle?.substring(0, index);
+                const afterStr = strTitle?.slice(index + searchValue.length);
+                const menuTitle =
+                    searchValue && index > -1 ? (
+                        <span className={styles.searchMenuContainer}>
+                            {beforeStr}
+                            <span className={styles.searchMenuTitle}>{searchValue}</span>
+                            {afterStr}
+                        </span>
+                    ) : (
+                        <span>
+                            <span>{strTitle}</span>
+                        </span>
+                    );
+                if (item?.subMenu) {
+                    return {
+                        ...item,
+                        menuTitle,
+                        menuOrgTitle: item?.menuTitle,
+                        subMenu: loop(item?.subMenu),
+                    };
+                }
+                return {
+                    ...item,
+                    menuOrgTitle: item?.menuTitle,
+                    menuTitle,
+                };
+            });
+        return loop(menuData);
+    }, [searchValue, menuData]);
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
 
@@ -456,34 +497,28 @@ const LeftSideBarMain = (props) => {
                 </div>
                 {!isLoading ? (
                     <>
-                        <Menu
+                       <Menu
                             onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            //defaultSelectedKeys={[defaultSelectedKeys]}
+                            // defaultSelectedKeys={[defaultSelectedKeys]}
                             // defaultOpenKeys={defaultOpenKeys}
                             openKeys={openKeys}
-                             onOpenChange={onOpenChange}
-                            // onExpand={onExpand}
-                            // onOpenChange={onExpand}
+                            onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
-                            // expandedKeys={expandedKeys}
-                            //selectedKeys={selectedTreeKey}
-                            // onSelect={handleTreeViewClick}
-                            autoExpandParent={autoExpandParent}
                         >
-                            <Row>
+                            <Item key={'home'} className={styles.subMenuParent}>
                                 <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
                                     <span className={styles.menuIcon}>
                                         <HomeIcon />
                                     </span>
                                     Home
                                 </Link>
-                            </Row>
-                            {prepareMenuItem(menuData)}
+                            </Item>
+                            {prepareMenuItem(finalMenuData)}
                         </Menu>
                     </>
                 ) : (
@@ -493,11 +528,29 @@ const LeftSideBarMain = (props) => {
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
-                        paddingLeft: collapsed ? '14px' : '10px',
+                        padding: collapsed ? '10px' : '10px 14px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    {theme === 'light' ? <BsSun size={30} className={styles.sun} /> : <BsMoon size={30} className={styles.moon} />}
+                    <div className={styles.changeThemeBorder}>
+                        {collapsed ? (
+                            theme === 'light' ? (
+                                <BsSun size={30} className={styles.sun} />
+                            ) : (
+                                <BsMoon size={30} className={styles.moon} />
+                            )
+                        ) : (
+                            <>
+                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                    <BsSun size={30} /> Light Mode
+                                </Button>
+
+                                <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                    <BsMoon size={30} /> Dark Mode
+                                </Button>
+                            </>
+                        )}
+                    </div>
                 </div>
             </Sider>
         </>

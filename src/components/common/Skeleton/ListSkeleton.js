@@ -7,7 +7,7 @@ export const ListSkeleton = ({ count = 10, height = 10, containerHeight = 'auto'
     return (
         <div style={{ padding: '0 15px', border: border, height: containerHeight }}>
             {[...Array(count)].map((e, i) => (
-                <div style={{ marginTop: '10px' }}>
+                <div key={'list-skeleton-' + i} style={{ marginTop: '10px' }}>
                     <SkeletonTheme baseColor={baseColor} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
                         <Skeleton height={height} />
                     </SkeletonTheme>

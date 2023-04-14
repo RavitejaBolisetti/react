@@ -1,4 +1,4 @@
-import { DEALER_HIERARCHY_DATA_LOADED, DEALER_HIERARCHY_DATA_SHOW_LOADING, DEALER_HIERARCHY_SET_FORM_DATA, DEALER_HIERARCHY_SET_FORM_IS_VISIBLE } from 'store/actions/data/dealerHierarchy';
+import { DEALER_HIERARCHY_DATA_LOADED, DEALER_HIERARCHY_DATA_SHOW_LOADING, DEALER_HIERARCHY_SET_FORM_DATA, DEALER_HIERARCHY_SET_FORM_IS_VISIBLE, DEALER_HIERARCHY_CHANGE_HISTORY_VISIBLE } from 'store/actions/data/dealerHierarchy';
 
 const initialState = {
     isLoaded: false,
@@ -7,6 +7,7 @@ const initialState = {
     isHistoryLoaded: false,
     historyData: [],
     isHistoryLoading: false,
+    changeHistoryVisible: false,
 };
 
 export const DealerHierarchy = (state = initialState, action) => {
@@ -19,6 +20,8 @@ export const DealerHierarchy = (state = initialState, action) => {
             return { ...state, isFormVisible: true };
         case DEALER_HIERARCHY_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
+        case DEALER_HIERARCHY_CHANGE_HISTORY_VISIBLE:
+            return { ...state, changeHistoryVisible: action.visible };
         default:
             return { ...state };
     }

@@ -1,5 +1,7 @@
+import { EN } from 'language/en';
+
 import axios from 'axios';
-import { clearAllLocalStorage } from 'store/actions/auth';
+import { clearLocalStorageData } from 'store/actions/auth';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
 export const AXIOS_ERROR_OTHER_ERROR = 'AXIOS_ERROR_OTHER_ERROR';
 export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
@@ -21,23 +23,24 @@ const baseAPICall = (params) => {
 
     if (token) {
         const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, accessToken: accessToken, userId, deviceType: 'W', deviceId: '' };
+        const headers = { Authorization: AuthStr, userId, accessToken: accessToken, deviceType: 'W', deviceId: '' };
         axiosConfig = {
             ...axiosConfig,
             headers,
         };
     }
 
-    const unAuthorizedMessage = 'Sorry you are not authorised to view this page. Please login again.';
+    const unAuthorizedTtitle = EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
+    const unAuthorizedMessage = EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
 
-    const onUnAuthenticated = (message) => {
-        clearAllLocalStorage();
-        onError && onError(unAuthorizedMessage);
+    const onUnAuthenticated = () => {
+        clearLocalStorageData();
     };
+
     try {
         axios
             .request(axiosConfig)
@@ -60,43 +63,40 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: response?.data?.errors || response?.data?.responseMessage });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: response?.data?.errors || response?.data?.responseMessage || EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
                     }
                 }
             })
             .catch((error) => {
+                onUnAuthenticated();
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
-                    clearAllLocalStorage();
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.ERROR.TITLE, errorMessage: EN.GENERAL.ERROR.MESSAGE });
                 } else if (error.code) {
-                    // This is a timeout error
                     if (error.code === 'ECONNABORTED') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
-                        clearAllLocalStorage();
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        clearAllLocalStorage();
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'Information', errorMessage: 'We are experiencing server issue, Please try again' });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
+                    } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: EN.GENERAL.NETWORK_ERROR.MESSAGE });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }
                 } else if (error.request) {
                     // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
-                    onError(AXIOS_ERROR_NO_RESPONSE);
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: EN.GENERAL.NO_RESPONSE.MESSAGE });
                 } else {
                     // Something happened in setting up the request that triggered an Error
-                    onError(AXIOS_ERROR_INTERNAL);
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: EN.GENERAL.NO_RESPONSE.MESSAGE });
                 }
             })
             .finally(() => {
                 postRequest();
             });
     } catch (err) {
-        console.log('We are facing server issue!!');
+        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
     }
 };
 

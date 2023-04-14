@@ -52,10 +52,10 @@ const MainPageBase = ({ notification }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn]);
-
+    
     useEffect(() => {
         if (notification?.visible) {
-            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message });
+            informationModalBox({ type: notification?.notificationType, title: notification?.title, message: notification?.message, placement: notification?.placement, showTitle: notification?.showTitle });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notification?.visible]);

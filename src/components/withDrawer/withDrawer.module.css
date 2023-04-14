@@ -1,0 +1,49 @@
+.myDrawerStyle :global .ant-drawer-body {
+    padding-top: 10px;
+    height: calc(100vh - 100px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.myDrawerStyle :global .ant-drawer-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #262626;
+}
+
+.myDrawerStyle :global .ant-drawer-header {
+    height: 60px;
+}
+
+.myDrawerStyle :global .ant-drawer-close {
+    color: #000000;
+}
+
+@media screen and (max-width: 1199px) {
+    .myDrawerStyle :global .ant-drawer-title {
+        font-size: 18px;
+    }
+
+    .myDrawerStyle :global .ant-drawer-header {
+        padding: 14px 24px;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    .myDrawerStyle :global .ant-drawer-content-wrapper {
+        width: 98% !important;
+    }
+
+    .myDrawerStyle :global .ant-drawer-title {
+        font-size: 18px;
+        font-weight: normal;
+        color: #484549;
+    }
+
+    .myDrawerStyle :global .ant-drawer-wrapper-body {
+        height: 90% !important;
+        background: #fff;
+        overflow: auto;
+    }
+}

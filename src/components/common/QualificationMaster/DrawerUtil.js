@@ -1,28 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Drawer, Input, Form, Col, Row, Switch, Button } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
-import styles from '../Common.module.css';
-import style from './QualificationMaster.module.css';
+import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const DrawerUtil = ({ state, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData }) => {
-    const disabledProps = { disabled: isReadOnly };
+import style from 'components/common/DrawerAndTable.module.css';
 
+const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+    const disabledProps = { disabled: isReadOnly };
+    console.log("isLoadingOnSave",isLoadingOnSave)
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Qualification Details';
     } else if (formActionType === 'update') {
-        drawerTitle = 'Update Application Criticality Group Details';
+        drawerTitle = 'Edit Qualification Details';
+    } else if (formActionType === 'view') {
+        drawerTitle = 'View Qualification Details';
     }
+
+    const handleForm = () => {
+        setFormBtnDisable(true);
+    };
 
     const onClose = () => {
         setDrawer(false);
+        setFormBtnDisable(false);
+        form.resetFields();
     };
-
-    useEffect(() => {
-        setForceFormReset(Math.random() * 1000);
-    }, [formData]);
 
     return (
         <Drawer
@@ -30,44 +34,67 @@ const DrawerUtil = ({ state, handleAdd, setForceFormReset, open, setDrawer, isCh
             placement="right"
             onClose={onClose}
             open={open}
+            className={footerEdit ?  style.viewMode : style.drawerCriticalityGrp}
             width="540px"
             footer={
-                <Row>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} className={styles.drawerFooterButtons}>
-                        <Button danger onClick={onClose} className={styles.drawerFooterButtons}>
-                            Cancel
-                        </Button>
-                    </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.drawerFooterButtons} style={{ textAlign: 'right' }}>
-                        <Button form="myForm" onClick={() => (state.button = 1)} type="primary" htmlType="submit">
-                            Save
-                        </Button>
-                        <Button form="myForm" onClick={() => (state.button = 2)} type="primary" htmlType="submit">
-                            Save and New
-                        </Button>
-                    </Col>
-                </Row>
+                <>
+                    <Row gutter={20}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Button danger onClick={onClose} className={style.cancelBtn}>
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
+                            {saveAndSaveNew ? (
+                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Save & Add New
+                                </Button>
+                            ) : (
+                                ''
+                            )}
+                            {saveBtn ? (
+                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
+                                </Button>
+                            ) : (
+                                ''
+                                )}
+                            {footerEdit ? (
+                                <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Edit
+                                </Button>
+                            ) : (
+                                ''
+                            )}
+                        </Col>
+                    </Row>
+                </>
             }
         >
-            <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.qualificationCode} label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
-                        <Input maxLength={5} minLength={5} placeholder={preparePlaceholderText('Code')} />
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formData?.qualificationName} label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Name')} />
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item  className={style.statusButton} labelCol={{ span: 24 }} normalize={(a, b) => (a ? 'Y' : 'N')} initialValue={formData?.isChildAllowed === 'Y' ? 'Y' : 'N'} label="Status" name="status">
-                        <Switch checkedChildren="Active" defaultChecked={formData?.status} unCheckedChildren="Inactive" {...disabledProps} />
-                    </Form.Item>
-                </Col>
-            </Row>
+            <Form form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name'),validateAlphanumericWithSpaceHyphenPeriod('Qualification Name')]}>
+                     {!footerEdit ?
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
+                            : <p className={style.viewModeText}>{form.getFieldValue("qualificationName")}</p>}
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
+                            <Switch  checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
         </Drawer>
     );
 };

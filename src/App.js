@@ -4,7 +4,7 @@ import { ConfigProvider, notification } from 'antd';
 import { MainPage } from './components/MainPage';
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { hideGlobalNotification } from 'store/actions/notification';
 
 import styles from './App.module.css';
@@ -28,20 +28,22 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
 
     const checkIcon = {
         success: <AiOutlineCheckCircle />,
+        warning: <AiOutlineInfoCircle />,
         error: <AiOutlineCloseCircle />,
     };
 
     const checkClassName = {
         success: styles.success,
+        warning: styles.warning,
         error: styles.error,
     };
 
-    const informationModalBox = ({ type = 'error', title = 'Information', message, duration = 3, placement = 'topRight' }) => {
+    const informationModalBox = ({ type = 'error', title = 'ERROR', message, duration = 5, placement = 'topRight', showTitle = true }) => {
         informationNotification.open({
             icon: checkIcon?.[type],
-            message: title,
+            message: showTitle ? title : false,
             description: message,
-            className: checkClassName?.[type],
+            className: `${checkClassName?.[type]} ${styles?.[placement]}`,
             duration,
             placement,
             onClose: hideGlobalNotification,

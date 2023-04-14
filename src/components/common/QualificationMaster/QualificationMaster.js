@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Modal, Form, Switch, Space } from 'antd';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { FiEdit2 } from 'react-icons/fi';
+import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
+import { EditIcon, ViewEyeIcon } from 'Icons';
+import { TfiReload } from 'react-icons/tfi';
+import { notification } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from '../QualificationMaster/QualificationMaster.module.css';
-import style from '../Common.module.css';
 import DataTable from 'utils/dataTable/DataTable';
-
+import { showGlobalNotification } from 'store/actions/notification';
+import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import DrawerUtil from './DrawerUtil';
+
+import styles from 'components/common/Common.module.css';
+import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
 
@@ -20,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData: qualificationData = [] },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -31,7 +34,10 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         isDataLoaded,
+        isLoading,
         qualificationData,
+        isLoadingOnSave,
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -43,6 +49,8 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: qualificationDataActions.listShowLoading,
             fetchList: qualificationDataActions.fetchList,
             saveData: qualificationDataActions.saveData,
+            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -50,13 +58,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData }) => {
+export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
-    const [isFavourite, setFavourite] = useState(false);
-    const handleFavouriteClick = () => setFavourite(!isFavourite);
-
-    const [searchInput, setSearchInput] = useState('');
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [data, setData] = useState(initialTableData);
@@ -65,13 +69,18 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [forceFormReset, setForceFormReset] = useState(false);
-    const [drawerTitle, setDrawerTitle] = useState('');
-    const [arrData, setArrData] = useState(qualificationData.data);
-    const [Searchdata, setSearchdata] = useState();
-
-    const state = {
-        button: 1,
-    };
+    const [searchData, setSearchdata] = useState();
+    const [refershData, setRefershData] = useState(false);
+    const [alertNotification, contextAlertNotification] = notification.useNotification();
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [filterString, setFilterString] = useState();
+    const [footerEdit, setFooterEdit] = useState(false);
+    const [selectedRecord, setSelectedRecord] = useState(null);
+    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
+    const [saveBtn, setSaveBtn] = useState(false);
+    const [saveclick, setsaveclick] = useState();
+    const [saveandnewclick, setsaveandnewclick] = useState();
+    const [successAlert, setSuccessAlert] = useState(false);
 
     useEffect(() => {
         form.resetFields();
@@ -80,205 +89,327 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     }, [forceFormReset]);
 
     useEffect(() => {
-        if (!isDataLoaded) {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
-        if (qualificationData?.data) {
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(qualificationData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refershData, userId]);
+
+    useEffect(() => {
+        if (isDataLoaded && qualificationData) {
+            if (filterString) {
+                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
+                setSearchdata(filterDataItem);
+            } else {
+                setSearchdata(qualificationData);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, qualificationData]);
 
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+            width: '6%',
+            sorter: false,
+            render: ((_t, _r, i) => i+1 ),
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
-            onFilter: (value, record) => record.qualificationCode.includes(value),
-            sortFn: (a, b) => a.code.localeCompare(b.code),
+            width: '17%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
-            sortFn: (a, b) => a.name.localeCompare(b.name),
+            width: '40%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (record) => {
-                return <Switch disabled={true} checked={record === 'Y' ? 1 : 0 || record === 'y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" />;
+            render: (text, record) => {
+                return <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>;
             },
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Action',
+            width: '15%',
             sorter: false,
-            render: (record) => {
+            render: (text, record, index) => {
                 return (
-                    <Space wrap>
-                        <FiEdit2 style={{ color: 'ff3e5b', cursor: 'pointer' }} onClick={() => handleUpdate(record)} />
+                    <Space>
+                        {
+                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                                <EditIcon />
+                            </Button>
+                        }
+                        {
+                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                                <ViewEyeIcon />
+                            </Button>
+                        }
                     </Space>
                 );
             },
         })
     );
     const tableProps = {
-        isLoading: listShowLoading,
-        tableData: Searchdata,
+        isLoading: isLoading,
+        tableData: searchData,
         tableColumn: tableColumn,
     };
 
     const onFinish = (values, e) => {
-        if (state.button === 1) {
-            const recordId = formData?.id || '';
-            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
-            let arrrData = [];
-            arrrData.push(data);
-            const onSuccess = (res) => {
-                form.resetFields();
-                setForceFormReset(Math.random() * 10000);
+        const recordId = selectedRecord?.id || '';
+        const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
+
+        const onSuccess = (res) => {
+            onSaveShowLoading(false);
+            form.resetFields();
+            setSelectedRecord({});
+            setSuccessAlert(true);
+            fetchList({ setIsLoading: listShowLoading, userId });
+            if (saveclick === true) {
                 setDrawer(false);
-                forceUpdate();
-                if (res?.data) {
-                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                    fetchList({ setIsLoading: listShowLoading, userId });
-                }
-            };
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setDrawer(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
+        };
 
-            const onError = (message) => {
-                handleErrorModal(message);
-            };
+        const onError = (message) => {
+            onSaveShowLoading(false);
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+        };
 
-            const requestData = {
-                data: arrrData,
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-            saveData(requestData);
-        }
+        const requestData = {
+            data: [data],
+            setIsLoading: onSaveShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
 
-        if (state.button === 2) {
-            const recordId = formData?.id || '';
-            const data = { ...values, status: values?.status ? 'Y' : 'N', createdBy: userId, createdDate: new Date() };
-            let arrrData = [];
-            arrrData.push(data);
-            const onSuccess = (res) => {
-                if (res?.data) {
-                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                    fetchList({ setIsLoading: listShowLoading, userId });
-                    form.resetFields();
-                    setFormData({});
-                }
-            };
-
-            const onError = (message) => {
-                handleErrorModal(message);
-            };
-
-            const requestData = {
-                data: arrrData,
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-        }
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleAdd = () => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData([]);
-        setDrawer(true);
         setFormActionType('add');
+        setSaveAndSaveNew(true);
+        setSaveBtn(true);
+        setFooterEdit(false);
+
+        setDrawer(true);
         setIsReadOnly(false);
-        form.resetFields();
-        forceUpdate();
+        setsaveclick(false);
+        setsaveandnewclick(true);
     };
 
     const handleUpdate = (record) => {
-        setForceFormReset(Math.random() * 10000);
-        setFormData(record);
-        setDrawer(true);
         setFormActionType('update');
+        setSaveAndSaveNew(false);
+        setFooterEdit(false);
+        setSaveBtn(true);
+        setSelectedRecord(record);
+
+        setFormData(record);
+
+        form.setFieldsValue({
+            qualificationCode: record.qualificationCode,
+            qualificationName: record.qualificationName,
+            status: record.status,
+        });
+
+        setDrawer(true);
         setIsReadOnly(false);
-        forceUpdate();
     };
+
+    const handleUpdate2 = () => {
+        setFormActionType('update');
+
+        setSaveAndSaveNew(false);
+        setFooterEdit(false);
+        setSaveBtn(true);
+
+        form.setFieldsValue({
+            qualificationCode: selectedRecord.qualificationCode,
+            qualificationName: selectedRecord.qualificationName,
+            status: selectedRecord.status,
+        });
+        setsaveclick(true);
+        setIsReadOnly(false);
+    };
+
+    const handleView = (record) => {
+        setFormActionType('view');
+
+        setSelectedRecord(record);
+        setSaveAndSaveNew(false);
+        setFooterEdit(true);
+        setSaveBtn(false);
+
+        form.setFieldsValue({
+            qualificationCode: record.qualificationCode,
+            qualificationName: record.qualificationName,
+            status: record.status,
+        });
+        setDrawer(true);
+        setIsReadOnly(true);
+    };
+
+    const handleReferesh = (e) => {
+        setRefershData(!refershData);
+    };
+
     const onChange = (sorter, filters) => {
         form.resetFields();
     };
 
-    const onChangeHandle = (e) => {
-        const newdata = [];
-        Object.keys(qualificationData).map((keyname, i) => {
-            if (qualificationData[keyname].qualificationName === e) {
-                newdata.push(qualificationData[keyname]);
-            } else if (qualificationData[keyname].qualificationCode === e) {
-                newdata.push(qualificationData[keyname]);
-            }
-        });
-
-        if (e === '') {
-            setSearchdata(qualificationData);
-        } else {
-            setSearchdata(newdata);
-        }
+    const onSearchHandle = (value) => {
+        setFilterString(value);
     };
-    const onChangeHandle2 = (e) => {
-        const getSearch = e.target.value;
-        if (e.target.value == '') {
-            const tempArr = qualificationData;
-            setSearchdata(tempArr);
-            return;
-        }
-        if (getSearch.length > -1) {
-            const searchResult = qualificationData.filter((record) => record.qualificationName.toLowerCase().startsWith(e.target.value.toLowerCase()) || record.qualificationCode.toLowerCase().startsWith(e.target.value.toLowerCase()));
-            setSearchdata(searchResult);
-        }
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
+    };
+
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
     return (
         <>
+            {contextAlertNotification}
             <Row gutter={20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    <Search
-                        placeholder="Search"
-                        allowClear
-                        style={{
-                            width: 200,
-                        }}
-                        onSearch={onChangeHandle}
-                        onChange={onChangeHandle2}
-                    />
-                </Col>
-                <Col className={styles.addQualification} xs={16} sm={16} md={16} lg={16} xl={16}>
-                    <Button danger onClick={handleAdd}>
-                        <AiOutlinePlus className={styles.buttonIcon} />
-                        Add Qualification
-                    </Button>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    <div className={style.searchAndLabelAlign}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                            Qualification List
+                                        </Col>
+                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
+                                            />
+                                        </Col>
+                                    </div>
+                                </Row>
+                            </Col>
+                            {qualificationData?.length ? (
+                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
+
+                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add Qualification
+                                    </Button>
+                                </Col>
+                            ) : (
+                                ''
+                            )}
+                        </Row>
+                    </div>
                 </Col>
             </Row>
-            <Form preserve={false} form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <DrawerUtil state={state} handleAdd={handleAdd} open={drawer} data={data} setDrawer={setDrawer} isChecked={isChecked} formData={formData} setIsChecked={setIsChecked} formActionType={formActionType} isReadOnly={isReadOnly} setFormData={setFormData} setForceFormReset={setForceFormReset} drawerTitle={drawerTitle} />
-            </Form>
+            <DrawerUtil
+                saveclick={saveclick}
+                setsaveclick={setsaveclick}
+                setsaveandnewclick={setsaveandnewclick}
+                saveandnewclick={saveandnewclick}
+                formBtnDisable={formBtnDisable}
+                saveAndSaveNew={saveAndSaveNew}
+                saveBtn={saveBtn}
+                setFormBtnDisable={setFormBtnDisable}
+                onFinishFailed={onFinishFailed}
+                onFinish={onFinish}
+                form={form}
+                handleAdd={handleAdd}
+                open={drawer}
+                data={data}
+                setDrawer={setDrawer}
+                isChecked={isChecked}
+                formData={formData}
+                setIsChecked={setIsChecked}
+                formActionType={formActionType}
+                isReadOnly={isReadOnly}
+                setFormData={setFormData}
+                setForceFormReset={setForceFormReset}
+                footerEdit={footerEdit}
+                handleUpdate2={handleUpdate2}
+                isLoadingOnSave={isLoadingOnSave}
+            />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DataTable {...tableProps} onChange={onChange} />
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: '20%',
+                                }}
+                                description={
+                                    !qualificationData?.length ? (
+                                        <span>
+                                            No records found. Please add new parameter <br />
+                                            using below button
+                                        </span>
+                                    ) : (
+                                        <span> No records found.</span>
+                                    )
+                                }
+                            >
+                                {!qualificationData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Qualification
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
+                            </Empty>
+                        )}
+                    >
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                    </ConfigProvider>
                 </Col>
             </Row>
         </>

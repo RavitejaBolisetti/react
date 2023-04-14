@@ -12,6 +12,7 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     return {
         title,
         dataIndex,
+        width: width,
         ellipsis,
         filters,
         render,
@@ -19,7 +20,6 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
         filterSearch,
         onFilter: onFilterFn,
         editable,
-        width,
         sorter: sorter && ((a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { sensitivity: 'base' }) : a)),
         sortDirections: ['descend', 'ascend'],
     };

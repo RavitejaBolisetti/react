@@ -7,12 +7,13 @@ import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
-import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 import { loginPageIsLoading } from 'store/actions/authPages/LoginPage';
 
 import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import styles from '../Auth.module.css';
+import notificationStyles from 'App.module.css';
 
 import * as IMAGES from 'assets';
 import ReactRecaptcha3 from 'react-google-recaptcha3';
@@ -49,11 +50,12 @@ const mapDispatchToProps = {
     doCloseLoginError,
     doCloseUnAuthenticatedError,
     showGlobalNotification,
+    hideGlobalNotification,
 };
 
 const GOOGLE_CAPTCHA_SITE_KEY = process.env.REACT_APP_GOOGLE_SITE_KEY;
 const Login = (props) => {
-    const { doLogin, authPostLogin, authPreLogin, showGlobalNotification, doCloseLoginError } = props;
+    const { doLogin, authPostLogin, authPreLogin, showGlobalNotification, hideGlobalNotification, doCloseLoginError } = props;
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +94,7 @@ const Login = (props) => {
     }, [GOOGLE_CAPTCHA_SITE_KEY]);
 
     const onSuccess = (data) => {
+        hideGlobalNotification();
         setIsLoading(false);
         ReactRecaptcha3.destroy();
         const passwordStatus = data?.passwordStatus;
@@ -121,6 +124,7 @@ const Login = (props) => {
     const onFinish = (values) => {
         setIsLoading(true);
 
+        hideGlobalNotification();
         ReactRecaptcha3.getToken().then(
             (captchaCode) => {
                 if (captchaCode) {
@@ -161,7 +165,7 @@ const Login = (props) => {
             description: message,
             btn: btn(data),
             duration: 0,
-            className: status === 'E' ? styles.error : styles.warning,
+            className: status === 'E' ? notificationStyles.error : notificationStyles.warning,
         });
     };
 
@@ -192,7 +196,7 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID (mile id.parent id')]} className={styles.inputBox}>
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID')]} className={styles.inputBox}>
                                                             {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" />}
                                                         </Form.Item>
                                                     </Col>

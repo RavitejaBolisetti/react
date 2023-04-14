@@ -4,7 +4,7 @@
   top: 3px;
   z-index: 1;
   height: 48px;
-  color: #ea2929;
+  color: #FF3E5B;
   line-height: 48px;
   text-align: center;
   background: #ffffff;
@@ -19,6 +19,8 @@
 
 .menuIcon {
   font-size: 22px !important;
+  vertical-align: middle;
+  padding-right: 4px;
 }
 
 .homeIcon {
@@ -34,7 +36,7 @@
 }
 
 .homeIcon span {
-  padding-right: 8px;
+  padding-right: 12px;
 }
 
 .homeIcon:hover {
@@ -50,6 +52,7 @@
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
+  box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.15);
   /* box-shadow: -10px 5px 10px 10px rgb(0 0 0 / 25%), 0 10px 10px 5px rgb(0 0 0 / 22%) !important; */
   /* box-shadow: 0 0 #0000, 0 0 #0000, 0 0 3px rgba(0, 0, 0, .2) !important;
   background-color: #f4f4f4 !important; */
@@ -57,7 +60,7 @@
 }
 
 .leftMenuBoxLight {
-  background-color: #f4f4f4 !important;
+  background-color: #ffffff !important;
 }
 
 .leftMenuBoxDark {
@@ -72,27 +75,35 @@
   background: none !important;
 }
 
+.leftMenuBox li.subMenuItem {
+  min-height: 40px;
+}
+
+.leftMenuBox li.subMenuItem:hover {
+  background-color: #ffffff !important;
+}
+
 .closeButton {
   font-size: 30px;
   padding-top: 12px;
   text-align: right;
-  color: #ea2929;
+  color: #FF3E5B;
   cursor: pointer;
 }
 
 :global .ant-menu-title-content a {
-  color: #000000 !important;
+  color: #000000;
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
 :global .ant-menu-title-content a:hover {
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
 }
 
 :global .ant-menu-light .ant-menu-submenu-title:hover:not(.ant-menu-item-selected):not(.ant-menu-submenu-selected) {
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
 }
 
 :global .ant-menu-light:not(.ant-menu-horizontal) .ant-menu-submenu-title:hover {
@@ -109,7 +120,7 @@
   top: 23px;
   z-index: 1;
   /* height: 48px; */
-  color: #ea2929;
+  color: #FF3E5B;
   font-size: 18px;
   /* line-height: 48px; */
   text-align: center;
@@ -143,7 +154,7 @@
 /* font-family & size for sub-menu in left-menu text */
 :global .ant-menu .ant-menu-sub {
   font-size: 14px;
-  background-color: #f4f4f4 !important;
+  background-color: #ffffff !important;
 }
 
 :global .ant-menu .ant-menu-sub li {
@@ -162,7 +173,7 @@
 :global .ant-menu .ant-menu-item .anticon+span:hover,
 :global .ant-menu .ant-menu-submenu-title .anticon+span:hover {
   background: #f4f4f4 !important;
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
   width: 100%;
 } */
 
@@ -187,30 +198,34 @@
 /* changes on menu list items on hover */
 /* :global .ant-menu-submenu-title:hover {
   background-color: transparent !important;
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
 } */
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {
-  background-color: #ffffff !important;
+  background-color: white !important;
   /* color: #000000; */
   border-radius: 4px;
 }
 
 /* changes on menu list items on select/visited/focus */
-:global .ant-menu-light .ant-menu-item-selected {
-  background-color: #ffffff;
+:global .ant-menu-light .ant-menu-item-selected,
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title span.ant-menu-title-content a {
+  background-color: white;
+  border-radius: 4px;
+  color: #FF3E5B !important;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-track,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-track {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
-  background-color: #F4F4F4;
+  background-color: #FFFFFF;
 }
 
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar {
   width: 5px;
-  background-color: #F4F4F4;
+  background-color: #FFFFFF;
 }
 
 /* :global .ant-menu-light.ant-menu-root.ant-menu-inline:hover::-webkit-scrollbar,
@@ -230,10 +245,8 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
   border-inline-end: none;
   overflow-y: scroll;
-  max-height: 74vh;
-  /* padding: 0px 16px; */
-  padding-left: 14px;
-  padding-right: 14px;
+  max-height: 72vh;
+  padding: 0px 14px;
 }
 
 /* font-family & size for left-menu text */
@@ -301,6 +314,7 @@
   border-radius: 4px;
   border-color: #DEDEDE;
   padding: 6px 12px;
+ 
 }
 
 :global .ant-input-affix-wrapper>input.ant-input {
@@ -339,7 +353,7 @@
   text-decoration: none;
   /* color: #000000; */
   /* background: #ffffff; */
-  color: #ea2929;
+  color: #FF3E5B;
 }
 
 /* :global .ant-menu-submenu-popup,
@@ -380,24 +394,40 @@
   width: auto;
 }
 
+:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
+:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
+  padding-left: 4px;
+}
+
 .changeTheme {
   display: flex;
-  /* align-items: center; */
-  /* font-size: 16px; */
   position: absolute;
-  color: #ea2929 !important;
-  /* cursor: pointer; */
-  background: #F2F2F2;
+  color: #FF3E5B !important;
+  background: #FFFFFF;
   width: 100%;
   bottom: 0;
-  padding: 10px 6px;
-  -webkit-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
-  -moz-box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
-  box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29);
+  -webkit-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.29); */
+  box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.changeTheme :global .ant-btn-default {
+  background-color: transparent !important;
+}
+
+.changeThemeBorder {
+  display: flex;
+  width: 100%;
+  border: 1px solid #DEDEDE;
+  border-radius: 4px;
+  padding: 4px;
 }
 
 .changeTheme button>span {
   font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .lightTheme,
@@ -406,7 +436,6 @@
 .darkThemeActive {
   width: 50%;
   border: 1px solid #FF3E5B !important;
-  margin-right: 5px !important;
   margin-bottom: 0 !important;
   padding: 0px !important;
   display: flex;
@@ -414,10 +443,15 @@
 }
 
 .lightTheme,
+.lightThemeActive {
+  margin-right: 5px !important;
+}
+
+.lightTheme,
 .darkTheme {
   /* border: none !important; */
   border: 1px solid transparent !important;
-  color: #000 !important;
+  color: #0B0B0C !important;
 }
 
 .changeTheme svg {
@@ -447,36 +481,29 @@
 }
 
 .changeTheme svg {
-  width: 30px;
-  height: 30px;
-  padding: 3px 7px;
-  border-radius: 100px;
-  -moz-border-radius: 100px;
-  -webkit-border-radius: 100px;
-  border: 0px solid #000000;
-  /* margin-right: 10px; */
-}
-
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
-:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
-  padding-right: 8px;
-  vertical-align: middle;
-  vertical-align: -webkit-baseline-middle;
+  padding: 2px 6px;
+  padding-left: 7px;
 }
 
 /* :global .ant-menu-inline.ant-menu-root>.ant-menu-submenu-inline .ant-menu-submenu-title>.ant-menu-item>.ant-menu-title-content span:first-child {
   padding-right: 0px;
-  vertical-align: sub;
+  vertical-align: middle;
 } */
 
 .leftMenuBox li.subMenuItemNew:hover {
-  color: #ea2929 !important;
+  color: #FF3E5B !important;
   background: transparent !important;
 }
 
-/* .subMenuItem {
-  color: #0458f7 !important;
-} */
+
+.searchMenuContainer {
+  padding-left: 8px !important;
+}
+
+.searchMenuTitle {
+  color: #FF3E5B;
+  padding-left: 0 !important;
+}
 
 .searchMenuContainer {
   display: inline-flex;

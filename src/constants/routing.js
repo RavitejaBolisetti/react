@@ -28,7 +28,6 @@ export const ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY = ROUTING_COMM
 export const ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY = ROUTING_COMMON.concat('manufacturer-organization-hierarchy');
 export const ROUTING_COMMON_DEALER_HIERARCHY = ROUTING_COMMON.concat('dealer-hierarchy');
 
-
 export const ROUTING_USER = '/user/';
 export const ROUTING_USER_PROFILE = ROUTING_USER.concat('profile');
 export const ROUTING_USER_SETTING = ROUTING_USER.concat('setting');
@@ -39,3 +38,7 @@ export const ROUTING_USER_TERM = ROUTING_HOME.concat('term-of-Use');
 export const ROUTING_USER_ABOUT = ROUTING_HOME.concat('about-us');
 export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
 export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
+
+export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
+export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
+export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');

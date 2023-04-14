@@ -1,4 +1,5 @@
-import { MENU_DATA_LOADED, MENU_DATA_FILTER, MENU_DATA_SHOW_LOADING } from 'store/actions/data/menu';
+import { MenuConstant } from 'constants/MenuConstant';
+import { MENU_DATA_LOADED, MENU_DATA_FILTER, MENU_DATA_SHOW_LOADING, MENU_DATA_CLEAR } from 'store/actions/data/menu';
 
 const initialState = {
     isLoaded: false,
@@ -17,6 +18,7 @@ const generateList = (data) => {
         node &&
             dataList.push({
                 ...rest,
+                link: MenuConstant?.[node?.menuId?.toLowerCase()]?.link,
             });
         if (node.subMenu) {
             generateList(node.subMenu);
@@ -35,6 +37,8 @@ export const Menu = (state = initialState, action) => {
             return { ...state, filter: action.filter };
         case MENU_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
+        case MENU_DATA_CLEAR:
+            return { ...initialState };
         default:
             return { ...state };
     }

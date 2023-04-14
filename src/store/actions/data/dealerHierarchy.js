@@ -7,6 +7,7 @@ export const DEALER_HIERARCHY_DATA_LOADED = 'DEALER_HIERARCHY_DATA_LOADED';
 export const DEALER_HIERARCHY_DATA_SHOW_LOADING = 'DEALER_HIERARCHY_DATA_SHOW_LOADING';
 export const DEALER_HIERARCHY_SET_FORM_IS_VISIBLE = 'DEALER_HIERARCHY_SET_FORM_IS_VISIBLE';
 export const DEALER_HIERARCHY_SET_FORM_DATA = 'DEALER_HIERARCHY_SET_FORM_DATA';
+export const DEALER_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'DEALER_HIERARCHY_CHANGE_HISTORY_VISIBLE';
 
 const receiveDealerHierarchyData = (data) => ({
     type: DEALER_HIERARCHY_DATA_LOADED,
@@ -19,6 +20,11 @@ const dealerHierarchyDataActions = {};
 dealerHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: DEALER_HIERARCHY_DATA_SHOW_LOADING,
     isLoading,
+});
+
+dealerHierarchyDataActions.changeHistoryModelOpen = (visible) => ({
+    type: DEALER_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    visible: true,
 });
 
 dealerHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
