@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
-import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox, Tabs } from 'antd';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox, Tabs, Descriptions } from 'antd';
 import { PlusOutlined, MinusOutlined, DownOutlined, SmileOutlined, MehOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
 
@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
+import { ViewRoleManagement } from './ViewRoleManagement';
 
 // import mocktreeData from './treeData.json';
 
@@ -336,8 +337,8 @@ const FinalTreedata = [
         ],
     },
 ];
-const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
-    const [form] = Form.useForm();
+const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+  
     const disabledProps = { disabled: isReadOnly };
 
     // const [selectedActions, setSelectedActions] = useState({})
@@ -434,8 +435,8 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
 
     console.log('mockData insertionData', mockData);
 
-    const handleFormSubmitBtn = () => {
-        // setFormBtnDisable(true);
+    const handleForm = () => {
+        setFormBtnDisable(true);
     };
 
     const onFinishFailed = () => {};
@@ -595,8 +596,15 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
                                 </Button>
                             </Col>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.saveBtn}>
-                                {!footerEdit ? (
-                                    <Button onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                {saveAndSaveNew ? (
+                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                        Save & Add New
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
+                                {saveBtn ? (
+                                    <Button loading={isLoadingOnSave} onClick={() => setsaveclick(true)} disabled={!formBtnDisable} form="myForm" key="submit" htmlType="submit" type="primary">
                                         Save
                                     </Button>
                                 ) : (
@@ -615,16 +623,16 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
                 }
             >
                 <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-                    <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+                    <Form id="myForm" form={form} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="roleId" label="Role Id" rules={[{ max: 6, message: 'Code must be less than 6 characters long.' }, validateRequiredInputField('Code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                                    {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item name="roleName" label="Role Name" rules={[{ max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name')]}>
-                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('roleName')}</p>}
+                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleName')}</p>}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -651,7 +659,7 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
                                             {...disabledProps}
                                         />
                                     ) : (
-                                        <p className={style.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
+                                        <p className={styles.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
                                     )}
                                 </Form.Item>
                             </Col>
@@ -659,7 +667,7 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                                    {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>}
                                 </Form.Item>
                             </Col>
                         </Row>
