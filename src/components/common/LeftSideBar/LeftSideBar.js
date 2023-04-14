@@ -115,7 +115,7 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
- 
+
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
@@ -133,7 +133,7 @@ const LeftSideBarMain = (props) => {
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
-    //   console.log(menuData);
+    
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
     };
@@ -407,7 +407,7 @@ const LeftSideBarMain = (props) => {
         setOpenKeys([])
         function subMenuSearch(TopMenu) {
             for (let i = 0; i < TopMenu.length; i++) {
-                // console.log(TopMenu[i].menuTitle)
+               
                 expandedkeys.push(TopMenu[i].menuId);
                 let strTitle=TopMenu[i].menuId;
                 if (strTitle.toLowerCase() === target.toLowerCase()) {
@@ -424,15 +424,13 @@ const LeftSideBarMain = (props) => {
         setmainKeys(values);
         setOpenKeys(values);
     }
-    
     const searchResult = (value) => {
         if (value?.length < 3) return;
-        console.log(value);
+     
+        setSearchValue(value);
         const val = flatternData.map((i) => {
             if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())) {
-                // console.log("yes i am in the loop")
-                console.log(i.menuTitle);
-                return {
+                               return {
                     value: i.menuId,
                     label: i.menuTitle,
                 };
@@ -440,19 +438,21 @@ const LeftSideBarMain = (props) => {
         });
         setOptions(val.filter((i)=>i));
     };
-    
+
     const [options, setOptions] = useState([]);
     const handleSearch = (value) => {
-        setOptions(value ? searchResult(value).filter((i) => i) : []);
-        console.log('options', options);
-    };
-    console.log('options', options);
-    const onSelect = (value,label) => {
-        if(value && getMenuValue(MenuConstant, value, 'link'))
-          navigate(getMenuValue(MenuConstant, value, 'link'))
-          openMenuBar(value);
-    };
+        
     
+        setOptions(value ? searchResult(value).filter((i) => i) : []);
+
+    };
+  
+    const onSelect = (value, label) => {
+        if (value && getMenuValue(MenuConstant, value, 'link'))
+            navigate(getMenuValue(MenuConstant, value, 'link'))
+        openMenuBar(value);
+    };
+
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -469,8 +469,8 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
 
-        
-                    
+
+
                     {!collapsed && (
                         <AutoComplete
                             dropdownMatchSelectWidth={200}
@@ -486,7 +486,7 @@ const LeftSideBarMain = (props) => {
                         >
                             <Input.Search size="large" placeholder="input here" enterButton />
                         </AutoComplete>
-        
+
                     )}
                     {/* <Row>
                         <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
@@ -497,7 +497,7 @@ const LeftSideBarMain = (props) => {
                 </div>
                 {!isLoading ? (
                     <>
-                       <Menu
+                        <Menu
                             onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
