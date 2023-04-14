@@ -13,10 +13,12 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave }) => {
+const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave,criticalityGroupData }) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+    
 
     let drawerTitle = 'Add Application Details';
     if (formActionType === 'add') {
@@ -39,7 +41,10 @@ const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormda
         setDrawer(false);
         setFormBtnDisable(false);
         forceUpdate();
+        setIsBtnDisabled(false)
     };
+    console.log("finalFormdata",finalFormdata)
+    console.log('criticalityGroupData',criticalityGroupData)
 
 
     return (
@@ -87,7 +92,7 @@ const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormda
                     {isDocumentToGenerate && (
                         <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                             <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : '' }>Document Type </span>}  key="2">
-                                <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
+                                <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled}/>
                             </Panel>
                         </Collapse>
                     )}

@@ -1,12 +1,8 @@
 import React, { Fragment, useState, useReducer } from 'react';
-import { Input, Form, Col, Card, Row, Switch, Button, Select, Space } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Form } from 'antd';
 
 import CardApplicationAction from './CardApplicationAction';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import styles from 'pages/common/Common.module.css';
 import ApplicationActionsForm from './ApplicationActionsForms';
 
 const applicationData = [
@@ -25,16 +21,13 @@ const applicationData = [
 ];
 
 const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
-    const [actionsList, setApplicationList] = useState([]);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
-        const { value, label } = val?.applicationAction;
-        setApplicationList((prev) => [...prev, { applicationName: label, id: value, status: val.status }]);
-        setFinalFormdata({ ...finalFormdata, ApplicationActions: [...finalFormdata.ApplicationActions, val] });
-
+        const { value, label } = val?.applicationName;
+        setFinalFormdata({ ...finalFormdata, applicationAction: [...finalFormdata.applicationAction, { applicationName: label, id: value, status: val.status }] });
         actionForm.resetFields();
     };
 
@@ -42,9 +35,9 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
         <Fragment>
             <ApplicationActionsForm form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />
 
-            {actionsList.length > 0 &&
-                actionsList.map((action) => {
-                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setApplicationList={setApplicationList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
+            {finalFormdata?.applicationAction?.length > 0 &&
+                finalFormdata?.applicationAction?.map((action) => {
+                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
                 })}
         </Fragment>
     );

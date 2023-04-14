@@ -133,7 +133,7 @@ applicationMasterDataActions.fetchDealerLocations = withAuthToken((params) => ({
 });
 
 applicationMasterDataActions.fetchApplicationAction = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, appId } = params;
+    const { setIsLoading, data, id } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -148,7 +148,7 @@ applicationMasterDataActions.fetchApplicationAction = withAuthToken((params) => 
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_ACTIONS + '?appId=' + appId,
+        url: BASE_URL_APPLICATION_ACTIONS + '?appId=' + id,
         token,
         accessToken,
         userId,

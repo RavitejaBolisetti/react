@@ -12,38 +12,38 @@ import { Fragment } from 'react';
 const { Text } = Typography;
 
 const CardApplicationAction = (props) => {
-    const { status, applicationName, id, setApplicationList, forceUpdate, setIsBtnDisabled, isBtnDisabled } = props;
+    const { status, applicationName, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
     // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
-            applicationAction: {
+            applicationName: {
                 label: values.applicationName,
                 value: values.id,
-                key: values.id,
+                id: values.id,
             },
             status: values.status,
         });
         setIsEditing(true);
-        setIsBtnDisabled(true)
+        setIsBtnDisabled(true);
     };
 
     // on clicking save button updates data
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
-        const { value, label } = newFormData?.applicationAction;
-        setApplicationList((prev) => {
-            const newList = prev;
-            const indx = prev.findIndex((el) => el.id === id);
+        const { value, label } = newFormData?.applicationName;
+        setFinalFormdata((prev) => {
+            const newList = prev?.applicationAction;
+            const indx = prev?.applicationAction?.findIndex((el) => el.id === id);
             newList.splice(indx, 1, { applicationName: label, id: value, status: newFormData.status });
-            return newList;
+            return {...prev, applicationAction: newList};
         });
         setIsEditing(false);
-        setIsBtnDisabled(false)
+        setIsBtnDisabled(false);
         form.resetFields();
-        forceUpdate()
+        forceUpdate();
     };
 
     // on cancel editing
@@ -67,10 +67,8 @@ const CardApplicationAction = (props) => {
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                             <Text strong>{applicationName || 'Employee Empowerment'}</Text>
-                            {/* <Text type="secondary">Action ID: {id || 'B6G431'}</Text> */}
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            {/* <Text strong>{applicationName || 'Employee Empowerment'}</Text> */}
                             <Text type="secondary">Action ID: {id || 'B6G431'}</Text>
                         </Col>
                     </Col>
@@ -102,7 +100,7 @@ const CardApplicationAction = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form}  isEditing={isEditing} />
+                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
