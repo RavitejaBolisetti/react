@@ -88,24 +88,24 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
     const [saveBtn, setSaveBtn] = useState(false);
    
 
-    // useEffect(() => {
-    //     if (!isDataLoaded && userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isDataLoaded, userId]);
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(RoleManagementData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RoleManagementData]);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [refreshData, userId]);
+    useEffect(() => {
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refreshData, userId]);
 
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
@@ -121,7 +121,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
 
     const onFinish = (values) => {
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId };
+        const data = { ...values, id: recordId,webRoleApplicationMapping:[{id:"",activeIndicator:true,applicationId:"4af77de8-363e-480e-bdac-e6c836c8467c",subApplication:[]}] };
 
         const onSuccess = (res) => {
             onSaveShowLoading(false);
@@ -135,7 +135,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
 
         const onError = (message) => {
             onSaveShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRright' });
         };
 
         const requestData = {
@@ -146,7 +146,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
             onSuccess,
         };
 
-        // saveData(requestData);
+        saveData(requestData);
     };
 
     const viewProps = {
@@ -363,7 +363,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
