@@ -232,13 +232,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     </Col>
                                     <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                         <Search
-                                            placeholder="Search"
-                                            style={{
-                                                width: '100%',
-                                            }}
+                                            placeholder="Search"                                          
                                             allowClear
                                             // onChange={onChange}
-                                            className={styles.searchField}
+                                            className={styl.anticon}
                                         />
                                     </Col>
                                 </Row>

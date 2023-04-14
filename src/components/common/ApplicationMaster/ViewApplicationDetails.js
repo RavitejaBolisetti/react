@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Col, Row, Card, Space, Collapse, Typography } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
+
 
 import styles from './ApplicationMaster.module.css';
+import style from '../../common/DrawerAndTable.module.css'
 
 import CardDocument from './CardDocument';
 import CardLocation from './CardLocation';
@@ -13,7 +16,11 @@ const { Text } = Typography;
 
 const ViewApplicationDetails = ({ applicationDetailsData }) => {
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
-
+    const [openAccordian, setOpenAccordian] = useState(1);
+    
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
     return (
         <Card title="Application Details">
             <div className={styles.cardBody}>
@@ -85,8 +92,8 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                     <Row gutter={20} className={styles.viewCollapse }>
                         {applicationAction.length > 0 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                                <Collapse expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
-                                    <Panel header="Application Actions" key="2">
+                                <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                    <Panel  header={<span className={openAccordian === 1 ? styles.viewAccordianHeader : '' }>Application Actions</span>} key="1" >
                                         {applicationAction.map((el) => (
                                             <CardAction {...el} />
                                         ))}
@@ -97,8 +104,8 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
 
                         {documentType.length > 0 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                                <Collapse  expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
-                                    <Panel header="Document Types" key="3">
+                                <Collapse  onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                    <Panel header={<span className={openAccordian === 2 ? styles.viewAccordianHeader : '' }>Document Types</span>}  key="2">
                                         {documentType.map((el) => (
                                             <CardDocument {...el} />
                                         ))}
@@ -108,8 +115,8 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         )}
                         {accessibleLocation?.length > 0 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                                <Collapse  expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)}>
-                                    <Panel header="Accessible Dealer Location" key="3">
+                                <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                    <Panel header={<span className={openAccordian === 3 ? styles.viewAccordianHeader : '' }>Accessible Dealer Location</span>} key="3">
                                         {accessibleLocation.map((el) => (
                                             <CardLocation {...el} />
                                         ))}
