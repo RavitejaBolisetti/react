@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_APPLICATION_DETAILS, BASE_URL_APPLICATION_CRITICALITY_GROUP, BASE_URL_APPLICATION_ACTIONS, BASE_URL_APPLICATION_DEALER_LOCATION, BASE_URL_MENU } from 'constants/routingApi';
+import { BASE_URL_APPLICATION_DETAILS, BASE_URL_APPLICATION_CRITICALITY_GROUP, BASE_URL_APPLICATION_ACTIONS, BASE_URL_APPLICATION_DEALER_LOCATION, BASE_URL_MENU, BASE_URL_CONFIG_PARAM_EDIT_TYPE } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED = 'APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED';
@@ -11,6 +11,7 @@ export const DEALER_LOCATIONS_LOADED = 'DEALER_LOCATIONS_LOADED';
 export const APPLICATION_ACTON_DATA_LOADED = 'APPLICATION_ACTON_DATA_LOADED';
 export const APPLICATION_MASTER_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DATA_SHOW_LOADING';
 export const APPLICATION_DATA_LOADED = 'APPLICATION_DATA_LOADED';
+export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 
 const receiveApplicationDetailsData = (data) => ({
     type: APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED,
@@ -34,6 +35,11 @@ const receiveApplicationActionData = (data) => ({
 });
 const receiveMenuData = (data) => ({
     type: APPLICATION_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+const receiveParametersData = (data, parameterType) => ({
+    type: CONFIG_PARAM_DATA_LOADED,
     isLoaded: true,
     data,
 });
@@ -148,7 +154,7 @@ applicationMasterDataActions.fetchApplicationAction = withAuthToken((params) => 
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_ACTIONS + '?appId=' + id,
+        url: BASE_URL_APPLICATION_ACTIONS + (id ? '?appId=' + id : '' ),
         token,
         accessToken,
         userId,
@@ -170,7 +176,7 @@ applicationMasterDataActions.fetchApplicationCriticalityGroup = withAuthToken((p
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveCriticalityGroupData(res?.data.map((el) => ({ critcltyGropCode: el?.critcltyGropCode, critcltyGropDesc: el?.critcltyGropDesc }))));
+            dispatch(receiveCriticalityGroupData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -217,6 +223,37 @@ applicationMasterDataActions.fetchMenuList = withAuthToken((params) => ({ token,
         onSuccess,
         onError,
         onTimeout: () => errorAction('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+applicationMasterDataActions.fetchConfigurableParameterList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data } = params;
+    setIsLoading(true);
+    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveParametersData(res?.data));
+        } else {
+            onError('Internal Error, Please try again');
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_CONFIG_PARAM_EDIT_TYPE + ( '?parameterType=APP_TYPE'),
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

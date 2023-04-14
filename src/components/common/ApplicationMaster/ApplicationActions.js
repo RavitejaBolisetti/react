@@ -20,7 +20,7 @@ const applicationData = [
     },
 ];
 
-const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
+const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
@@ -33,7 +33,7 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
 
     return (
         <Fragment>
-            <ApplicationActionsForm form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />
+            <ApplicationActionsForm form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions}/>
 
             {finalFormdata?.applicationAction?.length > 0 &&
                 finalFormdata?.applicationAction?.map((action) => {

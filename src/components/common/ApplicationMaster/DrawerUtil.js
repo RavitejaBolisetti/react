@@ -13,7 +13,7 @@ import AccessibleDealerLocations from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave,criticalityGroupData }) => {
+const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave,criticalityGroupData, configurableParamData, actions }) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
@@ -82,11 +82,11 @@ const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormda
                         paddingBottom: '10px',
                     }}
                 >
-                    <ApplicationDetails setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} />
+                    <ApplicationDetails setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData}/>
 
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : '' } onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : '' }>Application Actions</span>} key="1">
-                            <ApplicationActions setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
+                            <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
@@ -97,6 +97,7 @@ const DrawerUtil = ({applicationForm, forceUpdate, setFinalFormdata, finalFormda
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
+                        
                         <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                             <Panel header={<span className={openAccordian === 3 ? style.accordianHeader : '' }>Accessible Dealer Location</span>} key="3">
                                 <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />

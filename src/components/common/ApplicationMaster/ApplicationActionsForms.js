@@ -23,7 +23,7 @@ const applicationData = [
     },
 ];
 
-const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, isBtnDisabled }) => {
+const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, isBtnDisabled, actions }) => {
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -33,7 +33,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
         // setFormBtnDisable(true);
     };
 
-    const fieldNames = { label: 'applicationName', value: 'id' };
+    const fieldNames = { label: 'value', value: 'key' };
 
     return (
         <>
@@ -55,7 +55,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
                                             width: '100%',
                                         }}
                                         // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
-                                        options={applicationData}
+                                        options={actions}
                                         disabled={isBtnDisabled}
                                     />
                                 </Form.Item>

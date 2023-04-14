@@ -21,10 +21,11 @@ import ViewApplicationDetail from './ViewApplicationDetails';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
+    console.log("state===>",state)
     const {
         auth: { userId },
         data: {
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData },
+            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions },
         },
     } = state;
 
@@ -33,6 +34,8 @@ const mapStateToProps = (state) => {
         applicationDetailsData,
         dealerLocations,
         userId,
+        configurableParamData,
+        actions,
         menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
     };
     return returnValue;
@@ -48,6 +51,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
 
+            fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
+
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
 
             fetchList: applicationMasterDataActions.fetchMenuList,
@@ -57,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations }) => {
+export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations, configurableParamData, fetchCriticalitiData, actions }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
 
@@ -97,9 +102,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         if (!dealerLocations?.length) {
             fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading });
         }
+        fetchApplicationAction({setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac'})
+        fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading})
 
         fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
-        fetchApplicationAction({setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac'})
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, formActionType, menuType]);
@@ -126,7 +132,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const applicationCall = (key) => {
         // console.log('key', key);
-        fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: '8c9c2231-166f-43aa-8633-3c3c795047fc' });
+        fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: key });
 
     };
     // const flatternData = generateList(menuData);
@@ -154,15 +160,22 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     //view card footer button
     const handleButtonClick = (type) => {
+        if (!applicationDetailsData?.length) return;
+
+        const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
+
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
-            const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
             applicationForm.setFieldValue({...rest});
             setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
             forceUpdate();
-        } else {
+        } else if(FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
             // parent data only
             setFinalFormdata();
+        } else if(FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
+            setFinalFormdata({ applicationDetails: rest})
+        
         }
+        
         // setFormData([]);
         setDrawer(true);
         setFormActionType(type);
@@ -297,7 +310,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                 </Col>
             </Row>
 
-            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData}/>
+            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} actions={actions}/>
         </>
     );
 };

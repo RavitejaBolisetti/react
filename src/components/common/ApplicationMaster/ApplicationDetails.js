@@ -4,18 +4,19 @@ import { Input, Form, Col, Row, Switch, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
+import styles from './ApplicationMaster.module.css';
+
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata }) => {
+const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData,configurableParamData }) => {
     const disabledProps = { disabled: isReadOnly };
-    console.log('form ===11', form.getFieldsValue(), finalFormdata);
 
     useEffect(() => {
         form.setFieldsValue(finalFormdata?.applicationDetails);
     }, [form, finalFormdata]);
 
     const handleChangeLocations = (value) => {
-        setIsRestrictedLocation(value === 'restrictedAccessible');
+        setIsRestrictedLocation(value === '2');
     };
     const handleDocReq = (val) => {
         setIsDocumentToGenerate(val);
@@ -44,11 +45,9 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
+                        <Form.Item  className={styles.selectMgTop6} label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
                             <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Application Type')} {...disabledProps}>
-                                <Option value="all">Mah1</Option>
-                                <Option value="notAccessable">Mah2</Option>
-                                <Option value="restrictedAccessible">Mah3</Option>
+                            {configurableParamData?.map(type => <Option value={type.value}>{type.value}</Option>)}
                             </Select>
                         </Form.Item>
                     </Col>
@@ -56,7 +55,7 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {/* parent application id */}
-                        <Form.Item name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
+                        <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
                             <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all"></Option>
                             </Select>
@@ -66,21 +65,21 @@ const ApplicationDetails = ({ form, footerEdit = false, onFinishFailed = () => {
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="accessibleLocations" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
+                        <Form.Item className={styles.selectMgTop6} name="accessibleLocations" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
                             <Select onChange={handleChangeLocations} {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Option value="all">Accessible to all</Option>
-                                <Option value="notAccessable">Not accessible to all</Option>
-                                <Option value="restrictedAccessible">Restricted Accessible</Option>
+                                <Option value="0">Accessible to all</Option>
+                                <Option value="1">Not accessible to all</Option>
+                                <Option value="2">Restricted Accessible</Option>
                             </Select>
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Criticality Group" name="criticalityGroupCode" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
+                        <Form.Item className={styles.selectMgTop6} label="Application Criticality Group" name="criticalityGroupCode" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Option value="all">Mah1</Option>
-                                <Option value="notAccessable">Mah2</Option>
-                                <Option value="restrictedAccessible">Mah3</Option>
+                                {criticalityGroupData?.map((cg) => (
+                                    <Option value={cg.criticalityGroupCode}>{cg?.criticalityGroupName}</Option>
+                                ))}
                             </Select>
                         </Form.Item>
                     </Col>
