@@ -29,7 +29,7 @@ p {
     background: rgba(239, 67, 94, 0.1);
 }
 :global .ant-collapse-content-box {
-    background: #E6E6E6;
+    background: #e6e6e6;
 }
 .allowedTiming {
     background: #f4f4f4;
@@ -304,16 +304,20 @@ p {
 }
 :global .react-checkbox-tree ol .rct-node-leaf {
     display: inline-block;
+    width: 128px !important;
 }
-:global .rct-icon .rct-icon-half-check{
+:global .rct-icon .rct-icon-half-check {
     height: 20px !important;
     width: 20px !important;
 }
 :global .rct-title {
     padding: 0 5px;
-    color: #E31837;
+    color: #e31837;
 }
 :global .rct-icons-fa4 .rct-icon-check::before {
     /* content: "\f046"; */
-    color: #FF3E5B;
+    color: #ff3e5b;
+}
+:global .rct-icons-fa4 .rct-icon-uncheck::before {
+    border: #ff3e5b;
 }
