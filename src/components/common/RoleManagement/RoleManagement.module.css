@@ -321,3 +321,7 @@ p {
 :global .rct-icons-fa4 .rct-icon-uncheck::before {
     border: #ff3e5b;
 }
+
+:global .ant-collapse .ant-collapse-item .ant-collapse-item-active :nth-child(1) {
+    color: #ff3e5b !important;
+}

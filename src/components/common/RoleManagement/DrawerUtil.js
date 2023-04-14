@@ -326,12 +326,12 @@ const FinalTreedata = [
                         label: 'Sub Application Master-1',
                         value: 'subApplicationMaster1-1',
                         children: [
-                            { value: 'Upload-1', label: 'Upload-1' },
-                            { value: 'Delete-1', label: 'Delete-1' },
-                            { value: 'Read-1', label: 'Read-1' },
-                            { value: 'Create-1', label: 'Create-1' },
-                            { value: 'Update-1', label: 'Update-1' },
-                            { value: 'View-1', label: 'View-1' },
+                            { value: 'Upload-1', label: 'Upload' },
+                            { value: 'Delete-1', label: 'Delete' },
+                            { value: 'Read-1', label: 'Read' },
+                            { value: 'Create-1', label: 'Create' },
+                            { value: 'Update-1', label: 'Update' },
+                            { value: 'View-1', label: 'View' },
                         ],
                     },
                 ],
@@ -544,7 +544,7 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
             <>
                 <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                     {data?.map((el) => (
-                        <Collapse expandIcon={() => <PlusOutlined />}>
+                        <Collapse expandIcon={() => <AiOutlinePlusSquare style={{ width: '16px', height: '16px' }} />}>
                             <Panel header={el?.label}>
                                 <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                                     <Row gutter={20}>
@@ -567,6 +567,11 @@ const DrawerUtil = ({ setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisabl
                                                 onCheck={onTreeCheck}
                                                 onExpand={OnExpanded}
                                                 onMoveNode={OnChanges}
+                                                title={{
+                                                    label: 'name',
+                                                    value: 'code',
+                                                    children: 'items',
+                                                  }}
                                                 icons={{
                                                     check: <AiOutlineCheck style={{ width: '8px', height: '8px', color: '#EA3A51', border: ' 1px solid #B5B5B6', padding: '3px', borderRadius: '5px' }} />,
                                                     uncheck: <div style={{ width: '14px', height: '14px', color: '#EA3A51', border: ' 1px solid #B5B5B6', borderRadius: '4px' }} />,
