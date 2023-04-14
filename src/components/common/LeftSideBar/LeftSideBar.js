@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input, Menu, Layout, Row, Col, Search, AutoComplete } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
@@ -78,9 +78,13 @@ const LeftSideBarMain = (props) => {
     const [filterMenuList, setFilterMenuList] = useState();
     //const [FilterMenudata, setFilterMenudata] = useState(menuData);
     const [expandedKeys, setExpandedKeys] = useState([]);
+    const [mainKeys, setmainKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const expandedkeys=[];
+    const navigate = useNavigate();
+
 
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
@@ -88,6 +92,7 @@ const LeftSideBarMain = (props) => {
         if (!isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
+        setOpenKeys()
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
@@ -120,19 +125,6 @@ const LeftSideBarMain = (props) => {
     const onClick = (e) => {
         setCurrent(e.key);
     };
-    let values = [];
-
-    const Saveopenkeys = (keys) => {
-        Object.entries(keys).map(([keyname, value]) => {
-            console.log(value);
-            values.push(value);
-        });
-    };
-    const rootSubmenuKeys = menuData.map((e) => {
-        return e.menuId;
-    });
-
-   
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
@@ -348,67 +340,50 @@ const LeftSideBarMain = (props) => {
             ],
         },
     ];
-
-    const onExpand = (newExpandedKeys) => {
-        setExpandedKeys(newExpandedKeys);
-        setAutoExpandParent(false);
-        setOpenKeys(newExpandedKeys);
-    };
-
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
-            dataList.push({
-                id: node?.menuId,
-                title: node?.menuTitle,
-            });
-            if (node?.subMenu) {
-                generateList(node?.subMenu);
-            }
+    const onOpenChange = (keys) => {
+        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            setOpenKeys(keys);
+        } else {
+            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
 
-    customData && generateList(customData);
+    // searching in the tree with routing to next Page
+    let values = [];
 
-    const getParentKey = (key, tree) => {
-        let parentKey;
-        for (let i = 0; i < tree.length; i++) {
-            const node = tree[i];
-
-            if (node?.subMenu) {
-                if (node?.subMenu.some((item) => item?.menuId === key)) {
-                    parentKey = node?.menuId;
-                } else if (getParentKey(key, node?.subMenu)) {
-                    parentKey = getParentKey(key, node?.subMenu);
-                }
-            }
-        }
-        return parentKey;
+    const Saveopenkeys = (keys) => {
+        Object.entries(keys).map(([keyname, value]) => {
+            values.push(value);
+        });
     };
-
-    const onChange = (e) => {
-        const { value } = e.target;
-
-        const newExpandedKeys = dataList
-            .map((item) => {
-                if (item?.title?.indexOf(value) > -1) {
-                    return getParentKey(item?.id, customData);
-                }
-                return null;
-            })
-            .filter((item, i, self) => item && self?.indexOf(item) === i);
-
-        //console.log(newExpandedKeys, "LEFTOPENKEYS")
-
-        setOpenKeys(value ? newExpandedKeys : []);
-        setSearchValue(value);
-        setExpandedKeys(newExpandedKeys);
-        setAutoExpandParent(true);
-    };
-
+    const rootSubmenuKeys = menuData.map((e) => {
+        return e.menuId;
+    });
     // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
+    function openMenuBar(target) {
+        // let flag = true;
+        setOpenKeys([])
+        function subMenuSearch(TopMenu) {
+            for (let i = 0; i < TopMenu.length; i++) {
+                // console.log(TopMenu[i].menuTitle)
+                expandedkeys.push(TopMenu[i].menuId);
+                let strTitle=TopMenu[i].menuId;
+                if (strTitle.toLowerCase() === target.toLowerCase()) {
+                    Saveopenkeys(expandedkeys);
+                }
+                else if (TopMenu[i].subMenu) {
+                    subMenuSearch(TopMenu[i].subMenu);
+                }
 
+                expandedkeys.pop();
+            }
+        }
+        subMenuSearch(menuData);
+        setmainKeys(values);
+        setOpenKeys(values);
+    }
+    
     const searchResult = (value) => {
         if (value?.length < 3) return;
         console.log(value);
@@ -423,9 +398,8 @@ const LeftSideBarMain = (props) => {
             }
         });
         setOptions(val.filter((i)=>i));
-        // return val;
     };
-
+    
     const [options, setOptions] = useState([]);
     const handleSearch = (value) => {
         setOptions(value ? searchResult(value).filter((i) => i) : []);
@@ -433,19 +407,11 @@ const LeftSideBarMain = (props) => {
     };
     console.log('options', options);
     const onSelect = (value,label) => {
-        if (value && getMenuValue(MenuConstant, value, 'link') ){
-            <Link to={getMenuValue(MenuConstant, value, 'link')} label={label}>
-                {/* <span className={styles.menuIcon}>{getMenuValue(MenuConstant, value, 'link')}</span>
-                <span className={styles.menuTitle}>{label?.toUpperCase()}</span> */}
-            </Link>
-        }
-            
-    //     if(value && getMenuValue(MenuConstant, value, 'link') )
-    // {<Link to=
-    //     {getMenuValue(MenuConstant, value, 'link')}
-    // ></Link>}
-        console.log('onSelect', value,'label',label);
+        if(value && getMenuValue(MenuConstant, value, 'link'))
+          navigate(getMenuValue(MenuConstant, value, 'link'))
+          openMenuBar(value);
     };
+    
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -497,9 +463,9 @@ const LeftSideBarMain = (props) => {
                             //defaultSelectedKeys={[defaultSelectedKeys]}
                             // defaultOpenKeys={defaultOpenKeys}
                             openKeys={openKeys}
-                            // onOpenChange={onOpenChange}
+                             onOpenChange={onOpenChange}
                             // onExpand={onExpand}
-                            onOpenChange={onExpand}
+                            // onOpenChange={onExpand}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
