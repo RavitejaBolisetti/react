@@ -338,6 +338,8 @@ const FinalTreedata = [
 ];
 const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const [form] = Form.useForm();
+    const disabledProps = { disabled: isReadOnly };
+
     // const [selectedActions, setSelectedActions] = useState({})
     const [ParentCheck, setParentCheck] = useState();
     const Mychildren = [
@@ -585,6 +587,7 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
                 onClose={onClose}
                 open={openDrawer}
                 maskClosable={false}
+                className={footerEdit ?  styles.viewMode : styles.drawerCriticalityGrp}
                 footer={
                     <>
                         <Row gutter={20}>
@@ -616,14 +619,12 @@ const DrawerUtil = ({ setIsReadOnly, handleUpdate2, setFormBtnDisable, onFinish,
                 <Space
                     direction="vertical"
                     size="small"
-                    style={{
-                        display: 'flex',
-                    }}
+                    
                 >
                     <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="roleId" label="Role Id" rules={[{ max: 6, message: 'Code must be  6 characters long.' }, validateRequiredInputField('Code')]}>
+                                <Form.Item name="roleId" label="Role Id" rules={[{ max: 6, message: 'Code must be less than 6 characters long.' }, validateRequiredInputField('Code')]}>
                                     <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
                                 </Form.Item>
                             </Col>
