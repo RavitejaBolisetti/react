@@ -16,6 +16,7 @@ import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
+import viewStyle from 'components/common/Common.module.css'
 import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
@@ -24,14 +25,14 @@ import { DataTable } from 'utils/dataTable';
 
 const { Search } = Input;
 
-const initialTableData = [{}];
+const initialTableData = [{roleId:'hello'},{roleName:'Hi',activeIndicator: 1}];
 
 const mapStateToProps = (state) => {
     console.log('state', state);
     const {
         auth: { userId },
         data: {
-            RoleManagement: { isLoaded: isDataLoaded = false, data: RoleManagementData = [] },
+            RoleManagement: { isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -45,6 +46,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         RoleManagementData,
         isDataAttributeLoaded,
+        isLoadingOnSave,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -67,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
 
     const [filterString, setFilterString] = useState();
@@ -82,6 +84,9 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
     const [viewData, setViewData] = useState({});
     const [successAlert, setSuccessAlert] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
+    const [saveBtn, setSaveBtn] = useState(false);
+   
 
     // useEffect(() => {
     //     if (!isDataLoaded && userId) {
@@ -147,14 +152,26 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
     const viewProps = {
         viewData,
         setClosePanels,
-        styles,
+        viewStyle,
         viewTitle: 'Role Management',
+    };
+
+    const handleAdd = () => {
+        setFormActionType('add');
+        setSaveAndSaveNew(true);
+        setSaveBtn(true);
+        
+        setOpenDrawer(true);
+        setFooterEdit(false);
     };
 
     const handleUpdate = (record) => {
         setFormActionType('update');
         setOpenDrawer(true);
         setFooterEdit(false);
+        setSaveAndSaveNew(false);
+        setSaveBtn(true);
+
 
         form.setFieldsValue({
             roleId: record.roleId,
@@ -163,30 +180,13 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
             activeIndicator: record.activeIndicator,
         });
     };
-    const handleView = (record) => {
-        setFormActionType('view');
-        setOpenDrawer(true);
-        setFooterEdit(true);
-        setViewData(record);
-        form.setFieldsValue({
-            roleId: record.roleId,
-            roleName: record.roleName,
-            roleDesceription: record.roleDesceription,
-            activeIndicator: record.activeIndicator,
-        });
-        setIsReadOnly(true);
-    };
-    const handleAdd = () => {
-        setFormActionType('add');
-
-        setOpenDrawer(true);
-        setFooterEdit(false);
-    };
-
+    
     const handleUpdate2 = () => {
         setFormActionType('update');
-        setIsReadOnly(false)
-
+        setIsReadOnly(false);
+        setSaveAndSaveNew(false);
+        setSaveBtn(true);
+        
         setOpenDrawer(true);
         setFooterEdit(false);
         form.setFieldsValue({
@@ -195,6 +195,25 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
             roleDesceription: selectedRecord.roleDesceription,
             activeIndicator: selectedRecord.activeIndicator,
         });
+    };
+
+    const handleView = (record) => {
+        setFormActionType('view');
+        setSaveAndSaveNew(false);
+        
+        setOpenDrawer(true);
+        setSaveBtn(false);
+        
+        setFooterEdit(true);
+        setViewData(record);
+        form.setFieldsValue({
+            roleId: record.roleId,
+            roleName: record.roleName,
+            roleDesceription: record.roleDesceription,
+            activeIndicator: record.activeIndicator,
+        });
+        console.log(form.getFieldValue('roleId'))
+        setIsReadOnly(true);
     };
 
     const handleRefresh = () => {
@@ -220,6 +239,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            render: ((_t, _r, i) => i+1 ),
         })
     );
 
@@ -247,8 +267,8 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'status',
-            render: (text, record) => <>{text ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            dataIndex: 'activeIndicator',
+            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -293,12 +313,10 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                                     </div>
                                 </Row>
                             </Col>
-{/*code to be changed once API is integrated */}
+                            {/*code to be changed once API is integrated */}
                             {true ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button icon={ <TfiReload />} className={style.refreshBtn} onClick={handleRefresh} danger />
-                                       
-                                   
+                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleRefresh} danger />
 
                                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add New Role
@@ -349,7 +367,7 @@ export const RoleManagementMain = ({ onSaveShowLoading, userId, isDataLoaded, Ro
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} formBtnDisable={formBtnDisable} setFormBtnDisable={setFormBtnDisable} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2}   onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
