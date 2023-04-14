@@ -15,10 +15,10 @@ import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { DataTable } from 'utils/dataTable';
+import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
-import { escapeRegExp } from 'utils/escapeRegExp';
 
 const { Search } = Input;
 
@@ -101,9 +101,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         if (isDataLoaded && criticalityGroupData) {
             if (filterString) {
                 const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(criticalityGroupData);
             }
         }
         
@@ -259,11 +259,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setRefershData(!RefershData);
     };
 
-    const filterFunction = (filterString) => (title) => {
-        const filterStringNew = filterString.trim();
-        return title && title.match(new RegExp(escapeRegExp(filterStringNew), 'i'));
-    };
-
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
@@ -279,6 +274,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            render: ((_t, _r, i) => i+1 ),
         })
     );
 
