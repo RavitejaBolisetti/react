@@ -340,7 +340,7 @@ const FinalTreedata = [
         ],
     },
 ];
-const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const DrawerUtil = ({open,setSaveClick, form, viewProps,viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
   
     const disabledProps = { disabled: isReadOnly };
 
@@ -454,7 +454,7 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
             function Subpanel(node) {
                 if (!node?.children) {
                     return (
-                        <Button onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                        <Button onClick={() => setSaveClick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                             Save
                         </Button>
                     );
@@ -611,7 +611,7 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
                 width="540"
                 placement="right"
                 onClose={onClose}
-                open={openDrawer}
+                open={open}
                 maskClosable={false}
                 className={footerEdit ? styles.viewMode : styles.drawerCriticalityGrp}
                 footer={
@@ -631,7 +631,7 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
                                     ''
                                 )}
                                 {saveBtn ? (
-                                    <Button loading={isLoadingOnSave} onClick={() => setsaveclick(true)} disabled={!formBtnDisable} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    <Button loading={isLoadingOnSave} onClick={() => setSaveClick(true)} disabled={!formBtnDisable} form="myForm" key="submit" htmlType="submit" type="primary">
                                         Save
                                     </Button>
                                 ) : (
