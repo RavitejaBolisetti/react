@@ -12,7 +12,7 @@ import { Fragment } from 'react';
 const { Text } = Typography;
 
 const CardApplicationAction = (props) => {
-    const { status, applicationName, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = props;
+    const { status, applicationName, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled, actions } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -100,7 +100,7 @@ const CardApplicationAction = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form} isEditing={isEditing} />
+                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form} isEditing={isEditing} actions={actions}/>
                     </Fragment>
                 )}
             </Card>

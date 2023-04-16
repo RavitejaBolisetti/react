@@ -37,7 +37,7 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
 
             {finalFormdata?.applicationAction?.length > 0 &&
                 finalFormdata?.applicationAction?.map((action) => {
-                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
+                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} />;
                 })}
         </Fragment>
     );

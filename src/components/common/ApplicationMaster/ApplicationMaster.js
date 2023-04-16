@@ -21,7 +21,7 @@ import ViewApplicationDetail from './ViewApplicationDetails';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
-    console.log("state===>",state)
+    console.log('state===>', state);
     const {
         auth: { userId },
         data: {
@@ -62,7 +62,14 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, dealerLocations, configurableParamData, fetchCriticalitiData, actions }) => {
+const initialFormData = {
+    applicationDetails: {},
+    applicationAction: [],
+    documentType: [],
+    accessibleLocation: [],
+};
+
+export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
 
@@ -81,38 +88,35 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [closePanels, setClosePanels] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
-    const [finalFormdata, setFinalFormdata] = useState({
-        applicationDetails: [],
-        applicationAction: [],
-        documentType: [],
-        accessibleLocation: [],
-    });
-
-    console.log('applicationDetailsData', applicationDetailsData);
+    const [finalFormdata, setFinalFormdata] = useState(initialFormData);
 
     const moduleTitle = 'Application Master';
     const viewTitle = 'Application Details';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+
+    console.log('dealerLocations', 'configurableParamData',configurableParamData, 'actions',actions)
 
     useEffect(() => {
         if (!userId) return;
         if (!criticalityGroupData?.length) {
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
         }
-        if (!dealerLocations?.length) {
-            fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading });
+        // if (!dealerLocations?.length) {
+        //     fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading });
+        // }
+        if(!actions?.length){
+            fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
         }
-        fetchApplicationAction({setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac'})
-        fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading})
-
+        if(!criticalityGroupData?.length){
+            fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
+        }
         fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, formActionType, menuType]);
+    }, [userId, menuType]);
 
     useEffect(() => {
+        // on serching menu/application in left panel/tree
         setSearchValue(menuData);
-        // console.log('menuData', menuData);
     }, [menuData]);
 
     const handleAdd = () => {
@@ -126,20 +130,14 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const onFinish = (values) => {
-        console.log(values);
         setFinalFormdata({ ...finalFormdata, ApplicationDetails: values });
     };
 
     const applicationCall = (key) => {
-        // console.log('key', key);
         fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: key });
-
     };
-    // const flatternData = generateList(menuData);
-    // console.log('menuData flatternData', flatternData);
 
     const handleTreeViewClick = (keys) => {
-        // console.log('keys===>', keys);
         form.resetFields();
 
         setFormData([]);
@@ -148,9 +146,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         if (keys && keys.length > 0) {
             setFormActionType('view');
             applicationCall(keys[0]);
-            // const formData = flatternData.find((i) => keys[0] === i.data.applicationId);
-            // console.log('formData', formData);
-            // setSelectedTreeData(formData);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
         } else {
@@ -165,17 +160,16 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
 
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
-            applicationForm.setFieldValue({...rest});
+            applicationForm.setFieldValue({ ...rest });
             setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
             forceUpdate();
-        } else if(FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
-            // parent data only
-            setFinalFormdata();
-        } else if(FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
-            setFinalFormdata({ applicationDetails: rest})
-        
+        } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
+            // parent data only  parentApplicationId
+            setFinalFormdata({...initialFormData, applicationDetails: {parentApplicationId: rest?.applicationId} });
+        } else if (FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
+            setFinalFormdata({...initialFormData, applicationDetails: {parentApplicationId: rest?.parentApplicationId} });
         }
-        
+
         // setFormData([]);
         setDrawer(true);
         setFormActionType(type);
@@ -191,15 +185,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         treeData: menuData,
         setSearchValue,
         searchValue,
-    };
-    const viewProps = {
-        buttonData,
-        attributeData,
-        selectedTreeData,
-        handleButtonClick,
-        setClosePanels,
-        styles,
-        viewTitle,
     };
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
@@ -245,7 +230,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                     </Col>
                                     <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                         <Search
-                                            placeholder="Search"                                          
+                                            placeholder="Search"
                                             allowClear
                                             // onChange={onChange}
                                             className={styl.anticon}
@@ -255,7 +240,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             </Col>
                         </Row>
                     </div>
-                    <div className={styl.contentLeftPanel} >
+                    <div className={styl.contentLeftPanel}>
                         {menuData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
@@ -276,7 +261,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                             </div>
                         ) : (
                             <div className={` ${styl.leftPanelScroll}`}>
-                            <LeftPanel {...myProps} />
+                                <LeftPanel {...myProps} />
                             </div>
                         )}
                     </div>
@@ -284,7 +269,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
                     {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewApplicationDetail applicationDetailsData={applicationDetailsData} />
 
                             <div className={styles.hyrbuttonContainer}>
@@ -310,7 +295,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                 </Col>
             </Row>
 
-            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} actions={actions}/>
+            <DrawerUtil open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} actions={actions} menuData={menuData} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey}/>
         </>
     );
 };

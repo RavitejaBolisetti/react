@@ -22,7 +22,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 fieldNames={treeFieldNames}
                 onChange={handleSelectTreeClick}
                 treeData={treeData}
-                treeNodeFilterProp={treeFieldNames.label}
+                treeNodeFilterProp={treeFieldNames?.label }
                 disabled={treeDisabled}
             />
         </>

@@ -1,14 +1,15 @@
 import React, { Fragment, useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Select } from 'antd';
+import { Input, Form, Col, Row, Switch, Select, TreeSelect } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 
 import styles from './ApplicationMaster.module.css';
+import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData,configurableParamData }) => {
+const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData,setSelectedTreeKey, selectedTreeKey }) => {
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
@@ -20,6 +21,24 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
     };
     const handleDocReq = (val) => {
         setIsDocumentToGenerate(val);
+    };
+    const fieldNames = { label: 'menuTitle', value: 'menuId', children: 'subMenu' };
+    // const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subGeo' };
+    console.log('menuData', menuData);
+
+    const handleSelectTreeClick =(value)=>{
+        console.log('Vlaue', value)
+        setSelectedTreeKey(value)
+    };
+
+    const treeSelectFieldProps = {
+        treeFieldNames: fieldNames,
+        treeData: menuData,
+        // treeDisabled: treeCodeReadOnly || isReadOnly,
+        selectedTreeSelectKey: selectedTreeKey,
+        handleSelectTreeClick,
+        // defaultValue: treeCodeId,
+        placeholder: preparePlaceholderSelect('parent'),
     };
 
     return (
@@ -33,21 +52,23 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('Application Name'), validationFieldLetterAndNumber('Application Name')]}>
+                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('Application Name'), validateRequiredInputField('Application Name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('Application Name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('Application Title'), validationFieldLetterAndNumber('Application Title')]}>
+                        <Form.Item label="Application Title" name="menuTitle" rules={[validateRequiredInputField('Application Title'), validateRequiredInputField('Application Title')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('Application Title')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item  className={styles.selectMgTop6} label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
+                        <Form.Item className={styles.selectMgTop6} label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
                             <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Application Type')} {...disabledProps}>
-                            {configurableParamData?.map(type => <Option value={type.value}>{type.value}</Option>)}
+                                {configurableParamData?.map((type) => (
+                                    <Option value={type.value}>{type.value}</Option>
+                                ))}
                             </Select>
                         </Form.Item>
                     </Col>
@@ -55,11 +76,11 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {/* parent application id */}
-                        <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                        {/* <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}> */}
+                        {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all"></Option>
-                            </Select>
-                        </Form.Item>
+                            </Select> */}
+                        <TreeSelectField {...treeSelectFieldProps} />
                     </Col>
                 </Row>
 

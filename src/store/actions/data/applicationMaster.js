@@ -108,7 +108,7 @@ applicationMasterDataActions.saveApplicationDetails = withAuthToken((params) => 
 });
 
 applicationMasterDataActions.fetchDealerLocations = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, applicationId } = params;
+    const { setIsLoading, data, searchParam } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -123,7 +123,7 @@ applicationMasterDataActions.fetchDealerLocations = withAuthToken((params) => ({
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_DEALER_LOCATION ,
+        url: BASE_URL_APPLICATION_DEALER_LOCATION + (searchParam ? `?searchParam=${searchParam}` : ''),
         token,
         accessToken,
         userId,

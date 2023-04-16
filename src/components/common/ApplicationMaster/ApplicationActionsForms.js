@@ -33,13 +33,13 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
         // setFormBtnDisable(true);
     };
 
-    const fieldNames = { label: 'value', value: 'key' };
+    const fieldNames = { label: 'actionName', value: 'actionId' };
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form form={form} onFieldsChange={handleForm} id="applicationAction" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Form form={form} onFieldsChange={handleForm} id="applicationActions" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('Application Action')]}>
@@ -55,7 +55,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
                                             width: '100%',
                                         }}
                                         // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
-                                        options={actions}
+                                        options={actions?.filter(el => el?.actionName)}
                                         disabled={isBtnDisabled}
                                     />
                                 </Form.Item>
@@ -67,7 +67,7 @@ const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, i
                             </Col>
                             { !isEditing && (
                                 <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                    <Button disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
+                                    <Button form='applicationActions' disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
                                         Add
                                     </Button>
                                 </Col>
