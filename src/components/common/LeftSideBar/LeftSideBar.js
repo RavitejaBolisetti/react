@@ -71,20 +71,22 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LeftSideBarMain = (props) => {
     const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
-    console.log('🚀 ~ file: LeftSideBar.js:74 ~ LeftSideBarMain ~ flatternData:', flatternData);
+    // console.log('🚀 ~ file: LeftSideBar.js:74 ~ LeftSideBarMain ~ flatternData:', flatternData);
     const location = useLocation();
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
     const expandedkeys = [];
+
     const navigate = useNavigate();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [openKeys, setOpenKeys] = useState(['COMN-03.08']);
-    const [selectedKeys, setSelectedKeys] = useState(['COMN-03.08']);
+    const [openKeys, setOpenKeys] = useState([]);
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [expendedKeys, setExpendedKeys]=useState([])
 
     const [options, setOptions] = useState([]);
-    console.log('🚀 ~ file: LeftSideBar.js:87 ~ LeftSideBarMain ~ options:', options);
+    // console.log('🚀 ~ file: LeftSideBar.js:87 ~ LeftSideBarMain ~ options:', options);
 
     const errorAction = (message) => {
         console.log('success');
@@ -94,7 +96,7 @@ const LeftSideBarMain = (props) => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -214,22 +216,25 @@ const LeftSideBarMain = (props) => {
     const rootSubmenuKeys = menuData.map((e) => {
         return e.menuId;
     });
-
+const setOpening=(value)=>{
+    console.log("value",value);
+    setOpenKeys(value);
+}
     function openMenuBar(target) {
         function subMenuSearch(TopMenu) {
-            console.log('🚀 ~ file: LeftSideBar.js:222 ~ subMenuSearch ~ TopMenu:', TopMenu);
+            console.log("menu enter")
             for (let i = 0; i < TopMenu.length; i++) {
                 expandedkeys.push(TopMenu[i].menuId);
                 let strTitle = TopMenu[i].menuId;
                 if (strTitle.toLowerCase() === target.toLowerCase()) {
-                    console.log(expandedkeys);
-                    setOpenKeys(expandedkeys);
-                } else if (TopMenu[i].subMenu) {
-                    // subMenuSearch(TopMenu[i].subMenu);
+                    console.log('🚀 ~ file: LeftSideBar.js:232 ~ subMenuSearch ~ expandedkeys:', expandedkeys);
+                    setOpening(expandedkeys);
+                    
                 }
-
-                // expandedkeys.pop();
-                console.log('🚀 ~ file: LeftSideBar.js:232 ~ subMenuSearch ~ expandedkeys:', expandedkeys);
+                else if (TopMenu[i].subMenu) {
+                    subMenuSearch(TopMenu[i].subMenu);
+                }
+                expandedkeys.pop();
             }
         }
         subMenuSearch(menuData);
@@ -243,11 +248,15 @@ const LeftSideBarMain = (props) => {
         if (value && getMenuValue(MenuConstant, value, 'link')) navigate(getMenuValue(MenuConstant, value, 'link'));
         openMenuBar(value);
     };
-    const onExpand = (newExpandedKeys) => {
-        // setExpandedKeys(newExpandedKeys);
-        setAutoExpandParent(false);
-        setOpenKeys(newExpandedKeys);
-    };
+    // const onExpand = (newExpandedKeys) => {
+    //     // setExpandedKeys(newExpandedKeys);
+    //     setAutoExpandParent(false);
+    //     setOpenKeys(newExpandedKeys);
+    // };
+    useEffect(() => {
+        console.log(openKeys);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [openKeys]);
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -277,11 +286,11 @@ const LeftSideBarMain = (props) => {
                             mode="inline"
                             inlineIndent={15}
                             // defaultSelectedKeys={[onOpenChange]}
-                            // defaultOpenKeys={expandedKeys}
-                            defaultOpenKeys={openKeys}
+                            //  defaultOpenKeys={expandedKeys}
+                            openKeys={openKeys}
                             selectedKeys={selectedKeys}
-                            // expendedKeys={expandedKeys}
-                            onOpenChange={onExpand}
+                            // expendedKeys={expendedKeys}
+                            onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
