@@ -4,7 +4,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 
 import styles from 'pages/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
+import style from './ApplicationMaster.module.css';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 import { Fragment } from 'react';
@@ -70,10 +70,7 @@ const CardApplicationAction = (props) => {
     return (
         <>
             <Card
-                style={{
-                    backgroundColor: '#BEBEBE1A',
-                    marginTop: '12px',
-                }}
+               className={style.viewCardSize}                     
             >
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
@@ -94,7 +91,7 @@ const CardApplicationAction = (props) => {
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, applicationName, id })} />
                                     </Col>
-                                    <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
+                                    <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                         <Button onClick={() => handleDeleteAction({ status, applicationName, id })} type="link" icon={<FiTrash />}></Button>
                                     </Col>
                                 </>
@@ -102,13 +99,13 @@ const CardApplicationAction = (props) => {
                                 <>
                                     {' '}
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={() => onCancel()}>
-                                            Cancel
+                                        <Button type="link" onClick={onUpdate}>
+                                            Save
                                         </Button>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={onUpdate}>
-                                            Save
+                                        <Button type="link" onClick={() => onCancel()}>
+                                            Cancel
                                         </Button>
                                     </Col>
                                 </>

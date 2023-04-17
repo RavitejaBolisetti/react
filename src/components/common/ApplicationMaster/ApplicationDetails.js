@@ -9,7 +9,7 @@ import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData,setSelectedTreeKey, selectedTreeKey }) => {
+const ApplicationDetails = ({ form, onFinishFailed = () => { }, isReadOnly = false, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
     const disabledProps = { disabled: isReadOnly };
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
     // const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subGeo' };
     console.log('menuData', menuData);
 
-    const handleSelectTreeClick =(value)=>{
+    const handleSelectTreeClick = (value) => {
         console.log('Vlaue', value)
         setSelectedTreeKey(value)
     };
@@ -75,14 +75,17 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {/* parent application id */}
-                        {/* <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}> */}
-                        {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                        <Form.Item className={styles.selectMgTop6} label="Parent Application" name="parent" rules={[validateRequiredInputField('Parent Application'), validationFieldLetterAndNumber('Parent Application')]}>
+                            {/* parent application id */}
+                            {/* <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}> */}
+                            {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Option value="all"></Option>
                             </Select> */}
-                        <TreeSelectField {...treeSelectFieldProps} />
+                            <TreeSelectField {...treeSelectFieldProps} />
+                        </Form.Item>
                     </Col>
                 </Row>
+
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -99,7 +102,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
                         <Form.Item className={styles.selectMgTop6} label="Application Criticality Group" name="criticalityGroupCode" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 {criticalityGroupData?.map((cg) => (
-                                    <Option value={cg?.criticalityGroupName}>{ cg?.criticalityGroupName }</Option>
+                                    <Option value={cg?.criticalityGroupName}>{cg?.criticalityGroupName}</Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -108,7 +111,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document not to be generated" valuePropName="checked">
+                        <Form.Item className={styles.selectMgTop6} initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document number to be generated" valuePropName="checked" >
                             <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq} {...disabledProps} />
                         </Form.Item>
                     </Col>

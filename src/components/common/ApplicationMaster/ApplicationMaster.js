@@ -231,7 +231,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={18} sm={18} md={18} lg={18} xl={18}>
-                                <Row gutter={20} style={{ border: '1px' }} align="middle">
+                                <Row gutter={20} align="middle">
                                     <Col xs={10} sm={10} md={10} lg={10} xl={8}>
                                         <div className={styl.changeThemeBorder}>
                                             <Button

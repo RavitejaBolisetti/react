@@ -83,7 +83,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text type="secondary">Document not to be generated</Text>
+                            <Text type="secondary">Document number to be generated</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             {rest?.documentNumRequired === 'Y'|| rest?.documentNumRequired === true ? <Text className={styles.activeText}> 'Active' </Text> : <Text>Inactive</Text>}
