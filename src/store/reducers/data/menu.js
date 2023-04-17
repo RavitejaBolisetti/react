@@ -19,6 +19,7 @@ const generateList = (data) => {
             dataList.push({
                 ...rest,
                 link: MenuConstant?.[node?.menuId?.toLowerCase()]?.link,
+                childExist: node?.subMenu?.length > 0,
             });
         if (node.subMenu) {
             generateList(node.subMenu);

@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, Search, AutoComplete,Button } from 'antd';
+import { Input, Menu, Layout, Row, Col, AutoComplete, Button } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -19,8 +19,6 @@ import { getMenuValue } from 'utils/menuKey';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
 import { HomeIcon } from 'Icons';
-import { showGlobalNotification } from 'store/actions/notification';
-
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
@@ -53,7 +51,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData, flatternData, isMobile, collapsed };
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
     return returnValue;
 };
 
@@ -72,22 +70,21 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LeftSideBarMain = (props) => {
-    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
+    console.log('🚀 ~ file: LeftSideBar.js:74 ~ LeftSideBarMain ~ flatternData:', flatternData);
     const location = useLocation();
     const pagePath = location.pathname;
     const [current, setCurrent] = useState('mail');
-    const [filterMenuList, setFilterMenuList] = useState();
-    //const [FilterMenudata, setFilterMenudata] = useState(menuData);
-
-    const expandedkeys=[];
+    const expandedkeys = [];
     const navigate = useNavigate();
-
-
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-    const [searchValue, setSearchValue] = useState('');
-    const [expandedKeys, setExpandedKeys] = useState([]);
+
     const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [openKeys, setOpenKeys] = useState(['ADMN', 'COMN-07', 'COMN-07.01']);
+    const [openKeys, setOpenKeys] = useState(['COMN-03.08']);
+    const [selectedKeys, setSelectedKeys] = useState(['COMN-03.08']);
+
+    const [options, setOptions] = useState([]);
+    console.log('🚀 ~ file: LeftSideBar.js:87 ~ LeftSideBarMain ~ options:', options);
 
     const errorAction = (message) => {
         console.log('success');
@@ -97,31 +94,81 @@ const LeftSideBarMain = (props) => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
-        setOpenKeys()
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        if (filter) {
-            const filterDataItem = flatternData?.filter((item) => filterFunction(filter)(item?.menuTitle));
-            filterDataItem &&
-                setFilterMenuList(
-                    filterDataItem?.map((item) => {
-                        return item.menuId;
-                    }) || []
-                );
+        setOptions([]);
+        // setExpandedKeys['FAV'];
+
+        if (filter?.length >= 3) {
+            const menuItem = childredData?.map((i) => {
+                if (i?.menuTitle?.toLowerCase().includes(filter?.toLowerCase())) {
+                    return {
+                        value: i.menuId,
+                        label: i.menuTitle,
+                    };
+                }
+                return undefined;
+            });
+            setOptions(menuItem.filter((i) => i));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-
+    // const searchResult = (value) => {
+    //     if (value?.length < 3) return;
+    //     const val = flatternData.map((i) => {
+    //         if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())) {
+    //             return {
+    //                 value: i.menuId,
+    //                 label: i.menuTitle,
+    //             };
+    //         }
+    //         return undefined;
+    //     });
+    //     setOptions(val.filter((i) => i));
+    // };
 
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', changeTheme);
         setTheme(changeTheme);
     };
+
+    // const dataList = [];
+    // const generateList = (data) => {
+    //     for (let i = 0; i < data.length; i++) {
+    //         const node = data[i];
+    //         dataList.push({
+    //             id: node?.menuId,
+    //             title: node?.menuTitle,
+    //         });
+    //         if (node?.subMenu) {
+    //             generateList(node?.subMenu);
+    //         }
+    //     }
+    // };
+
+    // menuData && generateList(menuData);
+
+    // const getParentKey = (key, tree) => {
+    //     let parentKey;
+    //     for (let i = 0; i < tree.length; i++) {
+    //         const node = tree[i];
+    //         if (node?.subMenu) {
+    //             if (node?.subMenu.some((item) => item?.menuId === key)) {
+    //                 parentKey = node?.menuId;
+    //             } else if (getParentKey(key, node?.subMenu)) {
+    //                 parentKey = getParentKey(key, node?.subMenu);
+    //             }
+    //         } else if (node?.menuId === key) {
+    //             parentKey = node?.menuId;
+    //         }
+    //     }
+    //     return parentKey;
+    // };
 
     const onSubmit = (value, type) => {
         setCollapsed(value);
@@ -133,7 +180,7 @@ const LeftSideBarMain = (props) => {
 
     const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
     const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
-    
+
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
     };
@@ -143,244 +190,18 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={parentMenuId.concat(menuId)} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
     };
 
-    // const finalMenuData = useMemo(() => {
-    //     const loop = (data) =>
-    //         data.map((item) => {
-    //             const strTitle = item?.menuTitle;
-    //             const index = strTitle?.toLowerCase()?.indexOf(searchValue?.toLowerCase());
-    //             const beforeStr = strTitle?.substring(0, index);
-    //             const afterStr = strTitle?.slice(index + searchValue.length);
-    //             const menuTitle =
-    //                 searchValue && index > -1 ? (
-    //                     <span className={styles.searchMenuContainer}>
-    //                         {beforeStr}
-    //                         <span className={styles.searchMenuTitle}>{searchValue}</span>
-    //                         {afterStr}
-    //                     </span>
-    //                 ) : (
-    //                     <span>
-    //                         <span>{strTitle}</span>
-    //                     </span>
-    //                 );
-    //             if (item?.subMenu) {
-    //                 return {
-    //                     ...item,
-    //                     menuTitle,
-    //                     menuOrgTitle: item?.menuTitle,
-    //                     subMenu: loop(item?.subMenu),
-    //                 };
-    //             }
-    //             return {
-    //                 ...item,
-    //                 menuOrgTitle: item?.menuTitle,
-    //                 menuTitle,
-    //             };
-    //         });
-    //     return loop(menuData);
-    // }, [searchValue, menuData]);
-
-    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
-
-    /* new implementatoion */
-
-    const customData = [
-        {
-            menuId: 'COMN',
-            menuTitle: 'Common',
-            parentMenuId: 'Web',
-            menuIconUrl: 'icon',
-            isFavourite: '1',
-            accessType: 'R',
-            displayOrder: '1',
-            subMenu: [
-                {
-                    menuId: 'COMN-11',
-                    menuTitle: 'Vehicle Related',
-                    parentMenuId: 'COMN',
-                    menuIconUrl: 'icon',
-                    isFavourite: '0',
-                    accessType: 'R',
-                    displayOrder: '1',
-                    subMenu: [
-                        {
-                            menuId: 'COMN-11.05',
-                            menuTitle: 'Theft Vehicle Flag Update',
-                            parentMenuId: 'COMN-11',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                        {
-                            menuId: 'COMN-11.02',
-                            menuTitle: 'Customer ID/Registration No. Change Requisition',
-                            parentMenuId: 'COMN-11',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                        {
-                            menuId: 'COMN-11.01',
-                            menuTitle: 'Vehicle Details',
-                            parentMenuId: 'COMN-11',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                        {
-                            menuId: 'COMN-11.04',
-                            menuTitle: 'Customer ID/Registration No. Change Report',
-                            parentMenuId: 'COMN-11',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                    ],
-                },
-                {
-                    menuId: 'COMN-10',
-                    menuTitle: 'Customer Related',
-                    parentMenuId: 'COMN',
-                    menuIconUrl: 'icon',
-                    isFavourite: '0',
-                    accessType: 'R',
-                    displayOrder: '1',
-                    subMenu: [
-                        {
-                            menuId: 'COMN-10.01',
-                            menuTitle: 'Customer Master',
-                            parentMenuId: 'COMN-10',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                        {
-                            menuId: 'COMN-10.b',
-                            menuTitle: 'Key Account',
-                            parentMenuId: 'COMN-10',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [
-                                {
-                                    menuId: 'COMN-10.06',
-                                    menuTitle: 'Key Account Creation',
-                                    parentMenuId: 'COMN-10.b',
-                                    menuIconUrl: 'icon',
-                                    isFavourite: '0',
-                                    accessType: 'R',
-                                    displayOrder: '1',
-                                    subMenu: [],
-                                },
-                                {
-                                    menuId: 'COMN-10.05',
-                                    menuTitle: 'Key Account Type',
-                                    parentMenuId: 'COMN-10.b',
-                                    menuIconUrl: 'icon',
-                                    isFavourite: '0',
-                                    accessType: 'R',
-                                    displayOrder: '1',
-                                    subMenu: [],
-                                },
-                                {
-                                    menuId: 'COMN-10.08',
-                                    menuTitle: 'Key Account Transaction Report',
-                                    parentMenuId: 'COMN-10.b',
-                                    menuIconUrl: 'icon',
-                                    isFavourite: '0',
-                                    accessType: 'R',
-                                    displayOrder: '1',
-                                    subMenu: [],
-                                },
-                                {
-                                    menuId: 'COMN-10.07',
-                                    menuTitle: 'Key Account Company Mapping/Un-Mapping',
-                                    parentMenuId: 'COMN-10.b',
-                                    menuIconUrl: 'icon',
-                                    isFavourite: '0',
-                                    accessType: 'R',
-                                    displayOrder: '1',
-                                    subMenu: [],
-                                },
-                            ],
-                        },
-                        {
-                            menuId: 'COMN-10.02',
-                            menuTitle: 'Party Master',
-                            parentMenuId: 'COMN-10',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                        {
-                            menuId: 'COMN-10.01a',
-                            menuTitle: 'Financier Master',
-                            parentMenuId: 'COMN-10',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [],
-                        },
-                        {
-                            menuId: 'COMN-10.a',
-                            menuTitle: 'Lessor Company',
-                            parentMenuId: 'COMN-10',
-                            menuIconUrl: 'icon',
-                            isFavourite: '0',
-                            accessType: 'R',
-                            displayOrder: '1',
-                            subMenu: [
-                                {
-                                    menuId: 'COMN-10.03',
-                                    menuTitle: 'Lessor Company Master (M&M)',
-                                    parentMenuId: 'COMN-10.a',
-                                    menuIconUrl: 'icon',
-                                    isFavourite: '0',
-                                    accessType: 'R',
-                                    displayOrder: '1',
-                                    subMenu: [],
-                                },
-                                {
-                                    menuId: 'COMN-10.04',
-                                    menuTitle: 'Lessor Customer Creation',
-                                    parentMenuId: 'COMN-10.a',
-                                    menuIconUrl: 'icon',
-                                    isFavourite: '0',
-                                    accessType: 'R',
-                                    displayOrder: '1',
-                                    subMenu: [],
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
+    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -390,66 +211,43 @@ const LeftSideBarMain = (props) => {
         }
     };
 
-    // searching in the tree with routing to next Page
-    let values = [];
-
-    // const Saveopenkeys = (keys) => {
-    //     console.log(keys)
-    //     Object.entries(keys).map(([keyname, value]) => {
-    //         values.push(value);
-    //     });
-    // };
     const rootSubmenuKeys = menuData.map((e) => {
         return e.menuId;
     });
-    // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
+
     function openMenuBar(target) {
-        // let flag = true;
-        // setOpenKeys([])
         function subMenuSearch(TopMenu) {
+            console.log('🚀 ~ file: LeftSideBar.js:222 ~ subMenuSearch ~ TopMenu:', TopMenu);
             for (let i = 0; i < TopMenu.length; i++) {
-               
                 expandedkeys.push(TopMenu[i].menuId);
-                let strTitle=TopMenu[i].menuId;
+                let strTitle = TopMenu[i].menuId;
                 if (strTitle.toLowerCase() === target.toLowerCase()) {
-                    console.log(expandedkeys)
+                    console.log(expandedkeys);
                     setOpenKeys(expandedkeys);
-                }
-                else if (TopMenu[i].subMenu) {
-                    subMenuSearch(TopMenu[i].subMenu);
+                } else if (TopMenu[i].subMenu) {
+                    // subMenuSearch(TopMenu[i].subMenu);
                 }
 
-                expandedkeys.pop();
+                // expandedkeys.pop();
+                console.log('🚀 ~ file: LeftSideBar.js:232 ~ subMenuSearch ~ expandedkeys:', expandedkeys);
             }
         }
         subMenuSearch(menuData);
     }
-    const searchResult = (value) => {
-        if (value?.length < 3) return;
-     
-        // setSearchValue(value);
-        const val = flatternData.map((i) => {
-            if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())) {
-                return {
-                    value: i.menuId,
-                    label: i.menuTitle,
-                };
-            }
-        });
-        setOptions(val.filter((i)=>i));
+
+    const handleSearch = (value) => {
+        setFilter(value);
     };
 
-    const [options, setOptions] = useState([]);
-    const handleSearch = (value) => {
-        setOptions(value ? searchResult(value).filter((i) => i) : []);
-    };
-  
     const onSelect = (value, label) => {
-        if (value && getMenuValue(MenuConstant, value, 'link'))
-            navigate(getMenuValue(MenuConstant, value, 'link'))
+        if (value && getMenuValue(MenuConstant, value, 'link')) navigate(getMenuValue(MenuConstant, value, 'link'));
         openMenuBar(value);
     };
-
+    const onExpand = (newExpandedKeys) => {
+        // setExpandedKeys(newExpandedKeys);
+        setAutoExpandParent(false);
+        setOpenKeys(newExpandedKeys);
+    };
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -466,31 +264,11 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
 
-
-
                     {!collapsed && (
-                        <AutoComplete
-                            dropdownMatchSelectWidth={200}
-                            reset
-                            style={{
-                                width: '200px',
-                                color: 'red',
-                            }}
-                            options={options}
-                            onSelect={onSelect}
-                            onSearch={handleSearch}
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                        >
-                            <Input.Search size="large" placeholder="Search" enterButton />
+                        <AutoComplete reset options={options} onSelect={onSelect} onChange={handleSearch}>
+                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear />
                         </AutoComplete>
-
                     )}
-                    {/* <Row>
-                        <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                            <span className={styles.menuIcon}><HomeIcon /></span>
-                            HOME
-                        </Link>
-                    </Row> */}
                 </div>
                 {!isLoading ? (
                     <>
@@ -498,10 +276,12 @@ const LeftSideBarMain = (props) => {
                             onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            // defaultSelectedKeys={[defaultSelectedKeys]}
-                            // defaultOpenKeys={defaultOpenKeys}
-                            openKeys={openKeys}
-                            onOpenChange={onOpenChange}
+                            // defaultSelectedKeys={[onOpenChange]}
+                            // defaultOpenKeys={expandedKeys}
+                            defaultOpenKeys={openKeys}
+                            selectedKeys={selectedKeys}
+                            // expendedKeys={expandedKeys}
+                            onOpenChange={onExpand}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
