@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Row, Col, Modal } from 'antd';
+import { Button, Form, Row, Col } from 'antd';
 import { FiUpload, FiDownload } from 'react-icons/fi';
 import { connect } from 'react-redux';
 import { withDrawer } from 'components/withDrawer';
@@ -8,18 +8,13 @@ import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufa
 
 const mapStateToProps = (state) => {
     const {
-        auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], uploadVisible },
+            ManufacturerAdminHierarchy: {  uploadVisible },
         },
     } = state;
 
     let returnValue = {
-        userId,
-        isHistoryLoading,
-        isHistoryLoaded,
         isVisible: uploadVisible,
-        changeHistoryData,
     };
     return returnValue;
 };
@@ -28,9 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryShowLoading,
-            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryModelClose,
+            onCloseAction: manufacturerAdminHierarchyDataActions.uploadModelClose,
         },
         dispatch
     ),

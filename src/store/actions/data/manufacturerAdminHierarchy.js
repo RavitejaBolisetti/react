@@ -52,7 +52,7 @@ manufacturerAdminHierarchyDataActions.uploadModelOpen = (visible) => ({
     visible: true,
 });
 
-manufacturerAdminHierarchyDataActions.uploadModelOpen = (visible) => ({
+manufacturerAdminHierarchyDataActions.uploadModelClose = (visible) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE,
     visible: false,
 });
