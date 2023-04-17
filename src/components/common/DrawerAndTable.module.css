@@ -7,6 +7,7 @@
     gap: 20px;
     margin-bottom: 20px;
 }
+
 .viewMode .allowedTiming {
     background: #f4f4f4;
     border-radius: 8px;
@@ -18,8 +19,8 @@
 }
 
 
-.allowedTiming :global .ant-picker-input > input:placeholder-shown,
-.allowedTiming :global .ant-picker-input > input {
+.allowedTiming :global .ant-picker-input>input:placeholder-shown,
+.allowedTiming :global .ant-picker-input>input {
     font-size: 14px;
 }
 
@@ -57,7 +58,7 @@
 .searchAndLabelAlign {
     display: flex;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 10px;
     padding-right: 20px;
 }
 
@@ -101,6 +102,7 @@
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
     border: none;
     padding-top: 0px;
+    box-shadow: none !important;
 }
 
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
@@ -110,6 +112,8 @@
 .tableIcons {
     border: none;
     padding: 0px;
+    box-shadow: transparent !important;
+    width: 18px !important;
 }
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
@@ -184,6 +188,9 @@
     color: #0b0c0c;
     padding-right: 0px !important;
     padding-left: 0px !important;
+    display: flex;
+    justify-content: flex-start;
+
 }
 
 .srchbtn :global .ant-btn-default {
@@ -279,6 +286,7 @@
 .drawerFooterButtons button:not(:first-child) {
     margin-left: 10px !important;
 }
+
 .drawerFooterButtons :disabled {
     background-color: #b5b5b6 !important;
     color: #ffffff !important;
@@ -296,18 +304,18 @@
     left: 0px;
 }
 
-
 .viewMode :global(.ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before) {
     color: #0b0c0c;
     display: none;
 }
+
 .viewMode :global(.ant-input-disabled .ant-input[disabled]) {
     background-color: none !important;
 }
 
 .viewMode :global input[type="text"]:disabled {
     background-color: #ffffff !important;
-  
+
     border-color: transparent !important;
     padding-left: 0px !important;
     font-weight: 700;
@@ -316,7 +324,8 @@
     cursor: default;
 
 }
- .viewModeText {
+
+.viewModeText {
     background-color: #ffffff !important;
     border-color: transparent !important;
     padding-left: 0px !important;
@@ -325,20 +334,23 @@
     line-height: 24px;
     cursor: default;
     margin-top: 10px !important;
-    color:  rgba(0, 0, 0, 0.25);
+    color: rgba(0, 0, 0, 0.25);
     word-wrap: break-word;
 
 }
-.viewMode :global( .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked  ){
+
+.viewMode :global(.ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked) {
     color: #b5b5b6 !important;
     font-size: 16px !important;
     font-weight: 700 !important;
 }
-.viewMode :global( .ant-switch .ant-switch-inner .ant-switch-inner-unchecked  ){
+
+.viewMode :global(.ant-switch .ant-switch-inner .ant-switch-inner-unchecked) {
     color: #b5b5b6 !important;
     font-size: 16px !important;
     font-weight: 700 !important;
 }
+
 .viewMode :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
     background: transparent;
 }
@@ -352,6 +364,7 @@
 :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
     border: transparent;
 }
+
 :global .ant-drawer-wrapper-body .ant-drawer-footer {
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
     padding: 10px 20px;
@@ -359,20 +372,20 @@
 
 :global .ant-drawer-body::-webkit-scrollbar-track,
 :global .ant-drawer-body::-webkit-scrollbar-track {
-  background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 
 :global .ant-drawer-body::-webkit-scrollbar,
 :global .ant-drawer-body::-webkit-scrollbar {
-  width: 5px;
-  background-color: #FFFFFF;
+    width: 5px;
+    background-color: #FFFFFF;
 }
 
 
 :global .ant-drawer-body::-webkit-scrollbar-thumb,
 :global .ant-drawer-body::-webkit-scrollbar-thumb {
-  background-color: rgba(52, 44, 44, 0.34);
-  border-radius: 10px;
+    background-color: rgba(52, 44, 44, 0.34);
+    border-radius: 10px;
 }
 
 :global .ant-drawer .ant-drawer-close {
