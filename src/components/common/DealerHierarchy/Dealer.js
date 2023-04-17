@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
-import style from '../ProductHierarchy/producthierarchy.module.css';
+
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
@@ -135,10 +135,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         setSelectedTreeData([]);
 
         if (keys && keys.length > 0) {
-            setFormActionType('view');
+            setFormActionType(FROM_ACTION_TYPE.VIEW);
             const formData = flatternData.find((i) => keys[0] === i.key);
-            //console.log('🚀 ~ file: Dealer.js:138 ~ handleTreeViewClick ~ formData:', formData);
-
             if (formData) {
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeId)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
@@ -160,7 +158,6 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinish = (values) => {
-        //console.log(values, 'ValueCheCK');
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
@@ -171,9 +168,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
         const customFormInput = { [parentGroupForm]: null, [companyGroupForm]: null, [gstinGroupForm]: null, [branchGroupForm]: null };
 
-        const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId } };
-
-        console.log(data, 'ThisIsBusi');
+        const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId, status: values?.status } };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -183,12 +178,14 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-              
+
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === res?.data?.attributeId)?.hierarchyAttribueName;
-                formData && setSelectedTreeData({ type: values?.inputFormType, ...res?.data[values?.inputFormType], hierarchyAttribueName });
+                const prodctShrtName = flatternData.find((i) => res?.data[values?.inputFormType]?.parentId === i.key)?.data?.shortDescription;
+
+                formData && setSelectedTreeData({ type: values?.inputFormType, ...res?.data[values?.inputFormType], hierarchyAttribueName, parentName: prodctShrtName });
 
                 setSelectedTreeKey([res?.data[values?.inputFormType]?.id]);
-                setFormActionType('view');
+                setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setIsFormVisible(false);
             }
         };
@@ -199,6 +196,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
         delete data.inputFormType;
         delete data.parentId;
+        delete data.status;
 
         const requestData = {
             data: data,
@@ -287,7 +285,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.subheading}>
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={styles.subheading}>
                                 Hierarchy
                                 <Search
                                     placeholder="Search"
@@ -315,7 +313,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Empty>

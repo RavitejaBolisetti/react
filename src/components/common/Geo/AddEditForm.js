@@ -40,7 +40,6 @@ const AddEditFormMain = (props) => {
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
-    let selectedAttribute = selectedTreeData?.attributeKey;
 
     if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
         treeCodeId = formData?.geoParentCode;
@@ -51,9 +50,6 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.geoParentCode;
-
-        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
-        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
     useEffect(() => {
@@ -118,7 +114,7 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item label="Status" name="isActive">
+                        <Form.Item initialValue={formData?.active} label="Status" name="isActive">
                             <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>

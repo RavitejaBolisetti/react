@@ -23,7 +23,6 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                         <Descriptions.Item label="Owner Name">{selectedTreeData?.ownerName}</Descriptions.Item>
                         <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNo}</Descriptions.Item>
                         <Descriptions.Item label="Email ID">{selectedTreeData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
 
@@ -33,7 +32,6 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                         <Descriptions.Item label="TIN Number">{selectedTreeData?.tinNumber}</Descriptions.Item>
                         <Descriptions.Item label="TAN Number">{selectedTreeData?.tanNumber}</Descriptions.Item>
                         <Descriptions.Item label="PAN Number">{selectedTreeData?.panNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
 
@@ -45,7 +43,6 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                         <Descriptions.Item label="Date of Registration">{selectedTreeData?.dateOfRegistertion}</Descriptions.Item>
                         <Descriptions.Item label="Constitution of Business">{selectedTreeData?.consitutionOfBusiness}</Descriptions.Item>
                         <Descriptions.Item label="Taxpayer Type">{selectedTreeData?.taxPayerType}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
 
@@ -56,9 +53,9 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                         <Descriptions.Item label="City/District">{selectedTreeData?.city}</Descriptions.Item>
                         <Descriptions.Item label="State">{selectedTreeData?.state}</Descriptions.Item>
                         <Descriptions.Item label="City Classification">{selectedTreeData?.cityClassification}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
+                <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );

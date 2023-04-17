@@ -179,7 +179,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const otpSentOnMobileChange = (event) => {
-        console.log(event.target.checked, 'Final Check');
         setOTPSentOnMobile(event.target.checked);
     };
 
