@@ -16,7 +16,7 @@ import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
-import viewStyle from 'components/common/Common.module.css'
+import viewStyle from 'components/common/Common.module.css';
 import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
@@ -25,7 +25,7 @@ import { DataTable } from 'utils/dataTable';
 
 const { Search } = Input;
 
-const initialTableData = [{roleId:'hello'},{roleName:'Hi',activeIndicator: 1}];
+const initialTableData = [{ roleId: 'hello' }, { roleName: 'Hi', activeIndicator: 1 }];
 
 const mapStateToProps = (state) => {
     console.log('state', state);
@@ -86,8 +86,9 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
-   
-
+    useEffect(() => {
+        fetchList({ setIsLoading: listShowLoading, userId });
+    }, []);
     // useEffect(() => {
     //     if (!isDataLoaded && userId) {
     //         fetchList({ setIsLoading: listShowLoading, userId });
@@ -97,6 +98,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
 
     useEffect(() => {
         setSearchdata(RoleManagementData);
+        console.log('RoleManagementData  : ', RoleManagementData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RoleManagementData]);
 
@@ -160,7 +162,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
         setFormActionType('add');
         setSaveAndSaveNew(true);
         setSaveBtn(true);
-        
+
         setOpenDrawer(true);
         setFooterEdit(false);
     };
@@ -172,7 +174,6 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
         setSaveAndSaveNew(false);
         setSaveBtn(true);
 
-
         form.setFieldsValue({
             roleId: record.roleId,
             roleName: record.roleName,
@@ -180,13 +181,13 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
             activeIndicator: record.activeIndicator,
         });
     };
-    
+
     const handleUpdate2 = () => {
         setFormActionType('update');
         setIsReadOnly(false);
         setSaveAndSaveNew(false);
         setSaveBtn(true);
-        
+
         setOpenDrawer(true);
         setFooterEdit(false);
         form.setFieldsValue({
@@ -200,10 +201,10 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
     const handleView = (record) => {
         setFormActionType('view');
         setSaveAndSaveNew(false);
-        
+
         setOpenDrawer(true);
         setSaveBtn(false);
-        
+
         setFooterEdit(true);
         setViewData(record);
         form.setFieldsValue({
@@ -212,7 +213,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
             roleDesceription: record.roleDesceription,
             activeIndicator: record.activeIndicator,
         });
-        console.log(form.getFieldValue('roleId'))
+        console.log(form.getFieldValue('roleId'));
         setIsReadOnly(true);
     };
 
@@ -239,7 +240,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
-            render: ((_t, _r, i) => i+1 ),
+            render: (_t, _r, i) => i + 1,
         })
     );
 
@@ -367,7 +368,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2}   onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };

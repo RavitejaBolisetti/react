@@ -22,142 +22,6 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Search } = Input;
 
-const children = [
-    {
-        title: 'Upload',
-        key: 'Upload-1',
-    },
-    {
-        title: 'View',
-        key: 'View-1',
-    },
-
-    {
-        title: 'Delete',
-        key: 'Delete-1',
-    },
-    {
-        title: 'Read',
-        key: 'Read-1',
-    },
-    {
-        title: 'Create',
-        key: 'Create-1',
-    },
-    {
-        title: 'Update',
-        key: 'Update-1',
-    },
-];
-const options = {
-    subApplicationMaster1: [
-        {
-            label: 'Read',
-            value: 'Read',
-            checkable: false,
-        },
-        {
-            label: 'View',
-            value: 'View',
-            checkable: true,
-        },
-        {
-            label: 'Update',
-            value: 'Update',
-            checkable: true,
-        },
-        {
-            label: 'Delete',
-            value: 'Delete',
-        },
-        {
-            label: 'Create',
-            value: 'Create',
-        },
-        {
-            label: 'Upload',
-            value: 'Upload',
-        },
-    ],
-    applicationCriticalityGroup1: [
-        {
-            label: 'Read',
-            value: 'Read',
-            Read: true,
-        },
-        {
-            label: 'View',
-            value: 'View',
-            View: true,
-        },
-        {
-            label: 'Update',
-            value: 'Update',
-            Update: false,
-        },
-        {
-            label: 'Delete',
-            value: 'Delete',
-        },
-        {
-            label: 'Create',
-            value: 'Create',
-        },
-        {
-            label: 'Upload',
-            value: 'Upload',
-        },
-    ],
-    subApplicationMaster2: [
-        {
-            label: 'Read',
-            value: 'Read',
-            Read: true,
-            checkable: true,
-        },
-        {
-            label: 'View',
-            value: 'View',
-            View: true,
-            checkable: true,
-        },
-        {
-            label: 'Update',
-            value: 'Update',
-            Update: false,
-            checkable: true,
-        },
-        {
-            label: 'Delete',
-            value: 'Delete',
-            Delete: true,
-        },
-        {
-            label: 'Create',
-            value: 'Create',
-        },
-        {
-            label: 'Upload',
-            value: 'Upload',
-        },
-    ],
-};
-const Allselect = ['Read', 'View', 'Update', 'Delete', 'Create', 'Upload'];
-
-const options2 = [
-    {
-        label: 'Delete',
-        value: 'Delete',
-    },
-    {
-        label: 'Create',
-        value: 'Create',
-    },
-    {
-        label: 'Upload',
-        value: 'Upload',
-    },
-];
 const mocktreeData = [
     {
         title: 'Common',
@@ -235,15 +99,6 @@ const mocktreeData = [
         ],
     },
 ];
-
-const insertionData = {
-    children: [
-        {
-            isLeaf: true,
-            checkable: false,
-        },
-    ],
-};
 
 const mockData = [
     {
@@ -340,47 +195,75 @@ const FinalTreedata = [
         ],
     },
 ];
-const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
-  
-    const disabledProps = { disabled: isReadOnly };
 
-    // const [selectedActions, setSelectedActions] = useState({})
-    const [ParentCheck, setParentCheck] = useState();
-    const Mychildren = [
-        {
-            label: 'Read',
-            value: 'Read',
-        },
-        {
-            label: 'View',
-            value: 'View',
-        },
-        {
-            label: 'Update',
-            value: 'Update',
-        },
-        {
-            label: 'Delete',
-            value: 'Delete',
-        },
-        {
-            label: 'Create',
-            value: 'Create',
-        },
-        {
-            label: 'Upload',
-            value: 'Upload',
-        },
-    ];
-    const StateMangement = {
-        Common: [],
-        Common1: [],
-    };
+const ApplicationData = [
+    {
+        id: '',
+        roleId: 'role11232',
+        roleDesceription: 'abcd',
+        activeIndicator: true,
+        roleName: 'roleTest',
+        webRoleApplicationMapping: [
+            {
+                id: '',
+                activeIndicator: true,
+                applicationId: '4af77de8-363e-480e-bdac-e6c836c8467c',
+                subApplication: [
+                    {
+                        id: '',
+                        activeIndicator: true,
+                        applicationId: '8f4d4288-6862-48eb-ab5e-c089972cf0e8',
+                        subApplication: ['string'],
+                        roleActionMapping: [
+                            {
+                                id: '',
+                                actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+                                activeIndicator: true,
+                            },
+                        ],
+                    },
+                ],
+                roleActionMapping: [
+                    {
+                        id: '',
+                        actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+                        activeIndicator: true,
+                    },
+                ],
+            },
+        ],
+
+        mobileRoleApplicationMapping: [
+            {
+                id: '',
+
+                activeIndicator: true,
+
+                applicationId: 'a0fc205b-6fcf-4dd3-86dc-f382ac924335',
+
+                subApplication: [],
+
+                roleActionMapping: [
+                    {
+                        id: '',
+
+                        actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+
+                        activeIndicator: true,
+                    },
+                ],
+            },
+        ],
+    },
+];
+const DrawerUtil = ({ form, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+    const disabledProps = { disabled: isReadOnly };
+    let StateMangement = {};
     // const disabledProps = { disabled: false };
     const [treeData, settreeData] = useState([]);
     const [SelectedKeys, setSelectedKeys] = useState();
     const [CheckedKeys, setCheckedKeys] = useState();
-    const [ExpandedKeys, setExpandedKeys] = useState();
+    const [ExpandedKeys, setExpandedKeys] = useState({});
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add New Role';
@@ -394,6 +277,19 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
             Subpanel(mocktreeData);
         }
     }, []);
+    useEffect(() => {
+        console.log('These are the Expanded Keys : ', ExpandedKeys);
+    }, [ExpandedKeys]);
+    useEffect(() => {
+        let evalue;
+        FinalTreedata.map((e) => {
+            StateMangement[e?.value] = [];
+        });
+        console.log('My state Mangement : ', StateMangement);
+    }, []);
+    useEffect(() => {
+        console.log('The updated State : ', StateMangement);
+    }, [StateMangement]);
 
     useEffect(() => {
         function Subpanel(node) {
@@ -518,10 +414,11 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
                 ExpandVals.push(value);
             }
         }
-        console.log('This is the data : ', typeof expanded, 'dasdasd');
+        StateMangement[expanded[0]] = expanded;
+        const updated = { ...StateMangement, [expanded[0]]: expanded };
+        console.log('This is the updated : ', updated);
 
-        setExpandedKeys(expanded);
-        console.log('This is the data : ', typeof expanded, 'dasdasd');
+        setExpandedKeys(updated);
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
@@ -535,7 +432,6 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
                     }}
                 >
                     <Checkbox>Remember me</Checkbox>
-                    {console.log('Mein aagaya')}
                 </Form.Item>
             </>
         );
@@ -563,7 +459,7 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <CheckboxTree
                                                 nodes={[el]}
-                                                expanded={ExpandedKeys}
+                                                expanded={ExpandedKeys[el?.value]}
                                                 checked={CheckedKeys}
                                                 onCheck={onTreeCheck}
                                                 onExpand={OnExpanded}
@@ -572,7 +468,7 @@ const DrawerUtil = ({ form, viewProps,viewData, handleAdd, formBtnDisable, isLoa
                                                     label: 'name',
                                                     value: 'code',
                                                     children: 'items',
-                                                  }}
+                                                }}
                                                 icons={{
                                                     check: <AiOutlineCheck style={{ width: '8px', height: '8px', color: '#EA3A51', border: ' 1px solid #B5B5B6', padding: '3px', borderRadius: '5px' }} />,
                                                     uncheck: <div style={{ width: '14px', height: '14px', color: '#EA3A51', border: ' 1px solid #B5B5B6', borderRadius: '4px' }} />,
