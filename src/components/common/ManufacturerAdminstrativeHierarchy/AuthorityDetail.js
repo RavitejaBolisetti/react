@@ -8,6 +8,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import style from 'components/common/DrawerAndTable.module.css';
 import AuthorityCard from './AuthorityCard';
 import AuthorityForm from './AuthorityForm';
+import moment from 'moment';
 
 const AuthorityDetail = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, FinalFormdata }) => {
     const [docData, setDocData] = useState([]);
@@ -23,9 +24,10 @@ const AuthorityDetail = ({ footerEdit = false, onFinishFailed = () => {}, isRead
     };
 
     const onActionFormFinish = (val) => {
-        console.log('value ===>', val);
+        console.log('value ===>', val, 'AuthorityDetail', moment(val.dateFrom).format());
+
         const { key, label } = val.authoitytype;
-        setDocumentTypesList((prev) => [...prev, { token: val.token, authoitytype: key, authorityName: label }]);
+        setDocumentTypesList((prev) => [...prev, { token: val.token, authoitytype: key, authorityName: label, dateFrom: moment(val?.dateFrom).format('DD/MM/YYYY'), dateTo: moment(val?.dateTo).format('DD/MM/YYYY') }]);
         // setFinalFormdata({ ...FinalFormdata, DocumentType: documentTypesList });
         // setFinalFormdata({ ...FinalFormdata, DocumentType: [...FinalFormdata.DocumentType, val] });
 
