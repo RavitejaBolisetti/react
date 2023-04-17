@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button, InputNumber, DatePicker } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateMobileNoField, validateEmailField, validatePanField } from 'utils/validation';
-import TreeSelectField from '../TreeSelectField';
-import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import React from 'react';
+import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
@@ -14,16 +11,8 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, configData, parameterType, setParameterType, hanndleEditData, showSaveAndAddNewBtn, setShowSaveAndAddNewBtn, saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked } = props;
-    const { isChecked, footerEdit, setFooterEdit, treeData, setFormActionType, form, setSelectedTreeKey, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, fieldNames, onCloseAction } = props;
-
-    const [seletedAttribute, setSeletedAttribute] = useState();
-    const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
-
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-
-    const disabledProps = { disabled: isReadOnly };
-
+    const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
+    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const handleFormValueChange = () => {

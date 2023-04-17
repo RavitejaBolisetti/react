@@ -1102,6 +1102,54 @@
     border: 1px solid #0B0B0C;
 }
 
+
+.tableIcons {
+    border: none;
+    padding: 0px;
+    box-shadow: transparent !important;
+    width: 18px !important;
+}
+
+.searchContainer {
+    background-color: #f4f4f4;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    padding: 10px 20px 10px 10px;
+}
+
+
+.searchContainer .searchBox {
+    padding-left: 20px !important;
+    display: flex;
+    align-items: center;
+}
+
+
+.searchContainer .searchBox .subheading {
+    font-size: 16px;
+    color: #0b0c0c;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    display: flex;
+    justify-content: start;
+}
+
+.searchContainer .addGroup button {
+    margin-bottom: 0 !important;
+    margin-left: 10px;
+}
+
+.searchContainer .addGroup .refreshBtn {
+    background-color: initial;
+    font-size: 18px;
+    line-height: 18px;
+    width: 60px !important;
+}
+
+.searchContainer .searchBox :global .ant-input-group:hover {
+    border: 1px solid #0B0B0C;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
     /* .contentHeaderBackground{text-align: center;} */
