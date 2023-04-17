@@ -8,7 +8,7 @@ import style from 'components/common/DrawerAndTable.module.css';
 
 const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
-    console.log("isLoadingOnSave",isLoadingOnSave)
+
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add Qualification Details';
@@ -34,7 +34,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
             placement="right"
             onClose={onClose}
             open={open}
-            className={footerEdit ?  style.viewMode : style.drawerCriticalityGrp}
+            className={footerEdit ? style.viewMode : style.drawerCriticalityGrp}
             width="540px"
             footer={
                 <>
@@ -58,7 +58,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                                 </Button>
                             ) : (
                                 ''
-                                )}
+                            )}
                             {footerEdit ? (
                                 <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Edit
@@ -79,10 +79,8 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                     <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name'),validateAlphanumericWithSpaceHyphenPeriod('Qualification Name')]}>
-                     {!footerEdit ?
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} />
-                            : <p className={style.viewModeText}>{form.getFieldValue("qualificationName")}</p>}
+                        <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name'), validateAlphanumericWithSpaceHyphenPeriod('Qualification Name')]}>
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
                         </Form.Item>
                     </Col>
                 </Row>
@@ -90,7 +88,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                            <Switch  checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
