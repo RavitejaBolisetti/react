@@ -66,6 +66,7 @@ applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) =>
     axiosAPICall(apiCallParams);
 });
 
+
 applicationMasterDataActions.saveApplicationDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, onSuccess } = params;
     setIsLoading(true);

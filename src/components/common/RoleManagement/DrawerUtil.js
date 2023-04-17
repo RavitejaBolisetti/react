@@ -256,7 +256,7 @@ const ApplicationData = [
         ],
     },
 ];
-const DrawerUtil = ({ form, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const DrawerUtil = ({ form, MenuAlteredData,viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const disabledProps = { disabled: isReadOnly };
     let StateMangement = {};
     // const disabledProps = { disabled: false };
@@ -440,9 +440,9 @@ const DrawerUtil = ({ form, viewProps, viewData, handleAdd, formBtnDisable, isLo
         return (
             <>
                 <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                    {data?.map((el) => (
+                    {MenuAlteredData?.map((el) => (
                         <Collapse expandIcon={() => <AiOutlinePlusSquare style={{ width: '16px', height: '16px' }} />}>
-                            <Panel header={el?.label}>
+                            <Panel header={el?.menuTitle}>
                                 <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

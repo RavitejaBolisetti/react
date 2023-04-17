@@ -13,6 +13,8 @@ import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import DrawerUtil from './DrawerUtil';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
+import { menuDataActions } from 'store/actions/data/menu';
+
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import treeData from './Treedata.json';
@@ -32,7 +34,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            RoleManagement: { isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [] },
+            RoleManagement: { MenuTreeData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -47,6 +49,7 @@ const mapStateToProps = (state) => {
         RoleManagementData,
         isDataAttributeLoaded,
         isLoadingOnSave,
+        MenuTreeData,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -57,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: rolemanagementDataActions.fetchList,
+            fetchMenuList: rolemanagementDataActions.fetchMenuList,
             saveData: rolemanagementDataActions.saveData,
             listShowLoading: rolemanagementDataActions.listShowLoading,
             onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
@@ -69,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
 
     const [filterString, setFilterString] = useState();
@@ -86,8 +90,12 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
+    const [MenuAlteredData, setMenuAlteredData] = useState();
     useEffect(() => {
-        fetchList({ setIsLoading: listShowLoading, userId });
+        // fetchList({ setIsLoading: listShowLoading, userId });
+        fetchMenuList({ setIsLoading: listShowLoading, userId });
+        console.log('This is the Menus Data : ', MenuTreeData);
+        FilterMenudata(MenuTreeData);
     }, []);
     // useEffect(() => {
     //     if (!isDataLoaded && userId) {
@@ -287,6 +295,51 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
             },
         })
     );
+    function Subpanel(arr) {
+        arr.map((ele) => {
+            if (ele.subMenu.length) {
+                ele['children'] = ele?.subMenu;
+                ele['label'] = ele?.menuTitle;
+                ele['value'] = ele?.menuId;
+                ele.subMenu.forEach((child) => {
+                    if (Array.isArray(child)) {
+                        Subpanel(child);
+                    }
+                    {
+                        Subpanel([child]);
+                    }
+                });
+            } else {
+                ele['label'] = ele?.menuTitle;
+                ele['value'] = ele?.menuId;
+                ele['children'] = [
+                    { value: 'Upload' + ele?.menuId, label: 'Upload' },
+                    { value: 'Delete' + ele?.menuId, label: 'Delete' },
+                    { value: 'Read' + ele?.menuId, label: 'Read' },
+                    { value: 'Create' + ele?.menuId, label: 'Create' },
+                    { value: 'Update' + ele?.menuId, label: 'Update' },
+                    { value: 'View' + ele?.menuId, label: 'View' },
+                ];
+                return;
+            }
+        });
+        // arr?.map((row) => {
+        //     console.log('I am recursing the Row : : ', row);
+        //     if (row?.subMenu && row?.subMenu?.length) {
+        //         row?.subMenu?.forEach((ele) => {
+        //             Subpanel(ele);
+        //         });
+        //     } else {
+        //         return;
+        //     }
+        // });
+    }
+
+    const FilterMenudata = (MenuTreeData) => {
+        Subpanel(MenuTreeData);
+        setMenuAlteredData(MenuTreeData);
+        console.log('This is the Manipulated Data : ', MenuTreeData);
+    };
 
     return (
         <>
@@ -368,7 +421,7 @@ export const RoleManagementMain = ({ isLoadingOnSave, onSaveShowLoading, userId,
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil MenuAlteredData={MenuAlteredData} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
