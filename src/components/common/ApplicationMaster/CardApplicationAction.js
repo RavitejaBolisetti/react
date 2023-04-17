@@ -4,7 +4,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 
 import styles from 'pages/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
+import style from './ApplicationMaster.module.css';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 import { Fragment } from 'react';
@@ -70,10 +70,7 @@ const CardApplicationAction = (props) => {
     return (
         <>
             <Card
-                style={{
-                    backgroundColor: '#BEBEBE1A',
-                    marginTop: '12px',
-                }}
+               className={style.viewCardSize}                     
             >
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
@@ -102,13 +99,13 @@ const CardApplicationAction = (props) => {
                                 <>
                                     {' '}
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={() => onCancel()}>
-                                            Cancel
+                                        <Button type="link" onClick={onUpdate}>
+                                            Save
                                         </Button>
                                     </Col>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Button type="link" onClick={onUpdate}>
-                                            Save
+                                        <Button type="link" onClick={() => onCancel()}>
+                                            Cancel
                                         </Button>
                                     </Col>
                                 </>

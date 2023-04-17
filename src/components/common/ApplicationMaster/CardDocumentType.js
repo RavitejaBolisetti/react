@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
+import style from "./ApplicationMaster.module.css";
 import DocumentTypesForm from './DocumentTypesForm';
 
 const { Text } = Typography;
@@ -71,12 +72,7 @@ const CardDocumentType = (prop) => {
     return (
         <>
             <Card
-                style={{
-                    // width: 440,
-                    backgroundColor: '#BEBEBE1A',
-                    marginTop: '12px',
-                    border: '1px solid rgba(62, 62, 62, 0.1)',
-                }}
+                className={style.viewCardSize}   
                 key={documentTypeCode}
             >
                 <Row align="middle">
@@ -106,7 +102,7 @@ const CardDocumentType = (prop) => {
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
-                                    {!id?.length>0 && <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                    {!id?.length>0 && <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                         <Button onClick={() => handleDeleteDocType({termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode})} type="link" icon={<FiTrash />}></Button>
                                     </Col>}
                                 </>

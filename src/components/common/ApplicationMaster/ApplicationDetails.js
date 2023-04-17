@@ -94,6 +94,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, onFin
                     </Col>
                 </Row>
 
+
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item className={styles.selectMgTop6} name="accessableIndicator" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
