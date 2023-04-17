@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty } from 'antd';
-import { FaHistory,FaAngleUp } from 'react-icons/fa';
+import { Button, Col, Form, Row, Input, Empty, Dropdown } from 'antd';
+import { FaHistory, FaAngleUp } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { HierarchyFormButton } from 'components/common/Button';
@@ -14,7 +14,7 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { AddEditForm } from './AddEditForm';
 import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy'
+import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 
 import LeftPanel from '../LeftPanel';
 
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen}) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -285,13 +285,25 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
+    const items = [
+        {
+            key: '1',
+            label: 'Admin Change History',
+            onClick: { changeHistoryModelOpen },
+        },
+        {
+            key: '2',
+            label: 'Authority Change History',
+        },
+    ];
+
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{display: 'flex',justifyContent:'space-between'}}>
-                        {/* className={styles.searchAndLabelAlign} */}
+                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            {/* className={styles.searchAndLabelAlign} */}
                             <Col xs={19} sm={19} md={19} lg={19} xl={12}>
                                 Hierarchy
                                 <Search
@@ -306,17 +318,24 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                             </Col>
                             <div>
                                 <Button type="primary" onClick={uploadModelOpen}>
-                                            {/* <FaAngleUp className={styles.buttonIcon} /> */}
-                                            Upload
-                                        </Button>
+                                    {/* <FaAngleUp className={styles.buttonIcon} /> */}
+                                    Upload
+                                </Button>
                                 {manufacturerAdminHierarchyData.length > 0 && (
                                     <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
-                                        <Button type="primary" onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen}`}>
-                                            {/* className={`${styles.floatRight}`} */}
-                                            <FaHistory className={styles.buttonIcon} />
-                                            Change History
-                                        </Button>
+                                        <Dropdown
+                                            menu={{
+                                                items,
+                                            }}
+                                        >
+                                            <Button type="primary" onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen}`}>
+                                                {/* className={`${styles.floatRight}`} */}
+                                                <FaHistory className={styles.buttonIcon} />
+                                                Change History
+                                            </Button>
+                                        </Dropdown>
                                     </Col>
+                                    // onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen}`}
                                 )}
                             </div>
                         </Row>

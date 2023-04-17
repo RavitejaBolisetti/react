@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
     };
     return (
         <>
-            <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
@@ -122,24 +122,24 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse style={{ marginBottom: '100px' }}>
-                        <Panel header="Authority Details">
-                            <AuthorityDetail />
-                        </Panel>
-                    </Collapse>
-                </Col>
-            </Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Collapse style={{ marginBottom: '100px' }}>
+                            <Panel header="Authority Details">
+                                <AuthorityDetail />
+                            </Panel>
+                        </Collapse>
+                    </Col>
+                </Row>
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
+                        <Button danger form="myForm" onClick={onCloseAction}>
                             Cancel
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        <Button htmlType="submit" form="myForm" danger disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>
