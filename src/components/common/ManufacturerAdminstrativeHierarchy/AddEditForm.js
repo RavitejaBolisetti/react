@@ -121,6 +121,15 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
+                <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Collapse style={{ marginBottom: '100px' }}>
+                        <Panel header="Authority Details">
+                            <AuthorityDetail />
+                        </Panel>
+                    </Collapse>
+                </Col>
+            </Row>
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -136,7 +145,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             </Form>
-            <Row gutter={20}>
+            {/* <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse style={{ marginBottom: '100px' }}>
                         <Panel header="Authority Details">
@@ -144,7 +153,7 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                 </Col>
-            </Row>
+            </Row> */}
         </>
     );
 };

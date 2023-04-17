@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
-import { FaHistory } from 'react-icons/fa';
+import { FaHistory,FaAngleUp } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { HierarchyFormButton } from 'components/common/Button';
@@ -306,7 +306,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                             </Col>
                             <div>
                                 <Button type="primary" onClick={uploadModelOpen}>
-                                            {/* <FaHistory className={styles.buttonIcon} /> */}
+                                            {/* <FaAngleUp className={styles.buttonIcon} /> */}
                                             Upload
                                         </Button>
                                 {manufacturerAdminHierarchyData.length > 0 && (
