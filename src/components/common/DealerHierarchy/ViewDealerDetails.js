@@ -20,7 +20,8 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                 <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
                 {(selectedTreeData?.type === 'PARNT' || selectedTreeData?.type === 'parentGroup') && (
                     <>
-                        <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Owner Name">{selectedTreeData?.ownerName}</Descriptions.Item>
+                        <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNo}</Descriptions.Item>
                         <Descriptions.Item label="Email ID">{selectedTreeData?.emailId}</Descriptions.Item>
                         <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>

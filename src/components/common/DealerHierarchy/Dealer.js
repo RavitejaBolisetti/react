@@ -73,7 +73,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
-    const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
+    const [isChecked, setIsChecked] = useState(false);
+    //unCheckedChildren="Inactive"
 
     const [searchValue, setSearchValue] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -172,7 +173,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
 
         const data = { ...values, ...customFormInput, [values?.inputFormType]: { ...values[values?.inputFormType], parentId: codeToBeSaved, id: recordId } };
 
-        //console.log(data, 'ThisIsBusi');
+        console.log(data, 'ThisIsBusi');
 
         const onSuccess = (res) => {
             form.resetFields();

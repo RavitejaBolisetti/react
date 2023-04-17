@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
+import { Col, Input, Form, Row, Select, Switch, Button, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateMobileNoField, validateEmailField, validatePanField } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
@@ -126,7 +126,8 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.status} label="Status" name="status">
-                        <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} unCheckedChildren="Inactive" {...disabledProps} />
+                    <Switch defaultChecked={isChecked} onChange={() => setIsChecked(!isChecked)}  {...disabledProps} />
+                                {/* checkedChildren="Active" unCheckedChildren="Inactive" */}
                     </Form.Item>
                 </Col>
             </Row>
@@ -198,7 +199,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.contactNo} label="Contact Number" name={[parentGroupForm, 'contactNumber']} rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
+                            <Form.Item initialValue={formData?.contactNo} label="Contact Number" name={[parentGroupForm, 'contactNo']} rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
                                 <Input placeholder={preparePlaceholderText('Contact Number')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -212,7 +213,8 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name={[parentGroupForm, 'status']}>
-                                <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} unCheckedChildren="Inactive" {...disabledProps} />
+                            <Switch defaultChecked={isChecked} onChange={() => setIsChecked(!isChecked)}  {...disabledProps} />
+                                {/* checkedChildren="Active" unCheckedChildren="Inactive" */}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -278,7 +280,8 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name={[companyGroupForm, 'status']}>
-                                <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} unCheckedChildren="Inactive" {...disabledProps} />
+                                <Switch defaultChecked={isChecked} onChange={() => setIsChecked(!isChecked)}  {...disabledProps} />
+                                {/* checkedChildren="Active" unCheckedChildren="Inactive" */}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -340,7 +343,9 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.dateOfRegistertion} label="Date of Registration" name={[gstinGroupForm, 'dateOfRegistertion']} rules={[validateRequiredInputField('Date of Registration')]}>
-                                <Input placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} {...disabledProps} />
+                                {/* <Input placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} {...disabledProps} /> */}
+                                <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} {...disabledProps} />
+                                
                             </Form.Item>
                         </Col>
 
@@ -360,7 +365,8 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name={[gstinGroupForm, 'status']}>
-                                <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} unCheckedChildren="Inactive" {...disabledProps} />
+                            <Switch defaultChecked={isChecked} onChange={() => setIsChecked(!isChecked)}  {...disabledProps} />
+                                {/* checkedChildren="Active" unCheckedChildren="Inactive" */}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -433,7 +439,8 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name={[branchGroupForm, 'status']}>
-                                <Switch checkedChildren="Active" defaultChecked onChange={() => setIsChecked(!isChecked)} unCheckedChildren="Inactive" {...disabledProps} />
+                            <Switch defaultChecked={isChecked} onChange={() => setIsChecked(!isChecked)}  {...disabledProps} />
+                                {/* checkedChildren="Active" unCheckedChildren="Inactive" */}
                             </Form.Item>
                         </Col>
                     </Row>
