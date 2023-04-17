@@ -82,12 +82,12 @@ const LeftSideBarMain = (props) => {
     const expandedkeys=[];
     const navigate = useNavigate();
 
-    const [mainKeys,setmainKeys]=useState([])
+
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [searchValue, setSearchValue] = useState('');
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [openKeys, setOpenKeys] = useState([]);
+    const [openKeys, setOpenKeys] = useState(['ADMN', 'COMN-07', 'COMN-07.01']);
 
     const errorAction = (message) => {
         console.log('success');
@@ -154,41 +154,41 @@ const LeftSideBarMain = (props) => {
         });
     };
 
-    const finalMenuData = useMemo(() => {
-        const loop = (data) =>
-            data.map((item) => {
-                const strTitle = item?.menuTitle;
-                const index = strTitle?.toLowerCase()?.indexOf(searchValue?.toLowerCase());
-                const beforeStr = strTitle?.substring(0, index);
-                const afterStr = strTitle?.slice(index + searchValue.length);
-                const menuTitle =
-                    searchValue && index > -1 ? (
-                        <span className={styles.searchMenuContainer}>
-                            {beforeStr}
-                            <span className={styles.searchMenuTitle}>{searchValue}</span>
-                            {afterStr}
-                        </span>
-                    ) : (
-                        <span>
-                            <span>{strTitle}</span>
-                        </span>
-                    );
-                if (item?.subMenu) {
-                    return {
-                        ...item,
-                        menuTitle,
-                        menuOrgTitle: item?.menuTitle,
-                        subMenu: loop(item?.subMenu),
-                    };
-                }
-                return {
-                    ...item,
-                    menuOrgTitle: item?.menuTitle,
-                    menuTitle,
-                };
-            });
-        return loop(menuData);
-    }, [searchValue, menuData]);
+    // const finalMenuData = useMemo(() => {
+    //     const loop = (data) =>
+    //         data.map((item) => {
+    //             const strTitle = item?.menuTitle;
+    //             const index = strTitle?.toLowerCase()?.indexOf(searchValue?.toLowerCase());
+    //             const beforeStr = strTitle?.substring(0, index);
+    //             const afterStr = strTitle?.slice(index + searchValue.length);
+    //             const menuTitle =
+    //                 searchValue && index > -1 ? (
+    //                     <span className={styles.searchMenuContainer}>
+    //                         {beforeStr}
+    //                         <span className={styles.searchMenuTitle}>{searchValue}</span>
+    //                         {afterStr}
+    //                     </span>
+    //                 ) : (
+    //                     <span>
+    //                         <span>{strTitle}</span>
+    //                     </span>
+    //                 );
+    //             if (item?.subMenu) {
+    //                 return {
+    //                     ...item,
+    //                     menuTitle,
+    //                     menuOrgTitle: item?.menuTitle,
+    //                     subMenu: loop(item?.subMenu),
+    //                 };
+    //             }
+    //             return {
+    //                 ...item,
+    //                 menuOrgTitle: item?.menuTitle,
+    //                 menuTitle,
+    //             };
+    //         });
+    //     return loop(menuData);
+    // }, [searchValue, menuData]);
 
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxDark;
 
@@ -393,25 +393,27 @@ const LeftSideBarMain = (props) => {
     // searching in the tree with routing to next Page
     let values = [];
 
-    const Saveopenkeys = (keys) => {
-        Object.entries(keys).map(([keyname, value]) => {
-            values.push(value);
-        });
-    };
+    // const Saveopenkeys = (keys) => {
+    //     console.log(keys)
+    //     Object.entries(keys).map(([keyname, value]) => {
+    //         values.push(value);
+    //     });
+    // };
     const rootSubmenuKeys = menuData.map((e) => {
         return e.menuId;
     });
     // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
     function openMenuBar(target) {
         // let flag = true;
-        setOpenKeys([])
+        // setOpenKeys([])
         function subMenuSearch(TopMenu) {
             for (let i = 0; i < TopMenu.length; i++) {
                
                 expandedkeys.push(TopMenu[i].menuId);
                 let strTitle=TopMenu[i].menuId;
                 if (strTitle.toLowerCase() === target.toLowerCase()) {
-                    Saveopenkeys(expandedkeys);
+                    console.log(expandedkeys)
+                    setOpenKeys(expandedkeys);
                 }
                 else if (TopMenu[i].subMenu) {
                     subMenuSearch(TopMenu[i].subMenu);
@@ -421,16 +423,14 @@ const LeftSideBarMain = (props) => {
             }
         }
         subMenuSearch(menuData);
-        setmainKeys(values);
-        setOpenKeys(values);
     }
     const searchResult = (value) => {
         if (value?.length < 3) return;
      
-        setSearchValue(value);
+        // setSearchValue(value);
         const val = flatternData.map((i) => {
             if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())) {
-                               return {
+                return {
                     value: i.menuId,
                     label: i.menuTitle,
                 };
@@ -441,10 +441,7 @@ const LeftSideBarMain = (props) => {
 
     const [options, setOptions] = useState([]);
     const handleSearch = (value) => {
-        
-    
         setOptions(value ? searchResult(value).filter((i) => i) : []);
-
     };
   
     const onSelect = (value, label) => {
@@ -484,7 +481,7 @@ const LeftSideBarMain = (props) => {
                             onSearch={handleSearch}
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                         >
-                            <Input.Search size="large" placeholder="input here" enterButton />
+                            <Input.Search size="large" placeholder="Search" enterButton />
                         </AutoComplete>
 
                     )}
@@ -518,7 +515,7 @@ const LeftSideBarMain = (props) => {
                                     Home
                                 </Link>
                             </Item>
-                            {prepareMenuItem(finalMenuData)}
+                            {prepareMenuItem(menuData)}
                         </Menu>
                     </>
                 ) : (
