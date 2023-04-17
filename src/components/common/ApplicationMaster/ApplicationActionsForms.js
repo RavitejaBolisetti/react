@@ -6,22 +6,7 @@ import CardApplicationAction from './CardApplicationAction';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import styles from 'pages/common/Common.module.css';
 
-const applicationData = [
-    {
-        id: '1',
-        applicationName: 'APP nm 1',
-    },
-    {
-        id: '2',
-        applicationName: 'APP nm 2',
-    },
-    {
-        id: '3',
-        applicationName: 'APP nm 3',
-    },
-];
 
 const ApplicationActionsForm = ({ form, onFinish, status, name, id, isEditing, isBtnDisabled, actions }) => {
 

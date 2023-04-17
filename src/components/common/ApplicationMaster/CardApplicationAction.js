@@ -38,12 +38,27 @@ const CardApplicationAction = (props) => {
             const newList = prev?.applicationAction;
             const indx = prev?.applicationAction?.findIndex((el) => el.id === id);
             newList.splice(indx, 1, { applicationName: label, id: value, status: newFormData.status });
-            return {...prev, applicationAction: newList};
+            return { ...prev, applicationAction: newList };
         });
         setIsEditing(false);
         setIsBtnDisabled(false);
         form.resetFields();
         forceUpdate();
+    };
+
+    const handleDeleteAction = (val) => {
+        setFinalFormdata((prev) => {
+            const newList = prev?.applicationAction;
+            const indx = prev?.applicationAction?.findIndex((el) => el.id === val.id);
+            newList.splice(indx, 1);
+            return { ...prev, applicationAction: newList };
+        });
+
+        // Global niotification
+
+        setIsEditing(false);
+        setIsBtnDisabled(false);
+        form.resetFields();
     };
 
     // on cancel editing
@@ -75,9 +90,14 @@ const CardApplicationAction = (props) => {
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Row justify="end">
                             {!isEditing ? (
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, applicationName, id })} />
-                                </Col>
+                                <>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, applicationName, id })} />
+                                    </Col>
+                                    <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
+                                        <Button onClick={() => handleDeleteAction({ status, applicationName, id })} type="link" icon={<FiTrash />}></Button>
+                                    </Col>
+                                </>
                             ) : (
                                 <>
                                     {' '}
@@ -100,7 +120,7 @@ const CardApplicationAction = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form} isEditing={isEditing} actions={actions}/>
+                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form} isEditing={isEditing} actions={actions} />
                     </Fragment>
                 )}
             </Card>

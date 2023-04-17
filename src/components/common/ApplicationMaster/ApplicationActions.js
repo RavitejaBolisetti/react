@@ -5,20 +5,6 @@ import CardApplicationAction from './CardApplicationAction';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 
-const applicationData = [
-    {
-        id: '1',
-        applicationName: 'APP nm 1',
-    },
-    {
-        id: '2',
-        applicationName: 'APP nm 2',
-    },
-    {
-        id: '3',
-        applicationName: 'APP nm 3',
-    },
-];
 
 const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);

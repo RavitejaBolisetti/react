@@ -58,7 +58,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Title" name="menuTitle" rules={[validateRequiredInputField('Application Title'), validateRequiredInputField('Application Title')]}>
+                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('Application Title'), validateRequiredInputField('Application Title')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('Application Title')} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -99,7 +99,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly = fals
                         <Form.Item className={styles.selectMgTop6} label="Application Criticality Group" name="criticalityGroupCode" rules={[validateRequiredInputField('Application Criticality Group'), validationFieldLetterAndNumber('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} {...disabledProps} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 {criticalityGroupData?.map((cg) => (
-                                    <Option value={cg.criticalityGroupCode}>{cg?.criticalityGroupName}</Option>
+                                    <Option value={cg?.criticalityGroupName}>{ cg?.criticalityGroupName }</Option>
                                 ))}
                             </Select>
                         </Form.Item>

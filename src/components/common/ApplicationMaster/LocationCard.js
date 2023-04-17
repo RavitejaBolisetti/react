@@ -6,6 +6,7 @@ const { Text } = Typography;
 
 function LocationCard(props) {
     let { dealerLocationName, locationId, id, handleDeleteLocation } = props;
+    console.log('props',props)
 
     return (
         <Card
@@ -20,9 +21,9 @@ function LocationCard(props) {
                 <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22}>
                     <Text strong>{dealerLocationName }</Text>
                 </Col>
-                <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                    <Button onClick={() => handleDeleteLocation({ dealerLocationName, locationId })} type="link" icon={<FiTrash />}></Button>
-                </Col>
+                {id?.length>0 && <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
+                    <Button onClick={() => handleDeleteLocation({ dealerLocationName, id })} type="link" icon={<FiTrash />}></Button>
+                </Col>}
             </Row>
         </Card>
     );

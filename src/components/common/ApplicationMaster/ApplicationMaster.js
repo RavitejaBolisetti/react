@@ -17,6 +17,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
 import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetail from './ViewApplicationDetails';
+import { showGlobalNotification } from 'store/actions/notification';
+
 
 const { Search } = Input;
 
@@ -57,6 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchList: applicationMasterDataActions.fetchMenuList,
             listShowLoading: menuDataActions.listShowLoading,
+
+            showGlobalNotification
         },
         dispatch
     ),
@@ -69,7 +73,7 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions }) => {
+export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
 
@@ -85,7 +89,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [menuType, setMenuType] = useState('w');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [closePanels, setClosePanels] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChildAllowed, setIsChildAllowed] = useState(true);
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
@@ -130,7 +133,33 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const onFinish = (values) => {
-        setFinalFormdata({ ...finalFormdata, ApplicationDetails: values });
+        const {  applicationDetails, applicationAction,documentType, accessibleLocation} = finalFormdata;
+        const reqData = [{
+            applicationAction,documentType, accessibleLocation,
+            ...values
+        }];
+        console.log('onSubmit===>', reqData)
+        // return;
+        saveApplicationDetails({ setIsLoading: applicationMasterDataShowLoading, data:reqData })
+        // setFinalFormdata({ ...finalFormdata, ApplicationDetails: values });
+    };
+
+    const onSuccess = (res) => {
+        form.resetFields();
+        setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+
+        if (res?.data) {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
+            res?.data && setSelectedTreeData(res?.data);
+            setSelectedTreeKey([res?.data?.id]);
+            setFormActionType('view');
+            // setFormBtnActive(false);
+            // setIsFormVisible(false);
+        }
+    };
+    const onError = (message) => {
+        showGlobalNotification({ message });
     };
 
     const applicationCall = (key) => {
@@ -168,6 +197,8 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
             setFinalFormdata({...initialFormData, applicationDetails: {parentApplicationId: rest?.applicationId} });
         } else if (FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
             setFinalFormdata({...initialFormData, applicationDetails: {parentApplicationId: rest?.parentApplicationId} });
+        }else {
+            setFinalFormdata(initialFormData)
         }
 
         // setFormData([]);

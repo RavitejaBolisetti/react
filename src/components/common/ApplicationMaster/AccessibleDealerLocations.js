@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { addToolTip } from 'utils/customMenuLink';
 import { ExclamationCircleFilled } from '@ant-design/icons';
@@ -37,10 +37,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdata, finalFormdata, fetchDealerLocations, applicationMasterDataShowLoading }) => {
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const fieldNames = { label: 'dealerLocationName', value: 'id' };
-    // console.log('dealerLocations', dealerLocations);
 
-    function debounce(func, timeout = 600) {
+    function debounce(func, timeout = 400) {
         let timer;
         return (...args) => {
             clearTimeout(timer);
@@ -51,10 +51,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     }
 
     const handleSelect = (value) => {
-        setFinalFormdata(prev => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { id: value?.key, dealerLocationName: value?.label }] }));
-
-        console.log('dealerLocationName', value);
-        // setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { id: value?.key, dealerLocationName: value?.label }] }));
+        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { id: value?.key, dealerLocationName: value?.label }] }));
     };
 
     const onSearchLocation = debounce((text) => {
@@ -65,10 +62,11 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     const handleDeleteLocation = (values) => {
         setFinalFormdata((prev) => {
             const prevData = prev;
-            const index = prev?.accessibleLocation?.findIndex((el) => el.locationCode === values.locationCode);
+            const index = prev?.accessibleLocation?.findIndex((el) => el?.dealerLocationName === values?.dealerLocationName);
             prevData?.accessibleLocation?.splice(index, 1);
             return prevData;
         });
+        forceUpdate();
     };
 
     return (
@@ -119,5 +117,4 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     );
 };
 
-// export default AccessibleDealerLocations;
 export const AccessibleDealerLocations = connect(mapStateToProps, mapDispatchToProps)(AccessibleDealerLocationMain);
