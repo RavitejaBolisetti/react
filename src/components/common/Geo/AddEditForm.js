@@ -13,7 +13,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, selectedTreeData, isDataAttributeLoaded, attributeData, unFilteredAttributeData, geoData } = props;
-    const { selectedTreeKey, selectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { selectedTreeKey, selectedTreeSelectKey, handleSelectTreeClick, flatternData, setSelectedTreeKey, setSelectedTreeSelectKey } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
 
@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     let selectedAttribute = selectedTreeData?.attributeKey;
 
-    if (formActionType === FROM_ACTION_TYPE.EDIT) {
+    if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
         treeCodeId = formData?.geoParentCode;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
@@ -56,13 +56,13 @@ const AddEditFormMain = (props) => {
         selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    // useEffect(() => {
-    //     if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-    //         setSelectedTreeKey([treeCodeId]);
-    //     }
-    //     setSelectedTreeSelectKey(treeCodeId);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [treeCodeId]);
+    useEffect(() => {
+        // if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+        //     setSelectedTreeKey([treeCodeId]);
+        // }
+        setSelectedTreeSelectKey(treeCodeId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -89,9 +89,7 @@ const AddEditFormMain = (props) => {
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" {...attributeHierarchyFieldValidation}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option value={item?.id} disabled={selectedAttribute === item?.id ? true : false}>
-                                        {item?.hierarchyAttribueName}
-                                    </Option>
+                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                 ))}
                             </Select>
                         </Form.Item>
