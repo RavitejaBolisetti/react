@@ -9,7 +9,7 @@ import { HierarchyFormButton } from 'components/common/Button';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ChangeHistoryGeo } from '../ChangeHistory';
+import { ChangeHistory } from './ChangeHistory';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -352,7 +352,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
                     )}
                 </Col>
             </Row>
-            <ChangeHistoryGeo />
+            <ChangeHistory />
             <AddEditForm {...formProps} />
         </>
     );
