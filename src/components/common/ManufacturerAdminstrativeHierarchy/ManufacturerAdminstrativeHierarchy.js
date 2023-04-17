@@ -14,6 +14,7 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { AddEditForm } from './AddEditForm';
 import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
+import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy'
 
 import LeftPanel from '../LeftPanel';
 
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: manufacturerAdminHierarchyDataActions.saveData,
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryModelOpen,
+            uploadModelOpen: manufacturerAdminHierarchyDataActions.uploadModelOpen,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -71,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen}) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -288,27 +290,35 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={19} sm={19} md={19} lg={19} xl={19} className={style.subheading}>
+                        <Row gutter={20} style={{display: 'flex',justifyContent:'space-between'}}>
+                        {/* className={styles.searchAndLabelAlign} */}
+                            <Col xs={19} sm={19} md={19} lg={19} xl={12}>
                                 Hierarchy
                                 <Search
                                     placeholder="Search"
                                     style={{
-                                        width: '43%',
+                                        width: '70%',
                                     }}
                                     allowClear
                                     onChange={onChange}
                                     className={styles.searchField}
                                 />
                             </Col>
-                            {manufacturerAdminHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
-                                </Col>
-                            )}
+                            <div>
+                                <Button type="primary" onClick={uploadModelOpen}>
+                                            {/* <FaHistory className={styles.buttonIcon} /> */}
+                                            Upload
+                                        </Button>
+                                {manufacturerAdminHierarchyData.length > 0 && (
+                                    <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
+                                        <Button type="primary" onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen}`}>
+                                            {/* className={`${styles.floatRight}`} */}
+                                            <FaHistory className={styles.buttonIcon} />
+                                            Change History
+                                        </Button>
+                                    </Col>
+                                )}
+                            </div>
                         </Row>
                     </div>
                     <div className={styles.content}>
@@ -363,6 +373,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 </Col>
             </Row>
             <ManufacturerAdminHierarchyChangeHistory />
+            <ManufactureAdminHierarchyUpload />
             <AddEditForm {...formProps} />
         </>
     );

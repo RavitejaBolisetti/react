@@ -10,7 +10,8 @@ export const MANUFACTURER_ADMIN_HIERARCHY_SET_FORM_DATA = 'MANUFACTURER_ADMIN_HI
 
 export const MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
-export const  MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE';
+export const MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE';
+export const MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE = 'MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE';
 
 const receiveManufacturerAdminHierarchyData = (data) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED,
@@ -32,7 +33,7 @@ manufacturerAdminHierarchyDataActions.listShowLoading = (isLoading) => ({
 });
 
 manufacturerAdminHierarchyDataActions.changeHistoryModelOpen = (visible) => ({
-    type:MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    type: MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE,
     visible: true,
 });
 
@@ -44,6 +45,16 @@ manufacturerAdminHierarchyDataActions.changeHistoryModelClose = (visible) => ({
 manufacturerAdminHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_DATA_SHOW_LOADING,
     isLoading,
+});
+
+manufacturerAdminHierarchyDataActions.uploadModelOpen = (visible) => ({
+    type: MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE,
+    visible: true,
+});
+
+manufacturerAdminHierarchyDataActions.uploadModelOpen = (visible) => ({
+    type: MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE,
+    visible: false,
 });
 
 manufacturerAdminHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {

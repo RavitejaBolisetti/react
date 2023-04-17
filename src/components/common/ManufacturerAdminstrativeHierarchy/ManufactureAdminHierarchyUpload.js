@@ -1,11 +1,45 @@
 import React from 'react';
 import { Button, Form, Row, Col, Modal } from 'antd';
 import { FiUpload, FiDownload } from 'react-icons/fi';
+import { connect } from 'react-redux';
+import { withDrawer } from 'components/withDrawer';
+import { bindActionCreators } from 'redux';
+import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 
-export const Upload = () => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], uploadVisible },
+        },
+    } = state;
+
+    let returnValue = {
+        userId,
+        isHistoryLoading,
+        isHistoryLoaded,
+        isVisible: uploadVisible,
+        changeHistoryData,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryModelClose,
+        },
+        dispatch
+    ),
+});
+
+const UploadMain = () => {
     return (
-        <>
-            <Modal>
+        
+            <>
                 <Form>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -32,7 +66,9 @@ export const Upload = () => {
                         </Col>
                     </Row>
                 </Form>
-            </Modal>
-        </>
+            </>
+        
     );
 };
+
+export const ManufactureAdminHierarchyUpload = connect(mapStateToProps, mapDispatchToProps) (withDrawer(UploadMain, { title: 'Upload', width: '520px' }));
