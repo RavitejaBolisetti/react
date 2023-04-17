@@ -16,6 +16,10 @@
     height: 60px;
 }
 
+.myDrawerStyle :global .ant-drawer-wrapper-body {
+    height: calc(100vh - 50px) !important;
+}
+
 .myDrawerStyle :global .ant-drawer-close {
     color: #000000;
 }

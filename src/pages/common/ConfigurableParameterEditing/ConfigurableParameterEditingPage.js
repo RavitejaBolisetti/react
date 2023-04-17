@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigurableParameterEditing } from 'components/common/ConfigurableParameterEditing';
+import { ConfigurableParameterEditing } from 'components/common/ConfigurableParameterEditing/ConfigurableParameterEditing';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 

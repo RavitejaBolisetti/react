@@ -79,7 +79,6 @@ import {
   const App = () => {
     const [form] = Form.useForm();
     const onFinish = (values) => {
-      console.log('Received values of form: ', values);
     };
     const prefixSelector = (
       <Form.Item name="prefix" noStyle>

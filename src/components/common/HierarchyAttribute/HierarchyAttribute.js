@@ -104,13 +104,13 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             } else if (RefershData) {
                 setRefershData((prev) => !prev);
                 hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
-                setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(detailData?.hierarchyAttribute);
             } else if (detailData?.hierarchyAttribute) {
                 if (filterString) {
                     const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
-                    setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                    setSearchdata(filterDataItem);
                 } else {
-                    setSearchdata(detailData?.hierarchyAttribute?.map((el, i) => ({ ...el, srl: i + 1 })));
+                    setSearchdata(detailData?.hierarchyAttribute);
                 }
             }
         }
@@ -128,7 +128,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
-            setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            setSearchdata(filterDataItem);
         } else {
             setSearchdata(detailData?.hierarchyAttribute);
         }
@@ -189,6 +189,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            render: ((_t, _r, i) => i+1 ),
         })
     );
 
@@ -313,12 +314,12 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles3.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style2.subheading}>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} className={style2.subheading}>
                                         Hierarchy Attribute Type
                                     </Col>
-                                    <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <Select className={style2.attributeSelet} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                             {attributeData?.map((item) => (
                                                 <Option value={item}>{item}</Option>
@@ -331,6 +332,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
+                                                    marginLeft:"-10px",
+                                                    
                                                 }}
                                                 allowClear
                                                 onSearch={onSearchHandle}
@@ -338,17 +341,17 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                             />
                                         </Col>
                                     )}
+                                    {detailData?.hierarchyAttributeType && (
+                                        <Col className={styles3.addGroup} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                            <Button icon={<TfiReload />} className={style2.refreshBtn} onClick={handleReferesh} danger />
+                                            <Button icon={<PlusOutlined />} className={style2.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Attribute
+                                            </Button>
+                                        </Col>
+                                    )}
                                     {/* </div> */}
                                 </Row>
                             </Col>
-                            {detailData?.hierarchyAttributeType && (
-                                <Col className={styles3.addGroup} xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Button icon={<TfiReload />} className={style2.refreshBtn} onClick={handleReferesh} danger />
-                                    <Button icon={<PlusOutlined />} className={style2.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Attribute
-                                    </Button>
-                                </Col>
-                            )}
                         </Row>
                     </div>
                 </Col>
@@ -363,7 +366,6 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                                     imageStyle={{
                                         height: '20%',
-                                      
                                     }}
                                     description={
                                         selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
