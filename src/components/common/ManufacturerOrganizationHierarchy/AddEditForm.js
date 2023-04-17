@@ -82,7 +82,7 @@ const AddEditFormMain = (props) => {
             <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type Code" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                    <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                         
                         <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} {...disabledProps} showSearch allowClear>
                         {attributeData?.map((item) => (
@@ -102,7 +102,7 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={formData?.manufactureOrgCode} label="Attribute Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
+                    <Form.Item initialValue={formData?.manufactureOrgCode} label="Hierarchy Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
                         <Input maxLength={6} placeholder={preparePlaceholderText('Attribute Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
