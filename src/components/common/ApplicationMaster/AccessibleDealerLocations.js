@@ -10,6 +10,8 @@ import { Col, Row, Select, Modal, AutoComplete } from 'antd';
 import { Fragment } from 'react';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
+import { showGlobalNotification } from 'store/actions/notification';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -31,12 +33,14 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
+
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdata, finalFormdata, fetchDealerLocations, applicationMasterDataShowLoading }) => {
+const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdata, finalFormdata, fetchDealerLocations, applicationMasterDataShowLoading, showGlobalNotification }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const fieldNames = { label: 'dealerLocationName', value: 'id' };
 
@@ -51,6 +55,13 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     }
 
     const handleSelect = (value) => {
+
+        if(finalFormdata?.accessibleLocation.findIndex(el => el?.id === value?.key ) !== -1){
+            console.log('same locatioln selected')
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This location is already added.' });
+            return;
+        }
+
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { id: value?.key, dealerLocationName: value?.label }] }));
     };
 

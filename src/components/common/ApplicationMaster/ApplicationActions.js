@@ -13,7 +13,12 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
 
     const onActionFormFinish = (val) => {
         const { value, label } = val?.applicationName;
-        setFinalFormdata({ ...finalFormdata, applicationAction: [...finalFormdata.applicationAction, { applicationName: label, id: value, status: val.status }] });
+        
+        if(finalFormdata?.applicationAction.findIndex(el => el?.actionId === value ) !== -1){
+            console.log('error duplicate found');
+            return;
+        };
+        setFinalFormdata({ ...finalFormdata, applicationAction: [...finalFormdata.applicationAction, { actionName: label, actionId: value, status: val.status }] });
         actionForm.resetFields();
     };
 

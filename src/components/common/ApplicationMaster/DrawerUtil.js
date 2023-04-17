@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Drawer, Form, Col, Collapse, Row, Button, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Drawer, Form, Col, Collapse, Row, Button, Space, Spin } from 'antd';
 
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
@@ -13,12 +13,17 @@ import {AccessibleDealerLocations} from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave,criticalityGroupData, configurableParamData, actions, menuData }) => {
+const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave,criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading }) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
-    console.log('criticalityGroupData',criticalityGroupData, 'configurableParamData',configurableParamData, 'actions',actions )
+
+    useEffect(()=> {
+        return () => {
+            setIsBtnDisabled(false);
+        }
+    },[])
 
     let drawerTitle = 'Add Application Details';
     if (formActionType === 'add') {
@@ -79,6 +84,7 @@ const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, force
                         paddingBottom: '10px',
                     }}
                 >
+                    <Spin spinning={isApplicatinoOnSaveLoading}>
                     <ApplicationDetails setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} menuData={menuData}/>
 
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : '' } onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
@@ -89,7 +95,9 @@ const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, force
                     {isDocumentToGenerate && (
                         <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                             <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : '' }>Document Type </span>}  key="2">
-                                <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled}/>
+                                <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata}
+                                 setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled}
+                                 />
                             </Panel>
                         </Collapse>
                     )}
@@ -101,6 +109,7 @@ const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, force
                             </Panel>
                         </Collapse>
                     )}
+                    </Spin>
                 </Space>
             </>
         </Drawer>

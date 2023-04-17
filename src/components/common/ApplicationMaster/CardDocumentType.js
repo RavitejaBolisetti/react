@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
@@ -10,6 +10,14 @@ const CardDocumentType = (prop) => {
     const { id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        return()=> {
+            // on unmount it clears state 
+            setIsEditing(false);
+            setIsBtnDisabled(false);
+        };
+    },[])
 
     // on Click edit button sets form fields
     const onEdit = (values) => {

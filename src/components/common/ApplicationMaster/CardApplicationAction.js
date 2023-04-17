@@ -12,15 +12,15 @@ import { Fragment } from 'react';
 const { Text } = Typography;
 
 const CardApplicationAction = (props) => {
-    const { status, applicationName, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled, actions } = props;
+    const { status,actionId, actionName, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled, actions } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
     // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
-            applicationName: {
-                label: values.applicationName,
+            actionName: {
+                label: values.actionName,
                 value: values.id,
                 id: values.id,
             },
@@ -33,11 +33,11 @@ const CardApplicationAction = (props) => {
     // on clicking save button updates data
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
-        const { value, label } = newFormData?.applicationName;
+        const { value, label } = newFormData?.actionName;
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
-            const indx = prev?.applicationAction?.findIndex((el) => el.id === id);
-            newList.splice(indx, 1, { applicationName: label, id: value, status: newFormData.status });
+            const indx = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
+            newList.splice(indx, 1, { actionName: label, actionId: value, status: newFormData.status });
             return { ...prev, applicationAction: newList };
         });
         setIsEditing(false);
@@ -49,7 +49,7 @@ const CardApplicationAction = (props) => {
     const handleDeleteAction = (val) => {
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
-            const indx = prev?.applicationAction?.findIndex((el) => el.id === val.id);
+            const indx = prev?.applicationAction?.findIndex((el) => el.actionId === val.actionId);
             newList.splice(indx, 1);
             return { ...prev, applicationAction: newList };
         });
@@ -81,7 +81,7 @@ const CardApplicationAction = (props) => {
                             <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            <Text strong>{applicationName || 'Employee Empowerment'}</Text>
+                            <Text strong>{actionName || 'Employee Empowerment'}</Text>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                             <Text type="secondary">Action ID: {id || 'B6G431'}</Text>
@@ -92,10 +92,10 @@ const CardApplicationAction = (props) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, applicationName, id })} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionName, id })} />
                                     </Col>
                                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                                        <Button onClick={() => handleDeleteAction({ status, applicationName, id })} type="link" icon={<FiTrash />}></Button>
+                                        <Button onClick={() => handleDeleteAction({ status, actionName, id })} type="link" icon={<FiTrash />}></Button>
                                     </Col>
                                 </>
                             ) : (
@@ -120,7 +120,7 @@ const CardApplicationAction = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <ApplicationActionsForm status={status} name={applicationName} id={id} form={form} isEditing={isEditing} actions={actions} />
+                        <ApplicationActionsForm status={status} name={actionName} id={id} form={form} isEditing={isEditing} actions={actions} />
                     </Fragment>
                 )}
             </Card>

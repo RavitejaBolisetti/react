@@ -2,10 +2,11 @@ import React from 'react';
 import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled }) {
+function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata }) {
+    
     const onFinishFailed = (err) => {
         console.error(err);
     };
@@ -14,16 +15,24 @@ function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnD
         // setFormBtnDisable(true);
     };
 
+    const duplicateValidator = (value, type) => {
+        // onUpdate check id
+        if (finalFormdata?.documentType.findIndex((el) => el[type] === value) !== -1) {
+            return Promise.reject('Duplicate not allowed');
+        } else {
+            return Promise.resolve();
+        }
+    };
     return (
         <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Code" name="documentTypeCode" rules={[validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code')]}>
+                    <Form.Item label="Code" name="documentTypeCode" rules={[validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeCode') }]}>
                         <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('Application Code')} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Document Name" name="documentTypeDescription" rules={[validateRequiredInputField('Document Name'), validationFieldLetterAndNumber('Document Name')]}>
+                    <Form.Item label="Document Name" name="documentTypeDescription" rules={[validateRequiredInputField('Document Name'), validateAlphanumericWithSpace('Document Name'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeDescription') }]}>
                         <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('Document Name')} />
                     </Form.Item>
                 </Col>
