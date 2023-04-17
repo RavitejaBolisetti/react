@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Form, Row, Col, Button, Input } from 'antd';
 import { FiLock } from 'react-icons/fi';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 import { doLogoutAPI, authPostLogin } from 'store/actions/auth';
 import { updatePasswordActions } from 'store/actions/data/updatePassword';
@@ -48,8 +49,8 @@ const mapDispatchToProps = (dispatch) => ({
 const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogin, isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
-    const [confirmDirty, setConfirmDirty] = useState(false);
     const canSkip = preLoginData?.passwordStatus?.status === 'A';
+    const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
 
     useEffect(() => {
         if (!preLoginData) {
@@ -75,16 +76,6 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                     form.resetFields();
                     showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
                     navigate(ROUTING_LOGIN);
-                    
-                    // doLogout({
-                    //     onSuccess: (res) => {
-                    //         if (res?.data) {
-                    //             navigate(ROUTING_LOGIN);
-                    //         }
-                    //     },
-                    //     onError,
-                    //     userId,
-                    // });
                 }
             };
 
@@ -97,7 +88,6 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                 onSuccess,
                 onError,
             };
-            console.log('🚀 ~ file: UpdatePassword.js:99 ~ onFinishFailed ~ requestData:', requestData);
 
             saveData(requestData);
         }
@@ -118,14 +108,15 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         }
     };
 
-    const handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        setConfirmDirty(confirmDirty || !!value);
-    };
-
     const handleSkipNow = () => {
         authPostLogin(preLoginData);
     };
+
+    const passwordSuffix = (type) => (
+        <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
+            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
+        </span>
+    );
 
     return (
         <>
@@ -154,7 +145,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Old password" visibilityToggle={true} />
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
@@ -171,14 +162,14 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                             ]}
                                                             className={`${styles.changer} ${styles.inputBox}`}
                                                         >
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
+                                                            <Input.Password prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('New Password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={true} />
+                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
+                                                            <Input.Password prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>

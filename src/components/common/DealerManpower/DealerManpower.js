@@ -8,7 +8,7 @@ import { dealerManpowerActions } from 'store/actions/data/dealerManpower';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { ChangeHistoryGeo } from '../ChangeHistory';
+import { ChangeHistory } from '../ChangeHistory';
 
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'components/common/Common.module.css';
@@ -279,7 +279,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
                     </Col>
                     <Col xs={24} sm={24} md={!isTreeViewVisible ? 23 : 12} lg={!isTreeViewVisible ? 23 : 16} xl={!isTreeViewVisible ? 23 : 16} xxl={!isTreeViewVisible ? 23 : 16} className={styles.padRight0}>
                         {isChangeHistoryVisible ? (
-                            <ChangeHistoryGeo />
+                            <ChangeHistory />
                         ) : (
                             <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                 {isFormVisible && <AddEditForm {...formProps} />}

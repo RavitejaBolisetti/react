@@ -50,7 +50,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
-    const [confirmDirty, setConfirmDirty] = useState(false);
     const [inValidOTP, setInValidOTP] = useState(false);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
 
@@ -179,7 +178,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const otpSentOnMobileChange = (event) => {
-        console.log(event.target.checked, 'Final Check');
         setOTPSentOnMobile(event.target.checked);
     };
 
@@ -218,11 +216,11 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         // handle invalid form submission
     };
 
-    const handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        setConfirmDirty(confirmDirty || !!value);
-    };
-
+    const passwordSuffix = (type) => (
+        <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
+            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
+        </span>
+    );
     return (
         <>
             <div className={styles.loginSection}>
@@ -408,32 +406,14 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                     ]}
                                                                     className={`${styles.changer} ${styles.inputBox}`}
                                                                 >
-                                                                    <Input
-                                                                        type={showPassword?.newPassword ? 'text' : 'password'}
-                                                                        placeholder="Enter new password"
-                                                                        prefix={<FiLock size={18} />}
-                                                                        suffix={
-                                                                            <span onMouseDown={() => setShowPassword({ newPassword: true })} onMouseUp={() => setShowPassword({ newPassword: false })} onMouseLeave={() => setShowPassword({ confirmNewPassword: false })}>
-                                                                                {!showPassword?.confirmPassword ? <AiOutlineEyeInvisible size={24} /> : <AiOutlineEye size={24} />}
-                                                                            </span>
-                                                                        }
-                                                                    />
+                                                                    <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('New Password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                                    <Input
-                                                                        type={showPassword?.confirmNewPassword ? 'text' : 'password'}
-                                                                        placeholder="Re-enter new password"
-                                                                        prefix={<FiLock size={18} />}
-                                                                        suffix={
-                                                                            <span onMouseDown={() => setShowPassword({ confirmNewPassword: true })} onMouseUp={() => setShowPassword({ confirmNewPassword: false })} onMouseLeave={() => setShowPassword({ confirmNewPassword: false })}>
-                                                                                {!showPassword?.confirmNewPassword ? <AiOutlineEyeInvisible size={24} /> : <AiOutlineEye size={24} />}
-                                                                            </span>
-                                                                        }
-                                                                    />
+                                                                <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
+                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" prefix={<FiLock size={18} />} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
