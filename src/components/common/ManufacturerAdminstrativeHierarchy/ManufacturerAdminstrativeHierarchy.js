@@ -197,7 +197,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, manufactureOrgParntId: codeToBeSaved };
+        const data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
 

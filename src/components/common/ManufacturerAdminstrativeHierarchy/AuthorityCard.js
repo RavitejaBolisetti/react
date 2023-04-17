@@ -10,8 +10,7 @@ import { FaLessThanEqual } from 'react-icons/fa';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, tncReq, signatureReq, documentName, docCode, setDocumentTypesList, authoitytype, token, dateTo, dateFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
-    // const { tncReq, signatureReq, documentName, docCode, setDocumentTypesList, authoitytype, token, dateTo, dateFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
+const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, token, dateTo, dateFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
