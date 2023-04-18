@@ -96,16 +96,16 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
+            // filters: [
+            //     {
+            //         text: 'Active',
+            //         value: 'Active',
+            //     },
+            //     {
+            //         text: 'Inactive',
+            //         value: 'Inactive',
+            //     },
+            // ],
             render: (text) => (text ? 'Active' : 'In Active'),
         })
     );
