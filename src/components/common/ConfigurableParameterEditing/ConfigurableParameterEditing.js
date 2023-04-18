@@ -207,9 +207,9 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             width: '10%',
             render: (record) => [
                 <Space wrap>
-                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}
+                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)} >
                     <FiEdit2 />
-                        </Button>
+                    </Button>
                     {
                         <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
                             <ViewEyeIcon />
@@ -389,7 +389,9 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                             </Empty>
                         )}
                     >
+                        <div className={styles.tableProduct}>
                         <DataTable isLoading={isLoading} {...tableProps} />
+                        </div>
                     </ConfigProvider>
                 </Col>
             </Row>

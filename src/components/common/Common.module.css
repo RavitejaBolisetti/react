@@ -195,7 +195,7 @@
     box-shadow: none;
 }
 .tableProduct {
-    /* margin:20px 0;  */
+    margin:20px 0;
     padding: 0;
 }
 .tableProduct :global .ant-table-thead tr th {
