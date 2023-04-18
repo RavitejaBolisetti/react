@@ -83,7 +83,7 @@ const LeftSideBarMain = (props) => {
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const [openKeys, setOpenKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
-    const [expendedKeys, setExpendedKeys]=useState([])
+    const [expendedKeys, setExpendedKeys] = useState([]);
 
     const [options, setOptions] = useState([]);
     // console.log('🚀 ~ file: LeftSideBar.js:87 ~ LeftSideBarMain ~ options:', options);
@@ -96,7 +96,7 @@ const LeftSideBarMain = (props) => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId, errorAction });
         }
-        return () => { };
+        return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -206,10 +206,10 @@ const LeftSideBarMain = (props) => {
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            console.log("in the loop")
+            console.log('in the loop');
             setOpenKeys(keys);
         } else {
-            console.log("not in the loop");
+            console.log('not in the loop');
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
@@ -217,22 +217,20 @@ const LeftSideBarMain = (props) => {
     const rootSubmenuKeys = menuData.map((e) => {
         return e.menuId;
     });
-const setOpening=(value)=>{
-    console.log("value",value);
-    setOpenKeys(value);
-}
+    const setOpening = (value) => {
+        console.log('value', value);
+        setOpenKeys(value);
+    };
     function openMenuBar(target) {
         function subMenuSearch(TopMenu) {
-            console.log("menu enter")
+            console.log('menu enter');
             for (let i = 0; i < TopMenu.length; i++) {
                 expandedkeys.push(TopMenu[i].menuId);
                 let strTitle = TopMenu[i].menuId;
                 if (strTitle.toLowerCase() === target.toLowerCase()) {
                     console.log('🚀 ~ file: LeftSideBar.js:232 ~ subMenuSearch ~ expandedkeys:', expandedkeys);
                     setOpening(expandedkeys);
-                    
-                }
-                else if (TopMenu[i].subMenu) {
+                } else if (TopMenu[i].subMenu) {
                     subMenuSearch(TopMenu[i].subMenu);
                 }
                 expandedkeys.pop();
@@ -275,8 +273,8 @@ const setOpening=(value)=>{
                     </Row>
 
                     {!collapsed && (
-                        <AutoComplete  options={options} onSelect={onSelect} onChange={handleSearch} >
-                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type='text'/>
+                        <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
+                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
                         </AutoComplete>
                     )}
                 </div>

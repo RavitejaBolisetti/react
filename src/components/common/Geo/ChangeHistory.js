@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { geoDataActions } from 'store/actions/data/geo';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from './ChangeHistory.module.css';
+import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 
@@ -54,6 +54,7 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
+            width: 220,
         })
     );
 
@@ -61,6 +62,7 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
+            width: 150,
         })
     );
 
@@ -68,31 +70,35 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
         tblPrepareColumns({
             title: 'Attribute Type',
             dataIndex: 'attributeType',
+            width: 200,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Hierarchy Code',
+            title: 'Code',
             dataIndex: 'geoCode',
+            width: 100,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Hierarchy Name',
+            title: 'Name',
             dataIndex: 'geoName',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Parent Hierarchy Code',
+            title: 'Parent Code',
             dataIndex: 'parentCode',
+            width: 150,
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Parent Hierarchy Name',
+            title: 'Parent Name',
             dataIndex: 'parentName',
+            width: 200,
         })
     );
 
@@ -101,15 +107,15 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
         tableColumn,
         tableData: changeHistoryData,
     };
-    
+
     return (
         <div className={styles.changeHistoryContainer}>
-            <div>
+            {/* <div>
                 <h3>Change History</h3>
-            </div>
+            </div> */}
             <DataTable {...tableProps} />
         </div>
     );
 };
 
-export const ChangeHistoryGeo = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryGeoMain, {title: 'Change History', width: '90%'}));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryGeoMain, { title: 'Change History', width: '90%' }));

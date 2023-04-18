@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Select, Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
@@ -131,6 +131,14 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         }
 
         setIsReadOnly(true);
+    };
+
+    const renderConfigurableParemetarType = (record) => {
+        return typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.find((item) => item?.key === record?.configurableParameterType)?.value;
+    };
+
+    const renderControlGroup = (record) => {
+        return typeData && typeData[PARAM_MASTER.CTRL_GRP.id]?.find((item) => item?.key === record?.controlGroup)?.value;
     };
 
     const renderTableColumnName = (record, key, type) => {
@@ -384,7 +392,9 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} {...tableProps} />
+                       <div className={styles.tableProduct}>
+                         <DataTable isLoading={isLoading} {...tableProps} />
+                       </div>
                     </ConfigProvider>
                 </Col>
             </Row>
