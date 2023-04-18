@@ -2,7 +2,7 @@
     "name": "dms-ui-application",
     "version": "0.0.1",
     "private": true,
-    "proxy": "https://9kh66eg030.execute-api.ap-south-1.amazonaws.com/qa/",
+    "proxy": "https://2lebbk509d.execute-api.ap-south-1.amazonaws.com/dev/",
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
@@ -41,9 +41,9 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test --coverage",
+        "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "coverage": "react-scripts test --coverage --watchAll=false --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+        "coverage": "react-scripts test --coverage --watchAll --collectCoverageFrom='src/components/**/*.{js,.jsx}' --transformIgnorePatterns \"node_modules/(?!axios)/\"",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
