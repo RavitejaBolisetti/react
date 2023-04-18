@@ -92,7 +92,7 @@ rolemanagementDataActions.saveData = withAuthToken((params) => ({ token, accessT
     const apiCallParams = {
         data,
         method: 'post',
-        url: baseURLPath,
+        url: BASE_URL_ROLE_MANAGEMENT_ROLES,
         token,
         accessToken,
         userId,

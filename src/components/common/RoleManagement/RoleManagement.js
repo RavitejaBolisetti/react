@@ -147,7 +147,7 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
-            id: '',
+            id: RowData?.id,
             webRoleApplicationMapping: [
                 {
                     id: '',
@@ -566,7 +566,7 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
                 </Col>
             </Row>
 
-            <DrawerUtil  RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };
