@@ -1,7 +1,9 @@
 import { Card, Row, Col, Typography, Button } from 'antd';
 import React from 'react';
-import { FiDelete, FiTrash } from 'react-icons/fi';
 
+import { FiTrash } from 'react-icons/fi';
+import {CloseOutlined} from "@ant-design/icons";
+import style from './ApplicationMaster.module.css';
 const { Text } = Typography;
 
 function LocationCard(props) {
@@ -22,7 +24,7 @@ function LocationCard(props) {
                     <Text strong>{dealerLocationName }</Text>
                 </Col>
                 {id?.length>0 && <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                    <Button onClick={() => handleDeleteLocation({ dealerLocationName, id })} type="link" icon={<FiTrash />}></Button>
+                    <Button onClick={() => handleDeleteLocation({ dealerLocationName, id })} type="link" icon={<CloseOutlined className={style.anticon}/>}></Button>
                 </Col>}
             </Row>
         </Card>

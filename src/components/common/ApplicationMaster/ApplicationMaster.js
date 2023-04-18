@@ -126,6 +126,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         setIsReadOnly(false);
     };
 
+    const onChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
     const handleTypeClick = (type) => {
         setIsActive((current) => !current);
         setMenuType(type);
@@ -272,7 +276,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                             <Search
                                                 placeholder="Search"
                                                 allowClear
-                                                // onChange={onChange}
+                                                onChange={onChange}
                                                 className={styl.anticon}
                                             />
                                         </Col>

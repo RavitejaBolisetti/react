@@ -5,7 +5,8 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 
-import { Col, Row, Select, Modal, AutoComplete } from 'antd';
+
+import { Col, Row, Input, AutoComplete } from 'antd';
 
 import { Fragment } from 'react';
 import LocationCard from './LocationCard';
@@ -97,8 +98,9 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                         onSearch={onSearchLocation}
                         // onChange={onChange}
                         placeholder="control mode"
-                    />
-
+                    
+                    >  </AutoComplete>
+                   
                     {/* <Select
                         // defaultValue={record[dataIndex]}
                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
