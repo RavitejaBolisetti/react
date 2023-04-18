@@ -231,7 +231,7 @@ const LeftSideBarMain = (props) => {
                             defaultOpenKeys={openKeys}
                             openKeys={openKeys}
                             selectedKeys={selectedKeys}
-                            onChange={onOpenChange}
+                            onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
