@@ -63,9 +63,12 @@ const UploadMain = (props) => {
             <Form>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Text>Please download file and after filling the details upload it</Text>
-                        <Button icon={<FiDownload style={{margin:'0 0.5rem 0 0'}} />} type="primary" style={{margin:'0 0 0 1rem'}} >
-                            Download
+                        {/* <Text>Please download file and after filling the details upload it</Text> */}
+                        <Button icon={<FiDownload style={{margin:'0 0.5rem 0 0',color:'#ff3e5b'}} />} style={{width:'100%',height:'auto', 
+                        padding:'1rem 0 2.5rem 0',borderRadius:'0.45rem', color: '#000',fontWeight:'500'
+                        }} 
+                        >
+                            Please download file and after filling the details upload it
                         </Button>
                     </Col>
                 </Row>
