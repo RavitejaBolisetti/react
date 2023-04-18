@@ -189,7 +189,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
-            render: ((_t, _r, i) => i+1 ),
+            render: (_t, _r, i) => i + 1,
         })
     );
 
@@ -292,7 +292,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleChange = (attributeType) => {
@@ -332,8 +332,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
-                                                    marginLeft:"-10px",
-                                                    
+                                                    marginLeft: '-10px',
                                                 }}
                                                 allowClear
                                                 onSearch={onSearchHandle}
