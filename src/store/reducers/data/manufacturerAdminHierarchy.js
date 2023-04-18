@@ -8,6 +8,7 @@ const initialState = {
     historyData: [],
     isHistoryLoading: false,
     changeHistoryVisible: false,
+    changeHistoryAuthorityVisible: false,
     uploadVisible: false,
 };
 
@@ -24,7 +25,7 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
         case MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE:
             return { ...state, changeHistoryVisible: action.visible };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE:
-            return { ...state, changeHistoryVisible: action.visible };
+            return { ...state, changeHistoryAuthorityVisible: action.visible };
         case MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE:
             return { ...state, uploadVisible: action.visible }
 

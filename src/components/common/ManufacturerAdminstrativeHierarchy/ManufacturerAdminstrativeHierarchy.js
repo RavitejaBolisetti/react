@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty, Dropdown, message } from 'antd';
-import { FaHistory, FaAngleUp } from 'react-icons/fa';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Row, Input, Empty, Dropdown, message, Space } from 'antd';
+import { FaHistory } from 'react-icons/fa';
+import { PlusOutlined, DownOutlined } from '@ant-design/icons';
 
 import { HierarchyFormButton } from 'components/common/Button';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -12,9 +12,8 @@ import { ViewProductDetail } from './ViewProductDetail';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ManufacturerAdminHierarchyChangeHistory } from '../ManufacturerAdminstrativeHierarchy';
+import { ManufacturerAdminHierarchyChangeHistory, ManufacturerAdminAuthorityChangeHistory, ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 
 import LeftPanel from '../LeftPanel';
 
@@ -22,14 +21,13 @@ import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 
 import { EN } from 'language/en';
-import { Link } from 'react-router-dom';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible,historyData=[] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible, historyData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -62,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: manufacturerAdminHierarchyDataActions.saveData,
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryModelOpen,
-            changeHistoryAuthorityModelOpen:manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen,
+            changeHistoryAuthorityModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen,
             uploadModelOpen: manufacturerAdminHierarchyDataActions.uploadModelOpen,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
@@ -76,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible,changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -288,28 +286,18 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
-    const items = [
+    const historyOptions = [
         {
+            label: <div onClick={changeHistoryModelOpen}>Administrative Change History</div>,
             key: '1',
-            label: (
-                <div onClick={changeHistoryAuthorityModelOpen}>
-                    Authority Change history
-                </div>
-        
-            ),
-            
+            icon: <FaHistory />,
         },
         {
+            label: <div onClick={changeHistoryAuthorityModelOpen}>Authority Change History</div>,
             key: '2',
-            label: (
-                <div onClick={changeHistoryModelOpen} type="link">
-                    Admin Change history
-                </div>
-            ),
+            icon: <FaHistory />,
         },
-        
     ];
-    console.log("Button",items);
 
     return (
         <>
@@ -339,18 +327,16 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                                     <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
                                         <Dropdown
                                             menu={{
-                                                items,
-                                                // onClick,
+                                                items: historyOptions,
                                             }}
                                         >
                                             <Button type="primary">
-                                                {/* className={`${styles.floatRight}`} */}
                                                 <FaHistory className={styles.buttonIcon} />
                                                 Change History
+                                                <DownOutlined />
                                             </Button>
                                         </Dropdown>
                                     </Col>
-                                    // onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen}`}
                                 )}
                             </div>
                         </Row>
@@ -407,6 +393,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 </Col>
             </Row>
             <ManufacturerAdminHierarchyChangeHistory />
+            <ManufacturerAdminAuthorityChangeHistory />
             <ManufactureAdminHierarchyUpload />
             <AddEditForm {...formProps} />
         </>

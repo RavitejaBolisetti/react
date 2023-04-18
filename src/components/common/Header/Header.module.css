@@ -215,10 +215,10 @@
     float: right;
 }
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item,
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item,
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
     color: #342C2C;
     font-size: 14px;
     font-weight: 400;
@@ -226,40 +226,32 @@
     padding: 0;
 }
 
-:global .ant-dropdown {
+.headerContainer :global .ant-dropdown {
     width: 170px;
 }
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon {
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-title-content .anticon {
     padding-right: 8px;
 }
 
-:global .ant-dropdown .ant-dropdown-menu,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu {
+.headerContainer :global .ant-dropdown .ant-dropdown-menu,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu {
     padding: 10px 16px;
 }
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:hover,
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-active,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item-active,
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active {
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-active,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item-active,
+.headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active,
+.headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title-active {
     background-color: transparent;
     color: #ff3e5b;
 }
 
-/* :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:last-child,
-:global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:last-child {
-    color: #ff3e5b !important;
-} */
-
-/* .welcomeUser .userServiceArea {
-    float: right;
-} */
 
 .headerRight :global .ant-btn-default {
     background-color: #ffffff;

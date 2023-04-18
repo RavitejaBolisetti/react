@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryVisible },
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryAuthorityVisible },
         },
     } = state;
 
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        isVisible: changeHistoryVisible,
+        isVisible: changeHistoryAuthorityVisible,
         changeHistoryData,
     };
     return returnValue;
