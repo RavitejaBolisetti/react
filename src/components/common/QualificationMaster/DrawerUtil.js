@@ -6,8 +6,9 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const DrawerUtil = ({ codeIsReadOnly,handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
+    const codeDisabledProp = {disabled :codeIsReadOnly}
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -75,12 +76,12 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, setsaveclick, isLoading, formBt
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('Qualification Code'), validationFieldLetterAndNumber('Qualification Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...codeDisabledProp} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('Qualification Name'), validateAlphanumericWithSpaceHyphenPeriod('Qualification Name')]}>
-                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')}  /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
                         </Form.Item>
                     </Col>
                 </Row>
