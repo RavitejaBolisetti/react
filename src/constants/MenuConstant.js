@@ -190,7 +190,8 @@ export const MenuConstant = {
 
     [getMenyKey('RPT-PG')]: {
         key: 'RPT-PG',
-        icon: undefined,
+        link: routing.ROUTING_REPORT_PAGINATED_REPORT,
+        icon: undefined,        
         parentMenuId: 'RPT',
     },
 };
