@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            RoleManagement: { MenuTreeData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [] },
+            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -50,6 +50,7 @@ const mapStateToProps = (state) => {
         isDataAttributeLoaded,
         isLoadingOnSave,
         MenuTreeData,
+        RoleData,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -61,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: rolemanagementDataActions.fetchList,
             fetchMenuList: rolemanagementDataActions.fetchMenuList,
+            fetchRole: rolemanagementDataActions.fetchRole,
             saveData: rolemanagementDataActions.saveData,
             listShowLoading: rolemanagementDataActions.listShowLoading,
             onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
@@ -73,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
 
     const [filterString, setFilterString] = useState();
@@ -91,18 +93,25 @@ export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSav
     const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
     const [MenuAlteredData, setMenuAlteredData] = useState();
+    const [RowData, setRowData] = useState();
+
     useEffect(() => {
-        // fetchList({ setIsLoading: listShowLoading, userId });
-        fetchMenuList({ setIsLoading: listShowLoading, userId });
-        console.log('This is the Menus Data : ', MenuTreeData);
         FilterMenudata(MenuTreeData);
-    }, []);
-    // useEffect(() => {
-    //     if (!isDataLoaded && userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isDataLoaded, userId]);
+    }, [MenuTreeData]);
+    useEffect(() => {
+        fetchRole({ setIsLoading: listShowLoading, userId, id: RowData?.id });
+
+        console.log('This is the Specfic Role Data : ', RowData);
+    }, [RowData]);
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchMenuList({ setIsLoading: listShowLoading, userId });
+
+            console.log('This is the Menus Data : ', MenuTreeData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(RoleManagementData);
@@ -120,10 +129,10 @@ export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSav
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
             if (filterString) {
-                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.roleManagementId) || filterFunction(filterString)(item?.roleManagementName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.roleId) || filterFunction(filterString)(item?.roleName) || filterFunction(filterString)(item?.roleDesceription));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(RoleManagementData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(RoleManagementData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,6 +190,7 @@ export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSav
         setFooterEdit(false);
         setSaveAndSaveNew(false);
         setSaveBtn(true);
+        setRowData(record);
 
         form.setFieldsValue({
             roleId: record.roleId,
@@ -297,7 +307,7 @@ export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSav
     );
     function Subpanel(arr) {
         arr.map((ele) => {
-            if (ele.subMenu.length) {
+            if (ele.subMenu?.length) {
                 ele['children'] = ele?.subMenu;
                 ele['label'] = ele?.menuTitle;
                 ele['value'] = ele?.menuId;
@@ -417,11 +427,11 @@ export const RoleManagementMain = ({ MenuTreeData, fetchMenuList, isLoadingOnSav
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={initialTableData} tableColumn={tableColumn} />
+                        <DataTable tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil MenuAlteredData={MenuAlteredData} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };

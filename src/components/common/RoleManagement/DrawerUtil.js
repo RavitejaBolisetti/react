@@ -256,7 +256,7 @@ const ApplicationData = [
         ],
     },
 ];
-const DrawerUtil = ({ form, MenuAlteredData,viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const disabledProps = { disabled: isReadOnly };
     let StateMangement = {};
     // const disabledProps = { disabled: false };
@@ -276,10 +276,14 @@ const DrawerUtil = ({ form, MenuAlteredData,viewProps, viewData, handleAdd, form
         if (!treeData.length) {
             Subpanel(mocktreeData);
         }
+        console.log('The MenuAlteredData : ', MenuAlteredData);
     }, []);
     useEffect(() => {
         console.log('These are the Expanded Keys : ', ExpandedKeys);
     }, [ExpandedKeys]);
+    useEffect(() => {
+        console.log('These are the Expanded Keys : ', CheckedKeys);
+    }, [CheckedKeys]);
     useEffect(() => {
         let evalue;
         FinalTreedata.map((e) => {
@@ -400,7 +404,9 @@ const DrawerUtil = ({ form, MenuAlteredData,viewProps, viewData, handleAdd, form
     }
 
     const onTreeCheck = (checked, targetNode) => {
-        setCheckedKeys(checked);
+        const EvalChecked = checked['parent'];
+        const EvalChecked2 = EvalChecked['menuId'];
+        setCheckedKeys({ ...CheckedKeys, [CheckedKeys[EvalChecked2]]: checked['label'] });
         console.log('onTreeSelect', checked, targetNode);
     };
     const OnChanges = (value) => {
@@ -416,9 +422,9 @@ const DrawerUtil = ({ form, MenuAlteredData,viewProps, viewData, handleAdd, form
         }
         StateMangement[expanded[0]] = expanded;
         const updated = { ...StateMangement, [expanded[0]]: expanded };
-        console.log('This is the updated : ', updated);
+        console.log('This is the updated : ', expanded);
 
-        setExpandedKeys(updated);
+        setExpandedKeys({ ...ExpandedKeys, [expanded[0]]: expanded });
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
@@ -590,7 +596,7 @@ const DrawerUtil = ({ form, MenuAlteredData,viewProps, viewData, handleAdd, form
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
-                                    {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>}
+                                    {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>}
                                 </Form.Item>
                             </Col>
                         </Row>
