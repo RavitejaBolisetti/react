@@ -45,15 +45,19 @@ export const Menu = (state = initialState, action) => {
     }
 };
 
-const homeMenu = {
-    menuId: 'HOM',
-    menuTitle: 'Home',
-    parentMenuId: 'Web',
-    menuIconUrl: '',
-    isFavourite: '',
-    accessType: 'R',
-    displayOrder: 0,
-    subMenu: [],
-};
+const homeMenu = [
+    {
+        menuId: 'HOM',
+        menuTitle: 'Home',
+        parentMenuId: 'Web',
+        menuIconUrl: '',
+        isFavourite: '',
+        accessType: 'R',
+        displayOrder: 0,
+        subMenu: [],
+    },
+];
 
-const refactorMenu = (menu) => menu;
+const refactorMenu = (menu) => {
+    return [...homeMenu, ...menu];
+};
