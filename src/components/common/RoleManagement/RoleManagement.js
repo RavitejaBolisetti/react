@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Empty, notification, ConfigProvider, Col, Form, Row, Input, Space, Table, List, Drawer, Switch, Collapse, Checkbox, Card, Tree, Divider } from 'antd';
+import { Button, Empty, notification, ConfigProvider, Col, Form, Row, Input, Space, Tablet, Tree, List, Drawer, Switch, Collapse, Checkbox, Card, Divider } from 'antd';
 
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
@@ -17,7 +17,6 @@ import { menuDataActions } from 'store/actions/data/menu';
 
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
-import treeData from './Treedata.json';
 import viewStyle from 'components/common/Common.module.css';
 import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
@@ -27,14 +26,14 @@ import { DataTable } from 'utils/dataTable';
 
 const { Search } = Input;
 
-const initialTableData = [{ roleId: 'hello' }, { roleName: 'Hi', activeIndicator: 1 }];
+const initialTableData = [{ roleId: 'PM001' }, { roleName: 'PM002', activeIndicator: 1 }];
 
 const mapStateToProps = (state) => {
     console.log('state', state);
     const {
         auth: { userId },
         data: {
-            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [] },
+            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [],  isLoading, isFormDataLoaded  },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -45,13 +44,14 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
+        isLoading,
         isDataLoaded,
         RoleManagementData,
-        isDataAttributeLoaded,
         isLoadingOnSave,
         MenuTreeData,
         RoleData,
         attributeData: attributeData?.filter((i) => i),
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -67,15 +67,13 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: rolemanagementDataActions.listShowLoading,
             onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({isLoading,showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
 
     const [filterString, setFilterString] = useState();
@@ -94,6 +92,8 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
     const [saveBtn, setSaveBtn] = useState(false);
     const [MenuAlteredData, setMenuAlteredData] = useState();
     const [RowData, setRowData] = useState();
+    const [saveClick, setSaveClick] = useState();
+
 
     useEffect(() => {
         FilterMenudata(MenuTreeData);
@@ -110,6 +110,12 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
 
             console.log('This is the Menus Data : ', MenuTreeData);
         }
+    }, [isDataLoaded, userId]);
+    
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -119,12 +125,12 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RoleManagementData]);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [refreshData, userId]);
+    useEffect(() => {
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refreshData, userId]);
 
     useEffect(() => {
         if (isDataLoaded && RoleManagementData) {
@@ -140,7 +146,67 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
 
     const onFinish = (values) => {
         const recordId = selectedRecord?.id || '';
-        const data = { ...values, id: recordId };
+        const data = {
+            ...values,
+            id: '',
+            webRoleApplicationMapping: [
+                {
+                    id: '',
+                    activeIndicator: true,
+                    applicationId: '4af77de8-363e-480e-bdac-e6c836c8467c',
+                    subApplication: [
+                        {
+                            id: '',
+
+                            activeIndicator: true,
+
+                            applicationId: '8f4d4288-6862-48eb-ab5e-c089972cf0e8',
+                            subApplication: [],
+
+                            roleActionMapping: [
+                                {
+                                    id: '',
+
+                                    actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+
+                                    activeIndicator: true,
+                                },
+                            ],
+                        },
+                    ],
+                    roleActionMapping: [
+                        {
+                            id: '',
+
+                            actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+
+                            activeIndicator: true,
+                        },
+                    ],
+                },
+            ],
+            mobileRoleApplicationMapping: [
+                {
+                    id: '',
+
+                    activeIndicator: true,
+
+                    applicationId: 'a0fc205b-6fcf-4dd3-86dc-f382ac924335',
+
+                    subApplication: [],
+
+                    roleActionMapping: [
+                        {
+                            id: '',
+
+                            actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+
+                            activeIndicator: true,
+                        },
+                    ],
+                },
+            ],
+        };
 
         const onSuccess = (res) => {
             onSaveShowLoading(false);
@@ -148,13 +214,18 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
             setSelectedRecord({});
             setSuccessAlert(true);
             fetchList({ setIsLoading: listShowLoading, userId });
-            setOpenDrawer(false);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            if (saveClick === true) {
+                setOpenDrawer(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setOpenDrawer(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
         };
 
         const onError = (message) => {
             onSaveShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {
@@ -165,7 +236,7 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
             onSuccess,
         };
 
-        // saveData(requestData);
+        saveData(requestData);
     };
 
     const viewProps = {
@@ -181,6 +252,7 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
         setSaveBtn(true);
 
         setOpenDrawer(true);
+        setSaveClick(false)
         setFooterEdit(false);
     };
 
@@ -351,6 +423,69 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
         console.log('This is the Manipulated Data : ', MenuTreeData);
     };
 
+    function TreeNodeWithCheckbx({ title, key }) {
+        console.log('khauoukjbk', title);
+        const [checked, setChecked] = useState(false);
+        const handleCheckBoChecj = () => {
+            console.log('hello');
+        };
+        return (
+            <Tree.TreeNode title={title} key={key}>
+                <Checkbox checked={checked} onChange={handleCheckBoChecj} />
+            </Tree.TreeNode>
+        );
+    }
+
+    const renderTreeNodes = (data) => {
+        console.log('data5', data);
+        return data?.children?.map((node) => {
+            if (node.leafNode !== null) {
+                console.log('hcgcgc', node);
+                console.log('befir Checkbox', node.leafNode?.title);
+                return <TreeNodeWithCheckbx key={node.key} title={node.title} />;
+            } else {
+                console.log('hello1', node.title);
+
+                return (
+                    <Tree.TreeNode key={node.key} title={node.title}>
+                        {console.log('node', node, 'node.title', node.title, 'hshj', node.children)}
+                        {renderTreeNodes(node.children)}
+                    </Tree.TreeNode>
+                );
+            }
+        });
+    };
+
+    // const TreeNode = ({ node })=>  {
+    //     const { children, label } = node;
+
+    //     const [showChildren, setShowChildren] = useState(false);
+
+    //     const handleClick = () => {
+    //       setShowChildren(!showChildren);
+    //     };
+    //     return (
+    //       <>
+    //         <div onClick={handleClick} style={{ marginBottom: "10px" }}>
+    //           <span>{label}</span>
+    //         </div>
+    //         <ul style={{ paddingLeft: "10px", borderLeft: "1px solid black" }}>
+    //           {showChildren && <Tree treeData={children} />}
+    //         </ul>
+    //       </>
+    //     );
+    //   }
+    // const Tree = ({ treeData }) => {
+    //     return (
+    //       <ul>
+    //         {treeData?.map((node) => (
+    //           <TreeNode node={node} key={node.key} />
+
+    //         ))}
+    //       </ul>
+    //     );
+    //   }
+
     return (
         <>
             <Row gutter={20}>
@@ -427,11 +562,14 @@ export const RoleManagementMain = ({ MenuTreeData, RoleData, fetchRole, fetchMen
                             </Empty>
                         )}
                     >
-                        <DataTable tableData={searchData} tableColumn={tableColumn} />
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>
-            <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            {console.log('treeData jsx', treeData)}
+            <Tree>{renderTreeNodes(treeData)}</Tree>
+            {/* <Tree treeData={treeData} /> */}
+            <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData}  setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };

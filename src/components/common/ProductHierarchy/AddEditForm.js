@@ -114,13 +114,13 @@ const AddEditFormMain = (props) => {
             </Row>
 
             <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                     <Button htmlType="submit" danger type="primary" disabled={!isFormBtnActive}>
                         Save
                     </Button>

@@ -39,12 +39,13 @@ configParamEditActions.changeHistoryShowLoading = (isLoading) => ({
 });
 
 configParamEditActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, parameterType } = params;
+    const { setIsLoading, data, parameterType, onSuccessAction } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
     const onSuccess = (res) => {
         if (res?.data) {
+            onSuccessAction && onSuccessAction(res);
             dispatch(receiveParametersData(res?.data, parameterType));
         } else {
             onError('Internal Error, Please try again');
@@ -93,11 +94,12 @@ configParamEditActions.saveData = withAuthToken((params) => ({ token, accessToke
 });
 
 configParamEditActions.fetchDataList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data } = params;
+    const { setIsLoading, onError, onSuccessAction, data } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
         if (res?.data) {
+            onSuccessAction && onSuccessAction(res);
             dispatch(receiveData(res?.data));
         } else {
             onError('Internal Error, Please try again');

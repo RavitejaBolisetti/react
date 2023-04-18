@@ -195,70 +195,42 @@ const FinalTreedata = [
         ],
     },
 ];
-
-const ApplicationData = [
-    {
-        id: '',
-        roleId: 'role11232',
-        roleDesceription: 'abcd',
-        activeIndicator: true,
-        roleName: 'roleTest',
-        webRoleApplicationMapping: [
-            {
-                id: '',
-                activeIndicator: true,
-                applicationId: '4af77de8-363e-480e-bdac-e6c836c8467c',
-                subApplication: [
-                    {
-                        id: '',
-                        activeIndicator: true,
-                        applicationId: '8f4d4288-6862-48eb-ab5e-c089972cf0e8',
-                        subApplication: ['string'],
-                        roleActionMapping: [
-                            {
-                                id: '',
-                                actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
-                                activeIndicator: true,
-                            },
-                        ],
-                    },
-                ],
-                roleActionMapping: [
-                    {
-                        id: '',
-                        actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
-                        activeIndicator: true,
-                    },
-                ],
-            },
-        ],
-
-        mobileRoleApplicationMapping: [
-            {
-                id: '',
-
-                activeIndicator: true,
-
-                applicationId: 'a0fc205b-6fcf-4dd3-86dc-f382ac924335',
-
-                subApplication: [],
-
-                roleActionMapping: [
-                    {
-                        id: '',
-
-                        actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
-
-                        activeIndicator: true,
-                    },
-                ],
-            },
-        ],
-    },
-];
-const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const DrawerUtil = ({open,setSaveClick, form, viewProps,viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+  
     const disabledProps = { disabled: isReadOnly };
-    let StateMangement = {};
+
+    // const [selectedActions, setSelectedActions] = useState({})
+    const [ParentCheck, setParentCheck] = useState();
+    const Mychildren = [
+        {
+            label: 'Read',
+            value: 'Read',
+        },
+        {
+            label: 'View',
+            value: 'View',
+        },
+        {
+            label: 'Update',
+            value: 'Update',
+        },
+        {
+            label: 'Delete',
+            value: 'Delete',
+        },
+        {
+            label: 'Create',
+            value: 'Create',
+        },
+        {
+            label: 'Upload',
+            value: 'Upload',
+        },
+    ];
+    const StateMangement = {
+        Common: [],
+        Common1: [],
+    };
     // const disabledProps = { disabled: false };
     const [treeData, settreeData] = useState([]);
     const [SelectedKeys, setSelectedKeys] = useState();
@@ -360,7 +332,7 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
             function Subpanel(node) {
                 if (!node?.children) {
                     return (
-                        <Button onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                        <Button onClick={() => setSaveClick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                             Save
                         </Button>
                     );
@@ -524,7 +496,7 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
                 width="540"
                 placement="right"
                 onClose={onClose}
-                open={openDrawer}
+                open={open}
                 maskClosable={false}
                 className={footerEdit ? styles.viewMode : styles.drawerCriticalityGrp}
                 footer={
@@ -544,7 +516,7 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
                                     ''
                                 )}
                                 {saveBtn ? (
-                                    <Button loading={isLoadingOnSave} onClick={() => setsaveclick(true)} disabled={!formBtnDisable} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    <Button loading={isLoadingOnSave} onClick={() => setSaveClick(true)} disabled={!formBtnDisable} form="myForm" key="submit" htmlType="submit" type="primary">
                                         Save
                                     </Button>
                                 ) : (

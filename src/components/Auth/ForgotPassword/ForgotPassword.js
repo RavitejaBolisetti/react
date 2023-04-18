@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
 import { UndoOutlined } from '@ant-design/icons';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 
 import { BiUser } from 'react-icons/bi';
@@ -49,8 +50,8 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
-    const [confirmDirty, setConfirmDirty] = useState(false);
     const [inValidOTP, setInValidOTP] = useState(false);
+    const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -177,7 +178,6 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     };
 
     const otpSentOnMobileChange = (event) => {
-        console.log(event.target.checked, 'Final Check');
         setOTPSentOnMobile(event.target.checked);
     };
 
@@ -216,11 +216,11 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         // handle invalid form submission
     };
 
-    const handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        setConfirmDirty(confirmDirty || !!value);
-    };
-
+    const passwordSuffix = (type) => (
+        <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
+            {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
+        </span>
+    );
     return (
         <>
             <div className={styles.loginSection}>
@@ -363,19 +363,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Row gutter={20} className={styles.otpVerificationContainer}>
                                                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                {counter ? (
-                                                                    <div className={styles.otpCounter}>
-                                                                        {`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className={styles.otpNotReceive}>
-                                                                        {inValidOTP ? (
-                                                                            <span>{"Incorrect code"}</span>
-                                                                        ) : (
-                                                                            <span>{"Didn't receive OTP?"}</span>
-                                                                        )}
-                                                                    </div>
-                                                                )}
+                                                                {counter ? <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div> : <div className={styles.otpNotReceive}>{inValidOTP ? <span>{'Incorrect code'}</span> : <span>{"Didn't receive OTP?"}</span>}</div>}
                                                             </Col>
                                                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                                 <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
@@ -418,14 +406,14 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                     ]}
                                                                     className={`${styles.changer} ${styles.inputBox}`}
                                                                 >
-                                                                    <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Enter new password" visibilityToggle={true} />
+                                                                    <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), validateFieldsPassword('New Password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                                    <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Re-enter new password" visibilityToggle={true} />
+                                                                <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
+                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" prefix={<FiLock size={18} />} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>

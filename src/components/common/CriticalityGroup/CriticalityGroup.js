@@ -15,10 +15,10 @@ import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { DataTable } from 'utils/dataTable';
+import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
-import { escapeRegExp } from 'utils/escapeRegExp';
 
 const { Search } = Input;
 
@@ -257,11 +257,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleReferesh = () => {
         setRefershData(!RefershData);
-    };
-
-    const filterFunction = (filterString) => (title) => {
-        const filterStringNew = filterString.trim();
-        return title && title.match(new RegExp(escapeRegExp(filterStringNew), 'i'));
     };
 
     const onSearchHandle = (value) => {
