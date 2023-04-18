@@ -264,6 +264,7 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
     const [SelectedKeys, setSelectedKeys] = useState();
     const [CheckedKeys, setCheckedKeys] = useState();
     const [ExpandedKeys, setExpandedKeys] = useState({});
+    const [ourCheckedKeys, setourCheckedKeys] = useState();
     let drawerTitle = '';
     if (formActionType === 'add') {
         drawerTitle = 'Add New Role';
@@ -276,24 +277,29 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
         if (!treeData.length) {
             Subpanel(mocktreeData);
         }
-        console.log('The MenuAlteredData : ', MenuAlteredData);
     }, []);
     useEffect(() => {
         console.log('These are the Expanded Keys : ', ExpandedKeys);
     }, [ExpandedKeys]);
     useEffect(() => {
-        console.log('These are the Expanded Keys : ', CheckedKeys);
-    }, [CheckedKeys]);
+        console.log('The MenuAlteredData : ', MenuAlteredData);
+
+        const withCheck = {};
+        MenuAlteredData?.forEach((el) => {
+            withCheck[el?.value] = [];
+        });
+        setourCheckedKeys(withCheck);
+    }, [MenuAlteredData]);
+
+    useEffect(() => {
+        console.log('We change our checked keys to 404 : ', ourCheckedKeys);
+    }, [ourCheckedKeys]);
     useEffect(() => {
         let evalue;
         FinalTreedata.map((e) => {
             StateMangement[e?.value] = [];
         });
-        console.log('My state Mangement : ', StateMangement);
     }, []);
-    useEffect(() => {
-        console.log('The updated State : ', StateMangement);
-    }, [StateMangement]);
 
     useEffect(() => {
         function Subpanel(node) {
@@ -404,9 +410,9 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
     }
 
     const onTreeCheck = (checked, targetNode) => {
-        const EvalChecked = checked['parent'];
-        const EvalChecked2 = EvalChecked['menuId'];
-        setCheckedKeys({ ...CheckedKeys, [CheckedKeys[EvalChecked2]]: checked['label'] });
+        // setCheckedKeys({ ...CheckedKeys, [CheckedKeys[EvalChecked2]]: checked });
+
+        setCheckedKeys(checked);
         console.log('onTreeSelect', checked, targetNode);
     };
     const OnChanges = (value) => {
