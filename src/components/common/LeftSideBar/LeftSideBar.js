@@ -103,7 +103,6 @@ const LeftSideBarMain = (props) => {
     useEffect(() => {
         setOptions([]);
         // setExpandedKeys['FAV'];
-
         if (filter?.length >= 3) {
             const menuItem = childredData?.map((i) => {
                 if (i?.menuTitle?.toLowerCase().includes(filter?.toLowerCase())) {
@@ -207,8 +206,10 @@ const LeftSideBarMain = (props) => {
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            console.log("in the loop")
             setOpenKeys(keys);
         } else {
+            console.log("not in the loop");
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
@@ -254,9 +255,9 @@ const setOpening=(value)=>{
     //     setOpenKeys(newExpandedKeys);
     // };
     useEffect(() => {
-        console.log(openKeys);
+        console.log(options);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [openKeys]);
+    }, [options]);
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -274,8 +275,8 @@ const setOpening=(value)=>{
                     </Row>
 
                     {!collapsed && (
-                        <AutoComplete reset options={options} onSelect={onSelect} onChange={handleSearch}>
-                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear />
+                        <AutoComplete  options={options} onSelect={onSelect} onChange={handleSearch} >
+                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type='text'/>
                         </AutoComplete>
                     )}
                 </div>
@@ -290,7 +291,7 @@ const setOpening=(value)=>{
                             openKeys={openKeys}
                             selectedKeys={selectedKeys}
                             // expendedKeys={expendedKeys}
-                            onOpenChange={onOpenChange}
+                            onChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
