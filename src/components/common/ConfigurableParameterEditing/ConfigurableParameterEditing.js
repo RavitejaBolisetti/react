@@ -207,7 +207,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             width: '10%',
             render: (record) => [
                 <Space wrap>
-                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}>
+                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}
                     <FiEdit2 />
                         </Button>
                     {
