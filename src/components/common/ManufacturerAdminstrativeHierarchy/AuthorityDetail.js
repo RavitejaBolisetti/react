@@ -10,7 +10,7 @@ import AuthorityCard from './AuthorityCard';
 import AuthorityForm from './AuthorityForm';
 import moment from 'moment';
 
-const AuthorityDetail = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, FinalFormdata }) => {
+const AuthorityDetail = () => {
     const [docData, setDocData] = useState([]);
     const [documentTypesList, setDocumentTypesList] = useState([]);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
@@ -18,33 +18,23 @@ const AuthorityDetail = ({ footerEdit = false, onFinishFailed = () => {}, isRead
 
     const [actionForm] = Form.useForm();
 
-    const handleAdd = (value) => {
-        setDocData((prev) => [...prev, value]);
-        actionForm.resetFields();
-    };
-
     const onActionFormFinish = (val) => {
         console.log('value ===>', val, 'AuthorityDetail', moment(val.dateFrom).format());
 
         const { key, label } = val.authoitytype;
         setDocumentTypesList((prev) => [...prev, { token: val.token, authoitytype: key, authorityName: label, dateFrom: moment(val?.dateFrom).format('DD/MM/YYYY'), dateTo: moment(val?.dateTo).format('DD/MM/YYYY') }]);
-        // setFinalFormdata({ ...FinalFormdata, DocumentType: documentTypesList });
-        // setFinalFormdata({ ...FinalFormdata, DocumentType: [...FinalFormdata.DocumentType, val] });
-
         actionForm.resetFields();
         forceUpdate();
-    };
-    const onFinish = (vals) => {
-        setDocumentTypesList(vals);
-        console.log(vals, 'state');
     };
 
     console.log('documentTypesList', documentTypesList);
 
     return (
         <>
+            {/* main form(top form) */}
             <AuthorityForm onFinish={onActionFormFinish} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} />
 
+            {/* card with form */}
             {documentTypesList.length > 0 &&
                 documentTypesList.map((action) => {
                     return <AuthorityCard {...action} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
