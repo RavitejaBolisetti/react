@@ -448,6 +448,10 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
             </>
         );
     };
+    const handleSearch = (element, value) => {
+        console.log('ths is El ', element, value);
+        
+    };
     const AccordianTreeUtils = (data) => {
         return (
             <>
@@ -463,6 +467,7 @@ const DrawerUtil = ({ form, RowData, RoleData, MenuAlteredData, viewProps, viewD
                                                 style={{
                                                     width: '100%',
                                                 }}
+                                                onSearch={(element) => handleSearch(element, el)}
                                                 allowClear
                                             />
                                         </Col>
