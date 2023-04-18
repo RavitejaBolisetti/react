@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link, useLocation } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, Button } from 'antd';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Input, Menu, Layout, Row, Col, AutoComplete, Button } from 'antd';
 import { BsMoon, BsSun } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -10,23 +10,17 @@ import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
 
 import { menuDataActions } from 'store/actions/data/menu';
 import { setCollapsed, setIsMobile } from 'store/actions/common/leftsidebar';
-import { escapeRegExp } from 'utils/escapeRegExp';
 
 import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';
+import { getHierarchyParents } from 'utils/getHierarchyParents';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
-import { HomeIcon } from 'Icons';
-import { showGlobalNotification } from 'store/actions/notification';
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
-
-const filterFunction = (filterString) => (menuTitle) => {
-    return menuTitle && menuTitle.match(new RegExp(escapeRegExp(filterString), 'i'));
-};
 
 const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, captlized = false }) =>
     id && getMenuValue(MenuConstant, id, 'link') ? (
@@ -52,7 +46,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, isMobile, collapsed };
+    let returnValue = { isLoading, userId, isDataLoaded, filter, menuData: menuData, flatternData, childredData: flatternData?.filter((i) => !i.childExist && i.parentMenuId !== 'FAV'), isMobile, collapsed };
     return returnValue;
 };
 
@@ -70,38 +64,58 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed }) => {
-    const location = useLocation();
-    const pagePath = location.pathname;
-    const [current, setCurrent] = useState('mail');
-    const [filterMenuList, setFilterMenuList] = useState();
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-    const [searchValue, setSearchValue] = useState('');
-    const [expandedKeys, setExpandedKeys] = useState([]);
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [openKeys, setOpenKeys] = useState([]);
+const LeftSideBarMain = (props) => {
+    const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
 
-    const errorAction = (message) => {
-        console.log('success');
-    };
+    const location = useLocation();
+    const navigate = useNavigate();
+    const pagePath = location.pathname;
+
+    const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
+    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+
+    const [options, setOptions] = useState([]);
+    const [openKeys, setOpenKeys] = useState([]);
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [selectedMenuId, setSelectedMenuId] = useState(menuId);
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    useEffect(() => {
+        if (menuId) {
+            setSelectedMenuId(menuId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [menuId]);
+
+    useEffect(() => {
+        if (selectedMenuId) {
+            setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
+            setSelectedKeys(selectedMenuId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedMenuId]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, errorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => {} });
         }
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
-        if (filter) {
-            const filterDataItem = flatternData?.filter((item) => filterFunction(filter)(item?.menuTitle));
-            filterDataItem &&
-                setFilterMenuList(
-                    filterDataItem?.map((item) => {
-                        return item.menuId;
-                    }) || []
-                );
+        setOptions([]);
+        if (filter?.length >= 3) {
+            const menuItem = childredData?.map((i) => {
+                if (i?.menuTitle?.toLowerCase().includes(filter?.toLowerCase())) {
+                    return {
+                        key: i.menuId,
+                        value: i.menuTitle,
+                    };
+                }
+                return undefined;
+            });
+            setOptions(menuItem.filter((i) => i));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
@@ -112,65 +126,10 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         setTheme(changeTheme);
     };
 
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            const node = data[i];
-            dataList.push({
-                id: node?.menuId,
-                title: node?.menuTitle,
-            });
-            if (node?.subMenu) {
-                generateList(node?.subMenu);
-            }
-        }
-    };
-
-    menuData && generateList(menuData);
-
-    const getParentKey = (key, tree) => {
-        let parentKey;
-        for (let i = 0; i < tree.length; i++) {
-            const node = tree[i];
-            if (node?.subMenu) {
-                if (node?.subMenu.some((item) => item?.menuId === key)) {
-                    parentKey = node?.menuId;
-                } else if (getParentKey(key, node?.subMenu)) {
-                    parentKey = getParentKey(key, node?.subMenu);
-                }
-            } else if (node?.menuId === key) {
-                parentKey = node?.menuId;
-            }
-        }
-        return parentKey;
-    };
-
-    const onSearch = (e) => {
-        const { value } = e.target;
-
-        const newExpandedKeys = dataList
-            .map((item) => {
-                if (item?.title?.indexOf(value) > -1) {
-                    return getParentKey(item?.id, menuData);
-                }
-                return null;
-            })
-            .filter((item, i, self) => item && self?.indexOf(item) === i);
-
-        setOpenKeys(value ? newExpandedKeys : []);
-        setSearchValue(value);
-    };
-
     const onSubmit = (value, type) => {
         setCollapsed(value);
+        setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
     };
-
-    const onClick = (e) => {
-        setCurrent(e.key);
-    };
-
-    const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
-    const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
@@ -181,60 +140,46 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={parentMenuId.concat(menuId)} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
-                <Item key={parentMenuId.concat(menuId)} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
     };
 
-    const finalMenuData = useMemo(() => {
-        const loop = (data) =>
-            data.map((item) => {
-                const strTitle = item?.menuTitle;
-                const index = strTitle?.toLowerCase()?.indexOf(searchValue?.toLowerCase());
-                const beforeStr = strTitle?.substring(0, index);
-                const afterStr = strTitle?.slice(index + searchValue.length);
-                const menuTitle =
-                    searchValue && index > -1 ? (
-                        <span className={styles.searchMenuContainer}>
-                            {beforeStr}
-                            <span className={styles.searchMenuTitle}>{searchValue}</span>
-                            {afterStr}
-                        </span>
-                    ) : (
-                        <span>
-                            <span>{strTitle}</span>
-                        </span>
-                    );
-                if (item?.subMenu) {
-                    return {
-                        ...item,
-                        menuTitle,
-                        menuOrgTitle: item?.menuTitle,
-                        subMenu: loop(item?.subMenu),
-                    };
-                }
-                return {
-                    ...item,
-                    menuOrgTitle: item?.menuTitle,
-                    menuTitle,
-                };
-            });
-        return loop(menuData);
-    }, [searchValue, menuData]);
+    const onOpenChange = (keys) => {
+        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            setOpenKeys(keys);
+        } else {
+            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+        }
+    };
 
+    const rootSubmenuKeys = menuData.map((e) => {
+        return e.menuId;
+    });
+
+    const handleSearch = (value) => {
+        setFilter(value);
+    };
+
+    const onSelect = (key, value) => {
+        if (value.key && getMenuValue(MenuConstant, value.key, 'link')) navigate(getMenuValue(MenuConstant, value.key, 'link'));
+        setSelectedMenuId(value.key);
+    };
+
+    const onMenuCollapsed = () => {
+        setCollapsed();
+        setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
+        setSelectedKeys(selectedMenuId);
+    };
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
 
-    const onExpand = (newExpandedKeys) => {
-        setExpandedKeys(newExpandedKeys);
-        setAutoExpandParent(false);
-        setOpenKeys(newExpandedKeys);
-    };
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -247,36 +192,31 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
                             </Link>
                         </Col>
                         <Col xs={2} sm={2} md={0} lg={0} xl={0} className={styles.closeButton}>
-                            <RxCross2 onClick={setCollapsed} />
+                            <RxCross2 onClick={onMenuCollapsed} />
                         </Col>
                     </Row>
 
-                    {!collapsed && <Input placeholder="Search" allowClear onChange={onSearch} />}
+                    {!collapsed && (
+                        <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
+                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
+                        </AutoComplete>
+                    )}
                 </div>
                 {!isLoading ? (
                     <>
                         <Menu
-                            onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            // defaultSelectedKeys={[defaultSelectedKeys]}
-                            // defaultOpenKeys={defaultOpenKeys}
+                            defaultOpenKeys={openKeys}
                             openKeys={openKeys}
-                            onOpenChange={onExpand}
+                            selectedKeys={selectedKeys}
+                            onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
-                            <Item key={'home'} className={styles.subMenuParent}>
-                                <Link to={routing.ROUTING_DASHBOARD} className={styles.homeIcon} title={'Home'}>
-                                    <span className={styles.menuIcon}>
-                                        <HomeIcon />
-                                    </span>
-                                    Home
-                                </Link>
-                            </Item>
-                            {prepareMenuItem(finalMenuData)}
+                            {prepareMenuItem(menuData)}
                         </Menu>
                     </>
                 ) : (

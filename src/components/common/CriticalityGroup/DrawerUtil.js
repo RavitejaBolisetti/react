@@ -9,10 +9,11 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(Math.random() * 1000);
     const [TimeTrack, setTimeTrack] = useState(true);
+    const codeDisabledProp = { disabled: codeIsReadOnly };
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -173,7 +174,7 @@ const DrawerUtil = ({ forceUpdate, deletedItemList, setDeletedItemList, showGlob
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="criticalityGroupCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id'), validationFieldLetterAndNumber('Criticality Group Id')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Id')} {...disabledProps} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Id')} {...codeDisabledProp} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
