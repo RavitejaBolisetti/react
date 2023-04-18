@@ -71,32 +71,31 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LeftSideBarMain = (props) => {
     const { isMobile, setIsMobile, isDataLoaded, isLoading, menuData, flatternData, childredData, fetchList, listShowLoading, filter, setFilter, userId, collapsed, setCollapsed } = props;
-    // console.log('🚀 ~ file: LeftSideBar.js:74 ~ LeftSideBarMain ~ flatternData:', flatternData);
+
     const location = useLocation();
-    const pagePath = location.pathname;
-    const [current, setCurrent] = useState('mail');
-    const expandedkeys = [];
-
     const navigate = useNavigate();
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const pagePath = location.pathname;
 
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
-    const [openKeys, setOpenKeys] = useState([]);
-    const [selectedKeys, setSelectedKeys] = useState([]);
-    const [expendedKeys, setExpendedKeys] = useState([]);
+    const menuId = flatternData?.find((i) => i.link === pagePath)?.menuId;
 
     const [options, setOptions] = useState([]);
-    // console.log('🚀 ~ file: LeftSideBar.js:87 ~ LeftSideBarMain ~ options:', options);
+    const [openKeys, setOpenKeys] = useState([]);
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-    const errorAction = (message) => {
-        console.log('success');
-    };
+    useEffect(() => {
+        if (menuId) {
+            setOpenKeys(findParents({ subMenu: menuData }, menuId));
+            setSelectedKeys(menuId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [menuId]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, errorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => { } });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 
@@ -118,69 +117,15 @@ const LeftSideBarMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
-    // const searchResult = (value) => {
-    //     if (value?.length < 3) return;
-    //     const val = flatternData.map((i) => {
-    //         if (i?.menuTitle?.toLowerCase().includes(value?.toLowerCase())) {
-    //             return {
-    //                 value: i.menuId,
-    //                 label: i.menuTitle,
-    //             };
-    //         }
-    //         return undefined;
-    //     });
-    //     setOptions(val.filter((i) => i));
-    // };
-
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', changeTheme);
         setTheme(changeTheme);
     };
 
-    // const dataList = [];
-    // const generateList = (data) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //         const node = data[i];
-    //         dataList.push({
-    //             id: node?.menuId,
-    //             title: node?.menuTitle,
-    //         });
-    //         if (node?.subMenu) {
-    //             generateList(node?.subMenu);
-    //         }
-    //     }
-    // };
-
-    // menuData && generateList(menuData);
-
-    // const getParentKey = (key, tree) => {
-    //     let parentKey;
-    //     for (let i = 0; i < tree.length; i++) {
-    //         const node = tree[i];
-    //         if (node?.subMenu) {
-    //             if (node?.subMenu.some((item) => item?.menuId === key)) {
-    //                 parentKey = node?.menuId;
-    //             } else if (getParentKey(key, node?.subMenu)) {
-    //                 parentKey = getParentKey(key, node?.subMenu);
-    //             }
-    //         } else if (node?.menuId === key) {
-    //             parentKey = node?.menuId;
-    //         }
-    //     }
-    //     return parentKey;
-    // };
-
     const onSubmit = (value, type) => {
         setCollapsed(value);
     };
-
-    const onClick = (e) => {
-        setCurrent(e.key);
-    };
-
-    const defaultSelectedKeys = [routing.ROUTING_COMMON_GEO, routing.ROUTING_COMMON_PRODUCT_HIERARCHY, routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER].includes(pagePath) ? 'FEV' : '';
-    const defaultOpenKeys = current?.keyPath || [defaultSelectedKeys];
 
     const onBreakPoint = (broken) => {
         setIsMobile(broken);
@@ -217,26 +162,30 @@ const LeftSideBarMain = (props) => {
     const rootSubmenuKeys = menuData.map((e) => {
         return e.menuId;
     });
-    const setOpening = (value) => {
-        console.log('value', value);
-        setOpenKeys(value);
-    };
-    function openMenuBar(target) {
-        function subMenuSearch(TopMenu) {
-            console.log('menu enter');
-            for (let i = 0; i < TopMenu.length; i++) {
-                expandedkeys.push(TopMenu[i].menuId);
-                let strTitle = TopMenu[i].menuId;
-                if (strTitle.toLowerCase() === target.toLowerCase()) {
-                    console.log('🚀 ~ file: LeftSideBar.js:232 ~ subMenuSearch ~ expandedkeys:', expandedkeys);
-                    setOpening(expandedkeys);
-                } else if (TopMenu[i].subMenu) {
-                    subMenuSearch(TopMenu[i].subMenu);
+
+
+    const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
+
+    function findParents(node, searchForName) {
+        // If current node name matches the search name, return
+        // empty array which is the beginning of our parent result
+        if (node[fieldNames?.key]?.toLowerCase() === searchForName?.toLowerCase()) {
+            return []
+        }
+        // Otherwise, if this node has a tree field/value, recursively
+        // process the nodes in this tree array
+        if (Array.isArray(node[fieldNames?.children])) {
+            for (var treeNode of node[fieldNames?.children]) {
+                // Recursively process treeNode. If an array result is
+                // returned, then add the treeNode.name to that result
+                // and return recursively
+                const childResult = findParents(treeNode, searchForName)
+
+                if (Array.isArray(childResult)) {
+                    return [treeNode[fieldNames?.key]].concat(childResult);
                 }
-                expandedkeys.pop();
             }
         }
-        subMenuSearch(menuData);
     }
 
     const handleSearch = (value) => {
@@ -245,17 +194,13 @@ const LeftSideBarMain = (props) => {
 
     const onSelect = (value, label) => {
         if (value && getMenuValue(MenuConstant, value, 'link')) navigate(getMenuValue(MenuConstant, value, 'link'));
-        openMenuBar(value);
+        // value && findParents({ subMenu: menuData }, value);
+        value && setOpenKeys(findParents({ subMenu: menuData }, value));
+        value && setSelectedKeys(value);
+        // console.log("🚀 ~ file: LeftSideBar.js:207 ~ onSelect ~ value:", value, findParents({ subMenu: menuData }, value))
     };
-    // const onExpand = (newExpandedKeys) => {
-    //     // setExpandedKeys(newExpandedKeys);
-    //     setAutoExpandParent(false);
-    //     setOpenKeys(newExpandedKeys);
-    // };
-    useEffect(() => {
-        console.log(options);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [options]);
+
+
     return (
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
@@ -281,14 +226,11 @@ const LeftSideBarMain = (props) => {
                 {!isLoading ? (
                     <>
                         <Menu
-                            onClick={onClick}
                             mode="inline"
                             inlineIndent={15}
-                            // defaultSelectedKeys={[onOpenChange]}
-                            //  defaultOpenKeys={expandedKeys}
+                            defaultOpenKeys={openKeys}
                             openKeys={openKeys}
                             selectedKeys={selectedKeys}
-                            // expendedKeys={expendedKeys}
                             onChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
