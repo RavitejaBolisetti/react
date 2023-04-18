@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [],  isLoading, isFormDataLoaded  },
+            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [], isLoading, isFormDataLoaded },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const RoleManagementMain = ({isLoading,showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
 
     const [filterString, setFilterString] = useState();
@@ -94,7 +94,6 @@ export const RoleManagementMain = ({isLoading,showGlobalNotification, MenuTreeDa
     const [RowData, setRowData] = useState();
     const [saveClick, setSaveClick] = useState();
 
-
     useEffect(() => {
         FilterMenudata(MenuTreeData);
     }, [MenuTreeData]);
@@ -111,7 +110,7 @@ export const RoleManagementMain = ({isLoading,showGlobalNotification, MenuTreeDa
             console.log('This is the Menus Data : ', MenuTreeData);
         }
     }, [isDataLoaded, userId]);
-    
+
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -252,7 +251,7 @@ export const RoleManagementMain = ({isLoading,showGlobalNotification, MenuTreeDa
         setSaveBtn(true);
 
         setOpenDrawer(true);
-        setSaveClick(false)
+        setSaveClick(false);
         setFooterEdit(false);
     };
 
@@ -566,10 +565,8 @@ export const RoleManagementMain = ({isLoading,showGlobalNotification, MenuTreeDa
                     </ConfigProvider>
                 </Col>
             </Row>
-            {console.log('treeData jsx', treeData)}
-            <Tree>{renderTreeNodes(treeData)}</Tree>
-            {/* <Tree treeData={treeData} /> */}
-            <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData}  setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} />
+
+            <DrawerUtil  RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} />
         </>
     );
 };

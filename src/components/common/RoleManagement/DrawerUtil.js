@@ -195,8 +195,7 @@ const FinalTreedata = [
         ],
     },
 ];
-const DrawerUtil = ({open,setSaveClick, form, viewProps,viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
-  
+const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const disabledProps = { disabled: isReadOnly };
 
     // const [selectedActions, setSelectedActions] = useState({})
@@ -422,7 +421,6 @@ const DrawerUtil = ({open,setSaveClick, form, viewProps,viewData, handleAdd, for
     };
     const handleSearch = (element, value) => {
         console.log('ths is El ', element, value);
-        
     };
     const AccordianTreeUtils = (data) => {
         return (
