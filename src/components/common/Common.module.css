@@ -65,17 +65,17 @@
     color: #ff3e5b;
 }
 
-.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
+.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
     border-inline-end-width: 1px;
     border-start-end-radius: 4px;
     border-end-end-radius: 4px;
     height: 36px;
 }
 
-.geoSection :global .ant-form-item .ant-form-item-label > label {
+.geoSection :global .ant-form-item .ant-form-item-label>label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -106,8 +106,8 @@
     border-bottom: 1px dashed #d9d9d9;
 }
 
-:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
-:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
     color: #ff3e5b;
 }
 
@@ -115,22 +115,22 @@
 :global .ant-input-search .ant-input:focus{border-color: #e31837; border-right: none;}
 :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px;}
 :global .ant-btn-default:not(:disabled):hover{border-color: #e31837;} */
-.contentHeaderBackground :global .ant-input-affix-wrapper,
-.contentHeaderBackground :global .ant-btn-default,
-.contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
+.contentHeaderBackground .headerSelectField :global .ant-btn-default,
+.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-inline-end-width: 0px;
     border-color: transparent;
 }
 
-.contentHeaderBackground :global .ant-btn-default:not(:disabled):active,
-.contentHeaderBackground :global .ant-btn-default:not(:disabled):hover,
-.contentHeaderBackground :global .ant-input-search .ant-input:focus {
+.contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):active,
+.contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):hover,
+.contentHeaderBackground .headerSelectField :global .ant-input-search .ant-input:focus {
     border-color: transparent;
 }
 
-.contentHeaderBackground :global .ant-btn-default,
-.contentHeaderBackground :global .ant-input-search .ant-input:focus,
-.contentHeaderBackground :global .ant-input-affix-wrapper-focused {
+.contentHeaderBackground .headerSelectField :global .ant-btn-default,
+.contentHeaderBackground .headerSelectField :global .ant-input-search .ant-input:focus,
+.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper-focused {
     border-color: transparent;
 }
 
@@ -162,14 +162,14 @@
 
 :global .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
     background-color: transparent !important;
     color: #ff3e5b;
     font-size: 14px;
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span:hover {
     background-color: transparent !important;
 }
 
@@ -193,6 +193,63 @@
 :global .ant-select-focused:where(.css-dev-only-do-not-override-18twuw5).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
     border-color: #0b0b0c;
     box-shadow: none;
+}
+
+.tableProduct {
+    margin: 20px 0;
+    padding: 0;
+}
+
+.tableProduct :global .ant-table-thead tr th {
+    text-align: center;
+}
+
+.tableProduct :global .ant-pagination .ant-pagination-item {
+    height: 34px !important;
+    line-height: 32px !important;
+    background-color: #ffffff;
+    border: 1px solid #b5b5b6;
+    /* border-radius: 2px; */
+}
+
+.tableProduct :global .ant-pagination .ant-pagination-item-active {
+    border: 1px solid #ff3e5b !important;
+    font-weight: 500;
+}
+
+.tableProduct :global .ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.tableProduct :global .ant-pagination .ant-pagination-next .ant-pagination-item-link {
+    height: 34px !important;
+    line-height: 32px !important;
+    border: 1px solid #b5b5b6;
+    color: #b5b5b6;
+}
+
+:global .ant-btn-default {
+    background-color: transparent;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:disabled {
+    border: 1px solid #bfbfbf;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:not(:disabled) {
+    background-color: transparent;
+    color: #ff3e5b !important;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ff3e5b;
+    color: #ffffff !important;
+}
+
+:global .ant-btn-default.ant-btn-dangerous {
+    margin-bottom: 8px;
+}
+
+:global .ant-btn-default.ant-btn-dangerous svg {
+    margin-right: 6px;
+    padding-top: 2px;
 }
 
 /* Custom CSS */
@@ -417,13 +474,7 @@
     margin: 0px 0px 0px 46px;
 }
 
-/* :global .ant-space-item {
-    color: #ff3e5b;
-} */
 
-/* :global .ant-btn-default {
-    border-color: #d9d9d9;
-} */
 
 :global .ant-tree {
     background: #f4f4f4;
@@ -488,20 +539,6 @@
 
 :global .ant-tree {
     background: transparent;
-}
-
-:global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b;
-    color: #ffffff !important;
-}
-
-:global .ant-btn-default.ant-btn-dangerous {
-    margin-bottom: 8px;
-}
-
-:global .ant-btn-default.ant-btn-dangerous svg {
-    margin-right: 6px;
-    padding-top: 2px;
 }
 
 /* Drawer Override Start */
@@ -628,17 +665,17 @@
     color: #ff3e5b;
 }
 
-.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
+.geoSection :global .ant-input-group.ant-input-group-compact>*:last-child,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-select:last-child>.ant-select-selector,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker:last-child .ant-input,
+.geoSection :global .ant-input-group.ant-input-group-compact>.ant-cascader-picker-focused:last-child .ant-input {
     border-inline-end-width: 1px;
     border-start-end-radius: 4px;
     border-end-end-radius: 4px;
     height: 36px;
 }
 
-.geoSection :global .ant-form-item .ant-form-item-label > label {
+.geoSection :global .ant-form-item .ant-form-item-label>label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -835,10 +872,7 @@
     /* overflow-y: scroll; */
 }
 
-:global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b;
-    color: #ffffff !important;
-}
+
 
 .formFooter {
     width: 100%;
@@ -961,15 +995,16 @@
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
+    background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -1100,12 +1135,12 @@
     width: 100%;
 }
 
-.cardDescription :global .ant-descriptions .ant-descriptions-row > th,
-:global .ant-descriptions .ant-descriptions-row > * {
+.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
+:global .ant-descriptions .ant-descriptions-row>* {
     padding: 0px;
 }
 
-:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
 }
 
@@ -1155,6 +1190,11 @@
 
 .searchContainer .searchBox :global .ant-input-group:hover {
     border: 1px solid #0B0B0C;
+}
+
+:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    margin-inline-end: 8px;
+    margin-top: -2px;
 }
 
 @media (max-width: 768px) {
