@@ -120,8 +120,10 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         setSearchValue(menuData);
     }, [menuData]);
 
-    const handleAdd = () => {
+    const handleAdd = (type) => {
         setDrawer(true);
+        setFormActionType(type);
+        setIsReadOnly(false);
     };
 
     const handleTypeClick = (type) => {
@@ -193,13 +195,19 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
             setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+            setIsReadOnly(false)
             forceUpdate();
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
             setFinalFormdata({ ...initialFormData, applicationDetails: { parentApplicationId: rest?.applicationId } });
+            setIsReadOnly(true);
+
         } else if (FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
             setFinalFormdata({ ...initialFormData, applicationDetails: { parentApplicationId: rest?.parentApplicationId } });
+            setIsReadOnly(true);
+
         } else {
             setFinalFormdata(initialFormData);
+            setIsReadOnly(true);
         }
 
         setDrawer(true);
@@ -286,7 +294,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                             </span>
                                         }
                                     >
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={()=>handleAdd('add')}>
                                             Add
                                         </Button>
                                     </Empty>

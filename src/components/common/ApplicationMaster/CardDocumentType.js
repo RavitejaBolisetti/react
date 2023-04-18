@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
-import style from "./ApplicationMaster.module.css";
+import style from './ApplicationMaster.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
 const { Text } = Typography;
@@ -13,16 +13,15 @@ const CardDocumentType = (prop) => {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        return()=> {
-            // on unmount it clears state 
+        return () => {
+            // on unmount it clears state
             setIsEditing(false);
             setIsBtnDisabled(false);
         };
-    },[])
+    }, []);
 
     // on Click edit button sets form fields
     const onEdit = (values) => {
-
         form.setFieldsValue({
             termAndConRequired,
             digitalSignatureRequired,
@@ -50,11 +49,9 @@ const CardDocumentType = (prop) => {
     };
 
     const handleDeleteDocType = (val) => {
-
         setfinalFormdata((prev) => {
             const newList = prev;
-            const indx = prev?.documentType.findIndex((el) => el.id === val?.documentTypeCode);
-            console.log('newList', newList, 'indx', indx);
+            const indx = prev?.documentType.findIndex((el) => el.documentTypeCode === val?.documentTypeCode);
             newList?.documentType?.splice(indx, 1);
             return { ...prev, documentType: newList?.documentType };
         });
@@ -71,10 +68,7 @@ const CardDocumentType = (prop) => {
 
     return (
         <>
-            <Card
-                className={style.viewCardSize}   
-                key={documentTypeCode}
-            >
+            <Card className={style.viewCardSize} key={documentTypeCode}>
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Row align="middle">
@@ -102,9 +96,11 @@ const CardDocumentType = (prop) => {
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                                         <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
-                                    {!id?.length>0 && <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                        <Button onClick={() => handleDeleteDocType({termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode})} type="link" icon={<FiTrash />}></Button>
-                                    </Col>}
+                                    {!id?.length > 0 && (
+                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                            <Button onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })} type="link" icon={<FiTrash />}></Button>
+                                        </Col>
+                                    )}
                                 </>
                             ) : (
                                 <>

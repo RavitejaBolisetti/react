@@ -3,27 +3,27 @@ import { Drawer, Form, Col, Collapse, Row, Button, Space, Spin } from 'antd';
 
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
-import style from '../../common/DrawerAndTable.module.css'
+import style from '../../common/DrawerAndTable.module.css';
 import styles from 'pages/common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './ApplicationActions';
 import DocumentTypes from './DocumentTypes';
-import {AccessibleDealerLocations} from './AccessibleDealerLocations';
+import { AccessibleDealerLocations } from './AccessibleDealerLocations';
 
 const { Panel } = Collapse;
 
-const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave,criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading }) => {
+const DrawerUtil = ({ setSelectedTreeKey, selectedTreeKey, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, footerEdit, buttonData, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading }) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
-    useEffect(()=> {
+    useEffect(() => {
         return () => {
             setIsBtnDisabled(false);
-        }
-    },[])
+        };
+    }, []);
 
     let drawerTitle = 'Add Application Details';
     if (formActionType === 'add') {
@@ -46,7 +46,7 @@ const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, force
         setDrawer(false);
         setFormBtnDisable(false);
         forceUpdate();
-        setIsBtnDisabled(false)
+        setIsBtnDisabled(false);
     };
 
     return (
@@ -77,40 +77,37 @@ const DrawerUtil = ({setSelectedTreeKey, selectedTreeKey, applicationForm, force
             }
         >
             <>
-                <Space
-                    direction="vertical"
-                    style={{
-                        display: 'flex',
-                        paddingBottom: '10px',
-                    }}
-                >
-                    <Spin spinning={isApplicatinoOnSaveLoading}>
-                    <ApplicationDetails setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} menuData={menuData}/>
+                <Spin spinning={isApplicatinoOnSaveLoading}>
+                    <Space
+                        direction="vertical"
+                        size="middle"
+                        style={{
+                            display: 'flex',
+                        }}
+                    >
+                        <ApplicationDetails isReadOnly={isReadOnly} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} menuData={menuData} />
 
-                    <Collapse className={openAccordian === 1 ? style.accordianHeader : '' } onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                        <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : '' }>Application Actions</span>} key="1">
-                            <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
-                        </Panel>
-                    </Collapse>
-                    {isDocumentToGenerate && (
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                            <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : '' }>Document Type </span>}  key="2">
-                                <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata}
-                                 setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled}
-                                 />
+                        <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                            <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Application Actions</span>} key="1">
+                                <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                             </Panel>
                         </Collapse>
-                    )}
-                    {isRestrictedLocation && (
-                        
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                            <Panel header={<span className={openAccordian === 3 ? style.accordianHeader : '' }>Accessible Dealer Location</span>} key="3">
-                                <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
-                            </Panel>
-                        </Collapse>
-                    )}
-                    </Spin>
-                </Space>
+                        {isDocumentToGenerate && (
+                            <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : ''}>Document Type </span>} key="2">
+                                    <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />
+                                </Panel>
+                            </Collapse>
+                        )}
+                        {isRestrictedLocation && (
+                            <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Panel header={<span className={openAccordian === 3 ? style.accordianHeader : ''}>Accessible Dealer Location</span>} key="3">
+                                    <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
+                                </Panel>
+                            </Collapse>
+                        )}
+                    </Space>
+                </Spin>
             </>
         </Drawer>
     );

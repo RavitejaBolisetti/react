@@ -21,8 +21,8 @@ const CardApplicationAction = (props) => {
         form.setFieldsValue({
             actionName: {
                 label: values.actionName,
-                value: values.id,
-                id: values.id,
+                value: values.actionId,
+                id: values.actionId,
             },
             status: values.status,
         });
@@ -32,8 +32,10 @@ const CardApplicationAction = (props) => {
 
     // on clicking save button updates data
     const onUpdate = () => {
+        
         const newFormData = form.getFieldsValue();
-        const { value, label } = newFormData?.actionName;
+
+        const { value, label } = newFormData?.applicationName;
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
             const indx = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
@@ -47,9 +49,10 @@ const CardApplicationAction = (props) => {
     };
 
     const handleDeleteAction = (val) => {
+        console.log("val",val)
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
-            const indx = prev?.applicationAction?.findIndex((el) => el.actionId === val.actionId);
+            const indx = prev?.applicationAction?.findIndex((el) => el?.actionId === val.actionId);
             newList.splice(indx, 1);
             return { ...prev, applicationAction: newList };
         });
@@ -78,10 +81,10 @@ const CardApplicationAction = (props) => {
                             <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            <Text strong>{actionName || 'Employee Empowerment'}</Text>
+                            <Text strong>{actionName }</Text>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            <Text type="secondary">Action ID: {id || 'B6G431'}</Text>
+                            <Text type="secondary">Action ID: {id }</Text>
                         </Col>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -89,10 +92,10 @@ const CardApplicationAction = (props) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionName, id })} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionId, id })} />
                                     </Col>
                                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                                        <Button onClick={() => handleDeleteAction({ status, actionName, id })} type="link" icon={<FiTrash />}></Button>
+                                        <Button onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button>
                                     </Col>
                                 </>
                             ) : (

@@ -9,8 +9,6 @@ const DocumentTypes = ({ setIsBtnDisabled,isBtnDisabled, onFinish = () => {}, on
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [docForm] = Form.useForm();
 
-
-
     const handleAdd = (value) => {
         docForm.resetFields();
     };
