@@ -111,9 +111,9 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         if (isDataLoaded && qualificationData) {
             if (filterString) {
                 const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(qualificationData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,6 +126,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             dataIndex: 'srl',
             width: '6%',
             sorter: false,
+            render: ((_t, _r, i) => i+1 ),
         })
     );
 
@@ -202,7 +203,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
         const onError = (message) => {
             onSaveShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {

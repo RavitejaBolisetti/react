@@ -13,30 +13,29 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData?.attributeId}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
                 <Descriptions.Item label="Code">{selectedTreeData?.code}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>
-                {selectedTreeData?.type === 'Parent' && (
+                {(selectedTreeData?.type === 'PARNT' || selectedTreeData?.type === 'parentGroup') && (
                     <>
-                        <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNumber}</Descriptions.Item>
+                        <Descriptions.Item label="Owner Name">{selectedTreeData?.ownerName}</Descriptions.Item>
+                        <Descriptions.Item label="Contact Number">{selectedTreeData?.contactNo}</Descriptions.Item>
                         <Descriptions.Item label="Email ID">{selectedTreeData?.emailId}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
 
-                {selectedTreeData?.type === 'Company' && (
+                {(selectedTreeData?.type === 'COMP' || selectedTreeData?.type === 'companyGroup') && (
                     <>
                         <Descriptions.Item label="Registered Address of the Company">{selectedTreeData?.registeredAddressOfCompany}</Descriptions.Item>
                         <Descriptions.Item label="TIN Number">{selectedTreeData?.tinNumber}</Descriptions.Item>
                         <Descriptions.Item label="TAN Number">{selectedTreeData?.tanNumber}</Descriptions.Item>
                         <Descriptions.Item label="PAN Number">{selectedTreeData?.panNumber}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
 
-                {selectedTreeData?.type === 'Gstin' && (
+                {(selectedTreeData?.type === 'GSTIN' || selectedTreeData?.type === 'gstinGroup') && (
                     <>
                         <Descriptions.Item label="GSTIN Number">{selectedTreeData?.gstinNumber}</Descriptions.Item>
                         <Descriptions.Item label="Centre Jurisdiction">{selectedTreeData?.centerJurisdiction}</Descriptions.Item>
@@ -44,20 +43,19 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
                         <Descriptions.Item label="Date of Registration">{selectedTreeData?.dateOfRegistertion}</Descriptions.Item>
                         <Descriptions.Item label="Constitution of Business">{selectedTreeData?.consitutionOfBusiness}</Descriptions.Item>
                         <Descriptions.Item label="Taxpayer Type">{selectedTreeData?.taxPayerType}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
 
-                {selectedTreeData?.type === 'Branch' && (
+                {(selectedTreeData?.type === 'LOCTN' || selectedTreeData?.type === 'branchGroup') && (
                     <>
                         <Descriptions.Item label="Branch Address">{selectedTreeData?.branchAddress}</Descriptions.Item>
                         <Descriptions.Item label="Locality">{selectedTreeData?.locality}</Descriptions.Item>
                         <Descriptions.Item label="City/District">{selectedTreeData?.city}</Descriptions.Item>
                         <Descriptions.Item label="State">{selectedTreeData?.state}</Descriptions.Item>
                         <Descriptions.Item label="City Classification">{selectedTreeData?.cityClassification}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
                     </>
                 )}
+                <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );

@@ -314,6 +314,7 @@
   border-radius: 4px;
   border-color: #DEDEDE;
   padding: 6px 12px;
+ 
 }
 
 :global .ant-input-affix-wrapper>input.ant-input {

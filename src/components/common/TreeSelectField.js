@@ -12,6 +12,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                     width: '100%',
                 }}
                 value={selectedTreeSelectKey || []}
+                // value={defaultValue || []}
                 defaultValue={defaultValue}
                 dropdownStyle={{
                     maxHeight: 400,
