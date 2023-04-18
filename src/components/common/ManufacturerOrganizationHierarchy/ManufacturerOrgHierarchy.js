@@ -46,7 +46,8 @@ const mapStateToProps = (state) => {
         manufacturerOrgHierarchyData,
         isDataAttributeLoaded,
         viewTitle,
-        attributeData: attributeData?.filter((i) => i),
+        attributeData: attributeData?.filter((i) => i?.status),
+        unFilteredAttributeData: attributeData,
     };
     return returnValue;
 };
@@ -69,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification }) => {
+export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -137,19 +138,20 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         setSelectedTreeData([]);
 
         if (keys && keys.length > 0) {
-            setFormActionType('view');
+            setFormActionType(FROM_ACTION_TYPE.VIEW);
             const formData = flatternData.find((i) => keys[0] === i.key);
 
             if (formData) {
-                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
-                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
+                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
                 const manufactureOrgShrtName = flatternData.find((i) => formData?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
                 formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
+            } else {
+                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             }
-
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         }
 
         setSelectedTreeKey(keys);
@@ -175,9 +177,13 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
-                res?.data && setSelectedTreeData(res?.data);
+
+                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === res?.data?.attributeKey)?.hierarchyAttribueName;
+                const manufactureOrgShrtName = flatternData.find((i) => res?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
+                res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: manufactureOrgShrtName });
+
                 setSelectedTreeKey([res?.data?.id]);
-                setFormActionType('view');
+                setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
             }
@@ -244,6 +250,8 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         selectedTreeKey,
+        selectedTreeData,
+        unFilteredAttributeData,
         selectedTreeSelectKey,
         handleResetBtn,
         handleAttributeChange,
@@ -277,20 +285,21 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={style.contentHeaderRightBackground}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18} className={style.contentHeaderRightBackground}>
                                 Hierarchy
                                 <Search
                                     placeholder="Search"
-                                    style={{
-                                        width: '43%',
-                                    }}
+                                    // style={{
+                                    //     width: '43%',
+                                    // }}
+                                    className={styles.headerSelectField}
                                     allowClear
                                     onChange={onChange}
-                                    className={style.searchField}
+                                    // className={style.searchField}
                                 />
                             </Col>
                             {manufacturerOrgHierarchyData.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
@@ -324,7 +333,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewManufacturerOrgDetail {...viewProps} />

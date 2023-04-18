@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -9,12 +9,10 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ forceUpdate,deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(Math.random() * 1000);
     const [TimeTrack, setTimeTrack] = useState(true);
-
-    // const [DisableAddtime, setDisableAddtime] = useState(false);
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -112,15 +110,13 @@ const DrawerUtil = ({ forceUpdate,deletedItemList, setDeletedItemList, showGloba
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
-        form
-        .validateFields()
-        .then((values) => {
-          console.log("success");
-        })
-        .catch((errorInfo) => {
-          console.log("failure");
-        });
-      
+        form.validateFields()
+            .then((values) => {
+                console.log('success');
+            })
+            .catch((errorInfo) => {
+                console.log('failure');
+            });
     };
     const validatedDuplicateTime = (field) => (rule, value) => {
         const overlapData = checkOverlap();
@@ -176,8 +172,8 @@ const DrawerUtil = ({ forceUpdate,deletedItemList, setDeletedItemList, showGloba
             <Form form={form} id="myForm" layout="vertical" colon={false} onValuesChange={onValuesChange} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupCode" label="Criticality Group Code" rules={[validateRequiredInputField('Criticality Group Code'), validationFieldLetterAndNumber('Criticality Group Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Code')} {...disabledProps} />
+                        <Form.Item name="criticalityGroupCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id'), validationFieldLetterAndNumber('Criticality Group Id')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Id')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -285,7 +281,7 @@ const DrawerUtil = ({ forceUpdate,deletedItemList, setDeletedItemList, showGloba
                                                             removeItem(name, fields, restField);
                                                             remove(name);
                                                             setTimesegmentLengthTracker(Math.random() * 1000);
-                                                            forceUpdate()
+                                                            forceUpdate();
 
                                                             showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });
                                                             // confirm({

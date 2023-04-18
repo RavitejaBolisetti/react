@@ -106,8 +106,6 @@ const LeftSideBarMain = ({ isMobile, setIsMobile, isDataLoaded, isLoading, menuD
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter]);
 
- 
-
     const handleThemeChange = () => {
         const changeTheme = theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', changeTheme);

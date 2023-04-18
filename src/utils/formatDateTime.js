@@ -8,4 +8,4 @@ export const convertCalenderDate = (dateToConvert = moment(), defaultFormat = 'Y
     return dayjs(dateToConvert, defaultFormat);
 };
 export const convertDate = (dateToConvert = moment(), defaultFormat = 'YYYY-MM-DD') => moment(dateToConvert).format(defaultFormat);
-export const convertDateTime = (dateToConvert = moment(), defaultFormat = 'YYYY-MM-DD HH:mm:ss') => moment(dateToConvert).format(defaultFormat);
+export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD HH:mm:ss') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : 'NA');
