@@ -128,6 +128,7 @@ const LeftSideBarMain = (props) => {
 
     const onSubmit = (value, type) => {
         setCollapsed(value);
+        setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
     };
 
     const onBreakPoint = (broken) => {
@@ -172,6 +173,11 @@ const LeftSideBarMain = (props) => {
         setSelectedMenuId(menuId);
     };
 
+    const onMenuCollapsed = () => {
+        setCollapsed();
+        setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
+        setSelectedKeys(selectedMenuId);
+    };
     const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
 
     return (
@@ -186,12 +192,12 @@ const LeftSideBarMain = (props) => {
                             </Link>
                         </Col>
                         <Col xs={2} sm={2} md={0} lg={0} xl={0} className={styles.closeButton}>
-                            <RxCross2 onClick={setCollapsed} />
+                            <RxCross2 onClick={onMenuCollapsed} />
                         </Col>
                     </Row>
 
                     {!collapsed && (
-                        <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
+                        <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
                             <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
                         </AutoComplete>
                     )}
