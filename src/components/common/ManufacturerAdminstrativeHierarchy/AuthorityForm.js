@@ -2,7 +2,7 @@ import React, { Fragment, useState, useReducer } from 'react';
 import { Input, Form, Col, Card, Row, Switch, Button, Select, DatePicker, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber,validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 // import style from 'pages/common/Common.module.css';
@@ -80,12 +80,12 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="dateFrom" label="Date From:">
+                        <Form.Item name="dateFrom" label="Date From:" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker onChange={onChange} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="dateTo" label="Date To:">
+                        <Form.Item name="dateTo" label="Date To:" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker onChange={onChange} />
                         </Form.Item>
                     </Col>

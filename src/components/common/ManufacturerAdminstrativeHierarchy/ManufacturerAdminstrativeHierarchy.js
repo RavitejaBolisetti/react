@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty, Dropdown } from 'antd';
+import { Button, Col, Form, Row, Input, Empty, Dropdown, message } from 'antd';
 import { FaHistory, FaAngleUp } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -22,6 +22,7 @@ import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 
 import { EN } from 'language/en';
+import { Link } from 'react-router-dom';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {
@@ -288,12 +289,19 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const items = [
         {
             key: '1',
-            label: 'Admin Change History',
-            onClick: { changeHistoryModelOpen },
+            label: (
+                <div onClick={'Admin Change History'} type="link">
+                    Authority Change History
+                </div>
+            ),
         },
         {
             key: '2',
-            label: 'Authority Change History',
+            label: (
+                <div onClick={changeHistoryModelOpen} type="link">
+                    Admin Change history
+                </div>
+            ),
         },
     ];
 
@@ -326,9 +334,10 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                                         <Dropdown
                                             menu={{
                                                 items,
+                                                // onClick,
                                             }}
                                         >
-                                            <Button type="primary" onClick={changeHistoryModelOpen} className={`${styles.changeHistoryModelOpen}`}>
+                                            <Button type="primary">
                                                 {/* className={`${styles.floatRight}`} */}
                                                 <FaHistory className={styles.buttonIcon} />
                                                 Change History

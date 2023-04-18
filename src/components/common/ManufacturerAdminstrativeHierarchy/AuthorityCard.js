@@ -1,16 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import { Col, Card, Row, Button, Form, Divider } from 'antd';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 
-// import styles from 'pages/common/Common.module.css';
-// import style from 'components/common/DrawerAndTable.module.css';
+//  import styles from 'pages/common/Common.module.css';
+//import style from 'components/common/DrawerAndTable.module.css';
 import AuthorityForm from './AuthorityForm';
 import { FaLessThanEqual } from 'react-icons/fa';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, token, dateTo, dateFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
+const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalFormdata, token, dateTo, dateFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -47,6 +47,24 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, token, da
         forceUpdate();
     };
 
+    const handleDeleteDocType = (val) => {
+        setfinalFormdata((prev) => {
+            const newList = prev;
+
+            const indx = prev?.documentType.findIndex((el) => el.documentTypeCode === val?.documentTypeCode);
+
+            newList?.documentType?.splice(indx, 1);
+
+            return { ...prev, documentType: newList?.documentType };
+        });
+
+        setIsEditing(false);
+
+        setIsBtnDisabled(false);
+
+        form.resetFields();
+    };
+
     // on cancel editing
     const onCancel = () => {
         setIsEditing(false);
@@ -58,7 +76,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, token, da
             <Card
                 style={{
                     // width: 440,
-                    backgroundColor: '#BEBEBE1A',
+                    backgroundColor: '#F2F2F2',
                     marginTop: '12px',
                     border: '1px solid rgba(62, 62, 62, 0.1)',
                 }}
@@ -86,9 +104,15 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, token, da
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Row justify="end">
                             {!isEditing ? (
-                                <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                    <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoitytype, token, dateTo, dateFrom)} />
-                                </Col>
+                                <>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoitytype, token, dateTo, dateFrom)} />
+                                    </Col>
+
+                                    <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                        <Button onClick={() => handleDeleteDocType({ dateFrom, authoitytype, dateTo, token })} type="link" icon={<FiTrash />}></Button>
+                                    </Col>
+                                </>
                             ) : (
                                 <>
                                     {' '}
