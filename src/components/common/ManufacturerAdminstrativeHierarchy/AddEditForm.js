@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Col, Input, Form, Row, Select, Switch, Button, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'components/common/Common.module.css';
+import style from 'components/common/DrawerAndTable.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import AuthorityDetail from './AuthorityDetail';
+import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import AuthorityForm from './AuthorityForm';
 
 const { Option } = Select;
 const { TextArea } = Input;
+const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
-    const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { selectedTreeKey, setSelectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
+    const [openAccordian, setOpenAccordian] = useState('');
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -25,6 +31,11 @@ const AddEditFormMain = (props) => {
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
+    let selectedAttribute = selectedTreeData?.attributeKey;
+
+    let attributeHierarchyFieldValidation = {
+        rules: [validateRequiredSelectField('attribute level')],
+    };
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.manufactureOrgParntId;
@@ -33,17 +44,20 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
+
+        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
+        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    useEffect(() => {
-        if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-            setSelectedTreeKey([treeCodeId]);
-        }
-        setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    // useEffect(() => {
+    //     if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    //         setSelectedTreeKey([treeCodeId]);
+    //     }
+    //     setSelectedTreeSelectKey(treeCodeId);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -62,9 +76,13 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
+
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
     return (
         <>
-            <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
@@ -110,21 +128,45 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
+                {/* <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Collapse style={{ marginBottom: '100px' }}>
+                            <Panel header="Authority Details">
+                                <AuthorityDetail />
+                            </Panel>
+                        </Collapse>
+                    </Col>
+                </Row> */}
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
+                        <Button danger form="myForm" onClick={onCloseAction}>
                             Cancel
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        <Button htmlType="submit" form="myForm" danger disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>
                 </Row>
             </Form>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    {/* <Collapse style={{ marginBottom: '100px' }}>
+                        <Panel header="Authority Details">
+                            <AuthorityDetail />
+                        </Panel>
+                    </Collapse> */}
+
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                        <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Authority Details</span>} key="1">
+                            <AuthorityDetail />
+                        </Panel>
+                    </Collapse>
+                </Col>
+            </Row>
         </>
     );
 };

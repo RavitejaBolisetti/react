@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
 
@@ -34,18 +34,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryShowLoading,
-            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryModelClose,
+            fetchAuthorityChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchAuthorityChangeHistoryList,
+            changeHistoryAuthorityShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityShowLoading,
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelClose,
         },
         dispatch
     ),
 });
 
-const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHistoryList, changeHistoryAuthorityShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if (!isHistoryLoaded&&userId) {
-            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
+        if (!isHistoryLoaded && userId) {
+            fetchAuthorityChangeHistoryList({ setIsLoading: changeHistoryAuthorityShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
@@ -54,61 +54,60 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Changed/Modified Date ',
-            dataIndex: 'changedDate',
+            title: 'Created Date ',
+            dataIndex: 'createdDate',
             render: (text) => convertDateTime(text),
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Changed By',
-            dataIndex: 'changedBy',
+            title: 'Created By',
+            dataIndex: 'createdBy',
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Attribute Code',
-            dataIndex: 'attributeCode',
+            title: 'Authority Type Code',
+            dataIndex: 'authorityTypeCode',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Short Description',
-            dataIndex: 'shortDescript',
+            title: 'Employee Name',
+            dataIndex: 'employeeName',
+        })
+    );
+    
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Employee Token No.',
+            dataIndex: 'authorityEmployeeTokenNo',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Long Description',
-            dataIndex: 'shortDescript',
+            title: 'Authority Id',
+            dataIndex: 'manufacturerAdminAuthorityId',
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Effective From',
+            dataIndex: 'effectiveFrom',
+            render: (text) => convertDateTime(text),
         })
     );
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Hierarchy Code',
-            dataIndex: 'hierarchyCode',
+            title: 'Effective To',
+            dataIndex: 'effectiveTo',
+            render: (text) => convertDateTime(text),
         })
     );
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
-            render: (text) => (text ? 'Active' : 'In Active'),
-        })
-    );
+   
 
     const tableProps = {
         isLoading,
@@ -122,4 +121,4 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     );
 };
 
-export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Admin Change History', width: '90%' }));
+export const ManufacturerAdminAuthorityChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminAuthorityChangeHistoryMain, { title: 'Authority Change History', width: '90%' }));
