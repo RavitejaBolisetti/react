@@ -5,9 +5,10 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Col, Row, Input, AutoComplete } from 'antd';
 
-import { Col, Row, Input, AutoComplete } from 'antd';
-
+import style from './ApplicationMaster.module.css';
 import { Fragment } from 'react';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
@@ -57,7 +58,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
 
     const handleSelect = (value) => {
 
-        if(finalFormdata?.accessibleLocation.findIndex(el => el?.id === value?.key ) !== -1){
+        if (finalFormdata?.accessibleLocation.findIndex(el => el?.id === value?.key) !== -1) {
             console.log('same locatioln selected')
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This location is already added.' });
             return;
@@ -88,19 +89,22 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                     <AutoComplete
                         // value={value}
                         labelInValue
+                       
                         options={dealerLocations}
                         style={{
                             width: '100%',
+                          
                         }}
-                        allowClear
                         fieldNames={fieldNames}
                         onSelect={handleSelect}
                         onSearch={onSearchLocation}
-                        // onChange={onChange}
-                        placeholder="control mode"
-                    
-                    >  </AutoComplete>
-                   
+                    // onChange={onChange}
+                    // placeholder="control mode"  
+                 
+                    >                     
+                      <Input.Search type='text' className={style.searchicon} placeholder="control mode" />
+                    </AutoComplete>
+
                     {/* <Select
                         // defaultValue={record[dataIndex]}
                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
@@ -119,10 +123,11 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                     /> */}
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    
                     {finalFormdata?.accessibleLocation?.length > 0
                         ? finalFormdata?.accessibleLocation?.map((location) => {
-                              return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
-                          })
+                            return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
+                        })
                         : ''}
                 </Col>
             </Row>

@@ -146,3 +146,12 @@
 .selectMgTop6 :global(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
     margin-top: 6px;
 }
+
+.searchicon :global .ant-input-affix-wrapper,
+.searchicon :global .ant-btn-default {
+  height: 32px !important;
+  margin-bottom: -5px;
+  border-radius: 4px;
+  border-color: #DEDEDE;
+  
+}
