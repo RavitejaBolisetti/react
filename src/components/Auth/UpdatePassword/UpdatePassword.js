@@ -162,14 +162,14 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                             ]}
                                                             className={`${styles.changer} ${styles.inputBox}`}
                                                         >
-                                                            <Input.Password prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>

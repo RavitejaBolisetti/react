@@ -36,7 +36,7 @@
 }
 
 @media screen and (max-width: 767px) {
- 
+
     .myDrawerStyle :global .ant-drawer-content-wrapper {
         width: 98% !important;
     }

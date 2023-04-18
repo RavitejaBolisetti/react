@@ -18,7 +18,6 @@
     margin-bottom: 20px;
 }
 
-
 .allowedTiming :global .ant-picker-input>input:placeholder-shown,
 .allowedTiming :global .ant-picker-input>input {
     font-size: 14px;
@@ -53,6 +52,7 @@
     background-color: #ffffff;
     color: #b5b5b6;
     border-color: white;
+    /* text-align: right !important; */
 }
 
 .searchAndLabelAlign {
