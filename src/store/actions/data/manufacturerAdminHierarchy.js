@@ -31,7 +31,11 @@ const receiveChangeHistoryData = (data) => ({
     isLoaded: true,
     data,
 });
-
+const receiveAuthorityChangeHistoryData = (data) => ({
+    type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
 const manufacturerAdminHierarchyDataActions = {};
 
 manufacturerAdminHierarchyDataActions.listShowLoading = (isLoading) => ({
@@ -48,11 +52,6 @@ manufacturerAdminHierarchyDataActions.changeHistoryModelClose = (visible) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE,
     visible: false,
 });
-const receiveAuthorityChangeHistoryData = (data) => ({
-    type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED,
-    isLoaded: true,
-    data,
-});
 manufacturerAdminHierarchyDataActions.listShowLoading = (isLoading) => ({
     type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING,
     isLoading,
@@ -65,6 +64,10 @@ manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen = (visible
 manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelClose = (visible) => ({
     type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE,
     visible: false,
+});
+manufacturerAdminHierarchyDataActions.changeHistoryAuthorityShowLoading = (isLoading) => ({
+    type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING,
+    isLoading,
 });
 
 manufacturerAdminHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
@@ -142,7 +145,7 @@ manufacturerAdminHierarchyDataActions.fetchChangeHistoryList = withAuthToken((pa
 
     axiosAPICall(apiCallParams);
 });
-manufacturerAdminHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+manufacturerAdminHierarchyDataActions.fetchAuthorityChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data } = params;
     setIsLoading(true);
 

@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible,historyData=[] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -47,6 +47,7 @@ const mapStateToProps = (state) => {
         manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         moduleTitle,
+        historyData,
         viewTitle,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -291,10 +292,12 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         {
             key: '1',
             label: (
-                <div onClick={changeHistoryAuthorityModelOpen} type="link">
+                <div onClick={changeHistoryAuthorityModelOpen}>
                     Authority Change history
                 </div>
+        
             ),
+            
         },
         {
             key: '2',
@@ -304,7 +307,9 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 </div>
             ),
         },
+        
     ];
+    console.log("Button",items);
 
     return (
         <>

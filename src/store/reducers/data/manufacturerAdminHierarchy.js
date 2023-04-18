@@ -33,7 +33,7 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
         case MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED:
-            return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
+            return { ...state, isHistoryLoaded: action.isLoaded, authHistoryData: action.data };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
         default:

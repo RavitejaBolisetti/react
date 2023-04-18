@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
 
@@ -34,18 +34,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryShowLoading,
-            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryModelClose,
+            fetchAuthorityChangeHistoryList: manufacturerAdminHierarchyDataActions.fetchAuthorityChangeHistoryList,
+            changeHistoryAuthorityShowLoading: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityShowLoading,
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelClose,
         },
         dispatch
     ),
 });
 
-const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHistoryList, changeHistoryAuthorityShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
         if (!isHistoryLoaded && userId) {
-            fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
+            fetchAuthorityChangeHistoryList({ setIsLoading: changeHistoryAuthorityShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
