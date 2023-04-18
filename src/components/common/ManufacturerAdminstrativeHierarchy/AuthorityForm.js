@@ -2,10 +2,10 @@ import React, { Fragment, useState, useReducer } from 'react';
 import { Input, Form, Col, Card, Row, Switch, Button, Select, DatePicker, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber,validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-// import style from 'pages/common/Common.module.css';
+import style from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const fieldNames = { label: 'applicationName', value: 'id' };
@@ -51,7 +51,17 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
     };
 
     return (
-        <Form form={form} id="myForm" onFinish={onFinish} layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form
+            form={form}
+            id="myForm"
+            onFinish={onFinish}
+            layout="vertical"
+            onFinishFailed={onFinishFailed}
+            style={{
+                // width: 440,
+                backgroundColor: '#F2F2F2',
+            }}
+        >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authoitytype" rules={[validateRequiredInputField('Authority Type')]}>
@@ -60,9 +70,7 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
                             labelInValue // defaultValue={name || ''} // showSearch
                             placeholder="Select Authority Type" // optionFilterProp="children"
                             fieldNames={fieldNames}
-                            style={{
-                                width: '100%',
-                            }} // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
+                            // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
                             options={applicationData}
                         />
                     </Form.Item>
@@ -81,12 +89,12 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateFrom" label="Date From:" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker onChange={onChange} />
+                            <DatePicker className={style.datepicker} onChange={onChange} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateTo" label="Date To:" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker onChange={onChange} />
+                            <DatePicker className={style.datepicker} onChange={onChange} />
                         </Form.Item>
                     </Col>
                 </Row>

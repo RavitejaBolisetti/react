@@ -10,7 +10,7 @@ import { FaLessThanEqual } from 'react-icons/fa';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalFormdata, token, dateTo, dateFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
+const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalFormdata, token, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -19,8 +19,8 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
         form.setFieldsValue({
             authoitytype,
             token,
-            dateTo,
-            dateFrom,
+            EffectiveTo,
+            EffectiveFrom,
             // status: values.status,
         });
         setIsEditing(true);
@@ -48,7 +48,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
     };
 
     const handleDeleteDocType = (val) => {
-        setfinalFormdata((prev) => {
+        setDocumentTypesList((prev) => {
             const newList = prev;
 
             const indx = prev?.documentType.findIndex((el) => el.documentTypeCode === val?.documentTypeCode);
@@ -84,20 +84,23 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Row align="middle">
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Text type="secondary">DateFrom: </Text> {dateFrom || '31/99/9999'}
+                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                <Text type="secondary">Authority </Text>
+                            </Col>
+
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Text strong>{'authoitytype' || 'Attribute Type 1'} /</Text>
+                                <Text strong> {'token' || 'B6G431'}</Text>
+                            </Col>
+
+                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
+                                <Text type="secondary">EffectiveFrom: </Text> {EffectiveFrom || '31/99/9999'}
                             </Col>
 
                             <Divider type="vertical" />
 
                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text type="secondary">DateTo: </Text> {dateTo || '31/99/9999'}
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{authoitytype || 'Attribute Type 1'}</Text>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">Token: {token || 'B6G431'}</Text>
+                                <Text type="secondary">EffectiveTo: </Text> {EffectiveTo || '31/99/9999'}
                             </Col>
                         </Row>
                     </Col>
@@ -106,11 +109,11 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoitytype, token, dateTo, dateFrom)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoitytype, token, EffectiveTo, EffectiveFrom)} />
                                     </Col>
 
                                     <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                        <Button onClick={() => handleDeleteDocType({ dateFrom, authoitytype, dateTo, token })} type="link" icon={<FiTrash />}></Button>
+                                        <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authoitytype, EffectiveTo, token })} type="link" icon={<FiTrash />}></Button>
                                     </Col>
                                 </>
                             ) : (
@@ -135,7 +138,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AuthorityForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authoitytype={authoitytype} dateTo={dateTo} dateFrom={dateFrom} token={token} isEditing={isEditing} />
+                        <AuthorityForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authoitytype={authoitytype} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} token={token} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
