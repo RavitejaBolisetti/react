@@ -6,7 +6,6 @@ export const BASE_URL_GENERATE_OTP = BASE_URL + 'generateotp';
 export const BASE_URL_VALIDATE_OTP = BASE_URL + 'validateotp';
 export const BASE_URL_FORGOT_PASSWORD = BASE_URL + 'forgotpassword';
 
-
 export const BASE_URL_LOGOUT = BASE_URL + 'logout';
 export const BASE_URL_USER_DETAIL = BASE_URL + 'users';
 
@@ -45,7 +44,7 @@ export const BASE_URL_DEALER_HIERARCHY_SAVE = BASE_URL + 'dealerhierarchy';
 
 //get all applications
 export const BASE_URL_APPLICATIONS = BASE_URL + 'applications';
-// get post All form 
+// get post All form
 export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationdetails';
 
 export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
@@ -55,3 +54,5 @@ export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/deal
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 
 export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';
+
+export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
