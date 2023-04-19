@@ -6,9 +6,11 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from './HierarchyAttribute.module.css';
 import style from "../DrawerAndTable.module.css";
 
-const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
+const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
+    const codeDisabledProp = {disabled :codeIsReadOnly}
+
 
     let drawerTitle = '';
     if (formActionType === 'view') {
@@ -105,7 +107,7 @@ const AddUpdateDrawer = ({ editRow, setEditRow, showDrawer, setShowDrawer, setFo
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 6, message: 'Code must be 6 characters long.' }, validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code'),
                             ]}>
-                                <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps}/>
+                                <Input maxLength={6} placeholder={preparePlaceholderText('Code')}  {...codeDisabledProp}/>
                            
                             </Form.Item>
                         </Col>
