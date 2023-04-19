@@ -40,8 +40,12 @@ export const ROUTING_USER_ABOUT = ROUTING_HOME.concat('about-us');
 export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
 export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
 
+
 export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
 export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
 export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');
-export const ROUTING_USER_MANAGEMENT = '/admin/user-management';
-export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_USER_MANAGEMENT.concat('dealer');
+
+export const ROUTING_ADMIN = '/user/';
+
+export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-management/');
+export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
