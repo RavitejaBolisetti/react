@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select, Space, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row,  Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
@@ -16,7 +16,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
 

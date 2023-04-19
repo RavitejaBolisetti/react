@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input, Menu, Layout, Row, Col, AutoComplete, Button } from 'antd';
-import { BsMoon, BsSun } from 'react-icons/bs';
+import { BsMoon, BsSun, BsSearch } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
@@ -109,8 +109,8 @@ const LeftSideBarMain = (props) => {
             const menuItem = childredData?.map((i) => {
                 if (i?.menuTitle?.toLowerCase().includes(filter?.toLowerCase())) {
                     return {
-                        value: i.menuId,
-                        label: i.menuTitle,
+                        key: i.menuId,
+                        value: i.menuTitle,
                     };
                 }
                 return undefined;
@@ -184,7 +184,7 @@ const LeftSideBarMain = (props) => {
         <>
             <Sider onBreakpoint={onBreakPoint} breakpoint="sm" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
-                    <Row>
+                    <Row gutter={20}>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
                             <Link to={routing.ROUTING_DASHBOARD} className={styles.brandLink}>
                                 {collapsed ? <img src={IMG_ICON} alt="" className={styles.brandImage} /> : <img src={IMG_LOGO} alt="" className={styles.brandImage} />}
@@ -195,12 +195,19 @@ const LeftSideBarMain = (props) => {
                             <RxCross2 onClick={onMenuCollapsed} />
                         </Col>
                     </Row>
-
-                    {!collapsed && (
-                        <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
-                            <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
-                        </AutoComplete>
-                    )}
+                    <Row gutter={20}>
+                        <Col xs={22} sm={22} md={24} lg={24} xl={24}>
+                            <div className={styles.searchContainer}>
+                                {collapsed ? (
+                                    <BsSearch size={18} onClick={onMenuCollapsed}/>
+                                ) : (
+                                    <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
+                                        <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
+                                    </AutoComplete>
+                                )}
+                            </div>
+                        </Col>
+                    </Row>
                 </div>
                 {!isLoading ? (
                     <>
