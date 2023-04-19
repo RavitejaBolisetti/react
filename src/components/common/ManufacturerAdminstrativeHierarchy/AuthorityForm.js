@@ -8,7 +8,6 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy.js';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { bindActionCreators } from 'redux';
-
 import style from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -82,13 +81,12 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributesearchList: hierarchyAttributeMasterActions.searchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-            // showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
 });
-const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode }) => {
+const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode}) => {
     const onChange = (date, dateString) => {
         console.log(date, dateString);
     };
@@ -137,12 +135,19 @@ const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLo
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Token" name="token" rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required')]}>
+                    <Form.Item label="Token" name="token" rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'), 
+                        {
+                            required: employeeCode ? false : true,
+                            message: 'No Result found',
+                        },
+                ]}
+                    >
                         <Search allowClear onSearch={onSearchHandle} maxLength={50} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
             </Row>
-            {date && (
+
+            {employeeCode.length !== 0 && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Text type="primary">Employee Name : {employeeCode?.employeeName} </Text>

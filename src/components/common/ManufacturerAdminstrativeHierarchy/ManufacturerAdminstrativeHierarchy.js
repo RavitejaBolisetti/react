@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryModelOpen,
             changeHistoryAuthorityModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen,
-            uploadModelOpen: manufacturerAdminHierarchyDataActions.uploadModelOpen,
+            uploadModelOpen : manufacturerAdminHierarchyDataActions.uploadModelOpen,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,

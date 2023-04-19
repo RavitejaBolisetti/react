@@ -32,16 +32,19 @@ const reciveManufacturerSearchData = (data) => ({
     isLoaded: true,
     data,
 });
+
 const receiveChangeHistoryData = (data) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_DATA_LOADED,
     isLoaded: true,
     data,
 });
+
 const receiveAuthorityChangeHistoryData = (data) => ({
     type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED,
     isLoaded: true,
     data,
 });
+
 const manufacturerAdminHierarchyDataActions = {};
 
 manufacturerAdminHierarchyDataActions.listShowLoading = (isLoading) => ({
