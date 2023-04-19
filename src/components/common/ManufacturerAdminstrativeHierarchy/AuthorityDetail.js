@@ -7,7 +7,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 import AuthorityCard from './AuthorityCard';
-import AuthorityForm from './AuthorityForm';
+import { AuthorityForm } from './AuthorityForm';
 import moment from 'moment';
 
 const AuthorityDetail = () => {

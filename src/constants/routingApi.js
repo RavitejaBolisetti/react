@@ -6,7 +6,6 @@ export const BASE_URL_GENERATE_OTP = BASE_URL + 'generateotp';
 export const BASE_URL_VALIDATE_OTP = BASE_URL + 'validateotp';
 export const BASE_URL_FORGOT_PASSWORD = BASE_URL + 'forgotpassword';
 
-
 export const BASE_URL_LOGOUT = BASE_URL + 'logout';
 export const BASE_URL_USER_DETAIL = BASE_URL + 'users';
 
@@ -39,14 +38,15 @@ export const BASE_URL_MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'ma
 export const BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY = BASE_URL + 'manufacturer/admin/hierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE = BASE_URL + 'manufacturer/admin/hierarchy';
 export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/changehistory';
-export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/authority/changehistory'
+export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/authority/changehistory';
+export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/dealer';
 
 export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
 export const BASE_URL_DEALER_HIERARCHY_SAVE = BASE_URL + 'dealerhierarchy';
 
 //get all applications
 export const BASE_URL_APPLICATIONS = BASE_URL + 'applications';
-// get post All form 
+// get post All form
 export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationdetails';
 
 export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';

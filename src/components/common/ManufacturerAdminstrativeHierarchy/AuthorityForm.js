@@ -1,9 +1,13 @@
 import React, { Fragment, useState, useReducer } from 'react';
 import { Input, Form, Col, Card, Row, Switch, Button, Select, DatePicker, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy.js';
+import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { bindActionCreators } from 'redux';
 
 import style from 'components/common/Common.module.css';
 
@@ -31,11 +35,66 @@ const applicationData = [
         applicationName: 'APP nm 3',
     },
 ];
-const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisabled, setDocumentTypesList }) => {
+
+let apiData = [];
+
+const mapStateToProps = (state) => {
+    console.log('statye', state);
+    const {
+        auth: { userId },
+        data: {
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], employeeCode = [], changeHistoryVisible, historyData = [] },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
+        },
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+    // const moduleTitle = 'Manufacturer Detail';
+    // const viewTitle = 'Hierarchy Details';
+
+    apiData = state.data.ManufacturerAdminHierarchy.employeeCode;
+
+    let returnValue = {
+        collapsed,
+        userId,
+        isDataLoaded,
+        isChangeHistoryVisible: changeHistoryVisible,
+        manufacturerAdminHierarchyData,
+        isDataAttributeLoaded,
+        employeeCode,
+        // moduleTitle,
+        historyData,
+        // viewTitle,
+        attributeData: attributeData?.filter((i) => i),
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            searchList: manufacturerAdminHierarchyDataActions.searchList,
+            saveData: manufacturerAdminHierarchyDataActions.saveData,
+            listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
+
+            hierarchyAttributesearchList: hierarchyAttributeMasterActions.searchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            // showGlobalNotification,
+            // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
+        },
+        dispatch
+    ),
+});
+const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode }) => {
     const onChange = (date, dateString) => {
         console.log(date, dateString);
     };
-    const [active, setActive] = useState(false);
+    //const [active, setActive] = useState(false);
+    const [userInput, isSetUserInput] = useState('');
+    const [dateData, setDateData] = useState();
     const [date, setisDate] = useState(false);
     const onFinishFailed = (err) => {
         console.error(err);
@@ -45,11 +104,13 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
         // setFormBtnDisable(true);
     };
 
-    const onSearchHandle = () => {
+    const onSearchHandle = (data) => {
+        console.log('data', data);
         setisDate(!date);
-        console.log('hello');
+        searchList({ setIsLoading: listShowLoading, employeeCode: data });
+        // isSetUserInput(data.target.value);
     };
-
+    console.log(employeeCode, 'CodeCheck');
     return (
         <Form
             form={form}
@@ -84,16 +145,16 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
             {date && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Text type="primary">Employee Name : xxxxxx</Text>
+                        <Text type="primary">Employee Name : {employeeCode?.employeeName} </Text>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="dateFrom" label="Date From:" rules={[validateRequiredSelectField('Date Required')]}>
+                        <Form.Item name="dateFrom" label="Effective From:" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker className={style.datepicker} onChange={onChange} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="dateTo" label="Date To:" rules={[validateRequiredSelectField('Date Required')]}>
+                        <Form.Item name="dateTo" label="Effective To:" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker className={style.datepicker} onChange={onChange} />
                         </Form.Item>
                     </Col>
@@ -109,4 +170,5 @@ const AuthorityForm = ({ onFinish, form, isEditing, isBtnDisabled, setIsBtnDisab
     );
 };
 
-export default AuthorityForm;
+// export default AuthorityForm;
+export const AuthorityForm = connect(mapStateToProps, mapDispatchToProps)(AuthorityFormMin);

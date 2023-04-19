@@ -1,4 +1,17 @@
-import { MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED, MANUFACTURER_ADMIN_HIERARCHY_DATA_SHOW_LOADING,MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED,MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING, MANUFACTURER_ADMIN_HIERARCHY_SET_FORM_DATA,MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE, MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, MANUFACTURER_ADMIN_HIERARCHY_SET_FORM_IS_VISIBLE, MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING, MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE, MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE } from 'store/actions/data/manufacturerAdminHierarchy';
+import {
+    MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED,
+    MANUFACTURER_ADMIN_HIERARCHY_DATA_SHOW_LOADING,
+    MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED,
+    MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING,
+    MANUFACTURER_ADMIN_HIERARCHY_SET_FORM_DATA,
+    MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE,
+    MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_DATA_LOADED,
+    MANUFACTURER_ADMIN_HIERARCHY_SET_FORM_IS_VISIBLE,
+    MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
+    MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE,
+    MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE,
+    MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED,
+} from 'store/actions/data/manufacturerAdminHierarchy';
 
 const initialState = {
     isLoaded: false,
@@ -27,7 +40,7 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE:
             return { ...state, changeHistoryAuthorityVisible: action.visible };
         case MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE:
-            return { ...state, uploadVisible: action.visible }
+            return { ...state, uploadVisible: action.visible };
 
         case MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_DATA_LOADED:
             return { ...state, isHistoryLoaded: action.isLoaded, historyData: action.data };
@@ -35,6 +48,8 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
             return { ...state, isHistoryLoading: action.isLoading };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED:
             return { ...state, isHistoryLoaded: action.isLoaded, authHistoryData: action.data };
+        case MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED:
+            return { ...state, isHistoryLoaded: action.isLoaded, employeeCode: action.data };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
         default:
