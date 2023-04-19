@@ -197,7 +197,7 @@ const LeftSideBarMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
-                            <div style={{ textAlign: 'center', margin: '5px auto 10px auto' }}>
+                            <div className={styles.searchContainer}>
                                 {collapsed ? (
                                     <BsSearch size={18} onClick={onMenuCollapsed}/>
                                 ) : (
