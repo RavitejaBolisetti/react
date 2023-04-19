@@ -450,6 +450,7 @@
 
 .leftMenuBox .searchField {
   border: #000000;
+  width:100%;
 }
 
 .leftMenuBox .searchContainer {

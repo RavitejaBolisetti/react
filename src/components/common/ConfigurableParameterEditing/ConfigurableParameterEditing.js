@@ -325,7 +325,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
@@ -349,10 +349,10 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                             </Col>
 
                             {configData?.length ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`}  type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>
