@@ -1,7 +1,7 @@
 export const preparePlaceholderText = (name) => {
-    return 'Please Enter ' + name;
+    return 'Please enter ' + name;
 };
 
 export const preparePlaceholderSelect = (name) => {
-    return 'Please Select ' + name;
+    return 'Please select ' + name;
 };

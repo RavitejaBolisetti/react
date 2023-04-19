@@ -15,7 +15,6 @@ import { qualificationDataActions } from 'store/actions/data/qualificationMaster
 import DrawerUtil from './DrawerUtil';
 
 import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
 
@@ -23,7 +22,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
+            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -37,7 +36,7 @@ const mapStateToProps = (state) => {
         isLoading,
         qualificationData,
         isLoadingOnSave,
-        isFormDataLoaded
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -81,8 +80,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [saveclick, setsaveclick] = useState();
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
-
-
+    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
 
     useEffect(() => {
         form.resetFields();
@@ -102,7 +100,6 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
 
-
     useEffect(() => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -114,15 +111,13 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         if (isDataLoaded && qualificationData) {
             if (filterString) {
                 const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(qualificationData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
-
-
 
     const tableColumn = [];
     tableColumn.push(
@@ -130,7 +125,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             title: 'Srl.',
             dataIndex: 'srl',
             width: '6%',
-            sorter: false
+            sorter: false,
+            render: (_t, _r, i) => i + 1,
         })
     );
 
@@ -138,14 +134,14 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
-            width: '17%'
+            width: '17%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
-            width: '40%'
+            width: '40%',
         })
     );
     tableColumn.push(
@@ -153,7 +149,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             title: 'Status',
             dataIndex: 'status',
             render: (text, record) => {
-                return <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>;
+                return <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>;
             },
         })
     );
@@ -166,12 +162,12 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 return (
                     <Space>
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
                                 <EditIcon />
                             </Button>
                         }
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
                                 <ViewEyeIcon />
                             </Button>
                         }
@@ -191,7 +187,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false)
+            onSaveShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
@@ -205,10 +201,9 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             }
         };
 
-
         const onError = (message) => {
-            onSaveShowLoading(false)
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
+            onSaveShowLoading(false);
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {
@@ -236,6 +231,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
+        setcodeIsReadOnly(false)
+
     };
 
     const handleUpdate = (record) => {
@@ -255,6 +252,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
         setDrawer(true);
         setIsReadOnly(false);
+        setcodeIsReadOnly(true)
     };
 
     const handleUpdate2 = () => {
@@ -271,6 +269,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         });
         setsaveclick(true);
         setIsReadOnly(false);
+        setcodeIsReadOnly(true)
+
     };
 
     const handleView = (record) => {
@@ -288,6 +288,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         });
         setDrawer(true);
         setIsReadOnly(true);
+        setcodeIsReadOnly(true)
+
     };
 
     const handleReferesh = (e) => {
@@ -315,15 +317,15 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
+                    <div className={styles.searchContainer}>
                         <Row gutter={20}>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                    <div className={styles.searchBox}>
+                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={styles.subheading}>
                                             Qualification List
                                         </Col>
-                                        <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                             <Search
                                                 placeholder="Search"
                                                 style={{
@@ -339,9 +341,9 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             </Col>
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
+                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger></Button>
 
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add Qualification
                                     </Button>
                                 </Col>
@@ -353,6 +355,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 </Col>
             </Row>
             <DrawerUtil
+                codeIsReadOnly={codeIsReadOnly}
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
@@ -386,7 +389,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
                                 description={
                                     !qualificationData?.length ? (
@@ -402,7 +405,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                                 {!qualificationData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                                 Add Qualification
                                             </Button>
                                         </Col>
@@ -413,7 +416,9 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                        <div className={styles.tableProduct}>
+                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                        </div>
                     </ConfigProvider>
                 </Col>
             </Row>
