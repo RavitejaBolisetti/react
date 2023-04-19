@@ -355,6 +355,9 @@
     .userAvatar {
         padding-top: 8px;
     }
+    .dropdownArrow {
+        padding: 0%;
+    }
 
     .headerLeft .userAvatar .userAvatarInside {
         font-size: 16px;
@@ -379,12 +382,15 @@
         display: inline;
         padding-left: 5px;
     }
-
+    
     .menuIcon {
         display: inline;
         position: absolute;
         left: 0;
         cursor: pointer;
+    }
+    .menuIcon :global .anticon{
+        vertical-align: 0.75em;
     }
 
     .navbarExpand .navbarNav .navLink {

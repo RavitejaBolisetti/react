@@ -253,7 +253,9 @@
     /* margin-right: 6px; */
     padding-top: 2px;
 }
-
+.lastheaderbutton{
+    margin-right: 0px;
+}
 /* Custom CSS */
 
 .container {
@@ -944,6 +946,7 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0px !important;
+    margin-top: 0px;
 }
 
 .contentHeaderBackground {
@@ -1259,7 +1262,12 @@
         padding-left: 10px !important;
         padding-right: 0px !important;
     }
-
+    .addGroup {
+        margin-top: 10px;
+    }
+    .lastheaderbutton{
+        margin-right: 15px;
+    }
     /* .padRight0 {
     padding-right: 0px !important;
   } */
