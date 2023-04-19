@@ -303,7 +303,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -311,7 +311,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -323,12 +323,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 return (
                     <Space>
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
                                 <EditIcon />
                             </Button>
                         }
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
                                 <ViewEyeIcon />
                             </Button>
                         }
@@ -447,7 +447,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                                 {!criticalityGroupData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                                 Add Group
                                             </Button>
                                         </Col>

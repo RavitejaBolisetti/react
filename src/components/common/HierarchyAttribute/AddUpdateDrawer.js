@@ -4,13 +4,12 @@ import { validateAlphanumericWithSpace, validateRequiredInputField, validationFi
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from './HierarchyAttribute.module.css';
-import style from "../DrawerAndTable.module.css";
+import style from '../DrawerAndTable.module.css';
 
-const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
+const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
-    const codeDisabledProp = {disabled :codeIsReadOnly}
-
+    const codeDisabledProp = { disabled: codeIsReadOnly };
 
     let drawerTitle = '';
     if (formActionType === 'view') {
@@ -29,7 +28,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setSh
 
     const onClose = () => {
         setShowDrawer(false);
-        
+
         form.resetFields();
         setIsReadOnly(false);
         setFormBtnDisable(false);
@@ -61,7 +60,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setSh
             title={drawerTitle}
             footer={
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons }>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
                         <Button danger onClick={onClose}>
                             Cancel
                         </Button>
@@ -83,7 +82,6 @@ const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setSh
                                 ) : (
                                     ''
                                 )}
-                            
                             </>
                         )}
                     </Col>
@@ -93,7 +91,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setSh
             placement="right"
             onClose={onClose}
             open={showDrawer}
-            className={formActionType === 'view' ? style.viewMode  : styles.editDrawer }
+            className={formActionType === 'view' ? style.viewMode : styles.editDrawer}
         >
             <Space
                 direction="vertical"
@@ -105,16 +103,13 @@ const AddUpdateDrawer = ({ codeIsReadOnly,editRow, setEditRow, showDrawer, setSh
                 <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[{ max: 6, message: 'Code must be 6 characters long.' }, validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code'),
-                            ]}>
-                                <Input maxLength={6} placeholder={preparePlaceholderText('Code')}  {...codeDisabledProp}/>
-                           
+                            <Form.Item initialValue={editRow?.hierarchyAttribueCode} name="hierarchyAttribueCode" label="Code" rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
+                                <Input maxLength={6} placeholder={preparePlaceholderText('code')} {...codeDisabledProp} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[ { max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name'),validateAlphanumericWithSpace('Name')
-                             ]}>
-                                {formActionType === 'view' ? <p className={style.viewModeText} >{editRow?.hierarchyAttribueName}</p> :<Input maxLength={50} placeholder={preparePlaceholderText('Name')}  {...disabledProps}/>}
+                            <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
+                                {formActionType === 'view' ? <p className={style.viewModeText}>{editRow?.hierarchyAttribueName}</p> : <Input maxLength={50} placeholder={preparePlaceholderText('name')} {...disabledProps} />}
                             </Form.Item>
                         </Col>
                     </Row>

@@ -173,13 +173,13 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
             <Form form={form} id="myForm" layout="vertical" colon={false} onValuesChange={onValuesChange} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupCode" label="Criticality Group Id" rules={[validateRequiredInputField('Criticality Group Id'), validationFieldLetterAndNumber('Criticality Group Id')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Group Id')} {...codeDisabledProp} />
+                        <Form.Item name="criticalityGroupCode" label="Criticality Group Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} {...codeDisabledProp} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('Criticality Group Name'), validateAlphanumericWithSpace('Criticality Group Name')]}>
-                            {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />}
+                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
+                            {footerEdit ? <p className={style.viewModeText}>{form.getFieldValue('criticalityGroupName')}</p> : <Input placeholder={preparePlaceholderText('name')} maxLength={50} {...disabledProps} />}
                         </Form.Item>
                     </Col>
                 </Row>
