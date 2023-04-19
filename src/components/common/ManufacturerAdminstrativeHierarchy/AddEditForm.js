@@ -38,14 +38,14 @@ const AddEditFormMain = (props) => {
     };
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.manufactureOrgParntId;
+        treeCodeId = formData?.manufactureAdminParntId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
+        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureAdminParntId;
 
         const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
         selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
@@ -95,7 +95,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
+                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureAdminParntId">
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
@@ -103,13 +103,13 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Code" name="manufactureOrgCode" initialValue={formData?.manufactureOrgCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
+                        <Form.Item label="Code" name="manufactureAdminCode" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
                             <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('short description')]}>
+                        <Form.Item name="manufactureAdminShortName" label="Short Description" initialValue={formData?.manufactureAdminShortName} rules={[validateRequiredInputField('short description')]}>
                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -117,14 +117,14 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgLongName" label="Long Description" initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('long description')]}>
+                        <Form.Item name="manufactureAdminLongName" label="Long Description" initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField('long description')]}>
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active} label="Status" name="active">
-                            <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                        <Form.Item initialValue={formData?.status} label="Status" name="status">
+                            <Switch value={formData?.status} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
