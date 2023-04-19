@@ -43,3 +43,5 @@ export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
 export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
 export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
 export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');
+export const ROUTING_USER_MANAGEMENT = '/admin/user-management';
+export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_USER_MANAGEMENT.concat('dealer');
