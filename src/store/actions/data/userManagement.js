@@ -9,17 +9,27 @@ export const USER_MANAGEMENT_DEALER_DATA_SHOW_LOADING = 'USER_MANAGEMENT_DEALER_
 export const USER_MANAGEMENT_DEALER_GROUP_LOADED = 'USER_MANAGEMENT_DEALER_GROUP_LOADED';
 export const USER_MANAGEMENT_DEALER_SET_FORM_IS_VISIBLE = 'USER_MANAGEMENT_DEALER_SET_FORM_IS_VISIBLE';
 export const USER_MANAGEMENT_DEALER_SET_FORM_DATA = 'USER_MANAGEMENT_DEALER_SET_FORM_DATA';
+export const USER_MANAGEMENT_MANUFACTURER_DATA_LOADED = 'USER_MANAGEMENT_MANUFACTURER_DATA_LOADED';
 
 const receiveUserManagementDealerdata = (data) => ({
     type: USER_MANAGEMENT_DEALER_DATA_LOADED,
     isLoaded: true,
     data,
 });
-
+const receiveUserManagementManufacturerData = (data) => ({
+    type: USER_MANAGEMENT_MANUFACTURER_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
 const userManagementDataActions = {};
 
 const baseURLPath = BASE_URL_USER_MANAGEMENT_DEALER;
-const baseURLPathManufacturer = BASE_URL_USER_MANAGEMENT_DEALER;
+const baseURLPathManufacturer = BASE_URL_USER_MANAGEMENT_MANUFACTURER;
+
+userManagementDataActions.listShowLoading = (isLoading) => ({
+    type: USER_MANAGEMENT_DEALER_DATA_SHOW_LOADING,
+    isLoading,
+});
 
 userManagementDataActions.fetchDealerDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, id } = params;
@@ -81,7 +91,7 @@ userManagementDataActions.fetchManufacturerDetails = withAuthToken((params) => (
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveDealerLocationsData(res?.data));
+            dispatch(receiveUserManagementManufacturerData(res?.data));
         } else {
             onError('Internal Error, Please try again');
         }
@@ -90,7 +100,7 @@ userManagementDataActions.fetchManufacturerDetails = withAuthToken((params) => (
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_DEALER_LOCATION + '?applicationId=' + applicationId,
+        url: baseURLPathManufacturer + '?applicationId=' + applicationId,
         token,
         accessToken,
         userId,
