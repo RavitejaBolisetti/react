@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
 
@@ -22,6 +22,7 @@ import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -62,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
-
+const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
 export const UserManagementMain = ({ saveData, userId, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
@@ -92,6 +93,8 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     const [error, setError] = useState(false);
     const [valid, setValid] = useState(false);
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
+    const [DealerSelected, setDealerSelected] = useState();
+    const [disabled, setdisabled] = useState();
 
     useEffect(() => {
         form.resetFields();
@@ -104,6 +107,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
             // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        setdisabled(true);
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
@@ -111,11 +115,14 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
     useEffect(() => {
-        console.log(DealerSearchvalue);
+        console.log(DealerSelected);
         if (DealerSearchvalue?.length > 0) {
             // fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
         }
-    }, [DealerSearchvalue]);
+        if (DealerSelected?.length < 0 || DealerSelected === undefined) {
+            setdisabled(true);
+        }
+    }, [DealerSearchvalue, DealerSelected]);
 
     useEffect(() => {
         if (userId) {
@@ -416,6 +423,10 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
+    const handleChange = (selectedvalue) => {
+        setdisabled(false);
+        setDealerSelected(selectedvalue);
+    };
 
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
@@ -431,15 +442,22 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        <Col xs={9} sm={9} md={9} lg={9} xl={9} className={style.subheading}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
                                             <div className={style.userManagement}>
-                                                <Button className={style.actionbtn} type="primary" danger>
+                                                <Button className={style.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
                                                     Manufacturer
                                                 </Button>
                                                 <Button className={style.dealerBtn} type="primary" danger>
                                                     Dealer
                                                 </Button>
                                             </div>
+                                        </Col>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                            <Select className={styles.attributeSelet} onChange={handleChange} placeholder="Select" allowClear>
+                                                {dealersData?.map((item) => (
+                                                    <Option value={item}>{item}</Option>
+                                                ))}
+                                            </Select>
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                             <Search
@@ -449,11 +467,13 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                                                 }}
                                                 allowClear
                                                 onSearch={onSearchHandle}
+                                                disabled={disabled}
                                             />
                                         </Col>
                                     </div>
                                 </Row>
                             </Col>
+
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
@@ -527,7 +547,6 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                 setForceFormReset={setForceFormReset}
                 footerEdit={footerEdit}
                 handleUpdate2={handleUpdate2}
-                isLoadingOnSave={isLoadingOnSave}
             />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
