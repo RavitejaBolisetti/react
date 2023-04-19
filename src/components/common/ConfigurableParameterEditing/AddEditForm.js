@@ -131,7 +131,7 @@ const AddEditFormMain = (props) => {
                     )}
 
                     {!formData?.id && (
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)}>
+                        <Button htmlType="submit"  disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>
                     )}

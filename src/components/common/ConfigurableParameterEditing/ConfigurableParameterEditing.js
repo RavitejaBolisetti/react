@@ -15,6 +15,7 @@ import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
+import { FaRegEye } from 'react-icons/fa';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
@@ -219,8 +220,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                         <FiEdit2 />
                     </Button>
                     {
-                        <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                            <ViewEyeIcon />
+                        <Button className={styles.tableIcons}  onClick={() => handleView(record)}>
+                            <FaRegEye />
                         </Button>
                     }
                 </Space>,
