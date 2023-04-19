@@ -9,7 +9,6 @@ import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvi
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
-import style from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -335,9 +334,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                         {detailData?.hierarchyAttributeType && (
                                                 <Search
                                                     placeholder="Search"
-                                                    // style={{
-                                                    //     width: 300,
-                                                    // }}
+                                                  
                                                     className={styles.headerSearchField}
                                                     allowClear
                                                     onSearch={onSearchHandle}

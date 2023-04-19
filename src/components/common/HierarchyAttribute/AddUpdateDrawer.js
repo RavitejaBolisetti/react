@@ -3,7 +3,6 @@ import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from './HierarchyAttribute.module.css';
 import style from '../DrawerAndTable.module.css';
 
 const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
@@ -91,7 +90,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
             placement="right"
             onClose={onClose}
             open={showDrawer}
-            className={formActionType === 'view' ? style.viewMode : styles.editDrawer}
+            className={formActionType === 'view' ? style.viewMode : style.editDrawer}
         >
             <Space
                 direction="vertical"
