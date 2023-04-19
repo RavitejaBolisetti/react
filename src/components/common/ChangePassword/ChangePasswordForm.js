@@ -87,17 +87,18 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
     };
 
     const validateToNextPassword = (rule, value, callback) => {
-        if (value) {
+        if (form.getFieldValue('confirmNewPassword')) {
             form.validateFields(['confirmNewPassword'], { force: true });
+        } else {
+            return Promise.resolve();
         }
-        callback();
     };
 
     const compareToFirstPassword = (rule, value, callback) => {
         if (value && value !== form.getFieldValue('newPassword')) {
             callback("New Password and Confirm Password doesn't match!");
         } else {
-            callback();
+            return Promise.resolve();
         }
     };
 

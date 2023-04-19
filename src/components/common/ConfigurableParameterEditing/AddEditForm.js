@@ -4,7 +4,6 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
@@ -40,28 +39,28 @@ const AddEditFormMain = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('ControlID')]}>
-                        <Select placeholder={preparePlaceholderSelect('control id')} showSearch allowClear onChange={handleControlChange} disabled={isReadOnly}>
+                        <Select placeholder="Select" showSearch allowClear onChange={handleControlChange} disabled={isReadOnly}>
                             {typeData && typeData[PARAM_MASTER.CFG_PARAM.id] && typeData[PARAM_MASTER.CFG_PARAM.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
                         </Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Control Description" initialValue={formData?.controlDescription} rules={[validateRequiredInputField('Control Description')]} name="controlDescription">
-                        <TextArea rows={2} value={formData?.controlDescription} placeholder={preparePlaceholderText('control description')} disabled={isReadOnly} />
+                        <TextArea rows={2} value={formData?.controlDescription} placeholder="Enter Data" disabled={isReadOnly} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Control Group" initialValue={formData?.controlGroup} name="controlGroup" rules={[validateRequiredSelectField('controlGroup')]}>
-                        <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('control group')}>
+                        <Select disabled={isReadOnly} placeholder="Select">
                             {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
                         </Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={parameterType} label="Configurable Parameter Type" name="configurableParameterType" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                        <Select placeholder={preparePlaceholderSelect('parameter type')} onChange={changeSelectOptionHandler} disabled={isReadOnly}>
+                        <Select placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
                             {typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
                         </Select>
                     </Form.Item>
@@ -72,19 +71,19 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY ? (
                         <Form.Item initialValue={formData?.textValue} label="Configurable Parameter Values" name="textValue" rules={[validateRequiredInputField('ConfigParamValues')]}>
-                            <Input value={configData?.textValue} placeholder={preparePlaceholderText('configurable parameter values')} disabled={isReadOnly} />
+                            <Input value={configData?.textValue} placeholder="Enter Data" disabled={isReadOnly} />
                         </Form.Item>
                     ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY ? (
                         <Row gutter={20}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="From Number" className={styles.numberRange} initialValue={formData?.fromNumber} name="fromNumber" rules={[validateRequiredInputField('Number')]}>
-                                    <InputNumber min={1} max={100} placeholder={preparePlaceholderText('from number')} style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                    <InputNumber min={1} max={100} placeholder="From Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Form.Item label="To Number" className={styles.numberRange} initialValue={formData?.toNumber} name="toNumber" rules={[validateRequiredInputField('Number')]}>
-                                    <InputNumber min={1} max={100} placeholder={preparePlaceholderText('to number')} style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                    <InputNumber min={1} max={100} placeholder="To Number" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -104,7 +103,7 @@ const AddEditFormMain = (props) => {
                     ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY ? (
                         <Form.Item initialValue={formData?.booleanValue} name="booleanValue" label="Configurable Parameter Values" rules={[validateRequiredInputField('ConfigParamValues')]}>
                             <Select
-                                placeholder={preparePlaceholderSelect('configurable parameter values')}
+                                placeholder="Select"
                                 options={[
                                     { value: true, label: 'Yes' },
                                     { value: false, label: 'No' },

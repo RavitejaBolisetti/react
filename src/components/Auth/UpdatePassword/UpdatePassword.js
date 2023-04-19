@@ -94,10 +94,11 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
     };
 
     const validateToNextPassword = (_, value) => {
-        if (value) {
+        if (form.getFieldValue('confirmNewPassword')) {
             form.validateFields(['confirmNewPassword'], { force: true });
+        } else {
+            return Promise.resolve();
         }
-        return Promise.resolve();
     };
 
     const compareToFirstPassword = (_, value) => {
