@@ -17,7 +17,7 @@ export const RoleManagement = (state = initialState, action) => {
         case ROLE_MANAGEMENT_SET_FORM_DATA:
             return { ...state, isFormDataLoaded: action.isFormDataLoaded, formData: action.formData };
         case ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE:
-            return { ...state, isFormVisible: true };
+            return { ...state, isLoading: action.isLoading };
         case ROLE_MANAGEMENT_DATA_SHOW_LOADING:
             return { ...state, isLoading: action.isLoading };
         case ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING:

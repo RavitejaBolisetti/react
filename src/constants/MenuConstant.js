@@ -11,6 +11,7 @@ import * as routing from './routing';
 import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 export const MenuConstant = {
+   
     [getMenyKey('FAV')]: {
         key: 'FAV',
         link: undefined,
@@ -21,7 +22,7 @@ export const MenuConstant = {
     [getMenyKey('HOM')]: {
         key: 'HOM',
         link: routing.ROUTING_DASHBOARD,
-        icon: HomeIcon,
+        icon: <HomeIcon fontSize={22} />,
         parentMenuId: '',
     },
 
@@ -191,7 +192,7 @@ export const MenuConstant = {
     [getMenyKey('RPT-PG')]: {
         key: 'RPT-PG',
         link: routing.ROUTING_REPORT_PAGINATED_REPORT,
-        icon: undefined,        
+        icon: undefined,
         parentMenuId: 'RPT',
     },
 };
