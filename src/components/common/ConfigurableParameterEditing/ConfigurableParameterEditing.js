@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row,  Space, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
@@ -219,7 +219,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                         <FiEdit2 />
                     </Button>
                     {
-                        <Button className={styles.tableIcons}  onClick={() => handleView(record)}>
+                        <Button className={styles.tableIcons} onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
