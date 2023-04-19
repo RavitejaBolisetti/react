@@ -256,15 +256,18 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
         console.log('The MenuAlteredData : ', MenuAlteredData);
 
         const withCheck = {};
+        const withExpanded = {};
         MenuAlteredData?.forEach((el) => {
             withCheck[el?.value] = [];
+            withExpanded[el?.value] = [];
         });
-        setourCheckedKeys(withCheck);
+        setCheckedKeys(withCheck);
+        setExpandedKeys(withExpanded);
     }, [MenuAlteredData]);
 
     useEffect(() => {
-        console.log('We change our checked keys to 404 : ', ourCheckedKeys);
-    }, [ourCheckedKeys]);
+        console.log('We change our checked keys to 404 : ', CheckedKeys);
+    }, [CheckedKeys]);
     useEffect(() => {
         let evalue;
         FinalTreedata.map((e) => {
@@ -380,16 +383,18 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
         return result;
     }
 
-    const onTreeCheck = (checked, targetNode) => {
+    const onTreeCheck = (checked, targetNode, value) => {
         // setCheckedKeys({ ...CheckedKeys, [CheckedKeys[EvalChecked2]]: checked });
 
-        setCheckedKeys(checked);
+        setCheckedKeys({ ...CheckedKeys, [value]: checked });
+        // setExpandedKeys({ ...ExpandedKeys, [value]: expanded });
+
         console.log('onTreeSelect', checked, targetNode);
     };
     const OnChanges = (value) => {
         console.log('this is the Change in the Tree =>>>>>', value);
     };
-    const OnExpanded = (expanded, targetNode) => {
+    const OnExpanded = (expanded, targetNode, value) => {
         //  StateMangement.expanded[0]=expanded;
         let ExpandVals = [];
         for (const [key, value] of Object.entries(expanded)) {
@@ -401,7 +406,7 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
         const updated = { ...StateMangement, [expanded[0]]: expanded };
         console.log('This is the updated : ', expanded);
 
-        setExpandedKeys({ ...ExpandedKeys, [expanded[0]]: expanded });
+        setExpandedKeys({ ...ExpandedKeys, [value]: expanded });
     };
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
@@ -447,9 +452,9 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
                                             <CheckboxTree
                                                 nodes={[el]}
                                                 expanded={ExpandedKeys[el?.value]}
-                                                checked={CheckedKeys}
-                                                onCheck={onTreeCheck}
-                                                onExpand={OnExpanded}
+                                                checked={CheckedKeys[el?.value]}
+                                                onCheck={(checked, targetNode) => onTreeCheck(checked, targetNode, el?.value)}
+                                                onExpand={(expanded, targetNode) => OnExpanded(expanded, targetNode, el?.value)}
                                                 onMoveNode={OnChanges}
                                                 title={{
                                                     label: 'name',
