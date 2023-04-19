@@ -217,7 +217,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -226,7 +226,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '17%',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -234,7 +234,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -242,7 +242,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -320,8 +320,13 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.subheading}>
+                                    
+                                        <Row gutter={20} >
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         Hierarchy Attribute Type
+                                        </Col>
+                                        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                         <Select className={styles.headerSelectField} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                             {attributeData?.map((item) => (
                                                 <Option value={item}>{item}</Option>
@@ -339,6 +344,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                                     onChange={onChangeHandle}
                                                 />
                                         )}
+                                        </Col>
+                                        </Row>
                                     </Col>
                                    
                                     

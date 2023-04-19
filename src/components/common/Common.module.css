@@ -1,5 +1,5 @@
 /* :global CSS for Antd CSS Overrides */
-
+.lineHeight33{line-height: 33px;}
 .geoSection :global .ant-tree {
     background: #f4f4f4;
 }
@@ -117,15 +117,21 @@
 :global .ant-btn-default:not(:disabled):hover{border-color: #e31837;} */
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
-.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+.contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-inline-end-width: 0px;
     border-color: transparent;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):active,
-.contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):hover,
-.contentHeaderBackground .headerSelectField :global .ant-input-search .ant-input:focus {
+.contentHeaderBackground :global .ant-btn-default:not(:disabled):hover,
+.contentHeaderBackground :global .ant-input-search .ant-input:focus {
     border-color: transparent;
+}
+.contentHeaderBackground :global .anticon-close-circle{
+    color:#0B0B0C;
+    width:12px;
+    height: 12px;
+    vertical-align: -0.35em;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
@@ -257,7 +263,13 @@
     margin-right: 0px;
 }
 /* Custom CSS */
+.activeText {
+    color: #00a310;
+}
 
+.inactiveText {
+    color: #8e8585;
+}
 .container {
     padding: 20px;
 }
@@ -1022,9 +1034,7 @@
     padding-right: 0px !important;
 }
 
-.activeText {
-    color: #00a310;
-}
+
 
 .content {
     border: 1px solid #e8e8e8;
@@ -1088,11 +1098,6 @@
     background-color: rgba(52, 44, 44, 0.34);
     border-radius: 10px;
     /* border: 2px solid ; */
-}
-
-.attributeSelect {
-    width: 100%;
-    margin-left: -30px;
 }
 
 .tableIcons {
