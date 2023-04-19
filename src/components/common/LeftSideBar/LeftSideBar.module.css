@@ -220,7 +220,7 @@
 :global .ant-btn-default {
   height: 34px !important;
   border-radius: 4px;
-  border-color: #DEDEDE;
+  border-color: transparent;
   padding: 6px 12px;
 
 }
@@ -450,6 +450,7 @@
 
 .leftMenuBox .searchField {
   border: #000000;
+  width:100%;
 }
 
 .leftMenuBox .searchContainer {
