@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_USER_MANAGEMENT_DEALER } from 'constants/routingApi';
+import { BASE_URL_USER_MANAGEMENT_DEALER, BASE_URL_USER_MANAGEMENT_MANUFACTURER } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const USER_MANAGEMENT_DEALER_DATA_LOADED = 'USER_MANAGEMENT_DEALER_DATA_LOADED';
@@ -19,6 +19,7 @@ const receiveUserManagementDealerdata = (data) => ({
 const userManagementDataActions = {};
 
 const baseURLPath = BASE_URL_USER_MANAGEMENT_DEALER;
+const baseURLPathManufacturer = BASE_URL_USER_MANAGEMENT_DEALER;
 
 userManagementDataActions.fetchDealerDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, id } = params;
@@ -103,55 +104,14 @@ userManagementDataActions.fetchManufacturerDetails = withAuthToken((params) => (
 
     axiosAPICall(apiCallParams);
 });
-
-userManagementDataActions.fetchApplicationAction = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, appId } = params;
+userManagementDataActions.saveManufacturerDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, onSuccess } = params;
     setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(receiveApplicationActionData(res?.data));
-        } else {
-            onError('Internal Error, Please try again');
-        }
-    };
 
     const apiCallParams = {
         data,
-        method: 'get',
-        url: BASE_URL_APPLICATION_ACTIONS + '?appId=' + appId,
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-userManagementDataActions.fetchApplicationCriticalityGroup = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data } = params;
-    setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(receiveCriticalityGroupData(res?.data.map((el) => ({ critcltyGropCode: el?.critcltyGropCode, critcltyGropDesc: el?.critcltyGropDesc }))));
-        } else {
-            onError('Internal Error, Please try again');
-        }
-    };
-
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: BASE_URL_APPLICATION_CRITICALITY_GROUP,
+        method: 'post',
+        url: baseURLPath,
         token,
         accessToken,
         userId,
