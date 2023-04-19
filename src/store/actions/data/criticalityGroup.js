@@ -6,6 +6,7 @@ import { BASE_URL_CRITICALITY_GROUP } from 'constants/routingApi';
 export const CRITICALITY_DATA_LOADED = 'CRITICALITY_DATA_LOADED';
 export const CRITICALITY_SET_FORM_DATA = 'CRITICALITY_SET_FORM_DATA';
 export const CRITICALITY_DATA_SHOW_LOADING = 'CRITICALITY_DATA_SHOW_LOADING';
+export const CRITICALITY_ON_SAVE_DATA_SHOW_LOADING = 'CRITICALITY_ON_SAVE_DATA_SHOW_LOADING';
 
 const receiveData = (data) => ({
     type: CRITICALITY_DATA_LOADED,
@@ -19,6 +20,10 @@ const baseURLPath = BASE_URL_CRITICALITY_GROUP;
 
 criticalityDataActions.listShowLoading = (isLoading) => ({
     type: CRITICALITY_DATA_SHOW_LOADING,
+    isLoading,
+});
+criticalityDataActions.onSaveShowLoading = (isLoading) => ({
+    type: CRITICALITY_ON_SAVE_DATA_SHOW_LOADING,
     isLoading,
 });
 

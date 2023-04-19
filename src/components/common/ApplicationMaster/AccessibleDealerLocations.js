@@ -3,7 +3,7 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import { Button, Col, Row, Form, Select, Modal, Input, Table, Switch, Space } from 'antd';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
@@ -141,7 +141,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
             onOk() {
                 deleteTableRows(record, index);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
 
@@ -192,7 +192,7 @@ const AccessibleDealerLocations = ({ form, isReadOnly }) => {
     );
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
     const onFinish = (values) => {
         // console.log('On finish', values);

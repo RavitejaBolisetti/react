@@ -5,6 +5,7 @@ import { Form, Row, Col, Button, Input, message, notification, Space } from 'ant
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
@@ -59,7 +60,7 @@ const Login = (props) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const [tempData, setTempData] = useState();
+    const [showPassword, setShowPassword] = useState(false);
     const [alertNotification, contextAlertNotification] = notification.useNotification();
 
     const [, updateState] = React.useState();
@@ -100,7 +101,6 @@ const Login = (props) => {
         const passwordStatus = data?.passwordStatus;
         if (passwordStatus) {
             authPreLogin(data);
-            setTempData(data);
             updatePasswordStatusInfo(data);
             forceUpdate();
         } else {
@@ -169,6 +169,19 @@ const Login = (props) => {
         });
     };
 
+    const handleShowPassword = () => {
+        setShowPassword(true);
+    };
+
+    const handleHidePassword = () => {
+        setShowPassword(false);
+    };
+
+    const passowrdSuffix = (
+        <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword}>
+            {!showPassword ? <AiOutlineEyeInvisible size={24} /> : <AiOutlineEye size={24} />}
+        </span>
+    );
     return (
         <>
             {contextAlertNotification}
@@ -204,7 +217,7 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
-                                                            <Input.Password prefix={<FiLock size={18} />} type="text" placeholder="Password" visibilityToggle={true} />
+                                                            <Input type={showPassword ? 'text' : 'password'} placeholder="Password" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>

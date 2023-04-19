@@ -1,10 +1,15 @@
 import React from 'react';
-import { Col, Modal, Row } from 'antd';
+import { Col, Modal, Row, Form } from 'antd';
 import { ChangePasswordForm } from './ChangePasswordForm';
 import styles from './ChangePassword.module.css';
 
+export const ChangePassword = ({ setModalOpen, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+    const [form] = Form.useForm();
+    const onCancel = () => {
+        form.resetFields();
+        setModalOpen(false);
+    };
 
-export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     return (
         <>
             <Modal className={styles.changePassword} centered open={isOpen} title={title} okText="Submit" footer={false} okType="primary" maskClosable={false} onCancel={onCancel} width={480}>
@@ -15,7 +20,7 @@ export const ChangePassword = ({ isOpen = false, onOk = () => {}, onCancel = () 
                         </Col>
                     </Row>
                 )}
-                <ChangePasswordForm />
+                <ChangePasswordForm form={form} />
             </Modal>
         </>
     );

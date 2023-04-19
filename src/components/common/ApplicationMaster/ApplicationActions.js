@@ -6,7 +6,7 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { validateRequiredInputField } from 'utils/validation';
 
 const { confirm } = Modal;
@@ -98,7 +98,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
             onOk() {
                 deleteTableRows(record, index);
             },
-            onCancel() {},
+            onCancel() { },
         });
     };
 
@@ -201,7 +201,7 @@ const ApplicationActions = ({ form, isReadOnly, formActionType }) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     return (

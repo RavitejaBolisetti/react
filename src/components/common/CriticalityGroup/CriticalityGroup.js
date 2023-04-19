@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -13,10 +15,10 @@ import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import DrawerUtil from './DrawerUtil';
 import { DataTable } from 'utils/dataTable';
+import { filterFunction } from 'utils/filterFunction';
 
-import styles from 'pages/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import style from './criticatiltyGroup.module.css';
-import { escapeRegExp } from 'utils/escapeRegExp';
 
 const { Search } = Input;
 
@@ -24,7 +26,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [] },
+            criticalityGroup: { isLoaded: isDataLoaded = false, isLoading, data: criticalityGroupData = [], isLoadingOnSave },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -37,6 +39,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         criticalityGroupData,
+        isLoadingOnSave,
     };
     return returnValue;
 };
@@ -48,13 +51,14 @@ const mapDispatchToProps = (dispatch) => ({
             fetchData: criticalityDataActions.fetchData,
             saveData: criticalityDataActions.saveData,
             listShowLoading: criticalityDataActions.listShowLoading,
+            onSaveShowLoading: criticalityDataActions.onSaveShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification }) => {
+export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
@@ -76,6 +80,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [deletedItemList, setDeletedItemList] = useState([]);
     const [filterString, setFilterString] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
 
     const errorAction = (message) => {
         showGlobalNotification(message);
@@ -96,11 +102,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         if (isDataLoaded && criticalityGroupData) {
             if (filterString) {
                 const filterDataItem = criticalityGroupData?.filter((item) => filterFunction(filterString)(item?.criticalityGroupCode) || filterFunction(filterString)(item?.criticalityGroupName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(criticalityGroupData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(criticalityGroupData);
             }
-         }
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, criticalityGroupData]);
 
@@ -123,64 +130,39 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
 
-        //code for overlapping check on save
-        const timeInMinutes = (time) => {
-            const [hours, minutes] = time?.split(':').map(Number);
-            return hours * 60 + minutes;
+        const recordId = selectedRecord?.id || '';
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
+
+        const onSuccess = (res) => {
+            onSaveShowLoading(false);
+            form.resetFields();
+            setSelectedRecord({});
+            setSuccessAlert(true);
+            fetchData({ setIsLoading: listShowLoading, userId });
+            if (saveclick === true) {
+                setDrawer(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setDrawer(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
         };
 
-        const isOverlapping = (allowedTimingSlots) => {
-            // const times = allowedTimingSlots?.map((slot) => {
-            //     const startTime = timeInMinutes(slot?.timeSlotFrom);
-            //     const endTime = timeInMinutes(slot?.timeSlotTo);
-            //     const adjustedTime = endTime < startTime ? endTime + 1440 : endTime;
-            //     return { startTime, endTime: adjustedTime };
-            // });
-            // times?.sort((a, b) => a?.startTime - b?.startTime);
-            // for (let i = 0; i < times?.length - 1; i++) {
-            //     const slot1 = times[i];
-            //     const slot2 = times[i + 1];
-            //     if (slot1?.endTime >= slot2?.startTime || slot2?.endTime >= slot1?.startTime + (i === 0 ? 1440 : 0)) {
-            //         return true;
-            //     }
-            // }
-            return false;
+        const onError = (message) => {
+            onSaveShowLoading(false);
+            showGlobalNotification({ message, placement: 'bottomRight' });
         };
 
-        if (isOverlapping(finalAllowedTimingList)) {
-            showGlobalNotification({ title: 'Warning', message: 'The selected allowed timing slots are overlapping', placement: 'bottomRight' });
-        } else {
-            const recordId = selectedRecord?.id || '';
-            const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
+        const requestData = {
+            data: [data],
+            setIsLoading: onSaveShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
 
-            const onSuccess = (res) => {
-                form.resetFields();
-                setSelectedRecord({});
-                setSuccessAlert(true);
-                fetchData({ setIsLoading: listShowLoading, userId });
-                if (saveclick === true) {
-                    setDrawer(false);
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                } else {
-                    setDrawer(true);
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-                }
-            };
-
-            const onError = (message) => {
-                showGlobalNotification({ message, placement: 'bottomRight' });
-            };
-
-            const requestData = {
-                data: [data],
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-        }
+        saveData(requestData);
+        setForceFormReset(Math.Random() * 1000);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -192,11 +174,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
+        setcodeIsReadOnly(false)
+
     };
 
     const handleUpdate = (record) => {
@@ -208,8 +191,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         const momentTime = record?.allowedTimings?.map((i) => {
             return {
                 id: i?.id,
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
             };
         });
         setFormData(record);
@@ -224,18 +207,19 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         setDrawer(true);
         setIsReadOnly(false);
+        setcodeIsReadOnly(true)
+
     };
 
     const handleUpdate2 = () => {
         setFormActionType('update');
-
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
         const momentTime = selectedRecord?.allowedTimings?.map((i) => {
             return {
-                timeSlotFrom: moment(i.timeSlotFrom, 'HH:mm'),
-                timeSlotTo: moment(i.timeSlotTo, 'HH:mm'),
+                timeSlotFrom: dayjs(i.timeSlotFrom, 'HH:mm'),
+                timeSlotTo: dayjs(i.timeSlotTo, 'HH:mm'),
             };
         });
 
@@ -248,6 +232,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         });
         setsaveclick(true);
         setIsReadOnly(false);
+        setcodeIsReadOnly(true)
+
     };
 
     const handleView = (record) => {
@@ -272,14 +258,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         });
         setDrawer(true);
         setIsReadOnly(true);
+        setcodeIsReadOnly(true)
+
     };
 
     const handleReferesh = () => {
         setRefershData(!RefershData);
-    };
-
-    const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
 
     const onSearchHandle = (value) => {
@@ -296,6 +280,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
+            sorter: false,
+            render: (_t, _r, i) => i + 1,
         })
     );
 
@@ -357,12 +343,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
+                    <div className={styles.searchContainer}>
                         <Row gutter={20}>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
+                                    <div className={styles.searchBox}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={styles.subheading}>
                                             Criticality Group List
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
@@ -382,11 +368,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
                             {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button className={style.refreshBtn} onClick={handleReferesh} danger>
+                                    <Button className={styles.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
 
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>
@@ -399,6 +385,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             </Row>
 
             <DrawerUtil
+                codeIsReadOnly={codeIsReadOnly}
                 showGlobalNotification={showGlobalNotification}
                 deletedItemList={deletedItemList}
                 setDeletedItemList={setDeletedItemList}
@@ -432,7 +419,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 saveandnewclick={saveandnewclick}
                 alertNotification={alertNotification}
                 contextAlertNotification={contextAlertNotification}
-                isDataLoaded={isDataLoaded}
+                isDataLoaded={isLoadingOnSave}
+                isLoading={isLoadingOnSave}
+                forceUpdate={forceUpdate}
             />
 
             <Row gutter={20}>
@@ -442,7 +431,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
-                                    height: 60,
+                                    height: '20%',
                                 }}
                                 description={
                                     !criticalityGroupData?.length ? (
@@ -469,7 +458,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        <div className={styles.tableProduct}>
+                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        </div>
                     </ConfigProvider>
                 </Col>
             </Row>

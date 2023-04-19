@@ -1,3 +1,4 @@
+
 .myDrawerStyle :global .ant-drawer-body {
     padding-top: 10px;
     height: calc(100vh - 100px);
@@ -6,15 +7,23 @@
 }
 
 .myDrawerStyle :global .ant-drawer-title {
-    font-size: 24px;
-    font-weight: normal;
-    color: #484549;
+    font-size: 20px;
+    font-weight: 500;
+    color: #262626;
 }
 
-/* 
+.myDrawerStyle :global .ant-drawer-header {
+    height: 60px;
+}
+
+.myDrawerStyle :global .ant-drawer-wrapper-body {
+    height: calc(100vh - 50px) !important;
+}
+
 .myDrawerStyle :global .ant-drawer-close {
-    color: #0193e1;
-} */
+    color: #000000;
+}
+
 @media screen and (max-width: 1199px) {
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;
@@ -27,6 +36,7 @@
 }
 
 @media screen and (max-width: 767px) {
+
     .myDrawerStyle :global .ant-drawer-content-wrapper {
         width: 98% !important;
     }

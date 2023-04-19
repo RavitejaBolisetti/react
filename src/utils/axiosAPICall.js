@@ -23,7 +23,7 @@ const baseAPICall = (params) => {
 
     if (token) {
         const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, accessToken: accessToken, userId, deviceType: 'W', deviceId: '' };
+        const headers = { Authorization: AuthStr, userId, accessToken: accessToken, deviceType: 'W', deviceId: '' };
         axiosConfig = {
             ...axiosConfig,
             headers,
@@ -63,7 +63,7 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: 'ERROR', errorMessage: response?.data?.errors || response?.data?.responseMessage });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: response?.data?.errors || response?.data?.responseMessage || EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
                     }
                 }
             })

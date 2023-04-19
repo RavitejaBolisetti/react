@@ -1,13 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, ProductHierarchyPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage,ConfigurableParameterEditingPage,QualificationMasterPage, ApplicationMasterPage,DealerManpowerPage, CriticalityGroupPage, RoleManagementPage,BranchDealerMappingPage } from 'pages/common';
+import { GeoPage, ProductHierarchyPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, BranchDealerMappingPage } from 'pages/common';
+import { LoginPage } from 'pages/auth';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
-import { BiReportPage } from 'pages/report';
+import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
+import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 
 import { CMSPage } from 'pages/cms';
 
@@ -32,22 +34,19 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_CRITICALITY_GROUP} element={<CriticalityGroupPage />} />
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
 
-
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
+            <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
-            
+
             <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
-            {/* <Route path="*"  element={<LoginPage />} exact /> */}
+            <Route path="*" element={<LoginPage />} exact />
         </Routes>
     );
 };
-
-
-
