@@ -20,10 +20,13 @@ const DrawerUtil = ({ setSelectedTreeKey, selectedTreeKey, applicationForm, forc
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     useEffect(() => {
+        setIsRestrictedLocation( finalFormdata?.applicationDetails?.accessableIndicator==='2');
+        setIsDocumentToGenerate(finalFormdata?.applicationDetails?.documentNumRequired);
+
         return () => {
             setIsBtnDisabled(false);
         };
-    }, []);
+    }, [finalFormdata?.applicationDetails?.accessableIndicator, finalFormdata?.applicationDetails?.documentNumRequired]);
 
     let drawerTitle = 'Add Application Details';
     if (formActionType === 'add') {
@@ -55,6 +58,7 @@ const DrawerUtil = ({ setSelectedTreeKey, selectedTreeKey, applicationForm, forc
             placement="right"
             onClose={onClose}
             open={open}
+            // open={true}
             className={footerEdit ? style.viewMode : style.drawerCriticalityGrp}
             width="540px"
             footer={

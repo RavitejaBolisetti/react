@@ -22,15 +22,20 @@ import { showGlobalNotification } from 'store/actions/notification';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading },
+            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData,
+                 applicationDetailsData, dealerLocations, 
+                 applicationData, configurableParamData, actions,
+                  isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading: isMenuListLoading, isActionsLoaded 
+                },
         },
     } = state;
 
     let returnValue = {
-        criticalityGroupData,
+        criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
         applicationDetailsData,
         dealerLocations,
         userId,
@@ -38,7 +43,10 @@ const mapStateToProps = (state) => {
         actions,
         isApplicationDeatilsLoading,
         isApplicatinoOnSaveLoading,
-        menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
+        isMenuListLoading,
+        // menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
+        menuData: applicationData,
+        isActionsLoaded,
     };
     return returnValue;
 };
@@ -55,12 +63,12 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
 
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
-            onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
 
+            onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
 
             fetchList: applicationMasterDataActions.fetchMenuList,
-            listShowLoading: menuDataActions.listShowLoading,
+            applicationListShowLoading: menuDataActions.applicationListShowLoading,
 
             showGlobalNotification,
         },
@@ -75,10 +83,9 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded, applicationListShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
-
     const [formData, setFormData] = useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -88,7 +95,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [drawer, setDrawer] = useState(false);
     const [isActive, setIsActive] = useState(false);
-    const [menuType, setMenuType] = useState('w');
+    const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
@@ -111,12 +118,12 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         if (!criticalityGroupData?.length) {
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
         }
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, type: menuType }); //fetch menu data
+        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' }); //fetch menu data
+        // fetchList({ setIsLoading: applicationMasterDataShowLoading, userId,  }); //fetch menu data
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
     useEffect(() => {
-        // on serching menu/application in left panel/tree
         setSearchValue(menuData);
     }, [menuData]);
 
@@ -139,17 +146,18 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
     const onSuccess = (res) => {
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-
         if (res?.data) {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
+
             res?.data && setSelectedTreeData(res?.data);
             setSelectedTreeKey([res?.data?.id]);
             setFormActionType('view');
             // setFormBtnActive(false);
             // setIsFormVisible(false);
+            setDrawer(false);
         }
-        onSaveShowLoading(false);
+        // onSaveShowLoading(false);
     };
     const onError = (message) => {
         showGlobalNotification({ message });
@@ -158,15 +166,22 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
 
     const onFinish = (values) => {
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
+
+        const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
         const reqData = [
             {
-                applicationAction,
-                documentType,
-                accessibleLocation,
+                nodeType: '',
+                id: values.id || '',
                 ...values,
+                documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
+                accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),
+                deviceType: menuType,
+                applicationAction: actionData,
+                accessableIndicator: Number(values?.accessableIndicator),
             },
         ];
         console.log('onSubmit===>', reqData);
+        // return
         saveApplicationDetails({ setIsLoading: onSaveShowLoading, data: reqData, onSuccess, onError });
     };
 
@@ -178,7 +193,6 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         form.resetFields();
 
         setFormData([]);
-        // setSelectedTreeData([]);
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
             setFormActionType('view');
@@ -195,24 +209,21 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         if (!applicationDetailsData?.length) return;
 
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
-
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
             setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
-            setIsReadOnly(false)
-            forceUpdate();
+            setIsReadOnly(false);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
             setFinalFormdata({ ...initialFormData, applicationDetails: { parentApplicationId: rest?.applicationId } });
             setIsReadOnly(true);
-
         } else if (FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
             setFinalFormdata({ ...initialFormData, applicationDetails: { parentApplicationId: rest?.parentApplicationId } });
             setIsReadOnly(true);
-
         } else {
-            setFinalFormdata(initialFormData);
+            setFinalFormdata({ ...initialFormData });
             setIsReadOnly(true);
         }
+        forceUpdate();
 
         setDrawer(true);
         setFormActionType(type);
@@ -240,7 +251,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    <Spin spinning={isApplicationDeatilsLoading}>
+                    <Spin spinning={isMenuListLoading}>
                         <div className={styles.contentHeaderBackground}>
                             <Row gutter={20} className={styles.searchAndLabelAlign}>
                                 <Col xs={18} sm={18} md={18} lg={18} xl={18}>
@@ -250,7 +261,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                 <Button
                                                     type="secondary"
                                                     danger
-                                                    onClick={() => handleTypeClick('w')}
+                                                    onClick={() => handleTypeClick('W')}
                                                     style={{
                                                         backgroundColor: isActive ? '' : '#ff3e5b',
                                                         color: isActive ? '' : 'white',
@@ -262,7 +273,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                                 <Button
                                                     type="secondary"
                                                     danger
-                                                    onClick={() => handleTypeClick('m')}
+                                                    onClick={() => handleTypeClick('M')}
                                                     style={{
                                                         backgroundColor: isActive ? '#ff3e5b' : '',
                                                         color: isActive ? 'white' : '',
@@ -273,12 +284,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                             </div>
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search
-                                                placeholder="Search"
-                                                allowClear
-                                                onChange={onChange}
-                                                className={styl.anticon}
-                                            />
+                                            <Search placeholder="Search" allowClear onChange={onChange} className={styl.anticon} />
                                         </Col>
                                     </Row>
                                 </Col>
@@ -298,7 +304,7 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                                             </span>
                                         }
                                     >
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={()=>handleAdd('add')}>
+                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
                                             Add
                                         </Button>
                                     </Empty>
@@ -313,34 +319,36 @@ export const ApplicationMasterMain = ({ userId, isDataLoaded, listShowLoading, i
                 </Col>
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
-                    {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <ViewApplicationDetail applicationDetailsData={applicationDetailsData} />
+                    <Spin spinning={isApplicationDeatilsLoading}>
+                        {selectedTreeKey?.length && applicationDetailsData?.length ? (
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <ViewApplicationDetail applicationDetailsData={applicationDetailsData} />
 
-                            <div className={styles.hyrbuttonContainer}>
-                                <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
+                                <div className={styles.hyrbuttonContainer}>
+                                    <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
+                                </div>
+                            </Col>
+                        ) : (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            Please select product from left <br />
+                                            side hierarchy to view “Application Details”
+                                        </span>
+                                    }
+                                ></Empty>
                             </div>
-                        </Col>
-                    ) : (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        Please select product from left <br />
-                                        side hierarchy to view “Application Details”
-                                    </span>
-                                }
-                            ></Empty>
-                        </div>
-                    )}
+                        )}
+                    </Spin>
                 </Col>
             </Row>
 
-            <DrawerUtil isReadOnly={isReadOnly} open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} actions={actions} menuData={menuData} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} isApplicatinoOnSaveLoading={isApplicatinoOnSaveLoading}/>
+            <DrawerUtil isReadOnly={isReadOnly} open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} actions={actions} menuData={menuData} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} isApplicatinoOnSaveLoading={isApplicatinoOnSaveLoading} />
         </>
     );
 };

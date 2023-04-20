@@ -51,3 +51,11 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     message: fieldName + ' can contain only alphanumeric characters with space',
     pattern:  /^[a-zA-Z0-9 ]*$/,
 });
+
+export const duplicateValidator = (value, fieldName, dataList) => {
+    if (dataList.findIndex((el) => el[fieldName] === value) !== -1) {
+        return Promise.reject('error duplicate found');
+    } else {
+        return Promise.resolve('');
+    }
+};

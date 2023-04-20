@@ -3,7 +3,6 @@ import { Col, Card, Row, Button, Divider, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 
-import styles from 'pages/common/Common.module.css';
 import style from './ApplicationMaster.module.css';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
@@ -12,19 +11,22 @@ import { Fragment } from 'react';
 const { Text } = Typography;
 
 const CardApplicationAction = (props) => {
-    const { status,actionId, actionName, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled, actions } = props;
+    const { status, actionId, actionName, actionMasterId, id, setFinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled, actions } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
     // on Click edit button sets form fields
     const onEdit = (values) => {
+        console.log('on==edit',values)
         form.setFieldsValue({
-            actionName: {
+            applicationName: {
                 label: values.actionName,
-                value: values.actionId,
-                id: values.actionId,
+                value: values.actionMasterId,
+                id: values.actionMasterId,
             },
+            actionMasterId: actionMasterId,
             status: values.status,
+            id: id,
         });
         setIsEditing(true);
         setIsBtnDisabled(true);
@@ -34,12 +36,21 @@ const CardApplicationAction = (props) => {
     const onUpdate = () => {
         
         const newFormData = form.getFieldsValue();
+        // form.validateFields().then(data => {
+        //     console.log("data",data)
+        // });
+        // console.log('newFormData to update  ',newFormData)
 
-        const { value, label } = newFormData?.applicationName;
+        // const { value, label } = newFormData?.applicationName;
+        // const selectedActionData =  actions?.find(el => el?.id === value );
+        // console.log('selectedActionData',selectedActionData)
+
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
-            const indx = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
-            newList.splice(indx, 1, { actionName: label, actionId: value, status: newFormData.status });
+            const index = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
+            const prevData = prev?.applicationAction[index];
+            console.log('prevData',prevData)
+            newList.splice(index, 1, { ...prevData, status: newFormData?.status });
             return { ...prev, applicationAction: newList };
         });
         setIsEditing(false);
@@ -84,7 +95,7 @@ const CardApplicationAction = (props) => {
                             <Text strong>{actionName }</Text>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            <Text type="secondary">Action ID: {id }</Text>
+                            <Text type="secondary">Action ID: {actionId }</Text>
                         </Col>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -92,10 +103,10 @@ const CardApplicationAction = (props) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionId, id })} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status,actionName, actionId, actionMasterId, id })} />
                                     </Col>
                                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                                        <Button onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button>
+                                       {!id ?  <Button onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button> : '' }
                                     </Col>
                                 </>
                             ) : (
@@ -120,7 +131,7 @@ const CardApplicationAction = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <ApplicationActionsForm status={status} name={actionName} id={id} form={form} isEditing={isEditing} actions={actions} />
+                        <ApplicationActionsForm status={status} name={actionName} id={id} form={form} isEditing={isEditing} actions={actions} disableStatus={true} />
                     </Fragment>
                 )}
             </Card>

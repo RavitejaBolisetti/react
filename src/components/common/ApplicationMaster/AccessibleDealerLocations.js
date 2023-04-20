@@ -12,6 +12,8 @@ import { Fragment } from 'react';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
+import { preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
+import { debounce } from 'utils/debounce';
 
 
 const mapStateToProps = (state) => {
@@ -43,19 +45,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdata, finalFormdata, fetchDealerLocations, applicationMasterDataShowLoading, showGlobalNotification }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const fieldNames = { label: 'dealerLocationName', value: 'id' };
-
-    function debounce(func, timeout = 400) {
-        let timer;
-        return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                func.apply(this, args);
-            }, timeout);
-        };
-    }
+    const fieldNames = { value: 'dealerLocationName', key: 'id' };
 
     const handleSelect = (value) => {
+        console.log("value",value);
+
+        let locationDetails = dealerLocations?.find(location => location.dealerLocationName === value);
+        
 
         if(finalFormdata?.accessibleLocation.findIndex(el => el?.id === value?.key ) !== -1){
             console.log('same locatioln selected')
@@ -63,13 +59,13 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
             return;
         }
 
-        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { id: value?.key, dealerLocationName: value?.label }] }));
+        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails.id, dealerLocationName: value, id: '' }] }));
     };
 
     const onSearchLocation = debounce((text) => {
         if (text?.length < 3 || !userId) return;
         fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
-    });
+    }, 300);
 
     const handleDeleteLocation = (values) => {
         setFinalFormdata((prev) => {
@@ -87,36 +83,21 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <AutoComplete
                         // value={value}
-                        labelInValue
+                        // labelInValue
                         options={dealerLocations}
                         style={{
                             width: '100%',
                         }}
                         allowClear
-                        fieldNames={fieldNames}
+                        fieldNames={fieldNames} 
                         onSelect={handleSelect}
                         onSearch={onSearchLocation}
                         // onChange={onChange}
-                        placeholder="control mode"
-                    
-                    >  </AutoComplete>
-                   
-                    {/* <Select
-                        // defaultValue={record[dataIndex]}
-                        getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                        labelInValue
-                        showSearch
-                        placeholder="Select accesable location"
-                        optionFilterProp="children"
-                        fieldNames={fieldNames}
-                        style={{
-                            width: '100%',
-                        }}
-                        onSelect={handleSelect}
-                        onSearch={onSearchLocation}
-                        filterOption={(input, option) => (option?.dealerLocationName ?? '').toLowerCase().includes(input.toLowerCase())}
-                        options={dealerLocations}
-                    /> */}
+                        // placeholder="control mode"
+                        allowSearch
+                    >  
+                    <Input.Search size="large" placeholder={preparePlaceholderAutoComplete('Location name')} />
+                    </AutoComplete>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {finalFormdata?.accessibleLocation?.length > 0

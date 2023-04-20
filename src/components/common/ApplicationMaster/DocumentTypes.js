@@ -13,6 +13,7 @@ const DocumentTypes = ({ setIsBtnDisabled,isBtnDisabled, onFinish = () => {}, on
         docForm.resetFields();
     };
 
+
     const onDocumentFormFinish = (val) => {
 
         // if(finalFormdata?.documentType.findIndex(el => el?.documentTypeCode === val?.documentTypeCode ||  el?.documentTypeDescription === val?.documentTypeDescription ) !== -1){
@@ -23,6 +24,7 @@ const DocumentTypes = ({ setIsBtnDisabled,isBtnDisabled, onFinish = () => {}, on
         docForm.resetFields();
         forceUpdate();
     };
+    console.log('finalForm =p==>>', finalFormdata);
 
     return (
         <Fragment>
