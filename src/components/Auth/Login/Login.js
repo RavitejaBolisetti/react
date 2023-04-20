@@ -197,7 +197,7 @@ const Login = (props) => {
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="login_from" autoComplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>

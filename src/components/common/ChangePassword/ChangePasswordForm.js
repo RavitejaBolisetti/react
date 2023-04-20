@@ -87,7 +87,7 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
     );
 
     return (
-        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish}>
+        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('old password')]}>

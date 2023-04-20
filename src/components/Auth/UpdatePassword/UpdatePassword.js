@@ -111,7 +111,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="update_password" layout="vertical" autoComplete="false" onFinish={onFinish}>
+                        <Form form={form} name="update_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
