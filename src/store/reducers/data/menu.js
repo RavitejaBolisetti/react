@@ -19,6 +19,7 @@ const generateList = (data) => {
             dataList.push({
                 ...rest,
                 link: MenuConstant?.[node?.menuId?.toLowerCase()]?.link,
+                childExist: node?.subMenu?.length > 0,
             });
         if (node.subMenu) {
             generateList(node.subMenu);
@@ -32,7 +33,7 @@ const favouriteMenuData = (data) => data?.find((item) => item.menuId === 'FAV')?
 export const Menu = (state = initialState, action) => {
     switch (action.type) {
         case MENU_DATA_LOADED:
-            return { ...state, isLoaded: action.isLoaded, data: action.data, flatternData: generateList(action.data), favouriteMenu: favouriteMenuData(action.data) };
+            return { ...state, isLoaded: action.isLoaded, data: refactorMenu(action.data), flatternData: generateList(action.data), favouriteMenu: favouriteMenuData(action.data) };
         case MENU_DATA_FILTER:
             return { ...state, filter: action.filter };
         case MENU_DATA_SHOW_LOADING:
@@ -42,4 +43,21 @@ export const Menu = (state = initialState, action) => {
         default:
             return { ...state };
     }
+};
+
+const homeMenu = [
+    {
+        menuId: 'HOM',
+        menuTitle: 'Home',
+        parentMenuId: 'Web',
+        menuIconUrl: '',
+        isFavourite: '',
+        accessType: 'R',
+        displayOrder: 0,
+        subMenu: [],
+    },
+];
+
+const refactorMenu = (menu) => {
+    return [...homeMenu, ...menu];
 };

@@ -162,6 +162,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const handleSelectTreeClick = (value) => {
         setSelectedTreeSelectKey(value);
+        setFormBtnActive(true);
     };
 
     const onFinish = (values) => {

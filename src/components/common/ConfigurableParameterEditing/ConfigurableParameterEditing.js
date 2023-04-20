@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Select, Space, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
@@ -14,7 +14,8 @@ import { AddEditForm } from './AddEditForm';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { EditIcon, ViewEyeIcon } from 'Icons';
+import { FiEdit2 } from 'react-icons/fi';
+import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
 
@@ -214,10 +215,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             width: '10%',
             render: (record) => [
                 <Space wrap>
-                    <Button icon={<EditIcon />} className={styles.tableIcons} onClick={() => handleEditBtn(record)} />
+                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}>
+                        <FiEdit2 />
+                    </Button>
                     {
-                        <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                            <ViewEyeIcon />
+                        <Button className={styles.tableIcons} onClick={() => handleView(record)}>
+                            <FaRegEye />
                         </Button>
                     }
                 </Space>,
@@ -242,6 +245,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
+        setFormData([]);
+        setParameterType(defaultParametarType)
     };
 
     const onSearchHandle = (value) => {
@@ -320,34 +325,36 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.searchContainer}>
+                    <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.subheading}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             Configurable Parameter Editing
-                                        </Col>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                             <Search
                                                 placeholder="Search"
                                                 style={{
                                                     width: 300,
                                                 }}
                                                 allowClear
+                                                className={styles.headerSelectField}
                                                 onSearch={onSearchHandle}
                                                 onChange={onChangeHandle}
                                             />
                                         </Col>
+                                        {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                            
+                                        </Col> */}
                                     </div>
                                 </Row>
                             </Col>
 
                             {configData?.length ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`}  type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>
@@ -392,9 +399,9 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                             </Empty>
                         )}
                     >
-                       <div className={styles.tableProduct}>
-                         <DataTable isLoading={isLoading} {...tableProps} />
-                       </div>
+                        <div className={styles.tableProduct}>
+                            <DataTable isLoading={isLoading} {...tableProps} />
+                        </div>
                     </ConfigProvider>
                 </Col>
             </Row>

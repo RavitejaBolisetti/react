@@ -12,11 +12,11 @@ import { withDrawer } from 'components/withDrawer';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { isChecked, treeData, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, fieldNames, onCloseAction, onFinish, onFinishFailed } = props;
+    const { isChecked, treeData, setSelectedTreeSelectKey, setIsChecked, flatternData, formActionType, isReadOnly = false, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, fieldNames, onCloseAction, onFinish, onFinishFailed } = props;
     const [seletedAttribute, setSeletedAttribute] = useState(formData?.type);
     const [inputFormType, setInputFormType] = useState(DEALER_HIERARCHY.PARNT.FORM_NAME);
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    const disabledProps = { disabled: false };
+    const disabledProps = { disabled: isReadOnly };
     const [form] = Form.useForm();
 
     const { isFormBtnActive, setFormBtnActive } = props;
@@ -36,6 +36,7 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
         treeCodeId = formData?.parentId;
+        console.log(formData.status, 'Status')
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey[0];
         treeCodeReadOnly = true;
@@ -96,7 +97,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.shortDescription} label="Short Description" name="shortDescription" rules={[validateRequiredInputField('Short Description')]}>
-                        <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -104,7 +105,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.longDescription} label="Long Description" name="longDescription" rules={[validateRequiredInputField('Long Description')]}>
-                        <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -146,13 +147,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code || formData?.parentGroupCode} label="Code" name={[parentGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[parentGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
-                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -160,7 +161,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[parentGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
-                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} disabled={formData?.longDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
 
@@ -198,14 +199,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[companyGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
-                                {/* disabled={formData?.id || isReadOnly} */}
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[companyGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
-                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -213,7 +213,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[companyGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
-                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} disabled={formData?.longDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
 
@@ -260,20 +260,20 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[gstinGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[gstinGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
-                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[gstinGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
-                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} disabled={formData?.longDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
 
@@ -299,7 +299,6 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.dateOfRegistertion ? dayjs(formData?.dateOfRegistertion, 'YYYY-MM-DD') : ''} label="Date of Registration" name={[gstinGroupForm, 'dateOfRegistertion']} rules={[validateRequiredInputField('Date of Registration')]}>
-                                {/* <Input placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} {...disabledProps} /> */}
                                 <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -333,13 +332,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="Code" name={[branchGroupForm, 'code']} rules={[validateRequiredInputField('Code'), validationFieldLetterAndNumber('Code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.shortDescription} label="Short Description" name={[branchGroupForm, 'shortDescription']} rules={[validateRequiredInputField('Short Description')]}>
-                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Short Description')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -347,7 +346,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.longDescription} label="Long Description" name={[branchGroupForm, 'longDescription']} rules={[validateRequiredInputField('Long Description')]}>
-                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Long Description')} className={styles.inputBox} disabled={formData?.longDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
