@@ -11,7 +11,7 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import DrawerUtil from './DrawerUtil';
+import DrawerUtil, { AddEditForm } from './AddEditForm';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { menuDataActions } from 'store/actions/data/menu';
 
@@ -41,6 +41,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'Role Management';
+
     let returnValue = {
         collapsed,
         userId,
@@ -48,6 +50,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         RoleManagementData,
         isLoadingOnSave,
+        moduleTitle,
         MenuTreeData,
         RoleData,
         attributeData: attributeData?.filter((i) => i),
@@ -73,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
 
     const [filterString, setFilterString] = useState();
@@ -88,11 +91,13 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
     const [viewData, setViewData] = useState({});
     const [successAlert, setSuccessAlert] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
-    const [saveAndSaveNew, setSaveAndSaveNew] = useState(false);
-    const [saveBtn, setSaveBtn] = useState(false);
+    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
+    const [showSaveBtn, setShowSaveBtn] = useState(false);
     const [MenuAlteredData, setMenuAlteredData] = useState();
     const [RowData, setRowData] = useState();
     const [saveClick, setSaveClick] = useState();
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [formData, setFormData] = useState([]);
 
     useEffect(() => {
         FilterMenudata(MenuTreeData);
@@ -247,64 +252,90 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
 
     const handleAdd = () => {
         setFormActionType('add');
-        setSaveAndSaveNew(true);
-        setSaveBtn(true);
-
-        setOpenDrawer(true);
+        setShowSaveAndAddNewBtn(true);
+        setShowSaveBtn(true);
         setSaveClick(false);
         setFooterEdit(false);
-    };
-
-    const handleUpdate = (record) => {
-        setFormActionType('update');
-        setOpenDrawer(true);
-        setFooterEdit(false);
-        setSaveAndSaveNew(false);
-        setSaveBtn(true);
-        setRowData(record);
-
-        form.setFieldsValue({
-            roleId: record.roleId,
-            roleName: record.roleName,
-            roleDesceription: record.roleDesceription,
-            activeIndicator: record.activeIndicator,
-        });
-    };
-
-    const handleUpdate2 = () => {
-        setFormActionType('update');
+        setIsFormVisible(true);
         setIsReadOnly(false);
-        setSaveAndSaveNew(false);
-        setSaveBtn(true);
-
-        setOpenDrawer(true);
-        setFooterEdit(false);
-        form.setFieldsValue({
-            roleId: selectedRecord.roleId,
-            roleName: selectedRecord.roleName,
-            roleDesceription: selectedRecord.roleDesceription,
-            activeIndicator: selectedRecord.activeIndicator,
-        });
     };
 
+    // const handleUpdate = (record) => {
+    //     setFormActionType('update');
+    //     setOpenDrawer(true);
+    //     setFooterEdit(false);
+    //     setShowSaveAndAddNewBtn(false);
+    //     setSaveBtn(true);
+    //     setRowData(record);
+
+    //     form.setFieldsValue({
+    //         roleId: record.roleId,
+    //         roleName: record.roleName,
+    //         roleDesceription: record.roleDesceription,
+    //         activeIndicator: record.activeIndicator,
+    //     });
+    // };
+
+    const handleEditBtn = (record) => {
+        setShowSaveAndAddNewBtn(false);
+        setFormActionType('update');
+        setFooterEdit(false);
+        setIsReadOnly(false);
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
     const handleView = (record) => {
         setFormActionType('view');
-        setSaveAndSaveNew(false);
-
-        setOpenDrawer(true);
-        setSaveBtn(false);
-
+        setShowSaveAndAddNewBtn(false);
+        setShowSaveBtn(false);
         setFooterEdit(true);
-        setViewData(record);
-        form.setFieldsValue({
-            roleId: record.roleId,
-            roleName: record.roleName,
-            roleDesceription: record.roleDesceription,
-            activeIndicator: record.activeIndicator,
-        });
-        console.log(form.getFieldValue('roleId'));
+        record && setFormData(record);
+        setIsFormVisible(true);
+
         setIsReadOnly(true);
     };
+
+    const hanndleEditData = (record) => {
+        setShowSaveAndAddNewBtn(false);
+        setFormActionType('update');
+        setFooterEdit(false);
+        setIsReadOnly(false);
+    };
+
+    // const handleUpdate2 = () => {
+    //     setFormActionType('update');
+    //     setIsReadOnly(false);
+    //     setShowSaveAndAddNewBtn(false);
+    //     setSaveBtn(true);
+
+    //     setOpenDrawer(true);
+    //     setFooterEdit(false);
+    //     form.setFieldsValue({
+    //         roleId: selectedRecord.roleId,
+    //         roleName: selectedRecord.roleName,
+    //         roleDesceription: selectedRecord.roleDesceription,
+    //         activeIndicator: selectedRecord.activeIndicator,
+    //     });
+    // };
+
+    // const handleView = (record) => {
+    //     setFormActionType('view');
+    //     setShowSaveAndAddNewBtn(false);
+
+    //     setOpenDrawer(true);
+    //     setSaveBtn(false);
+
+    //     setFooterEdit(true);
+    //     setViewData(record);
+    //     form.setFieldsValue({
+    //         roleId: record.roleId,
+    //         roleName: record.roleName,
+    //         roleDesceription: record.roleDesceription,
+    //         activeIndicator: record.activeIndicator,
+    //     });
+    //     console.log(form.getFieldValue('roleId'));
+    //     setIsReadOnly(true);
+    // };
 
     const handleRefresh = () => {
         setRefreshData(!refreshData);
@@ -369,7 +400,7 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
             render: (text, record, index) => {
                 return (
                     <Space>
-                        {<Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)} />}
+                        {<Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleEditBtn(record)} />}
                         {<Button icon={<ViewEyeIcon />} className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)} />}
                     </Space>
                 );
@@ -484,6 +515,31 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
     //       </ul>
     //     );
     //   }
+    const formProps = {
+        RowData,
+        RoleData,
+        MenuAlteredData,
+        setSaveClick,
+        form,
+        viewData,
+        viewProps,
+        setFormBtnDisable,
+        formBtnDisable,
+        isLoadingOnSave,
+        showSaveBtn,
+        showSaveAndAddNewBtn,
+        isVisible: isFormVisible,
+        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+
+        onCloseAction: () => setIsFormVisible(false),
+
+        isReadOnly,
+        setIsReadOnly,
+
+        onFinish,
+        footerEdit,
+        formActionType,
+    };
 
     return (
         <>
@@ -566,7 +622,8 @@ export const RoleManagementMain = ({ isLoading, showGlobalNotification, MenuTree
                 </Col>
             </Row>
 
-            <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} saveAndSaveNew={saveAndSaveNew} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} />
+            {/* <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} showSaveAndAddNewBtn={showSaveAndAddNewBtn} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} /> */}
+            <AddEditForm {...formProps} />
         </>
     );
 };

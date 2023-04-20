@@ -2,21 +2,17 @@ import React, { useEffect, useState } from 'react';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
-import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Modal, Collapse, Tree, Checkbox, Tabs, Descriptions } from 'antd';
-import { PlusOutlined, MinusOutlined, DownOutlined, SmileOutlined, MehOutlined, FrownFilled, FrownOutlined } from '@ant-design/icons';
-import { LinearTrash } from 'Icons';
+import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Collapse, Checkbox, Tabs } from 'antd';
 import { FaSquare } from 'react-icons/fa';
-import { BiCheckboxSquare } from 'react-icons/bi';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineCheck, AiOutlineBorder } from 'react-icons/ai';
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineCheck } from 'react-icons/ai';
 
-import { validateRequiredInputField } from 'utils/validation';
+import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from '../DrawerAndTable.module.css';
 import style from './RoleManagement.module.css';
-import { ViewRoleManagement } from './ViewRoleManagement';
+import { withDrawer } from 'components/withDrawer';
 
-// import mocktreeData from './treeData.json';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -195,7 +191,7 @@ const FinalTreedata = [
         ],
     },
 ];
-const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const AddEditFormMain = ({ open, MenuAlteredData, setSaveClick, form, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
     const disabledProps = { disabled: isReadOnly };
 
     // const [selectedActions, setSelectedActions] = useState({})
@@ -411,7 +407,6 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
     const CheckboxUtil = ({ upload, view, del, read, create, update, key }) => {
         return (
             <>
-                {' '}
                 <Form.Item
                     name="remember"
                     wrapperCol={{
@@ -541,31 +536,22 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
                     <Form id="myForm" form={form} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="roleId" label="Role Id" rules={[{ max: 6, message: 'Code must be less than 6 characters long.' }, validateRequiredInputField('Code')]}>
-                                    {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('Code')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
+                                <Form.Item name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                                    {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('id')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
                                 </Form.Item>
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="roleName" label="Role Name" rules={[{ max: 50, message: 'Name must be less than 50 characters.' }, validateRequiredInputField('Name')]}>
-                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('Name')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleName')}</p>}
+                                <Form.Item name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
+                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleName')}</p>}
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item
-                                    label="Role Description"
-                                    name="roleDesceription"
-                                    rules={[
-                                        { max: 250, message: 'Role Description cannot be more than 250 characters.' },
-                                        {
-                                            required: true,
-                                        },
-                                    ]}
-                                >
+                                <Form.Item label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
                                     {!footerEdit ? (
                                         <TextArea
-                                            placeholder={preparePlaceholderText('Name')}
+                                            placeholder={preparePlaceholderText('description')}
                                             autoSize={{
                                                 minRows: 2,
                                                 maxRows: 5,
@@ -582,7 +568,7 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
-                                    {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>}
+                                    {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={style.activeText}>Active</div> : <div className={style.inactiveText}>Inactive</div>}</>}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -617,4 +603,4 @@ const DrawerUtil = ({ open, MenuAlteredData, setSaveClick, form, viewProps, view
     );
 };
 
-export default DrawerUtil;
+export const AddEditForm = withDrawer(AddEditFormMain,{});
