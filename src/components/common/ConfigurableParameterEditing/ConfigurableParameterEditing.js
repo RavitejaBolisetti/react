@@ -245,6 +245,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
+        setFormData([]);
+        setParameterType(defaultParametarType)
     };
 
     const onSearchHandle = (value) => {
