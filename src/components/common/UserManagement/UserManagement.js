@@ -17,6 +17,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { userManagementDataActions } from 'store/actions/data/userManagement';
 import DrawerUtil from './DrawerUtil';
+import { AddEditForm } from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
@@ -70,6 +71,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     const [formActionType, setFormActionType] = useState('');
     const [isLoadingOnSave, setisLoadingOnSave] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const navigate = useNavigate();
 
     const [data, setData] = useState(initialTableData);
@@ -95,6 +97,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
     const [DealerSelected, setDealerSelected] = useState();
     const [disabled, setdisabled] = useState();
+    const [DealerData, setDealerData] = useState(UserManagementDealerData);
 
     useEffect(() => {
         form.resetFields();
@@ -107,7 +110,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
             // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        setdisabled(true);
+        // setdisabled(true);
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
@@ -117,12 +120,17 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     useEffect(() => {
         console.log(DealerSelected);
         if (DealerSearchvalue?.length > 0) {
-            // fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
+            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
         }
         if (DealerSelected?.length < 0 || DealerSelected === undefined) {
             setdisabled(true);
+            setDealerData();
         }
     }, [DealerSearchvalue, DealerSelected]);
+    useEffect(() => {
+        console.log('UserManagementDealerData : ', UserManagementDealerData);
+        setDealerData(UserManagementDealerData);
+    }, [UserManagementDealerData]);
 
     useEffect(() => {
         if (userId) {
@@ -195,23 +203,22 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     );
 
     const tableDetailData = [
-        {
-            employeeCode: 'B6G433',
-            dealerName: 'Mahindra',
-            tokenNo: 'B6G433',
-            userName: 'John Doe',
-            designation: 'Chief Sales Officer',
-            mobileNumber: '9664321226',
-            emailID: 'john.doe@mahindra.com',
-        },
         // {
-        //     employeeCode: UserManagementDealerData?.employeeCode,
-        //     dealerName: UserManagementDealerData?.dealerName,
-        //     userName: UserManagementDealerData?.userName,
-        //     designation: UserManagementDealerData?.designation,
-        //     mobileNumber: UserManagementDealerData?.mobileNumber,
-        //     emailid: UserManagementDealerData?.emailID,
+        //     employeeCode: 'B6G433',
+        //     dealerName: 'Mahindra',
+        //     userName: 'John Doe',
+        //     designation: 'Chief Sales Officer',
+        //     mobileNumber: '9664321226',
+        //     emailID: 'john.doe@mahindra.com',
         // },
+        {
+            employeeCode: DealerData?.employeeCode,
+            dealerName: DealerSelected,
+            userName: DealerData?.employeeName,
+            designation: DealerData?.employeeDesignation,
+            mobileNumber: DealerData?.mobileNumber,
+            emailid: DealerData?.emailID,
+        },
     ];
 
     const tableDetailProps = {
@@ -312,6 +319,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     };
 
     const onError = (message) => {
+        setError(true);
         onSaveShowLoading(false);
         showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
     };
@@ -336,10 +344,16 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     };
 
     const handleAdd = () => {
+        form.setFieldsValue({
+            userRole: 'Mahindra',
+        });
+
         setFormActionType('add');
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
+        setIsFormVisible(true);
+
 
         setDrawer(true);
         setIsReadOnly(false);
@@ -431,6 +445,39 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
+    const formProps = {
+        saveclick,
+        setsaveclick,
+        setsaveandnewclick,
+        saveandnewclick,
+        isVisible: isFormVisible,
+        isLoadingOnSave,
+        formBtnDisable,
+        saveAndSaveNew,
+        saveBtn,
+        setFormBtnDisable,
+        onFinishFailed,
+        onFinish,
+        form,
+        handleAdd,
+        drawer,
+        data,
+        setDrawer,
+        isChecked,
+        formData,
+        setIsChecked,
+        formActionType,
+        isReadOnly,
+        setFormData,
+        setForceFormReset,
+        footerEdit,
+        handleUpdate2,
+        DealerData,
+        tableDetailData,
+        style,
+        onCloseAction: () => setIsFormVisible(false),
+
+    };
 
     return (
         <>
@@ -486,7 +533,40 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                                 ''
                             )}
                         </Row>
-                        {error && (
+                        {Object.keys(DealerData).length > 0 ? (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={style.successDisplay}>
+                                        <Row gutter={20}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                    Manage Access
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                        ) : error ? (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={style.errorDisplay}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
+                                                <IoBanOutline />
+                                                <span>User token number "B6G431" does not exist. Try again with valid token number.</span>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                        ) : (
+                            ''
+                        )}
+                        {/* {error && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={style.errorDisplay}>
@@ -517,11 +597,11 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                                     </div>
                                 </Col>
                             </Row>
-                        )}
+                        )} */}
                     </div>
                 </Col>
             </Row>
-            <DrawerUtil
+            {/* <DrawerUtil
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
@@ -547,7 +627,9 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                 setForceFormReset={setForceFormReset}
                 footerEdit={footerEdit}
                 handleUpdate2={handleUpdate2}
-            />
+                DealerData={DealerData}
+                tableDetailData={tableDetailData}
+            /> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -578,8 +660,9 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
                     </ConfigProvider>
                 </Col>
             </Row>
+            <AddEditForm {...formProps} />
         </>
     );
 };
 
-export const UserManagement = connect(mapDispatchToProps, mapDispatchToProps)(UserManagementMain);
+export const UserManagement = connect(mapStateToProps, mapDispatchToProps)(UserManagementMain);
