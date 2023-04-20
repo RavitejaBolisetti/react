@@ -1077,7 +1077,10 @@
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
-
+.attributeSelet {
+    width: 100%;
+    margin-left: -30px;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */

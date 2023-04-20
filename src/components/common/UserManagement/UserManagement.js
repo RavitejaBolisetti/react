@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider, Select } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
+
 import { EditIcon, ViewEyeIcon } from 'Icons';
 import { TfiReload } from 'react-icons/tfi';
 import { IoBanOutline } from 'react-icons/io5';
@@ -12,19 +15,20 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
-import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
+import { userManagementDataActions } from 'store/actions/data/userManagement';
 import DrawerUtil from './DrawerUtil';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
+            UserManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementDealerData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -36,9 +40,9 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isLoading,
-        qualificationData,
+        UserManagementDealerData,
         isLoadingOnSave,
-        isFormDataLoaded
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -47,23 +51,27 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            listShowLoading: qualificationDataActions.listShowLoading,
-            fetchList: qualificationDataActions.fetchList,
-            saveData: qualificationDataActions.saveData,
-            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
+            listShowLoading: userManagementDataActions.listShowLoading,
+            fetchDealerDetails: userManagementDataActions.fetchDealerDetails,
+            fetchManufacturerDetails: userManagementDataActions.fetchManufacturerDetails,
+            saveDealerDetails: userManagementDataActions.saveDealerDetails,
+            saveManufacturerDetails: userManagementDataActions.saveManufacturerDetails,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-const initialTableData = [];
-
-export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
+const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
+export const UserManagementMain = ({ saveData, userId, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
+    const [isLoadingOnSave, setisLoadingOnSave] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const navigate = useNavigate();
+
     const [data, setData] = useState(initialTableData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
@@ -84,8 +92,9 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     const [successAlert, setSuccessAlert] = useState(false);
     const [error, setError] = useState(false);
     const [valid, setValid] = useState(false);
-
-
+    const [DealerSearchvalue, setDealerSearchvalue] = useState();
+    const [DealerSelected, setDealerSelected] = useState();
+    const [disabled, setdisabled] = useState();
 
     useEffect(() => {
         form.resetFields();
@@ -95,20 +104,29 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        setdisabled(true);
     }, [isDataLoaded, userId]);
 
     useEffect(() => {
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
-
+    useEffect(() => {
+        console.log(DealerSelected);
+        if (DealerSearchvalue?.length > 0) {
+            // fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
+        }
+        if (DealerSelected?.length < 0 || DealerSelected === undefined) {
+            setdisabled(true);
+        }
+    }, [DealerSearchvalue, DealerSelected]);
 
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -126,12 +144,21 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     }, [filterString, isDataLoaded, qualificationData]);
 
     const tableDetails = [];
+
     tableDetails.push(
         tblPrepareColumns({
-            title: 'Token No.',
-            dataIndex: 'tokenNo',
+            title: 'Employee Code',
+            dataIndex: 'employeeCode',
             width: '12%',
-            sorter: false
+            sorter: false,
+        })
+    );
+    tableDetails.push(
+        tblPrepareColumns({
+            title: 'Dealer Name',
+            dataIndex: 'dealerName',
+            width: '12%',
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -139,7 +166,7 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
             title: 'User Name',
             dataIndex: 'userName',
             width: '18%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -147,7 +174,7 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
             title: 'Designation',
             dataIndex: 'designation',
             width: '22%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -155,25 +182,37 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
             title: 'Mobile Number',
             dataIndex: 'mobileNumber',
             width: '16%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
         tblPrepareColumns({
             title: 'Email ID',
-            dataIndex: 'emailID',
+            dataIndex: 'emailid',
             width: '32%',
-            sorter: false
+            sorter: false,
         })
     );
 
-    const tableDetailData = [{
-        tokenNo: "B6G433",
-        userName: "John Doe",
-        designation: "Chief Sales Officer",
-        mobileNumber: "9664321226",
-        emailID: "john.doe@mahindra.com",
-    },]
+    const tableDetailData = [
+        {
+            employeeCode: 'B6G433',
+            dealerName: 'Mahindra',
+            tokenNo: 'B6G433',
+            userName: 'John Doe',
+            designation: 'Chief Sales Officer',
+            mobileNumber: '9664321226',
+            emailID: 'john.doe@mahindra.com',
+        },
+        // {
+        //     employeeCode: UserManagementDealerData?.employeeCode,
+        //     dealerName: UserManagementDealerData?.dealerName,
+        //     userName: UserManagementDealerData?.userName,
+        //     designation: UserManagementDealerData?.designation,
+        //     mobileNumber: UserManagementDealerData?.mobileNumber,
+        //     emailid: UserManagementDealerData?.emailID,
+        // },
+    ];
 
     const tableDetailProps = {
         tableColumn: tableDetails,
@@ -186,49 +225,49 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
             title: 'Sr.No.',
             dataIndex: 'srNo',
             width: '6%',
-            sorter: false
+            sorter: false,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Token No.',
-            dataIndex: 'tokenNo',
-            width: '14%'
+            title: 'Employee Code',
+            dataIndex: 'employeecode',
+            width: '14%',
+        })
+    );
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Dealer Name',
+            dataIndex: 'dealername',
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'User Name',
-            dataIndex: 'userName',
-            width: '14%'
-        })
-    );
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Designation',
-            dataIndex: 'designation',
-            width: '14%'
+            dataIndex: 'username',
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'User Roles',
-            dataIndex: 'userRoles',
-            width: '14%'
+            dataIndex: 'useroles',
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Hierarchy Mapping',
+            title: 'Branch Mapping',
             dataIndex: 'hierarchyMapping',
-            width: '20%'
+            width: '20%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Products Mapping',
             dataIndex: 'productsMapping',
-            width: '20%'
+            width: '20%',
         })
     );
     tableColumn.push(
@@ -239,16 +278,13 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
             render: (text, record, index) => {
                 return (
                     <Space>
-                        {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                                <EditIcon />
-                            </Button>
-                        }
-                        {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                                <ViewEyeIcon />
-                            </Button>
-                        }
+                        <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <EditIcon />
+                        </Button>
+
+                        <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                            <ViewEyeIcon />
+                        </Button>
                     </Space>
                 );
             },
@@ -256,34 +292,33 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     );
     const tableProps = {
         isLoading: isLoading,
-        tableData: searchData,
+        tableData: initialTableData,
         tableColumn: tableColumn,
+    };
+
+    const onSuccess = (res) => {
+        onSaveShowLoading(false);
+        form.resetFields();
+        setSelectedRecord({});
+        setSuccessAlert(true);
+        fetchList({ setIsLoading: listShowLoading, userId });
+        if (saveclick === true) {
+            setDrawer(false);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        } else {
+            setDrawer(true);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+        }
+    };
+
+    const onError = (message) => {
+        onSaveShowLoading(false);
+        showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
     };
 
     const onFinish = (values, e) => {
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
-
-        const onSuccess = (res) => {
-            onSaveShowLoading(false)
-            form.resetFields();
-            setSelectedRecord({});
-            setSuccessAlert(true);
-            fetchList({ setIsLoading: listShowLoading, userId });
-            if (saveclick === true) {
-                setDrawer(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
-                setDrawer(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            }
-        };
-
-
-        const onError = (message) => {
-            onSaveShowLoading(false)
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
-        };
 
         const requestData = {
             data: [data],
@@ -297,7 +332,7 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleAdd = () => {
@@ -373,11 +408,12 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     };
 
     const onSearchHandle = (value) => {
+        console.log('This is the searched Value : ', value);
+        setDealerSearchvalue(value);
         if (value === 'B6G431') {
             setError(true);
             setValid(false);
-        }
-        else if (value === 'B6G433') {
+        } else if (value === 'B6G433') {
             setError(false);
             setValid(true);
         }
@@ -386,6 +422,10 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
 
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
+    };
+    const handleChange = (selectedvalue) => {
+        setdisabled(false);
+        setDealerSelected(selectedvalue);
     };
 
     const filterFunction = (filterString) => (title) => {
@@ -402,15 +442,22 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
-                                        <Col xs={9} sm={9} md={9} lg={9} xl={9} className={style.subheading}>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
                                             <div className={style.userManagement}>
-                                                <Button className={style.actionbtn} type="primary" danger>
+                                                <Button className={style.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
                                                     Manufacturer
                                                 </Button>
                                                 <Button className={style.dealerBtn} type="primary" danger>
                                                     Dealer
                                                 </Button>
                                             </div>
+                                        </Col>
+                                        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                            <Select className={styles.attributeSelet} onChange={handleChange} placeholder="Select" allowClear>
+                                                {dealersData?.map((item) => (
+                                                    <Option value={item}>{item}</Option>
+                                                ))}
+                                            </Select>
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                             <Search
@@ -420,11 +467,13 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                                                 }}
                                                 allowClear
                                                 onSearch={onSearchHandle}
+                                                disabled={disabled}
                                             />
                                         </Col>
                                     </div>
                                 </Row>
                             </Col>
+
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
@@ -477,6 +526,7 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
                 saveandnewclick={saveandnewclick}
+                isLoadingOnSave={isLoadingOnSave}
                 formBtnDisable={formBtnDisable}
                 saveAndSaveNew={saveAndSaveNew}
                 saveBtn={saveBtn}
@@ -497,7 +547,6 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                 setForceFormReset={setForceFormReset}
                 footerEdit={footerEdit}
                 handleUpdate2={handleUpdate2}
-                isLoadingOnSave={isLoadingOnSave}
             />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -509,9 +558,7 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={
-                                    <span> No record found.</span>
-                                }
+                                description={<span> No record found.</span>}
                             >
                                 {/* {!qualificationData?.length ? (
                                     <Row>
@@ -535,4 +582,4 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     );
 };
 
-export const UserManagement = connect(null, null)(UserManagementMain);
+export const UserManagement = connect(mapDispatchToProps, mapDispatchToProps)(UserManagementMain);

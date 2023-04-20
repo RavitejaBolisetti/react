@@ -56,3 +56,4 @@ export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';
 
 export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
+export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';
