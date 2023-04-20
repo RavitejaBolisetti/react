@@ -13,9 +13,9 @@ import style from 'components/common/DrawerAndTable.module.css';
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
-
+const attributeData=['mh1','mh2','mh3','mh4'];
 const AddEditFormMain = (props) => {
-    const { saveclick, attributeData, onCloseAction, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, handleAddMacid, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
+    const { saveclick, onCloseAction, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, handleAddMacid, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
 
     const handleFormValueChange = () => {
@@ -84,9 +84,9 @@ const AddEditFormMain = (props) => {
                         <Collapse>
                             <Panel header="Assign User Roles*" key="1">
                                 <Form.Item name="userRole" label="User Role">
-                                    <Select loading={!isDataAttributeLoaded} placeholder={'Select User Role'} showSearch allowClear>
+                                    <Select  placeholder={'Select User Role'} showSearch allowClear>
                                         {attributeData?.map((item) => (
-                                            <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                            <Option value={item}>{item}</Option>
                                         ))}
                                     </Select>
                                 </Form.Item>
