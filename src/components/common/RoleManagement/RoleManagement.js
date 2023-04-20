@@ -151,7 +151,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     }, [filterString, isDataLoaded, RoleManagementData]);
 
     const onFinish = (values) => {
-        console.log("values",values)
+        console.log('values', values);
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
@@ -255,12 +255,11 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const handleAdd = () => {
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
+        setFormData([]);
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
     };
-
-  
 
     // const handleUpdate = (record) => {
     //     setFormActionType('update');
@@ -277,7 +276,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     //         activeIndicator: record.activeIndicator,
     //     });
     // };
-  
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -285,6 +283,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setFooterEdit(false);
         setIsReadOnly(false);
         setFormData(record);
+        console.log(record,"formData",formData)
         setIsFormVisible(true);
     };
     const handleView = (record) => {
@@ -292,7 +291,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setShowSaveAndAddNewBtn(false);
         setShowSaveBtn(false);
         setFooterEdit(true);
-        record && setFormData(record);
+        setFormData(record);
         setIsFormVisible(true);
 
         setIsReadOnly(true);
@@ -535,6 +534,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onCloseAction: () => setIsFormVisible(false),
         isReadOnly,
+        formData,
         setIsReadOnly,
         handleEditData,
         isFormBtnActive,

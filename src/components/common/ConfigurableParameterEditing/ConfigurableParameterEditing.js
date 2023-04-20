@@ -112,8 +112,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = configData.find((i) => i.id === record.id);
+        console.log("data",data)
         if (data) {
+            
             data && setFormData(data);
+            console.log("formData",formData)
+
             setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
