@@ -18,8 +18,7 @@ import { menuDataActions } from 'store/actions/data/menu';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
 import viewStyle from 'components/common/Common.module.css';
-import styles from '../DrawerAndTable.module.css';
-import style from './RoleManagement.module.css';
+import styles from 'components/common/Common.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
@@ -92,16 +91,19 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [successAlert, setSuccessAlert] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
-    const [showSaveBtn, setShowSaveBtn] = useState(false);
+    const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [MenuAlteredData, setMenuAlteredData] = useState();
     const [RowData, setRowData] = useState();
     const [saveClick, setSaveClick] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState([]);
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
-    useEffect(() => {
-        FilterMenudata(MenuTreeData);
-    }, [MenuTreeData]);
+    // useEffect(() => {
+    //     FilterMenudata(MenuTreeData);
+    // }, [MenuTreeData]);
+
     useEffect(() => {
         fetchRole({ setIsLoading: listShowLoading, userId, id: RowData?.id });
 
@@ -149,6 +151,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     }, [filterString, isDataLoaded, RoleManagementData]);
 
     const onFinish = (values) => {
+        console.log("values",values)
         const recordId = selectedRecord?.id || '';
         const data = {
             ...values,
@@ -213,16 +216,15 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
             fetchList({ setIsLoading: listShowLoading, userId });
-            if (saveClick === true) {
-                setOpenDrawer(false);
+            if (showSaveAndAddNewBtn === true || recordId) {
+                setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
-                setOpenDrawer(true);
+                setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
@@ -253,12 +255,12 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const handleAdd = () => {
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
-        setShowSaveBtn(true);
-        setSaveClick(false);
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
     };
+
+  
 
     // const handleUpdate = (record) => {
     //     setFormActionType('update');
@@ -275,13 +277,14 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     //         activeIndicator: record.activeIndicator,
     //     });
     // };
+  
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        record && setFormData(record);
+        setFormData(record);
         setIsFormVisible(true);
     };
     const handleView = (record) => {
@@ -295,7 +298,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setIsReadOnly(true);
     };
 
-    const hanndleEditData = (record) => {
+    const handleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
         setFormActionType('update');
         setFooterEdit(false);
@@ -389,7 +392,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -400,8 +403,8 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
             render: (text, record, index) => {
                 return (
                     <Space>
-                        {<Button icon={<EditIcon />} className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleEditBtn(record)} />}
-                        {<Button icon={<ViewEyeIcon />} className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)} />}
+                        {<Button icon={<EditIcon />} className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleEditBtn(record)} />}
+                        {<Button icon={<ViewEyeIcon />} className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)} />}
                     </Space>
                 );
             },
@@ -447,11 +450,11 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         // });
     }
 
-    const FilterMenudata = (MenuTreeData) => {
-        Subpanel(MenuTreeData);
-        setMenuAlteredData(MenuTreeData);
-        console.log('This is the Manipulated Data : ', MenuTreeData);
-    };
+    // const FilterMenudata = (MenuTreeData) => {
+    //     Subpanel(MenuTreeData);
+    //     setMenuAlteredData(MenuTreeData);
+    //     console.log('This is the Manipulated Data : ', MenuTreeData);
+    // };
 
     function TreeNodeWithCheckbx({ title, key }) {
         console.log('khauoukjbk', title);
@@ -530,11 +533,13 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         showSaveAndAddNewBtn,
         isVisible: isFormVisible,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
-
         onCloseAction: () => setIsFormVisible(false),
-
         isReadOnly,
         setIsReadOnly,
+        handleEditData,
+        isFormBtnActive,
+        setFormBtnActive,
+        setSaveAndAddNewBtnClicked,
 
         onFinish,
         footerEdit,
@@ -547,32 +552,22 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} className={style.subheading}>
-                                            Role List
-                                        </Col>
-                                        <Col xs={18} sm={18} md={18} lg={18} xl={18}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            />
-                                        </Col>
-                                    </div>
+                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                        Role List
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
+                                    </Col>
                                 </Row>
                             </Col>
                             {/*code to be changed once API is integrated */}
                             {true ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleRefresh} danger />
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add New Role
                                     </Button>
                                 </Col>
@@ -606,7 +601,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                                 {!RoleManagementData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                                 Add Role
                                             </Button>
                                         </Col>
@@ -617,12 +612,13 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        <div className={styles.tableProduct}>
+                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        </div>
                     </ConfigProvider>
                 </Col>
             </Row>
 
-            {/* <DrawerUtil RowData={RowData} RoleData={RoleData} MenuAlteredData={MenuAlteredData} setSaveClick={setSaveClick} form={form} viewData={viewData} viewProps={viewProps} setFormBtnDisable={setFormBtnDisable} formBtnDisable={formBtnDisable} isLoadingOnSave={isLoadingOnSave} saveBtn={saveBtn} showSaveAndAddNewBtn={showSaveAndAddNewBtn} isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} handleUpdate2={handleUpdate2} onFinish={onFinish} footerEdit={footerEdit} formActionType={formActionType} open={openDrawer} setOpenDrawer={setOpenDrawer} /> */}
             <AddEditForm {...formProps} />
         </>
     );

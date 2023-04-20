@@ -9,10 +9,9 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineCheck } from 'react
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from '../DrawerAndTable.module.css';
-import style from './RoleManagement.module.css';
-import { withDrawer } from 'components/withDrawer';
+import styles from 'components/common/Common.module.css';
 
+import { withDrawer } from 'components/withDrawer';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -191,7 +190,8 @@ const FinalTreedata = [
         ],
     },
 ];
-const AddEditFormMain = ({ open, MenuAlteredData, setSaveClick, form, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, setIsReadOnly, isReadOnly, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit }) => {
+const AddEditFormMain = (props) => {
+    const { showSaveBtn, formData, isFormBtnActive, onCloseAction, setFormBtnActive, handleEditData, open, MenuAlteredData, setSaveClick, form, isReadOnly, setIsReadOnly, viewProps, viewData, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, handleUpdate2, setFormBtnDisable, onFinish, formActionType, openDrawer, setOpenDrawer, setsaveclick, footerEdit, setSaveAndAddNewBtnClicked } = props;
     const disabledProps = { disabled: isReadOnly };
 
     // const [selectedActions, setSelectedActions] = useState({})
@@ -232,14 +232,8 @@ const AddEditFormMain = ({ open, MenuAlteredData, setSaveClick, form, viewProps,
     const [CheckedKeys, setCheckedKeys] = useState();
     const [ExpandedKeys, setExpandedKeys] = useState({});
     const [ourCheckedKeys, setourCheckedKeys] = useState();
-    let drawerTitle = '';
-    if (formActionType === 'add') {
-        drawerTitle = 'Add New Role';
-    } else if (formActionType === 'update') {
-        drawerTitle = 'Edit Role Details';
-    } else if (formActionType === 'view') {
-        drawerTitle = 'View Role Details';
-    }
+ 
+    
     useEffect(() => {
         if (!treeData.length) {
             Subpanel(mocktreeData);
@@ -312,16 +306,18 @@ const AddEditFormMain = ({ open, MenuAlteredData, setSaveClick, form, viewProps,
         return result;
     }
 
-    console.log('mockData insertionData', mockData);
+    const handleFormValueChange = () => {
+        setFormBtnActive(true);
+    };
 
-    const handleForm = () => {
-        setFormBtnDisable(true);
+    const handleFormFieldChange = () => {
+        setFormBtnActive(true);
     };
 
     const onFinishFailed = () => {};
     const Title = (props) => {
         console.log('render');
-        return <span className={style.placement}>{props.title}</span>;
+        return <span className={styles.placement}>{props.title}</span>;
     };
     const Paneldata = (data) => {
         return data?.map((subData) => {
@@ -479,17 +475,10 @@ const AddEditFormMain = ({ open, MenuAlteredData, setSaveClick, form, viewProps,
             </>
         );
     };
-    const onClose = () => {
-        setOpenDrawer(false);
-        setFormBtnDisable(false);
-        setIsReadOnly(false);
-
-        form.resetFields();
-    };
 
     return (
         <>
-            <Drawer
+            {/* <Drawer
                 title={drawerTitle}
                 width="540"
                 placement="right"
@@ -532,75 +521,99 @@ const AddEditFormMain = ({ open, MenuAlteredData, setSaveClick, form, viewProps,
                     </>
                 }
             >
-                <Space direction="vertical" size="small" style={{ display: 'flex' }}>
-                    <Form id="myForm" form={form} onFieldsChange={handleForm} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                    {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('id')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
-                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')} {...disabledProps} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleName')}</p>}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
-                                    {!footerEdit ? (
-                                        <TextArea
-                                            placeholder={preparePlaceholderText('description')}
-                                            autoSize={{
-                                                minRows: 2,
-                                                maxRows: 5,
-                                            }}
-                                            maxLength={250}
-                                            {...disabledProps}
-                                        />
-                                    ) : (
-                                        <p className={styles.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
-                                    )}
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
-                                    {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={style.activeText}>Active</div> : <div className={style.inactiveText}>Inactive</div>}</>}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                <Space direction="vertical" size="small" style={{ display: 'flex' }}> */}
+            <Form id="myForm" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={isReadOnly} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('name')} disabled={isReadOnly} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
+                            <TextArea
+                                placeholder={preparePlaceholderText('description')}
+                                autoSize={{
+                                    minRows: 2,
+                                    maxRows: 5,
+                                }}
+                                value={formData?.roleDesceription}
+                                maxLength={250}
+                                disabled={isReadOnly}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={formData?.activeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" >
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator} onChange={(checked) => (checked ? 1 : 0)} disabled={isReadOnly} />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                        <hr />
-                        <Tabs
-                            defaultActiveKey="1"
-                            items={[
-                                {
-                                    label: 'Web',
-                                    key: '1',
-                                    children: AccordianTreeUtils(FinalTreedata),
-                                },
+                <hr />
+                <Tabs
+                    defaultActiveKey="1"
+                    items={[
+                        {
+                            label: 'Web',
+                            key: '1',
+                            children: AccordianTreeUtils(FinalTreedata),
+                        },
 
-                                {
-                                    label: 'Mobile',
-                                    key: '2',
-                                    children: '',
-                                },
-                            ]}
-                        />
+                        {
+                            label: 'Mobile',
+                            key: '2',
+                            children: '',
+                        },
+                    ]}
+                />
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {AccordianTreeUtils(FinalTreedata)}
+                    </Col>
+                </Row>
 
-                        {/* <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                {AccordianTreeUtils(FinalTreedata)}
-                            </Col>
-                        </Row> */}
-                    </Form>
-                </Space>
-            </Drawer>
+                <Row gutter={20} className={styles.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                    <Button danger onClick={onCloseAction}>
+                        {footerEdit ? 'Close' : 'Cancel'}
+                    </Button>
+                </Col>
+
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    {!footerEdit && showSaveBtn && (
+                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                    )}
+
+                    {!formData?.id && (
+                        <Button htmlType="submit"  disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
+                            Save & Add New
+                        </Button>
+                    )}
+
+                    {footerEdit && (
+                        <Button onClick={handleEditData} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                            Edit
+                        </Button>
+                    )}
+                </Col>
+            </Row>
+            </Form>
+            {/* </Space>
+            </Drawer> */}
         </>
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain,{});
+export const AddEditForm = withDrawer(AddEditFormMain, {});
