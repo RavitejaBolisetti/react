@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { duplicateValidator, validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata }) {
@@ -15,14 +15,14 @@ function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnD
         // setFormBtnDisable(true);
     };
 
-    const duplicateValidator = (value, type) => {
-        // onUpdate check id
-        if (finalFormdata?.documentType.findIndex((el) => el[type] === value) !== -1) {
-            return Promise.reject('Duplicate not allowed');
-        } else {
-            return Promise.resolve();
-        }
-    };
+    // const duplicateValidator = (value, type) => {
+    //     // onUpdate check id
+    //     if (finalFormdata?.documentType.findIndex((el) => el[type] === value) !== -1) {
+    //         return Promise.reject('Duplicate not allowed');
+    //     } else {
+    //         return Promise.resolve();
+    //     }
+    // };
     return (
         <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
