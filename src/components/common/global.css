@@ -238,7 +238,10 @@
     margin-inline-end: 8px;
     margin-top: -2px;
 }
-
+:global .ant-modal-mask, 
+:global body {
+    width: 100% !important; overflow: inherit !important;
+}
 @media (max-width: 768px) {
     :global .ant-input-group {
         margin-top: 20px;
