@@ -72,11 +72,11 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Space>
                         <div>
-                            <span className={styles.headingGradient}>{pageTitle}
-                            {canMarkFavourite && <span className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<TiStarFullOutline size={13} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<TiStarFullOutline color="#B5B5B6" size={13} onClick={handleFavouriteClick} />)}</span>}
+                            <span className={styles.headingGradient}>
+                                {pageTitle}
+                                {canMarkFavourite && <span className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<TiStarFullOutline size={13} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<TiStarFullOutline color="#B5B5B6" size={13} onClick={handleFavouriteClick} />)}</span>}
                             </span>
                         </div>
-                        
                     </Space>
                 </Col>
             </Row>
@@ -90,4 +90,6 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
     );
 };
 
-export const PageHeader = connect(mapStateToProps, mapDispatchToProps)(PageHeaderMain);
+const PageHeader = connect(mapStateToProps, mapDispatchToProps)(PageHeaderMain);
+
+export default PageHeader;
