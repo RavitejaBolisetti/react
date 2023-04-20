@@ -526,35 +526,41 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={isReadOnly} />
+                            {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('id')}  disabled={isReadOnly} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
+
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('name')} disabled={isReadOnly} />
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')} disabled={isReadOnly} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleName')}</p>}
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
-                            <TextArea
-                                placeholder={preparePlaceholderText('description')}
-                                autoSize={{
-                                    minRows: 2,
-                                    maxRows: 5,
-                                }}
-                                value={formData?.roleDesceription}
-                                maxLength={250}
-                                disabled={isReadOnly}
-                            />
+                          
+                             {!footerEdit ? (
+                                        <TextArea
+                                            placeholder={preparePlaceholderText('description')}
+                                            autoSize={{
+                                                minRows: 2,
+                                                maxRows: 5,
+                                            }}
+                                            maxLength={250}
+                                            disabled={isReadOnly}
+
+                                        />
+                                    ) : (
+                                        <p className={styles.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
+                                    )}
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={formData?.activeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" >
-                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator} onChange={(checked) => (checked ? 1 : 0)} disabled={isReadOnly} />
+                        {!footerEdit ?   <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator} onChange={(checked) => (checked ? 1 : 0)} disabled={isReadOnly} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>}
                         </Form.Item>
                     </Col>
                 </Row>

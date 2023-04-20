@@ -257,6 +257,8 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setShowSaveAndAddNewBtn(true);
         setFormData([]);
         setFooterEdit(false);
+        setShowSaveBtn(true);
+
         setIsFormVisible(true);
         setIsReadOnly(false);
     };
@@ -282,8 +284,9 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
+        setShowSaveBtn(true);
         setFormData(record);
-        console.log(record,"formData",formData)
+        console.log(record, 'formData', formData);
         setIsFormVisible(true);
     };
     const handleView = (record) => {
@@ -301,6 +304,8 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setShowSaveAndAddNewBtn(false);
         setFormActionType('update');
         setFooterEdit(false);
+        setShowSaveBtn(true)
+
         setIsReadOnly(false);
     };
 
