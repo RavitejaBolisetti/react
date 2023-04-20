@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY, BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH } from 'constants/routingApi';
+import { BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY, BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SAVE, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH, BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_DROPDOWN } from 'constants/routingApi';
 import { message } from 'antd';
 // import { message } from 'antd';
 
@@ -20,6 +20,7 @@ export const MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING = 'MANUFAC
 export const MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE = 'MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_VISIBLE';
 export const MANUFACTURER_ADMIN_AUTHORITY_UPLOAD_VISIBLE = 'MANUFACTURER_ADMIN_AUTHORITY_UPLOAD_VISIBLE';
 export const MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED = 'MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED';
+export const MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN = 'MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN';
 
 const receiveManufacturerAdminHierarchyData = (data) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_DATA_LOADED,
@@ -41,6 +42,12 @@ const receiveChangeHistoryData = (data) => ({
 
 const receiveAuthorityChangeHistoryData = (data) => ({
     type: MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+
+const receiveAuthorityTypeData = (data) => ({
+    type: MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN,
     isLoaded: true,
     data,
 });
@@ -224,6 +231,37 @@ manufacturerAdminHierarchyDataActions.searchList = withAuthToken((params) => ({ 
         data,
         method: 'get',
         url: BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH + (employeeCode ? `?employeeCode=${employeeCode}` : ''),
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+manufacturerAdminHierarchyDataActions.authTypeDropdown = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data } = params;
+    setIsLoading(true);
+    const onError = () => message.error('Internal Error, Please try again');
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveAuthorityTypeData(res?.data));
+        } else {
+            onError();
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_DROPDOWN+'?parameterType=AUTH_TYPE',
         token,
         accessToken,
         userId,

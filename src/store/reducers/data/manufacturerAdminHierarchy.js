@@ -11,6 +11,7 @@ import {
     MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY_VISIBLE,
     MANUFACTURER_ADMIN_HIERARCHY_UPLOAD_VISIBLE,
     MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED,
+    MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN,
 } from 'store/actions/data/manufacturerAdminHierarchy';
 
 const initialState = {
@@ -52,6 +53,8 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
             return { ...state, isHistoryLoaded: action.isLoaded, employeeCode: action.data };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
+        case MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN:
+            return { ...state, authTypeDropdown : action.data }
         default:
             return { ...state };
     }

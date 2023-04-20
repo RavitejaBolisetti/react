@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useReducer } from 'react';
+import React, { Fragment, useState, useReducer,useEffect } from 'react';
 import { Input, Form, Col, Card, Row, Switch, Button, Select, DatePicker, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
@@ -15,34 +15,34 @@ const fieldNames = { label: 'applicationName', value: 'id' };
 const { Search } = Input;
 const { Text } = Typography;
 
-const applicationData = [
-    {
-        id: '1',
+// const applicationData = [
+//     {
+//         id: '1',
 
-        applicationName: 'APP nm 1',
-    },
+//         applicationName: 'APP nm 1',
+//     },
 
-    {
-        id: '2',
+//     {
+//         id: '2',
 
-        applicationName: 'APP nm 2',
-    },
+//         applicationName: 'APP nm 2',
+//     },
 
-    {
-        id: '3',
+//     {
+//         id: '3',
 
-        applicationName: 'APP nm 3',
-    },
-];
+//         applicationName: 'APP nm 3',
+//     },
+// ];
 
 let apiData = [];
 
 const mapStateToProps = (state) => {
-    console.log('statye', state);
+    console.log('stateChecking', state);
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], employeeCode = [], changeHistoryVisible, historyData = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], employeeCode = [], changeHistoryVisible, historyData = [] ,authTypeDropdown = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
     // const moduleTitle = 'Manufacturer Detail';
     // const viewTitle = 'Hierarchy Details';
 
-    apiData = state.data.ManufacturerAdminHierarchy.employeeCode;
+    apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
     let returnValue = {
         collapsed,
@@ -62,6 +62,7 @@ const mapStateToProps = (state) => {
         manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         employeeCode,
+        authTypeDropdown,
         // moduleTitle,
         historyData,
         // viewTitle,
@@ -77,29 +78,35 @@ const mapDispatchToProps = (dispatch) => ({
             searchList: manufacturerAdminHierarchyDataActions.searchList,
             saveData: manufacturerAdminHierarchyDataActions.saveData,
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
+            authTypeDropdown : manufacturerAdminHierarchyDataActions.authTypeDropdown,
 
             hierarchyAttributesearchList: hierarchyAttributeMasterActions.searchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
 });
-const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode}) => {
+const AuthorityFormMin = ({ userId,onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode, authTypeDropdown}) => {
     const onChange = (date, dateString) => {
         console.log(date, dateString);
     };
     //const [active, setActive] = useState(false);
-    const [userInput, isSetUserInput] = useState('');
-    const [dateData, setDateData] = useState();
+    // const [userInput, isSetUserInput] = useState('');
+    // const [dateData, setDateData] = useState();
     const [date, setisDate] = useState(false);
+
+    useEffect(() => {
+        if (userId) {
+            authTypeDropdown({ setIsLoading: listShowLoading, userId});
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+    
     const onFinishFailed = (err) => {
         console.error(err);
-    };
-
-    const handleForm = (value) => {
-        // setFormBtnDisable(true);
     };
 
     const onSearchHandle = (data) => {
@@ -109,6 +116,13 @@ const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLo
         // isSetUserInput(data.target.value);
     };
     console.log(employeeCode, 'CodeCheck');
+
+    console.log(authTypeDropdown, 'dropDown Check');
+
+    console.log(apiData,'dropdownData')
+
+
+
     return (
         <Form
             form={form}
@@ -128,16 +142,17 @@ const AuthorityFormMin = ({ onFinish, form, isEditing, isBtnDisabled, listShowLo
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             labelInValue // defaultValue={name || ''} // showSearch
                             placeholder="Select Authority Type" // optionFilterProp="children"
-                            fieldNames={fieldNames}
+                            //fieldNames={fieldNames}
                             // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
-                            options={applicationData}
+                            options={apiData}
+                            onChange=""
                         />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Token" name="token" rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'), 
                         {
-                            required: employeeCode ? false : true,
+                            required: employeeCode.length !== 0 ? false : true,
                             message: 'No Result found',
                         },
                 ]}
