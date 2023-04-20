@@ -65,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
 const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
+const savePayload = [{}];
 export const UserManagementMain = ({ saveData, userId, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
@@ -98,12 +99,16 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     const [DealerSelected, setDealerSelected] = useState();
     const [disabled, setdisabled] = useState();
     const [DealerData, setDealerData] = useState(UserManagementDealerData);
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
 
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceFormReset]);
+    useEffect(() => {
+        console.log('This is the dealer Data :: ', DealerData);
+    }, [DealerData]);
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -319,6 +324,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     };
 
     const onError = (message) => {
+        setDealerData({});
         setError(true);
         onSaveShowLoading(false);
         showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
@@ -353,7 +359,7 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
         setSaveBtn(true);
         setFooterEdit(false);
         setIsFormVisible(true);
-
+        setFormBtnActive(true);
 
         setDrawer(true);
         setIsReadOnly(false);
@@ -367,6 +373,8 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
+        setIsFormVisible(true);
+        setFormBtnActive(true);
 
         setFormData(record);
 
@@ -403,6 +411,8 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
         setSaveAndSaveNew(false);
         setFooterEdit(true);
         setSaveBtn(false);
+        setIsFormVisible(true);
+        setFormBtnActive(false);
 
         form.setFieldsValue({
             qualificationCode: record.qualificationCode,
@@ -453,6 +463,8 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
         isVisible: isFormVisible,
         isLoadingOnSave,
         formBtnDisable,
+        isFormBtnActive,
+        setFormBtnActive,
         saveAndSaveNew,
         saveBtn,
         setFormBtnDisable,
@@ -476,7 +488,6 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
         tableDetailData,
         style,
         onCloseAction: () => setIsFormVisible(false),
-
     };
 
     return (

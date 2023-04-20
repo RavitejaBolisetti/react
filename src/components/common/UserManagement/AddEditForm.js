@@ -10,13 +10,12 @@ import { IoTrashOutline } from 'react-icons/io5';
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 
-
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { saveclick, attributeData, onCloseAction,handleEditData,showSaveBtn,setSaveAndAddNewBtnClicked, handleAddMacid, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
+    const { saveclick, attributeData, onCloseAction, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, handleAddMacid, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
 
     const handleFormValueChange = () => {
@@ -33,7 +32,7 @@ const AddEditFormMain = (props) => {
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Space
                 direction="vertical"
-                size="small"
+                size="middle"
                 style={{
                     display: 'flex',
                 }}
@@ -44,10 +43,7 @@ const AddEditFormMain = (props) => {
                             <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card> */}
                         <Card
-                            style={{
-                                width: '100% ',
-                                display: 'flex',
-                            }}
+                           className={style.userManagementDrawer}
                         >
                             <p>
                                 Employee Code : <span>{tableDetailData['0'].employeeCode}</span>
@@ -147,28 +143,14 @@ const AddEditFormMain = (props) => {
             <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
+                        Cancel
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    )}
-
-                    {!formData?.id && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
-                            Save & Add New
-                        </Button>
-                    )}
-
-                    {footerEdit && (
-                        <Button onClick={handleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
+                    <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        Save
+                    </Button>
                 </Col>
             </Row>
         </Form>
