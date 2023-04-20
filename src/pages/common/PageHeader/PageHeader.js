@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { menuDataActions } from 'store/actions/data/menu';
 import { connect } from 'react-redux';
 import { MdStars } from 'react-icons/md';
+import { TiStarFullOutline } from 'react-icons/ti';
 import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
@@ -71,9 +72,11 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Space>
                         <div>
-                            <span className={styles.headingGradient}>{pageTitle}</span>
+                            <span className={styles.headingGradient}>{pageTitle}
+                            {canMarkFavourite && <span className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<TiStarFullOutline size={13} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<TiStarFullOutline color="#B5B5B6" size={13} onClick={handleFavouriteClick} />)}</span>}
+                            </span>
                         </div>
-                        {canMarkFavourite && <div className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<MdStars size={22} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<MdStars color="#1e1e1e" size={22} onClick={handleFavouriteClick} />)}</div>}
+                        
                     </Space>
                 </Col>
             </Row>

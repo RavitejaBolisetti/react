@@ -149,7 +149,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             title: 'Status',
             dataIndex: 'status',
             render: (text, record) => {
-                return <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.InactiveText}>Inactive</div>}</>;
+                return <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>;
             },
         })
     );
@@ -317,30 +317,28 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.searchContainer}>
+                    <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} className={styles.subheading}>
+                                   
+                                        <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
                                             Qualification List
                                         </Col>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <Col xs={24} sm={24} md={12} lg={19} xl={19}>
                                             <Search
                                                 placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
+                                              
                                                 allowClear
                                                 onSearch={onSearchHandle}
                                                 onChange={onChangeHandle}
+                                                className={styles.headerSearchField}
                                             />
                                         </Col>
-                                    </div>
                                 </Row>
                             </Col>
                             {qualificationData?.length ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger></Button>
 
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>

@@ -1,5 +1,5 @@
 /* :global CSS for Antd CSS Overrides */
-
+.lineHeight33{line-height: 33px;}
 .geoSection :global .ant-tree {
     background: #f4f4f4;
 }
@@ -117,15 +117,21 @@
 :global .ant-btn-default:not(:disabled):hover{border-color: #e31837;} */
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
-.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+.contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-inline-end-width: 0px;
     border-color: transparent;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):active,
-.contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):hover,
-.contentHeaderBackground .headerSelectField :global .ant-input-search .ant-input:focus {
+.contentHeaderBackground :global .ant-btn-default:not(:disabled):hover,
+.contentHeaderBackground :global .ant-input-search .ant-input:focus {
     border-color: transparent;
+}
+.contentHeaderBackground :global .anticon-close-circle{
+    color:#0B0B0C;
+    width:12px;
+    height: 12px;
+    vertical-align: -0.35em;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
@@ -139,6 +145,10 @@
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border: 1px solid #d9d9d9;
+}
+
+.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper .ant-input-clear-icon {
+    color: #0B0B0C;
 }
 
 .contentHeaderBackground :global .ant-input-group:hover {
@@ -248,12 +258,20 @@
 }
 
 :global .ant-btn-default.ant-btn-dangerous svg {
-    margin-right: 6px;
+    /* margin-right: 6px; */
     padding-top: 2px;
 }
-
+.lastheaderbutton{
+    margin-right: 0px;
+}
 /* Custom CSS */
+.activeText {
+    color: #00a310;
+}
 
+.inactiveText {
+    color: #8e8585;
+}
 .container {
     padding: 20px;
 }
@@ -942,6 +960,7 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0px !important;
+    margin-top: 0px;
 }
 
 .contentHeaderBackground {
@@ -1017,9 +1036,7 @@
     padding-right: 0px !important;
 }
 
-.activeText {
-    color: #00a310;
-}
+
 
 .content {
     border: 1px solid #e8e8e8;
@@ -1130,7 +1147,6 @@
     border: 1px solid #0b0b0c;
 }
 
-
 .tableIcons {
     border: none;
     padding: 0px;
@@ -1145,13 +1161,11 @@
     padding: 10px 20px 10px 10px;
 }
 
-
 .searchContainer .searchBox {
     padding-left: 20px !important;
     display: flex;
     align-items: center;
 }
-
 
 .searchContainer .searchBox .subheading {
     font-size: 16px;
@@ -1175,12 +1189,28 @@
 }
 
 .searchContainer .searchBox :global .ant-input-group:hover {
-    border: 1px solid #0B0B0C;
+    border: 1px solid #0b0b0c;
 }
 
 :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-inline-end: 8px;
     margin-top: -2px;
+}
+
+:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    margin-inline-end: 8px;
+    margin-top: -2px;
+}
+
+.cardItemBtn {
+    display: flex;
+    align-items: end;
+    text-align: right;
+    float: right;
+}
+
+::-ms-reveal {
+    display: none;
 }
 
 @media (max-width: 768px) {
@@ -1255,7 +1285,12 @@
         padding-left: 10px !important;
         padding-right: 0px !important;
     }
-
+    .addGroup {
+        margin-top: 10px;
+    }
+    .lastheaderbutton{
+        margin-right: 15px;
+    }
     /* .padRight0 {
     padding-right: 0px !important;
   } */
