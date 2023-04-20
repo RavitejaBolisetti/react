@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, ProductHierarchyPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, BranchDealerMappingPage, UserManagementPage } from 'pages/common';
+import { GeoPage, ProductHierarchyPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, BranchDealerMappingPage, UserManagementPage, UserManagementManufacturerPage } from 'pages/common';
 import { LoginPage } from 'pages/auth';
 
 import * as routing from 'constants/routing';
@@ -43,7 +43,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
             <Route path={routing.ROUTING_USER_MANAGEMENT_DEALER} element={<UserManagementPage />} exact />
-            <Route path={routing.ROUTING_USER_MANAGEMENT_MANUFACTURER} element={<UserManagementPage />} exact />
+            <Route path={routing.ROUTING_USER_MANAGEMENT_MANUFACTURER} element={<UserManagementManufacturerPage />} exact />
 
             <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />

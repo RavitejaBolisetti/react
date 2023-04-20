@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const UserManagementManufacturerMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -535,4 +535,4 @@ export const UserManagementMain = ({ saveData, userId, isDataLoaded, fetchList, 
     );
 };
 
-export const UserManagement = connect(null, null)(UserManagementMain);
+export const UserManagementManufacturer = connect(null, null)(UserManagementManufacturerMain);
