@@ -1,30 +1,22 @@
 import React, { Fragment, useState, useReducer } from 'react';
-import { Input, Form, Col, Card, Row, Switch, Button, Select } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-
-import { validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
+import { Form, } from 'antd';
 import style from 'components/common/DrawerAndTable.module.css';
 import AuthorityCard from './AuthorityCard';
 import { AuthorityForm } from './AuthorityForm';
 import moment from 'moment';
 
 const AuthorityDetail = () => {
-    const [docData, setDocData] = useState([]);
     const [documentTypesList, setDocumentTypesList] = useState([]);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
     const [actionForm] = Form.useForm();
 
     const onActionFormFinish = (val) => {
-        console.log('value ===>', val, 'AuthorityDetail', moment(val.dateFrom).format());
+        // console.log('value ===>', val, 'AuthorityDetail', moment(val.dateFrom).format());
+        // console.log(val, "CARDCHECK")
 
-        console.log(val, "CARDCHECK")
-
-        const { key, label } = val.authoitytype;
-        setDocumentTypesList((prev) => [...prev, { token: val.token, authoitytype: key, authorityName: label, dateFrom: moment(val?.dateFrom).format('DD/MM/YYYY'), dateTo: moment(val?.dateTo).format('DD/MM/YYYY') }]);
+        const { key} = val.authoritytype;
+        setDocumentTypesList((prev) => [...prev, { tokken: val.tokken, authoritytype: key, employeeName : val.EmployeeName, dateFrom: moment(val?.dateFrom).format('DD/MM/YYYY'), dateTo: moment(val?.dateTo).format('DD/MM/YYYY') }]);
         actionForm.resetFields();
         forceUpdate();
     };

@@ -6,15 +6,15 @@ import { AuthorityForm } from './AuthorityForm';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalFormdata, token, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList }) => {
+const AuthorityCard = ({ onFinish, setDocumentTypesList, authoritytype, setfinalFormdata, tokken, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
     // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
-            authoitytype,
-            token,
+            authoritytype,
+            tokken,
             EffectiveTo,
             EffectiveFrom,
             // status: values.status,
@@ -75,7 +75,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{documentTypesList[0]?.token + ' | ' + documentTypesList[0]?.token}</Text>
+                                <Text strong>{documentTypesList[0]?.employeeName + ' | ' + documentTypesList[0]?.tokken}</Text>
                             </Col>
 
                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
@@ -94,11 +94,11 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoitytype, token, EffectiveTo, EffectiveFrom)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoritytype, tokken, EffectiveTo, EffectiveFrom)} />
                                     </Col>
 
                                     <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                        <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authoitytype, EffectiveTo, token })} type="link" icon={<FiTrash />}></Button>
+                                        <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authoritytype, EffectiveTo, tokken })} type="link" icon={<FiTrash />}></Button>
                                     </Col>
                                 </>
                             ) : (
@@ -123,7 +123,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AuthorityForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authoitytype={authoitytype} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} token={token} isEditing={isEditing} />
+                        <AuthorityForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authoritytype={authoritytype} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} tokken={tokken} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>

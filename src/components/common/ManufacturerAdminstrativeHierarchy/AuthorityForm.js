@@ -107,15 +107,15 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    useEffect(() => {
-        console.log(authData, 'useState');
-        
-    }, [authData]);
+    // useEffect(() => {
+    //     console.log(authData, 'useState');
 
-    useEffect( () =>{
+    // }, [authData]);
+
+    useEffect(() => {
         authData.name = employeeCode?.employeeName;
         isSetAuthData({ ...authData });
-    },[employeeCode])
+    }, [employeeCode]);
 
     return (
         <Form
@@ -131,7 +131,7 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name="authoitytype" rules={[validateRequiredInputField('Authority Type')]}>
+                    <Form.Item label="Authority Type" name="authoritytype" rules={[validateRequiredInputField('Authority Type')]}>
                         <Select
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             labelInValue // defaultValue={name || ''} // showSearch
@@ -144,7 +144,7 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         label="Token"
-                        name="token"
+                        name="tokken"
                         rules={[
                             validateRequiredInputField('Token Required'),
                             validationFieldLetterAndNumber('Token Required'),
@@ -162,16 +162,24 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
             {employeeCode.length !== 0 && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Text type="primary">Employee Name : {employeeCode?.employeeName} </Text>
+                        <Form.Item>
+                            <Text type="primary">Employee Name : {employeeCode?.employeeName} </Text>
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} >
+                        <Form.Item label="" name='EmployeeName' initialValue={employeeCode?.employeeName}>
+                            <Input />
+                        </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="dateFrom" label="Effective From:" rules={[validateRequiredSelectField('Date Required')]}>
+                        <Form.Item name="dateFrom" label="Effective From" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} onChange={handleSelectDateFrom} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="dateTo" label="Effective To:" rules={[validateRequiredSelectField('Date Required')]}>
+                        <Form.Item name="dateTo" label="Effective To" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} onChange={handleSelectDateTo} />
                         </Form.Item>
                     </Col>
