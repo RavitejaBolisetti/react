@@ -2,11 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { Col, Card, Row, Button, Form, Divider } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
-
-//  import styles from 'pages/common/Common.module.css';
-//import style from 'components/common/DrawerAndTable.module.css';
 import { AuthorityForm}  from './AuthorityForm';
-import { FaLessThanEqual } from 'react-icons/fa';
 
 const { Text } = Typography;
 
@@ -31,16 +27,6 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
         console.log('fod', newFormData);
-        const { key, label } = newFormData.authoitytype;
-        // setDocumentTypesList((prev) => [...prev, { token: val.token, authoitytype: key, authorityName: label }]);
-        // setDocumentTypesList((prev) => {
-        //     console.log(prev);
-        //     const newList = prev;
-        //     const indx = prev?.findIndex((el) => el?.token === token);
-        //     console.log('newList', newList, 'indx', indx);
-        //     newList?.splice(indx, 1, { ...newFormData });
-        //     return newList;
-        // });
         setIsEditing(false);
         setIsBtnDisabled(false);
         form.resetFields();

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useReducer,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Form, Col, Card, Row, Switch, Button, Select, DatePicker, Typography, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
@@ -10,47 +10,22 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 import { bindActionCreators } from 'redux';
 import style from 'components/common/Common.module.css';
 
-const { Option } = Select;
-const fieldNames = { label: 'applicationName', value: 'id' };
 const { Search } = Input;
 const { Text } = Typography;
-
-// const applicationData = [
-//     {
-//         id: '1',
-
-//         applicationName: 'APP nm 1',
-//     },
-
-//     {
-//         id: '2',
-
-//         applicationName: 'APP nm 2',
-//     },
-
-//     {
-//         id: '3',
-
-//         applicationName: 'APP nm 3',
-//     },
-// ];
 
 let apiData = [];
 
 const mapStateToProps = (state) => {
-    console.log('stateChecking', state);
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], employeeCode = [], changeHistoryVisible, historyData = [] ,authTypeDropdown = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], employeeCode = [], changeHistoryVisible, historyData = [], authTypeDropdown = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    // const moduleTitle = 'Manufacturer Detail';
-    // const viewTitle = 'Hierarchy Details';
 
     apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
@@ -78,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
             searchList: manufacturerAdminHierarchyDataActions.searchList,
             saveData: manufacturerAdminHierarchyDataActions.saveData,
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
-            authTypeDropdown : manufacturerAdminHierarchyDataActions.authTypeDropdown,
+            authTypeDropdown: manufacturerAdminHierarchyDataActions.authTypeDropdown,
 
             hierarchyAttributesearchList: hierarchyAttributeMasterActions.searchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -89,39 +64,58 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const AuthorityFormMin = ({ userId,onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode, authTypeDropdown}) => {
-    const onChange = (date, dateString) => {
-        console.log(date, dateString);
+const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode, authTypeDropdown }) => {
+    const authObj = {
+        authType: '',
+        name: '',
+        tokken: '',
+        fromDate: '',
+        toDate: '',
     };
-    //const [active, setActive] = useState(false);
-    // const [userInput, isSetUserInput] = useState('');
-    // const [dateData, setDateData] = useState();
-    const [date, setisDate] = useState(false);
 
-    useEffect(() => {
-        if (userId) {
-            authTypeDropdown({ setIsLoading: listShowLoading, userId});
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-    
+    const [authData, isSetAuthData] = useState(authObj);
+
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
-    const onSearchHandle = (data) => {
-        console.log('data', data);
-        setisDate(!date);
-        searchList({ setIsLoading: listShowLoading, employeeCode: data });
-        // isSetUserInput(data.target.value);
+    const handleChange = (data) => {
+        authData.authType = data.value;
+        isSetAuthData({ ...authData });
     };
-    console.log(employeeCode, 'CodeCheck');
 
-    console.log(authTypeDropdown, 'dropDown Check');
+    const onSearchHandle = (data) => {
+        searchList({ setIsLoading: listShowLoading, employeeCode: data });
+        authData.tokken = data;
+        isSetAuthData({ ...authData });
+    };
 
-    console.log(apiData,'dropdownData')
+    const handleSelectDateFrom = (data) => {
+        authData.fromDate = data;
+        isSetAuthData({ ...authData });
+    };
 
+    const handleSelectDateTo = (data) => {
+        authData.toDate = data;
+        isSetAuthData({ ...authData });
+    };
 
+    useEffect(() => {
+        if (userId) {
+            authTypeDropdown({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
+    useEffect(() => {
+        console.log(authData, 'useState');
+        
+    }, [authData]);
+
+    useEffect( () =>{
+        authData.name = employeeCode?.employeeName;
+        isSetAuthData({ ...authData });
+    },[employeeCode])
 
     return (
         <Form
@@ -142,20 +136,23 @@ const AuthorityFormMin = ({ userId,onFinish, form, isEditing, isBtnDisabled, lis
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             labelInValue // defaultValue={name || ''} // showSearch
                             placeholder="Select Authority Type" // optionFilterProp="children"
-                            //fieldNames={fieldNames}
-                            // filterOption={(input, option) => (option?.applicationName ?? '').toLowerCase().includes(input.toLowerCase())}
                             options={apiData}
-                            onChange=""
+                            onChange={handleChange}
                         />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Token" name="token" rules={[validateRequiredInputField('Token Required'), validationFieldLetterAndNumber('Token Required'), 
-                        {
-                            required: employeeCode.length !== 0 ? false : true,
-                            message: 'No Result found',
-                        },
-                ]}
+                    <Form.Item
+                        label="Token"
+                        name="token"
+                        rules={[
+                            validateRequiredInputField('Token Required'),
+                            validationFieldLetterAndNumber('Token Required'),
+                            {
+                                required: employeeCode.length !== 0 ? false : true,
+                                message: 'No Result found',
+                            },
+                        ]}
                     >
                         <Search allowClear onSearch={onSearchHandle} maxLength={50} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
@@ -170,12 +167,12 @@ const AuthorityFormMin = ({ userId,onFinish, form, isEditing, isBtnDisabled, lis
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateFrom" label="Effective From:" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker className={style.datepicker} onChange={onChange} />
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} onChange={handleSelectDateFrom} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateTo" label="Effective To:" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker className={style.datepicker} onChange={onChange} />
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} onChange={handleSelectDateTo} />
                         </Form.Item>
                     </Col>
                 </Row>

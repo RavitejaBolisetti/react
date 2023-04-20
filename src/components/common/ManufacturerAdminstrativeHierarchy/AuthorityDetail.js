@@ -27,7 +27,7 @@ const AuthorityDetail = () => {
         forceUpdate();
     };
 
-    console.log('documentTypesList', documentTypesList);
+    //console.log('documentTypesList', documentTypesList);
 
     return (
         <>
