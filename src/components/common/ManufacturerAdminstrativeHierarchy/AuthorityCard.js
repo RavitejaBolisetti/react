@@ -2,11 +2,11 @@ import React, { useState, Fragment } from 'react';
 import { Col, Card, Row, Button, Form, Divider } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
-import { AuthorityForm}  from './AuthorityForm';
+import { AuthorityForm } from './AuthorityForm';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalFormdata, token, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled }) => {
+const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalFormdata, token, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -75,18 +75,17 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoitytype, setfinalF
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{'authoitytype' || 'Attribute Type 1'} /</Text>
-                                <Text strong> {'token' || 'B6G431'}</Text>
+                                <Text strong>{documentTypesList[0]?.token + ' | ' + documentTypesList[0]?.token}</Text>
                             </Col>
 
                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text type="secondary">EffectiveFrom: </Text> {EffectiveFrom || '31/99/9999'}
+                                <Text type="secondary"> EffectiveFrom- {documentTypesList[0]?.dateFrom}</Text>
                             </Col>
 
                             <Divider type="vertical" />
 
                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text type="secondary">EffectiveTo: </Text> {EffectiveTo || '31/99/9999'}
+                                <Text type="secondary">EffectiveTo- {documentTypesList[0]?.dateTo} </Text> 
                             </Col>
                         </Row>
                     </Col>

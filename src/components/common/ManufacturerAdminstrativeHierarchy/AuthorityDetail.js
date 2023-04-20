@@ -21,13 +21,15 @@ const AuthorityDetail = () => {
     const onActionFormFinish = (val) => {
         console.log('value ===>', val, 'AuthorityDetail', moment(val.dateFrom).format());
 
+        console.log(val, "CARDCHECK")
+
         const { key, label } = val.authoitytype;
         setDocumentTypesList((prev) => [...prev, { token: val.token, authoitytype: key, authorityName: label, dateFrom: moment(val?.dateFrom).format('DD/MM/YYYY'), dateTo: moment(val?.dateTo).format('DD/MM/YYYY') }]);
         actionForm.resetFields();
         forceUpdate();
     };
 
-    //console.log('documentTypesList', documentTypesList);
+    console.log('documentTypesList', documentTypesList);
 
     return (
         <>
@@ -37,7 +39,9 @@ const AuthorityDetail = () => {
             {/* card with form */}
             {documentTypesList.length > 0 &&
                 documentTypesList.map((action) => {
-                    return <AuthorityCard {...action} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />;
+                    return <AuthorityCard {...action} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled}
+                    documentTypesList={documentTypesList}
+                    />;
                 })}
         </>
     );
