@@ -12,11 +12,14 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
-import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
+// import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
+import { userManagementManufacturerDataActions } from 'store/actions/data/UserManagementManagement';
 import DrawerUtil from './DrawerUtil';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { ROUTING_USER_MANAGEMENT_DEALER, ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
 
 const { Search } = Input;
 
@@ -24,7 +27,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
+            UserManagementManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementManufacturerData = [] },
+            // QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -36,7 +40,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isLoading,
-        qualificationData,
+        UserManagementManufacturerData,
         isLoadingOnSave,
         isFormDataLoaded
     };
@@ -47,10 +51,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            listShowLoading: qualificationDataActions.listShowLoading,
-            fetchList: qualificationDataActions.fetchList,
-            saveData: qualificationDataActions.saveData,
-            onSaveShowLoading: qualificationDataActions.onSaveShowLoading,
+            listShowLoading: userManagementManufacturerDataActions.listShowLoading,
+            fetchDealerDetails: userManagementManufacturerDataActions.fetchDealerDetails,
+            fetchManufacturerDetails: userManagementManufacturerDataActions.fetchManufacturerDetails,
+            saveDealerDetails: userManagementManufacturerDataActions.saveDealerDetails,
+            saveManufacturerDetails: userManagementManufacturerDataActions.saveManufacturerDetails,
             showGlobalNotification,
         },
         dispatch
@@ -59,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const UserManagementManufacturerMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const UserManagementManufacturerMain = ({ saveData, userId, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -84,6 +89,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, isDataLoaded,
     const [successAlert, setSuccessAlert] = useState(false);
     const [error, setError] = useState(false);
     const [valid, setValid] = useState(false);
+
+    const navigate = useNavigate();
 
 
 
@@ -404,10 +411,10 @@ export const UserManagementManufacturerMain = ({ saveData, userId, isDataLoaded,
                                     <div className={style.searchAndLabelAlign}>
                                         <Col xs={9} sm={9} md={9} lg={9} xl={9} className={style.subheading}>
                                             <div className={style.userManagement}>
-                                                <Button className={style.actionbtn} type="primary" danger>
+                                                <Button className={style.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
                                                     Manufacturer
                                                 </Button>
-                                                <Button className={style.dealerBtn} type="primary" danger>
+                                                <Button className={style.dealerBtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_DEALER)}>
                                                     Dealer
                                                 </Button>
                                             </div>
@@ -456,10 +463,10 @@ export const UserManagementManufacturerMain = ({ saveData, userId, isDataLoaded,
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={style.successDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} className={style.subheading}>
                                                 <DataTable tableColumn={tableDetails} {...tableDetailProps} />
                                             </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} className={style.subheading}>
                                                 <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>

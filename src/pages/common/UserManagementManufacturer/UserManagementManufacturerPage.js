@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { UserManagement } from 'components/common/UserManagement'
+import { UserManagementManufacturer } from 'components/common/UserManagementManufacturer'
 
 const mapStateToProps = (state) => {
     const {
@@ -30,7 +30,7 @@ export const UserManagementManufacturerPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <UserManagement />
+            <UserManagementManufacturer />
         </>
     );
 };
