@@ -20,6 +20,9 @@ import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_DEALER, ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
+import {AddEditForm} from '../UserManagementManufacturer/AddEditForm' 
+
+
 
 const { Search } = Input;
 
@@ -91,6 +94,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
     const [valid, setValid] = useState(false);
 
     const navigate = useNavigate();
+    const [isFormVisible, setIsFormVisible] = useState(false)
+    const [DealerData, setDealerData] = useState(UserManagementManufacturerData);
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
 
 
 
@@ -313,6 +319,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
         setSaveBtn(true);
         setFooterEdit(false);
 
+        setIsFormVisible(true);
+        setFormBtnActive(true);
+
         setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
@@ -325,6 +334,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
+
+        setIsFormVisible(true);
+        setFormBtnActive(true);
 
         setFormData(record);
 
@@ -345,6 +357,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
         setFooterEdit(false);
         setSaveBtn(true);
 
+        setIsFormVisible(true);
+        setFormBtnActive(true);
+
         form.setFieldsValue({
             qualificationCode: selectedRecord.qualificationCode,
             qualificationName: selectedRecord.qualificationName,
@@ -361,6 +376,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
         setSaveAndSaveNew(false);
         setFooterEdit(true);
         setSaveBtn(false);
+
+        setIsFormVisible(true);
+        setFormBtnActive(true);
 
         form.setFieldsValue({
             qualificationCode: record.qualificationCode,
@@ -397,6 +415,41 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
 
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    };
+
+    const formProps = {
+        saveclick,
+        setsaveclick,
+        setsaveandnewclick,
+        saveandnewclick,
+        isVisible: isFormVisible,
+        isLoadingOnSave,
+        formBtnDisable,
+        isFormBtnActive,
+        setFormBtnActive,
+        saveAndSaveNew,
+        saveBtn,
+        setFormBtnDisable,
+        onFinishFailed,
+        onFinish,
+        form,
+        handleAdd,
+        drawer,
+        data,
+        setDrawer,
+        isChecked,
+        formData,
+        setIsChecked,
+        formActionType,
+        isReadOnly,
+        setFormData,
+        setForceFormReset,
+        footerEdit,
+        handleUpdate2,
+        DealerData,
+        tableDetailData,
+        style,
+        onCloseAction: () => setIsFormVisible(false),
     };
 
     return (
@@ -479,7 +532,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
                     </div>
                 </Col>
             </Row>
-            <DrawerUtil
+            {/* <DrawerUtil
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}
                 setsaveandnewclick={setsaveandnewclick}
@@ -505,7 +558,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
                 footerEdit={footerEdit}
                 handleUpdate2={handleUpdate2}
                 isLoadingOnSave={isLoadingOnSave}
-            />
+            /> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -538,6 +591,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
                     </ConfigProvider>
                 </Col>
             </Row>
+            <AddEditForm {...formProps}/>                                
         </>
     );
 };
