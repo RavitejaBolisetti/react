@@ -138,6 +138,18 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
                         </Form.Item>
                     </Col>
 
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} >
+                        <Form.Item label="" name='id' initialValue={""}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} >
+                        <Form.Item label="" name='isModified' initialValue={false}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateFrom" label="Effective From" rules={[validateRequiredSelectField('Date Required')]}>
                             <DatePicker format="YYYY-MM-DD" className={style.datepicker} 

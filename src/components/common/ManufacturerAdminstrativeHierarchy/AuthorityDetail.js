@@ -11,7 +11,7 @@ const AuthorityDetail = ({documentTypesList, setDocumentTypesList}) => {
 
     const onActionFormFinish = (val) => {
         const { key} = val.authorityTypeCode;
-        setDocumentTypesList((prev) => [...prev, { authorityEmployeeTokenNo: val.authorityEmployeeTokenNo, authorityTypeCode: key, employeeName : val.EmployeeName, effectiveFrom: moment(val?.effectiveFrom).format('DD/MM/YYYY'), effectiveTo: moment(val?.effectiveTo).format('DD/MM/YYYY') }]);
+        setDocumentTypesList((prev) => [...prev, { id: val.id, authorityEmployeeTokenNo: val.authorityEmployeeTokenNo, authorityTypeCode: key, employeeName : val.EmployeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val.isModified }]);
         actionForm.resetFields();
         forceUpdate();
     };

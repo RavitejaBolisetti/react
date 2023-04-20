@@ -205,7 +205,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
 
         const recordId = formData?.id || '';
         //const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, isModified : false, id: recordId, adminAuthority : documentTypesList, };
+        
+        const data = {  isModified : false, id: recordId, adminAuthority : documentTypesList ,...values, };
         const onSuccess = (res) => {
             form.resetFields();
 
@@ -233,7 +234,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             userId,
             onError,
             onSuccess,
-            isModified : false,
         };
 
         console.log( requestData, "DATATATA" )
