@@ -65,8 +65,68 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [{ srNo: '1', employeecode: 'SH1121', dealername: 'Dealer 1', username: 'DeepakPalariya', useroles: 'dummy', hierarchyMapping: 'dummy', productsMapping: 'dummy' }];
 const dealersData = ['Dealer 1', 'Dealer 2', 'Dealer 3', 'Dealer 4', 'Dealer 5', 'Dealer 6 '];
-const savePayload = [{}];
-export const UserManagementMain = ({ saveData, userId, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+const savePayload = {
+    employeeCode: 'deepakpalariya',
+
+    employeeName: 'deepak',
+
+    employeeDesignation: 'Developer',
+
+    createUser: 'N',
+
+    roles: [
+        {
+            id: 'b9698119-cabf-4863-ac88-9b91561ba7bd',
+
+            roleId: '1b01c102-867f-42ed-b3dd-d8527f9ddc0c',
+
+            status: true,
+
+            applications: [
+                {
+                    id: '',
+
+                    appId: '92389586-eb20-45fe-82ad-2654e783c03d',
+
+                    status: true,
+
+                    actions: [
+                        {
+                            id: '',
+
+                            actionId: '6373a978-3332-4152-8095-90d4dc33c866',
+
+                            status: true,
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+
+    branches: [
+        {
+            id: '2e42a441-c82d-41b4-8b3e-8509bf9affb1',
+
+            branchCode: '8a4176b8-d5c9-4a68-a682-cd5bacb3be7b',
+
+            status: true,
+
+            defaultBranch: true,
+        },
+    ],
+
+    products: [
+        {
+            id: '06545d1e-d61b-46f6-8a79-eb262342f38a',
+
+            productCode: '644bb543-7727-4545-ae24-9bc03b8036b5',
+
+            status: true,
+        },
+    ],
+};
+export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -309,11 +369,11 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     };
 
     const onSuccess = (res) => {
-        onSaveShowLoading(false);
+        debugger
+        listShowLoading(false);
         form.resetFields();
         setSelectedRecord({});
         setSuccessAlert(true);
-        fetchList({ setIsLoading: listShowLoading, userId });
         if (saveclick === true) {
             setDrawer(false);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -331,18 +391,19 @@ export const UserManagementMain = ({ saveData, userId, UserManagementDealerData,
     };
 
     const onFinish = (values, e) => {
+        console.log("The On Finish Function Called : ")
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const requestData = {
-            data: [data],
-            setIsLoading: onSaveShowLoading,
+            data: savePayload,
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
-        saveData(requestData);
+        saveDealerDetails(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
