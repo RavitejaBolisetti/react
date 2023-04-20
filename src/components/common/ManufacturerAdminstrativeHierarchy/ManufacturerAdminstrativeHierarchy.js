@@ -93,6 +93,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [documentTypesList, setDocumentTypesList] = useState([]);
+
 
     const fieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
 
@@ -196,9 +198,14 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     };
 
     const onFinish = (values) => {
+
+        //console.log(documentTypesList,'documentTypesList');
+       // console.log(values,'VALUESSSS');
+
+
         const recordId = formData?.id || '';
-        const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId };
+        //const codeToBeSaved = selectedTreeSelectKey || '';
+        const data = { ...values, isModified : false, id: recordId, adminAuthority : documentTypesList, };
         const onSuccess = (res) => {
             form.resetFields();
 
@@ -226,7 +233,10 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             userId,
             onError,
             onSuccess,
+            isModified : false,
         };
+
+        console.log( requestData, "DATATATA" )
 
         saveData(requestData);
     };
@@ -270,6 +280,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
+        documentTypesList,
+        setDocumentTypesList,
     };
 
     const viewProps = {

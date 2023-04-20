@@ -64,40 +64,14 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode, authTypeDropdown }) => {
-    const authObj = {
-        authType: '',
-        name: '',
-        tokken: '',
-        fromDate: '',
-        toDate: '',
-    };
-
-    const [authData, isSetAuthData] = useState(authObj);
+const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode, authTypeDropdown, documentTypesList, }) => {
 
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
-    const handleChange = (data) => {
-        authData.authType = data.value;
-        isSetAuthData({ ...authData });
-    };
-
     const onSearchHandle = (data) => {
         searchList({ setIsLoading: listShowLoading, employeeCode: data });
-        authData.tokken = data;
-        isSetAuthData({ ...authData });
-    };
-
-    const handleSelectDateFrom = (data) => {
-        authData.fromDate = data;
-        isSetAuthData({ ...authData });
-    };
-
-    const handleSelectDateTo = (data) => {
-        authData.toDate = data;
-        isSetAuthData({ ...authData });
     };
 
     useEffect(() => {
@@ -107,15 +81,6 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    // useEffect(() => {
-    //     console.log(authData, 'useState');
-
-    // }, [authData]);
-
-    useEffect(() => {
-        authData.name = employeeCode?.employeeName;
-        isSetAuthData({ ...authData });
-    }, [employeeCode]);
 
     return (
         <Form
@@ -131,20 +96,20 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
         >
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Authority Type" name="authoritytype" rules={[validateRequiredInputField('Authority Type')]}>
+                    <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
                         <Select
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             labelInValue // defaultValue={name || ''} // showSearch
                             placeholder="Select Authority Type" // optionFilterProp="children"
                             options={apiData}
-                            onChange={handleChange}
+                            //onChange={handleChange}
                         />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         label="Token"
-                        name="tokken"
+                        name="authorityEmployeeTokenNo"
                         rules={[
                             validateRequiredInputField('Token Required'),
                             validationFieldLetterAndNumber('Token Required'),
@@ -175,12 +140,16 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateFrom" label="Effective From" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} onChange={handleSelectDateFrom} />
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} 
+                            //onChange={handleSelectDateFrom}
+                             />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateTo" label="Effective To" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} onChange={handleSelectDateTo} />
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} 
+                            //onChange={handleSelectDateTo} 
+                            />
                         </Form.Item>
                     </Col>
                 </Row>

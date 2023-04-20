@@ -10,6 +10,8 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
+    // console.log(selectedTreeData,'tree');
+
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>

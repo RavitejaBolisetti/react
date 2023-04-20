@@ -18,7 +18,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
+    const { setDocumentTypesList,documentTypesList, onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
@@ -137,7 +137,8 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" form="myForm" danger disabled={!isFormBtnActive}>
+                        <Button htmlType="submit" form="myForm" danger >
+                        {/* disabled={!isFormBtnActive} */}
                             Save
                         </Button>
                     </Col>
@@ -153,7 +154,7 @@ const AddEditFormMain = (props) => {
 
                     <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Authority Details</span>} key="1">
-                            <AuthorityDetail />
+                            <AuthorityDetail     setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList}/>
                         </Panel>
                     </Collapse>
                 </Col>

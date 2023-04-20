@@ -6,15 +6,15 @@ import { AuthorityForm } from './AuthorityForm';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, setDocumentTypesList, authoritytype, setfinalFormdata, tokken, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList }) => {
+const AuthorityCard = ({ onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
     // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
-            authoritytype,
-            tokken,
+            authorityTypeCode,
+            authorityEmployeeTokenNo,
             EffectiveTo,
             EffectiveFrom,
             // status: values.status,
@@ -75,18 +75,15 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoritytype, setfinal
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{documentTypesList[0]?.employeeName + ' | ' + documentTypesList[0]?.tokken}</Text>
+                                <Text strong>{documentTypesList[0]?.employeeName + ' | ' + documentTypesList[0]?.authorityEmployeeTokenNo}</Text>
                             </Col>
 
-                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text type="secondary"> EffectiveFrom- {documentTypesList[0]?.dateFrom}</Text>
-                            </Col>
-
-                            <Divider type="vertical" />
-
-                            <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text type="secondary">EffectiveTo- {documentTypesList[0]?.dateTo} </Text> 
-                            </Col>
+                            <div>
+                            
+                                <Text type="secondary"> EffectiveFrom- {documentTypesList[0]?.effectiveFrom}</Text>
+                                <Divider type="vertical" />
+                                <Text type="secondary">EffectiveTo- {documentTypesList[0]?.effectiveTo} </Text> 
+                            </div>
                         </Row>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -94,11 +91,11 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoritytype, setfinal
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authoritytype, tokken, EffectiveTo, EffectiveFrom)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authorityTypeCode, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom)} />
                                     </Col>
 
                                     <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                        <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authoritytype, EffectiveTo, tokken })} type="link" icon={<FiTrash />}></Button>
+                                        <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authorityTypeCode, EffectiveTo, authorityEmployeeTokenNo })} type="link" icon={<FiTrash />}></Button>
                                     </Col>
                                 </>
                             ) : (
@@ -123,7 +120,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authoritytype, setfinal
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AuthorityForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authoritytype={authoritytype} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} tokken={tokken} isEditing={isEditing} />
+                        <AuthorityForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authorityTypeCode={authorityTypeCode} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} authorityEmployeeTokenNo={authorityEmployeeTokenNo} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
