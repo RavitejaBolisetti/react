@@ -46,15 +46,11 @@ const mapDispatchToProps = (dispatch) => ({
 const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const navigate = useNavigate();
 
-    const onFinish = (errorInfo) => {
+    const onFinish = (values) => {
         // form.validateFields().then((values) => {});
-    };
-
-    const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
-
-    const onFinishFailed = (values) => {
-        if (values.errorFields.length === 0) {
-            const data = { ...values.values };
+        console.log('hello from finish');
+        // if (values.errorFields.length === 0) {
+            const data = { ...values };
             const onSuccess = (res) => {
                 form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
@@ -83,24 +79,31 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
             };
 
             saveData(requestData);
-        }
+        // }
     };
 
-    const validateToNextPassword = (rule, value, callback) => {
-        if (form.getFieldValue('confirmNewPassword')) {
-            form.validateFields(['confirmNewPassword'], { force: true });
-        } else {
-            return Promise.resolve();
-        }
+    const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
+
+    const onFinishFailed = (values) => {
+        console.log('hello');
+      
     };
 
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue('newPassword')) {
-            callback("New Password and Confirm Password doesn't match!");
-        } else {
-            return Promise.resolve();
-        }
-    };
+    // const validateToNextPassword = (rule, value) => {
+    //     if (form.getFieldValue('confirmNewPassword')) {
+    //         form.validateFields(['confirmNewPassword'], { force: true });
+    //     } else {
+    //         return Promise.resolve();
+    //     }
+    // };
+
+    // const compareToFirstPassword = (rule, value, callback) => {
+    //     if (value && value !== form.getFieldValue('newPassword')) {
+    //         callback("New Password and Confirm Password doesn't match!");
+    //     } else {
+    //         return Promise.resolve();
+    //     }
+    // };
 
     const passwordSuffix = (type) => (
         <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
@@ -118,17 +121,7 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item
-                        label="New Password"
-                        name="newPassword"
-                        rules={[
-                            validateRequiredInputField('New Password'),
-                            validateFieldsPassword('New Password'),
-                            {
-                                validator: validateToNextPassword,
-                            },
-                        ]}
-                    >
+                    <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('New Password'), validateFieldsPassword('New Password')]}>
                         <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
                     </Form.Item>
                 </Col>
@@ -138,11 +131,17 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
                     <Form.Item
                         label="Confirm Password"
                         name="confirmNewPassword"
+                        dependencies={['newPassword']}
                         rules={[
                             validateRequiredInputField('Confirm Password'),
-                            {
-                                validator: compareToFirstPassword,
-                            },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('newPassword') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                                },
+                            }),
                         ]}
                     >
                         <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Enter confirm password" suffix={passwordSuffix('confirmNewPassword')} />
