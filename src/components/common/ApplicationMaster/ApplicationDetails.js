@@ -1,130 +1,141 @@
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { connect } from 'react-redux';
+import React, { Fragment, useEffect } from 'react';
+import { Input, Form, Col, Row, Switch, Select, TreeSelect } from 'antd';
 
-import { Col, Form, Row } from 'antd';
-import { Input, Select, Switch } from 'antd';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
+
+import styles from './ApplicationMaster.module.css';
+import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 
-const mapStateToProps = (state) => {
-    const {
-        data: {
-            applicationDetailsData: applicationDetailsData,
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroup },
-        },
-    } = state;
-
-    let returnValue = {
-        criticalityGroup,
-        applicationDetailsData,
-    };
-    return returnValue;
-};
-
-const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedLocaationAccessiblity, criticalityGroup }) => {
-    // const [form] = Form.useForm();
+const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
     const disabledProps = { disabled: isReadOnly };
 
-    const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+    useEffect(() => {
+        form.setFieldsValue({ ...finalFormdata?.applicationDetails });
+        setSelectedTreeKey(finalFormdata?.applicationDetails.parentApplicationId);
+    }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
+
+    const handleChangeLocations = (value) => {
+        setIsRestrictedLocation(value === '2');
+    };
+    const handleDocReq = (val) => {
+        setIsDocumentToGenerate(val);
+    };
+    const fieldNames = { label: 'menuTitle', value: 'menuId', children: 'subMenu' };
+
+    const handleSelectTreeClick = (value) => {
+        setSelectedTreeKey(value);
     };
 
-    const onFinish = (values) => {
-        // console.log('Values', values);
+    const treeSelectFieldProps = {
+        treeFieldNames: fieldNames,
+        treeData: menuData,
+        treeDisabled: isReadOnly,
+        selectedTreeSelectKey: selectedTreeKey,
+        handleSelectTreeClick,
+        defaultValue: finalFormdata?.applicationDetails?.parentApplicationId,
+        placeholder: preparePlaceholderSelect('parent'),
     };
 
-    const handleChangeLocatons = (value) => {
-        setSelectedLocaationAccessiblity(value);
+    // duplicate APP ID and Application Name are not allowed
+    const duplicateValidator = (value, type) => {
+        return Promise.resolve();
+        // onUpdate check id
+        // if (finalFormdata?.documentType.findIndex((el) => el[type] === value) !== -1) {
+        //     return Promise.reject('Duplicate not allowed');
+        // } else {
+        // }
     };
 
     return (
-        <div>
-            {/* <Form layout="vertical" handledetails={handledetails}> */}
-            <Form scrollToFirstError={true} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Fragment>
+            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="applicationId" label="Application ID" rules={[validateRequiredInputField('Application ID')]}>
-                            <Input placeholder="Type code here" {...disabledProps} />
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID'), { validator: (rule, value) => duplicateValidator(value, 'applicationId') }]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Application ID')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="applicationName" label="Application Name" rules={[validateRequiredInputField('Application Name')]}>
-                            <Input placeholder="Type code here" {...disabledProps} />
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('Application Name'), validateRequiredInputField('Application Name')]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Application Name')} />
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="applicationTitle" label="Application Title" rules={[validateRequiredInputField('Application Title')]}>
-                            <Input placeholder="Type title here" {...disabledProps} />
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('Application Title'), validateRequiredInputField('Application Title')]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Application Title')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="applicationType" label="Application Type" rules={[validateRequiredSelectField('Application Type')]}>
-                            <Select {...disabledProps}>
-                                <Option value="Module">Module</Option>
-                                <Option value="Group">Group</Option>
-                                <Option value="Transaction">Transaction</Option>
-                                <Option value="Report">Report</Option>
-                                <Option value="Query">Query</Option>
-                                <Option value="Master">Master</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="parentApplicationId" label="Parent Application ID" rules={[validateRequiredSelectField('Parent Application ID')]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('Group Application ID/Name')}>
-                                <Option value="">Select</Option>
-                                <Option value="1">parent application id 1</Option>
-                                <Option value="2">parent application id 2</Option>
-                                <Option value="3">parent application id 2</Option>
-                                <Option value="4">apl id</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="criticalityGroupCode" label="Application Criticality Group" rules={[validateRequiredSelectField('Application Criticality Group')]}>
-                            <Select placeholder={preparePlaceholderSelect('Application Criticality Group')} {...disabledProps} showSearch allowClear>
-                                {criticalityGroup?.map((item) => (
-                                    <Option value={item?.critcltyGropCode}>{item?.critcltyGropDesc}</Option>
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item className={styles.selectMgTop6} label="Application Type" name="applicationType" rules={[validateRequiredInputField('Application Type'), validationFieldLetterAndNumber('Application Type')]}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Application Type')}>
+                                {configurableParamData?.map((type) => (
+                                    <Option value={type.value}>{type.value}</Option>
                                 ))}
-                                <Option value="1">Application Criticality Group </Option>
-                                <Option value="2">Application Criticality Group</Option>
-                                <Option value="3">Application Criticality Group</Option>
                             </Select>
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="accessibleLocations" label="Accessible Locations" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            <Select onChange={handleChangeLocatons} selected="" {...disabledProps} placeholder={preparePlaceholderSelect('Accessible Location')}>
-                                <Option value="">Select</Option>
-                                <Option value="all">Accessible to all</Option>
-                                <Option value="notAccessable">Not accessible to all</Option>
-                                <Option value="restrictedAccessible">Restricted Accessible</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="documentNumRequired" label="Document No to be generated">
-                            <Switch defaultChecked checkedChildren="Yes" unCheckedChildren="No" {...disabledProps} />
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {/* parent application id */}
+                        {/* <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}> */}
+                        {/* <Select  placeholder={preparePlaceholderSelect('Parent Application')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                <Option value="all"></Option>
+                            </Select> */}
+                        <Form.Item className={styles.selectMgTop6} name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
+                            <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
                 </Row>
+
                 <Row gutter={20}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item name="status" label="Status">
-                            <Switch defaultChecked checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item className={styles.selectMgTop6} name="accessableIndicator" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
+                            <Select onChange={handleChangeLocations} placeholder={preparePlaceholderSelect('Accessible Location')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                <Option value="0">Accessible to all</Option>
+                                <Option value="1">Not accessible to all</Option>
+                                <Option value="2">Restricted Accessible</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item className={styles.selectMgTop6} label="Application Criticality Group" name="criticalityGroupMapId" rules={[validateRequiredInputField('Application Criticality Group')]}>
+                            <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                {criticalityGroupData?.map((cg) => (
+                                    <Option value={cg?.id}>{cg?.criticalityGroupName}</Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document not to be generated" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item hidden name="id">
+                            <Input />
                         </Form.Item>
                     </Col>
                 </Row>
             </Form>
-        </div>
+        </Fragment>
     );
 };
 
-export const ApplicationDetails = connect(mapStateToProps, null)(ApplicationDetailsMain);
+export default ApplicationDetails;
