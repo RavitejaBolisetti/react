@@ -13,16 +13,15 @@ import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 // import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
-import { userManagementManufacturerDataActions } from 'store/actions/data/UserManagementManagement';
+import { userManagementManufacturerDataActions } from 'store/actions/data/UserManagementManufacturer';
 import DrawerUtil from './DrawerUtil';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_DEALER, ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
-import {AddEditForm} from '../UserManagementManufacturer/AddEditForm' 
-
-
+import { AddEditForm } from '../UserManagementManufacturer/AddEditForm';
+import { dealerData } from '../DealerHierarchy/test';
 
 const { Search } = Input;
 
@@ -45,7 +44,7 @@ const mapStateToProps = (state) => {
         isLoading,
         UserManagementManufacturerData,
         isLoadingOnSave,
-        isFormDataLoaded
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -65,36 +64,32 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const initialTableData = [{employeeName: "Prateek Kumar", contactMobileNumber: "+919896100046", contactEmail: "prks-feb@2023",}];
+const initialTableData = [{ employeeName: 'Prateek Kumar', contactMobileNumber: '+919896100046', contactEmail: 'prks-feb@2023' }];
 
-const savePayload ={
-     "employeeRoles":[
+const savePayload = {
+    employeeRoles: [
         {
-            "id": "0ed76cec-b617-4071-a029-84758cde8ad9",
-            "roleId": "eefac2ca-eabb-4504-8379-6054c6b3a547",
-            "status": true,
-            "employeeApplications": [
-        {
-        
-        "id": "1080faf2-9d21-4b41-9f8c-303dd71050f1",
-        "appId": "98848bf5-9e73-4dc2-8b17-26c90d2e0b82",
-        "status": true,
-        "employeeActions": [
-        {
-    
-        "id": "77d46074-accc-4f50-a82d-73050d22078c",
-        "actionName": "e8e4493a-07fb-4fdc-9908-038ff8818173",
-        "status": true
-        }
-        ]
-    }
-    
-]
-}
-],
-"manufacturerAdminHeirarchyAdminId": "facf625b-908b-4f8c-8796-af07c8c9b74c"
-}
-
+            id: '0ed76cec-b617-4071-a029-84758cde8ad9',
+            roleId: 'eefac2ca-eabb-4504-8379-6054c6b3a547',
+            status: true,
+            employeeApplications: [
+                {
+                    id: '1080faf2-9d21-4b41-9f8c-303dd71050f1',
+                    appId: '98848bf5-9e73-4dc2-8b17-26c90d2e0b82',
+                    status: true,
+                    employeeActions: [
+                        {
+                            id: '77d46074-accc-4f50-a82d-73050d22078c',
+                            actionName: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+                            status: true,
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+    manufacturerAdminHeirarchyAdminId: 'facf625b-908b-4f8c-8796-af07c8c9b74c',
+};
 
 export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
@@ -126,12 +121,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
     const [DealerSelected, setDealerSelected] = useState();
     const [disabled, setdisabled] = useState();
-    const [isFormVisible, setIsFormVisible] = useState(false)
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const [DealerData, setDealerData] = useState(UserManagementManufacturerData);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-
-
-
 
     useEffect(() => {
         form.resetFields();
@@ -143,7 +135,6 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         console.log('This is the Manufacturer Data :: ', DealerData);
     }, [DealerData]);
 
-
     useEffect(() => {
         console.log(DealerSearchvalue);
         if (DealerSearchvalue?.length > 0) {
@@ -154,13 +145,11 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         //     setDealerData();
         // }
     }, [DealerSearchvalue, DealerSelected]);
-    
+
     useEffect(() => {
-       
         setDealerData(UserManagementManufacturerData);
         console.log('UserManagementManufacturerData : ', UserManagementManufacturerData);
     }, [UserManagementManufacturerData]);
-
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
@@ -173,8 +162,6 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
-
-
 
     useEffect(() => {
         if (userId) {
@@ -194,6 +181,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
+    useEffect(() => {
+        console.log('This is the Dealer Data::::=>', dealerData);
+    }, [dealerData]);
 
     const tableDetails = [];
     tableDetails.push(
@@ -201,7 +191,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             title: 'Token No.',
             dataIndex: 'tokenNo',
             width: '12%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -209,7 +199,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             title: 'User Name',
             dataIndex: 'userName',
             width: '18%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -217,7 +207,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             title: 'Designation',
             dataIndex: 'designation',
             width: '22%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -225,7 +215,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             title: 'Mobile Number',
             dataIndex: 'mobileNumber',
             width: '16%',
-            sorter: false
+            sorter: false,
         })
     );
     tableDetails.push(
@@ -233,7 +223,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             title: 'Email ID',
             dataIndex: 'emailID',
             width: '32%',
-            sorter: false
+            sorter: false,
         })
     );
 
@@ -246,15 +236,15 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         //     emailID: "john.doe@mahindra.com",
         // },
 
-    {
-        // employeeCode: DealerData?.employeeCode,
-        // dealerName: DealerSelected,
-        userName: DealerData?.employeeName,
-        designation: DealerData?.designation,
-        mobileNumber: DealerData?.contactMobileNumber,
-        emailID: DealerData?.contactEmail,
-    },
-]
+        {
+            // employeeCode: DealerData?.employeeCode,
+            // dealerName: DealerSelected,
+            userName: DealerData?.employeeName,
+            designation: DealerData?.designation,
+            mobileNumber: DealerData?.contactMobileNumber,
+            emailID: DealerData?.contactEmail,
+        },
+    ];
 
     const tableDetailProps = {
         tableColumn: tableDetails,
@@ -267,49 +257,49 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             title: 'Sr.No.',
             dataIndex: 'srNo',
             width: '6%',
-            sorter: false
+            sorter: false,
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Token No.',
             dataIndex: 'tokenNo',
-            width: '14%'
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'User Name',
             dataIndex: 'userName',
-            width: '14%'
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Designation',
             dataIndex: 'designation',
-            width: '14%'
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'User Roles',
             dataIndex: 'userRoles',
-            width: '14%'
+            width: '14%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Hierarchy Mapping',
             dataIndex: 'hierarchyMapping',
-            width: '20%'
+            width: '20%',
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Products Mapping',
             dataIndex: 'productsMapping',
-            width: '20%'
+            width: '20%',
         })
     );
     tableColumn.push(
@@ -347,7 +337,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false)
+            onSaveShowLoading(false);
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
@@ -361,9 +351,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
             }
         };
 
-
         const onError = (message) => {
-            onSaveShowLoading(false)
+            onSaveShowLoading(false);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottom-right' });
         };
 
@@ -379,7 +368,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleAdd = () => {
@@ -672,9 +661,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
                                 imageStyle={{
                                     height: 60,
                                 }}
-                                description={
-                                    <span> No record found.</span>
-                                }
+                                description={<span> No record found.</span>}
                             >
                                 {/* {!qualificationData?.length ? (
                                     <Row>
@@ -694,7 +681,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
                     </ConfigProvider>
                 </Col>
             </Row>
-            <AddEditForm {...formProps}/>                                
+            <AddEditForm {...formProps} />
         </>
     );
 };
