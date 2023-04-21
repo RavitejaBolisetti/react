@@ -13,6 +13,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { bindActionCreators } from 'redux';
 
 import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
@@ -59,54 +61,30 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preLoginData]);
 
-    const onFinish = (errorInfo) => {
-        // form.validateFields().then((values) => {});
-    };
+    const onFinish = (values) => {
+        const onError = (message) => {
+            showGlobalNotification({ message: message[0] });
+        };
 
-    const onFinishFailed = (values) => {
-        if (values.errorFields.length === 0) {
-            const data = { ...values.values };
+        const onSuccess = (res) => {
+            if (res) {
+                form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
+                navigate(ROUTING_LOGIN);
+            }
+        };
 
-            const onError = (message) => {
-                showGlobalNotification({ message: message[0] });
-            };
+        const requestData = {
+            data: values,
+            setIsLoading: listShowLoading,
+            userId,
+            token: preLoginData?.idToken,
+            accessToken: preLoginData?.accessToken,
+            onSuccess,
+            onError,
+        };
 
-            const onSuccess = (res) => {
-                if (res) {
-                    form.resetFields();
-                    showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
-                    navigate(ROUTING_LOGIN);
-                }
-            };
-
-            const requestData = {
-                data: data,
-                setIsLoading: listShowLoading,
-                userId,
-                token: preLoginData?.idToken,
-                accessToken: preLoginData?.accessToken,
-                onSuccess,
-                onError,
-            };
-
-            saveData(requestData);
-        }
-    };
-
-    const validateToNextPassword = (_, value) => {
-        if (form.getFieldValue('confirmNewPassword')) {
-            form.validateFields(['confirmNewPassword'], { force: true });
-        } else {
-            return Promise.resolve();
-        }
-    };
-
-    const compareToFirstPassword = (_, value) => {
-        if (value && value !== form.getFieldValue('newPassword')) {
-            return Promise.reject(new Error("New Password and Confirm Password doesn't match"));
-        } else {
-            return Promise.resolve();
-        }
+        saveData(requestData);
     };
 
     const handleSkipNow = () => {
@@ -133,7 +111,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="update_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="update_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -145,32 +123,37 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
+                                                        <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('old password')]}>
+                                                            <Input type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('old password')} suffix={passwordSuffix('oldPassword')} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('new password'), validateFieldsPassword('New password')]}>
+                                                            <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} suffix={passwordSuffix('newPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item
-                                                            name="newPassword"
+                                                            label="Confirm Password"
+                                                            name="confirmNewPassword"
+                                                            dependencies={['newPassword']}
                                                             rules={[
-                                                                validateRequiredInputField('New Password'),
-                                                                validateFieldsPassword('New Password'),
-                                                                {
-                                                                    validator: validateToNextPassword,
-                                                                },
+                                                                validateRequiredInputField('confirm password'),
+                                                                ({ getFieldValue }) => ({
+                                                                    validator(_, value) {
+                                                                        if (!value || getFieldValue('newPassword') === value) {
+                                                                            return Promise.resolve();
+                                                                        }
+                                                                        return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
+                                                                    },
+                                                                }),
                                                             ]}
-                                                            className={`${styles.changer} ${styles.inputBox}`}
                                                         >
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
-                                                        </Form.Item>
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="confirmNewPassword" rules={[validateRequiredInputField('New password again'), { validator: compareToFirstPassword }]} className={styles.inputBox}>
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>

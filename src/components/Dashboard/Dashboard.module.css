@@ -80,7 +80,13 @@
   border-radius: 5px;
   border: 0px;
   border-bottom: 4px solid;
-  border-image: linear-gradient(to right, #EFA3A3, #CAC9EE);
+  border-image: rgba(255,62,91,1);
+  border-image: linear-gradient(135deg, #FF3E5B 0.19%, #FFE1D8 99.81%);
+  border-image: -moz-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);
+  border-image: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,62,91,1)), color-stop(100%, rgba(255,225,216,1)));
+  border-image: -webkit-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);
+  border-image: -o-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);
+  border-image: -ms-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%); 
   border-image-slice: 1;
   text-decoration: none;
   /* margin-bottom: 30px; */
