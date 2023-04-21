@@ -18,7 +18,7 @@ import { getMenuValue } from 'utils/menuKey';
 import { getHierarchyParents } from 'utils/getHierarchyParents';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
- 
+
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
@@ -109,8 +109,8 @@ const LeftSideBarMain = (props) => {
             const menuItem = childredData?.map((i) => {
                 if (i?.menuTitle?.toLowerCase().includes(filter?.toLowerCase())) {
                     return {
-                        key: i.menuId,
-                        value: i.menuTitle,
+                        label: i.menuTitle,
+                        value: i.menuId,
                     };
                 }
                 return undefined;
@@ -196,13 +196,13 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
                     <Row gutter={20}>
-                        <Col xs={22} sm={22} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className={styles.searchContainer}>
                                 {collapsed ? (
-                                    <BsSearch size={18} onClick={onMenuCollapsed}/>
+                                    <BsSearch size={18} onClick={onMenuCollapsed} />
                                 ) : (
                                     <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
-                                        <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
+                                        <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
                                     </AutoComplete>
                                 )}
                             </div>

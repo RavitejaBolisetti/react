@@ -8,7 +8,7 @@ export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
 export const AXIOS_ERROR_INTERNAL = 'AXIOS_ERROR_INTERNAL';
 
 const baseAPICall = (params) => {
-    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, postRequest, token, accessToken, userId } = params;
+    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, postRequest, token, accessToken, userId, deviceType } = params;
     let axiosConfig = {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
@@ -23,7 +23,7 @@ const baseAPICall = (params) => {
 
     if (token) {
         const AuthStr = 'Bearer '.concat(token);
-        const headers = { Authorization: AuthStr, userId, accessToken: accessToken, deviceType: 'W', deviceId: '' };
+        const headers = { Authorization: AuthStr, userId, accessToken: accessToken, deviceType: deviceType ||'W', deviceId: '' };
         axiosConfig = {
             ...axiosConfig,
             headers,
