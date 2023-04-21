@@ -126,7 +126,7 @@ const savePayload = {
         },
     ],
 };
-export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -369,7 +369,6 @@ export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserMa
     };
 
     const onSuccess = (res) => {
-        debugger
         listShowLoading(false);
         form.resetFields();
         setSelectedRecord({});
@@ -379,7 +378,9 @@ export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserMa
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         } else {
             setDrawer(true);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            setIsFormVisible(false);
+
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'topRight' });
         }
     };
 
@@ -391,7 +392,7 @@ export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserMa
     };
 
     const onFinish = (values, e) => {
-        console.log("The On Finish Function Called : ")
+        console.log('The On Finish Function Called : ');
         const recordId = selectedRecord?.id || '';
         const data = { ...values, id: recordId, status: values?.status ? 1 : 0 };
 
@@ -426,6 +427,7 @@ export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserMa
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
+        setFormData();
     };
 
     const handleUpdate = (record) => {
@@ -439,11 +441,7 @@ export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserMa
 
         setFormData(record);
 
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
+       
 
         setDrawer(true);
         setIsReadOnly(false);
@@ -545,6 +543,7 @@ export const UserManagementMain = ({ saveData, userId, saveDealerDetails, UserMa
         setForceFormReset,
         footerEdit,
         handleUpdate2,
+        titleOverride: formData?.employeecode ? 'Edit User Access ' : 'Manage User Access',
         DealerData,
         tableDetailData,
         style,
