@@ -12,7 +12,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction } = props;
+    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction , isViewModeVisible ,setisViewModeVisible} = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const handleFormValueChange = () => {
@@ -36,6 +36,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            {!isViewModeVisible ? (
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.controlId} label="Control ID" name="controlId" rules={[validateRequiredInputField('ControlID')]}>
@@ -142,6 +143,9 @@ const AddEditFormMain = (props) => {
                     )}
                 </Col>
             </Row>
+            ): (
+                <ViewConfigDetails {...viewProps}/>
+            )}
         </Form>
     );
 };

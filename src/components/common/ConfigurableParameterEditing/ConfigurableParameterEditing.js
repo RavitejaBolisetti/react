@@ -58,6 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -108,6 +109,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
+        setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
@@ -125,6 +127,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true);
+
         setShowSaveAndAddNewBtn(false);
         setShowSaveBtn(false);
         setFooterEdit(true);
@@ -238,6 +242,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
+        setIsViewModeVisible(false);
+
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
@@ -246,6 +252,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const handleAdd = () => {
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
+        setIsViewModeVisible(false);
+
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
@@ -305,6 +313,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const formProps = {
         formActionType,
         setFormActionType,
+        setIsViewModeVisible,
+        isViewModeVisible;
         isReadOnly,
         formData,
         footerEdit,
