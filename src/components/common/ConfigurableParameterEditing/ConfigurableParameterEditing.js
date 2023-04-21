@@ -156,7 +156,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                 fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-                fieldType = fieldType.concat(convertDate(record?.fromDate)).concat('  ').concat(convertDate(record?.toDate));
+                fieldType = fieldType.concat((record?.fromDate)).concat('  ').concat((record?.toDate));
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
                 fieldType = record?.booleanValue ? 'Yes' : 'No';
@@ -237,6 +237,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
+        setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
@@ -245,6 +246,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
+        setFormData([]);
+        setParameterType(defaultParametarType)
     };
 
     const onSearchHandle = (value) => {
@@ -305,7 +308,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => setIsFormVisible(false),
+        onCloseAction: () => (setIsFormVisible(false),setFormBtnActive(false)),
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,

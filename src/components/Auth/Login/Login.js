@@ -197,7 +197,7 @@ const Login = (props) => {
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="login_from" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form form={form} name="login_from" autoComplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -209,14 +209,14 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('User ID')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" />}
+                                                        <Form.Item name="userId" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="password" rules={[validateRequiredInputField('Password')]} className={styles.inputBox}>
+                                                        <Form.Item name="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
                                                             <Input type={showPassword ? 'text' : 'password'} placeholder="Password" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
