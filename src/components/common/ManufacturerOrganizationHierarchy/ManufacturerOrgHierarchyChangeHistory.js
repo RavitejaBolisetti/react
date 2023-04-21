@@ -101,9 +101,12 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'active',
-        
-            render: (text,record) =>{console.log("This is the text",text)} ,
+            dataIndex: 'status',
+
+            render: (text) => {
+                console.log('record', text, typeof text);
+                return  JSON.parse(text) ? 'Active' : 'InActive';
+            },
         })
     );
 
