@@ -83,7 +83,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     const [searchData, setSearchdata] = useState(RoleManagementData);
     const [refreshData, setRefreshData] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const [formActionType, setFormActionType] = useState('');
     const [footerEdit, setFooterEdit] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [formBtnDisable, setFormBtnDisable] = useState(false);
@@ -247,25 +246,23 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         saveData(requestData);
     };
 
-    const viewProps = {
-        isVisible: isViewModeVisible,
-        titleOverride: 'View '.concat(moduleTitle),
-        onCloseAction: () => setIsViewModeVisible(false),
-        viewData,
-        setClosePanels,
-        viewStyle,
-        viewTitle: 'Role Management',
-    };
-
-    const handleAdd = () => {
-        form.resetFields()
-        setFormData([]);
-        setFormActionType('add');
-        setShowSaveAndAddNewBtn(true);
-        console.log("formData",formData)
+    const handleEditData = (record) => {
+        setIsViewModeVisible(false);
+        setShowSaveAndAddNewBtn(false);
         setFooterEdit(false);
         setShowSaveBtn(true);
 
+        setIsReadOnly(false);
+    };
+ 
+
+    const handleAdd = () => {
+        form.resetFields();
+        setIsViewModeVisible(false);
+        setFormData([]);
+        setShowSaveAndAddNewBtn(true);
+        setFooterEdit(false);
+        setShowSaveBtn(true);
         setIsFormVisible(true);
         setIsReadOnly(false);
     };
@@ -288,11 +285,11 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
-        setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
         setFormData(record);
+        setIsViewModeVisible(false);
         console.log(record, 'formData', formData);
         setIsFormVisible(true);
     };
@@ -301,19 +298,12 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setShowSaveAndAddNewBtn(false);
         setShowSaveBtn(false);
         setFooterEdit(true);
+        setFormData(record);
         setViewData(record);
-        // setIsFormVisible(true);
+        setIsFormVisible(true);
         setIsViewModeVisible(true);
 
         // setIsReadOnly(true);
-    };
-
-    const handleEditData = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(false);
-        setShowSaveBtn(true);
-
-        setIsReadOnly(false);
     };
 
     // const handleUpdate2 = () => {
@@ -530,15 +520,18 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     //     );
     //   }
 
-    const viewRoleProps = {};
 
     const formProps = {
+        moduleTitle,
+        setIsViewModeVisible,
+        setClosePanels,
+        viewStyle,
+        isViewModeVisible,
         RowData,
         RoleData,
         MenuAlteredData,
         setSaveClick,
         form,
-
         setFormBtnDisable,
         formBtnDisable,
         isLoadingOnSave,
@@ -550,6 +543,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
             form.resetFields();
             setIsFormVisible(false);
             setFormData([]);
+            setFormBtnActive(false);
         },
         isReadOnly,
         formData,
@@ -560,7 +554,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         setSaveAndAddNewBtnClicked,
         onFinish,
         footerEdit,
-        formActionType,
     };
 
     return (
@@ -637,7 +630,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
             </Row>
 
             <AddEditForm {...formProps} />
-            <ViewRoleManagement {...viewProps} />
         </>
     );
 };
