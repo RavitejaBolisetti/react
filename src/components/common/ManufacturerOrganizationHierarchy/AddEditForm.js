@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import TreeSelectField from '../TreeSelectField';
 
-import { validateAlphanumericWithSpace, validateAlphanumericWithSpaceHyphenPeriod, validateAlphanumericWithSpace, validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import {  validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
@@ -51,11 +50,7 @@ const AddEditFormMain = (props) => {
     }
 
     useEffect(() => {
-        // if (formActionType === 'sibling') {
-        //     setSelectedTreeKey([treeCodeId]);
-        // }
         setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
     const treeSelectFieldProps = {
