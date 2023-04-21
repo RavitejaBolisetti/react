@@ -6,7 +6,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
@@ -90,22 +90,35 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {AccessMacid?.map((el) => {
-                            return (
-                                <Card className={style.userManagementDrawer}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <span>Mac Id</span>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <span>{el.macid}</span>
-                                        </Col>
-                                    </Row>
-                                </Card>
-                            );
-                        })}
+                        <Space
+                            direction="vertical"
+                            size="middle"
+                            style={{
+                                display: 'flex',
+                            }}
+                        >
+                            {AccessMacid?.map((el) => {
+                                return (
+                                    <Card className={style.userManagementDrawer}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <span>Mac Id</span>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                                <span>{el.macid}</span>
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Button>
+                                                    <AiOutlineClose />
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                );
+                            })}
+                        </Space>
                     </Col>
                 </Row>
 

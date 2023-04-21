@@ -160,7 +160,11 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
     const [disabled, setdisabled] = useState();
     const [DealerData, setDealerData] = useState(UserManagementDealerData);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-
+    const FetchError = (message) => {
+        setError(true);
+        setDealerData({});
+        console.log('I am fetching Error');
+    };
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
@@ -185,7 +189,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
     useEffect(() => {
         console.log(DealerSelected);
         if (DealerSearchvalue?.length > 0) {
-            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
+            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
         }
         if (DealerSelected?.length < 0 || DealerSelected === undefined) {
             setdisabled(true);
@@ -441,8 +445,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
 
         setFormData(record);
 
-       
-
         setDrawer(true);
         setIsReadOnly(false);
     };
@@ -628,7 +630,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
                                                 <IoBanOutline />
-                                                <span>User token number "B6G431" does not exist. Try again with valid token number.</span>
+                                                <span>User token number {DealerSearchvalue} does not exist. Try again with valid token number.</span>
                                             </Col>
                                         </Row>
                                     </div>

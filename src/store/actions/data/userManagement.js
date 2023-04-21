@@ -32,9 +32,12 @@ userManagementDataActions.listShowLoading = (isLoading) => ({
 });
 
 userManagementDataActions.fetchDealerDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, id } = params;
+    const { setIsLoading, data, id, FetchError } = params;
     setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
+    const onError = (errorMessage) => {
+        FetchError(errorMessage);
+        message.error(errorMessage);
+    };
 
     const onSuccess = (res) => {
         if (res?.data) {
