@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            UserManagementManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementManufacturerData = [] },
+            UserManagementManufacturer: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementManufacturerData = [] },
             // QualificationMaster: { isLoaded: isDataLoaded = false, qualificationData = [], isLoading, isLoadingOnSave, isFormDataLoaded, },
         },
         common: {
@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const UserManagementManufacturerMain = ({ saveData, userId, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -94,9 +94,13 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
     const [valid, setValid] = useState(false);
 
     const navigate = useNavigate();
+    const [DealerSearchvalue, setDealerSearchvalue] = useState();
+    const [DealerSelected, setDealerSelected] = useState();
+    const [disabled, setdisabled] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false)
     const [DealerData, setDealerData] = useState(UserManagementManufacturerData);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+
 
 
 
@@ -107,8 +111,30 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
     }, [forceFormReset]);
 
     useEffect(() => {
+        console.log('This is the Manufacturer Data :: ', DealerData);
+    }, [DealerData]);
+
+
+    useEffect(() => {
+        console.log(DealerSelected);
+        if (DealerSearchvalue?.length > 0) {
+            fetchManufacturerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
+        }
+        if (DealerSelected?.length < 0 || DealerSelected === undefined) {
+            setdisabled(true);
+            setDealerData();
+        }
+    }, [DealerSearchvalue, DealerSelected]);
+    
+    useEffect(() => {
+        //console.log('UserManagementManufacturerData : ', UserManagementManufacturerData);
+        setDealerData(UserManagementManufacturerData);
+    }, [UserManagementManufacturerData]);
+
+
+    useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -119,9 +145,10 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
     }, [qualificationData]);
 
 
+
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -282,7 +309,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
-            fetchList({ setIsLoading: listShowLoading, userId });
+            // fetchList({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setDrawer(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -596,4 +623,4 @@ export const UserManagementManufacturerMain = ({ saveData, userId, UserManagemen
     );
 };
 
-export const UserManagementManufacturer = connect(null, null)(UserManagementManufacturerMain);
+export const UserManagementManufacturer = connect(mapStateToProps, mapDispatchToProps)(UserManagementManufacturerMain);
