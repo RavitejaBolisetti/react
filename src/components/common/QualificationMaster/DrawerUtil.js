@@ -6,9 +6,9 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ codeIsReadOnly,handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const DrawerUtil = ({ codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
-    const codeDisabledProp = {disabled :codeIsReadOnly}
+    const codeDisabledProp = { disabled: codeIsReadOnly };
 
     let drawerTitle = '';
     if (formActionType === 'add') {
@@ -42,7 +42,7 @@ const DrawerUtil = ({ codeIsReadOnly,handleUpdate2, footerEdit, setsaveclick, is
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Button danger onClick={onClose} className={style.cancelBtn}>
-                                Cancel
+                                {!footerEdit ? 'Cancel' : 'Close'}
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
@@ -81,7 +81,7 @@ const DrawerUtil = ({ codeIsReadOnly,handleUpdate2, footerEdit, setsaveclick, is
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
-                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')}  /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')} /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
                         </Form.Item>
                     </Col>
                 </Row>

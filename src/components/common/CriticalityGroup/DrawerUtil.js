@@ -137,7 +137,7 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Button danger onClick={onClose} className={style.cancelBtn}>
-                                Cancel
+                               {!footerEdit ? 'Cancel':'Close'} 
                             </Button>
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>

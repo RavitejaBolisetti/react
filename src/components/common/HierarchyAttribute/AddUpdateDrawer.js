@@ -61,7 +61,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
                         <Button danger onClick={onClose}>
-                            Cancel
+                            {formActionType === 'view' ? 'Close' : 'Cancel'}
                         </Button>
                     </Col>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
@@ -76,7 +76,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
                                 </Button>
                                 {formActionType === 'add' ? (
                                     <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
-                                        Save and New
+                                        Save & Add New
                                     </Button>
                                 ) : (
                                     ''
