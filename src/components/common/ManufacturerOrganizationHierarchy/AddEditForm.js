@@ -104,21 +104,21 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgShrtName" label="Short Description"  initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description'), validateAlphanumericWithSpace('Short Description')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
+                        <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description'), validateAlphanumericWithSpace('Short Description')]}>
+                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgLongName" label="Long Description"  placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description'), validateAlphanumericWithSpaceHyphenPeriod('Long Description')]}>
-                            <TextArea rows={2} placeholder={preparePlaceholderText('Long Description')} showCount maxLength={100} {...disabledProps} />
+                        <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description'), validateAlphanumericWithSpaceHyphenPeriod('Long Description')]}>
+                            <TextArea rows={2} placeholder={preparePlaceholderText('Long Description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
-                            <Switch value={formData?.active === null || false  ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formData?.active === true || null||undefined ? true : false   } {...disabledProps} />
+                            <Switch value={formData?.active === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>

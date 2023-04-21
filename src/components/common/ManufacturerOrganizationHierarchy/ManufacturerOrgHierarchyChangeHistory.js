@@ -81,7 +81,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     tableColumn.push(
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parentManufactOrgHie',
+            dataIndex: 'parent',
         })
     );
     tableColumn.push(
@@ -101,9 +101,9 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     tableColumn.push(
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'status',
+            dataIndex: 'active',
         
-            render: (text) => (text === true ? 'Active' : 'In Active'),
+            render: (text,record) =>{console.log("This is the text",text)} ,
         })
     );
 
