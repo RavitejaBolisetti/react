@@ -163,6 +163,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
+        setSearchdata();
         console.log('I am fetching Error');
     };
     useEffect(() => {
@@ -190,16 +191,22 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
         console.log(DealerSelected);
         if (DealerSearchvalue?.length > 0) {
             fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
+           
         }
         if (DealerSelected?.length < 0 || DealerSelected === undefined) {
             setdisabled(true);
-            setDealerData();
+            setDealerData({});
         }
     }, [DealerSearchvalue, DealerSelected]);
     useEffect(() => {
         console.log('UserManagementDealerData : ', UserManagementDealerData);
         setDealerData(UserManagementDealerData);
-    }, [UserManagementDealerData]);
+        if(Object.entries(UserManagementDealerData)?.length>0)
+        {
+            setSearchdata([UserManagementDealerData])
+        }
+      
+     }, [UserManagementDealerData,error]);
 
     useEffect(() => {
         if (userId) {
@@ -208,17 +215,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
 
-    useEffect(() => {
-        if (isDataLoaded && qualificationData) {
-            if (filterString) {
-                const filterDataItem = qualificationData?.filter((item) => filterFunction(filterString)(item?.qualificationCode) || filterFunction(filterString)(item?.qualificationName));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-            } else {
-                setSearchdata(qualificationData?.map((el, i) => ({ ...el, srl: i + 1 })));
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, qualificationData]);
+    
 
     const tableDetails = [];
 
@@ -299,7 +296,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
     tableColumn.push(
         tblPrepareColumns({
             title: 'Sr.No.',
-            dataIndex: 'srNo',
+            dataIndex: 'srl',
             width: '6%',
             sorter: false,
         })
@@ -368,7 +365,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
     );
     const tableProps = {
         isLoading: isLoading,
-        tableData: initialTableData,
+        tableData: searchData,
         tableColumn: tableColumn,
     };
 

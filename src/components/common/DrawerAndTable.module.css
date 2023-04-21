@@ -286,6 +286,7 @@
 
 .userManagementDrawer :global .ant-card .ant-card-body {
     padding: 10px 20px;
+    background: red;
 }
 
 .userManagementDrawer :global .ant-card .ant-card-meta-detail>div:not(:last-child) {
