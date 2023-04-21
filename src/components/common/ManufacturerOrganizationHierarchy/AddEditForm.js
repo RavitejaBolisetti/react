@@ -76,7 +76,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} {...disabledProps} showSearch allowClear>
+                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly}  showSearch allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                 ))}
@@ -100,7 +100,7 @@ const AddEditFormMain = (props) => {
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
+                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                            <TextArea rows={2} placeholder={preparePlaceholderText('Long Description')} showCount maxLength={100} {...disabledProps} />
+                            <TextArea rows={2} placeholder={preparePlaceholderText('Long Description')} showCount maxLength={100} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
