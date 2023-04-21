@@ -19,13 +19,15 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], tokenNumber = [], changeHistoryVisible, historyData = [], authTypeDropdown = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], tokenNumber = [], changeHistoryVisible, historyData = [], authTypeDropdown = [], authorityVisible },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+
+  //  console.log(state,"nishant")
 
     apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
@@ -41,6 +43,7 @@ const mapStateToProps = (state) => {
         // moduleTitle,
         historyData,
         // viewTitle,
+        authorityVisible,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -59,12 +62,16 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
 
+            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction
+           // authTypeDataLoaded: manufacturerAdminHierarchyDataActions.authTypeDataLoaded,
+
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
         dispatch
     ),
 });
-const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, }) => {
+
+const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList,authorityVisible, cardBtmDisableAction }) => {
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -168,7 +175,9 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
             )}
 
             {!isEditing && (
-                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit">
+                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit"
+                    onClick={()=> cardBtmDisableAction(true)}
+                >
                     Add
                 </Button>
             )}

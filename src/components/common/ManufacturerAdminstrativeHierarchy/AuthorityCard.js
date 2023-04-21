@@ -3,10 +3,30 @@ import { Col, Card, Row, Button, Form, Divider } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 import { AuthorityForm } from './AuthorityForm';
+import { connect } from 'react-redux';
 
 const { Text } = Typography;
 
-const AuthorityCard = ({ onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList }) => {
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            ManufacturerAdminHierarchy: { authorityVisible },
+        },
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+   // console.log(state,"nishant")
+
+    let returnValue = {
+        authorityVisible,
+    };
+    return returnValue;
+};
+
+const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData,authData,authorityVisible }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -57,6 +77,8 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authorityTypeCode, setf
         setIsBtnDisabled(false);
     };
 
+    console.log(authData)
+
     return (
         <>
             <Card
@@ -75,31 +97,34 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authorityTypeCode, setf
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{documentTypesList[0]?.employeeName + ' | ' + documentTypesList[0]?.authorityEmployeeTokenNo}</Text>
+                                {/* <Text strong>{authorityVisible ? authData?.employeeName + ' | ' + authData?.authorityEmployeeTokenNo : documentTypesList[0]?.employeeName + ' | ' + documentTypesList[0]?.authorityEmployeeTokenNo}</Text> */}
+                                <Text strong>{authData?.employeeName + ' | ' + authData?.authorityEmployeeTokenNo}</Text>
                             </Col>
 
                             <div>
-                            
-                                <Text type="secondary"> EffectiveFrom- {documentTypesList[0]?.effectiveFrom}</Text>
+                                <Text type="secondary"> EffectiveFrom- {authorityVisible ? authData?.effectiveFrom : documentTypesList[0]?.effectiveFrom}</Text>
                                 <Divider type="vertical" />
-                                <Text type="secondary">EffectiveTo- {documentTypesList[0]?.effectiveTo} </Text> 
+                                <Text type="secondary">EffectiveTo- {authorityVisible ? authData?.effectiveTo : documentTypesList[0]?.effectiveTo} </Text>
                             </div>
+                            
                         </Row>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
                         <Row justify="end">
                             {!isEditing ? (
-                                <>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authorityTypeCode, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom)} />
-                                    </Col>
+                                authorityVisible ? null : (
+                                    <>
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                            <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authorityTypeCode, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom)} />
+                                        </Col>
 
-                                    <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                        <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authorityTypeCode, EffectiveTo, authorityEmployeeTokenNo })} type="link" icon={<FiTrash />}></Button>
-                                    </Col>
-                                </>
+                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                            <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authorityTypeCode, EffectiveTo, authorityEmployeeTokenNo })} type="link" icon={<FiTrash />}></Button>
+                                        </Col>
+                                    </>
+                                )
                             ) : (
-                                <>
+                               <>
                                     {' '}
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                         <Button type="link" onClick={onUpdate}>
@@ -128,4 +153,7 @@ const AuthorityCard = ({ onFinish, setDocumentTypesList, authorityTypeCode, setf
     );
 };
 
-export default AuthorityCard;
+// export default AuthorityCard
+
+export const AuthorityCard = connect(mapStateToProps)(AuthorityCardMain);
+

@@ -27,13 +27,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible, historyData = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible, historyData = [], authData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+
     const moduleTitle = 'Manufacturer Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -47,6 +48,7 @@ const mapStateToProps = (state) => {
         moduleTitle,
         historyData,
         viewTitle,
+        authData,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -61,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: manufacturerAdminHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryModelOpen,
             changeHistoryAuthorityModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen,
-            uploadModelOpen : manufacturerAdminHierarchyDataActions.uploadModelOpen,
+            uploadModelOpen: manufacturerAdminHierarchyDataActions.uploadModelOpen,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -69,12 +71,15 @@ const mapDispatchToProps = (dispatch) => ({
 
             onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
             showGlobalNotification,
+            authTypeDataLoaded: manufacturerAdminHierarchyDataActions.authTypeDataLoaded,
+            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction
+
         },
         dispatch
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen }) => {
+export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, authData, cardBtmDisableAction }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -94,7 +99,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [documentTypesList, setDocumentTypesList] = useState([]);
-
+    const [authId, setAuthId] = useState('87d4a0cf-55e9-43dc-a136-6757d3476ea1');
+    // const [viewMode, isViewMode] = useState(true);
 
     const fieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
 
@@ -108,9 +114,18 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     useEffect(() => {
         if (userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
+            authTypeDataLoaded({ setIsLoading: listShowLoading, id: authId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect(() => {
+        // console.log( authId, 'CheckAuthID' )
+        if (userId) {
+            authTypeDataLoaded({ setIsLoading: listShowLoading, id: authId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authId, userId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -151,13 +166,25 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
 
+            const ID = formData.data.id;
+
+            // // const authData = authTypeDataLoaded({setIsLoading: listShowLoading, tokenNumber: ID });
+
+            // // console.log( authData, "AUTHDATATAT" )
+
+            // console.log( ID, "ididididi" )
+
+            setAuthId(ID);
+
+            cardBtmDisableAction(true);
+
             if (formData) {
                 const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
                 formData && setFormData({ ...formData?.data, isChildAllowed });
 
                 const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
                 const manufactureAdminShortName = flatternData.find((i) => formData?.data?.manufactureAdminParntId === i.key)?.data?.manufactureAdminShortName;
-                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName });
+                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName, adminAuthority: authData });
             }
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
@@ -198,15 +225,13 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     };
 
     const onFinish = (values) => {
-
         //console.log(documentTypesList,'documentTypesList');
-       // console.log(values,'VALUESSSS');
-
+        // console.log(values,'VALUESSSS');
 
         const recordId = formData?.id || '';
         //const codeToBeSaved = selectedTreeSelectKey || '';
-        
-        const data = {  isModified : false, id: recordId, adminAuthority : documentTypesList ,...values, };
+
+        const data = { isModified: false, id: recordId, adminAuthority: documentTypesList, ...values };
         const onSuccess = (res) => {
             form.resetFields();
 
@@ -236,7 +261,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
             onSuccess,
         };
 
-        console.log( requestData, "DATATATA" )
+        console.log(requestData, 'DATATATA');
 
         saveData(requestData);
     };
@@ -282,6 +307,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         setFormBtnActive,
         documentTypesList,
         setDocumentTypesList,
+        // viewMode,
+        // isViewMode,
     };
 
     const viewProps = {
@@ -291,6 +318,8 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         handleButtonClick,
         styles,
         viewTitle,
+        // viewMode,
+        // isViewMode,
     };
     const leftCol = manufacturerAdminHierarchyData.length > 0 ? 16 : 24;
     const rightCol = manufacturerAdminHierarchyData.length > 0 ? 8 : 24;

@@ -11,14 +11,13 @@ import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import AuthorityForm from './AuthorityForm';
 
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { setDocumentTypesList,documentTypesList, onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
+    const { setDocumentTypesList, documentTypesList, onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData, viewMode, isViewMode } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
@@ -137,8 +136,8 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" form="myForm" danger >
-                        {/* disabled={!isFormBtnActive} */}
+                        <Button htmlType="submit" form="myForm" danger>
+                            {/* disabled={!isFormBtnActive} */}
                             Save
                         </Button>
                     </Col>
@@ -154,7 +153,7 @@ const AddEditFormMain = (props) => {
 
                     <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Authority Details</span>} key="1">
-                            <AuthorityDetail     setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList}/>
+                            <AuthorityDetail setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} />
                         </Panel>
                     </Collapse>
                 </Col>
