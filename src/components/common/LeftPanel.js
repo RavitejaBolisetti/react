@@ -47,7 +47,7 @@ const LeftPanel = (props) => {
 
     useEffect(() => {
         const newExpandedKeys = dataList
-            .map((item) => {
+            ?.map((item) => {
                 if (item?.title?.indexOf(searchValue) > -1) {
                     return getParentKey(item?.id, treeData, fieldNames);
                 }
@@ -113,3 +113,5 @@ const LeftPanel = (props) => {
     );
 };
 export default LeftPanel;
+
+
