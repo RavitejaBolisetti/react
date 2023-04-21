@@ -18,6 +18,9 @@
     height: calc(100vh - 274px);
 }
 
+.panelVisible {
+    height: calc(100vh - 274px);
+}
 .panelHidden {
     background: none;
     /* box-shadow: none; */
@@ -190,7 +193,6 @@
 
 
 @media (max-width: 576px) {
-
     .scrollTreeData {
         width: 100%;
         overflow: scroll;
@@ -198,7 +200,6 @@
         height: calc(100vh - 350px);
         /* border:1px solid red; */
     }
-
     .panelVisible {
         height: calc(100vh - 368px);
     }
