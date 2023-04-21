@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 export const ViewGeoDetailMain = ({ viewTitle,selectedTreeData,styles }) => {
     const viewProps = {
@@ -14,7 +15,7 @@ export const ViewGeoDetailMain = ({ viewTitle,selectedTreeData,styles }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
                 <Descriptions.Item label="Code">{selectedTreeData?.geoCode}</Descriptions.Item>
                 <Descriptions.Item label="Name">{selectedTreeData?.geoName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
