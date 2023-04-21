@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { Table } from 'antd';
 import userEvent from '@testing-library/user-event';
-import { QualificationMaster } from './QualificationMaster';
+import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
 
 jest.mock('react-redux', () => ({

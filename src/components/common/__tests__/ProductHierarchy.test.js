@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LeftPanel from '../LeftPanel';
 import { Tree } from 'antd';
-import { ProductHierarchy } from './ProductHierarchy';
+import { ProductHierarchy } from '../ProductHierarchy/ProductHierarchy';
 
 jest.mock('react-redux', () => ({
     connect: () => (ProductHierarchy) => ProductHierarchy,
@@ -217,7 +217,6 @@ describe('ProductHierarchy component', () => {
         //         value: 'ABCDEFG',
         //     },
         // });
-
         fireEvent.click(SaveBtn);
         expect(result).toBeTruthy();
         expect(onFinish).toHaveBeenCalled();
