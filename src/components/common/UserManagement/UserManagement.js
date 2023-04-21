@@ -187,6 +187,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [qualificationData]);
+
     useEffect(() => {
         console.log(DealerSelected);
         if (DealerSearchvalue?.length > 0) {
@@ -198,6 +199,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
             setDealerData({});
         }
     }, [DealerSearchvalue, DealerSelected]);
+    
     useEffect(() => {
         console.log('UserManagementDealerData : ', UserManagementDealerData);
         setDealerData(UserManagementDealerData);

@@ -85,7 +85,7 @@ userManagementManufacturerDataActions.saveDealerDetails = withAuthToken((params)
 });
 
 userManagementManufacturerDataActions.fetchManufacturerDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, applicationId } = params;
+    const { setIsLoading, data, id } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -100,7 +100,7 @@ userManagementManufacturerDataActions.fetchManufacturerDetails = withAuthToken((
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPathManufacturer + '?applicationId=' + applicationId,
+        url: baseURLPathManufacturer + '?tokenNumber=' + id,
         token,
         accessToken,
         userId,
