@@ -2,7 +2,7 @@ import { Tooltip } from 'antd';
 import React from 'react';
 const { Link } = require('react-router-dom');
 export const addToolTip =
-    (title, placement = '', color = '') =>
+    (title, placement = 'bottom', color = '') =>
     (inputComponent) =>
         inputComponent ? (
             <>
