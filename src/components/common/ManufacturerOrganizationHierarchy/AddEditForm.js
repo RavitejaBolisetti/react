@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import TreeSelectField from '../TreeSelectField';
 
 import { validateAlphanumericWithSpace, validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -103,7 +104,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description'),validateAlphanumericWithSpace('Short Description')]}>
+                        <Form.Item name="manufactureOrgShrtName" label="Short Description"  initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description'), validateAlphanumericWithSpace('Short Description')]}>
                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -111,14 +112,13 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description'),validateAlphanumericWithSpaceHyphenPeriod('Long Description')]}>
+                        <Form.Item name="manufactureOrgLongName" label="Long Description"  placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description'), validateAlphanumericWithSpaceHyphenPeriod('Long Description')]}>
                             <TextArea rows={2} placeholder={preparePlaceholderText('Long Description')} showCount maxLength={100} {...disabledProps} />
                         </Form.Item>
                     </Col>
-
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active === 'Y' ? 1 : 0} label="Status" name="active">
-                            <Switch value={formData?.active === 'Y' ? 1 : 0} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                        <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
+                            <Switch value={formData?.active === null || false  ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formData?.active === true || null||undefined ? true : false   } {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
