@@ -221,7 +221,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                     {currentStep === 1 ? (
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
-                                                <Form form={form} id="verifyUser" autoComplete="false" onFinish={onVerifyUser} onFinishFailed={onFinishFailed}>
+                                                <Form form={form} id="verifyUser" autoComplete="off" onFinish={onVerifyUser} onFinishFailed={onFinishFailed}>
                                                     <div className={styles.loginHeading}>
                                                         <h1>Forgot Your Password</h1>
                                                         <div className={styles.loginSubHeading}>Please enter your user credential</div>
@@ -229,8 +229,8 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Form.Item name="userId" rules={[validateRequiredInputField('User ID')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
-                                                                <Input prefix={<BiUser size={18} style={{ color: '#ffffff' }} />} type="text" placeholder="User ID (mile id.parent id)" />
+                                                            <Form.Item name="userId" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                                <Input prefix={<BiUser size={18} style={{ color: '#ffffff' }} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -261,11 +261,11 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         <h1>Forgot Your Password</h1>
                                                         <div className={styles.loginSubHeading}>User credential verified successfully.</div>
                                                     </div>
-                                                    <Form form={form} id="sendOTP" autoComplete="false" onFinish={onSentOTP} onFinishFailed={onFinishFailed}>
+                                                    <Form form={form} id="sendOTP" autoComplete="off" onFinish={onSentOTP} onFinishFailed={onFinishFailed}>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={18} />} type="text" placeholder="User ID (mile id.parent id)" style={{ color: '#838383' }} />
+                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" style={{ color: '#838383' }} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>
@@ -370,7 +370,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                     ) : currentStep === 4 ? (
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
-                                                <Form id="updatePassword" form={form} autoComplete="false" onFinish={onUpdatePassword} layout="vertical">
+                                                <Form id="updatePassword" form={form} autoComplete="off" onFinish={onUpdatePassword} layout="vertical">
                                                     <div className={styles.loginHeading}>
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>

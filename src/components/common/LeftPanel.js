@@ -47,7 +47,7 @@ const LeftPanel = (props) => {
 
     useEffect(() => {
         const newExpandedKeys = dataList
-            .map((item) => {
+            ?.map((item) => {
                 if (item?.title?.indexOf(searchValue) > -1) {
                     return getParentKey(item?.id, treeData, fieldNames);
                 }
@@ -64,7 +64,7 @@ const LeftPanel = (props) => {
 
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
-            data.map((item) => {
+            data?.map((item) => {
                 const strTitle = item[fieldNames?.title];
                 const index = strTitle?.indexOf(searchValue);
                 const beforeStr = strTitle?.substring(0, index);
@@ -113,3 +113,5 @@ const LeftPanel = (props) => {
     );
 };
 export default LeftPanel;
+
+
