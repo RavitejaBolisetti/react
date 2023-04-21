@@ -50,7 +50,7 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_DATA_LOADED:
             return { ...state, isHistoryLoaded: action.isLoaded, authHistoryData: action.data };
         case MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED:
-            return { ...state, isHistoryLoaded: action.isLoaded, employeeCode: action.data };
+            return { ...state, isHistoryLoaded: action.isLoaded, tokenNumber: action.data };
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };
         case MANUFACTURER_AUTHORITY_HIERARCHY_DROPDOWN:

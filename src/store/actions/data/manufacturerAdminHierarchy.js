@@ -215,7 +215,7 @@ manufacturerAdminHierarchyDataActions.saveData = withAuthToken((params) => ({ to
 });
 
 manufacturerAdminHierarchyDataActions.searchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, employeeCode } = params;
+    const { setIsLoading, errorAction, data, tokenNumber } = params;
     setIsLoading(true);
     const onError = () => message.error('Internal Error, Please try again');
 
@@ -230,7 +230,7 @@ manufacturerAdminHierarchyDataActions.searchList = withAuthToken((params) => ({ 
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH + (employeeCode ? `?employeeCode=${employeeCode}` : ''),
+        url: BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH + (tokenNumber ? `?tokenNumber=${tokenNumber}` : ''),
         token,
         accessToken,
         userId,

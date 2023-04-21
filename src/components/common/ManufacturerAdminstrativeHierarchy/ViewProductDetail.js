@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
+export const ViewProductDetailMain = ({ viewTitle, buttonData, documentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -21,6 +21,10 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
                 <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureAdminShortName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureAdminLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label="Authority Type">{documentTypesList?.employeeName}</Descriptions.Item>
+                <Descriptions.Item label="Token">{documentTypesList?.authorityEmployeeTokenNo}</Descriptions.Item>
+                <Descriptions.Item label="EffectiveFrom">{documentTypesList?.effectiveFrom}</Descriptions.Item>
+                <Descriptions.Item label="EffectiveTo">{documentTypesList?.effectiveTo}</Descriptions.Item>
             </Descriptions>
         </div>
     );

@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], employeeCode = [], changeHistoryVisible, historyData = [], authTypeDropdown = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], tokenNumber = [], changeHistoryVisible, historyData = [], authTypeDropdown = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
         isChangeHistoryVisible: changeHistoryVisible,
         manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
-        employeeCode,
+        tokenNumber,
         authTypeDropdown,
         // moduleTitle,
         historyData,
@@ -64,14 +64,14 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, employeeCode, authTypeDropdown, documentTypesList, }) => {
+const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, }) => {
 
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
     const onSearchHandle = (data) => {
-        searchList({ setIsLoading: listShowLoading, employeeCode: data });
+        searchList({ setIsLoading: listShowLoading, tokenNumber: data });
     };
 
     useEffect(() => {
@@ -114,7 +114,7 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
                             validateRequiredInputField('Token Required'),
                             validationFieldLetterAndNumber('Token Required'),
                             {
-                                required: employeeCode.length !== 0 ? false : true,
+                                required: tokenNumber.length !== 0 ? false : true,
                                 message: 'No Result found',
                             },
                         ]}
@@ -124,16 +124,16 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
                 </Col>
             </Row>
 
-            {employeeCode.length !== 0 && (
+            {tokenNumber.length !== 0 && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item>
-                            <Text type="primary">Employee Name : {employeeCode?.employeeName} </Text>
+                            <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
                         </Form.Item>
                     </Col>
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} >
-                        <Form.Item label="" name='EmployeeName' initialValue={employeeCode?.employeeName}>
+                        <Form.Item label="" name='EmployeeName' initialValue={tokenNumber?.employeeName}>
                             <Input />
                         </Form.Item>
                     </Col>
