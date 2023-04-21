@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewRoleManagementMain = ({formData, viewStyle }) => {
+const ViewRoleManagementMain = ({formData,viewStyle}) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -10,7 +10,7 @@ const ViewRoleManagementMain = ({formData, viewStyle }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${viewStyle.viewContainer} ${viewStyle.hierarchyRightContaner}`}>
+        <div className={`${viewStyle.viewContainer} ${viewStyle.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
@@ -23,7 +23,7 @@ const ViewRoleManagementMain = ({formData, viewStyle }) => {
     );
 };
 
-export const ViewRoleManagement = ViewRoleManagementMain();
+export const ViewRoleManagement = ViewRoleManagementMain;
 
 {
     /* </div> */

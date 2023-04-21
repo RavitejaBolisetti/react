@@ -633,6 +633,12 @@
     font-size: 14px !important;
 }
 
+.hierarchyRightContaners {
+    border-radius: 7px 7px 0px 0px;
+    border: none;
+   
+}
+
 .hierarchyRightContaner {
     border-radius: 7px 7px 0px 0px;
     -moz-border-radius: 7px 7px 0px 0px;

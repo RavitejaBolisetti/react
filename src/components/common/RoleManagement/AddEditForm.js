@@ -10,9 +10,12 @@ import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
+import viewStyle from 'components/common/Common.module.css';
+
 
 import { withDrawer } from 'components/withDrawer';
 import { ViewRoleManagement } from './ViewRoleManagement';
+// import { ViewRoleManagement } from './ViewRoleManagement';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -194,7 +197,7 @@ const FinalTreedata = [
 const AddEditFormMain = (props) => {
     const { moduleTitle, setClosePanels, setIsViewModeVisible, viewData, showSaveBtn, formData, isFormBtnActive, onCloseAction, setFormBtnActive, handleEditData, open, MenuAlteredData, setSaveClick, form, isReadOnly, setIsReadOnly, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, handleUpdate2, setFormBtnDisable, onFinish, openDrawer, setOpenDrawer, setsaveclick, footerEdit, setSaveAndAddNewBtnClicked, isViewModeVisible } = props;
     const disabledProps = { disabled: isReadOnly };
-
+    console.log("adasda",formData);
     // const [selectedActions, setSelectedActions] = useState({})
     const [ParentCheck, setParentCheck] = useState();
     const Mychildren = [
@@ -478,10 +481,13 @@ const AddEditFormMain = (props) => {
         );
     };
     console.log('This is the view data::',formData);
+    const [hell,setHell] = useState(formData);
+
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,
-        formData:formData,
+        formData,
+        viewStyle,
     };
 
     return (
@@ -547,7 +553,8 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </>
                 ) : (
-                    <ViewRoleManagement {...viewProps} formData={formData} />
+                    <ViewRoleManagement {...viewProps}  />
+                
                 )}
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>

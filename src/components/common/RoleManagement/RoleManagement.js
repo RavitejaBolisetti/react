@@ -17,7 +17,6 @@ import { menuDataActions } from 'store/actions/data/menu';
 
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { validateEmailField } from 'utils/validation';
-import viewStyle from 'components/common/Common.module.css';
 import styles from 'components/common/Common.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -525,7 +524,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         moduleTitle,
         setIsViewModeVisible,
         setClosePanels,
-        viewStyle,
         isViewModeVisible,
         RowData,
         RoleData,
