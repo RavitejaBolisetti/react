@@ -1,96 +1,7 @@
-/* :global CSS for Antd CSS Overrides */
+@import url('./global.css');
 
-.geoSection :global .ant-tree {
-    background: #f4f4f4;
-}
-
-.geoSection :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 6px;
-    box-shadow: none;
-}
-
-.geoSection :global .ant-form-vertical .ant-form-item-label {
-    margin: 0;
-    padding: 0px;
-}
-
-.geoSection :global .ant-select-single:not(.ant-select-customize-input),
-.geoSection :global .ant-select-selector {
-    width: 100%;
-    height: 36px !important;
-}
-
-.geoSection :global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
-}
-
-.geoSection :global .ant-modal .ant-modal-content {
-    position: relative;
-    background-color: #ffffff;
-    background-clip: padding-box;
-    border: 0;
-    border-radius: 8px;
-    box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    pointer-events: auto;
-    padding: 20px 24px;
-    max-height: 300vh;
-    /* overflow-y: scroll; */
-}
-
-.geoSection :global .ant-form-item {
-    margin-bottom: 4px;
-}
-
-.geoSection :global .ant-tree {
-    background: transparent;
-}
-
-.geoSection :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b;
-    border-color: #ff3e5b;
-    color: #ffffff !important;
-}
-
-.geoSection :global .ant-btn-default.ant-btn-dangerous {
-    margin-bottom: 8px;
-}
-
-.geoSection :global .ant-btn {
-    line-height: 1.5;
-    color: #ff3e5b;
-}
-
-.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
-    border-inline-end-width: 1px;
-    border-start-end-radius: 4px;
-    border-end-end-radius: 4px;
-    height: 36px;
-}
-
-.geoSection :global .ant-form-item .ant-form-item-label > label {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    max-width: 100%;
-    height: 32px;
-    color: #0b0b0c;
-    font-size: 14px;
-}
-
-:global .ant-tree .ant-tree-switcher-leaf-line:before {
-    border-inline-end: 1px dashed #d9d9d9;
-}
-
-:global .ant-tree .ant-tree-switcher-leaf-line:after {
-    border-bottom: 1px dashed #d9d9d9;
+.lineHeight33 {
+    line-height: 33px;
 }
 
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
@@ -98,34 +9,24 @@
     height: 1.25em;
 }
 
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher-leaf-line:before {
-    border-inline-end: 1px dashed #d9d9d9;
-}
-
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher-leaf-line:after {
-    border-bottom: 1px dashed #d9d9d9;
-}
-
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
-    color: #ff3e5b;
-}
-
-/* :global .ant-input-search .ant-input:hover, 
-:global .ant-input-search .ant-input:focus{border-color: #e31837; border-right: none;}
-:global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{border-inline-end-width: 0px;}
-:global .ant-btn-default:not(:disabled):hover{border-color: #e31837;} */
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
-.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+.contentHeaderBackground :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-inline-end-width: 0px;
     border-color: transparent;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):active,
-.contentHeaderBackground .headerSelectField :global .ant-btn-default:not(:disabled):hover,
-.contentHeaderBackground .headerSelectField :global .ant-input-search .ant-input:focus {
+.contentHeaderBackground :global .ant-btn-default:not(:disabled):hover,
+.contentHeaderBackground :global .ant-input-search .ant-input:focus {
     border-color: transparent;
+}
+
+.contentHeaderBackground :global .anticon-close-circle {
+    color: #0B0B0C;
+    width: 12px;
+    height: 12px;
+    vertical-align: -0.35em;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
@@ -140,9 +41,11 @@
     -webkit-border-radius: 5px;
     border: 1px solid #d9d9d9;
 }
-.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper .ant-input-clear-icon{
-    color:#0B0B0C; 
+
+.contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper .ant-input-clear-icon {
+    color: #0B0B0C;
 }
+
 .contentHeaderBackground :global .ant-input-group:hover {
     border: 1px solid #0b0b0c;
 }
@@ -155,46 +58,6 @@
 .contentHeaderBackground :global .ant-input-affix-wrapper:focus,
 .contentHeaderBackground :global .ant-input-affix-wrapper-focused {
     box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
-}
-
-:global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
-    border-color: #0b0b0c;
-    box-shadow: none;
-}
-
-:global .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
-    background-color: transparent !important;
-    color: #ff3e5b;
-    font-size: 14px;
-}
-
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
-    background-color: transparent !important;
-}
-
-:global .ant-select-dropdown,
-:global .ant-input:hover,
-:global .ant-input:focus,
-:global .ant-input-focused {
-    border: 1px solid #0b0b0c;
-    box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
-}
-
-:global .ant-select .ant-select-arrow {
-    color: #ff3e5b;
-}
-
-:global .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-    background-color: transparent;
-    color: #ff3e5b;
-}
-
-:global .ant-select-focused:where(.css-dev-only-do-not-override-18twuw5).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
-    border-color: #0b0b0c;
-    box-shadow: none;
 }
 
 .tableProduct {
@@ -227,48 +90,23 @@
     color: #b5b5b6;
 }
 
-:global .ant-btn-default {
-    background-color: transparent;
+
+.lastheaderbutton {
+    margin-right: 0px;
 }
 
-:global .ant-btn-default.ant-btn-dangerous:disabled {
-    border: 1px solid #bfbfbf;
+.activeText {
+    color: #00a310;
 }
 
-:global .ant-btn-default.ant-btn-dangerous:not(:disabled) {
-    background-color: transparent;
-    color: #ff3e5b !important;
+.inactiveText {
+    color: #8e8585;
 }
-
-:global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b;
-    color: #ffffff !important;
-}
-
-:global .ant-btn-default.ant-btn-dangerous {
-    margin-bottom: 8px;
-}
-
-:global .ant-btn-default.ant-btn-dangerous svg {
-    /* margin-right: 6px; */
-    padding-top: 2px;
-}
-
-/* Custom CSS */
 
 .container {
     padding: 20px;
 }
 
-.geoSection .headerContainer {
-    clear: both;
-    border-bottom: dashed 1px #a5b5c2;
-    margin-bottom: 30px;
-}
-
-.geoSection .padRight10 {
-    padding-right: 10px;
-}
 
 .mb10 {
     margin-bottom: 20px;
@@ -395,10 +233,6 @@
     padding: 0;
 }
 
-:global .ant-btn-primary.ant-btn-dangerous:disabled,
-:global .ant-btn-primary:disabled {
-    border-color: #b5b5b6;
-}
 
 .buttonContainer .buttonIcon {
     margin-right: 6px;
@@ -476,108 +310,6 @@
     margin: 0px 0px 0px 46px;
 }
 
-
-
-:global .ant-tree {
-    background: #f4f4f4;
-}
-
-:global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 6px;
-    box-shadow: none;
-}
-
-:global .ant-empty .ant-empty-footer {
-    margin-top: 12px;
-}
-
-:global .ant-form-vertical .ant-form-item-label {
-    margin: 0;
-    padding: 0px;
-}
-
-/* :global .ant-select-single:not(.ant-select-customize-input),
-:global .ant-select-selector {
-    width: 100%;
-    height: 36px !important;
-} */
-
-:global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
-}
-
-:global .ant-modal .ant-modal-content {
-    padding: 20px;
-    max-height: 300vh;
-    /* overflow-y: scroll; */
-}
-
-:global .ant-modal .ant-modal-title {
-    border-bottom: 1px solid #dedede;
-    padding-bottom: 16px;
-    line-height: 24px;
-    font-weight: 700;
-    font-size: 16px;
-    color: #342c2c;
-}
-
-/* :global .ant-modal .ant-modal-body {
-    padding-top: 16px;
-} */
-
-:global .ant-modal .ant-modal-close:hover {
-    color: #ff3e5b;
-    background-color: transparent !important;
-}
-
-:global .ant-modal .ant-modal-close {
-    top: 22px;
-}
-
-:global .ant-tree {
-    background: transparent;
-}
-
-/* Drawer Override Start */
-:global .ant-drawer .ant-drawer-header-title {
-    display: inline-block;
-}
-
-:global .ant-drawer-close {
-    float: right !important;
-    padding: 4px 0 0 0 !important;
-    margin-inline-end: 0 !important;
-}
-
-:global .ant-drawer-body .ant-form-item {
-    margin-bottom: 12px;
-}
-
-:global .ant-drawer-body .ant-input-number {
-    width: 48.5%;
-}
-
-:global .ant-drawer-body .ant-input-number:last-child {
-    margin-left: 0%;
-}
-
-:global .ant-drawer-body .ant-input-number {
-    width: 100%;
-}
-
-:global .ant-drawer-body .ant-picker-range {
-    width: 100%;
-}
-
-/* :global .ant-drawer .ant-drawer-footer {
-    padding: 8px 24px;
-} */
-
 .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
@@ -587,118 +319,12 @@
     margin-left: 10px !important;
 }
 
-/* Drawer Override End */
-
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }
 
-/* Common.module.css from /pages/common */
-
-/* .geoSection :global .ant-btn-default {
-  /* border-color: #ff3e5b; 
-} */
-
-.geoSection :global .ant-tree {
-    background: #f4f4f4;
-}
-
-.geoSection :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 2px;
-    box-shadow: none;
-}
-
-.geoSection :global .ant-form-vertical .ant-form-item-label {
-    margin: 0;
-    padding: 0px;
-}
-
-.geoSection :global .ant-select-single:not(.ant-select-customize-input),
-.geoSection :global .ant-select-selector {
-    width: 100%;
-    height: 36px !important;
-}
-
-.geoSection :global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
-}
-
-.geoSection :global .ant-modal .ant-modal-content {
-    position: relative;
-    background-color: #ffffff;
-    background-clip: padding-box;
-    border: 0;
-    border-radius: 8px;
-    box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    pointer-events: auto;
-    padding: 20px 24px;
-    max-height: 300vh;
-    /* overflow-y: scroll; */
-}
-
-.geoSection :global .ant-form-item {
-    margin-bottom: 4px;
-}
-
-.geoSection :global .ant-tree {
-    background: transparent;
-}
-
-.geoSection :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-    background-color: #ff3e5b;
-    border-color: #ff3e5b;
-    color: #ffffff !important;
-}
-
-.geoSection :global .ant-btn-default.ant-btn-dangerous {
-    margin-bottom: 8px;
-    margin-left: 10px;
-    margin-top: 8px;
-    float: right;
-}
-
-.geoSection :global .ant-btn {
-    line-height: 1.5;
-    color: #ff3e5b;
-}
-
-.geoSection :global .ant-input-group.ant-input-group-compact > *:last-child,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-select:last-child > .ant-select-selector,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker:last-child .ant-input,
-.geoSection :global .ant-input-group.ant-input-group-compact > .ant-cascader-picker-focused:last-child .ant-input {
-    border-inline-end-width: 1px;
-    border-start-end-radius: 4px;
-    border-end-end-radius: 4px;
-    height: 36px;
-}
-
-.geoSection :global .ant-form-item .ant-form-item-label > label {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    max-width: 100%;
-    height: 32px;
-    color: #0b0b0c;
-    font-size: 14px;
-}
-
 .container {
     padding: 20px;
-}
-
-.geoSection .headerContainer {
-    clear: both;
-    border-bottom: dashed 1px #a5b5c2;
-    margin-bottom: 30px;
-}
-
-.geoSection .padRight10 {
-    padding-right: 10px;
 }
 
 .mb10 {
@@ -712,7 +338,6 @@
 
 .treemenu {
     margin: 24px 0px;
-    /* padding-left: 25px; */
     padding-left: 0px;
     padding-bottom: 0px;
     line-height: 2em;
@@ -763,7 +388,6 @@
     position: absolute;
     z-index: 10;
     top: 136px;
-    /* left:266px; */
     padding: 5px;
     color: #ff3e5b;
     line-height: 2px;
@@ -791,13 +415,10 @@
     padding: 0.2em;
     width: 99%;
     background: #f4f4f4;
-    /* margin-left: 8px; */
     box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
     border-radius: 10px;
-    /* border-top-left-radius: 0; */
     margin-bottom: 20px;
     height: 66vh;
-    /* overflow-y: scroll; */
     white-space: nowrap;
     margin-top: 5px;
 }
@@ -820,7 +441,6 @@
     display: flex;
     flex-flow: row wrap;
     min-width: 0;
-    /* margin-right: 0px !important; */
 }
 
 .formContainer {
@@ -848,33 +468,6 @@
     color: #ff3e5b;
     padding-right: 8px;
 }
-
-:global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 6px;
-    box-shadow: none;
-}
-
-:global .ant-form-vertical .ant-form-item-label {
-    margin: 0;
-    padding: 0px;
-}
-
-:global .ant-tree .ant-tree-list-holder-inner {
-    align-items: flex-start;
-    margin-bottom: 50px;
-}
-
-:global .ant-modal .ant-modal-content {
-    padding: 20px;
-    max-height: 300vh;
-    /* overflow-y: scroll; */
-}
-
-
 
 .formFooter {
     width: 100%;
@@ -908,42 +501,11 @@
     padding-top: 2px;
 }
 
-/* Switch Design Changes */
-:global .ant-switch .ant-switch-inner {
-    display: block;
-    overflow: hidden;
-    border-radius: 100px;
-    height: 100%;
-    position: absolute;
-    margin-left: 35px;
-    margin-top: -12px;
-}
-
-:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
-    margin-inline-start: 0px;
-    color: #70c922;
-    /* margin-inline-end: 9px; */
-}
-
-:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
-    margin-top: -22px;
-    margin-inline-start: -10px;
-    color: #8e8585;
-    margin-inline-end: 9px;
-}
-
-:global .ant-switch.ant-switch-checked {
-    background: #70c922;
-}
-
-:global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background: #70c922;
-}
-
 .addGroup {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0px !important;
+    margin-top: 0px;
 }
 
 .contentHeaderBackground {
@@ -1000,13 +562,13 @@
     background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -1019,9 +581,6 @@
     padding-right: 0px !important;
 }
 
-.activeText {
-    color: #00a310;
-}
 
 .content {
     border: 1px solid #e8e8e8;
@@ -1067,12 +626,10 @@
 }
 
 .hierarchyRightContaner::-webkit-scrollbar-track {
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
     background-color: #f4f4f4;
 }
 
 .hierarchyRightContaner::-webkit-scrollbar {
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
     background-color: #f4f4f4;
     width: 5px;
 }
@@ -1177,20 +734,19 @@
     border: 1px solid #0b0b0c;
 }
 
-:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    margin-inline-end: 8px;
-    margin-top: -2px;
+
+.cardItemBtn {
+    display: flex;
+    align-items: end;
+    text-align: right;
+    float: right;
 }
 
-:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    margin-inline-end: 8px;
-    margin-top: -2px;
+::-ms-reveal {
+    display: none;
 }
 
 @media (max-width: 768px) {
-    /* For mobile phones: */
-    /* .contentHeaderBackground{text-align: center;} */
-
     .headerSearchField {
         vertical-align: middle;
         margin: 0 0px;
@@ -1260,9 +816,13 @@
         padding-right: 0px !important;
     }
 
-    /* .padRight0 {
-    padding-right: 0px !important;
-  } */
+    .addGroup {
+        margin-top: 10px;
+    }
+
+    .lastheaderbutton {
+        margin-right: 15px;
+    }
 
     .gap {
         gap: 8px;
@@ -1270,11 +830,6 @@
 
     .treeCollapsibleButton {
         top: 174px;
-    }
-
-    :global .ant-input-group {
-        /* width: auto; */
-        margin-top: 20px;
     }
 
     .TreeView_searchField__jn\+nY {
@@ -1286,7 +841,6 @@
 }
 
 @media (max-width: 576px) {
-    /* For mobile phones: */
 
     .leftpanel {
         height: auto;
@@ -1333,10 +887,6 @@
     .treeCollapsibleButton {
         top: 184px;
     }
-
-    /* :global .ant-input-group {
-        width: auto;
-    } */
 
     .TreeView_searchField__jn\+nY {
         padding: 0 8px;

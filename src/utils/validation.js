@@ -41,7 +41,7 @@ export const validateFieldsPassword = (fieldName) => ({
 
 
 export const validateAlphanumericWithSpaceHyphenPeriod = (fieldName) => ({
-    message: fieldName + ' can contain only hyphen, period and space',
+    message: fieldName + ' can contain only alphanumeric characters',
     pattern:  /^[\w\-.\s]+$/,
 });
 

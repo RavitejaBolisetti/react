@@ -33,19 +33,6 @@ export const MenuConstant = {
         parentMenuId: 'FAV',
     },
 
-    [getMenyKey('COMN-06.01')]: {
-        key: 'COMN-06.01',
-        link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
-        icon: undefined,
-        parentMenuId: 'FAV',
-    },
-
-    [getMenyKey('COMN-05.01')]: {
-        key: 'COMN-05.01',
-        link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
-        icon: undefined,
-        parentMenuId: 'FAV',
-    },
 
     [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
@@ -67,12 +54,6 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('COMN-05.04')]: {
-        key: 'COMN-05.04',
-        link: routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY,
-        icon: undefined,
-        parentMenuId: 'ADMN',
-    },
 
     [getMenyKey('COMN-07.01')]: {
         key: 'COMN-07.01',
@@ -88,34 +69,7 @@ export const MenuConstant = {
         parentMenuId: 'COMN-03',
     },
 
-    [getMenyKey('COMN-02.01')]: {
-        key: 'COMN-02.01',
-        link: routing.ROUTING_COMMON_ROLE_MANAGEMENT,
-        icon: undefined,
-        parentMenuId: 'COMN-02',
-    },
-
-    [getMenyKey('COMN-03.02')]: {
-        key: 'COMN-03.02',
-        link: routing.ROUTING_COMMON_APPLICATION_MASTER,
-        icon: undefined,
-        parentMenuId: 'COMN-03',
-    },
-    
-    [getMenyKey('COMN-03.07')]: {
-        key: 'COMN-03.07',
-        link: routing.ROUTING_COMMON_CONFIG_PARAM_EDIT,
-        icon: undefined,
-        parentMenuId: 'COMN-03',
-    },
-
-    [getMenyKey('COMN-05.03')]: {
-        key: 'COMN-05.03',
-        link: routing.ROUTING_COMMON_BRANCH_DEALER_MAPPING,
-        icon: undefined,
-        parentMenuId: 'COMN-05',
-    },
-
+   
     [getMenyKey('DBP')]: {
         link: undefined,
         icon: <FaAddressBook fontSize={22} />,
@@ -152,13 +106,6 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('MILE-02.19')]: {
-        key: 'MILE-02.19',
-        link: routing.ROUTING_COMMON_DEALER_MANPOWER,
-        icon: undefined,
-        parentMenuId: 'MILE-02',
-    },
-
     [getMenyKey('MILE-02.04')]: {
         key: 'MILE-02.04',
         link: routing.ROUTING_COMMON_QUALIFICATION_MASTER,
@@ -183,6 +130,7 @@ export const MenuConstant = {
         icon: <TbReport fontSize={22} />,
         parentMenuId: 'WEB',
     },
+    
     [getMenyKey('RPT-BI')]: {
         key: 'RPT-BI',
         link: routing.ROUTING_REPORT_BI_REPORT,
