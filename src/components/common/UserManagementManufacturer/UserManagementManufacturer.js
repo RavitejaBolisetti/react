@@ -65,7 +65,36 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const initialTableData = [];
+const initialTableData = [{employeeName: "Prateek Kumar", contactMobileNumber: "+919896100046", contactEmail: "prks-feb@2023",}];
+
+const savePayload ={
+     "employeeRoles":[
+        {
+            "id": "0ed76cec-b617-4071-a029-84758cde8ad9",
+            "roleId": "eefac2ca-eabb-4504-8379-6054c6b3a547",
+            "status": true,
+            "employeeApplications": [
+        {
+        
+        "id": "1080faf2-9d21-4b41-9f8c-303dd71050f1",
+        "appId": "98848bf5-9e73-4dc2-8b17-26c90d2e0b82",
+        "status": true,
+        "employeeActions": [
+        {
+    
+        "id": "77d46074-accc-4f50-a82d-73050d22078c",
+        "actionName": "e8e4493a-07fb-4fdc-9908-038ff8818173",
+        "status": true
+        }
+        ]
+    }
+    
+]
+}
+],
+"manufacturerAdminHeirarchyAdminId": "facf625b-908b-4f8c-8796-af07c8c9b74c"
+}
+
 
 export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
@@ -116,19 +145,20 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
 
 
     useEffect(() => {
-        console.log(DealerSelected);
+        console.log(DealerSearchvalue);
         if (DealerSearchvalue?.length > 0) {
             fetchManufacturerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue });
         }
-        if (DealerSelected?.length < 0 || DealerSelected === undefined) {
-            setdisabled(true);
-            setDealerData();
-        }
+        // if (DealerSelected?.length < 0 || DealerSelected === undefined) {
+        //    // setdisabled(true);
+        //     setDealerData();
+        // }
     }, [DealerSearchvalue, DealerSelected]);
     
     useEffect(() => {
-        //console.log('UserManagementManufacturerData : ', UserManagementManufacturerData);
+       
         setDealerData(UserManagementManufacturerData);
+        console.log('UserManagementManufacturerData : ', UserManagementManufacturerData);
     }, [UserManagementManufacturerData]);
 
 
@@ -207,13 +237,24 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         })
     );
 
-    const tableDetailData = [{
-        tokenNo: "B6G433",
-        userName: "John Doe",
-        designation: "Chief Sales Officer",
-        mobileNumber: "9664321226",
-        emailID: "john.doe@mahindra.com",
-    },]
+    const tableDetailData = [
+        // {
+        //     tokenNo: "B6G433",
+        //     userName: "John Doe",
+        //     designation: "Chief Sales Officer",
+        //     mobileNumber: "9664321226",
+        //     emailID: "john.doe@mahindra.com",
+        // },
+
+    {
+        // employeeCode: DealerData?.employeeCode,
+        // dealerName: DealerSelected,
+        userName: DealerData?.employeeName,
+        designation: DealerData?.designation,
+        mobileNumber: DealerData?.contactMobileNumber,
+        emailID: DealerData?.contactEmail,
+    },
+]
 
     const tableDetailProps = {
         tableColumn: tableDetails,
@@ -296,6 +337,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
     );
     const tableProps = {
         isLoading: isLoading,
+        tableData: initialTableData,
         tableData: searchData,
         tableColumn: tableColumn,
     };
@@ -326,7 +368,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         };
 
         const requestData = {
-            data: [data],
+            data: [savePayload],
             setIsLoading: onSaveShowLoading,
             userId,
             onError,
@@ -425,11 +467,12 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
     };
 
     const onSearchHandle = (value) => {
-        if (value === 'B6G431') {
+        console.log('This is the searched Value : ', value);
+        setDealerSearchvalue(value);
+        if (value === 'B6G433') {
             setError(true);
             setValid(false);
-        }
-        else if (value === 'B6G433') {
+        } else if (value === 'B6G433') {
             setError(false);
             setValid(true);
         }
@@ -524,7 +567,40 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
                                 ''
                             )}
                         </Row>
-                        {error && (
+                        {Object.keys(DealerData).length > 0 ? (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={style.successDisplay}>
+                                        <Row gutter={20}>
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
+                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
+                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                    Manage Access
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                        ) : error ? (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className={style.errorDisplay}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
+                                                <IoBanOutline />
+                                                <span>User token number "B6G431" does not exist. Try again with valid token number.</span>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                        ) : (
+                            ''
+                        )}
+                        {/* {error && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={style.errorDisplay}>
@@ -555,7 +631,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
                                     </div>
                                 </Col>
                             </Row>
-                        )}
+                        )} */}
                     </div>
                 </Col>
             </Row>
