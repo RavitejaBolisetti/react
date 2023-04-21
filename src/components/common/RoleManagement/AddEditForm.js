@@ -232,8 +232,7 @@ const AddEditFormMain = (props) => {
     const [CheckedKeys, setCheckedKeys] = useState();
     const [ExpandedKeys, setExpandedKeys] = useState({});
     const [ourCheckedKeys, setourCheckedKeys] = useState();
- 
-    
+
     useEffect(() => {
         if (!treeData.length) {
             Subpanel(mocktreeData);
@@ -478,56 +477,11 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {/* <Drawer
-                title={drawerTitle}
-                width="540"
-                placement="right"
-                onClose={onClose}
-                open={open}
-                maskClosable={false}
-                className={footerEdit ? styles.viewMode : styles.drawerCriticalityGrp}
-                footer={
-                    <>
-                        <Row gutter={20}>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Button danger onClick={onClose} className={styles.cancelBtn}>
-                                    {formActionType === 'view' ? 'Close' : 'Cancel'}
-                                </Button>
-                            </Col>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={styles.saveBtn}>
-                                {saveAndSaveNew ? (
-                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                        Save & Add New
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                                {saveBtn ? (
-                                    <Button loading={isLoadingOnSave} onClick={() => setSaveClick(true)} disabled={!formBtnDisable} form="myForm" key="submit" htmlType="submit" type="primary">
-                                        Save
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                                {footerEdit ? (
-                                    <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                        Edit
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                            </Col>
-                        </Row>
-                    </>
-                }
-            >
-                <Space direction="vertical" size="small" style={{ display: 'flex' }}> */}
             <Form form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                            {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('id')}  disabled={isReadOnly} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
-
+                            {!footerEdit ? <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={isReadOnly} /> : <p className={styles.viewModeText}>{form.getFieldValue('roleId')}</p>}
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -539,28 +493,26 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
-                          
-                             {!footerEdit ? (
-                                        <TextArea
-                                            placeholder={preparePlaceholderText('description')}
-                                            autoSize={{
-                                                minRows: 2,
-                                                maxRows: 5,
-                                            }}
-                                            maxLength={250}
-                                            disabled={isReadOnly}
-
-                                        />
-                                    ) : (
-                                        <p className={styles.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
-                                    )}
+                            {!footerEdit ? (
+                                <TextArea
+                                    placeholder={preparePlaceholderText('description')}
+                                    autoSize={{
+                                        minRows: 2,
+                                        maxRows: 5,
+                                    }}
+                                    maxLength={250}
+                                    disabled={isReadOnly}
+                                />
+                            ) : (
+                                <p className={styles.viewModeText}>{form.getFieldValue('roleDesceription')}</p>
+                            )}
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={formData?.activeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" >
-                        {!footerEdit ?   <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator} onChange={(checked) => (checked ? 1 : 0)} disabled={isReadOnly} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>}
+                        <Form.Item initialValue={formData?.activeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status">
+                            {!footerEdit ? <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator}  disabled={isReadOnly} /> : <>{form.getFieldValue('activeIndicator') === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>}
                         </Form.Item>
                     </Col>
                 </Row>
@@ -589,35 +541,33 @@ const AddEditFormMain = (props) => {
                 </Row>
 
                 <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Save
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                        <Button danger onClick={onCloseAction}>
+                            {footerEdit ? 'Close' : 'Cancel'}
                         </Button>
-                    )}
+                    </Col>
 
-                    {!formData?.id && (
-                        <Button htmlType="submit"  disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
-                            Save & Add New
-                        </Button>
-                    )}
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                        {!footerEdit && showSaveBtn && (
+                            <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                                Save
+                            </Button>
+                        )}
 
-                    {footerEdit && (
-                        <Button onClick={handleEditData} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
-                </Col>
-            </Row>
+                        {!formData?.id && (
+                            <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
+                                Save & Add New
+                            </Button>
+                        )}
+
+                        {footerEdit && (
+                            <Button onClick={handleEditData} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                Edit
+                            </Button>
+                        )}
+                    </Col>
+                </Row>
             </Form>
-            {/* </Space>
-            </Drawer> */}
         </>
     );
 };

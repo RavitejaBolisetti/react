@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
+import { withDrawer } from 'components/withDrawer';
 
 const ViewRoleManagementMain = ({ viewData, viewStyle }) => {
     const viewProps = {
@@ -15,13 +16,13 @@ const ViewRoleManagementMain = ({ viewData, viewStyle }) => {
                 
                 <Descriptions.Item label="Role ID">{viewData.roleId}</Descriptions.Item>
                 <Descriptions.Item label="Role Name">{viewData.roleName}</Descriptions.Item>
-                <Descriptions.Item label="Role Description">{viewData.roleTitle}</Descriptions.Item>
+                <Descriptions.Item label="Role Description">{viewData.roleDesceription}</Descriptions.Item>
                 <Descriptions.Item label="Status">{viewData?.active === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
               
             </Descriptions>
     );
 };
 
-export const ViewRoleManagement = ViewRoleManagementMain;
+export const ViewRoleManagement = withDrawer(ViewRoleManagementMain, {});
 
 {/* </div> */}
