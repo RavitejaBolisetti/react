@@ -248,9 +248,9 @@
     padding: 20px;
 }
 
-:global .ant-drawer .ant-drawer-body .ant-input {
+/* :global .ant-drawer .ant-drawer-body .ant-input {
     margin-top: 6px;
-}
+} */
 
 .drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;

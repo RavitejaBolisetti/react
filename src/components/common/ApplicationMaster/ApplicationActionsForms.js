@@ -1,10 +1,9 @@
-import React, { Fragment, useState } from 'react';
-import { Input, Form, Col, Card, Row, Switch, Button, Select, Divider, Space } from 'antd';
+import React, { Fragment } from 'react';
+import { Input, Form, Col, Row, Switch, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import CardApplicationAction from './CardApplicationAction';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { duplicateValidator, validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, id, isEditing, isBtnDisabled, actions,disableStatus }) => {
     const onFinishFailed = (err) => {
@@ -24,7 +23,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                     <Form form={form} onFieldsChange={handleForm} id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('Application Action')]}>
+                                <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('Application Action'), { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction)   }]}>  
                                     <Select
                                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                         labelInValue

@@ -12,17 +12,10 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
 
-    console.log('finalformData', finalFormdata  )
 
     const onActionFormFinish = (val) => {
-        // console.log("val>>",val);
         const { value, label } = val?.applicationName;
        const { actionId,...selectedActionData} =  actions?.find(el => el?.id === value );
-       console.log('selectedActionData',selectedActionData)
-        // if(finalFormdata?.applicationAction.findIndex(el => el?.actionId === value ) !== -1){
-        //     console.log('error duplicate found');
-        //     return;
-        // };
         setFinalFormdata({ ...finalFormdata, applicationAction: [...finalFormdata.applicationAction, { actionName: label, status: val?.status, id: val?.id, actionMasterId: value, actionId: actionId }] });
         actionForm.resetFields();
     };

@@ -60,6 +60,18 @@
     box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
 }
 
+.autoCompleteContent :global .ant-input-search .ant-input:hover, 
+.autoCompleteContent :global .ant-input-search .ant-input:focus {
+    border-color: transparent;
+}
+.autoCompleteContent :global .ant-btn-default{
+    border-color: transparent;
+    background-color: #fff;
+}
+.autoCompleteContent :global .ant-btn-default:not(:disabled):hover{
+    border-color: transparent;
+}
+
 .tableProduct {
     margin: 20px 0;
     padding: 0;
@@ -322,6 +334,12 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }
+.contentHeaderBackground :global .ant-btn-default {
+    border-color: transparent !important;
+}
+
+
+
 
 .container {
     padding: 20px;

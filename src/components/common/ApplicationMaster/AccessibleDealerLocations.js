@@ -1,14 +1,9 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { connect } from 'react-redux';
-import { addToolTip } from 'utils/customMenuLink';
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import { FaTrash, FaPlus } from 'react-icons/fa';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Col, Row, Input, AutoComplete } from 'antd';
-
-import style from './ApplicationMaster.module.css';
+import { Col, Row, Input, AutoComplete } from 'antd';
+import styles from '../../common/Common.module.css'
 import { Fragment } from 'react';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
@@ -49,13 +44,9 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     const fieldNames = { value: 'dealerLocationName', key: 'id' };
 
     const handleSelect = (value) => {
-        console.log("value",value);
-
         let locationDetails = dealerLocations?.find(location => location.dealerLocationName === value);
         
-
-        if (finalFormdata?.accessibleLocation.findIndex(el => el?.id === value?.key) !== -1) {
-            console.log('same locatioln selected')
+        if (finalFormdata?.accessibleLocation?.findIndex(el => el?.dealerMasterLocationId === locationDetails?.id) !== -1) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This location is already added.' });
             return;
         }
@@ -81,7 +72,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     return (
         <Fragment>
             <Row gap={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col className={styles.autoCompleteContent} xs={24} sm={24} md={24} lg={24} xl={24}>
                     <AutoComplete
                         // value={value}
                         // labelInValue
