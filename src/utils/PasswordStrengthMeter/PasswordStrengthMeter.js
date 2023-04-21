@@ -9,9 +9,9 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     const [strength, setStrength] = useState(0);
 
     const regexArr = [
-        /\d+/, // at least one digit
-        /[a-z]+/, // at least one lowercase letter
         /[A-Z]+/, // at least one uppercase letter
+        /[a-z]+/, // at least one lowercase letter
+        /\d+/, // at least one digit
         /[^\w\d\s]/, // at least one symbol
         /.{8,}/, // at least 8 characters
     ];
@@ -34,11 +34,11 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
             return '';
         }
 
-        if (strength <= 33) {
+        if (strength <= 40) {
             return 'Week';
         }
 
-        if (strength <= 66) {
+        if (strength <= 80) {
             return 'Medium';
         }
 
@@ -52,9 +52,9 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     const getProgressColor = (strength) => {
         if (strength <= 0) {
             setPasswordLevel({ levelOne: false, levelTwo: false, levelThree: false });
-        } else if (strength <= 33) {
+        } else if (strength <= 40) {
             setPasswordLevel({ levelOne: true, levelTwo: false, levelThree: false });
-        } else if (strength <= 66) {
+        } else if (strength <= 80) {
             setPasswordLevel({ levelOne: true, levelTwo: true, levelThree: false });
         } else if (strength <= 100) {
             setPasswordLevel({ levelOne: true, levelTwo: true, levelThree: true });
@@ -67,10 +67,10 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
         <div>
             <ul style={{ padding: '0px', color: '#000', paddingLeft: '20px' }}>
                 <li>Have at least 1 uppercase</li>
-                <li>Have at least 1 number and symbol</li>
-                <li>Have at least 1 letter</li>
+                <li>Have at least 1 lowercase</li>
+                <li>Have at least 1 number</li>
+                <li>Have at least 1 symbol</li>
                 <li>Be at least 8 characters</li>
-                <li>Not be a common password</li>
             </ul>
         </div>
     );
