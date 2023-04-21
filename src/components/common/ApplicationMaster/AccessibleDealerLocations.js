@@ -52,6 +52,8 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
         }
 
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails.id, dealerLocationName: value, id: '' }] }));
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Location added successfully'});
+        
     };
 
     const onSearchLocation = debounce((text) => {
@@ -66,6 +68,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
             prevData?.accessibleLocation?.splice(index, 1);
             return prevData;
         });
+        showGlobalNotification({ notificationType: 'success', title: 'Delete', message: 'Location deleted sucessfully.' });
         forceUpdate();
     };
 

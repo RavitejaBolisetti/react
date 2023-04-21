@@ -2,9 +2,7 @@ import React, { Fragment, useState, useReducer } from 'react';
 import { Form } from 'antd';
 
 import CardApplicationAction from './CardApplicationAction';
-
 import ApplicationActionsForm from './ApplicationActionsForms';
-import { useEffect } from 'react';
 
 
 const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions }) => {
@@ -22,7 +20,7 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
 
     return (
         <Fragment>
-            <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions}/>
+            <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} />
 
             {finalFormdata?.applicationAction?.length > 0 &&
                 finalFormdata?.applicationAction?.map((action) => {

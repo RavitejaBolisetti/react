@@ -3,21 +3,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
-
-import DrawerUtil from './DrawerUtil';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import { showGlobalNotification } from 'store/actions/notification';
+
+import LeftPanel from '../LeftPanel';
+import ViewApplicationDetail from './ViewApplicationDetails';
+import { DrawerUtil } from './DrawerUtil';
+import { HierarchyFormButton } from '../Button';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
-import { HierarchyFormButton } from '../Button';
-import ViewApplicationDetail from './ViewApplicationDetails';
-import { showGlobalNotification } from 'store/actions/notification';
 
 const { Search } = Input;
 
@@ -26,13 +27,10 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData,
-                 applicationDetailsData, dealerLocations, 
-                 applicationData, configurableParamData, actions,
-                  isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading: isMenuListLoading, isActionsLoaded 
-                },
+            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
         },
     } = state;
+    const moduleTitle = 'Application Details';
 
     let returnValue = {
         criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
@@ -41,9 +39,10 @@ const mapStateToProps = (state) => {
         userId,
         configurableParamData,
         actions,
+        moduleTitle,
         isApplicationDeatilsLoading,
         isApplicatinoOnSaveLoading,
-        isMenuListLoading,
+        isLoading,
         // menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
         menuData: applicationData,
         isActionsLoaded,
@@ -56,9 +55,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
+            applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
+
 
             fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
-            // fetchDealerLocations: applicationMasterDataActions.fetchDealerLocations,
             fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
             fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
 
@@ -83,28 +83,27 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded, applicationListShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applicationListShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
-    const [formData, setFormData] = useState([]);
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [drawer, setDrawer] = useState(false);
+    const [isVisible, setisVisible] = useState(false);
+
     const [isActive, setIsActive] = useState(false);
     const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [selectedTreeData, setSelectedTreeData] = useState([]);
-    const [isChildAllowed, setIsChildAllowed] = useState(true);
+    const [selectedTreeData, setSelectedTreeData] = useState([]); // selected tree and on adding set tree key
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
+    const [isFieldDisable, setIsFieldDisable] = useState(false);
 
     const moduleTitle = 'Application Master';
-    const viewTitle = 'Application Details';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     useEffect(() => {
@@ -128,7 +127,7 @@ export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded,
     }, [menuData]);
 
     const handleAdd = (type) => {
-        setDrawer(true);
+        setisVisible(true);
         setFormActionType(type);
         setIsReadOnly(false);
     };
@@ -155,7 +154,7 @@ export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded,
             setFormActionType('view');
             // setFormBtnActive(false);
             // setIsFormVisible(false);
-            setDrawer(false);
+            setisVisible(false);
         }
         // onSaveShowLoading(false);
     };
@@ -180,53 +179,61 @@ export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded,
                 accessableIndicator: Number(values?.accessableIndicator),
             },
         ];
-        console.log('onSubmit===>', reqData);
-        // return
         saveApplicationDetails({ setIsLoading: onSaveShowLoading, data: reqData, onSuccess, onError });
     };
 
     const applicationCall = (key) => {
-        fetchApplication({ setIsLoading: applicationMasterDataShowLoading, id: key });
+        fetchApplication({ setIsLoading: applicationDetailListShowLoading, id: key });
     };
 
     const handleTreeViewClick = (keys) => {
         form.resetFields();
 
-        setFormData([]);
         setSelectedTreeKey([]);
         if (keys && keys.length > 0) {
             setFormActionType('view');
             applicationCall(keys[0]);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
-        } else {
-            setIsChildAllowed(true);
+        // } else {
+        //     setIsChildAllowed(true);
         }
     };
 
     //view card footer button
     const handleButtonClick = (type) => {
         if (!applicationDetailsData?.length) return;
-
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
             setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
             setIsReadOnly(false);
+            setIsFieldDisable(true);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
             setFinalFormdata({ ...initialFormData, applicationDetails: { parentApplicationId: rest?.applicationId } });
             setIsReadOnly(true);
+            setIsFieldDisable(false);
         } else if (FROM_ACTION_TYPE.SIBLING === type && applicationDetailsData?.length) {
             setFinalFormdata({ ...initialFormData, applicationDetails: { parentApplicationId: rest?.parentApplicationId } });
             setIsReadOnly(true);
+            setIsFieldDisable(false);
         } else {
             setFinalFormdata({ ...initialFormData });
             setIsReadOnly(true);
+            setIsFieldDisable(false);
         }
         forceUpdate();
 
-        setDrawer(true);
+        setisVisible(true);
         setFormActionType(type);
+    };
+
+    const onClose = () => {
+        applicationForm.resetFields();
+        setisVisible(false);
+        // setFormBtnDisable(false);
+        forceUpdate();
+        // setIsBtnDisabled(false);
     };
 
     const myProps = {
@@ -234,24 +241,44 @@ export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded,
         handleTreeViewVisiblity,
         selectedTreeKey,
         selectedTreeSelectKey,
+        setSelectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
         treeData: menuData,
         setSearchValue,
         searchValue,
     };
+    const formProp = {
+        isReadOnly,
+        isVisible,
+        isFieldDisable,
+        applicationForm,
+        finalFormdata,
+        setFinalFormdata,
+        setisVisible,
+        onFinish,
+        forceUpdate,
+        criticalityGroupData,
+        configurableParamData,
+        actions,
+        menuData,
+        titleOverride: (finalFormdata?.applicationDetails?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        setSelectedTreeKey,
+        selectedTreeKey,
+        isApplicatinoOnSaveLoading,
+        onCloseAction: onClose,
+    };
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
     const rightCol = menuData?.length > 0 ? 8 : 24;
-
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-
+console.log("isApplicationDeatilsLoading",isApplicationDeatilsLoading)
     return (
         <>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    <Spin spinning={isMenuListLoading}>
+                    <Spin spinning={isLoading}>
                         <div className={styles.contentHeaderBackground}>
                             <Row gutter={20} className={styles.searchAndLabelAlign}>
                                 <Col xs={18} sm={18} md={18} lg={18} xl={18}>
@@ -348,7 +375,7 @@ export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded,
                 </Col>
             </Row>
 
-            <DrawerUtil isReadOnly={isReadOnly} open={drawer} applicationForm={applicationForm} finalFormdata={finalFormdata} setFinalFormdata={setFinalFormdata} setDrawer={setDrawer} onFinish={onFinish} forceUpdate={forceUpdate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} actions={actions} menuData={menuData} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} isApplicatinoOnSaveLoading={isApplicatinoOnSaveLoading} />
+            <DrawerUtil {...formProp} />
         </>
     );
 };

@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import { Input, Form, Col, Row, Switch, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { duplicateValidator, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, id, isEditing, isBtnDisabled, actions,disableStatus }) => {
+const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, id, isEditing, isBtnDisabled, actions,disableStatus, setIsBtnDisabled }) => {
     const onFinishFailed = (err) => {
         console.error(err);
     };

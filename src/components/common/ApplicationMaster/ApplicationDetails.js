@@ -9,8 +9,7 @@ import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
-    const disabledProps = { disabled: isReadOnly };
+const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
 
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
@@ -39,29 +38,19 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, onFin
         placeholder: preparePlaceholderSelect('parent'),
     };
 
-    // duplicate APP ID and Application Name are not allowed
-    const duplicateValidator = (value, type) => {
-        return Promise.resolve();
-        // onUpdate check id
-        // if (finalFormdata?.documentType.findIndex((el) => el[type] === value) !== -1) {
-        //     return Promise.reject('Duplicate not allowed');
-        // } else {
-        // }
-    };
-
     return (
         <Fragment>
             <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID'), { validator: (rule, value) => duplicateValidator(value, 'applicationId') }]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Application ID')} />
+                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID')]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('Application ID')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('Application Name'), validateRequiredInputField('Application Name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Application Name')} />
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('Application Name')} />
                         </Form.Item>
                     </Col>
 
@@ -118,7 +107,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, onFin
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document not to be generated" valuePropName="checked">
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document number to be generated" valuePropName="checked">
                             <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq} />
                         </Form.Item>
                     </Col>
