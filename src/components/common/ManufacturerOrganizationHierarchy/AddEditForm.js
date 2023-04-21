@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import TreeSelectField from '../TreeSelectField';
 
-import {  validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
@@ -13,7 +13,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isChecked, handleAttributeChange, unFilteredAttributeData, setSelectedTreeSelectKey, setIsChecked, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, manufacturerOrgHierarchyData } = props;
+    const { onCloseAction, handleAttributeChange, unFilteredAttributeData, setSelectedTreeSelectKey, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, setIsModalOpen, setFieldValue, handleSelectTreeClick, manufacturerOrgHierarchyData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -51,6 +51,7 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setSelectedTreeSelectKey(treeCodeId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
     const treeSelectFieldProps = {
@@ -76,7 +77,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly}  showSearch allowClear>
+                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
                                 ))}
