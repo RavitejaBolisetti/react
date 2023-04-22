@@ -21,6 +21,13 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
+    const accessibleLocationIdndicator ={
+        0: 'Accessible to all',
+        1: 'Not accessible to all',
+        2: 'Restricted Accessible'
+    };
+    
+
     return (
         <Card title="Application Details">
             <div className={styles.cardBody}>
@@ -39,33 +46,34 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.applicationName }</Text>
+                            <Text>{rest?.applicationName || 'NA' }</Text>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary"> Application Title</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.applicationTitle }</Text>
+                            <Text>{rest?.applicationTitle || "NA" }</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Application Type</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text> {rest.applicationType}</Text>
+                            <Text> {rest.applicationType || 'NA'}</Text>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Parent Application ID</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.parentApplicationId }</Text>
+                            <Text>{rest?.parentApplicationId || 'NA'}</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Accessible Location</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.accessibleLocation || 'Restricted Access'}</Text>
+                            <Text>{accessibleLocationIdndicator[rest?.accessableIndicator] || 'NA'}</Text>
+
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Status </Text>
@@ -78,7 +86,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                             <Text type="secondary">Application Criticality Group</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.criticalityGroupCode }</Text>
+                            <Text>{rest?.criticalityGroupCode || 'NA' }</Text>
                         </Col>
                     </Row>
                     <Row gutter={20}>

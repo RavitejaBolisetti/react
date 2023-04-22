@@ -23,7 +23,6 @@ import { EN } from 'language/en';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
-    console.log('state', state);
     const {
         auth: { userId },
         data: {
@@ -33,7 +32,8 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
+        // criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
+        criticalityGroupData,
         applicationDetailsData,
         dealerLocations,
         userId,
@@ -56,7 +56,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
-
 
             fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
             fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
@@ -149,7 +148,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
 
-            res?.data && setSelectedTreeData(res?.data);
             setSelectedTreeKey([res?.data?.id]);
             setFormActionType('view');
             // setFormBtnActive(false);
@@ -165,6 +163,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
 
     const onFinish = (values) => {
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
+
+        if (applicationDetails?.accessableIndicator === 0 && accessibleLocation?.length < 1) {
+            return showGlobalNotification({ message: 'Please add accessible location' });
+        }
+        if (applicationDetails?.documentNumRequired === true && documentType?.length < 1) {
+            return showGlobalNotification({ message: 'Please add document types' });
+        }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
         const reqData = [
@@ -195,8 +200,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
             applicationCall(keys[0]);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
-        // } else {
-        //     setIsChildAllowed(true);
+            // } else {
+            //     setIsChildAllowed(true);
         }
     };
 
@@ -273,7 +278,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
     const rightCol = menuData?.length > 0 ? 8 : 24;
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-console.log("isApplicationDeatilsLoading",isApplicationDeatilsLoading)
     return (
         <>
             <Row gutter={20} span={24}>

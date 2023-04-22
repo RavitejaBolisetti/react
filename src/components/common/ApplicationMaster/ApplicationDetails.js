@@ -95,7 +95,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item className={styles.selectMgTop6} label="Application Criticality Group" name="criticalityGroupMapId" rules={[validateRequiredInputField('Application Criticality Group')]}>
+                        <Form.Item className={styles.selectMgTop6} label="Application Criticality Group" name="criticalityGroupCode" rules={[validateRequiredInputField('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 {criticalityGroupData?.map((cg) => (
                                     <Option value={cg?.id}>{cg?.criticalityGroupName}</Option>
