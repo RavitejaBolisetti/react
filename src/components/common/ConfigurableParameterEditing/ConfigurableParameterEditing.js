@@ -130,7 +130,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
-        setShowSaveBtn(false);
         setFooterEdit(true);
         const data = configData.find((i) => i.id === record.id);
         if (data) {
