@@ -236,7 +236,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
