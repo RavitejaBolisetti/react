@@ -13,7 +13,7 @@ import styles from 'components/common/Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
-import  AddUpdateDrawer  from './AddUpdateDrawer';
+import  {AddUpdateDrawer}  from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
@@ -82,6 +82,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+
 
     useEffect(() => {
         if (userId) {
@@ -315,6 +317,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tableColumn: tableColumn,
     };
 
+  
+
     return (
         <>
             {contextAlertNotification}
@@ -401,6 +405,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                 </Row>
             </>
             <AddUpdateDrawer
+            isViewModeVisible={isViewModeVisible}
                 codeIsReadOnly={codeIsReadOnly}
                 tableData={detailData?.hierarchyAttribute}
                 setsaveclick={setsaveclick}

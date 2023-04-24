@@ -4,10 +4,10 @@ import { validateAlphanumericWithSpace, validateRequiredInputField, validationFi
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/Common.module.css';
-import styles from 'components/common/DrawerAndTable.module.css';
+import { withDrawer } from 'components/withDrawer';
+import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 
-
-const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
+const AddUpdateDrawerMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
@@ -56,51 +56,21 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
         setFormBtnDisable(true);
     };
 
+    const viewProps = {
+        isVisible: isViewModeVisible,
+        editRow,
+        style,
+    };
+
     return (
-        <Drawer
-            title={drawerTitle}
-            footer={
-                <Row gutter={20} className={style.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
-                        <Button danger onClick={onClose}>
-                            {formActionType === 'view' ? 'Close' : 'Cancel'}
-                        </Button>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
-                        {formActionType === 'view' ? (
-                            <Button onClick={handleEditView} type="primary">
-                                Edit
-                            </Button>
-                        ) : (
-                            <>
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
-                                {formActionType === 'add' ? (
-                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
-                                        Save & Add New
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                            </>
-                        )}
-                    </Col>
-                </Row>
-            }
-            width="540"
-            placement="right"
-            onClose={onClose}
-            open={showDrawer}
-            className={formActionType === 'view' ? styles.viewMode : styles.editDrawer}
+        <Space
+            direction="vertical"
+            size="small"
+            style={{
+                display: 'flex',
+            }}
         >
-            <Space
-                direction="vertical"
-                size="small"
-                style={{
-                    display: 'flex',
-                }}
-            >
+            {!isViewModeVisible ? (
                 <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
@@ -110,7 +80,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item initialValue={editRow?.hierarchyAttribueName} name="hierarchyAttribueName" label="Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
-                                {formActionType === 'view' ? <p className={styles.viewModeText}>{editRow?.hierarchyAttribueName}</p> : <Input maxLength={50} placeholder={preparePlaceholderText('name')} {...disabledProps} />}
+                                {formActionType === 'view' ? <p className={style.viewModeText}>{editRow?.hierarchyAttribueName}</p> : <Input maxLength={50} placeholder={preparePlaceholderText('name')} {...disabledProps} />}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -141,10 +111,39 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
                     <Form.Item initialValue={editRow?.id} hidden label="Status" name="id">
                         <Input />
                     </Form.Item>
+                    <Row gutter={20} className={style.formFooter}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
+                            <Button danger onClick={onClose}>
+                                {formActionType === 'view' ? 'Close' : 'Cancel'}
+                            </Button>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
+                            {formActionType === 'view' ? (
+                                <Button onClick={handleEditView} type="primary">
+                                    Edit
+                                </Button>
+                            ) : (
+                                <>
+                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handesave} form="myForm" key="submit" htmlType="submit" type="primary">
+                                        Save
+                                    </Button>
+                                    {formActionType === 'add' ? (
+                                        <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handlesaveandnew} form="myForm" key="submit2" htmlType="submit" type="primary">
+                                            Save & Add New
+                                        </Button>
+                                    ) : (
+                                        ''
+                                    )}
+                                </>
+                            )}
+                        </Col>
+                    </Row>
                 </Form>
-            </Space>
-        </Drawer>
+            ) : (
+                <ViewHierarchyAttribute {...viewProps} />
+            )}
+        </Space>
     );
 };
 
-export default AddUpdateDrawer;
+export const AddUpdateDrawer = withDrawer(AddUpdateDrawerMain,{});

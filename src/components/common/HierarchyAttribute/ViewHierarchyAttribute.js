@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewQualificationListMain = ({formData,viewStyle}) => {
+const ViewHierarchyAttributeMain = ({formData,viewStyle}) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -25,5 +25,5 @@ const ViewQualificationListMain = ({formData,viewStyle}) => {
     );
 };
 
-export const ViewQualificationList = ViewQualificationListMain;
+export const ViewHierarchyAttribute = ViewHierarchyAttributeMain;
 

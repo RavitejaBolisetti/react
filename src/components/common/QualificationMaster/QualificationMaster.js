@@ -12,7 +12,7 @@ import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
-import DrawerUtil from './DrawerUtil';
+import { AddEditDrawer } from './AddEditDrawer';
 
 import styles from 'components/common/Common.module.css';
 
@@ -81,8 +81,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
-    const [isViewModeVisible,setIsViewModeVisible] = useState(false)
-
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     useEffect(() => {
         form.resetFields();
@@ -233,8 +232,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
-        setcodeIsReadOnly(false)
-
+        setcodeIsReadOnly(false);
     };
 
     const handleUpdate = (record) => {
@@ -254,7 +252,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
         setDrawer(true);
         setIsReadOnly(false);
-        setcodeIsReadOnly(true)
+        setcodeIsReadOnly(true);
     };
 
     const handleUpdate2 = () => {
@@ -271,13 +269,12 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         });
         setsaveclick(true);
         setIsReadOnly(false);
-        setcodeIsReadOnly(true)
-
+        setcodeIsReadOnly(true);
     };
 
     const handleView = (record) => {
         setFormActionType('view');
-        setIsViewModeVisible(true)
+        setIsViewModeVisible(true);
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
         setFooterEdit(true);
@@ -290,8 +287,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
         });
         setDrawer(true);
         setIsReadOnly(true);
-        setcodeIsReadOnly(true)
-
+        setcodeIsReadOnly(true);
     };
 
     const handleReferesh = (e) => {
@@ -323,20 +319,12 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                   
-                                        <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                            Qualification List
-                                        </Col>
-                                        <Col xs={24} sm={24} md={12} lg={19} xl={19}>
-                                            <Search
-                                                placeholder="Search"
-                                              
-                                                allowClear
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                                className={styles.headerSearchField}
-                                            />
-                                        </Col>
+                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                        Qualification List
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
+                                    </Col>
                                 </Row>
                             </Col>
                             {qualificationData?.length ? (
@@ -354,8 +342,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                     </div>
                 </Col>
             </Row>
-            <DrawerUtil
-            isViewModeVisible={isViewModeVisible}
+            <AddEditDrawer
+                isViewModeVisible={isViewModeVisible}
                 codeIsReadOnly={codeIsReadOnly}
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}

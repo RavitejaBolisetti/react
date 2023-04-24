@@ -13,12 +13,11 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import DrawerUtil from './DrawerUtil';
+import DrawerUtil, { AddEditDrawer } from './AddEditDrawer';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
-
 
 const { Search } = Input;
 
@@ -82,6 +81,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [isVisible,setIsVisible] = useState(false)
 
     const errorAction = (message) => {
         showGlobalNotification(message);
@@ -171,6 +173,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleAdd = () => {
         setFormActionType('add');
+        setIsVisible(true)
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
@@ -184,6 +187,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const handleUpdate = (record) => {
         setFormActionType('update');
         setSaveAndSaveNew(false);
+        setIsVisible(true)
+
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
@@ -211,6 +216,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleUpdate2 = () => {
         setFormActionType('update');
+        setIsVisible(true)
+
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
@@ -235,6 +242,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true)
+        setIsVisible(true)
 
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
@@ -354,7 +363,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
                             {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button className={styles.refreshBtn} onClick={handleReferesh}  danger>
+                                    <Button className={styles.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
 
@@ -370,7 +379,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 </Col>
             </Row>
 
-            <DrawerUtil
+            <AddEditDrawer
+            isVisible={isVisible}
+            isViewModeVisible={isViewModeVisible}
                 codeIsReadOnly={codeIsReadOnly}
                 showGlobalNotification={showGlobalNotification}
                 deletedItemList={deletedItemList}

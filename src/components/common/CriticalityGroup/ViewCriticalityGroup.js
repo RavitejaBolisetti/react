@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewQualificationListMain = ({formData,styles}) => {
+const ViewCriticalityGroupMain = ({formData,styles}) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -11,16 +11,17 @@ const ViewQualificationListMain = ({formData,styles}) => {
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
-            {console.log(formData)}
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>
-                    <Descriptions.Item label="Qualification Name">{formData?.qualificationName}</Descriptions.Item>
+                    <Descriptions.Item label="Criticality Group Id">{formData?.qualificationCode}</Descriptions.Item>
+                    <Descriptions.Item label="Criticality Group Name">{formData?.qualificationName}</Descriptions.Item>
+                    <Descriptions.Item label="Default Group">{formData?.status === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
+
                 </Descriptions>
             </>
         </div>
     );
 };
 
-export const ViewQualificationList = ViewQualificationListMain;
+export const ViewCriticalityGroup = ViewCriticalityGroupMain;
 
