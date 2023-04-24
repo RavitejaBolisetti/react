@@ -7,7 +7,7 @@ import { LinearTrash } from 'Icons';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import style from 'components/common/DrawerAndTable.module.css';
+import style from 'components/common/Common.module.css';
 
 const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };

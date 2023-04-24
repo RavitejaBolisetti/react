@@ -5,7 +5,7 @@ import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
-import viewStyle from 'components/common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 import { ViewQualificationList } from './ViewQualificationList';
 
 const DrawerUtil = ({ setIsViewModeVisible,isViewModeVisible,codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
@@ -34,7 +34,7 @@ const DrawerUtil = ({ setIsViewModeVisible,isViewModeVisible,codeIsReadOnly, han
     const viewProps = {
         isVisible: isViewModeVisible,
         formData,
-        viewStyle,
+        styles,
     };
 
     return (

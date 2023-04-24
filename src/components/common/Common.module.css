@@ -530,6 +530,7 @@
     -moz-border-radius: 7px 7px 0px 0px;
     -webkit-border-radius: 7px 7px 0px 0px;
     border: 1px solid #e8e8e8;
+    font-weight: 500;
 }
 
 .contentHeaderRightBackground {
@@ -557,7 +558,7 @@
 .headerSearchField {
     vertical-align: middle;
     margin: 0 5px;
-    width: 41%;
+    width: 51%;
 }
 
 .headerSearchField :global .anticon svg {
@@ -809,10 +810,6 @@
     .headerSearchField {
         vertical-align: middle;
         margin: 0 0px;
-        width: 100%;
-    }
-
-    .headerSearchField span {
         width: 100%;
     }
 

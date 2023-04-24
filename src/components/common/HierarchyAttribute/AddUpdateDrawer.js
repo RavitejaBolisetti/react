@@ -3,7 +3,7 @@ import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import style from '../DrawerAndTable.module.css';
+import style from 'components/common/Common.module.css';
 
 const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
@@ -58,13 +58,13 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
         <Drawer
             title={drawerTitle}
             footer={
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={style.drawerFooterButtons}>
+                <Row gutter={20} className={style.formFooter}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
                         <Button danger onClick={onClose}>
                             {formActionType === 'view' ? 'Close' : 'Cancel'}
                         </Button>
                     </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.drawerFooterButtons} style={{ textAlign: 'right' }}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
                         {formActionType === 'view' ? (
                             <Button onClick={handleEditView} type="primary">
                                 Edit
