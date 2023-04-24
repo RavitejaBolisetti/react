@@ -9,6 +9,7 @@ import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvid
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { showGlobalNotification } from 'store/actions/notification';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
@@ -161,7 +162,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         };
 
         saveData(requestData);
-        setForceFormReset(Math.Random() * 1000);
+        setForceFormReset(generateRandomNumber * 1000);
     };
 
     const onFinishFailed = (errorInfo) => {

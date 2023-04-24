@@ -8,7 +8,7 @@ import { dealerManpowerActions } from 'store/actions/data/dealerManpower';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import { cryptoRandom } from 'utils/RandomNumberGenerator';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { ChangeHistory } from '../ChangeHistory';
 
 import LeftPanel from 'components/common/LeftPanel';
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId, isDataLoaded, dealerManpowerData, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoaded, dealerManpowerData, geoData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -114,7 +114,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
     const flatternData = generateList(finalDealerData);
 
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         form.resetFields();
         setFormVisible(false);
@@ -147,7 +147,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
         const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', dealerParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
-            setForceFormReset(cryptoRandom());
+            setForceFormReset(generateRandomNumber());
 
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
@@ -181,7 +181,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
     };
 
     const handleEditBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
 
         const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         formData && setFormData(formData?.data);
@@ -192,7 +192,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
     };
 
     const handleRootChildBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setFormActionType('rootChild');
         setFormVisible(true);
         setReadOnly(false);
@@ -202,7 +202,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
     };
 
     const handleChildBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setFormActionType('child');
         setFormVisible(true);
         setReadOnly(false);
@@ -212,7 +212,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
     };
 
     const handleSiblingBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
 
         setFormActionType('sibling');
         setFormVisible(true);
@@ -223,13 +223,13 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible,cryptoRandom, userId
     };
 
     const handleResetBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         form.resetFields();
     };
 
     const handleBack = () => {
         setReadOnly(true);
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         if (selectedTreeKey && selectedTreeKey.length > 0) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);

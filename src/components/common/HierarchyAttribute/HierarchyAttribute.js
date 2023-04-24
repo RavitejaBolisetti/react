@@ -6,6 +6,7 @@ import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
@@ -86,10 +87,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         if (userId) {
             if (!isDataLoaded) {
                 hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
-                forceUpdate(Math.random() * 1000);
+                forceUpdate(generateRandomNumber());
             }
             if (detailData?.hierarchyAttribute) {
-                forceUpdate(Math.random() * 1000);
+                forceUpdate(generateRandomNumber());
                 setRowsData(detailData?.hierarchyAttribute);
             }
         }

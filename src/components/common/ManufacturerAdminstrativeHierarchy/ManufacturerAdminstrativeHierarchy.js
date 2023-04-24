@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { FaHistory } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
-import { cryptoRandom } from 'utils/RandomNumberGenerator';
+import { generateRandomNumber } from 'utils/generateRandomNumber' ;
 import { HierarchyFormButton } from 'components/common/Button';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ViewProductDetail } from './ViewProductDetail';
@@ -136,7 +136,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle,viewTitle, 
     const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);

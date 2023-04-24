@@ -45,10 +45,9 @@ const ChangeHistoryData = [
         parntHeirarchyCode: 'INDIA',
         prodctShrtDescription: 'AS121',
         prodctLongDiscription: 'ASIA',
-        status:"Active",
+        status: 'Active',
     },
 ];
-
 
 describe('ChangeHistory Geo', () => {
     test('Is change History Text Present', async () => {
@@ -76,7 +75,7 @@ describe('ChangeHistory Geo', () => {
 });
 describe('ChangeHistory Common', () => {
     test('Is change History Text Present', async () => {
-        render(<ChangeHistory fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryData}   />);
+        render(<ChangeHistory fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryData} />);
         const ChangeHistoryPresent = await screen.getByText('Change History');
         expect(ChangeHistoryPresent).toBeInTheDocument();
     });

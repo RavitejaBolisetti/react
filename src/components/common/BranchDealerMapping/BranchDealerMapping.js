@@ -6,7 +6,7 @@ import { FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle
 import { EditOutlined } from '@ant-design/icons';
 import { addToolTip } from 'utils/customMenuLink';
 import TreeView from 'components/common/TreeView';
-import { cryptoRandom } from 'utils/RandomNumberGenerator';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 
 import styles from 'components/common/Common.module.css';
 import styles2 from './BranchDealerMapping.module.css';
@@ -219,7 +219,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         // setValid(true);
     };
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         form.resetFields();
         setFormVisible(false);
@@ -249,7 +249,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const handleEditBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
 
         const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         formData && setFormData(formData?.data);
@@ -260,7 +260,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const handleRootChildBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setFormActionType('rootChild');
         setFormVisible(true);
         setReadOnly(false);
@@ -270,7 +270,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const handleChildBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         setFormActionType('child');
         setCollapsible(true);
         setFormVisible(false);
@@ -281,7 +281,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const handleSiblingBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
 
         setFormActionType('sibling');
         setFormVisible(true);
@@ -292,7 +292,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
     };
 
     const handleResetBtn = () => {
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         form.resetFields();
     };
     const handleDrawer = () => {};
@@ -301,7 +301,7 @@ export const BranchDealerMappingMain = ({ isChangeHistoryVisible, userId, isData
         setOpen('0');
         setOpen2('0');
 
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
         if (selectedTreeKey && selectedTreeKey.length > 0) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);

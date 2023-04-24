@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { TimePicker, Drawer, Input, Form, Col, Row, Switch, Button, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { LinearTrash } from 'Icons';
-import { cryptoRandom } from 'utils/RandomNumberGenerator';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
 
-const DrawerUtil = ({ codeIsReadOnly, forceUpdate, cryptoRandom, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
-    const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(Math.random() * 1000);
+    const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [TimeTrack, setTimeTrack] = useState(true);
     const codeDisabledProp = { disabled: codeIsReadOnly };
 
@@ -215,7 +215,7 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, cryptoRandom, deletedItemList
                                         {...disabledProps}
                                         onClick={() => {
                                             add();
-                                            setTimesegmentLengthTracker(cryptoRandom());
+                                            setTimesegmentLengthTracker(generateRandomNumber());
                                         }}
                                         icon={<PlusOutlined />}
                                     >
@@ -282,7 +282,7 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, cryptoRandom, deletedItemList
                                                         onClick={() => {
                                                             removeItem(name, fields, restField);
                                                             remove(name);
-                                                            setTimesegmentLengthTracker(Math.random() * 1000);
+                                                            setTimesegmentLengthTracker(generateRandomNumber());
                                                             forceUpdate();
 
                                                             showGlobalNotification({ notificationType: 'success', message: 'Group Timing has been deleted Successfully', placement: 'bottomRight', showTitle: false });

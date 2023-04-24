@@ -11,7 +11,7 @@ import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
 import treeData from './Treedata.json';
-import { cryptoRandom } from 'utils/RandomNumberGenerator';
+import { generateRandomNumber } from 'utils/generateRandomNumber' ;
 
 const mapStateToProps = (state) => {
     const {
@@ -200,7 +200,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     };
 
     const handleChilds = () => {
-        setForceFormReset(Math.random() * 1000);
+        setForceFormReset(generateRandomNumber());
         setAddEditCancel(true);
         setAddchild(!addchilds);
     };
@@ -318,7 +318,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
             const Final_data = { cretdby: 'shaka', cretddate: new Date(), modfdby: 'Me', modfddate: 'adasdad', roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
             const onSuccess = (res) => {
                 form.resetFields();
-                setForceFormReset(cryptoRandom());
+                setForceFormReset(generateRandomNumber());
 
                 if (res?.Final_data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
@@ -350,7 +350,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
 
     const handleForms = (e) => {
         setDisabled(true);
-        setForceFormReset(cryptoRandom()); //Important Form Rerender
+        setForceFormReset(generateRandomNumber()); //Important Form Rerender
 
         setAddchild(false);
         setAddEditCancel(false);
@@ -368,7 +368,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const oncancel = () => {
         setAddchild(!addchilds);
         setDisabled(false);
-        setForceFormReset(cryptoRandom());
+        setForceFormReset(generateRandomNumber());
 
         setInitialData({});
         form.resetFields();
