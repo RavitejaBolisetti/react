@@ -48,8 +48,7 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     pattern: /^[a-zA-Z0-9 ]*$/,
 });
 
-export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
-    
+export const duplicateValidator = (value, fieldName, dataList, updateVal) => {    
     let dataListToCheck = dataList || [];
     if (updateVal && dataList?.length > 1) {
         let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal);

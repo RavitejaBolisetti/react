@@ -31,23 +31,24 @@ export const MenuConstant = {
         parentMenuId: 'FAV',
     },
 
-    [getMenyKey('COMN-06.01')]: {
-        key: 'COMN-06.01',
-        link: routing.ROUTING_COMMON_PRODUCT_HIERARCHY,
-        icon: undefined,
-        parentMenuId: 'FAV',
-    },
-
-    [getMenyKey('COMN-05.01')]: {
-        key: 'COMN-05.01',
-        link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
-        icon: undefined,
-        parentMenuId: 'FAV',
-    },
 
     [getMenyKey('COMN-03.08')]: {
         key: 'HAM',
         link: routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER,
+        icon: undefined,
+        parentMenuId: 'FAV',
+    },
+
+    [getMenyKey('COMN-07.01')]: {
+        key: 'COMN-07.01',
+        link: routing.ROUTING_COMMON_GEO,
+        icon: undefined,
+        parentMenuId: 'FAV',
+    },
+    
+    [getMenyKey('COMN-05.01')]: {
+        key: 'COMN-05.01',
+        link: routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY,
         icon: undefined,
         parentMenuId: 'FAV',
     },
@@ -65,12 +66,6 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('COMN-05.04')]: {
-        key: 'COMN-05.04',
-        link: routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY,
-        icon: undefined,
-        parentMenuId: 'ADMN',
-    },
 
     [getMenyKey('COMN-07.01')]: {
         key: 'COMN-07.01',
@@ -150,13 +145,6 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('MILE-02.19')]: {
-        key: 'MILE-02.19',
-        link: routing.ROUTING_COMMON_DEALER_MANPOWER,
-        icon: undefined,
-        parentMenuId: 'MILE-02',
-    },
-
     [getMenyKey('MILE-02.04')]: {
         key: 'MILE-02.04',
         link: routing.ROUTING_COMMON_QUALIFICATION_MASTER,
@@ -181,6 +169,7 @@ export const MenuConstant = {
         icon: <TbReport fontSize={22} />,
         parentMenuId: 'WEB',
     },
+    
     [getMenyKey('RPT-BI')]: {
         key: 'RPT-BI',
         link: routing.ROUTING_REPORT_BI_REPORT,
