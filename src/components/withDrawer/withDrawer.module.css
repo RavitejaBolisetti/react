@@ -36,10 +36,12 @@
 }
 
 @media screen and (max-width: 767px) {
-
-    .myDrawerStyle :global .ant-drawer-content-wrapper {
+    :global .ant-drawer-content-wrapper {
         width: 98% !important;
     }
+    /* .myDrawerStyle :global .ant-drawer-content-wrapper {
+        width: 98% !important;
+    } */
 
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;

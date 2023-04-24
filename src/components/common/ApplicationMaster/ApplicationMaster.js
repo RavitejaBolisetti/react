@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from 'components/common/Common.module.css';
+// import styles from 'components/common/Common.module.css';
 // import style from 'components/common/DrawerAndTable.module.css';
 // import styl from './ApplicationMaster.module.css';
 
@@ -21,9 +21,13 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
 import ViewApplicationDetailMain from './ViewApplicationDetailMain';
 
+import styles from 'components/common/Common.module.css';
+import styl from './ApplicationMaster.module.css';
+
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {

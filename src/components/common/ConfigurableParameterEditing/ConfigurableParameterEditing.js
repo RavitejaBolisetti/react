@@ -58,6 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -73,6 +74,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -108,12 +110,16 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
+        setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = configData.find((i) => i.id === record.id);
+        console.log('data', data);
         if (data) {
             data && setFormData(data);
+            console.log('formData', formData);
+
             setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
@@ -121,6 +127,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true);
+
         setShowSaveAndAddNewBtn(false);
         setShowSaveBtn(false);
         setFooterEdit(true);
@@ -132,14 +140,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         }
 
         setIsReadOnly(true);
-    };
-
-    const renderConfigurableParemetarType = (record) => {
-        return typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.find((item) => item?.key === record?.configurableParameterType)?.value;
-    };
-
-    const renderControlGroup = (record) => {
-        return typeData && typeData[PARAM_MASTER.CTRL_GRP.id]?.find((item) => item?.key === record?.controlGroup)?.value;
     };
 
     const renderTableColumnName = (record, key, type) => {
@@ -156,7 +156,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                 fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-                fieldType = fieldType.concat(convertDate(record?.fromDate)).concat('  ').concat(convertDate(record?.toDate));
+                fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
                 fieldType = record?.booleanValue ? 'Yes' : 'No';
@@ -174,19 +174,20 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            width: '5%',
         }),
 
         tblPrepareColumns({
             title: 'Control ID',
             dataIndex: 'controlId',
             render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
-            width: '10%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Control Description',
             dataIndex: 'controlDescription',
-            width: '25%',
+            width: '20%',
         }),
 
         tblPrepareColumns({
@@ -207,12 +208,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             title: 'Control Group',
             dataIndex: 'controlGroup',
             render: (text, record, value) => renderTableColumnName(record, 'controlGroup', PARAM_MASTER.CTRL_GRP.id),
-            width: '15%',
+            width: '12%',
         }),
         {
             title: 'Action',
             dataIndex: '',
-            width: '10%',
+            width: '8%',
             render: (record) => [
                 <Space wrap>
                     <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}>
@@ -234,19 +235,23 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
+        setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
+        setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
+        setIsViewModeVisible(false);
+
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType)
+        setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
@@ -301,14 +306,16 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const formProps = {
         formActionType,
         setFormActionType,
+        setIsViewModeVisible,
+        isViewModeVisible,
         isReadOnly,
         formData,
         footerEdit,
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => setIsFormVisible(false),
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
@@ -316,6 +323,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         configData,
         parameterType,
         setParameterType,
+        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
@@ -354,7 +362,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`}  type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>

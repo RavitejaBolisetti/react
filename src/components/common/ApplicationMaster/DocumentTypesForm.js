@@ -6,7 +6,7 @@ import { duplicateValidator, validateAlphanumericWithSpace, validateRequiredInpu
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
-console.log('finalFormdata',finalFormdata)
+
     const onFinishFailed = (err) => {
         console.error(err);
     };
@@ -14,7 +14,6 @@ console.log('finalFormdata',finalFormdata)
     const handleForm = (value) => {
         // setFormBtnDisable(true);
     };
-
 
     return (
         <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>

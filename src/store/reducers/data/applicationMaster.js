@@ -32,6 +32,8 @@ export const ApplicationMaster = (state = initialState, action) => {
             return { ...state, isApplicatinoOnSaveLoading: action.isLoading };
         case APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING:
             return { ...state, isApplicationDeatilsLoading: action.isLoading };
+        case APPLICATION_ON_SAVE_DATA_SHOW_LOADING:
+            return { ...state, isApplicatinoOnSaveLoading: action.isLoading };
         default:
             return { ...state };
     }
