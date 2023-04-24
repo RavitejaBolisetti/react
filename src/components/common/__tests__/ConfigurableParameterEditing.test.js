@@ -1,10 +1,6 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved, mount } from '@testing-library/react';
-import { ConfigProvider, Drawer, Table } from 'antd';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ConfigurableParameterEditing } from '../ConfigurableParameterEditing/ConfigurableParameterEditing';
-import { AddEditForm } from '../ConfigurableParameterEditing/AddEditForm';
-import DataTable from '../../../utils/dataTable/DataTable';
-import { async } from 'sonarqube-scanner';
 
 jest.mock('react-redux', () => ({
     connect: () => (ConfigurableParameterEditing) => ConfigurableParameterEditing,
@@ -16,21 +12,11 @@ window.matchMedia =
     function () {
         return {
             matches: false,
-            addListener: function () { },
-            removeListener: function () { },
+            addListener: function () {},
+            removeListener: function () {},
         };
     };
-// const  = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5'];
 
-const configParamData1 = [
-    {
-        controlId: 'Test33',
-        controlDescription: 'Time for testing133',
-        controlGroup: 'SM',
-        configurableParameterType: 'Text',
-
-    },
-];
 const configParamData = [
     {
         controlId: 'OTP Expiry',
@@ -38,36 +24,33 @@ const configParamData = [
         controlGroup: 'Common',
         configurableParameterType: 'Boolean',
         configPrmVal: 'No',
-
     },
-
 ];
 
 const typeData = [
     {
-        id: "5ef8b161-ecf6-42a1-894b-78807f0a4292",
-        key: "ACLOK",
-        value: "Lock Account",
+        id: '5ef8b161-ecf6-42a1-894b-78807f0a4292',
+        key: 'ACLOK',
+        value: 'Lock Account',
     },
     {
-        id: "763b9094-43d8-4096-a7fc-4f2954937baa",
-        key: "NOLOG",
-        value: "No Login",
-    }
-]
+        id: '763b9094-43d8-4096-a7fc-4f2954937baa',
+        key: 'NOLOG',
+        value: 'No Login',
+    },
+];
+
 const fetchList = () => {
     return;
 };
+
 const saveData = () => {
     return;
 };
+
 const fetchDataList = () => {
     return;
 };
-const listShowLoading = () => {
-    return;
-};
-
 
 // jest.mock('antd', () => {
 //     return {
@@ -79,7 +62,6 @@ const listShowLoading = () => {
 //     }
 //   });
 describe('Config Param Test', () => {
-
     //Passed2!
     test('Is Add Group Button Working', async () => {
         render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchDataList={fetchDataList} configData={configParamData} />);
@@ -89,7 +71,7 @@ describe('Config Param Test', () => {
         // expect(Drawer).toBeTruthy();
         // const textArea = await screen.findByPlaceholderText('Enter Data');
         // expect(textArea).toBeTruthy();
-    })
+    });
 
     //Passed1!
     test('Is the search Field Present or not', async () => {
@@ -98,20 +80,17 @@ describe('Config Param Test', () => {
         expect(searchField).toBeTruthy();
     });
 
-
     test('Edit Functionality in Table', async () => {
         render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} configData={configParamData} />);
         const textfield = await screen.findByText('Configurable Parameter Editing');
         expect(textfield).toBeTruthy();
 
-        const editBtn = await screen.getAllByRole('button', { Name: "" });
+        const editBtn = await screen.getAllByRole('button', { Name: '' });
         expect(editBtn).toBeTruthy();
         userEvent.click(editBtn);
 
-
         // const InputFieldName = await screen.findByPlaceholderText('Enter Data');
         // expect(InputFieldName.value).toBe('Time (in minutes) for which OTP is valid');
-
 
         // fireEvent.change(InputFieldName, { target: { value: '' } });
 
@@ -122,10 +101,6 @@ describe('Config Param Test', () => {
         // expect(Validations2).toBeTruthy();
         // expect(saveBtn).toBeTruthy();
     });
-
-
-
-
 
     // test('Is Selection working', async () => {
     //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configParamData={configParamData} typeData={typeData} />);
@@ -143,8 +118,6 @@ describe('Config Param Test', () => {
     //     )
     //     expect(screen.getByRole('option', { name: 'Lock Account' }).selected).toBe(true)
     // });
-
-
 
     // test('is drawer opening on click of Add Group', async () => {
     //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
@@ -198,6 +171,4 @@ describe('Config Param Test', () => {
     // //     const configParamVal=await screen.getByLabelText('Configurable Parameter Values');
     // //     expect(configParamVal).toBeTruthy();
     // // });
-
-
 });

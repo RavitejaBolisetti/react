@@ -403,11 +403,11 @@ describe('geo component', () => {
 });
 // const axios = require('axios');
 global.fetch = jest.fn(() => {
-    Promise.resolve({
-        json: () => promise.resolve({ data: { id: 'f7d7c0ca-e03f-4d7b-8af8-30c17cd783cc', geoCode: 'ASI12', geoName: 'ASIA24', attributeKey: '59077c54-6cbf-46d0-9729-8cb6fbb7cd87', isActive: 'N', geoParentCode: 'DMS' } }),
-    });
+    // Promise.resolve({
+    //     json: () => promise.resolve({ data: { id: 'f7d7c0ca-e03f-4d7b-8af8-30c17cd783cc', geoCode: 'ASI12', geoName: 'ASIA24', attributeKey: '59077c54-6cbf-46d0-9729-8cb6fbb7cd87', isActive: 'N', geoParentCode: 'DMS' } }),
+    // });
+    Promise.resolve({ data: { id: 'f7d7c0ca-e03f-4d7b-8af8-30c17cd783cc', geoCode: 'ASI12', geoName: 'ASIA24', attributeKey: '59077c54-6cbf-46d0-9729-8cb6fbb7cd87', isActive: 'N', geoParentCode: 'DMS' } });
 });
-// jest.mock('axios');
 
 describe('This is to test the Axios Call using Jest', () => {
     test('This is the Api call test', async () => {

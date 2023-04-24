@@ -1,6 +1,5 @@
-import { screen, render, fireEvent, findAllByText, getAllByPlaceholderText, getByText, findByRole } from '@testing-library/react';
-import { BrowserRouter, Route, Routes, MemoryRouter } from 'react-router-dom';
-import { async } from 'sonarqube-scanner';
+import { screen, render, fireEvent } from '@testing-library/react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { ChangePasswordForm } from '../ChangePassword/ChangePasswordForm';
 
@@ -8,16 +7,6 @@ jest.mock('react-redux', () => ({
     connect: () => (ChangePasswordForm) => ChangePasswordForm,
 }));
 
-const showGlobalNotification = () => {
-    return;
-};
-const isLoggedIn = () => {
-    return;
-};
-
-const errorMessage = () => {
-    return 'Invalid credentials.';
-};
 window.matchMedia =
     window.matchMedia ||
     function () {
@@ -64,9 +53,9 @@ describe('updatepasswordform component', () => {
         fireEvent.change(newPassword, { target: { value: '' } });
         fireEvent.change(confirmPassword, { target: { value: '' } });
         fireEvent.click(changebtn);
-        const validation = screen.findByText('Enter old password');
-        const validation2 = screen.findByText('Enter new password');
-        const validation3 = screen.findByText('Enter confirm password');
+        const validation = await screen.findByText('Enter old password');
+        const validation2 = await screen.findByText('Enter new password');
+        const validation3 = await screen.findByText('Enter confirm password');
         expect(oldPassword).toBeTruthy();
         expect(newPassword).toBeTruthy();
         expect(confirmPassword).toBeTruthy();
@@ -93,8 +82,8 @@ describe('updatepasswordform component', () => {
         fireEvent.change(confirmPassword, { target: { value: 'qqqqq' } });
 
         fireEvent.click(changebtn);
-        const validation = screen.findByText('Confirm Password should contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and should be of minimum 8 characters in length');
-        const validation2 = screen.findByText('New Password should contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and should be of minimum 8 characters in length');
+        const validation = await screen.findByText('Confirm Password should contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and should be of minimum 8 characters in length');
+        const validation2 = await screen.findByText('New Password should contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and should be of minimum 8 characters in length');
 
         expect(validation).toBeTruthy();
         expect(validation2).toBeTruthy();

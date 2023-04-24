@@ -1,9 +1,6 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { Table } from 'antd';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { ChangeHistory } from '../ChangeHistory/ChangeHistory';
 import { ChangeHistoryGeo } from '../ChangeHistory/ChangeHistoryGeo';
-import DataTable from '../../../utils/dataTable/DataTable';
 
 jest.mock('react-redux', () => ({
     connect: () => (ChangeHistoryGeo) => ChangeHistoryGeo,
@@ -22,9 +19,7 @@ window.matchMedia =
 const fetchChangeHistoryList = () => {
     return;
 };
-const saveData = () => {
-    return;
-};
+
 const ChangeHistoryDataGeo = [
     {
         changedDate: '2023-3-4',
@@ -52,18 +47,18 @@ const ChangeHistoryData = [
 describe('ChangeHistory Geo', () => {
     test('Is change History Text Present', async () => {
         render(<ChangeHistoryGeo fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryDataGeo} />);
-        const ChangeHistoryPresent = await screen.getByText('Change History');
+        const ChangeHistoryPresent = screen.getByText('Change History');
         expect(ChangeHistoryPresent).toBeInTheDocument();
     });
     test('Is Table Present', async () => {
         render(<ChangeHistoryGeo fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryDataGeo} />);
-        const ModifiedDatePresent = await screen.getByText('Changed/Modified Date');
-        const ChangedBy = await screen.getByText('Changed By');
-        const AttributeType = await screen.getByText('Attribute Type');
-        const HierarchyCode = await screen.getByText('Hierarchy Code');
-        const HierarchyName = await screen.getByText('Hierarchy Name');
-        const ParentHierarchyCode = await screen.getByText('Parent Hierarchy Code');
-        const ParentHierarchyName = await screen.getByText('Parent Hierarchy Name');
+        const ModifiedDatePresent = screen.getByText('Changed/Modified Date');
+        const ChangedBy = screen.getByText('Changed By');
+        const AttributeType = screen.getByText('Attribute Type');
+        const HierarchyCode = screen.getByText('Hierarchy Code');
+        const HierarchyName = screen.getByText('Hierarchy Name');
+        const ParentHierarchyCode = screen.getByText('Parent Hierarchy Code');
+        const ParentHierarchyName = screen.getByText('Parent Hierarchy Name');
         expect(ModifiedDatePresent).toBeInTheDocument();
         expect(ChangedBy).toBeInTheDocument();
         expect(AttributeType).toBeInTheDocument();
@@ -76,18 +71,18 @@ describe('ChangeHistory Geo', () => {
 describe('ChangeHistory Common', () => {
     test('Is change History Text Present', async () => {
         render(<ChangeHistory fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryData} />);
-        const ChangeHistoryPresent = await screen.getByText('Change History');
+        const ChangeHistoryPresent = screen.getByText('Change History');
         expect(ChangeHistoryPresent).toBeInTheDocument();
     });
     test('Is Table Present', async () => {
         render(<ChangeHistory fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryData} />);
-        const ModifiedDatePresent = await screen.getByText('Changed/Modified Date');
-        const ChangedBy = await screen.getByText('Changed By');
-        const AttributeType = await screen.getByText('Attribute');
-        const HierarchyCode = await screen.getByText('Code');
-        const HierarchyName = await screen.getByText('DMS-1');
-        const ParentHierarchyCode = await screen.getByText('Short Description');
-        const ParentHierarchyName = await screen.getByText('Long Description');
+        const ModifiedDatePresent = screen.getByText('Changed/Modified Date');
+        const ChangedBy = screen.getByText('Changed By');
+        const AttributeType = screen.getByText('Attribute');
+        const HierarchyCode = screen.getByText('Code');
+        const HierarchyName = screen.getByText('DMS-1');
+        const ParentHierarchyCode = screen.getByText('Short Description');
+        const ParentHierarchyName = screen.getByText('Long Description');
         expect(ModifiedDatePresent).toBeInTheDocument();
         expect(ChangedBy).toBeInTheDocument();
         expect(AttributeType).toBeInTheDocument();
