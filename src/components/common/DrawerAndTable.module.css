@@ -216,12 +216,12 @@
     padding-left: 0px !important;
     display: flex;
     justify-content: flex-start;
-
 }
 
 .srchbtn :global .ant-btn-default {
     background-color: #ffffff;
 }
+
 .addGroup {
     display: flex;
     justify-content: right;
@@ -343,7 +343,7 @@
     background-color: none !important;
 }
 
-.viewMode :global input[type="text"]:disabled {
+.viewMode :global input[type='text']:disabled {
     background-color: #ffffff !important;
 
     border-color: transparent !important;
@@ -352,7 +352,6 @@
     font-size: 16px;
     line-height: 0px;
     cursor: default;
-
 }
 
 .viewModeText {
@@ -366,7 +365,6 @@
     margin-top: 10px !important;
     color: rgba(0, 0, 0, 0.25);
     word-wrap: break-word;
-
 }
 
 .viewMode :global(.ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked) {
@@ -385,11 +383,9 @@
     background: transparent;
 }
 
-
 .viewMode :global .ant-drawer.ant-drawer-body.ant-form-item {
     padding-bottom: 0px !important;
 }
-
 
 :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
     border: transparent;
@@ -402,15 +398,14 @@
 
 :global .ant-drawer-body::-webkit-scrollbar-track,
 :global .ant-drawer-body::-webkit-scrollbar-track {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 
 :global .ant-drawer-body::-webkit-scrollbar,
 :global .ant-drawer-body::-webkit-scrollbar {
     width: 5px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
-
 
 :global .ant-drawer-body::-webkit-scrollbar-thumb,
 :global .ant-drawer-body::-webkit-scrollbar-thumb {
@@ -423,15 +418,19 @@
     padding-right: 0px;
 }
 
-:global .ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-texts {
+.accordianHeader {
+    color: #e31837 !important;
+}
+
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
     font-size: 16px;
 }
-.accordianHeader { 
+
+.accordianHeader {
     color: #E31837 !important;
 }
 
 /* .collapseContent :global(.ant-collapse .ant-collapse-content>.ant-collapse-content-box){
     padding: 2px 16px 16px 16px;
 } */
-

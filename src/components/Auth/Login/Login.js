@@ -97,13 +97,13 @@ const Login = (props) => {
     const onSuccess = (data) => {
         hideGlobalNotification();
         setIsLoading(false);
-        ReactRecaptcha3.destroy();
         const passwordStatus = data?.passwordStatus;
         if (passwordStatus) {
             authPreLogin(data);
             updatePasswordStatusInfo(data);
             forceUpdate();
         } else {
+            ReactRecaptcha3.destroy();
             authPostLogin(data);
         }
     };

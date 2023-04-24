@@ -18,6 +18,7 @@
         "otp-input-react": "^0.3.0",
         "react": "^18.2.0",
         "react-bootstrap": "^2.7.0",
+        "react-checkbox-tree": "^1.8.0",
         "react-dom": "^18.2.0",
         "react-google-recaptcha3": "^1.0.4",
         "react-helmet": "^6.1.0",
@@ -61,6 +62,7 @@
     "devDependencies": {
         "@babel/preset-env": "^7.20.2",
         "react-app-rewired": "^2.2.1",
+        "react-checkbox-tree": "^1.8.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
         "sonarqube-scanner": "^3.0.1"

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
+import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
@@ -13,10 +14,11 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
-    const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { setDocumentTypesList, documentTypesList, onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData, viewMode, isViewMode } = props;
+    const { selectedTreeKey, setSelectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
+    const [openAccordian, setOpenAccordian] = useState('');
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -25,25 +27,33 @@ const AddEditFormMain = (props) => {
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
+    let selectedAttribute = selectedTreeData?.attributeKey;
+
+    let attributeHierarchyFieldValidation = {
+        rules: [validateRequiredSelectField('attribute level')],
+    };
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
-        treeCodeId = formData?.manufactureOrgParntId;
+        treeCodeId = formData?.manufactureAdminParntId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureOrgParntId;
+        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
+        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureAdminParntId;
+
+        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
+        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    useEffect(() => {
-        if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-            setSelectedTreeKey([treeCodeId]);
-        }
-        setSelectedTreeSelectKey(treeCodeId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [treeCodeId]);
+    // useEffect(() => {
+    //     if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    //         setSelectedTreeKey([treeCodeId]);
+    //     }
+    //     setSelectedTreeSelectKey(treeCodeId);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -62,9 +72,19 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
+
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+
+    // const authorityDetailProps = {
+    //     ...props,
+    //     documentTypesList,
+    //     setDocumentTypesList,
+    // };
     return (
         <>
-            <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
@@ -77,7 +97,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
+                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureAdminParntId">
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
@@ -85,13 +105,13 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Code" name="manufactureOrgCode" initialValue={formData?.manufactureOrgCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
+                        <Form.Item label="Code" name="manufactureAdminCode" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
                             <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('short description')]}>
+                        <Form.Item name="manufactureAdminShortName" label="Short Description" initialValue={formData?.manufactureAdminShortName} rules={[validateRequiredInputField('short description')]}>
                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -99,32 +119,39 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgLongName" label="Long Description" initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('long description')]}>
+                        <Form.Item name="manufactureAdminLongName" label="Long Description" initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField('long description')]}>
                             <TextArea rows={1} placeholder={preparePlaceholderText('long description')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active} label="Status" name="active">
-                            <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                        <Form.Item initialValue={formData?.status} label="Status" name="status">
+                            <Switch value={formData?.status} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
+                        <Button danger form="myForm" onClick={onCloseAction}>
                             Cancel
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        <Button htmlType="submit" form="myForm" danger>
+                            {/* disabled={!isFormBtnActive} */}
                             Save
                         </Button>
                     </Col>
                 </Row>
             </Form>
+
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <AuthorityDetailPanel {...props} />
+                </Col>
+            </Row>
         </>
     );
 };

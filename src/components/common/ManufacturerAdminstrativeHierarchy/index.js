@@ -1,3 +1,4 @@
 import { ManufacturerAdminstrativeHierarchy } from './ManufacturerAdminstrativeHierarchy';
-import { ManufacturerAdminHierarchyChangeHistory } from './ManufacturerAdminHierarchyChangeHistory';
-export { ManufacturerAdminstrativeHierarchy, ManufacturerAdminHierarchyChangeHistory };
+import { ManufactureAdminHierarchyUpload } from './ManufactureAdminHierarchyUpload';
+
+export { ManufacturerAdminstrativeHierarchy, ManufactureAdminHierarchyUpload };

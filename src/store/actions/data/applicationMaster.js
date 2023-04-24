@@ -13,6 +13,7 @@ export const APPLICATION_MASTER_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DATA_SHO
 export const APPLICATION_DATA_LOADED = 'APPLICATION_DATA_LOADED';
 export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const APPLICATION_ON_SAVE_DATA_SHOW_LOADING = 'APPLICATION_ON_SAVE_DATA_SHOW_LOADING';
+export const APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING';
 
 const receiveApplicationDetailsData = (data) => ({
     type: APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED,
@@ -49,9 +50,12 @@ const applicationMasterDataActions = {};
 
 const baseURLPath = BASE_URL_APPLICATION_DETAILS;
 
-
 applicationMasterDataActions.listShowLoading = (isLoading) => ({
     type: APPLICATION_MASTER_DATA_SHOW_LOADING,
+    isLoading,
+});
+applicationMasterDataActions.detailListShowLoading = (isLoading) => ({
+    type: APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING,
     isLoading,
 });
 applicationMasterDataActions.onSaveShowLoading = (isLoading) => ({
