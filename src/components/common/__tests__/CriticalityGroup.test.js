@@ -1,8 +1,5 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { Table } from 'antd';
-import userEvent from '@testing-library/user-event';
-import { CriticalityGroup } from './CriticalityGroup';
-import DataTable from '../../../utils/dataTable/DataTable';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { CriticalityGroup } from '../CriticalityGroup/CriticalityGroup';
 
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
@@ -17,7 +14,7 @@ window.matchMedia =
             removeListener: function () {},
         };
     };
-// const  = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5'];
+
 const criticalityGroupData1 = [
     {
         critcltyGropCode: 'Hello',
@@ -68,14 +65,13 @@ const saveData = () => {
 describe('Criticality Group Test', () => {
     test('Is the search Field Present or not', () => {
         render(<CriticalityGroup fetchData={fetchData} saveData={saveData} />);
-        const searchField = screen.findByPlaceholderText('Search');
-
+        const searchField =   screen.findByPlaceholderText('Search');
         expect(searchField).toBeTruthy();
     });
 
     test('Is the Add Group Button Present or not', () => {
         render(<CriticalityGroup fetchData={fetchData} saveData={saveData} />);
-        const addGrp = screen.findByText('Add Group');
+        const addGrp =  await screen .findByText('Add Group');
 
         expect(addGrp).toBeTruthy();
     });
@@ -107,11 +103,11 @@ describe('Criticality Group Test', () => {
 
     test('Is search working', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        
+
         const nameField = await screen.findByPlaceholderText('Search');
-        const nameText = await screen.getByText('NONON');
+        const nameText = screen.getByText('NONON');
         fireEvent.change(nameField, { target: { value: 'Hell' } });
-       
+
         expect(nameText).toBeFalsy();
     });
 
@@ -125,7 +121,7 @@ describe('Criticality Group Test', () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
         const addGroupBtn = await screen.findByText('Add Group');
         fireEvent.click(addGroupBtn);
-        const nameField = screen.findByPlaceholderText('Please Enter Name');
+        const nameField = await screen.findByPlaceholderText('Please Enter Name');
         expect(nameField).toBeTruthy();
     });
 
@@ -249,13 +245,13 @@ describe('Criticality Group Test', () => {
 
     test('is end time close on  clicking close', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
-        const addGroupBtn = await screen.getByText('Add Group');
+        const addGroupBtn = screen.getByText('Add Group');
         fireEvent.click(addGroupBtn);
-        const addTime = await screen.getByText('Add Time');
+        const addTime = screen.getByText('Add Time');
         fireEvent.click(addTime);
-        const endTime = await screen.getByLabelText('End Time');
+        const endTime = screen.getByLabelText('End Time');
         expect(endTime).toBeTruthy();
-        const closeButton = await screen.getByLabelText('outline-close');
+        const closeButton = screen.getByLabelText('outline-close');
         fireEvent.click(closeButton);
         expect(endTime).not.toBeVisible();
         expect(closeButton).not.toBeVisible();

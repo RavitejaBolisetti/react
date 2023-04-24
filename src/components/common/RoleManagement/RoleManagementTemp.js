@@ -8,6 +8,7 @@ import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, 
 import styles from 'pages/common/Common.module.css';
 import { addToolTip } from 'utils/customMenuLink';
 import { geoDataActions } from 'store/actions/data/geo';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
@@ -208,7 +209,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     };
 
     const handleChilds = () => {
-        setForceFormReset(Math.random() * 1000);
+        setForceFormReset(generateRandomNumber());
         setAddEditCancel(true);
         setAddchild(!addchilds);
     };
@@ -327,7 +328,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
             console.log("Final Sending data",Final_data);
             const onSuccess = (res) => {
                 form.resetFields();
-                setForceFormReset(Math.random() * 10000);
+                setForceFormReset(generateRandomNumber());
     
                
     
@@ -369,7 +370,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
 
     const handleForms = (e) => {
         setDisabled(true);
-        setForceFormReset(Math.random() * 10000); //Important Form Rerender
+        setForceFormReset(generateRandomNumber()); //Important Form Rerender
 
         console.log(e.target.outerText);
         setAddchild(false);
@@ -392,7 +393,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const oncancel = () => {
         setAddchild(!addchilds);
         setDisabled(false);
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
 
         setInitialData({});
         form.resetFields();

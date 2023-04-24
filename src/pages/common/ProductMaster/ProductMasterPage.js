@@ -29,8 +29,8 @@ export const ProductMasterPageBase = () => {
     };
     const onSubmit = (e) => {
         form.validateFields()
-            .then((err, values) => { })
-            .catch((errorInfo) => { });
+            .then((err, values) => {})
+            .catch((errorInfo) => {});
     };
 
     const tblPrepareColumns = ({ title, dataIndex }) => {
@@ -41,25 +41,20 @@ export const ProductMasterPageBase = () => {
         };
     };
 
-    const tableColumn = [];
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'Srl',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Attribute Name',
             dataIndex: 'AttributeName',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Attribute Value',
             dataIndex: 'AttributeValue',
-        })
-    );
+        }),
+    ];
 
     const dataSource = [
         {
@@ -138,7 +133,7 @@ export const ProductMasterPageBase = () => {
                                                             type="primary"
                                                             id="hierarchyChange"
                                                             className="btn btn-outline srchbtn mr0 boxShdwNon"
-                                                        // disabled={props.editableFormContent.editParent}
+                                                            // disabled={props.editableFormContent.editParent}
                                                         >
                                                             <FaSearch />
                                                         </Button>

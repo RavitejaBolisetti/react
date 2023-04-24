@@ -3,12 +3,11 @@ import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
-import { HomeIcon } from 'Icons';
+import { HomeIcon, AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
-import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 export const MenuConstant = {
    

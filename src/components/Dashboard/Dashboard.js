@@ -323,3 +323,4 @@ const DashboardBase = ({ props }) => {
 };
 
 export const Dashboard = connect(mapStateToProps, null)(DashboardBase);
+

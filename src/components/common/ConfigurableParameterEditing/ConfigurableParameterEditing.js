@@ -130,7 +130,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
-        setShowSaveBtn(false);
         setFooterEdit(true);
         const data = configData.find((i) => i.id === record.id);
         if (data) {
@@ -216,11 +215,13 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             width: '8%',
             render: (record) => [
                 <Space wrap>
-                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}>
-                        <FiEdit2 />
-                    </Button>
                     {
-                        <Button className={styles.tableIcons} onClick={() => handleView(record)}>
+                        <Button data-testid='edit' className={styles.tableIcons} aria-label='fa-edit' onClick={() => handleEditBtn(record, 'edit')}>
+                            <FiEdit2 />
+                        </Button>
+                    }
+                    {
+                        <Button className={styles.tableIcons} aria-label='ai-view' onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
@@ -296,7 +297,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
     const tableProps = {
         tableColumn: tableColumn,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CheckboxTree from 'react-checkbox-tree';
-// import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 import { Drawer, Input, Form, Col, Row, Switch, Button, Space, Collapse, Checkbox, Tabs, Descriptions } from 'antd';
 import { FaSquare } from 'react-icons/fa';
