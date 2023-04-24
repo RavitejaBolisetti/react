@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState } from 'react';
 import { Col, Modal, Row, Form } from 'antd';
 import { FiLock } from 'react-icons/fi';
 import { ChangePasswordForm } from './ChangePasswordForm';
@@ -6,8 +6,11 @@ import styles from './ChangePassword.module.css';
 
 export const ChangePassword = ({ setModalOpen, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const [form] = Form.useForm();
+    const [password, setPassword] = useState('');
+
     const onCancel = () => {
         form.resetFields();
+        setPassword('');
         setModalOpen(false);
     };
 
@@ -17,6 +20,11 @@ export const ChangePassword = ({ setModalOpen, isOpen = false, onOk = () => {}, 
             {' ' + title}
         </>
     );
+
+    const formProps = {
+        password,
+        setPassword,
+    };
     return (
         <>
             <Modal className={styles.changePassword} centered open={isOpen} title={modelTitle} okText="Submit" footer={false} okType="primary" maskClosable={false} onCancel={onCancel} width={480}>
@@ -27,7 +35,7 @@ export const ChangePassword = ({ setModalOpen, isOpen = false, onOk = () => {}, 
                         </Col>
                     </Row>
                 )}
-                <ChangePasswordForm form={form} />
+                <ChangePasswordForm form={form} {...formProps} />
             </Modal>
         </>
     );

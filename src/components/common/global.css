@@ -14,8 +14,8 @@
     border-bottom: 1px dashed #d9d9d9;
 }
 
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
     color: #ff3e5b;
 }
 
@@ -26,14 +26,14 @@
 
 :global .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
     background-color: transparent !important;
     color: #ff3e5b;
     font-size: 14px;
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span:hover {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
     background-color: transparent !important;
 }
 
@@ -228,23 +228,22 @@
     background: #70c922;
 }
 
-
-:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-inline-end: 8px;
     margin-top: -2px;
 }
 
-:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-inline-end: 8px;
     margin-top: -2px;
 }
-:global .ant-modal-mask, 
+:global .ant-modal-mask,
 :global body {
-    width: 100% !important; overflow: inherit !important;
+    width: 100% !important;
+    overflow: inherit !important;
 }
 @media (max-width: 768px) {
-    :global .ant-input-group {
+    /* :global .ant-input-group {
         margin-top: 20px;
-    }
-
+    } */
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
+import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
+
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 
@@ -34,6 +36,7 @@ const AddEditFormMain = (props) => {
         setParameterType(event);
     };
 
+    console.log(formData.toDate)
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
@@ -91,13 +94,14 @@ const AddEditFormMain = (props) => {
                     ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                         <Row gutter={20}>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('Number')]}>
-                                    <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                <Form.Item label="From Date" name="fromDate"  initialValue={convertCalenderDate(formData?.fromDate)} rules={[validateRequiredInputField('Number')]}>
+                                    <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                 </Form.Item>
                             </Col>
+                           
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('Number')]}>
-                                    <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                <Form.Item label="To Date" name="toDate"  initialValue={convertCalenderDate(formData?.toDate)} rules={[validateRequiredInputField('Number')]}>
+                                    <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                 </Form.Item>
                             </Col>
                         </Row>

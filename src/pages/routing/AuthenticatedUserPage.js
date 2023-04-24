@@ -48,7 +48,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
-            <Route path="*" element={<LoginPage />} exact />
+            {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>
     );
 };

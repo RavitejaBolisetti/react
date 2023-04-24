@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -14,7 +15,7 @@ export const ViewDealerDetailsMain = ({ viewTitle, buttonData, attributeData, se
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
                 <Descriptions.Item label="Code">{selectedTreeData?.code}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.shortDescription}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.longDescription}</Descriptions.Item>

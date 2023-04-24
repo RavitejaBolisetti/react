@@ -191,6 +191,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
+            width: '6%',
             sorter: false,
             render: (_t, _r, i) => i + 1,
         })
@@ -200,7 +201,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
-            width: '12%',
+            width: '10%',
         })
     );
 
@@ -208,7 +209,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
-            width: '17%',
+            width: '20%',
         })
     );
 
@@ -216,6 +217,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
+            width: '14%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
@@ -224,7 +226,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
-            width: '17%',
+            width: '20%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
@@ -233,6 +235,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
+            width: '10%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
@@ -241,6 +244,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
+            width: '10%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
@@ -249,6 +253,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
+            width: '10%',
             sorter: false,
             render: (text, record, index) => {
                 return (

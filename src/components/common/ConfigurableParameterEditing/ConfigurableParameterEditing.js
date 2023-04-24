@@ -142,14 +142,6 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setIsReadOnly(true);
     };
 
-    const renderConfigurableParemetarType = (record) => {
-        return typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.find((item) => item?.key === record?.configurableParameterType)?.value;
-    };
-
-    const renderControlGroup = (record) => {
-        return typeData && typeData[PARAM_MASTER.CTRL_GRP.id]?.find((item) => item?.key === record?.controlGroup)?.value;
-    };
-
     const renderTableColumnName = (record, key, type) => {
         return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
     };
@@ -164,7 +156,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                 fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-                fieldType = fieldType.concat(convertDate(record?.fromDate)).concat('  ').concat(convertDate(record?.toDate));
+                fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
                 break;
             case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
                 fieldType = record?.booleanValue ? 'Yes' : 'No';
@@ -182,19 +174,20 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            width: '5%',
         }),
 
         tblPrepareColumns({
             title: 'Control ID',
             dataIndex: 'controlId',
             render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
-            width: '10%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Control Description',
             dataIndex: 'controlDescription',
-            width: '25%',
+            width: '20%',
         }),
 
         tblPrepareColumns({
@@ -215,12 +208,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             title: 'Control Group',
             dataIndex: 'controlGroup',
             render: (text, record, value) => renderTableColumnName(record, 'controlGroup', PARAM_MASTER.CTRL_GRP.id),
-            width: '15%',
+            width: '12%',
         }),
         {
             title: 'Action',
             dataIndex: '',
-            width: '10%',
+            width: '8%',
             render: (record) => [
                 <Space wrap>
                     <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}>
@@ -247,6 +240,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
+        setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
@@ -258,7 +252,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType)
+        setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
@@ -321,7 +315,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => setIsFormVisible(false),
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
@@ -368,7 +362,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`}  type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>
