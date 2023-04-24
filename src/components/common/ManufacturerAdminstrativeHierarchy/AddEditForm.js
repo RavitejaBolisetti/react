@@ -153,7 +153,7 @@ const AddEditFormMain = (props) => {
 
                     <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Authority Details</span>} key="1">
-                            <AuthorityDetail setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} />
+                            <AuthorityDetail setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} selectedTreeData={selectedTreeData} />
                         </Panel>
                     </Collapse>
                 </Col>

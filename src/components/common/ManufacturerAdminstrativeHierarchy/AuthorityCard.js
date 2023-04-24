@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-   // console.log(state,"nishant")
+    console.log(state,"viewView")
 
     let returnValue = {
         authorityVisible,
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData,authData,authorityVisible }) => {
+const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData, authData, authorityVisible }) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -77,7 +77,7 @@ const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, 
         setIsBtnDisabled(false);
     };
 
-    console.log(authData)
+    console.log(authData);
 
     return (
         <>
@@ -101,12 +101,17 @@ const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, 
                                 <Text strong>{authData?.employeeName + ' | ' + authData?.authorityEmployeeTokenNo}</Text>
                             </Col>
 
-                            <div>
+                            {/* <div>
                                 <Text type="secondary"> EffectiveFrom- {authorityVisible ? authData?.effectiveFrom : documentTypesList[0]?.effectiveFrom}</Text>
                                 <Divider type="vertical" />
                                 <Text type="secondary">EffectiveTo- {authorityVisible ? authData?.effectiveTo : documentTypesList[0]?.effectiveTo} </Text>
+                            </div> */}
+
+                            <div>
+                                <Text type="secondary"> EffectiveFrom- {authData?.effectiveFrom}</Text>
+                                <Divider type="vertical" />
+                                <Text type="secondary">EffectiveTo- {authData?.effectiveTo} </Text>
                             </div>
-                            
                         </Row>
                     </Col>
                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -118,13 +123,13 @@ const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, 
                                             <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authorityTypeCode, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom)} />
                                         </Col>
 
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                        {/* <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                             <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authorityTypeCode, EffectiveTo, authorityEmployeeTokenNo })} type="link" icon={<FiTrash />}></Button>
-                                        </Col>
+                                        </Col> */}
                                     </>
                                 )
                             ) : (
-                               <>
+                                <>
                                     {' '}
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                         <Button type="link" onClick={onUpdate}>
@@ -156,4 +161,3 @@ const AuthorityCardMain = ({ onFinish, setDocumentTypesList, authorityTypeCode, 
 // export default AuthorityCard
 
 export const AuthorityCard = connect(mapStateToProps)(AuthorityCardMain);
-

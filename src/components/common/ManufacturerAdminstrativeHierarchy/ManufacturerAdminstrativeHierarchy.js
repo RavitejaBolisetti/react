@@ -209,6 +209,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);
+
         }
         setIsFormVisible(true);
         setFormActionType(type);
@@ -309,6 +310,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         setDocumentTypesList,
         // viewMode,
         // isViewMode,
+        selectedTreeData,
     };
 
     const viewProps = {
@@ -320,6 +322,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         viewTitle,
         // viewMode,
         // isViewMode,
+        cardBtmDisableAction,
     };
     const leftCol = manufacturerAdminHierarchyData.length > 0 ? 16 : 24;
     const rightCol = manufacturerAdminHierarchyData.length > 0 ? 8 : 24;
