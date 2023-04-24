@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
-
+import comonTest from './comonTest.js'
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
 }));
@@ -14,8 +14,8 @@ window.matchMedia =
     function () {
         return {
             matches: false,
-            addListener: function () { },
-            removeListener: function () { },
+            addListener: function () {},
+            removeListener: function () {},
         };
     };
 // const  = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5'];
@@ -50,6 +50,7 @@ const listShowLoading = () => {
 
 
 describe('Qualification Master Test', () => {
+    comonTest(listShowLoading,saveData,fetchList)
     test('Is the search Field Present or not', () => {
         render(<QualificationMaster fetchList={fetchList} saveData={saveData} />);
         const searchField = screen.findByPlaceholderText('Search');
