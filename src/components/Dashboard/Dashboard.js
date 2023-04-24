@@ -37,7 +37,7 @@ const DashboardBase = ({ props }) => {
                 <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
-                            <div>
+                            <div className={styles.dashboardPageHeading}>
                                 {/* <span className={styles.headingGradient}>Welcome back {firstName}! </span> */}
                                 <span className={styles.headingGradient}>Home</span>
                             </div>
