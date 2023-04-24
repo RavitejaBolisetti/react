@@ -5,10 +5,9 @@ import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
-import styles from 'components/common/Common.module.css';
-import { ViewQualificationList } from './ViewQualificationList';
+import viewStyle from 'components/common/Common.module.css'
 
-const DrawerUtil = ({ setIsViewModeVisible,isViewModeVisible,codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const DrawerUtil = ({ codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
 
@@ -27,14 +26,8 @@ const DrawerUtil = ({ setIsViewModeVisible,isViewModeVisible,codeIsReadOnly, han
 
     const onClose = () => {
         setDrawer(false);
-        setIsViewModeVisible(false)
         setFormBtnDisable(false);
         form.resetFields();
-    };
-    const viewProps = {
-        isVisible: isViewModeVisible,
-        formData,
-        styles,
     };
 
     return (
@@ -81,32 +74,26 @@ const DrawerUtil = ({ setIsViewModeVisible,isViewModeVisible,codeIsReadOnly, han
             }
         >
             <Form form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                {!isViewModeVisible ? (
-                    <>
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('code')} {...codeDisabledProp} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
-                                    {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')} /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Qualification Code" name="qualificationCode" rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
+                            <Input maxLength={6} placeholder={preparePlaceholderText('code')} {...codeDisabledProp} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Qualification Name" name="qualificationName" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
+                            {!footerEdit ? <Input maxLength={50} placeholder={preparePlaceholderText('name')} /> : <p className={style.viewModeText}>{form.getFieldValue('qualificationName')}</p>}
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </>
-                ) : (
-                    <ViewQualificationList {...viewProps} />
-                )}
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="status" label="Status" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                </Row>
             </Form>
         </Drawer>
     );

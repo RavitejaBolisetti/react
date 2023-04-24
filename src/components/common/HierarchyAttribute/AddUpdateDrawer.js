@@ -4,6 +4,8 @@ import { validateAlphanumericWithSpace, validateRequiredInputField, validationFi
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/Common.module.css';
+import styles from 'components/common/DrawerAndTable.module.css';
+
 
 const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
@@ -90,7 +92,7 @@ const AddUpdateDrawer = ({ codeIsReadOnly, editRow, setEditRow, showDrawer, setS
             placement="right"
             onClose={onClose}
             open={showDrawer}
-            className={formActionType === 'view' ? style.viewMode : style.editDrawer}
+            className={formActionType === 'view' ? styles.viewMode : styles.editDrawer}
         >
             <Space
                 direction="vertical"
