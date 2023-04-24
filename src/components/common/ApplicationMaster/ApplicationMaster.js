@@ -5,8 +5,8 @@ import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
-import styl from './ApplicationMaster.module.css';
+// import style from 'components/common/DrawerAndTable.module.css';
+// import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
@@ -19,6 +19,7 @@ import { HierarchyFormButton } from '../Button';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
+import ViewApplicationDetailMain from './ViewApplicationDetailMain';
 
 const { Search } = Input;
 
@@ -32,8 +33,8 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        // criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
-        criticalityGroupData,
+        criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
+        // criticalityGroupData,
         applicationDetailsData,
         dealerLocations,
         userId,
@@ -82,7 +83,7 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applicationListShowLoading, isDataAttributeLoaded, attributeData, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -97,7 +98,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
     const [menuType, setMenuType] = useState('W');
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [selectedTreeData, setSelectedTreeData] = useState([]); // selected tree and on adding set tree key
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
@@ -117,7 +117,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
         }
         fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' }); //fetch menu data
-        // fetchList({ setIsLoading: applicationMasterDataShowLoading, userId,  }); //fetch menu data
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
@@ -145,16 +144,17 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         if (res?.data) {
+            const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data;
+
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
 
-            setSelectedTreeKey([res?.data?.id]);
+            applicationCall(res?.data);
+            setSelectedTreeKey([rest?.applicationId]);
+
             setFormActionType('view');
-            // setFormBtnActive(false);
-            // setIsFormVisible(false);
             setisVisible(false);
         }
-        // onSaveShowLoading(false);
     };
     const onError = (message) => {
         showGlobalNotification({ message });
@@ -164,11 +164,15 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
     const onFinish = (values) => {
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
-        if (applicationDetails?.accessableIndicator === 0 && accessibleLocation?.length < 1) {
-            return showGlobalNotification({ message: 'Please add accessible location' });
+        // let message = '';
+        if (applicationAction?.length < 1) {
+            return showGlobalNotification({ message: 'Please add application action to proceed' });
         }
-        if (applicationDetails?.documentNumRequired === true && documentType?.length < 1) {
-            return showGlobalNotification({ message: 'Please add document types' });
+        if (values?.documentNumRequired && documentType?.length < 1) {
+            return showGlobalNotification({ message: 'Please add document types  to proceed' });
+        }
+        if (values?.accessableIndicator === '2' && accessibleLocation?.length < 1) {
+            return showGlobalNotification({ message: 'Please add accessible location  to proceed' });
         }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
@@ -200,12 +204,9 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
             applicationCall(keys[0]);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
             setSelectedTreeKey(keys);
-            // } else {
-            //     setIsChildAllowed(true);
         }
     };
 
-    //view card footer button
     const handleButtonClick = (type) => {
         if (!applicationDetailsData?.length) return;
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
@@ -288,7 +289,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
                                 <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                     <Row gutter={20} style={{ border: '1px' }} align="middle">
                                         <Col xs={10} sm={10} md={10} lg={10} xl={8}>
-                                            <div className={styl.changeThemeBorder}>
+                                            <div className={styles.changeThemeBorder}>
                                                 <Button
                                                     type="secondary"
                                                     danger
@@ -315,13 +316,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
                                             </div>
                                         </Col>
                                         <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={styl.anticon} />
+                                            <Search style={{ width: '100%' }} placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                                         </Col>
                                     </Row>
                                 </Col>
                             </Row>
                         </div>
-                        <div className={styl.contentLeftPanel}>
+                        <div className={styles.content}>
                             {menuData?.length <= 0 ? (
                                 <div className={styles.emptyContainer}>
                                     <Empty
@@ -335,13 +336,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
                                             </span>
                                         }
                                     >
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
                                             Add
                                         </Button>
                                     </Empty>
                                 </div>
                             ) : (
-                                <div className={` ${styl.leftPanelScroll}`}>
+                                <div className={` ${styles.leftPanelScroll}`}>
                                     <LeftPanel {...myProps} />
                                 </div>
                             )}
@@ -349,12 +350,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, isDataLoaded, applica
                     </Spin>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={`${styles.padRight0} ${styles.viewDetails}`}>
                     <Spin spinning={isApplicationDeatilsLoading}>
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <ViewApplicationDetail applicationDetailsData={applicationDetailsData} />
-
+                                {/* <ViewApplicationDetail applicationDetailsData={applicationDetailsData} /> */}
+                                <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
                                 <div className={styles.hyrbuttonContainer}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
                                 </div>

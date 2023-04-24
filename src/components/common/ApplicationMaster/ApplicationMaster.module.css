@@ -2,9 +2,10 @@
     background: #f2f2f2;
 }
 
-.viewCardSize :global {
+.viewCardSize  {
     width: 100%;
-    margin-top: 12px;
+    /* margin-top: 12px; */
+    margin-bottom: 10px;
 }
 
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
@@ -32,44 +33,7 @@
     height: 16px;
     width: 16px;
 } */
-:global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-text) {
-    font-weight: 600;
-    font-size: 16px;
 
-}
-
-:global(.ant-collapse) {
-    background: #f2f2f2;
-}
-
-:global .ant-card .ant-card-body {
-    padding: 6px 20px;
-    gap: 10px;
-    border-radius: 0 0 8px 8px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    /* height: 400px; */
-}
-
-:global .ant-card .ant-card-head {
-    padding: 0 20px;
-    background: #f4f4f4;
-}
-
-:global .ant-card .ant-card-body::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34) !important;
-    border-radius: 10px;
-}
-
-:global .ant-card .ant-card-body::-webkit-scrollbar {
-    width: 5px;
-    background-color: #f4f4f4;
-}
-
-
-:global .ant-card .ant-card-body::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
-}
 
 .changeThemeBorder {
     border: 1px solid #dedede;
@@ -119,8 +83,8 @@
     -moz-border-radius: 7px 7px 0px 0px;
     -webkit-border-radius: 7px 7px 0px 0px;
     border: 1px solid #e8e8e8;
-    height: calc(100vh - 255px);
-    overflow-y: auto;
+    /* height: calc(100vh - 255px); */
+    /* overflow-y: auto; */
     margin-top: 0px;
 }
 
@@ -154,4 +118,17 @@
   border-radius: 4px;
   border-color: #DEDEDE;
   
+}
+
+.autoCompleteBtn :global .ant-input-group >.ant-input-group-addon:last-child {
+    inset-inline-start: -1px;
+    padding: 0;
+    border: 0;
+    border: 1px solid hsl(0deg 0% 85.1%);
+    border-left: none;
+    background: white;
+}
+
+.autoCompleteBtn :global .ant-input-group >.ant-input-group-addon:last-child :hover {
+    border: none;
 }

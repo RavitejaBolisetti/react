@@ -6,7 +6,8 @@ import style from './ApplicationMaster.module.css';
 const { Text } = Typography;
 
 function LocationCard(props) {
-    let { dealerLocationName, dealerMasterLocationId, id, handleDeleteLocation } = props;
+    let { locationName, id, handleDeleteLocation } = props;
+    console.log("props",props)
 
     return (
         <Card
@@ -19,11 +20,11 @@ function LocationCard(props) {
         >
             <Row>
                 <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22}>
-                    <Text strong>{dealerLocationName}</Text>
+                    <Text strong>{locationName}</Text>
                 </Col>
                 {!id?.length > 0 && (
                     <Col xs={2} sm={2} md={2} lg={2} xl={2} xxl={2}>
-                        <Button onClick={() => handleDeleteLocation({ dealerLocationName })} type="link" icon={<CloseOutlined className={style.anticon} />}></Button>
+                        <Button onClick={() => handleDeleteLocation({ locationName })} type="link" icon={<CloseOutlined className={style.anticon} />}></Button>
                     </Col>
                 )}
             </Row>

@@ -3,11 +3,13 @@ import { APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED, APPLICATION_CRITICA
 const initialState = {
     isLoaded: false,
     isLoading: false, //for tree/menu
-    // isApplicationDeatilsLoaded: false,
     applicationDetailsData: [],
     isApplicationDeatilsLoading: false,
     applicationCriticalityGroupData: [],
     isApplicatinoOnSaveLoading: false,
+    isLocationsLoading: false,
+    isActionsLoading: false,
+    isConfigParamsLoading: false,
 };
 
 export const ApplicationMaster = (state = initialState, action) => {
@@ -15,13 +17,13 @@ export const ApplicationMaster = (state = initialState, action) => {
         case APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED:
             return { ...state, isApplicationDeatilsLoading: action.isLoaded, applicationDetailsData: action.data };
         case APPLICATION_CRITICALITY_GROUP_LOADED:
-            return { ...state, isCriticalityGroupLoaded: action.isLoaded, applicationCriticalityGroupData: action.data };
+            return { ...state, isactionsLoaded: action.isLoaded, applicationCriticalityGroupData: action.data };
         case DEALER_LOCATIONS_LOADED:
-            return { ...state, isDealerLocationsLoaded: action.isLoaded, dealerLocations: action.data };
+            return { ...state, isLocationsLoading: action.isLoaded, dealerLocations: action.data };
         case APPLICATION_ACTON_DATA_LOADED:
-            return { ...state, isActionsLoaded: action.isLoaded, actions: action.data };
+            return { ...state, isActionsLoading: action.isLoaded, actions: action.data };
         case CONFIG_PARAM_DATA_LOADED:
-            return { ...state, isConfigParamsLoaded: action.isLoaded, configurableParamData: action.data };
+            return { ...state, isConfigParamsLoading: action.isLoaded, configurableParamData: action.data };
         case APPLICATION_DATA_LOADED:
             return { ...state, isLoading: action.isLoading, applicationData: action.data };
         case APPLICATION_MASTER_DATA_SHOW_LOADING:
@@ -34,5 +36,3 @@ export const ApplicationMaster = (state = initialState, action) => {
             return { ...state };
     }
 };
-
-

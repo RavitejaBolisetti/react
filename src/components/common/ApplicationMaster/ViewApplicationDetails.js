@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Col, Row, Card, Space, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 
@@ -29,8 +28,10 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
     
 
     return (
-        <Card title="Application Details">
-            <div className={styles.cardBody}>
+        // <Card title="Application Details">
+            // <div className={styles.cardBody}>
+
+
                 <Space direction="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
@@ -110,7 +111,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                             </Col>
                         )}
 
-                        {documentType.length > 0 && (
+                        {rest?.documentNumRequired && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                                 <Collapse  onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 2 ? styles.viewAccordianHeader : '' }>Document Types</span>}  key="2">
@@ -121,7 +122,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                                 </Collapse>
                             </Col>
                         )}
-                        {accessibleLocation?.length > 0 && (
+                        {rest?.accessableIndicator === 2 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                                 <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 3 ? styles.viewAccordianHeader : '' }>Accessible Dealer Location</span>} key="3">
@@ -134,8 +135,8 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         )}
                     </Row>
                 </Space>
-            </div>
-        </Card>
+            // </div>
+        // </Card>
     );
 };
 

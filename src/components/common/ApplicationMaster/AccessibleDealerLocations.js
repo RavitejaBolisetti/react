@@ -4,6 +4,7 @@ import { applicationMasterDataActions } from 'store/actions/data/applicationMast
 
 import { Col, Row, Input, AutoComplete } from 'antd';
 import styles from '../../common/Common.module.css';
+import style from './ApplicationMaster.module.css';
 import { Fragment } from 'react';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
@@ -88,20 +89,26 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
 
     const handleSelect = (value) => {
         let locationDetails = dealerLocations?.find((location) => location?.dealerLocationName === value);
-
         if (finalFormdata?.accessibleLocation?.findIndex((el) => el?.dealerMasterLocationId === locationDetails?.id) !== -1) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This location is already added.' });
             return;
         }
-
-        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails.id, dealerLocationName: value, id: '' }] }));
+        setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '' }] }));
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Location added successfully' });
     };
 
     const onSearchLocation = debounce((text) => {
         if (text?.length < 3 || !userId) return;
-        fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
-    }, 300);
+         fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
+    }, 500);
+
+    // function onSearchLocation(text){
+    //     if (text?.length < 3 || !userId) return;
+    //         debounce(() => {
+    //         console.log("text",text)
+    //          return fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
+    //     }, 500)
+    // };
 
     const handleChange = (text) => {
         setSearchValue(text?.trim());
@@ -110,7 +117,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     const handleDeleteLocation = (values) => {
         setFinalFormdata((prev) => {
             const prevData = prev;
-            const index = prev?.accessibleLocation?.findIndex((el) => el?.dealerLocationName === values?.dealerLocationName);
+            const index = prev?.accessibleLocation?.findIndex((el) => el?.locationName === values?.locationName);
             prevData?.accessibleLocation?.splice(index, 1);
             return prevData;
         });
@@ -121,9 +128,11 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
     return (
         <Fragment>
             <Row gap={20}>
-                <Col className={styles.autoCompleteContent} xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <AutoComplete
+                        className={`${styles.headerSearchField} ${style.autoCompleteBtn}`}
                         options={dealerLocationsList}
+                        backfill={false}
                         style={{
                             width: '100%',
                         }}
@@ -132,10 +141,12 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                         onSearch={onSearchLocation}
                         onChange={handleChange}
                         allowSearch
+                        notFoundContent="No location found"
                     >
                         <Input.Search size="large" placeholder={preparePlaceholderAutoComplete('Location name')} />
                     </AutoComplete>
                 </Col>
+
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {finalFormdata?.accessibleLocation?.length > 0
                         ? finalFormdata?.accessibleLocation?.map((location) => {
