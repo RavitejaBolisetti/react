@@ -90,9 +90,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    
-    console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:", selectedTreeData);
-    console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ formData:", formData);
+
+    console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:', selectedTreeData, formData);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -120,18 +119,18 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     useEffect(() => {
         if (isDetailLoaded && selectedId && detailData) {
-            console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:90 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedId:', selectedId, isDetailLoaded, detailData);
+            console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:122 ~ useEffect ~ detailData:", detailData)
             const isChildAllowed = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.isChildAllowed;
-            fetchDetail && setFormData({ ...detailData?.data, isChildAllowed });
+            detailData && setFormData({ ...detailData?.data, isChildAllowed });
 
             const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.hierarchyAttribueName;
             const manufactureAdminShortName = flatternData.find((i) => detailData?.data?.manufactureAdminParntId === i.key)?.data?.manufactureAdminShortName;
-            fetchDetail && setSelectedTreeData({ ...detailData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName });
+            detailData && setSelectedTreeData({ ...detailData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName });
 
             setFormActionType('view');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDetailLoaded, fetchDetail]);
+    }, [isDetailLoaded, detailData, selectedId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
