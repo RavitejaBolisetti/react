@@ -22,17 +22,17 @@
     border-radius: 5px;
     border: 0px;
     border-bottom: 4px solid;
-    border-image: rgba(255,62,91,1);
-    border-image: linear-gradient(135deg, #FF3E5B 0.19%, #FFE1D8 99.81%);
-    border-image: -moz-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);
-    border-image: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,62,91,1)), color-stop(100%, rgba(255,225,216,1)));
-    border-image: -webkit-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);
-    border-image: -o-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);
-    border-image: -ms-linear-gradient(left, rgba(255,62,91,1) 0%, rgba(255,225,216,1) 100%);  
-    border-image-slice: 1; 
+    border-image: rgba(255, 62, 91, 1);
+    border-image: linear-gradient(135deg, #ff3e5b 0.19%, #ffe1d8 99.81%);
+    border-image: -moz-linear-gradient(left, rgba(255, 62, 91, 1) 0%, rgba(255, 225, 216, 1) 100%);
+    border-image: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 62, 91, 1)), color-stop(100%, rgba(255, 225, 216, 1)));
+    border-image: -webkit-linear-gradient(left, rgba(255, 62, 91, 1) 0%, rgba(255, 225, 216, 1) 100%);
+    border-image: -o-linear-gradient(left, rgba(255, 62, 91, 1) 0%, rgba(255, 225, 216, 1) 100%);
+    border-image: -ms-linear-gradient(left, rgba(255, 62, 91, 1) 0%, rgba(255, 225, 216, 1) 100%);
+    border-image-slice: 1;
     text-decoration: none;
     margin-bottom: 28px;
-    color: #342C2C;
+    color: #342c2c;
     font-size: 18px;
     font-weight: 500;
 }
@@ -75,11 +75,11 @@
     margin-top: 0;
 }
 
-:global .ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-title+.ant-modal-confirm-content {
+:global .ant-modal-confirm .ant-modal-confirm-body .ant-modal-confirm-title + .ant-modal-confirm-content {
     max-width: 100%;
     padding: 10px;
     text-align: justify;
-    border-top: 1px solid #DEDEDE;
+    border-top: 1px solid #dedede;
 }
 
 :global .ant-modal-confirm .ant-modal-confirm-btns button:last-child {
@@ -103,12 +103,11 @@
 }
 
 .modalIconAlert {
-    color: #FF7A00;
+    color: #ff7a00;
     padding-right: 8px;
 }
 
 @media (max-width: 768px) {
-
     .pageHeader .headingGradient {
         padding-bottom: 5px;
         /* border-bottom: 0px; */
@@ -144,5 +143,4 @@
     .buttonContainer button {
         margin-left: 0px;
     }
-
 }
