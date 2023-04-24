@@ -1,0 +1,12 @@
+.cardBox, .collapsecardBox{ background:#BEBEBE1A; border: 1px solid #3E3E3E1A}
+
+.userdetials span{ width: 50%; display: inline-block; color: #747474D9;}
+.userdetials span strong{ display: block; color: #000000D9;} 
+.collapsecardBox span{ font-size: 16px; font-weight: 600; text-align: left; line-height: 20px; }
+.collapsecardBox svg{font-size: 18px !important;}
+.collapsecardBox .chooserole .ant-form-item-control-input span{ font-size: 120px;}
+
+/* .collapsecardBox .ant-collapse-item-active span{ color: #E31837;} */
+/* .collapsecardBox .ant-collapse-content.ant-collapse-content-active{ background: #f00;} */
+.collapsecardBox .ant-collapse-content-box { background: none !important;}
+

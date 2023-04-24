@@ -8,7 +8,11 @@ import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 
+
+
+
 import styles from 'components/common/Common.module.css';
+import manufacturerstyle from '../UserManagementManufacturer/UserManagementManufacturer.module.css'
 import style from 'components/common/DrawerAndTable.module.css';
 import { dealerData } from '../DealerHierarchy/test';
 
@@ -16,7 +20,13 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
+const OPTIONS = ['Manager', 'Sales Executive', 'Financial Executive', 'Sales Manager'];
+
 const AddEditFormMain = (props) => {
+    const [selectedItems, setSelectedItems] = useState([]);
+    const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o));
+
+
     const { saveclick, onCloseAction, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const [Macid, setMacid] = useState();
@@ -39,6 +49,7 @@ const AddEditFormMain = (props) => {
         form.validateFields();
         const CardData = {
             macid: Macid,
+            
         };
         setAccessMacid([...AccessMacid, CardData]);
         console.log('This is the macID : ', CardData);
@@ -50,7 +61,16 @@ const AddEditFormMain = (props) => {
         console.log('We are getting dealer data: :', DealerData);
     }, [DealerData]);
 
+    
+
+
+    
+
+    
+
     return (
+
+        
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Space
                 direction="vertical"
@@ -64,13 +84,15 @@ const AddEditFormMain = (props) => {
                         {/* <Card>
                             <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card> */}
-                        <Card className={style.userManagementDrawer}>
-                            <p>
-                                Token No: <span>{tableDetailData['0'].employeeCode}</span>
-                            </p>
-                            <p>
-                                User Name: <span>{tableDetailData['0'].userName}</span>
-                            </p>
+                        <Card className={manufacturerstyle.cardBox}>
+                            <div className={manufacturerstyle.userdetials}>
+                            <span>
+                                Token No: <strong>{tableDetailData['0'].employeeCode}</strong>
+                            </span>
+                            <span>
+                                User Name: <strong>{tableDetailData['0'].userName}</strong>
+                            </span>
+                            </div>
                         </Card>
                     </Col>
                 </Row>
@@ -95,63 +117,81 @@ const AddEditFormMain = (props) => {
                                 display: 'flex',
                             }}
                         >
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={({ isActive }) => <AiOutlinePlusSquare rotate={isActive ? 30 : 0} />}>
                                 <Panel header="Assign User Roles" key="1">
 
                                 <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item label="User Role" name="Macid" rules={[validateRequiredInputField('MAC id'), validationFieldLetterAndNumber('MAC id')]}>
-                                        <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
-                                        Add
-                                    </Button>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Space
-                                        direction="vertical"
-                                        size="middle"
-                                        style={{
-                                            display: 'flex',
-                                        }}
-                                    >
-                                        {AccessMacid?.map((el) => {
-                                            return (
-                                                <Card className={style.userManagementDrawer}>
-                                                    <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                            <span>Mac Id</span>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row gutter={20}>
-                                                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                                                            <span>{el.macid}</span>
-                                                        </Col>
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Button>
-                                                                <AiOutlineClose />
-                                                            </Button>
-                                                        </Col>
-                                                    </Row>
-                                                </Card>
-                                            );
-                                        })}
-                                    </Space>
-                                </Col>
-                            </Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <Form.Item label="User Role" name="Macid" rules={[validateRequiredInputField(''), validationFieldLetterAndNumber('')]}>
+                                            {/* <Input onChange={(event) => setMacid(event.target.value)}  placeholder={preparePlaceholderText('User Role')} /> */}
+                                           
+                                            <Select
+                                                className={manufacturerstyle.chooserole}
+                                                mode="multiple"
+                                                placeholder="Select user role"
+                                                value={selectedItems}
+                                                onChange={setSelectedItems}
+                                                style={{ width: '100%' }}
+                                                options={filteredOptions.map((item) => ({
+                                                    value: item,
+                                                    label: item,
+                                                }))}
+                                                />
+                                           
+                                            
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        {/* <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
+                                            Add
+                                        </Button> */}
+                                        <Button form="myForm" key="Add" type="primary">
+                                            Add
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <Space
+                                            direction="vertical"
+                                            size="middle"
+                                            style={{
+                                                display: 'flex',
+                                            }}
+                                        >
+                                            {AccessMacid?.map((el) => {
+                                                return (
+                                                    <Card className={style.userManagementDrawer}>
+                                                        <Row gutter={20}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                                <span>Mac Id</span>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row gutter={20}>
+                                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                                                <span>{el.macid}</span>
+                                                            </Col>
+                                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                                <Button>
+                                                                    <AiOutlineClose />
+                                                                </Button>
+                                                            </Col>
+                                                        </Row>
+                                                    </Card>
+                                                );
+                                            })}
+                                        </Space>
+                                    </Col>
+                                </Row>
 
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                 <Panel header="Branch Mapping" key="2"></Panel>
                             </Collapse>
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                 <Panel header="Product Mapping" key="3"></Panel>
                             </Collapse>
                         </Space>
