@@ -3,15 +3,13 @@ import { FaAddressBook, FaCreativeCommonsShare } from 'react-icons/fa';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { MdStars } from 'react-icons/md';
 import { TbReport } from 'react-icons/tb';
-import { HomeIcon } from 'Icons';
+import { HomeIcon, AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 import { getMenyKey } from 'utils/menuKey';
 
 import * as routing from './routing';
-import { AdminIcon, CrmIcon, HrIcon, ServiceIcon, SparesIcon } from 'Icons';
 
 export const MenuConstant = {
-   
     [getMenyKey('FAV')]: {
         key: 'FAV',
         link: undefined,
@@ -101,7 +99,7 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-03',
     },
-    
+
     [getMenyKey('COMN-03.07')]: {
         key: 'COMN-03.07',
         link: routing.ROUTING_COMMON_CONFIG_PARAM_EDIT,
