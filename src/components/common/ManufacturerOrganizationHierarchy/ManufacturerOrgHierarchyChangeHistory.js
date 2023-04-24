@@ -56,6 +56,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
             title: 'Changed Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
+     
         })
     );
 
@@ -63,6 +64,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
+         
         })
     );
 
@@ -70,24 +72,28 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tblPrepareColumns({
             title: 'Attribute',
             dataIndex: 'attributeCode',
+        
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyCode',
+           
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Parent',
             dataIndex: 'parent',
+            
         })
     );
     tableColumn.push(
         tblPrepareColumns({
             title: 'Short Description',
             dataIndex: 'shortDescript',
+            
         })
     );
 
@@ -95,6 +101,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tblPrepareColumns({
             title: 'Long Description',
             dataIndex: 'longDescript',
+            
         })
     );
 
@@ -102,6 +109,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
+           
 
             render: (text) => {
                 console.log('record', text, typeof text);
