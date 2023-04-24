@@ -91,7 +91,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
-    console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:', selectedTreeData, formData);
+    console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:', selectedTreeData, formData);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -117,20 +117,23 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDetailLoaded, selectedId, userId]);
 
+    // console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:122 ~ useEffect ~ selectedId:', selectedId, detailData);
+
     useEffect(() => {
-        if (isDetailLoaded && selectedId && detailData) {
-            console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:122 ~ useEffect ~ detailData:", detailData)
-            const isChildAllowed = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.isChildAllowed;
-            detailData && setFormData({ ...detailData?.data, isChildAllowed });
+        console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:126 ~ useEffect ~ detailData 1:', detailData, attributeData);
+        const isChildAllowed = attributeData && attributeData?.find((attribute) => attribute.id === detailData?.attributeKey);
+        console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:126 ~ useEffect ~ detailData 2:', detailData, attributeData);
+        
+        console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:125 ~ useEffect ~ isChildAllowed:', isChildAllowed);
+        // setFormData({ ...detailData, isChildAllowed });
 
-            const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.hierarchyAttribueName;
-            const manufactureAdminShortName = flatternData.find((i) => detailData?.data?.manufactureAdminParntId === i.key)?.data?.manufactureAdminShortName;
-            detailData && setSelectedTreeData({ ...detailData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName });
+        // const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.hierarchyAttribueName;
+        // const manufactureAdminShortName = flatternData.find((i) => detailData?.data?.manufactureAdminParntId === i.key)?.data?.manufactureAdminShortName;
+        // setSelectedTreeData({ ...detailData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName });
+        // setFormActionType('view');
 
-            setFormActionType('view');
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDetailLoaded, detailData, selectedId]);
+    }, [isDetailLoaded, selectedId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -161,15 +164,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
-
-       // console.log("Visible Function Working")
+        // console.log("Visible Function Working")
 
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
 
-        console.log("Visible Function Working")
+        console.log('Visible Function Working');
 
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i.key);
@@ -180,16 +182,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
-            if (formData) {
-                // const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
-                // formData && setFormData({ ...formData?.data, isChildAllowed });
+            // if (formData) {
+            // const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+            // formData && setFormData({ ...formData?.data, isChildAllowed });
 
-                // const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                // const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
-                formData && setSelectedTreeData({ ...formData?.data, 
-                   // hierarchyAttribueName, parentName: prodctShrtName 
-                });
-            }
+            // const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+            // const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+            // formData && setSelectedTreeData({ ...formData?.data,
+            // hierarchyAttribueName, parentName: prodctShrtName
+            // });
+            // }
         }
 
         setSelectedTreeKey(keys);
