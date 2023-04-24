@@ -20,6 +20,7 @@ import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
 
+
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -278,6 +279,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             dataIndex: 'srl',
             sorter: false,
             render: (_t, _r, i) => i + 1,
+            width: '5%'
         })
     );
 
@@ -285,6 +287,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
+            width: '15%'
         })
     );
 
@@ -292,6 +295,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
+            width: '35%'
+
         })
     );
 
@@ -300,6 +305,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
             render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '15%'
         })
     );
 
@@ -308,6 +314,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '15%'
+
         })
     );
 
@@ -331,6 +339,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                     </Space>
                 );
             },
+            width: '15%'
+
         })
     );
 
@@ -343,10 +353,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         Criticality Group List
                                     </Col>
-                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                         <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
                                     </Col>
                                 </Row>

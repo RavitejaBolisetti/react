@@ -13,6 +13,7 @@ const applicationData = [
         applicationName: 'Tharr',
     },
 ];
+
 const fieldNames = { label: 'applicationName', value: 'id' };
 
 const ProductAttributeAddEditForm = ({ form, onFinish, status, name, id, canAdd = true, canEdit = false, isAddBtnDisabled, skuData, setSKUAttributes, setAddBtnDisabled }) => {

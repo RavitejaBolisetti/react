@@ -49,16 +49,17 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
+    
     let dataListToCheck = dataList || [];
     if (updateVal && dataList?.length > 1) {
-        let index = dataList?.findIndex((el) => el[fieldName] === updateVal);
+        let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal);
         if(index !== -1){
             dataListToCheck?.splice(index, 1);
         }
     };
 
-    if (dataListToCheck?.findIndex((el) => el[fieldName] === value) !== -1) {
-        return Promise.reject('error duplicate found');
+    if (dataListToCheck?.findIndex((el) => (el[fieldName])?.toLowerCase() === value?.toLowerCase()) !== -1) {
+        return Promise.reject('Duplicate found');
     } else {
         return Promise.resolve('');
     }

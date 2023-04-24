@@ -8,7 +8,9 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
+import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
+
 
 const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
@@ -135,23 +137,23 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
             maskClosable={false}
             footer={
                 <>
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Button danger onClick={onClose} className={style.cancelBtn}>
-                                Cancel
+                  <Row gutter={20} className={styles.formFooter}>
+                  <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onClose} >
+                               {!footerEdit ? 'Cancel':'Close'} 
                             </Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
-                            {saveAndSaveNew ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                            {saveBtn ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                    Save
                                 </Button>
                             ) : (
                                 ''
                             )}
-                            {saveBtn ? (
-                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
+                            {saveAndSaveNew ? (
+                                <Button loading={isLoading} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Save & Add New
                                 </Button>
                             ) : (
                                 ''

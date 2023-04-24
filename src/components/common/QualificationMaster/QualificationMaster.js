@@ -81,6 +81,8 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [saveandnewclick, setsaveandnewclick] = useState();
     const [successAlert, setSuccessAlert] = useState(false);
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+    const [isViewModeVisible,setIsViewModeVisible] = useState(false)
+
 
     useEffect(() => {
         form.resetFields();
@@ -275,7 +277,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
     const handleView = (record) => {
         setFormActionType('view');
-
+        setIsViewModeVisible(true)
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
         setFooterEdit(true);
@@ -353,6 +355,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 </Col>
             </Row>
             <DrawerUtil
+            isViewModeVisible={isViewModeVisible}
                 codeIsReadOnly={codeIsReadOnly}
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}
@@ -379,6 +382,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                 footerEdit={footerEdit}
                 handleUpdate2={handleUpdate2}
                 isLoadingOnSave={isLoadingOnSave}
+                setIsViewModeVisible={setIsViewModeVisible}
             />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

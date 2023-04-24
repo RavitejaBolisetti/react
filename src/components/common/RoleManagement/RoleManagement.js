@@ -1,23 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Space, List, Switch, Checkbox, Card, Tree, Divider } from 'antd';
-import { FaEdit, FaUserPlus, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa';
+import { Button, Empty, notification, ConfigProvider, Col, Form, Row, Input, Space, Tablet, Tree, List, Drawer, Switch, Collapse, Checkbox, Card, Divider } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
+import { PlusOutlined } from '@ant-design/icons';
+import { TfiReload } from 'react-icons/tfi';
+import { showGlobalNotification } from 'store/actions/notification';
+import { EditIcon, ViewEyeIcon } from 'Icons';
 import { addToolTip } from 'utils/customMenuLink';
+import { geoDataActions } from 'store/actions/data/geo';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import DrawerUtil, { AddEditForm } from './AddEditForm';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
+import { menuDataActions } from 'store/actions/data/menu';
+
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
-import styles2 from './RoleManagement.module.css';
-import treeData from './Treedata.json';
-import { generateRandomNumber } from 'utils/generateRandomNumber' ;
+import { validateEmailField } from 'utils/validation';
+import styles from 'components/common/Common.module.css';
+import { escapeRegExp } from 'utils/escapeRegExp';
+import { tblPrepareColumns } from 'utils/tableCloumn';
+import { DataTable } from 'utils/dataTable';
+import { ViewRoleManagement } from './ViewRoleManagement';
+
+const { Search } = Input;
+
+const initialTableData = [{ roleId: 'PM001' }, { roleName: 'PM002', activeIndicator: 1 }];
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
-            RoleManagement: { isLoaded: isDataLoaded = false, data: RoleManagementData = [] },
+            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [], isLoading, isFormDataLoaded },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -25,13 +40,20 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'Role Management';
+
     let returnValue = {
         collapsed,
         userId,
+        isLoading,
         isDataLoaded,
         RoleManagementData,
-        isDataAttributeLoaded,
+        isLoadingOnSave,
+        moduleTitle,
+        MenuTreeData,
+        RoleData,
         attributeData: attributeData?.filter((i) => i),
+        isFormDataLoaded,
     };
     return returnValue;
 };
@@ -41,443 +63,576 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: rolemanagementDataActions.fetchList,
+            fetchMenuList: rolemanagementDataActions.fetchMenuList,
+            fetchRole: rolemanagementDataActions.fetchRole,
             saveData: rolemanagementDataActions.saveData,
             listShowLoading: rolemanagementDataActions.listShowLoading,
+            onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
     const [form] = Form.useForm();
-    const [isTreeViewVisible, setTreeViewVisible] = useState(true);
-    const [Roledataset, setRoledataset] = useState([]); //Left Menu render as new data is added Presently hardcoded
 
-    const [formData, setFormData] = useState([]); //When we fetch from Api the data is added here and the new data is also appended
-    const [Mycheckvals, setMycheckvals] = useState([]); //Reference to checked keys in the tree
+    const [filterString, setFilterString] = useState();
+    const [searchData, setSearchdata] = useState(RoleManagementData);
+    const [refreshData, setRefreshData] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [footerEdit, setFooterEdit] = useState(false);
+    const [selectedRecord, setSelectedRecord] = useState(null);
+    const [formBtnDisable, setFormBtnDisable] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
+    const [viewData, setViewData] = useState({});
+    const [successAlert, setSuccessAlert] = useState(false);
+    const [isReadOnly, setIsReadOnly] = useState(false);
+    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
+    const [showSaveBtn, setShowSaveBtn] = useState(true);
+    const [MenuAlteredData, setMenuAlteredData] = useState();
+    const [RowData, setRowData] = useState();
+    const [saveClick, setSaveClick] = useState();
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [formData, setFormData] = useState([]);
+    const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
-    const [disabled, setDisabled] = useState(false); //To open form in read only mode true at the first time
+    // useEffect(() => {
+    //     FilterMenudata(MenuTreeData);
+    // }, [MenuTreeData]);
 
-    const [AddEditCancel, setAddEditCancel] = useState(true); // when we click on Add Role save cancel and reset is opened
-    const [forceFormReset, setForceFormReset] = useState();
-
-    const [InitialData, setInitialData] = useState({}); //Finding the Clicked role and setting it in intialData
-    const [addchilds, setAddchild] = useState(true); //Add role button to show or not
-    const [Switcher, setSwitcher] = useState(true);
-
-    const [Checkboxdata, setCheckBoxData] = useState({
-        All: false,
-        Add: false,
-        View: false,
-        Delete: false,
-        Edit: false,
-        Upload: false,
-        Download: false,
-    });
     useEffect(() => {
-        if (!isDataLoaded) {
+        fetchRole({ setIsLoading: listShowLoading, userId, id: RowData?.id });
+
+        console.log('This is the Specfic Role Data : ', RowData);
+    }, [RowData]);
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchMenuList({ setIsLoading: listShowLoading, userId });
+
+            console.log('This is the Menus Data : ', MenuTreeData);
+        }
+    }, [isDataLoaded, userId]);
+
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded]);
+    }, [isDataLoaded, userId]);
+
     useEffect(() => {
-        form.resetFields();
-        setExpandedKeys([]);
-        setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
+        setSearchdata(RoleManagementData);
+        console.log('RoleManagementData  : ', RoleManagementData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [forceFormReset]);
-    useEffect(() => {
-        const SetRole = [];
-        // const finalRoledata = RoleManagementData.map((e) => {
-        //     Object.keys(e).map((keyName, i) => {
-        //         if (keyName === 'roleName') {
-        //             SetRole.push(e[keyName]);
-        //         }
-        //     });
-        // });
-        setRoledataset(SetRole);
-        setFormData(RoleManagementData);
     }, [RoleManagementData]);
 
-    //Tree
-
-    const [expandedKeys, setExpandedKeys] = useState([]);
-    const [checkedKeys, setCheckedKeys] = useState([]);
-    const [selectedKeys, setSelectedKeys] = useState([]);
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
-
-    const onExpand = (expandedKeysValue) => {
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
-        setExpandedKeys(expandedKeysValue);
-        setAutoExpandParent(false);
-    };
-    const onCheck = (checkedKeysValue) => {
-        setMycheckvals(checkedKeysValue);
-        setCheckedKeys(checkedKeysValue);
-    };
-    const onSelect = (selectedKeysValue, info) => {
-        setSelectedKeys(selectedKeysValue);
-    };
-
-    const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
-
-    const Onindivisualselect = (e) => {
-        setCheckBoxData({ ...Checkboxdata, [e.target.name]: e.target.checked });
-    };
-    const Onselectall = (e) => {
-        if (e.target.checked === true) {
-            setCheckBoxData({ ...Checkboxdata, All: true, Add: true, View: true, Delete: true, Edit: true, Upload: true, Download: true });
-        } else {
-            setCheckBoxData({ ...Checkboxdata, All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
+    useEffect(() => {
+        if (userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
         }
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refreshData, userId]);
 
-    const Actions = () => {
-        return (
-            <>
-                <Row>
-                    <Col xs={22} sm={22} md={22} lg={22} xl={22} xxl={22} offset={2}>
-                        <Form.Item name="All" initialValue={InitialData?.All}>
-                            <Checkbox name="All" checked={AddEditCancel ? Checkboxdata.All : InitialData?.All} onChange={Onselectall}>
-                                Select All
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
-                        <Form.Item name="Add" initialValue={InitialData?.Add}>
-                            <Checkbox name="Add" checked={AddEditCancel ? Checkboxdata.Add : InitialData?.Add} onChange={Onindivisualselect}>
-                                Add
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="View" initialValue={InitialData?.View}>
-                            <Checkbox name="View" checked={AddEditCancel ? Checkboxdata.View : InitialData?.View} onChange={Onindivisualselect}>
-                                View
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Delete" initialValue={InitialData?.Delete}>
-                            <Checkbox name="Delete" checked={AddEditCancel ? Checkboxdata.Delete : InitialData?.Delete} onChange={Onindivisualselect}>
-                                Delete
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} offset={2}>
-                        <Form.Item name="Edit" initialValue={InitialData?.Edit}>
-                            <Checkbox name="Edit" checked={AddEditCancel ? Checkboxdata.Edit : InitialData?.Edit} onChange={Onindivisualselect}>
-                                Edit
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Upload" initialValue={InitialData?.Upload}>
-                            <Checkbox name="Upload" checked={AddEditCancel ? Checkboxdata.Upload : InitialData?.Upload} onChange={Onindivisualselect}>
-                                Upload
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Form.Item name="Download" initialValue={InitialData?.Download}>
-                            <Checkbox name="Download" checked={AddEditCancel ? Checkboxdata.Download : InitialData?.Download} onChange={Onindivisualselect}>
-                                Download
-                            </Checkbox>
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </>
-        );
-    };
+    useEffect(() => {
+        if (isDataLoaded && RoleManagementData) {
+            if (filterString) {
+                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.roleId) || filterFunction(filterString)(item?.roleName) || filterFunction(filterString)(item?.roleDesceription));
+                setSearchdata(filterDataItem);
+            } else {
+                setSearchdata(RoleManagementData);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, RoleManagementData]);
 
-    const handleChilds = () => {
-        setForceFormReset(generateRandomNumber());
-        setAddEditCancel(true);
-        setAddchild(!addchilds);
-    };
-    const handleSave = () => {
-        form.validateFields();
-    };
-    const Handleswitch = (e) => {
-        setSwitcher(!Switcher);
-    };
+    const onFinish = (values) => {
+        console.log('values', values);
+        const recordId = selectedRecord?.id || '';
+        const data = {
+            ...values,
+            id: RowData?.id,
+            webRoleApplicationMapping: [
+                {
+                    id: '',
+                    activeIndicator: true,
+                    applicationId: '4af77de8-363e-480e-bdac-e6c836c8467c',
+                    subApplication: [
+                        {
+                            id: '',
 
-    const CardTree = () => {
-        return (
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Card title="Access Applications" bordered={true}>
-                        {/* <Trees /> */}
-                        <Form.Item initialValue={undefined} name="Treedata">
-                            <Tree defaultExpandAll={true} showLine={true} checkable onExpand={onExpand} expandedKeys={expandedKeys} autoExpandParent={autoExpandParent} onCheck={onCheck} checkedKeys={AddEditCancel ? checkedKeys : InitialData?.Treedata} onSelect={onSelect} selectedKeys={selectedKeys} treeData={treeData} />
-                        </Form.Item>
-                    </Card>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <Card title="Access Actions" bordered={true}>
-                        <Actions />
-                    </Card>
-                </Col>
-            </Row>
-        );
-    };
+                            activeIndicator: true,
 
-    const FormComponent = () => {
-        return (
-            <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item
-                        name="roleId"
-                        label="Role Id"
-                        initialValue={InitialData?.roleId}
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input disabled={disabled} />
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item
-                        name="roleName"
-                        label="Role Name"
-                        initialValue={InitialData?.roleName}
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input disabled={disabled} />
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item
-                        name="roleDescription"
-                        label="Role Description"
-                        initialValue={InitialData?.roleDescription}
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input disabled={disabled} />
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Status" name="status" initialValue={InitialData?.status === '1' ? true : false}>
-                        <Switch disabled={disabled} checked={AddEditCancel ? Switcher : InitialData?.status === '1' ? true : false} onChange={Handleswitch} checkedChildren="Active" unCheckedChildren="Inactive" />
-                    </Form.Item>
-                </Col>
-            </Row>
-        );
-    };
-    const onReset = () => {
-        form.resetFields();
-        setMycheckvals([]);
-        setSwitcher(true);
-        setCheckedKeys([]);
-        setInitialData({});
-        setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
-    };
-    const onFinisher = (values) => {
-        if (Mycheckvals.length === 0) {
-        } else {
-            Object.keys(values).map((keyName, i) => {
-                if (keyName === 'Treedata') {
-                    values[keyName] = checkedKeys;
-                }
+                            applicationId: '8f4d4288-6862-48eb-ab5e-c089972cf0e8',
+                            subApplication: [],
 
-                if (keyName === 'roleName') {
-                    Roledataset.push(values[keyName]);
-                }
-                if (keyName === 'status') {
-                    if (values[keyName] === false) {
-                        values[keyName] = '0';
-                    } else {
-                        values[keyName] = '1';
-                    }
-                }
-            });
-            Object.keys(Checkboxdata).map((keyName, i) => {
-                values[keyName] = Checkboxdata[keyName];
-            });
+                            roleActionMapping: [
+                                {
+                                    id: '',
 
-            const Final_data = { cretdby: 'shaka', cretddate: new Date(), modfdby: 'Me', modfddate: 'adasdad', roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
-            const onSuccess = (res) => {
-                form.resetFields();
-                setForceFormReset(generateRandomNumber());
+                                    actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
 
-                if (res?.Final_data) {
-                    handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
-                    fetchList({ setIsLoading: listShowLoading, userId });
-                }
-            };
+                                    activeIndicator: true,
+                                },
+                            ],
+                        },
+                    ],
+                    roleActionMapping: [
+                        {
+                            id: '',
 
-            const onError = (message) => {
-                handleErrorModal(message);
-            };
+                            actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
 
-            const requestData = {
-                data: Final_data,
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-            saveData(requestData);
+                            activeIndicator: true,
+                        },
+                    ],
+                },
+            ],
+            mobileRoleApplicationMapping: [
+                {
+                    id: '',
 
-            setAddchild(!addchilds);
+                    activeIndicator: true,
+
+                    applicationId: 'a0fc205b-6fcf-4dd3-86dc-f382ac924335',
+
+                    subApplication: [],
+
+                    roleActionMapping: [
+                        {
+                            id: '',
+
+                            actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
+
+                            activeIndicator: true,
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const onSuccess = (res) => {
             form.resetFields();
-            setMycheckvals([]);
-            setCheckedKeys([]);
-            setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
-        }
-        setFormData([...formData, values]);
+            setSelectedRecord({});
+            setSuccessAlert(true);
+            fetchList({ setIsLoading: listShowLoading, userId });
+            if (showSaveAndAddNewBtn === true || recordId) {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
+        };
+
+        const onError = (message) => {
+            onSaveShowLoading(false);
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+        };
+
+        const requestData = {
+            data: [data],
+            setIsLoading: onSaveShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
-    const handleForms = (e) => {
-        setDisabled(true);
-        setForceFormReset(generateRandomNumber()); //Important Form Rerender
+    const handleEditData = (record) => {
+        setIsViewModeVisible(false);
+        setShowSaveAndAddNewBtn(false);
+        setFooterEdit(false);
+        setShowSaveBtn(true);
 
-        setAddchild(false);
-        setAddEditCancel(false);
-        Object.keys(formData).map((keyName, i) => {
-            Object.keys(formData[keyName]).map((keyName2, i) => {
-                if (keyName2 === 'roleName') {
-                    if (formData[keyName][keyName2] === e.target.outerText) {
-                        setInitialData(formData[keyName]);
+        setIsReadOnly(false);
+    };
+
+    const handleAdd = () => {
+        form.resetFields();
+        setIsViewModeVisible(false);
+        setFormData([]);
+        setShowSaveAndAddNewBtn(true);
+        setFooterEdit(false);
+        setShowSaveBtn(true);
+        setIsFormVisible(true);
+        setIsReadOnly(false);
+    };
+
+    // const handleUpdate = (record) => {
+    //     setFormActionType('update');
+    //     setOpenDrawer(true);
+    //     setFooterEdit(false);
+    //     setShowSaveAndAddNewBtn(false);
+    //     setSaveBtn(true);
+    //     setRowData(record);
+
+    //     form.setFieldsValue({
+    //         roleId: record.roleId,
+    //         roleName: record.roleName,
+    //         roleDesceription: record.roleDesceription,
+    //         activeIndicator: record.activeIndicator,
+    //     });
+    // };
+
+    const handleEditBtn = (record) => {
+        setShowSaveAndAddNewBtn(false);
+        setFooterEdit(false);
+        setIsReadOnly(false);
+        setShowSaveBtn(true);
+        setFormData(record);
+        setIsViewModeVisible(false);
+        console.log(record, 'formData', formData);
+        setIsFormVisible(true);
+    };
+    const handleView = (record) => {
+        // setFormActionType('view');
+        setShowSaveAndAddNewBtn(false);
+        setShowSaveBtn(false);
+        setFooterEdit(true);
+        setFormData(record);
+        setViewData(record);
+        setIsFormVisible(true);
+        setIsViewModeVisible(true);
+
+        // setIsReadOnly(true);
+    };
+
+    // const handleUpdate2 = () => {
+    //     setFormActionType('update');
+    //     setIsReadOnly(false);
+    //     setShowSaveAndAddNewBtn(false);
+    //     setSaveBtn(true);
+
+    //     setOpenDrawer(true);
+    //     setFooterEdit(false);
+    //     form.setFieldsValue({
+    //         roleId: selectedRecord.roleId,
+    //         roleName: selectedRecord.roleName,
+    //         roleDesceription: selectedRecord.roleDesceription,
+    //         activeIndicator: selectedRecord.activeIndicator,
+    //     });
+    // };
+
+    // const handleView = (record) => {
+    //     setFormActionType('view');
+    //     setShowSaveAndAddNewBtn(false);
+
+    //     setOpenDrawer(true);
+    //     setSaveBtn(false);
+
+    //     setFooterEdit(true);
+    //     setViewData(record);
+    //     form.setFieldsValue({
+    //         roleId: record.roleId,
+    //         roleName: record.roleName,
+    //         roleDesceription: record.roleDesceription,
+    //         activeIndicator: record.activeIndicator,
+    //     });
+    //     console.log(form.getFieldValue('roleId'));
+    //     setIsReadOnly(true);
+    // };
+
+    const handleRefresh = () => {
+        setRefreshData(!refreshData);
+    };
+
+    const filterFunction = (filterString) => (title) => {
+        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    };
+
+    const onSearchHandle = (value) => {
+        setFilterString(value);
+    };
+
+    const onChangeHandle = (e) => {
+        setFilterString(e.target.value);
+    };
+
+    const tableColumn = [];
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Srl.',
+            dataIndex: 'srl',
+            sorter: false,
+            render: (_t, _r, i) => i + 1,
+            width: '5%',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Role ID',
+            dataIndex: 'roleId',
+            width: '20%',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Role Name',
+            dataIndex: 'roleName',
+            width: '20%',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Role Description',
+            dataIndex: 'roleDesceription',
+            ellipsis: true,
+            width: 100,
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Status',
+            dataIndex: 'activeIndicator',
+            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '10%',
+        })
+    );
+
+    tableColumn.push(
+        tblPrepareColumns({
+            title: 'Actions',
+            sorter: false,
+            render: (text, record, index) => {
+                return (
+                    <Space>
+                        {<Button icon={<EditIcon />} className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleEditBtn(record)} />}
+                        {<Button icon={<ViewEyeIcon />} className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)} />}
+                    </Space>
+                );
+            },
+            width: '10%',
+        })
+    );
+    function Subpanel(arr) {
+        arr.map((ele) => {
+            if (ele.subMenu?.length) {
+                ele['children'] = ele?.subMenu;
+                ele['label'] = ele?.menuTitle;
+                ele['value'] = ele?.menuId;
+                ele.subMenu.forEach((child) => {
+                    if (Array.isArray(child)) {
+                        Subpanel(child);
                     }
-                }
-            });
+                    {
+                        Subpanel([child]);
+                    }
+                });
+            } else {
+                ele['label'] = ele?.menuTitle;
+                ele['value'] = ele?.menuId;
+                ele['children'] = [
+                    { value: 'Upload' + ele?.menuId, label: 'Upload' },
+                    { value: 'Delete' + ele?.menuId, label: 'Delete' },
+                    { value: 'Read' + ele?.menuId, label: 'Read' },
+                    { value: 'Create' + ele?.menuId, label: 'Create' },
+                    { value: 'Update' + ele?.menuId, label: 'Update' },
+                    { value: 'View' + ele?.menuId, label: 'View' },
+                ];
+                return;
+            }
         });
-        form.resetFields();
-    };
-    const oncancel = () => {
-        setAddchild(!addchilds);
-        setDisabled(false);
-        setForceFormReset(generateRandomNumber());
+        // arr?.map((row) => {
+        //     console.log('I am recursing the Row : : ', row);
+        //     if (row?.subMenu && row?.subMenu?.length) {
+        //         row?.subMenu?.forEach((ele) => {
+        //             Subpanel(ele);
+        //         });
+        //     } else {
+        //         return;
+        //     }
+        // });
+    }
 
-        setInitialData({});
-        form.resetFields();
-        setMycheckvals([]);
-        // setAddEditCancel(!AddEditCancel);
-        setCheckedKeys([]);
-        setCheckBoxData({ All: false, Add: false, View: false, Delete: false, Edit: false, Upload: false, Download: false });
-    };
-    const OnEdit = () => {
-        setAddEditCancel(true);
-        setDisabled(false);
-    };
-    const Handlebuttons = () => {
-        return AddEditCancel ? (
-            <Row justify="end" gutter={20}>
-                <Col>
-                    <Button danger onClick={oncancel}>
-                        <FaEdit className={styles.buttonIcon} />
-                        cancel
-                    </Button>
-                </Col>
-                <Col>
-                    <Button danger onClick={onReset}>
-                        <FaUndo className={styles.buttonIcon} />
-                        Reset
-                    </Button>
-                </Col>
-                <Col>
-                    <Button htmlType="submit" onClick={handleSave} danger>
-                        <FaSave className={styles.buttonIcon} />
-                        Save
-                    </Button>
-                </Col>
-            </Row>
-        ) : (
-            <Row justify="end" gutter={20}>
-                <Col>
-                    <Button danger onClick={oncancel}>
-                        <FaEdit className={styles.buttonIcon} />
-                        cancel
-                    </Button>
-                </Col>
-                <Col>
-                    <Button danger onClick={OnEdit}>
-                        <FaUndo className={styles.buttonIcon} />
-                        Edit
-                    </Button>
-                </Col>
-                <Col>
-                    <Button htmlType="submit" onClick={onReset} danger>
-                        <FaSave className={styles.buttonIcon} />
-                        Add Role
-                    </Button>
-                </Col>
-            </Row>
+    // const FilterMenudata = (MenuTreeData) => {
+    //     Subpanel(MenuTreeData);
+    //     setMenuAlteredData(MenuTreeData);
+    //     console.log('This is the Manipulated Data : ', MenuTreeData);
+    // };
+
+    function TreeNodeWithCheckbx({ title, key }) {
+        console.log('khauoukjbk', title);
+        const [checked, setChecked] = useState(false);
+        const handleCheckBoChecj = () => {
+            console.log('hello');
+        };
+        return (
+            <Tree.TreeNode title={title} key={key}>
+                <Checkbox checked={checked} onChange={handleCheckBoChecj} />
+            </Tree.TreeNode>
         );
+    }
+
+    const renderTreeNodes = (data) => {
+        console.log('data5', data);
+        return data?.children?.map((node) => {
+            if (node.leafNode !== null) {
+                console.log('hcgcgc', node);
+                console.log('befir Checkbox', node.leafNode?.title);
+                return <TreeNodeWithCheckbx key={node.key} title={node.title} />;
+            } else {
+                console.log('hello1', node.title);
+
+                return (
+                    <Tree.TreeNode key={node.key} title={node.title}>
+                        {console.log('node', node, 'node.title', node.title, 'hshj', node.children)}
+                        {renderTreeNodes(node.children)}
+                    </Tree.TreeNode>
+                );
+            }
+        });
     };
+
+    // const TreeNode = ({ node })=>  {
+    //     const { children, label } = node;
+
+    //     const [showChildren, setShowChildren] = useState(false);
+
+    //     const handleClick = () => {
+    //       setShowChildren(!showChildren);
+    //     };
+    //     return (
+    //       <>
+    //         <div onClick={handleClick} style={{ marginBottom: "10px" }}>
+    //           <span>{label}</span>
+    //         </div>
+    //         <ul style={{ paddingLeft: "10px", borderLeft: "1px solid black" }}>
+    //           {showChildren && <Tree treeData={children} />}
+    //         </ul>
+    //       </>
+    //     );
+    //   }
+    // const Tree = ({ treeData }) => {
+    //     return (
+    //       <ul>
+    //         {treeData?.map((node) => (
+    //           <TreeNode node={node} key={node.key} />
+
+    //         ))}
+    //       </ul>
+    //     );
+    //   }
+
+    const formProps = {
+        moduleTitle,
+        setIsViewModeVisible,
+        setClosePanels,
+        isViewModeVisible,
+        RowData,
+        RoleData,
+        MenuAlteredData,
+        setSaveClick,
+        form,
+        setFormBtnDisable,
+        formBtnDisable,
+        isLoadingOnSave,
+        showSaveBtn,
+        showSaveAndAddNewBtn,
+        isVisible: isFormVisible,
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        onCloseAction: () => {
+            form.resetFields();
+            setIsFormVisible(false);
+            setFormData([]);
+            setFormBtnActive(false);
+        },
+        isReadOnly,
+        formData,
+        setIsReadOnly,
+        handleEditData,
+        isFormBtnActive,
+        setFormBtnActive,
+        setSaveAndAddNewBtnClicked,
+        onFinish,
+        footerEdit,
+    };
+
     return (
         <>
             <Row gutter={20}>
-                <div className={styles.treeCollapsibleButton} style={{ marginTop: '-8px', marginLeft: '10px' }} onClick={handleTreeViewVisiblity}>
-                    {isTreeViewVisible ? addToolTip('Collapse')(<FaAngleDoubleLeft />) : addToolTip('Expand')(<FaAngleDoubleRight />)}
-                </div>
-            </Row>
-            <Row gutter={20}>
-                {isTreeViewVisible ? (
-                    <Col xs={24} sm={24} md={!isTreeViewVisible ? 1 : 12} lg={!isTreeViewVisible ? 1 : 8} xl={!isTreeViewVisible ? 1 : 6} xxl={!isTreeViewVisible ? 1 : 8}>
-                        <div className={styles.leftpanel}>
-                            <Row justify="left">
-                                <p style={{ paddingLeft: 10, paddingTop: 10, fontWeight: 500 }}>Role List</p>
-                                <Divider style={{ marginTop: 6 }} plain></Divider>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <List size="large" bordered={true} dataSource={Roledataset} renderItem={(item) => <List.Item onClick={handleForms}>{item}</List.Item>} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                        Role List
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            {/*code to be changed once API is integrated */}
+                            {true ? (
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger />
+
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add New Role
+                                    </Button>
                                 </Col>
-                            </Row>
-                        </div>
-                    </Col>
-                ) : undefined}
-                <Col xs={24} sm={24} md={12} lg={16} xl={!isTreeViewVisible ? 24 : 18} xxl={!isTreeViewVisible ? 24 : 16}>
-                    <Row>
-                        {addchilds ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Button onClick={handleChilds} className={styles.floatRight} danger>
-                                    <FaUserPlus className={styles2.buttonIcon} />
-                                    Add Role
-                                </Button>
-                            </Col>
-                        ) : (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form name="customized_form_controls" form={form} layout="vertical" onFinish={onFinisher}>
-                                    <Space
-                                        direction="vertical"
-                                        size="middle"
-                                        style={{
-                                            display: 'flex',
-                                        }}
-                                    >
-                                        <FormComponent />
-                                        <CardTree />
-                                        <Handlebuttons />
-                                    </Space>
-                                </Form>
-                            </Col>
-                        )}
-                    </Row>
+                            ) : (
+                                ''
+                            )}
+                        </Row>
+                    </div>
                 </Col>
             </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ConfigProvider
+                        renderEmpty={() => (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    !RoleManagementData?.length ? (
+                                        <span>
+                                            No records found. Please add new Role <br />
+                                            using below button
+                                        </span>
+                                    ) : (
+                                        <span> No records found.</span>
+                                    )
+                                }
+                            >
+                                {!RoleManagementData?.length ? (
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                Add Role
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                ) : (
+                                    ''
+                                )}
+                            </Empty>
+                        )}
+                    >
+                        <div className={styles.tableProduct}>
+                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        </div>
+                    </ConfigProvider>
+                </Col>
+            </Row>
+
+            <AddEditForm {...formProps} />
         </>
     );
 };

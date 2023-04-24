@@ -86,7 +86,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [skuAttributes, setSKUAttributes] = useState([]);
-    console.log("🚀 ~ file: ProductHierarchy.js:89 ~ ProductHierarchyMain ~ skuAttributes:", skuAttributes)
+    console.log('🚀 ~ file: ProductHierarchy.js:89 ~ ProductHierarchyMain ~ skuAttributes:', skuAttributes);
     const [openPanels, setOpenPanels] = React.useState([]);
     const [closePanels, setClosePanels] = React.useState([]);
 
@@ -318,11 +318,17 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
-                                Hierarchy
-                                <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
-                                    <Option value="hyr">Hyr</Option>
-                                </Select>
-                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                    Hierarchy
+                                </Col>
+                                <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                    <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                                        <Option value="hyr">Hyr</Option>
+                                    </Select>
+                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                </Col>
+                                </Row>
                             </Col>
                             {productHierarchyData.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
