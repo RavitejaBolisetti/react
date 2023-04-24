@@ -349,6 +349,10 @@
 .srchbtn :global .ant-btn-default {
     background-color: #ffffff;
 }
+.addGroup {
+    display: flex;
+    justify-content: right;
+}
 
 .actionbtn {
     background-color: #ff3e5b;
@@ -397,9 +401,9 @@
     padding: 20px;
 }
 
-:global .ant-drawer .ant-drawer-body .ant-input {
+/* :global .ant-drawer .ant-drawer-body .ant-input {
     margin-top: 6px;
-}
+} */
 
 .drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;

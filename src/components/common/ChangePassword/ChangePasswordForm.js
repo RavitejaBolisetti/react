@@ -5,12 +5,15 @@ import { bindActionCreators } from 'redux';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { changePasswordActions } from 'store/actions/data/changePassword';
 import { showGlobalNotification } from 'store/actions/notification';
-import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { handleErrorModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from './ChangePassword.module.css';
+
+import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 const mapStateToProps = (state) => {
     const {
@@ -43,62 +46,40 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const navigate = useNavigate();
-
-    const onFinish = (errorInfo) => {
-        // form.validateFields().then((values) => {});
-    };
-
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
 
-    const onFinishFailed = (values) => {
-        if (values.errorFields.length === 0) {
-            const data = { ...values.values };
-            const onSuccess = (res) => {
-                form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
+    const onFinish = (values) => {
+        const data = { ...values };
+        const onSuccess = (res) => {
+            form.resetFields();
+            showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
 
-                doLogout({
-                    onSuccess: (res) => {
-                        if (res?.data) {
-                            navigate(ROUTING_LOGIN);
-                        }
-                    },
-                    onError,
-                    userId,
-                });
-            };
-
-            const onError = (message) => {
-                handleErrorModal(message);
-            };
-
-            const requestData = {
-                data: data,
-                setIsLoading: listShowLoading,
-                userId,
-                onSuccess,
+            doLogout({
+                onSuccess: (res) => {
+                    if (res?.data) {
+                        navigate(ROUTING_LOGIN);
+                    }
+                },
                 onError,
-            };
+                userId,
+            });
+        };
 
-            saveData(requestData);
-        }
-    };
+        const onError = (message) => {
+            handleErrorModal(message);
+        };
 
-    const validateToNextPassword = (rule, value, callback) => {
-        if (value) {
-            form.validateFields(['confirmNewPassword'], { force: true });
-        }
-        callback();
-    };
+        const requestData = {
+            data: data,
+            setIsLoading: listShowLoading,
+            userId,
+            onSuccess,
+            onError,
+        };
 
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue('newPassword')) {
-            callback("New Password and Confirm Password doesn't match!");
-        } else {
-            callback();
-        }
+        saveData(requestData);
     };
 
     const passwordSuffix = (type) => (
@@ -106,30 +87,25 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
             {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
         </span>
     );
+
     return (
-        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="false" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('Old Password')]}>
-                        <Input type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Enter old password" suffix={passwordSuffix('oldPassword')} />
+                    <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('old password')]}>
+                        <Input type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('old password')} suffix={passwordSuffix('oldPassword')} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item
-                        label="New Password"
-                        name="newPassword"
-                        rules={[
-                            validateRequiredInputField('New Password'),
-                            validateFieldsPassword('New Password'),
-                            {
-                                validator: validateToNextPassword,
-                            },
-                        ]}
-                    >
-                        <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
+                    {/* validateFieldsPassword('New password') */}
+                    <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('new password')]}>
+                        <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} suffix={passwordSuffix('newPassword')} />
                     </Form.Item>
+                    {/* {password && <PasswordStrengthBar minLength={8} barColors={['#ddd', '#ef4836', '#f6b44d', '#2b90ef', '#25c281']} scoreWords={['poor', 'weak', 'okay', 'good', 'strong']} password={password} />}
+                    <PasswordStrength password={password} /> */}
+                    <PasswordStrengthMeter Row={Row} Col={Col} password={password} />
                 </Col>
             </Row>
             <Row gutter={20}>
@@ -137,14 +113,20 @@ const ChangePasswordBase = ({ form, showGlobalNotification, isOpen = false, onOk
                     <Form.Item
                         label="Confirm Password"
                         name="confirmNewPassword"
+                        dependencies={['newPassword']}
                         rules={[
-                            validateRequiredInputField('Confirm Password'),
-                            {
-                                validator: compareToFirstPassword,
-                            },
+                            validateRequiredInputField('confirm password'),
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('newPassword') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
+                                },
+                            }),
                         ]}
                     >
-                        <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Enter confirm password" suffix={passwordSuffix('confirmNewPassword')} />
+                        <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} suffix={passwordSuffix('confirmNewPassword')} />
                     </Form.Item>
                 </Col>
             </Row>
