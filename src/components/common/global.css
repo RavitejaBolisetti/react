@@ -50,7 +50,7 @@
 }
 
 :global .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-    background-color: transparent;
+    background-color: #FFD8DE;
     color: #ff3e5b;
 }
 
