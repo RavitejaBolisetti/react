@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
-import  AddUpdateDrawer  from './AddUpdateDrawer';
+import AddUpdateDrawer from './AddUpdateDrawer';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
@@ -187,71 +187,48 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         setFilterString(value);
     };
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             width: '6%',
             sorter: false,
             render: (_t, _r, i) => i + 1,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
             width: '10%',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
             width: '20%',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
             width: '14%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '20%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
             width: '10%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
             width: '10%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
@@ -273,8 +250,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                     </Space>
                 );
             },
-        })
-    );
+        }),
+    ];
 
     const onFinish = (values) => {
         form.validateFields();

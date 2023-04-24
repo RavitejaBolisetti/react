@@ -20,7 +20,6 @@ import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
 
-
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -271,55 +270,36 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setFilterString(e.target.value);
     };
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
             render: (_t, _r, i) => i + 1,
-            width: '5%'
-        })
-    );
-
-    tableColumn.push(
+            width: '5%',
+        }),
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
-            width: '15%'
-        })
-    );
-
-    tableColumn.push(
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
-            width: '35%'
-
-        })
-    );
-
-    tableColumn.push(
+            width: '35%',
+        }),
         tblPrepareColumns({
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
             render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%'
-        })
-    );
-
-    tableColumn.push(
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%'
-
-        })
-    );
-
-    tableColumn.push(
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: 'Actions',
             sorter: false,
@@ -339,10 +319,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                     </Space>
                 );
             },
-            width: '15%'
-
-        })
-    );
+            width: '15%',
+        }),
+    ];
 
     return (
         <>
@@ -364,7 +343,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
                             {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button className={styles.refreshBtn} onClick={handleReferesh}  danger>
+                                    <Button className={styles.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
 

@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryAuthorityVisible },
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryAuthorityVisible: isVisible },
         },
     } = state;
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        isVisible: changeHistoryAuthorityVisible,
+        isVisible,
         changeHistoryData,
     };
     return returnValue;
@@ -49,63 +49,43 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Created Date ',
             dataIndex: 'createdDate',
             render: (text) => convertDateTime(text),
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Created By',
             dataIndex: 'createdBy',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Authority Type Code',
             dataIndex: 'authorityTypeCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Employee Name',
             dataIndex: 'employeeName',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Employee Token No.',
             dataIndex: 'authorityEmployeeTokenNo',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Authority Id',
             dataIndex: 'manufacturerAdminAuthorityId',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             render: (text) => convertDateTime(text),
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveTo',
             render: (text) => convertDateTime(text),
-        })
-    );
+        }),
+    ];
 
     const tableProps = {
         isLoading,

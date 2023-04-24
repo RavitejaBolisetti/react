@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
+            ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
         },
     } = state;
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        isVisible: changeHistoryVisible,
+        isVisible,
         changeHistoryData,
     };
     return returnValue;
@@ -49,55 +49,38 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Attribute Code',
             dataIndex: 'attributeCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Short Description',
             dataIndex: 'shortDescript',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Long Description',
             dataIndex: 'shortDescript',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Hierarchy Code',
             dataIndex: 'hierarchyCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
             render: (text) => (text ? 'Active' : 'In Active'),
-        })
-    );
+        }),
+    ];
 
     const tableProps = {
         isLoading,
