@@ -101,6 +101,7 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-03',
     },
+    
     [getMenyKey('COMN-03.07')]: {
         key: 'COMN-03.07',
         link: routing.ROUTING_COMMON_CONFIG_PARAM_EDIT,

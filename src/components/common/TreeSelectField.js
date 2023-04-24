@@ -1,5 +1,6 @@
 import React from 'react';
 import { TreeSelect } from 'antd';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 export default function TreeSelectField({ treeFieldNames, treeData, defaultValue, selectedTreeSelectKey, handleSelectTreeClick, placeholder, treeDisabled = false }) {
     return (
@@ -11,8 +12,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 style={{
                     width: '100%',
                 }}
-                value={selectedTreeSelectKey || []}
-                // value={defaultValue || []}
+                value={selectedTreeSelectKey || HIERARCHY_DEFAULT_PARENT}
                 defaultValue={defaultValue}
                 dropdownStyle={{
                     maxHeight: 400,
@@ -23,7 +23,7 @@ export default function TreeSelectField({ treeFieldNames, treeData, defaultValue
                 fieldNames={treeFieldNames}
                 onChange={handleSelectTreeClick}
                 treeData={treeData}
-                treeNodeFilterProp={treeFieldNames.label}
+                treeNodeFilterProp={treeFieldNames?.label}
                 disabled={treeDisabled}
             />
         </>

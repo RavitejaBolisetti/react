@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -18,7 +18,6 @@ import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
 import styles from 'components/common/Common.module.css';
-import style from './criticatiltyGroup.module.css';
 
 const { Search } = Input;
 
@@ -81,6 +80,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [filterString, setFilterString] = useState();
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
 
     const errorAction = (message) => {
         showGlobalNotification(message);
@@ -106,7 +106,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 setSearchdata(criticalityGroupData);
             }
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, criticalityGroupData]);
 
@@ -129,45 +129,43 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         const finalAllowedTimingList = deletedItemList && allowedTiming ? [...deletedItemList, ...allowedTiming] : allowedTiming;
 
+        const recordId = selectedRecord?.id || '';
+        const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
 
-            const recordId = selectedRecord?.id || '';
-            const data = { ...values, id: recordId, activeIndicator: values.activeIndicator ? 1 : 0, criticalityDefaultGroup: values.criticalityDefaultGroup ? '1' : '0', allowedTimings: finalAllowedTimingList || [] };
+        const onSuccess = (res) => {
+            onSaveShowLoading(false);
+            form.resetFields();
+            setSelectedRecord({});
+            setSuccessAlert(true);
+            fetchData({ setIsLoading: listShowLoading, userId });
+            if (saveclick === true) {
+                setDrawer(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setDrawer(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
+        };
 
-            const onSuccess = (res) => {
-                onSaveShowLoading(false);
-                form.resetFields();
-                setSelectedRecord({});
-                setSuccessAlert(true);
-                fetchData({ setIsLoading: listShowLoading, userId });
-                if (saveclick === true) {
-                    setDrawer(false);
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                } else {
-                    setDrawer(true);
-                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-                }
-            };
+        const onError = (message) => {
+            onSaveShowLoading(false);
+            showGlobalNotification({ message, placement: 'bottomRight' });
+        };
 
-            const onError = (message) => {
-                onSaveShowLoading(false);
-                showGlobalNotification({ message, placement: 'bottomRight' });
-            };
+        const requestData = {
+            data: [data],
+            setIsLoading: onSaveShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
 
-            const requestData = {
-                data: [data],
-                setIsLoading: onSaveShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
-            setForceFormReset(Math.Random() * 1000);
-        
+        saveData(requestData);
+        setForceFormReset(Math.Random() * 1000);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleAdd = () => {
@@ -179,6 +177,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
+        setcodeIsReadOnly(false);
     };
 
     const handleUpdate = (record) => {
@@ -206,6 +205,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
         setDrawer(true);
         setIsReadOnly(false);
+        setcodeIsReadOnly(true);
     };
 
     const handleUpdate2 = () => {
@@ -229,6 +229,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         });
         setsaveclick(true);
         setIsReadOnly(false);
+        setcodeIsReadOnly(true);
     };
 
     const handleView = (record) => {
@@ -253,6 +254,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         });
         setDrawer(true);
         setIsReadOnly(true);
+        setcodeIsReadOnly(true);
     };
 
     const handleReferesh = () => {
@@ -274,7 +276,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
-            render: ((_t, _r, i) => i+1 ),
+            render: (_t, _r, i) => i + 1,
         })
     );
 
@@ -296,7 +298,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
-            render: (text, record) => <>{text === '1' ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -304,7 +306,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -316,12 +318,12 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 return (
                     <Space>
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
                                 <EditIcon />
                             </Button>
                         }
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
                                 <ViewEyeIcon />
                             </Button>
                         }
@@ -338,34 +340,24 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
-                                            Criticality Group List
-                                        </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            />
-                                        </Col>
-                                    </div>
+                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                        Criticality Group List
+                                    </Col>
+                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
+                                    </Col>
                                 </Row>
                             </Col>
 
                             {criticalityGroupData?.length ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button className={style.refreshBtn} onClick={handleReferesh} danger>
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Button className={styles.refreshBtn} onClick={handleReferesh}  danger>
                                         <TfiReload />
                                     </Button>
 
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>
@@ -378,6 +370,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             </Row>
 
             <DrawerUtil
+                codeIsReadOnly={codeIsReadOnly}
                 showGlobalNotification={showGlobalNotification}
                 deletedItemList={deletedItemList}
                 setDeletedItemList={setDeletedItemList}
@@ -439,7 +432,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                                 {!criticalityGroupData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                                 Add Group
                                             </Button>
                                         </Col>
@@ -450,7 +443,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        <div className={styles.tableProduct}>
+                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
+                        </div>
                     </ConfigProvider>
                 </Col>
             </Row>

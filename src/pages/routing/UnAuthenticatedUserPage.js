@@ -17,7 +17,7 @@ export const UnAuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
 
             <Route path={routing.ROUTING_SSO_LOGIN} element={<SSOLoginPage />} exact />
-            <Route path="*" exact />
+            {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>
     );
 };

@@ -196,6 +196,11 @@
     background-color: #ffffff;
 }
 
+.addGroup {
+    display: flex;
+    justify-content: right;
+}
+
 .actionbtn {
     background-color: #ff3e5b;
     border-radius: 5px;
@@ -243,9 +248,9 @@
     padding: 20px;
 }
 
-:global .ant-drawer .ant-drawer-body .ant-input {
+/* :global .ant-drawer .ant-drawer-body .ant-input {
     margin-top: 6px;
-}
+} */
 
 .drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;
@@ -386,6 +391,20 @@
     margin-inline-end: 0px;
     padding-right: 0px;
 }
+
 .accordianHeader {
     color: #e31837 !important;
 }
+
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.accordianHeader {
+    color: #E31837 !important;
+}
+
+/* .collapseContent :global(.ant-collapse .ant-collapse-content>.ant-collapse-content-box){
+    padding: 2px 16px 16px 16px;
+} */

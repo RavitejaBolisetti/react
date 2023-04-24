@@ -220,7 +220,7 @@
 :global .ant-btn-default {
   height: 34px !important;
   border-radius: 4px;
-  border-color: #DEDEDE;
+  border-color: transparent;
   padding: 6px 12px;
 
 }
@@ -254,6 +254,50 @@
   text-decoration: none;
   color: #FF3E5B;
 }
+
+
+/* menu Search  */
+.searchField :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+.searchField :global .ant-input-search .ant-input:focus {
+  border-inline-end-width: 0px;
+  border-color: transparent;
+}
+
+.searchField :global .ant-input-affix-wrapper:focus,
+.searchField :global .ant-input-affix-wrapper-focused {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
+  border-inline-end-width: 0px;
+  outline: 0;
+}
+
+.searchField :global .ant-input-group .ant-input-group-addon {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.searchField :global .ant-input-affix-wrapper,
+.searchField :global .ant-btn-default,
+.searchField :global .ant-btn-default:not(:disabled):hover {
+  border-color: transparent;
+}
+
+.searchField :global .ant-input-group {
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: 1px solid #B5B5B6;
+}
+
+.searchField :global .ant-input-group:hover,
+.searchField :global .ant-input-group:focus {
+  border: 1px solid #0B0B0C;
+}
+
+.searchField :global .anticon-close-circle {
+  color: #0B0B0C;
+}
+
 
 .customSider {
   overflow: 'auto';
@@ -406,6 +450,12 @@
 
 .leftMenuBox .searchField {
   border: #000000;
+  width:100%;
+}
+
+.leftMenuBox .searchContainer {
+  text-align: center;
+  margin: 5px auto 10px auto;
 }
 
 @media (max-width: 768px) {

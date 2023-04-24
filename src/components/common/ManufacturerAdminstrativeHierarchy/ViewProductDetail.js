@@ -1,20 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Descriptions } from 'antd';
 import { AuthorityCard } from './AuthorityCard.js';
-import { connect } from 'react-redux';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 const mapStateToProps = (state) => {
     const {
-        // auth: { userId },
         data: {
             ManufacturerAdminHierarchy: { authorityVisible },
         },
-        // common: {
-        //     LeftSideBar: { collapsed = false },
-        // },
     } = state;
-
-    //console.log(state,"nishant")
 
     let returnValue = {
         authorityVisible,
@@ -31,14 +26,11 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, documentTypesList
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-    //console.log(documentTypesList, 'documentTypesListdocumentTypesList');
-    //console.log(selectedTreeData, 'authorityVisible');
-
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
                 <Descriptions.Item label="Code">{selectedTreeData?.manufactureAdminCode}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.manufactureAdminShortName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureAdminLongName}</Descriptions.Item>

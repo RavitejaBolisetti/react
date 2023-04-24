@@ -285,7 +285,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={18} sm={18} md={18} lg={18} xl={18} className={styles.subheading}>
+                            <Col xs={18} sm={18} md={18} lg={18} xl={18} >
                                 Hierarchy
                                 <Search
                                     placeholder="Search"
@@ -328,7 +328,9 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewDealerDetails {...viewProps} />
+                            <div className={styles.hyrbuttonContainer}>
                             <HierarchyFormButton {...viewProps} />
+                            </div>
                         </Col>
                     ) : (
                         <div className={styles.emptyContainer}>

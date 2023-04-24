@@ -1,0 +1,249 @@
+:global .ant-tree .ant-tree-switcher-leaf-line:before {
+    border-inline-end: 1px dashed #d9d9d9;
+}
+
+:global .ant-tree .ant-tree-switcher-leaf-line:after {
+    border-bottom: 1px dashed #d9d9d9;
+}
+
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher-leaf-line:before {
+    border-inline-end: 1px dashed #d9d9d9;
+}
+
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher-leaf-line:after {
+    border-bottom: 1px dashed #d9d9d9;
+}
+
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):hover {
+    color: #ff3e5b;
+}
+
+:global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+    border-color: #0b0b0c;
+    box-shadow: none;
+}
+
+:global .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
+    background-color: transparent !important;
+    color: #ff3e5b;
+    font-size: 14px;
+}
+
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
+    background-color: transparent !important;
+}
+
+:global .ant-select-dropdown,
+:global .ant-input:hover,
+:global .ant-input:focus,
+:global .ant-input-focused {
+    border: 1px solid #0b0b0c;
+    box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
+}
+
+:global .ant-select .ant-select-arrow {
+    color: #ff3e5b;
+}
+
+:global .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: transparent;
+    color: #ff3e5b;
+}
+
+:global .ant-select-focused:where(.css-dev-only-do-not-override-18twuw5).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
+    border-color: #0b0b0c;
+    box-shadow: none;
+}
+
+:global .ant-btn-default {
+    background-color: transparent;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:disabled {
+    border: 1px solid #bfbfbf;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:not(:disabled) {
+    background-color: transparent;
+    color: #ff3e5b !important;
+}
+
+:global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+    background-color: #ff3e5b;
+    color: #ffffff !important;
+}
+
+:global .ant-btn-default.ant-btn-dangerous {
+    margin-bottom: 8px;
+}
+
+:global .ant-btn-default.ant-btn-dangerous svg {
+    padding-top: 2px;
+}
+
+:global .ant-btn-primary.ant-btn-dangerous:disabled,
+:global .ant-btn-primary:disabled {
+    border-color: #b5b5b6;
+}
+
+:global .ant-tree {
+    background: #f4f4f4;
+}
+
+:global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+:global .ant-empty .ant-empty-footer {
+    margin-top: 12px;
+}
+
+:global .ant-form-vertical .ant-form-item-label {
+    margin: 0;
+    padding: 0px;
+}
+
+:global .ant-tree .ant-tree-list-holder-inner {
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+:global .ant-modal .ant-modal-content {
+    padding: 20px;
+    max-height: 300vh;
+}
+
+:global .ant-modal .ant-modal-title {
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #342c2c;
+}
+
+:global .ant-modal .ant-modal-close:hover {
+    color: #ff3e5b;
+    background-color: transparent !important;
+}
+
+:global .ant-modal .ant-modal-close {
+    top: 22px;
+}
+
+:global .ant-tree {
+    background: transparent;
+}
+
+:global .ant-drawer .ant-drawer-header-title {
+    display: inline-block;
+}
+
+:global .ant-drawer-close {
+    float: right !important;
+    padding: 4px 0 0 0 !important;
+    margin-inline-end: 0 !important;
+}
+
+:global .ant-drawer-body .ant-form-item {
+    margin-bottom: 12px;
+}
+
+:global .ant-drawer-body .ant-input-number {
+    width: 48.5%;
+}
+
+:global .ant-drawer-body .ant-input-number:last-child {
+    margin-left: 0%;
+}
+
+:global .ant-drawer-body .ant-input-number {
+    width: 100%;
+}
+
+:global .ant-drawer-body .ant-picker-range {
+    width: 100%;
+}
+
+:global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+:global .ant-form-vertical .ant-form-item-label {
+    margin: 0;
+    padding: 0px;
+}
+
+:global .ant-tree .ant-tree-list-holder-inner {
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+:global .ant-modal .ant-modal-content {
+    padding: 20px;
+    max-height: 300vh;
+}
+
+:global .ant-switch .ant-switch-inner {
+    display: block;
+    overflow: hidden;
+    border-radius: 100px;
+    height: 100%;
+    position: absolute;
+    margin-left: 35px;
+    margin-top: -12px;
+}
+
+:global .ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
+    margin-inline-start: 0px;
+    color: #70c922;
+}
+
+:global .ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-top: -22px;
+    margin-inline-start: -10px;
+    color: #8e8585;
+    margin-inline-end: 9px;
+}
+
+:global .ant-switch.ant-switch-checked {
+    background: #70c922;
+}
+
+:global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background: #70c922;
+}
+
+:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    margin-inline-end: 8px;
+    margin-top: -2px;
+}
+
+:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    margin-inline-end: 8px;
+    margin-top: -2px;
+}
+:global .ant-modal-mask,
+:global body {
+    width: 100% !important;
+    overflow: inherit !important;
+}
+@media (max-width: 768px) {
+    /* :global .ant-input-group {
+        margin-top: 20px;
+    } */
+}
