@@ -215,11 +215,13 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             width: '10%',
             render: (record) => [
                 <Space wrap>
-                    <Button className={styles.tableIcons} onClick={() => handleEditBtn(record)}>
-                        <FiEdit2 />
-                    </Button>
                     {
-                        <Button className={styles.tableIcons} onClick={() => handleView(record)}>
+                        <Button data-testid='edit' className={styles.tableIcons} aria-label='fa-edit' onClick={() => handleEditBtn(record, 'edit')}>
+                            <FiEdit2 />
+                        </Button>
+                    }
+                    {
+                        <Button className={styles.tableIcons} aria-label='ai-view' onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
@@ -292,7 +294,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
     const tableProps = {
         tableColumn: tableColumn,
@@ -308,7 +310,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false),setFormBtnActive(false)),
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
@@ -355,7 +357,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`}  type="primary" danger onClick={handleAdd}>
+                                    <Button data-testid='addGroup' icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
                                         Add Group
                                     </Button>
                                 </Col>
