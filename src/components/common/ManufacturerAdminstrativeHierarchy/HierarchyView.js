@@ -26,6 +26,8 @@ export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, at
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
+    console.log(selectedTreeData,'selectedTreeDataselectedTreeData');
+
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
