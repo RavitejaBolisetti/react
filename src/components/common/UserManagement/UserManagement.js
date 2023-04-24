@@ -192,23 +192,20 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
         console.log(DealerSelected);
         if (DealerSearchvalue?.length > 0) {
             fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
-           
         }
         if (DealerSelected?.length < 0 || DealerSelected === undefined) {
             setdisabled(true);
             setDealerData({});
         }
     }, [DealerSearchvalue, DealerSelected]);
-    
+
     useEffect(() => {
         console.log('UserManagementDealerData : ', UserManagementDealerData);
         setDealerData(UserManagementDealerData);
-        if(Object.entries(UserManagementDealerData)?.length>0)
-        {
-            setSearchdata([UserManagementDealerData])
+        if (Object.entries(UserManagementDealerData)?.length > 0) {
+            setSearchdata([UserManagementDealerData]);
         }
-      
-     }, [UserManagementDealerData,error]);
+    }, [UserManagementDealerData, error]);
 
     useEffect(() => {
         if (userId) {
@@ -216,8 +213,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
-
-    
 
     const tableDetails = [];
 
@@ -592,18 +587,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
                                     </div>
                                 </Row>
                             </Col>
-
-                            {qualificationData?.length ? (
-                                <Col className={styles.addGroup} xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger></Button>
-
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add Qualification
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
                         </Row>
                         {Object.keys(DealerData).length > 0 ? (
                             <Row gutter={20}>
