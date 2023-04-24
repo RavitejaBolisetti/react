@@ -163,7 +163,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         };
 
         saveData(requestData);
-        setForceFormReset(cryptoRandom);
+        setForceFormReset(generateRandomNumber());
     };
 
     const onFinishFailed = (errorInfo) => {
