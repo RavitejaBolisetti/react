@@ -5,7 +5,7 @@ import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import style from 'components/common/DrawerAndTable.module.css';
-import viewStyle from 'components/common/Common.module.css'
+import styles from 'components/common/Common.module.css'
 
 const DrawerUtil = ({ codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
@@ -40,23 +40,23 @@ const DrawerUtil = ({ codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, i
             width="540px"
             footer={
                 <>
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Button danger onClick={onClose} className={style.cancelBtn}>
+                    <Row gutter={20} className={styles.formFooter}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onClose}>
                                 {!footerEdit ? 'Cancel' : 'Close'}
                             </Button>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16} className={style.saveBtn}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                                {saveBtn ? (
+                                    <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                                        Save
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
                             {saveAndSaveNew ? (
                                 <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
                                     Save & Add New
-                                </Button>
-                            ) : (
-                                ''
-                            )}
-                            {saveBtn ? (
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
                                 </Button>
                             ) : (
                                 ''
