@@ -1,8 +1,9 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, getAllByLabelText, getAllByText, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { Switch, Table } from 'antd';
 import userEvent from '@testing-library/user-event';
 import { QualificationMaster } from './QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
+import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
@@ -76,13 +77,20 @@ describe('Qualification Master Test', () => {
         fireEvent.click(refBtn);
     });
 
+    test('Is the View Button Present or not', () => {
+        render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
+        const refBtn = screen.getByLabelText('ai-view');
+        expect(refBtn).toBeTruthy();
+        fireEvent.click(refBtn);
+    });
+
     // test('Refresh data button', async () => {
     //     const handleRefereshBtn = jest.fn();
     //     console.log(handleRefereshBtn);
     //    render(<QualificationMaster handleRefereshBtn={handleRefereshBtn} qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} listShowLoading={listShowLoading}  />);
-       
+
     //     // const refBtn = screen.getByLabelText('fa-ref');
-        
+
     //     // fireEvent.click(refBtn);
     //     // expect(handleRefereshBtn).toHaveBeenCalled();
     // });
@@ -128,7 +136,7 @@ describe('Qualification Master Test', () => {
         const editBtn = screen.getByLabelText('fa-edit');
         expect(editBtn).toBeTruthy();
         fireEvent.click(editBtn);
-        
+
         const InputFieldCode = await screen.findByPlaceholderText('Please enter code');
         const InputFieldName = await screen.findByPlaceholderText('Please enter name');
         expect(InputFieldCode.value).toBe('ZHJ');
@@ -136,10 +144,10 @@ describe('Qualification Master Test', () => {
 
         fireEvent.change(InputFieldCode, { target: { value: '' } });
         fireEvent.change(InputFieldName, { target: { value: '' } });
-        
+
         const Validations1 = await screen.findAllByText('Qualification Code');
         const Validations2 = await screen.findAllByText('Qualification Name');
-    
+
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
 
@@ -203,7 +211,7 @@ describe('Qualification Master Test', () => {
 
     test('Save drawer element', async () => {
         const onFinish = jest.fn();
-        const { getByLabelText, getByText } = render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData}/>);
+        const { getByLabelText, getByText } = render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
         const AddQualificationBtn = screen.getByText('Add Qualification');
         fireEvent.click(AddQualificationBtn);
         const nameInputField = screen.findByPlaceholderText('Please enter name');
@@ -229,7 +237,14 @@ describe('Qualification Master Test', () => {
         fireEvent.click(AddQualificationBtn);
         const cancelBtn = screen.getByText('Cancel');
         expect(cancelBtn).toBeTruthy();
-        fireEvent.click(cancelBtn);     
+        fireEvent.click(cancelBtn);
     });
 
+});
+
+describe('This is to test the Axios Call using Jest', () => {
+    test('This is the Api call test', async () => {
+        const Fetchlist = await qualificationDataActions.fetchList();
+        console.log(Fetchlist);
+    });
 });
