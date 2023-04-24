@@ -353,7 +353,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
                             {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button className={styles.refreshBtn} onClick={handleReferesh} danger>
+                                    <Button className={styles.refreshBtn} onClick={handleReferesh}  danger>
                                         <TfiReload />
                                     </Button>
 

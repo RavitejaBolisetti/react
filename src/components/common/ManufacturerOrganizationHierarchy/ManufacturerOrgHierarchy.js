@@ -60,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: manufacturerOrgHierarchyDataActions.saveData,
             listShowLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: manufacturerOrgHierarchyDataActions.changeHistoryModelOpen,
+            fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
@@ -70,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
+export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisible, fetchChangeHistoryList, viewTitle, userId, changeHistoryModelOpen, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, manufacturerOrgHierarchyData, showGlobalNotification, unFilteredAttributeData }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -137,7 +138,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         setFormData([]);
         setSelectedTreeData([]);
 
-        if (keys && keys.length > 0) {
+        if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
             const formData = flatternData.find((i) => keys[0] === i.key);
 
@@ -178,6 +179,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
                 fetchList({ setIsLoading: listShowLoading, userId });
+                fetchChangeHistoryList({ setIsLoading: listShowLoading, userId });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === res?.data?.attributeKey)?.hierarchyAttribueName;
                 const manufactureOrgShrtName = flatternData.find((i) => res?.data?.manufactureOrgParntId === i.key)?.data?.manufactureOrgShrtName;
@@ -278,8 +280,8 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-    const leftCol = manufacturerOrgHierarchyData.length > 0 ? 16 : 24;
-    const rightCol = manufacturerOrgHierarchyData.length > 0 ? 8 : 24;
+    const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
+    const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
     return (
         <>
             <Row gutter={20} span={24}>
@@ -299,7 +301,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                                     // className={style.searchField}
                                 />
                             </Col>
-                            {manufacturerOrgHierarchyData.length > 0 && (
+                            {manufacturerOrgHierarchyData?.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
@@ -310,7 +312,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {manufacturerOrgHierarchyData.length <= 0 ? (
+                        {manufacturerOrgHierarchyData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}

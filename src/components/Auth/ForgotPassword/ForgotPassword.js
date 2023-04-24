@@ -12,7 +12,7 @@ import { showGlobalNotification, hideGlobalNotification } from 'store/actions/no
 import { BiUser } from 'react-icons/bi';
 
 import { ROUTING_LOGIN } from 'constants/routing';
-import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from '../Auth.module.css';
 
@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
+import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
@@ -53,6 +54,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [validationKey, setValidationKey] = useState();
     const [inValidOTP, setInValidOTP] = useState(false);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -375,9 +377,10 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('new password'), validateFieldsPassword('New password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                    <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
+                                                                <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                                    <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
                                                                 </Form.Item>
+                                                                <PasswordStrengthMeter password={password} beforeLogin={true} />
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>

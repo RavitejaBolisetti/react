@@ -261,16 +261,16 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                         <div className={`${styles.floatLeft}`}>
                                             <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
                                                 <Icon component={HeadPhoneIcon} />
-                                                <span className={styles.helpLineText}>
+                                                {/* <span className={styles.helpLineText}>
                                                     OneStop <br></br> Help Desk
-                                                </span>
+                                                </span> */}
                                             </Link>
                                         </div>
                                         <div className={styles.welcomeUser}>
                                             <Space>
                                                 <div className={styles.userAvatar}>
                                                     <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
-                                                    <span className={styles.displayNone}>
+                                                    <span className={`${styles.mobmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                         <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                             <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                                 <Space>
@@ -282,9 +282,10 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span>
+                                                    <span className={styles.userRoleName}>Superadmin</span>
+                                                    {/* <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span> */}
                                                 </div>
-                                                <div className={styles.dropdownArrow}>
+                                                <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>

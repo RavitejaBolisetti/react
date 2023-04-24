@@ -12,14 +12,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { bindActionCreators } from 'redux';
 
-import { validateFieldsPassword, validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
 
 import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import { ROUTING_LOGIN } from 'constants/routing';
 import Footer from '../Footer';
+import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 const mapStateToProps = (state) => {
     const {
@@ -53,6 +53,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
     const [form] = Form.useForm();
     const canSkip = preLoginData?.passwordStatus?.status === 'A';
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         if (!preLoginData) {
@@ -111,7 +112,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                         <div className={styles.logoText}>Dealer Management System</div>
                     </div>
                     <div className={styles.loginWrap}>
-                        <Form form={form} name="update_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
+                        <Form form={form} name="update_password" layout="vertical" autoComplete="false" onFinish={onFinish}>
                             <Row>
                                 <Col span={24}>
                                     <div className={styles.loginHtml}>
@@ -123,22 +124,22 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('old password')]}>
-                                                            <Input type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('old password')} suffix={passwordSuffix('oldPassword')} />
+                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('new password'), validateFieldsPassword('New password')]}>
-                                                            <Input type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} suffix={passwordSuffix('newPassword')} />
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New Password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                            <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
                                                         </Form.Item>
+                                                        <PasswordStrengthMeter password={password} beforeLogin={true} />
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item
-                                                            label="Confirm Password"
                                                             name="confirmNewPassword"
                                                             dependencies={['newPassword']}
                                                             rules={[
@@ -152,8 +153,9 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                                     },
                                                                 }),
                                                             ]}
+                                                            className={styles.inputBox}
                                                         >
-                                                            <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>

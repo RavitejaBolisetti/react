@@ -339,7 +339,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                             </Col>
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger></Button>
+                                    <Button icon={<TfiReload />} inputProps={{ "data-testid": "ref-btn" }} id="ref" className={styles.refreshBtn} onClick={handleReferesh} danger aria-label='fa-ref'></Button>
 
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add Qualification
@@ -415,7 +415,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                            <DataTable inputProps={{ "data-testid": "tbl-data" }}  id="tbl" isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
                         </div>
                     </ConfigProvider>
                 </Col>
