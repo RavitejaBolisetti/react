@@ -604,13 +604,13 @@
     background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -736,6 +736,21 @@
     border: 1px solid #0b0b0c;
 }
 
+/*for datepicker */
+.datepicker {
+    width: 100%;
+}
+
+.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
+:global .ant-descriptions .ant-descriptions-row>* {
+    padding: 0px;
+}
+
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    background: #f2f2f2;
+}
+
+
 .tableIcons {
     border: none;
     padding: 0px;
@@ -818,6 +833,7 @@
     justify-content: flex-end;
     margin-bottom: 0px !important;
 }
+
 .content {
     /* border: 1px solid rgba(200, 200, 200, 0.55);
     border-top: none;
@@ -831,13 +847,10 @@
     /* margin-left: 12px; */
 }
 
-:global(.ant-card.ant-card-actions) {
-    height: 40px;
+.accordianHeader {
+    color: #E31837 !important;
 }
 
-:global(.ant-card.ant-card-actions) {
-    height: 40px;
-}
 @media (max-width: 768px) {
     .headerSearchField {
         vertical-align: middle;
