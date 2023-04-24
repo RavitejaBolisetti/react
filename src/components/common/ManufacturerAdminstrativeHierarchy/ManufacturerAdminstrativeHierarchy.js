@@ -91,8 +91,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     
-    console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:", selectedTreeData);
-    console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ formData:", formData);
+    // console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:", selectedTreeData);
+    // console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ formData:", formData);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -162,10 +162,15 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
+
+       // console.log("Visible Function Working")
+
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
+
+        console.log("Visible Function Working")
 
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i.key);
@@ -175,6 +180,17 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             cardBtmDisableAction(true);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+
+            if (formData) {
+                // const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
+                // formData && setFormData({ ...formData?.data, isChildAllowed });
+
+                // const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
+                // const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
+                formData && setSelectedTreeData({ ...formData?.data, 
+                   // hierarchyAttribueName, parentName: prodctShrtName 
+                });
+            }
         }
 
         setSelectedTreeKey(keys);
