@@ -107,19 +107,39 @@ const treeDatas = [
     },
 ];
 
-const fetchList = () => {};
-const saveData = () => {};
-const hierarchyAttributeFetchList = () => {};
+const fetchList = () => {
+    return;
+};
+const saveData = () => {
+    return;
+};
+const hierarchyAttributeFetchList = () => {
+    return;
+};
+const listShowLoading = () => {
+    return;
+};
 
 describe('manufacturerorghierarchy component', () => {
-    test('render child button', async () => {
-        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const addChildBtn = screen.getByText('Add Child');
-        expect(addChildBtn).toBeInTheDocument();
+    test('Manufacturer Organization Heirarchy Page render ', async () => {
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading}/>);
+        const hierarchyText = await screen.getByText('Hierarchy');
+        expect(hierarchyText).toBeInTheDocument();
     });
+    test('Is the search Field Present or not', async () => {
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} saveData={saveData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} />);
+        const searchField = await screen.findByPlaceholderText('Search');
+        expect(searchField).toBeTruthy();
+        const searchIcon = screen.getByRole('img', { name: 'search' });
+        expect(searchIcon).toBeTruthy();
+        fireEvent.click(searchIcon);
 
+        const searchBtn = screen.getByRole('button', { name: 'search' });
+        expect(searchBtn).toBeTruthy();
+        fireEvent.click(searchBtn);
+    });
     test('render form', async () => {
-        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading}/>);
         const codeInputField = screen.queryByPlaceholderText('Please Enter Attribute Code');
         expect(codeInputField).toBeNull();
     });
