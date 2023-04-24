@@ -196,13 +196,13 @@ const LeftSideBarMain = (props) => {
                         </Col>
                     </Row>
                     <Row gutter={20}>
-                        <Col xs={22} sm={22} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className={styles.searchContainer}>
                                 {collapsed ? (
                                     <BsSearch size={18} onClick={onMenuCollapsed} />
                                 ) : (
                                     <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
-                                        <Input.Search placeholder="Search" style={{ width: '212px' }} allowClear type="text" />
+                                        <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
                                     </AutoComplete>
                                 )}
                             </div>

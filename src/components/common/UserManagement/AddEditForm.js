@@ -11,6 +11,7 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 import { dealerData } from '../DealerHierarchy/test';
+import AssignUserRole from './AssignUserRole';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -32,13 +33,18 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleControlChange = (control, e) => {
-        return;
+    const handleDelete = (event, key) => {
+        console.log('key', key);
+        const newAccessid = AccessMacid.filter((el) => {
+            return el?.key != key;
+        });
+        setAccessMacid(newAccessid);
     };
-    const handleAddMacid = (event) => {
+    const handleAddMacid = (event, key) => {
         form.validateFields();
         const CardData = {
             macid: Macid,
+            key: AccessMacid?.length,
         };
         setAccessMacid([...AccessMacid, CardData]);
         console.log('This is the macID : ', CardData);
@@ -83,7 +89,7 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
+                        <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary">
                             Add
                         </Button>
                     </Col>
@@ -99,18 +105,22 @@ const AddEditFormMain = (props) => {
                         >
                             {AccessMacid?.map((el) => {
                                 return (
-                                    <Card className={style.userManagementDrawer}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <span>Mac Id</span>
+                                    <Card className={style.usermanagementCard}>
+                                        <Row gutter={20} className={style.alignUsermanagementCard}>
+                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} xxl={20}>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                        <span>Mac Id</span>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                        <span>{el?.macid}</span>
+                                                    </Col>
+                                                </Row>
                                             </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                                                <span>{el.macid}</span>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Button>
+                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                                <Button className={style.crossButton} type="danger" onClick={(event) => handleDelete(event, el?.key)}>
                                                     <AiOutlineClose />
                                                 </Button>
                                             </Col>
@@ -142,7 +152,9 @@ const AddEditFormMain = (props) => {
                             }}
                         >
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Assign User Roles" key="1"></Panel>
+                                <Panel header="Assign User Roles" key="1">
+                                    <AssignUserRole />
+                                </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                 <Panel header="Branch Mapping" key="2"></Panel>

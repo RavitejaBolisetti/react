@@ -2,11 +2,13 @@
     padding: 10px 20px 10px 32px;
     overflow: initial;
     background: #ffffff;
-    min-height: calc(100vh - 100px) !important
+    min-height: calc(100vh - 100px) !important;
+    margin-top: 0px;
 }
 
 @media (max-width: 768px) {
     .mainContainer {
-        padding: 50px 10px 0;
+        padding: 10px 10px 0;
+        margin-top: 80px;
     }
 }

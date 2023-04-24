@@ -9,7 +9,6 @@ import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvi
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
-import style from './HierarchyAttribute.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -146,7 +145,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
     const onError = (message) => {
         onSaveShowLoading(false);
-        showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: style.error, placement: 'bottomRight' });
+        showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: styles.error, placement: 'bottomRight' });
     };
 
     const handleAdd = () => {
@@ -192,6 +191,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
+            width: '6%',
             sorter: false,
             render: (_t, _r, i) => i + 1,
         })
@@ -201,7 +201,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
-            width: '12%',
+            width: '10%',
         })
     );
 
@@ -209,7 +209,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
-            width: '17%',
+            width: '20%',
         })
     );
 
@@ -217,7 +217,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
-            render: (text, record) => <>{text ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            width: '14%',
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -225,8 +226,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
-            width: '17%',
-            render: (text, record) => <>{text ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            width: '20%',
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -234,7 +235,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
-            render: (text, record) => <>{text ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            width: '10%',
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -242,7 +244,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <>{text ? <div className={style.activeText}>Active</div> : <div className={style.InactiveText}>Inactive</div>}</>,
+            width: '10%',
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
         })
     );
 
@@ -250,17 +253,18 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
+            width: '10%',
             sorter: false,
             render: (text, record, index) => {
                 return (
                     <Space>
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => edit(record, 'edit')}>
                                 <EditIcon />
                             </Button>
                         }
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
+                            <Button className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => edit(record, 'view')}>
                                 <ViewEyeIcon />
                             </Button>
                         }
@@ -316,39 +320,42 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
             {contextAlertNotification}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.searchContainer}>
+                    <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
-                                    <Col xs={5} sm={5} md={5} lg={5} xl={5} className={style.subheading}>
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.subheading}>
+                                    
+                                        <Row gutter={20} >
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         Hierarchy Attribute Type
-                                    </Col>
-                                    <Col xs={5} sm={5} md={5} lg={5} xl={5}>
-                                        <Select className={style.attributeSelet} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                        <Select className={styles.headerSelectField} onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                             {attributeData?.map((item) => (
                                                 <Option value={item}>{item}</Option>
                                             ))}
                                         </Select>
-                                    </Col>
-                                    {detailData?.hierarchyAttributeType && (
-                                        <div className={styles.searchBox}>
-                                            <Col xs={5} sm={5} md={5} lg={5} xl={5}>
+                                        {detailData?.hierarchyAttributeType && (
                                                 <Search
                                                     placeholder="Search"
-                                                    style={{
-                                                        width: 300,
-                                                    }}
+                                                  
+                                                    className={styles.headerSearchField}
                                                     allowClear
                                                     onSearch={onSearchHandle}
                                                     onChange={onChangeHandle}
                                                 />
-                                            </Col>
-                                        </div>
-                                    )}
+                                        )}
+                                        </Col>
+                                        </Row>
+                                    </Col>
+                                   
+                                    
+                                  
                                     {detailData?.hierarchyAttributeType && (
                                         <Col className={styles.addGroup} xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                            <Button icon={<TfiReload />} className={style.refreshBtn} onClick={handleReferesh} danger />
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                                 Add Attribute
                                             </Button>
                                         </Col>
@@ -373,21 +380,21 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                     }}
                                     description={
                                         selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
-                                            <span className={style.descriptionText}>
+                                            <span className={styles.descriptionText}>
                                                 No records found. Please add new parameter <br />
                                                 using below button
                                             </span>
                                         ) : !selectedHierarchy ? (
-                                            <span className={style.descriptionText}>Please select hierarchy type to view records.</span>
+                                            <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
                                         ) : (
-                                            <span className={style.descriptionText}> No records found.</span>
+                                            <span className={styles.descriptionText}> No records found.</span>
                                         )
                                     }
                                 >
                                     {selectedHierarchy && !detailData?.hierarchyAttribute?.length ? (
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                                     Add Attribute
                                                 </Button>
                                             </Col>

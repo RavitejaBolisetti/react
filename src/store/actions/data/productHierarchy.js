@@ -1,16 +1,24 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE } from 'constants/routingApi';
+import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE,BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE} from 'constants/routingApi';
+import { message } from 'antd';
 
 export const PRODUCT_HIERARCHY_DATA_LOADED = 'PRODUCT_HIERARCHY_DATA_LOADED';
 export const PRODUCT_HIERARCHY_DATA_SHOW_LOADING = 'PRODUCT_HIERARCHY_DATA_SHOW_LOADING';
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED';
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE';
+export const PRODUCT_HIERARCHY_DATA_LOADED_SKU = 'PRODUCT_HIERARCHY_DATA_LOADED_SKU';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+
+const receiverProductHierarchyData = (data) => ({
+    type: PRODUCT_HIERARCHY_DATA_LOADED_SKU,
     isLoaded: true,
     data,
 });
@@ -113,6 +121,37 @@ productHierarchyDataActions.saveData = withAuthToken((params) => ({ token, acces
         data,
         method: 'post',
         url: BASE_URL_PRODUCT_HIERARCHY_SAVE,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+productHierarchyDataActions.skulist = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, data, skuId = '' } = params;
+    setIsLoading(true);
+    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiverProductHierarchyData(res?.data));
+        } else {
+            onError('Internal Error, Please try again');
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url:  BASE_URL_PRODUCT_HIERARCHY_SKU + (skuId ? '?skuId=' + skuId : ''),
         token,
         accessToken,
         userId,
