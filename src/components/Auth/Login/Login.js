@@ -165,6 +165,7 @@ const Login = (props) => {
             description: message,
             btn: btn(data),
             duration: 0,
+            onClose: status === 'A' ? handleSkipUpdatePassword(data) : () => {},
             className: status === 'E' ? notificationStyles.error : notificationStyles.warning,
         });
     };

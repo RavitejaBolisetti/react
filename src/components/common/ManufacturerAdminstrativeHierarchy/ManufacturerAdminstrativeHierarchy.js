@@ -123,7 +123,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:126 ~ useEffect ~ detailData 1:', detailData, attributeData);
         const isChildAllowed = attributeData && attributeData?.find((attribute) => attribute.id === detailData?.attributeKey);
         console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:126 ~ useEffect ~ detailData 2:', detailData, attributeData);
-        
+
         console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:125 ~ useEffect ~ isChildAllowed:', isChildAllowed);
         // setFormData({ ...detailData, isChildAllowed });
 
