@@ -26,22 +26,6 @@ import styl from './ApplicationMaster.module.css';
 
 const { Search } = Input;
 
-import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
-import styl from './ApplicationMaster.module.css';
-
-import { menuDataActions } from 'store/actions/data/menu';
-
-import DrawerUtil from './DrawerUtil';
-import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { EN } from 'language/en';
-import { HierarchyFormButton } from '../Button';
-import ViewApplicationDetail from './ViewApplicationDetails';
-import { showGlobalNotification } from 'store/actions/notification';
-
-const { Search } = Input;
-
 const mapStateToProps = (state) => {
     console.log('state', state);
     const {
