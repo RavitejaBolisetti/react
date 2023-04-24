@@ -675,3 +675,18 @@
     font-size: 20px;
     color: #ff3e5b;
 }
+.usermanagementCardTextLeft {
+    float: left;
+    color: #000000;
+    font-weight: 600;
+    font-size: 14px;
+}
+.usermanagementCardTextRight {
+    float: right;
+    color: #000000;
+    font-weight: 600;
+    font-size: 14px;
+}
+:global .ant-select-dropdown .ant-select-item-option-state {
+    display: none;
+}

@@ -10,15 +10,16 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
-import { dealerData } from '../DealerHierarchy/test';
 import AssignUserRole from './AssignUserRole';
+import BranchMapping from './BranchMapping';
+import ProductMapping from './ProductMapping';
 
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
-    const { saveclick, onCloseAction, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
+    const { saveclick, onCloseAction, productHierarchyData, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
@@ -70,13 +71,29 @@ const AddEditFormMain = (props) => {
                         {/* <Card>
                             <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card> */}
-                        <Card className={style.userManagementDrawer}>
-                            <p>
-                                Employee Code : <span>{tableDetailData['0'].employeeCode}</span>
-                            </p>
-                            <p>
-                                userName:<span>{tableDetailData['0'].userName}</span>
-                            </p>
+                        <Card className={style.usermanagementCard}>
+                            <Row gutter={20}>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            Employee Code
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <div className={style.usermanagementCardTextLeft}> {DealerData.employeeCode}</div>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <div className={styles.floatRight}>User Name</div>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <div className={style.usermanagementCardTextRight}> {DealerData.employeeName}</div>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
                         </Card>
                     </Col>
                 </Row>
@@ -153,14 +170,18 @@ const AddEditFormMain = (props) => {
                         >
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                 <Panel header="Assign User Roles" key="1">
-                                    <AssignUserRole />
+                                    <AssignUserRole userRoleOptions={DealerData?.roles} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Branch Mapping" key="2"></Panel>
+                                <Panel header="Branch Mapping" key="2">
+                                    <BranchMapping BranchMappingData={DealerData?.branches} />
+                                </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Product Mapping" key="3"></Panel>
+                                <Panel header="Product Mapping" key="3">
+                                    <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
+                                </Panel>
                             </Collapse>
                         </Space>
                         {/* <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>

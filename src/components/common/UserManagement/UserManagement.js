@@ -16,6 +16,9 @@ import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { userManagementDataActions } from 'store/actions/data/userManagement';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+
 import DrawerUtil from './DrawerUtil';
 import { AddEditForm } from './AddEditForm';
 
@@ -30,6 +33,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             UserManagement: { isLoaded: isDataLoaded = false, isLoading, isLoadingOnSave, isFormDataLoaded, data: UserManagementDealerData = [] },
+            ProductHierarchy: { isLoading: isprodLoading, isLoaded: isProdDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -42,6 +47,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         UserManagementDealerData,
+        productHierarchyData,
+        attributeData,
         isLoadingOnSave,
         isFormDataLoaded,
     };
@@ -57,6 +64,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchManufacturerDetails: userManagementDataActions.fetchManufacturerDetails,
             saveDealerDetails: userManagementDataActions.saveDealerDetails,
             saveManufacturerDetails: userManagementDataActions.saveManufacturerDetails,
+            fetchList: productHierarchyDataActions.fetchList,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             showGlobalNotification,
         },
         dispatch
@@ -126,7 +135,7 @@ const savePayload = {
         },
     ],
 };
-export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+export const UserManagementMain = ({ saveData, userId, moduleTitle, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -177,7 +186,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId });
+            hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
         // setdisabled(true);
@@ -186,7 +196,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
     useEffect(() => {
         setSearchdata(qualificationData);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [qualificationData]);
+        console.log('productHierarchyData', productHierarchyData);
+        console.log('attributeData', attributeData);
+    }, [productHierarchyData, attributeData, qualificationData]);
 
     useEffect(() => {
         console.log(DealerSelected);
@@ -541,6 +553,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, saveDealerDe
         handleUpdate2,
         titleOverride: formData?.employeecode ? 'Edit User Access ' : 'Manage User Access',
         DealerData,
+        productHierarchyData, 
         tableDetailData,
         style,
         onCloseAction: () => setIsFormVisible(false),
