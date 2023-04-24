@@ -11,6 +11,7 @@ import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import styles2 from './RoleManagement.module.css';
 import treeData from './Treedata.json';
+import { cryptoRandom } from 'utils/RandomNumberGenerator';
 
 const mapStateToProps = (state) => {
     const {
@@ -317,7 +318,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
             const Final_data = { cretdby: 'shaka', cretddate: new Date(), modfdby: 'Me', modfddate: 'adasdad', roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
             const onSuccess = (res) => {
                 form.resetFields();
-                setForceFormReset(Math.random() * 10000);
+                setForceFormReset(cryptoRandom());
 
                 if (res?.Final_data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
@@ -349,7 +350,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
 
     const handleForms = (e) => {
         setDisabled(true);
-        setForceFormReset(Math.random() * 10000); //Important Form Rerender
+        setForceFormReset(cryptoRandom()); //Important Form Rerender
 
         setAddchild(false);
         setAddEditCancel(false);
@@ -367,7 +368,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const oncancel = () => {
         setAddchild(!addchilds);
         setDisabled(false);
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(cryptoRandom());
 
         setInitialData({});
         form.resetFields();
