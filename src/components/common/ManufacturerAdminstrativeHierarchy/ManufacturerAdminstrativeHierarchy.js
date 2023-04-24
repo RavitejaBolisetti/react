@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty, Dropdown, message, Space } from 'antd';
+import { Button, Col, Form, Row, Input, Empty, Dropdown } from 'antd';
 import { FaHistory } from 'react-icons/fa';
 import { PlusOutlined, DownOutlined } from '@ant-design/icons';
 
 import { HierarchyFormButton } from 'components/common/Button';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ViewProductDetail } from './ViewProductDetail';
+import { HierarchyView } from './HierarchyView';
 
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
-import { ManufacturerAdminHierarchyChangeHistory, ManufacturerAdminAuthorityChangeHistory, ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
+import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
+import { ManufacturerAdminHierarchyChangeHistory, ManufacturerAdminAuthorityChangeHistory } from './ChangeHistory';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import LeftPanel from '../LeftPanel';
-
 import styles from 'components/common/Common.module.css';
-import style from '../ProductHierarchy/producthierarchy.module.css';
 
 import { EN } from 'language/en';
 
@@ -27,7 +26,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible, historyData = [], authData = [] },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], changeHistoryVisible, historyData = [], isDetailLoaded = false, detailData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -48,7 +47,8 @@ const mapStateToProps = (state) => {
         moduleTitle,
         historyData,
         viewTitle,
-        authData,
+        isDetailLoaded,
+        detailData,
         attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -64,22 +64,21 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryModelOpen,
             changeHistoryAuthorityModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen,
             uploadModelOpen: manufacturerAdminHierarchyDataActions.uploadModelOpen,
+            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
+            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
 
-            onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
             showGlobalNotification,
-            authTypeDataLoaded: manufacturerAdminHierarchyDataActions.authTypeDataLoaded,
-            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction
-
         },
         dispatch
     ),
 });
 
-export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle, isChangeHistoryVisible, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, authData, cardBtmDisableAction }) => {
+export const ManufacturerAdminstrativeHierarchyMain = (props) => {
+    const { moduleTitle, viewTitle, isDetailLoaded, detailData, isChangeHistoryVisible, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, fetchDetail, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, cardBtmDisableAction } = props;
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -87,45 +86,52 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
+    const [selectedId, setSelectedId] = useState();
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    
+    console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:", selectedTreeData);
+    console.log("🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ formData:", formData);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [forceFormReset, setForceFormReset] = useState(false);
-
     const [searchValue, setSearchValue] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [documentTypesList, setDocumentTypesList] = useState([]);
-    const [authId, setAuthId] = useState('87d4a0cf-55e9-43dc-a136-6757d3476ea1');
-    // const [viewMode, isViewMode] = useState(true);
 
     const fieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
+            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
             fetchList({ setIsLoading: listShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
 
     useEffect(() => {
-        if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration' });
-            authTypeDataLoaded({ setIsLoading: listShowLoading, id: authId });
+        if (!isDetailLoaded && selectedId && userId) {
+            fetchList({ setIsLoading: listShowLoading, id: selectedId, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [isDetailLoaded, selectedId, userId]);
 
     useEffect(() => {
-        // console.log( authId, 'CheckAuthID' )
-        if (userId) {
-            authTypeDataLoaded({ setIsLoading: listShowLoading, id: authId });
+        if (isDetailLoaded && selectedId && detailData) {
+            console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:90 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedId:', selectedId, isDetailLoaded, detailData);
+            const isChildAllowed = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.isChildAllowed;
+            fetchDetail && setFormData({ ...detailData?.data, isChildAllowed });
+
+            const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === detailData?.data?.attributeKey)?.hierarchyAttribueName;
+            const manufactureAdminShortName = flatternData.find((i) => detailData?.data?.manufactureAdminParntId === i.key)?.data?.manufactureAdminShortName;
+            fetchDetail && setSelectedTreeData({ ...detailData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName });
+
+            setFormActionType('view');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authId, userId]);
+    }, [isDetailLoaded, fetchDetail]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -156,36 +162,17 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(Math.random() * 10000);
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
 
         if (keys && keys.length > 0) {
-            setFormActionType('view');
             const formData = flatternData.find((i) => keys[0] === i.key);
-
             const ID = formData.data.id;
 
-            // // const authData = authTypeDataLoaded({setIsLoading: listShowLoading, tokenNumber: ID });
-
-            // // console.log( authData, "AUTHDATATAT" )
-
-            // console.log( ID, "ididididi" )
-
-            setAuthId(ID);
-
+            setSelectedId(ID);
             cardBtmDisableAction(true);
-
-            if (formData) {
-                const isChildAllowed = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
-                formData && setFormData({ ...formData?.data, isChildAllowed });
-
-                const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const manufactureAdminShortName = flatternData.find((i) => formData?.data?.manufactureAdminParntId === i.key)?.data?.manufactureAdminShortName;
-                formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: manufactureAdminShortName, adminAuthority: authData });
-            }
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         }
@@ -209,7 +196,6 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);
-
         }
         setIsFormVisible(true);
         setFormActionType(type);
@@ -226,11 +212,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
     };
 
     const onFinish = (values) => {
-        //console.log(documentTypesList,'documentTypesList');
-        // console.log(values,'VALUESSSS');
-
         const recordId = formData?.id || '';
-        //const codeToBeSaved = selectedTreeSelectKey || '';
 
         const data = { isModified: false, id: recordId, adminAuthority: documentTypesList, ...values };
         const onSuccess = (res) => {
@@ -278,9 +260,9 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
+        searchValue,
         setSearchValue,
         treeData: manufacturerAdminHierarchyData,
-        searchValue,
     };
 
     const formProps = {
@@ -399,7 +381,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Empty>
@@ -413,7 +395,7 @@ export const ManufacturerAdminstrativeHierarchyMain = ({ moduleTitle, viewTitle,
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
                     {selectedTreeData && selectedTreeData?.id ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <ViewProductDetail {...viewProps} />
+                            <HierarchyView {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>
                                 <HierarchyFormButton {...viewProps} />
                             </div>

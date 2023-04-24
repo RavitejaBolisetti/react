@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button, Collapse } from 'antd';
+import React, { useState } from 'react';
+import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
+import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 
 import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import AuthorityDetail from './AuthorityDetail';
-import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
 const { TextArea } = Input;
-const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { setDocumentTypesList, documentTypesList, onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData, viewMode, isViewMode } = props;
@@ -79,6 +76,12 @@ const AddEditFormMain = (props) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
+
+    // const authorityDetailProps = {
+    //     ...props,
+    //     documentTypesList,
+    //     setDocumentTypesList,
+    // };
     return (
         <>
             <Form form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -143,19 +146,10 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
             </Form>
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {/* <Collapse style={{ marginBottom: '100px' }}>
-                        <Panel header="Authority Details">
-                            <AuthorityDetail />
-                        </Panel>
-                    </Collapse> */}
-
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                        <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Authority Details</span>} key="1">
-                            <AuthorityDetail setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} selectedTreeData={selectedTreeData} />
-                        </Panel>
-                    </Collapse>
+                    <AuthorityDetailPanel {...props} />
                 </Col>
             </Row>
         </>

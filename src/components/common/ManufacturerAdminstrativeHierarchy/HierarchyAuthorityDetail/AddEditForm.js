@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Input, Form, Col, Card, Row, Switch, Button, Select, DatePicker, Typography, Space } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy.js';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
-import { bindActionCreators } from 'redux';
+
 import style from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -27,8 +28,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-  //  console.log(state,"nishant")
-
     apiData = state.data.ManufacturerAdminHierarchy.authTypeDropdown;
 
     let returnValue = {
@@ -40,9 +39,7 @@ const mapStateToProps = (state) => {
         isDataAttributeLoaded,
         tokenNumber,
         authTypeDropdown,
-        // moduleTitle,
         historyData,
-        // viewTitle,
         authorityVisible,
         attributeData: attributeData?.filter((i) => i),
     };
@@ -62,17 +59,13 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
 
-            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction
-           // authTypeDataLoaded: manufacturerAdminHierarchyDataActions.authTypeDataLoaded,
-
-            // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
+            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction,
         },
         dispatch
     ),
 });
 
-const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList,authorityVisible, cardBtmDisableAction }) => {
-
+const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, saveData, searchList, setIsBtnDisabled, setDocumentTypesList, tokenNumber, authTypeDropdown, documentTypesList, authorityVisible, cardBtmDisableAction }) => {
     const onFinishFailed = (err) => {
         console.error(err);
     };
@@ -88,7 +81,6 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-
     return (
         <Form
             form={form}
@@ -97,7 +89,6 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
             layout="vertical"
             onFinishFailed={onFinishFailed}
             style={{
-                // width: 440,
                 backgroundColor: '#F2F2F2',
             }}
         >
@@ -139,35 +130,39 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
                         </Form.Item>
                     </Col>
 
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} >
-                        <Form.Item label="" name='EmployeeName' initialValue={tokenNumber?.employeeName}>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                        <Form.Item label="" name="EmployeeName" initialValue={tokenNumber?.employeeName}>
                             <Input />
                         </Form.Item>
                     </Col>
 
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} >
-                        <Form.Item label="" name='id' initialValue={""}>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                        <Form.Item label="" name="id" initialValue={''}>
                             <Input />
                         </Form.Item>
                     </Col>
 
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} >
-                        <Form.Item label="" name='isModified' initialValue={false}>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0}>
+                        <Form.Item label="" name="isModified" initialValue={false}>
                             <Input />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateFrom" label="Effective From" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} 
-                            //onChange={handleSelectDateFrom}
-                             />
+                            <DatePicker
+                                format="YYYY-MM-DD"
+                                className={style.datepicker}
+                                //onChange={handleSelectDateFrom}
+                            />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="dateTo" label="Effective To" rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} 
-                            //onChange={handleSelectDateTo} 
+                            <DatePicker
+                                format="YYYY-MM-DD"
+                                className={style.datepicker}
+                                //onChange={handleSelectDateTo}
                             />
                         </Form.Item>
                     </Col>
@@ -175,15 +170,11 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
             )}
 
             {!isEditing && (
-                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit"
-                    onClick={()=> cardBtmDisableAction(false)}
-                >
+                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtmDisableAction(false)}>
                     Add
                 </Button>
             )}
         </Form>
     );
 };
-
-// export default AuthorityForm;
-export const AuthorityForm = connect(mapStateToProps, mapDispatchToProps)(AuthorityFormMin);
+export const AddEditForm = connect(mapStateToProps, mapDispatchToProps)(AuthorityFormMin);

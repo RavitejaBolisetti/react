@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Descriptions } from 'antd';
-import { AuthorityCard } from './AuthorityCard.js';
+import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 const mapStateToProps = (state) => {
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const ViewProductDetailMain = ({ viewTitle, buttonData, documentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, authorityVisible }) => {
+export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, authorityVisible }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -36,9 +36,9 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, documentTypesList
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureAdminLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
-            {authorityVisible ? selectedTreeData?.adminAuthority?.adminAuthority?.map((item) => <AuthorityCard authData={item} />) : documentTypesList?.map((item) => <AuthorityCard authData={item} />)}
+            <AuthorityDetailPanel selectedTreeData={selectedTreeData} viewMode={true} />
         </div>
     );
 };
 
-export const ViewProductDetail = connect(mapStateToProps)(ViewProductDetailMain);
+export const HierarchyView = connect(mapStateToProps)(HierarchyViewMain);

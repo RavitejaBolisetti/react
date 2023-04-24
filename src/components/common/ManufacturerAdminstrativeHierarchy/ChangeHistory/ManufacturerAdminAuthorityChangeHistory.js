@@ -6,9 +6,10 @@ import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufa
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
-import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+
+import styles from 'components/common/ChangeHistory/ChangeHistory.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -17,8 +18,6 @@ const mapStateToProps = (state) => {
             ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, authHistoryData: changeHistoryData = [], changeHistoryAuthorityVisible },
         },
     } = state;
-
-    // console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
 
     let returnValue = {
         userId,
@@ -79,7 +78,7 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
             dataIndex: 'employeeName',
         })
     );
-    
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Employee Token No.',
@@ -107,7 +106,6 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
             render: (text) => convertDateTime(text),
         })
     );
-   
 
     const tableProps = {
         isLoading,
@@ -121,4 +119,6 @@ const ManufacturerAdminAuthorityChangeHistoryMain = ({ fetchAuthorityChangeHisto
     );
 };
 
-export const ManufacturerAdminAuthorityChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminAuthorityChangeHistoryMain, { title: 'Authority Change History', width: '90%' }));
+const ManufacturerAdminAuthorityChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminAuthorityChangeHistoryMain, { title: 'Authority Change History', width: '90%' }));
+
+export default ManufacturerAdminAuthorityChangeHistory;

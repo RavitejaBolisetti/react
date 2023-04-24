@@ -6,9 +6,10 @@ import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufa
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
-import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+
+import styles from 'components/common/ChangeHistory/ChangeHistory.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -17,8 +18,6 @@ const mapStateToProps = (state) => {
             ManufacturerAdminHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
-
-    // console.log('🚀 ~ file: ChangeHistory.js:17 ~ mapStateToProps ~ changeHistoryVisible:', changeHistoryVisible);
 
     let returnValue = {
         userId,
@@ -44,7 +43,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
-        if (!isHistoryLoaded&&userId) {
+        if (!isHistoryLoaded && userId) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,16 +95,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            // filters: [
-            //     {
-            //         text: 'Active',
-            //         value: 'Active',
-            //     },
-            //     {
-            //         text: 'Inactive',
-            //         value: 'Inactive',
-            //     },
-            // ],
             render: (text) => (text ? 'Active' : 'In Active'),
         })
     );
@@ -122,4 +111,6 @@ const ManufacturerAdminHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, c
     );
 };
 
-export const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Admin Change History', width: '90%' }));
+const ManufacturerAdminHierarchyChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ManufacturerAdminHierarchyChangeHistoryMain, { title: 'Admin Change History', width: '90%' }));
+
+export default ManufacturerAdminHierarchyChangeHistory;
