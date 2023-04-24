@@ -190,7 +190,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         tblPrepareColumns({
             title: 'Token No.',
             dataIndex: 'tokenNo',
-            width: '12%',
+            width: '10%',
             sorter: false,
         })
     );
@@ -198,7 +198,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         tblPrepareColumns({
             title: 'User Name',
             dataIndex: 'userName',
-            width: '18%',
+            width: '30%',
             sorter: false,
         })
     );
@@ -206,7 +206,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         tblPrepareColumns({
             title: 'Designation',
             dataIndex: 'designation',
-            width: '22%',
+            width: '25%',
             sorter: false,
         })
     );
@@ -214,7 +214,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         tblPrepareColumns({
             title: 'Mobile Number',
             dataIndex: 'mobileNumber',
-            width: '16%',
+            width: '15%',
             sorter: false,
         })
     );
@@ -222,7 +222,7 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         tblPrepareColumns({
             title: 'Email ID',
             dataIndex: 'emailID',
-            width: '32%',
+            width: '20%',            
             sorter: false,
         })
     );
@@ -561,10 +561,10 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={style.successDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={20} sm={20} md={20} lg={20} xl={20} className={style.subheading}>
+                                            <Col xs={21} sm={21} md={21} lg={21} xl={21} className={style.subheading}>
                                                 <DataTable tableColumn={tableDetails} {...tableDetailProps} />
                                             </Col>
-                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} className={style.subheading}>
+                                            <Col xs={3} sm={3} md={3} lg={3} xl={3} className={style.subheading}>
                                                 <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
