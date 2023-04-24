@@ -58,6 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -73,6 +74,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -108,12 +110,16 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
+        setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = configData.find((i) => i.id === record.id);
+        console.log('data', data);
         if (data) {
             data && setFormData(data);
+            console.log('formData', formData);
+
             setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
@@ -121,6 +127,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true);
+
         setShowSaveAndAddNewBtn(false);
         setShowSaveBtn(false);
         setFooterEdit(true);
@@ -227,6 +235,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
 
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
+        setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
@@ -236,6 +245,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const handleAdd = () => {
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
+        setIsViewModeVisible(false);
+
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
@@ -295,6 +306,8 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const formProps = {
         formActionType,
         setFormActionType,
+        setIsViewModeVisible,
+        isViewModeVisible,
         isReadOnly,
         formData,
         footerEdit,
@@ -302,7 +315,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         typeData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
@@ -310,6 +323,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         configData,
         parameterType,
         setParameterType,
+        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,

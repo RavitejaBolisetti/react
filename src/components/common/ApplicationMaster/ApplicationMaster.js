@@ -6,7 +6,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
 import styl from './ApplicationMaster.module.css';
 
 import { menuDataActions } from 'store/actions/data/menu';
@@ -304,7 +303,7 @@ export const ApplicationMasterMain = ({ userId, isMenuListLoading, isDataLoaded,
                                             </span>
                                         }
                                     >
-                                        <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
                                             Add
                                         </Button>
                                     </Empty>
