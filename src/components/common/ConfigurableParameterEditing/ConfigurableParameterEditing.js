@@ -74,6 +74,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -114,11 +115,10 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = configData.find((i) => i.id === record.id);
-        console.log("data",data)
+        console.log('data', data);
         if (data) {
-            
             data && setFormData(data);
-            console.log("formData",formData)
+            console.log('formData', formData);
 
             setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
@@ -308,7 +308,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         formActionType,
         setFormActionType,
         setIsViewModeVisible,
-        isViewModeVisible;
+        isViewModeVisible,
         isReadOnly,
         formData,
         footerEdit,
@@ -316,7 +316,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         typeData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
@@ -324,6 +324,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         configData,
         parameterType,
         setParameterType,
+        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,

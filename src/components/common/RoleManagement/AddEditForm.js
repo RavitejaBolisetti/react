@@ -480,9 +480,7 @@ const AddEditFormMain = (props) => {
             </>
         );
     };
-    console.log('This is the view data::',formData);
-    const [hell,setHell] = useState(formData);
-
+  
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,

@@ -253,7 +253,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
 
         setIsReadOnly(false);
     };
- 
 
     const handleAdd = () => {
         form.resetFields();
@@ -364,6 +363,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
             dataIndex: 'srl',
             sorter: false,
             render: (_t, _r, i) => i + 1,
+            width: '5%',
         })
     );
 
@@ -371,6 +371,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         tblPrepareColumns({
             title: 'Role ID',
             dataIndex: 'roleId',
+            width: '20%',
         })
     );
 
@@ -378,6 +379,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         tblPrepareColumns({
             title: 'Role Name',
             dataIndex: 'roleName',
+            width: '20%',
         })
     );
 
@@ -385,6 +387,8 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         tblPrepareColumns({
             title: 'Role Description',
             dataIndex: 'roleDesceription',
+            ellipsis: true,
+            width: 100,
         })
     );
 
@@ -393,6 +397,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '10%',
         })
     );
 
@@ -408,6 +413,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                     </Space>
                 );
             },
+            width: '10%',
         })
     );
     function Subpanel(arr) {
@@ -519,7 +525,6 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
     //     );
     //   }
 
-
     const formProps = {
         moduleTitle,
         setIsViewModeVisible,
@@ -536,7 +541,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         showSaveBtn,
         showSaveAndAddNewBtn,
         isVisible: isFormVisible,
-        titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onCloseAction: () => {
             form.resetFields();
             setIsFormVisible(false);
