@@ -34,6 +34,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    console.log(state,"GLOABAL");
+
     const moduleTitle = 'Manufacturer Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -91,7 +93,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
-    console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:', selectedTreeData, formData);
+   // console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:91 ~ ManufacturerAdminstrativeHierarchyMain ~ selectedTreeData:', selectedTreeData, formData);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -121,7 +123,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     useEffect(() => {
         console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:126 ~ useEffect ~ detailData 1:', detailData, attributeData);
-        const isChildAllowed = attributeData && attributeData?.find((attribute) => attribute.id === detailData?.attributeKey);
+
+        //const isChildAllowed = attributeData && attributeData?.find((attribute) => attribute.id === detailData?.attributeKey);
+        const isChildAllowed = manufacturerAdminHierarchyData && manufacturerAdminHierarchyData?.find((attribute) => attribute.id === detailData?.id);
+        //adminAuthority?.
         console.error('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:126 ~ useEffect ~ detailData 2:', detailData, attributeData);
         
         console.log('🚀 ~ file: ManufacturerAdminstrativeHierarchy.js:125 ~ useEffect ~ isChildAllowed:', isChildAllowed);
@@ -171,7 +176,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setFormData([]);
         setSelectedTreeData([]);
 
-        console.log('Visible Function Working');
+      //  console.log('Visible Function Working');
 
         if (keys && keys.length > 0) {
             const formData = flatternData.find((i) => keys[0] === i.key);
