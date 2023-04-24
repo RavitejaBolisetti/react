@@ -1,4 +1,6 @@
-
+:global .ant-drawer-content-wrapper {
+    width: 40% !important;
+}
 .myDrawerStyle :global .ant-drawer-body {
     padding-top: 10px;
     height: calc(100vh - 100px);
@@ -36,10 +38,12 @@
 }
 
 @media screen and (max-width: 767px) {
-
-    .myDrawerStyle :global .ant-drawer-content-wrapper {
+    :global .ant-drawer-content-wrapper {
         width: 98% !important;
     }
+    /* .myDrawerStyle :global .ant-drawer-content-wrapper {
+        width: 98% !important;
+    } */
 
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;
