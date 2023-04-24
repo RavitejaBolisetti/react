@@ -1,6 +1,4 @@
-:global .ant-drawer-content-wrapper {
-    width: 40% !important;
-}
+
 .myDrawerStyle :global .ant-drawer-body {
     padding-top: 10px;
     height: calc(100vh - 100px);

@@ -278,6 +278,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             dataIndex: 'srl',
             sorter: false,
             render: (_t, _r, i) => i + 1,
+            width: '5%'
         })
     );
 
@@ -285,6 +286,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
+            width: '15%'
         })
     );
 
@@ -292,6 +294,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
+            width: '35%'
+
         })
     );
 
@@ -300,6 +304,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
             render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '15%'
         })
     );
 
@@ -308,6 +313,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '15%'
+
         })
     );
 
@@ -331,6 +338,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                     </Space>
                 );
             },
+            width: '15%'
+
         })
     );
 
