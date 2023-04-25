@@ -4,7 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
-import comonTest from './comonTest.js'
+import comonTest from './comonTest.js';
+import { AddNewButton, InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, refreshButton, searchFieldTest, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
 }));
@@ -48,96 +49,54 @@ const listShowLoading = () => {
     return;
 };
 
-
 describe('Qualification Master Test', () => {
-    comonTest(listShowLoading,saveData,fetchList)
+    comonTest(listShowLoading, saveData, fetchList);
     test('Is the search Field Present or not', () => {
         render(<QualificationMaster fetchList={fetchList} saveData={saveData} />);
-        const searchField = screen.findByPlaceholderText('Search');
-        expect(searchField).toBeTruthy();
-
-        const searchIcon = screen.getByRole('img', { name: 'search' });
-        expect(searchIcon).toBeTruthy();
-        fireEvent.click(searchIcon);
-
-        const searchBtn = screen.getByRole('button', { name: 'search' });
-        expect(searchBtn).toBeTruthy();
-        fireEvent.click(searchBtn);
+        searchFieldTest()
     });
 
     test('Is the Add Qualification Button Present or not', () => {
         render(<QualificationMaster fetchList={fetchList} saveData={saveData} />);
-        const addGrp = screen.findByText('Add Qualification');
-        expect(addGrp).toBeTruthy();
+        AddNewButton('Add Qualification')
+
     });
 
     test('Is the Refresh Button Present or not', () => {
         render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
-        const refBtn = screen.getByLabelText('fa-ref');
-        expect(refBtn).toBeTruthy();
-        fireEvent.click(refBtn);
+        refreshButton('fa-ref')
     });
 
     test('Is the View Button Present or not', () => {
         render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
-        const refBtn = screen.getByLabelText('ai-view');
-        expect(refBtn).toBeTruthy();
-        fireEvent.click(refBtn);
+        refreshButton('ai-view')
+
     });
-
-    // test('Refresh data button', async () => {
-    //     const handleRefereshBtn = jest.fn();
-    //     console.log(handleRefereshBtn);
-    //    render(<QualificationMaster handleRefereshBtn={handleRefereshBtn} qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} listShowLoading={listShowLoading}  />);
-
-    //     // const refBtn = screen.getByLabelText('fa-ref');
-
-    //     // fireEvent.click(refBtn);
-    //     // expect(handleRefereshBtn).toHaveBeenCalled();
-    // });
 
     test('Is Add Qualification Button Present on  render of Table', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
         const options = await screen.findByText('ZHJ');
         expect(options).toBeTruthy();
 
-        const AddQualificationBtn = await screen.findByText('Add Qualification');
-        expect(AddQualificationBtn).toBeInTheDocument();
-        fireEvent.click(AddQualificationBtn);
+        buttonLookAndFireEventWithText('Add Qualification')
+        switchAvailablity('fa-switch')
+        InputFieldAvailablity('Please enter code')
+        InputFieldAvailablity('Please enter name')
+        buttonLookAndFireEventWithText('Cancel')
 
-        const Status = screen.getByRole('switch', { name: 'fa-switch' });
-        expect(Status).toBeChecked();
-
-        const InputFieldCode = await screen.findByPlaceholderText('Please enter code');
-        const InputFieldName = await screen.findByPlaceholderText('Please enter name');
-
-        expect(InputFieldCode).toBeTruthy();
-        expect(InputFieldName).toBeTruthy();
-
-        const CancelBtn = await screen.findByText('Cancel');
-        expect(CancelBtn).toBeTruthy();
-        fireEvent.click(CancelBtn);
     });
 
     test('Is table rendering data', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} listShowLoading={listShowLoading} />);
-        const Tablepresent = screen.getByRole('table');
-        const textfield = await screen.findByText('Qualification List');
-        expect(textfield).toBeTruthy();
-        const options = await screen.findByText('ZHH');
-        expect(options).toBeTruthy();
-        expect(Tablepresent).toBeTruthy();
+        tablerender('Qualification List', 'ZHH')
     });
 
     test('Edit Functionality in Table', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
-        const textfield = await screen.findByText('Qualification List');
-        expect(textfield).toBeTruthy();
+        buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
 
-        const editBtn = screen.getByLabelText('fa-edit');
-        expect(editBtn).toBeTruthy();
-        fireEvent.click(editBtn);
-
+        // InputFieldAvailablityWithTextFilled('Please enter code', 'ZHJ')
+        // InputFieldAvailablityWithTextFilled('Please enter name', 'ZHH')
         const InputFieldCode = await screen.findByPlaceholderText('Please enter code');
         const InputFieldName = await screen.findByPlaceholderText('Please enter name');
         expect(InputFieldCode.value).toBe('ZHJ');
@@ -146,25 +105,16 @@ describe('Qualification Master Test', () => {
         fireEvent.change(InputFieldCode, { target: { value: '' } });
         fireEvent.change(InputFieldName, { target: { value: '' } });
 
-        const Validations1 = await screen.findAllByText('Qualification Code');
+        const inputCodelabel = await screen.findAllByText('Qualification Code');
         const Validations2 = await screen.findAllByText('Qualification Name');
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
 
-        expect(Validations1).toBeTruthy();
+        expect(inputCodelabel).toBeTruthy();
         expect(Validations2).toBeTruthy();
         expect(saveBtn).toBeTruthy();
     });
-
-    // test('Is drawer opening on clicking edit', async () => {
-    //     render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
-    //     const editBtn =  screen.getByLabelText('fi-edit', {exact:false});
-    //     fireEvent.click(editBtn);
-    //     const nameField = await screen.findByPlaceholderText('Please Enter Name');
-    //     expect(nameField).toBeInTheDocument();
-    //     expect(screen.getByDisplayValue('Hello')).toBeInTheDocument();
-    // });
 
     test('Is search working', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData1} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
@@ -174,15 +124,6 @@ describe('Qualification Master Test', () => {
         fireEvent.change(nameField, { target: { value: 'ZHJ' } });
         expect(nameText.value).toBeFalsy();
     });
-
-    // test('Is switch in table disabled', async () => {
-    //     render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
-    //     const AddQualificationBtn = await screen.findByText('Add Qualification');
-    //     expect(AddQualificationBtn).toBeInTheDocument();
-    //     fireEvent.click(AddQualificationBtn);
-    //     expect(screen.getByTestId('switchbtn')).toBeDisabled();
-    //     // fireEvent.click(switchBtn);
-    // });
 
     test('is drawer opening on click of Add Qualification', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
@@ -194,7 +135,7 @@ describe('Qualification Master Test', () => {
         expect(nameField2).toBeTruthy();
     });
 
-    test('is drawer opening on click of Add Qualification', async () => {
+    test('is drawer opening on click of Add Qualification to add ', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
         const AddQualificationBtn = await screen.findByText('Add Qualification');
         fireEvent.click(AddQualificationBtn);
@@ -221,7 +162,6 @@ describe('Qualification Master Test', () => {
         onFinish.mockResolvedValue({
             qualificationCode: 'ZHJ',
             qualificationName: 'ZHH',
-
         });
         const result = await onFinish();
         fireEvent.click(SaveBtn);
@@ -240,7 +180,6 @@ describe('Qualification Master Test', () => {
         expect(cancelBtn).toBeTruthy();
         fireEvent.click(cancelBtn);
     });
-
 });
 
 describe('This is to test the Axios Call using Jest', () => {
