@@ -7,11 +7,14 @@ import { LinearTrash } from 'Icons';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
+
 import style from 'components/common/Common.module.css';
+import styles from '../DrawerAndTable.module.css'
+
 import { ViewCriticalityGroup } from './ViewCriticalityGroup';
 import { withDrawer } from 'components/withDrawer';
 
-const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
+const AddEditDrawerMain = ({ setIsViewModeVisible,setIsFormVisible,isViewModeVisible, codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(Math.random() * 1000);
     const [TimeTrack, setTimeTrack] = useState(true);
@@ -49,9 +52,12 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
         form.setFieldsValue({
             allowedTimings: [],
         });
+        setIsViewModeVisible(false)
+
         setSelectedRecord(null);
-        setDrawer(false);
         setFormBtnDisable(false);
+        setIsFormVisible(false);
+
     };
 
     const checkOverlap = () => {
@@ -130,7 +136,7 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
 
     const viewProps = {
         isVisible: isViewModeVisible,
-        formData,
+        selectedRecord,
         style,
     };
 
@@ -165,7 +171,7 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <p className={style.allowedTimingAlignment}>Allowed Timings</p>
+                            <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
                         </Col>
                     </Row>
 
@@ -173,7 +179,7 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
                         {(fields, { add, remove, ...restP }) => (
                             <>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.addTimeBtn}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.addTimeBtn}>
                                         <Button
                                             type="link"
                                             color="#FF3E5B"
@@ -193,13 +199,13 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
                                     {fields.length > 0 ? (
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={style.timingHeader}>
+                                                <div className={styles.timingHeader}>
                                                     <Row gutter={20}>
                                                         <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                            <div className={style.paddingLeft}>Start Time</div>
+                                                            <div className={styles.paddingLeft}>Start Time</div>
                                                         </Col>
                                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                                            <div className={style.paddingLeft2}> End Time</div>
+                                                            <div className={styles.paddingLeft2}> End Time</div>
                                                         </Col>
                                                     </Row>
                                                 </div>
@@ -210,7 +216,7 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
 
                                 <>
                                     {fields.map(({ key, name, ...restField }) => (
-                                        <div key={key} className={style.allowedTiming}>
+                                        <div key={key} className={styles.allowedTiming}>
                                             <Space size="middle">
                                                 <Row gutter={20}>
                                                     <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
@@ -241,7 +247,7 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
                                                     <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                                         <Button
                                                             icon={<LinearTrash />}
-                                                            className={style.deleteBtn}
+                                                            className={styles.deleteBtn}
                                                             {...disabledProps}
                                                             danger
                                                             ghost
@@ -264,7 +270,12 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
                         )}
                     </Form.List>
 
-                    <Row gutter={20} className={style.formFooter}>
+                    
+                </>
+            ) : (
+                <ViewCriticalityGroup {...viewProps} />
+            )}
+            <Row gutter={20} className={style.formFooter}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
                             <Button danger onClick={onClose}>
                                 {!footerEdit ? 'Cancel' : 'Close'}
@@ -294,10 +305,6 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, forceUpdate, del
                             )}
                         </Col>
                     </Row>
-                </>
-            ) : (
-                <ViewCriticalityGroup {...viewProps} />
-            )}
         </Form>
     );
 };

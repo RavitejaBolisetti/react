@@ -8,7 +8,7 @@ import style from 'components/common/Common.module.css';
 import { ViewQualificationList } from './ViewQualificationList';
 import { withDrawer } from 'components/withDrawer';
 
-const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const AddEditDrawerMain = ({ setIsFormVisible,selectedRecord, isFormVisible, isViewModeVisible, codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
 
@@ -26,14 +26,14 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, handleUpdate2, f
     };
 
     const onClose = () => {
-        setDrawer(false);
-        setFormBtnDisable(false);
-        form.resetFields();
+        setIsFormVisible(false) 
+        setFormBtnDisable(false)
+         form.resetFields();
     };
 
     const viewProps = {
         isVisible: isViewModeVisible,
-        formData,
+        selectedRecord,
         style,
     };
 
@@ -61,41 +61,40 @@ const AddEditDrawerMain = ({ isViewModeVisible, codeIsReadOnly, handleUpdate2, f
                             </Form.Item>
                         </Col>
                     </Row>
-
-                    <Row gutter={20} className={style.formFooter}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
-                            <Button danger onClick={onClose}>
-                                {!footerEdit ? 'Cancel' : 'Close'}
-                            </Button>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
-                            {saveBtn ? (
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
-                                    Save
-                                </Button>
-                            ) : (
-                                ''
-                            )}
-                            {saveAndSaveNew ? (
-                                <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Save & Add New
-                                </Button>
-                            ) : (
-                                ''
-                            )}
-                            {footerEdit ? (
-                                <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                    Edit
-                                </Button>
-                            ) : (
-                                ''
-                            )}
-                        </Col>
-                    </Row>
                 </>
             ) : (
                 <ViewQualificationList {...viewProps} />
             )}
+            <Row gutter={20} className={style.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
+                    <Button danger onClick={onClose}>
+                        {!footerEdit ? 'Cancel' : 'Close'}
+                    </Button>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
+                    {saveBtn ? (
+                        <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                    ) : (
+                        ''
+                    )}
+                    {saveAndSaveNew ? (
+                        <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={handleAdd} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                            Save & Add New
+                        </Button>
+                    ) : (
+                        ''
+                    )}
+                    {footerEdit ? (
+                        <Button onClick={handleUpdate2} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                            Edit
+                        </Button>
+                    ) : (
+                        ''
+                    )}
+                </Col>
+            </Row>
         </Form>
     );
 };

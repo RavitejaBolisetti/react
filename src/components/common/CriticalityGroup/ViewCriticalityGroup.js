@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewCriticalityGroupMain = ({formData,styles}) => {
+const ViewCriticalityGroupMain = ({selectedRecord,style}) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -9,13 +9,13 @@ const ViewCriticalityGroupMain = ({formData,styles}) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Criticality Group Id">{formData?.qualificationCode}</Descriptions.Item>
-                    <Descriptions.Item label="Criticality Group Name">{formData?.qualificationName}</Descriptions.Item>
-                    <Descriptions.Item label="Default Group">{formData?.status === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
+                    <Descriptions.Item label="Criticality Group Id">{selectedRecord?.criticalityGroupCode}</Descriptions.Item>
+                    <Descriptions.Item label="Criticality Group Name">{selectedRecord?.criticalityGroupName}</Descriptions.Item>
+                    <Descriptions.Item label="Default Group">{selectedRecord?.criticalityDefaultGroup === '1' ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{selectedRecord?.activeIndicator === 1 ? <text className={style.activeText}>Active</text> :<text    className={style.inactiveText}>InActive</text>}</Descriptions.Item>
 
                 </Descriptions>
             </>

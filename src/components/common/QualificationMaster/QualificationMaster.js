@@ -29,6 +29,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'Qualification Master';
+
     let returnValue = {
         collapsed,
         userId,
@@ -37,6 +39,7 @@ const mapStateToProps = (state) => {
         qualificationData,
         isLoadingOnSave,
         isFormDataLoaded,
+        moduleTitle,
     };
     return returnValue;
 };
@@ -57,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialTableData = [];
 
-export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -82,6 +85,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const [successAlert, setSuccessAlert] = useState(false);
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
     useEffect(() => {
         form.resetFields();
@@ -194,10 +198,10 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             setSuccessAlert(true);
             fetchList({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
-                setDrawer(false);
+                setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
-                setDrawer(true);
+                setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
@@ -224,11 +228,12 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
     const handleAdd = () => {
         setFormActionType('add');
+        setIsFormVisible(true);
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-
-        setDrawer(true);
+        setIsViewModeVisible(false);
+        setSelectedRecord([]);
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
@@ -238,6 +243,9 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
     const handleUpdate = (record) => {
         setFormActionType('update');
         setSaveAndSaveNew(false);
+        setIsFormVisible(true);
+        setIsViewModeVisible(false);
+
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
@@ -250,13 +258,14 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             status: record.status,
         });
 
-        setDrawer(true);
         setIsReadOnly(false);
         setcodeIsReadOnly(true);
     };
 
     const handleUpdate2 = () => {
         setFormActionType('update');
+        setIsFormVisible(true);
+        setIsViewModeVisible(false);
 
         setSaveAndSaveNew(false);
         setFooterEdit(false);
@@ -285,7 +294,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
             qualificationName: record.qualificationName,
             status: record.status,
         });
-        setDrawer(true);
+        setIsFormVisible(true);
         setIsReadOnly(true);
         setcodeIsReadOnly(true);
     };
@@ -308,6 +317,40 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
 
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+    };
+
+    const formProps = {
+        isVisible: isFormVisible,
+        isViewModeVisible,
+        codeIsReadOnly,
+        saveclick,
+        setsaveclick,
+        setsaveandnewclick,
+        saveandnewclick,
+        setIsFormVisible,
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
+        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id  ? 'Edit ' : 'Add ').concat(moduleTitle),
+        selectedRecord,
+        formBtnDisable,
+        saveAndSaveNew,
+        saveBtn,
+        setFormBtnDisable,
+        onFinishFailed,
+        onFinish,
+        form,
+        handleAdd,
+        data,
+        isChecked,
+        formData,
+        setIsChecked,
+        formActionType,
+        isReadOnly,
+        setFormData,
+        setForceFormReset,
+        footerEdit,
+        handleUpdate2,
+        isLoadingOnSave,
+        setIsViewModeVisible,
     };
 
     return (
@@ -342,36 +385,7 @@ export const QualificationMasterMain = ({ saveData, userId, isDataLoaded, fetchL
                     </div>
                 </Col>
             </Row>
-            <AddEditDrawer
-                isViewModeVisible={isViewModeVisible}
-                codeIsReadOnly={codeIsReadOnly}
-                saveclick={saveclick}
-                setsaveclick={setsaveclick}
-                setsaveandnewclick={setsaveandnewclick}
-                saveandnewclick={saveandnewclick}
-                formBtnDisable={formBtnDisable}
-                saveAndSaveNew={saveAndSaveNew}
-                saveBtn={saveBtn}
-                setFormBtnDisable={setFormBtnDisable}
-                onFinishFailed={onFinishFailed}
-                onFinish={onFinish}
-                form={form}
-                handleAdd={handleAdd}
-                open={drawer}
-                data={data}
-                setDrawer={setDrawer}
-                isChecked={isChecked}
-                formData={formData}
-                setIsChecked={setIsChecked}
-                formActionType={formActionType}
-                isReadOnly={isReadOnly}
-                setFormData={setFormData}
-                setForceFormReset={setForceFormReset}
-                footerEdit={footerEdit}
-                handleUpdate2={handleUpdate2}
-                isLoadingOnSave={isLoadingOnSave}
-                setIsViewModeVisible={setIsViewModeVisible}
-            />
+            <AddEditDrawer {...formProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
