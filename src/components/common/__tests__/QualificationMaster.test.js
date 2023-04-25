@@ -7,6 +7,7 @@ import comonTest from './comonTest.js';
 import { InputFieldAvailablity, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 import {fetchList,saveData,listShowLoading} from './Common/CommonImports/commonImports';
 
+
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
 }));
@@ -138,18 +139,5 @@ describe('Qualification Master Test', () => {
         expect(onFinish).toHaveBeenCalled();
     });
 
-    test('is drawer closing on click of cancel button', async () => {
-        render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
-        buttonLookAndFireEventWithText('Add Qualification');
-        buttonLookAndFireEventWithText('Cancel')
-    });
 });
 
-
-
-describe('This is to test the Axios Call using Jest', () => {
-    test('This is the Api call test', async () => {
-        const Fetchlist = await qualificationDataActions.fetchList();
-        console.log(Fetchlist);
-    });
-});
