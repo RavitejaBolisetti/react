@@ -84,7 +84,6 @@ export const ManufacturerTreeData = [
         ],
     },
 ];
-
 export const ProductDatas = [
     {
         geoName: 'parent 1',
@@ -187,16 +186,14 @@ export const ProductDatas = [
                         title: 'node2',
                         key: 'node2',
 
-                        children: [
+                    children: [
                             {
                                 title: 'randomNode_2',
                                 key: 'randomNode_2',
-
                                 children: [
                                     {
                                         title: 'node2',
                                         key: 'node2',
-
                                         children: [
                                             {
                                                 title: 'randomNode_3',
@@ -213,28 +210,6 @@ export const ProductDatas = [
         ],
     },
 ];
-
-export const qualificationMasterData1 = [
-    {
-        qualificationCode: 'ZHJ',
-        qualificationName: 'ZHH',
-        status: 'Y',
-    },
-];
-
-export const qualificationMasterData = [
-    {
-        qualificationCode: 'Hello',
-        qualificationName: 'Name',
-        status: 'Y',
-    },
-    {
-        qualificationCode: 'Hello',
-        qualificationName: 'Name',
-        status: 'N',
-    },
-];
-
 export const geoTreeData = [
     {
         geoName: 'parent 1',
@@ -359,5 +334,119 @@ export const geoTreeData = [
                 ],
             },
         ],
+    },
+];
+export const dealerHierarchyData = [
+    {
+        shortDescription: 'parent 1',
+        id: 'parent 1',
+        children: [
+            {
+                shortDescription: 'asian',
+                id: 'AS',
+
+                children: [
+                    {
+                        shortDescription: 'India',
+                        id: 'IND',
+                    },
+                    {
+                        title: 'node2',
+                        key: 'node2',
+
+                        children: [
+                            {
+                                title: 'randomNode_2',
+                                key: 'randomNode_2',
+
+                                children: [
+                                    {
+                                        title: 'node2',
+                                        key: 'node2',
+
+                                        children: [
+                                            {
+                                                title: 'randomNode_3',
+                                                key: 'randomNode_3',
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        shortDescription: 'topNode',
+        id: 'topNode',
+        children: [
+            {
+                title: 'node1',
+                key: 'node1',
+
+                children: [
+                    {
+                        title: 'randomNode_1',
+                        key: 'randomNode_1',
+                    },
+                    {
+                        title: 'node2',
+                        key: 'node2',
+
+                        children: [
+                            {
+                                title: 'randomNode_2',
+                                key: 'randomNode_2',
+
+                                children: [
+                                    {
+                                        title: 'node2',
+                                        key: 'node2',
+
+                                        children: [
+                                            {
+                                                title: 'randomNode_3',
+                                                key: 'randomNode_3',
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+];
+
+export const qualificationMasterData1 = [
+    {
+        qualificationCode: 'ZHJ',
+
+        qualificationName: 'ZHH',
+
+        status: 'Y',
+    },
+];
+
+export const qualificationMasterData = [
+    {
+        qualificationCode: 'Hello',
+
+        qualificationName: 'Name',
+
+        status: 'Y',
+    },
+
+    {
+        qualificationCode: 'Hello',
+
+        qualificationName: 'Name',
+
+        status: 'N',
     },
 ];
