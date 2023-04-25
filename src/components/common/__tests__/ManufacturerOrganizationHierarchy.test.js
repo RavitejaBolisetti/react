@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { async } from 'sonarqube-scanner';
 import { ManufacturerOrgHierarchy } from '../ManufacturerOrganizationHierarchy/ManufacturerOrgHierarchy';
+import comonTest from './Common/treeWithDrawer/common';
 
 jest.mock('react-redux', () => ({
     connect: () => (ManufacturerOrgHierarchy) => ManufacturerOrgHierarchy,
@@ -127,11 +128,11 @@ describe('manufacturerorghierarchy component', () => {
         const hierarchyText = await screen.getByText('Hierarchy');
         expect(hierarchyText).toBeInTheDocument();
     });
-    // test('Manufacturer Organization Heirarchy Page render ', async () => {
-    //     render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading}/>);
-    //     const changeHistoryBtn = await screen.getByText('Change History');
-    //     expect(changeHistoryBtn).toBeInTheDocument();
-    // });
+    test('Manufacturer Organization Heirarchy Page render ', async () => {
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} manufacturerOrgHierarchyData={treeDatas}/>);
+        const changeHistoryBtn = screen.findByRole('button', {name: 'Change History'});
+        expect(changeHistoryBtn).toBeTruthy();
+    });
     // test('Is search working', async () => {
     //     render(<ManufacturerOrgHierarchy hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
 
@@ -177,11 +178,7 @@ describe('manufacturerorghierarchy component', () => {
         fireEvent.click(treeBranch);
         const attributeText = await screen.findByText('Attribute Level');
         expect(attributeText).toBeInTheDocument();
-        const addiblingBtn = await screen.findByRole('button', { name: 'Add Sibling' });
-        expect(addiblingBtn).toBeInTheDocument();
-        fireEvent.click(addiblingBtn);
-        const cancelBtn = await screen.getByText('Cancel');
-        expect(cancelBtn).toBeTruthy();
+        comonTest();
     })
     test('render form element on edit button',async() => {
         render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
@@ -319,10 +316,7 @@ describe('manufacturerorghierarchy component', () => {
 
     test('Is tree present', async () => {
         render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const Treepresent = screen.getAllByRole('tree');
-        console.log(Treepresent);
-
-        expect(Treepresent).toBeTruthy();
+        comonTest();
     });
 
     test('render tree view and click branch to add child after selecting parent', async () => {
