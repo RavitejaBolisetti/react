@@ -10,8 +10,6 @@ const AuthorityDetailMaster = ({ documentTypesList, setDocumentTypesList, select
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [actionForm] = Form.useForm();
 
-    const authData = selectedTreeData?.adminAuthority?.adminAuthority;
-
     const onActionFormFinish = (val) => {
         const { key } = val.authorityTypeCode;
         setDocumentTypesList((prev) => [...prev, { id: val.id, authorityEmployeeTokenNo: val.authorityEmployeeTokenNo, authorityTypeCode: key, employeeName: val.EmployeeName, effectiveFrom: moment(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: moment(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val.isModified }]);
@@ -25,11 +23,6 @@ const AuthorityDetailMaster = ({ documentTypesList, setDocumentTypesList, select
 
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((action) => {
-                    return <AuthorityDetailCardItem {...action} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} authData={action} />;
-                })}
-
-            {authData?.length > 0 &&
-                authData?.map((action) => {
                     return <AuthorityDetailCardItem {...action} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} documentTypesList={documentTypesList} authData={action} />;
                 })}
         </>

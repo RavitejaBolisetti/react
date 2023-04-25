@@ -21,15 +21,16 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData, authData, authorityVisible }) => {
+const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, id, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData, authData, authorityVisible }) => {
     const [isEditing, setIsEditing] = useState(false);
 
-    const onEdit = (values) => {
+    const recordId = id;
+    const onEdit = () => {
         form.setFieldsValue({
-            authorityTypeCode,
-            authorityEmployeeTokenNo,
-            EffectiveTo,
-            EffectiveFrom,
+            ['authorityTypeCode' + recordId]: authorityTypeCode,
+            ['authorityEmployeeTokenNo' + recordId]: authorityEmployeeTokenNo,
+            ['EffectiveTo' + recordId]: EffectiveTo,
+            ['EffectiveFrom' + recordId]: EffectiveFrom,
         });
         setIsEditing(true);
         setIsBtnDisabled(true);
@@ -73,6 +74,7 @@ const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList,
                 }}
             >
                 <Row>
+                    {recordId + 'dsds'}
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                         <Row>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
@@ -94,37 +96,39 @@ const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList,
                             </Col>
                         </Row>
                     </Col>
-                    <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
-                        {!isEditing ? (
-                            authorityVisible ? null : (
+                    {!viewMode && (
+                        <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
+                            {!isEditing ? (
+                                authorityVisible ? null : (
+                                    <Row align="right">
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ float: 'right' }}>
+                                            <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authorityTypeCode, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom)} />
+                                            {!authData?.id && <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authorityTypeCode, EffectiveTo, authorityEmployeeTokenNo })} type="link" icon={<FiTrash />}></Button>}
+                                        </Col>
+                                    </Row>
+                                )
+                            ) : (
                                 <Row align="right">
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} style={{ float: 'right' }}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(authorityTypeCode, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom)} />
-                                        {!authData?.id && <Button onClick={() => handleDeleteDocType({ EffectiveFrom, authorityTypeCode, EffectiveTo, authorityEmployeeTokenNo })} type="link" icon={<FiTrash />}></Button>}
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Button type="link" onClick={onUpdate}>
+                                            Save
+                                        </Button>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Button type="link" onClick={() => onCancel()}>
+                                            Cancel
+                                        </Button>
                                     </Col>
                                 </Row>
-                            )
-                        ) : (
-                            <Row align="right">
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Button type="link" onClick={onUpdate}>
-                                        Save
-                                    </Button>
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Button type="link" onClick={() => onCancel()}>
-                                        Cancel
-                                    </Button>
-                                </Col>
-                            </Row>
-                        )}
-                    </Col>
+                            )}
+                        </Col>
+                    )}
                 </Row>
 
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authorityTypeCode={authorityTypeCode} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} authorityEmployeeTokenNo={authorityEmployeeTokenNo} isEditing={isEditing} />
+                        <AddEditForm recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} authorityTypeCode={authorityTypeCode} EffectiveTo={EffectiveTo} EffectiveFrom={EffectiveFrom} authorityEmployeeTokenNo={authorityEmployeeTokenNo} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
