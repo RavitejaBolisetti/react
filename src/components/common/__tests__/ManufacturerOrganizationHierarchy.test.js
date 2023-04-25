@@ -81,7 +81,7 @@ describe('manufacturerorghierarchy component', () => {
         const cancelBtn = await screen.getByText('Cancel');
         expect(cancelBtn).toBeTruthy();
         fireEvent.click(cancelBtn);
-        const saveBtn = await screen.findByText('Save');
+        const saveBtn = await screen.queryByText('Save');
         expect(saveBtn).toBeFalsy();
     })
 
