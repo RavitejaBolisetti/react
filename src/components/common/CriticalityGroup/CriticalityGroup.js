@@ -145,10 +145,10 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
-                setDrawer(false);
+                setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
-                setDrawer(true);
+                setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
