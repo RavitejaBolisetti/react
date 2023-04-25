@@ -1,3 +1,4 @@
+//Done
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { async } from 'sonarqube-scanner';
@@ -39,7 +40,7 @@ describe('manufacturerorghierarchy component', () => {
         findbuttonAndClick('Change History')
     });
     test('Is search working', async () => {
-        render(<ManufacturerOrgHierarchy hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
+        render(<ManufacturerOrgHierarchy hierarhyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
         searchIsWorking()
     });
     test('Is the search Field Present or not', async () => {
@@ -189,10 +190,6 @@ describe('manufacturerorghierarchy component', () => {
     //     expect(onFinish).toHaveBeenCalled();
     // });
 
-    test('Is tree present', async () => {
-        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        // comonTest();
-    });
 
     test('render tree view and click branch to add child after selecting parent', async () => {
         render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
