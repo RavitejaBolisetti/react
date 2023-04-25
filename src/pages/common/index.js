@@ -6,13 +6,13 @@ import { ProductHierarchyPage } from './ProductHierarchy';
 import { CriticalityGroupPage } from './CriticalityGroup';
 import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster/HierarchyAttributeMasterPage';
 import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy';
-import { QualificationMasterPage } from './QualificationMaster';
+import { QualificationMasterPage } from './QualificationMaster/QualificationMasterPage';
+import { BranchDealerMappingPage } from './BranchDealerMapping';
 
 import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarchy';
 import { DealerHierarchyPage } from './DealerHierarchy';
-import { BranchDealerMappingPage } from './BranchDealerMapping';
 
-import { DealerManpowerPage } from './DealerManpower';
+import { DealerManpowerPage } from './DealerManpower/DealerManpowerPage';
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';

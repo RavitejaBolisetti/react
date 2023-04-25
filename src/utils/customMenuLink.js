@@ -1,5 +1,7 @@
 import { Tooltip } from 'antd';
 import React from 'react';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
+
 const { Link } = require('react-router-dom');
 export const addToolTip =
     (title, placement = 'bottom', color = '') =>
@@ -12,9 +14,9 @@ export const addToolTip =
             </>
         ) : (
             title
-        ); 
+        );
 
-const customMenuLink = ({ key = Math.random() * 1000, title, link, icon, children = undefined, onClick = () => {}, collapsed = false }) => {
+const customMenuLink = ({ key = generateRandomNumber(), title, link, icon, children = undefined, onClick = () => {}, collapsed = false }) => {
     return {
         key: key,
         label: link ? (

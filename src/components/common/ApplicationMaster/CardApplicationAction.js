@@ -36,15 +36,6 @@ const CardApplicationAction = (props) => {
     const onUpdate = () => {
         
         const newFormData = form.getFieldsValue();
-        // form.validateFields().then(data => {
-        //     console.log("data",data)
-        // });
-        // console.log('newFormData to update  ',newFormData)
-
-        // const { value, label } = newFormData?.applicationName;
-        // const selectedActionData =  actions?.find(el => el?.id === value );
-        // console.log('selectedActionData',selectedActionData)
-
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
             const index = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
@@ -67,8 +58,6 @@ const CardApplicationAction = (props) => {
             newList.splice(indx, 1);
             return { ...prev, applicationAction: newList };
         });
-
-        // Global niotification
 
         setIsEditing(false);
         setIsBtnDisabled(false);

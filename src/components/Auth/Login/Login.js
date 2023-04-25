@@ -97,13 +97,13 @@ const Login = (props) => {
     const onSuccess = (data) => {
         hideGlobalNotification();
         setIsLoading(false);
-        ReactRecaptcha3.destroy();
         const passwordStatus = data?.passwordStatus;
         if (passwordStatus) {
             authPreLogin(data);
             updatePasswordStatusInfo(data);
             forceUpdate();
         } else {
+            ReactRecaptcha3.destroy();
             authPostLogin(data);
         }
     };
@@ -146,10 +146,13 @@ const Login = (props) => {
         const { passwordStatus } = data;
         const { status, title, message } = passwordStatus;
 
+        const shandleSkipForNow = () => {
+            status === 'A' && handleSkipUpdatePassword(data);
+        };
         const btn = (data) => (
             <Space>
                 {status === 'A' && (
-                    <Button onClick={() => handleSkipUpdatePassword(data)} danger size="small">
+                    <Button onClick={shandleSkipForNow} danger size="small">
                         Skip For Now
                     </Button>
                 )}
@@ -165,6 +168,7 @@ const Login = (props) => {
             description: message,
             btn: btn(data),
             duration: 0,
+            onClose: shandleSkipForNow,
             className: status === 'E' ? notificationStyles.error : notificationStyles.warning,
         });
     };
@@ -252,5 +256,7 @@ const Login = (props) => {
         </>
     );
 };
+
+export const Logins = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

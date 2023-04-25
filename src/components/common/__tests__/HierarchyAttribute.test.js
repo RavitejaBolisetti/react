@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Table } from 'antd';
 import userEvent from '@testing-library/user-event';
-import { HierarchyAttribute } from './HierarchyAttribute';
+import { HierarchyAttribute } from '../HierarchyAttribute/HierarchyAttribute';
 import DataTable from '../../../utils/dataTable/DataTable';
 
 jest.mock('react-redux', () => ({
@@ -117,9 +117,9 @@ describe('Hierarchy attributree test', () => {
         fireEvent.click(EditButton);
         const InputFieldCode = await screen.findByPlaceholderText('Please Input Code');
         const InputFieldName = await screen.findByPlaceholderText('Please Input Name');
-        const DuplicateAllowed = await screen.getByRole('switch', { name: 'Duplicate Allowed?' });
-        const DuplicateAllowedunderdifferentParent = await screen.getByRole('switch', { name: 'Duplicate Allowed under different Parent?' });
-        const ChildAllowed = await screen.getByRole('switch', { name: 'Child Allowed?' });
+        const DuplicateAllowed = screen.getByRole('switch', { name: 'Duplicate Allowed?' });
+        const DuplicateAllowedunderdifferentParent = screen.getByRole('switch', { name: 'Duplicate Allowed under different Parent?' });
+        const ChildAllowed = screen.getByRole('switch', { name: 'Child Allowed?' });
 
         expect(InputFieldCode.value).toBe('Shaka');
         expect(InputFieldName).toBeTruthy();
@@ -180,6 +180,5 @@ describe('Hierarchy attributree test', () => {
         expect(Validations1).toBeTruthy();
         expect(Validations2).toBeTruthy();
         expect(saveAndNew).toBeTruthy();
-        
     }, 60000);
 });

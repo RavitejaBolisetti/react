@@ -9,12 +9,11 @@ import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerOrgHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [],changeHistoryVisible},
+            ManufacturerOrgHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
         },
     } = state;
 
@@ -35,7 +34,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
             changeHistoryShowLoading: manufacturerOrgHierarchyDataActions.changeHistoryShowLoading,
             onCloseAction: manufacturerOrgHierarchyDataActions.changeHistoryModelClose,
-
         },
         dispatch
     ),
@@ -49,67 +47,46 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Changed Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Attribute',
             dataIndex: 'attributeCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Parent',
             dataIndex: 'parent',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Short Description',
             dataIndex: 'shortDescript',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Long Description',
             dataIndex: 'longDescript',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-
             render: (text) => {
                 console.log('record', text, typeof text);
-                return  JSON.parse(text) ? 'Active' : 'InActive';
+                return JSON.parse(text) ? 'Active' : 'InActive';
             },
-        })
-    );
-
+        }),
+    ];
+    
     const tableProps = {
         isLoading,
         tableColumn,
@@ -117,7 +94,6 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
     };
     return (
         <div className={styles.changeHistoryContainer}>
-        
             <DataTable {...tableProps} />
         </div>
     );

@@ -23,22 +23,22 @@ const CardDocumentType = (prop) => {
     // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
+            id,
             termAndConRequired,
             digitalSignatureRequired,
             documentTypeDescription,
             documentTypeCode,
-            status: values.status,
+            status: values?.status,
         });
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
-
     // on clicking save button updates data
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
         setfinalFormdata((prev) => {
             const newList = prev;
-            const indx = prev?.documentType.findIndex((el) => el.id === documentTypeCode);
+            const indx = prev?.documentType.findIndex((el) => el?.documentTypeCode === documentTypeCode);
             newList?.documentType?.splice(indx, 1, { ...newFormData });
             return { ...prev, documentType: newList?.documentType };
         });
@@ -94,7 +94,7 @@ const CardDocumentType = (prop) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id,termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
                                     {!id?.length > 0 && (
                                         <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>

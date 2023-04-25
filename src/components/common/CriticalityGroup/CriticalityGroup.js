@@ -9,6 +9,7 @@ import { Button, Col, Input, Form, Row, Space, Empty, notification, ConfigProvid
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { showGlobalNotification } from 'store/actions/notification';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
@@ -161,7 +162,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         };
 
         saveData(requestData);
-        setForceFormReset(Math.Random() * 1000);
+        setForceFormReset(generateRandomNumber());
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -269,48 +270,36 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         setFilterString(e.target.value);
     };
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
             render: (_t, _r, i) => i + 1,
-        })
-    );
-
-    tableColumn.push(
+            width: '5%',
+        }),
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
-        })
-    );
-
-    tableColumn.push(
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: 'Criticality Group Name',
             dataIndex: 'criticalityGroupName',
-        })
-    );
-
-    tableColumn.push(
+            width: '35%',
+        }),
         tblPrepareColumns({
             title: 'Default Group',
             dataIndex: 'criticalityDefaultGroup',
             render: (text, record) => <>{text === '1' ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+            width: '15%',
+        }),
         tblPrepareColumns({
             title: 'Actions',
             sorter: false,
@@ -330,8 +319,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                     </Space>
                 );
             },
-        })
-    );
+            width: '15%',
+        }),
+    ];
 
     return (
         <>
@@ -342,10 +332,10 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         Criticality Group List
                                     </Col>
-                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                         <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
                                     </Col>
                                 </Row>
@@ -353,7 +343,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
                             {criticalityGroupData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button className={styles.refreshBtn} onClick={handleReferesh}  danger>
+                                    <Button className={styles.refreshBtn} onClick={handleReferesh} danger>
                                         <TfiReload />
                                     </Button>
 
