@@ -13,7 +13,7 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import  { AddEditDrawer } from './AddEditDrawer';
+import { AddEditDrawer } from './AddEditDrawer';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
@@ -141,6 +141,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
+            setForceFormReset(Math.Random() * 1000);
             setSelectedRecord({});
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
@@ -167,7 +168,6 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         };
 
         saveData(requestData);
-        setForceFormReset(Math.Random() * 1000);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -177,7 +177,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
     const handleAdd = () => {
         setFormActionType('add');
         setIsFormVisible(true);
-        setSelectedRecord({})
+        setSelectedRecord({});
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
@@ -375,12 +375,12 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         onCloseAction: () => {
             setIsFormVisible(false);
             form.resetFields();
-            setIsViewModeVisible(false)
+            setIsViewModeVisible(false);
             form.setFieldsValue({
                 allowedTimings: [],
             });
             setFormBtnDisable(false);
-            setSelectedRecord(null)
+            setSelectedRecord(null);
         },
         titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         formData,
