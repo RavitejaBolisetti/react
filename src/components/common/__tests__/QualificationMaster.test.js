@@ -1,5 +1,4 @@
 import {  render, screen, waitFor } from '@testing-library/react';
-import { Switch, Table } from 'antd';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { qualificationMasterData, qualificationMasterData1 } from './Common/Data/data';

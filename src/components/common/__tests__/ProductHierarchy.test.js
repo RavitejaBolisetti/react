@@ -5,6 +5,7 @@ import { ProductHierarchy } from '../ProductHierarchy/ProductHierarchy';
 import { commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
 import { ProductDatas as treeDatas } from './Common/Data/data';
 import { fetchList, saveData, hierarchyAttributeFetchList, listShowLoading } from './Common/CommonImports/commonImports';
+import { async } from 'sonarqube-scanner';
 
 jest.mock('react-redux', () => ({
     connect: () => (ProductHierarchy) => ProductHierarchy,
@@ -41,7 +42,7 @@ describe('Product Hierarchy component', () => {
     test('render form', async () => {
         render(<ProductHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} />);
 
-        findplaceholder('Please Enter Attribute Code');
+        findplaceholder('Please enter Code');
     });
 
     test('render hierarchy details element', async () => {
@@ -61,5 +62,10 @@ describe('Product Hierarchy component', () => {
     test('render tree view and click branch to add child after selecting parent', async () => {
         render(<ProductHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} productHierarchyData={treeDatas} />);
         commonTreeTest();
+    });
+    test('render hierarchy dropdown', async()=>{
+        render(<ProductHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} productHierarchyData={treeDatas} />);
+            const hierarchDropdown = await screen.findByRole('combobox', {name:''});
+            expect(hierarchDropdown).toBeTruthy();
     });
 });
