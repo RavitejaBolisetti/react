@@ -171,3 +171,25 @@ export const ProductDatas = [
         ],
     },
 ];
+
+export const qualificationMasterData1 = [
+    {
+        qualificationCode: 'ZHJ',
+        qualificationName: 'ZHH',
+        status: 'Y',
+    },
+];
+
+export const qualificationMasterData = [
+    {
+        qualificationCode: 'Hello',
+        qualificationName: 'Name',
+        status: 'Y',
+    },
+    {
+        qualificationCode: 'Hello',
+        qualificationName: 'Name',
+        status: 'N',
+    },
+];
+

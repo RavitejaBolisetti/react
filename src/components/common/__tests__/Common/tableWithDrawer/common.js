@@ -2,15 +2,12 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-//  QUAIFICATION MASTER //
 
 export const searchFieldTest = async () => {
     const btn = await screen.findByPlaceholderText('Search');
     expect(btn).toBeTruthy();
     expect(screen.getByRole('img', { name: 'search' })).toBeTruthy();
     fireEvent.click(screen.getByRole('img', { name: 'search' }));
-    // expect(screen.getByRole('button', { name: 'search' })).toBeTruthy();
-    // fireEvent.click(screen.getByRole('button', { name: 'search' }));
     buttonLookAndFireEventByRole('search')
 };
 
