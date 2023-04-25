@@ -2,7 +2,7 @@ import {  render, screen, waitFor } from '@testing-library/react';
 import { Switch, Table } from 'antd';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
-import { qualificationDataActions, qualificationMasterData1 } from './Common/Data/data';
+import { qualificationMasterData, qualificationMasterData1 } from './Common/Data/data';
 import comonTest from './comonTest.js';
 import { InputFieldAvailablity, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 import {fetchList,saveData,listShowLoading} from './Common/CommonImports/commonImports';
