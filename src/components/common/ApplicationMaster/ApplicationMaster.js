@@ -148,12 +148,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         if (res?.data) {
-            const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data;
+            const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
 
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
 
-            applicationCall(res?.data);
+            applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);
 
             setFormActionType('view');

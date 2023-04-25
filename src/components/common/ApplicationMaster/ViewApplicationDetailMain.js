@@ -9,7 +9,7 @@ import CardAction from './CardAction';
 const { Text } = Typography;
 const { Panel } = Collapse;
 
-export const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
+const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Application Details', styles }) => {
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
     const [openAccordian, setOpenAccordian] = useState(1);
 

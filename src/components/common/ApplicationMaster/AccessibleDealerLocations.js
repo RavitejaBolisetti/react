@@ -97,7 +97,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Location added successfully' });
     };
 
-    const onSearchLocation = debounce((text) => {
+    const onSearchLocation = debounce(function(text) {
         if (text?.length < 3 || !userId) return;
          fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
     }, 500);

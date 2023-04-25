@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Select, TreeSelect } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField } from 'utils/validation';
 
 import TreeSelectField from '../TreeSelectField';
 
@@ -42,7 +42,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
             <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID')]}>
+                        <Form.Item label="Application ID" name="applicationId" rules={[validationFieldLetteNumberandPeriod('Application ID')]}>
                             <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('Application ID')} />
                         </Form.Item>
                     </Col>
