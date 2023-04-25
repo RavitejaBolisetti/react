@@ -1,7 +1,5 @@
 import {  render, screen, waitFor } from '@testing-library/react';
-import { Switch, Table } from 'antd';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
-import DataTable from '../../../utils/dataTable/DataTable';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
 import comonTest from './comonTest.js';
 import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
