@@ -1,10 +1,12 @@
 import {  render, screen, waitFor } from '@testing-library/react';
-import { Switch, Table } from 'antd';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 import DataTable from '../../../utils/dataTable/DataTable';
-import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
+import { qualificationMasterData, qualificationMasterData1 } from './Common/Data/data';
 import comonTest from './comonTest.js';
-import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
+import { InputFieldAvailablity, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
+import {fetchList,saveData,listShowLoading} from './Common/CommonImports/commonImports';
+
+
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
 }));
@@ -18,35 +20,7 @@ window.matchMedia =
             removeListener: function () {},
         };
     };
-// const  = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5'];
-const qualificationMasterData1 = [
-    {
-        qualificationCode: 'ZHJ',
-        qualificationName: 'ZHH',
-        status: 'Y',
-    },
-];
-const qualificationMasterData = [
-    {
-        qualificationCode: 'Hello',
-        qualificationName: 'Name',
-        status: 'Y',
-    },
-    {
-        qualificationCode: 'Hello',
-        qualificationName: 'Name',
-        status: 'N',
-    },
-];
-const fetchList = () => {
-    return;
-};
-const saveData = () => {
-    return;
-};
-const listShowLoading = () => {
-    return;
-};
+
 
 describe('Qualification Master Test', () => {
     comonTest(listShowLoading, saveData, fetchList);
@@ -105,6 +79,25 @@ describe('Qualification Master Test', () => {
         searchFunctionality('ZHJ')
     });
 
+    test('is drawer closing on click of cancel button', async () => {
+        render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
+        buttonLookAndFireEventWithText('Add Qualification');
+        buttonLookAndFireEventWithText('Cancel');
+    });
+
+    test('View Functionality in Table', async () => {
+        
+        render(<QualificationMaster qualificationData={qualificationMasterData1} fetchList={fetchList} saveData={saveData} />);
+        const textfield = await screen.findByText('Qualification List');
+        expect(textfield).toBeTruthy();
+
+        buttonLookAndFireEventWithLabel('ai-view')
+        InputFieldAvailablity('Qualification Code');
+        InputFieldAvailablity('Qualification Name');
+        
+        buttonLookAndFireEventByRole('Edit');
+    });
+
     test('is drawer opening on click of Add Qualification', async () => {
         render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
         buttonLookAndFireEventWithText('Add Qualification');
@@ -145,16 +138,5 @@ describe('Qualification Master Test', () => {
         expect(onFinish).toHaveBeenCalled();
     });
 
-    test('is drawer closing on click of cancel button', async () => {
-        render(<QualificationMaster qualificationData={qualificationMasterData} fetchList={fetchList} saveData={saveData} />);
-        buttonLookAndFireEventWithText('Add Qualification');
-        buttonLookAndFireEventWithText('Cancel')
-    });
 });
 
-describe('This is to test the Axios Call using Jest', () => {
-    test('This is the Api call test', async () => {
-        const Fetchlist = await qualificationDataActions.fetchList();
-        console.log(Fetchlist);
-    });
-});
