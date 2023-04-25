@@ -65,7 +65,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [data, setData] = useState(criticalityGroupData);
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
-    const [isChecked, setIsChecked] = useState(data.status === 'Y' ? true : false);
+    const [isChecked, setIsChecked] = useState(data?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
     const [form] = Form.useForm();
     const [searchData, setSearchdata] = useState(criticalityGroupData);
