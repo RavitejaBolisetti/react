@@ -142,7 +142,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
-            setForceFormReset(Math.Random() * 1000);
+            setForceFormReset(generateRandomNumber());
             setSelectedRecord({});
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
@@ -169,7 +169,6 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         };
 
         saveData(requestData);
-        setForceFormReset(generateRandomNumber());
     };
 
     const onFinishFailed = (errorInfo) => {
