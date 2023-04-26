@@ -15,6 +15,7 @@ import style3 from './UserManagement.module.css';
 import AssignUserRole from './AssignUserRole';
 import BranchMapping from './BranchMapping';
 import ProductMapping from './ProductMapping';
+import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -22,7 +23,7 @@ const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
+    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels } = props;
     const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
     const handleFormValueChange = () => {
@@ -60,18 +61,26 @@ const AddEditFormMain = (props) => {
         console.log('We are getting dealer data: :', DealerData);
     }, [DealerData]);
 
+    const viewProps = {
+        isVisible: isViewModeVisible,
+        setClosePanels,
+        formData,
+        styles,
+    };
+
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            <Space
-                direction="vertical"
-                size="middle"
-                style={{
-                    display: 'flex',
-                }}
-            >
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {/* <Card>
+            {!isViewModeVisible ? (
+                <Space
+                    direction="vertical"
+                    size="middle"
+                    style={{
+                        display: 'flex',
+                    }}
+                >
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {/* <Card>
                             <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card> */}
                         <Card className={style.usermanagementCard}>
@@ -241,23 +250,27 @@ const AddEditFormMain = (props) => {
                                 <p>This is panel contents 3</p>
                             </Panel>
                         </Collapse> */}
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
 
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
+                  
+                </Space>
+            ) : (
+                <ViewUserManagementDealer {...viewProps} />
+            )}
+              <Row gutter={20} className={styles.formFooter}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onCloseAction}>
+                                Cancel
+                            </Button>
+                        </Col>
 
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
-                            Save
-                        </Button>
-                    </Col>
-                </Row>
-            </Space>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                            <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                                Save
+                            </Button>
+                        </Col>
+                    </Row>
         </Form>
     );
 };

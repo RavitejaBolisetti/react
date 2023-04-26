@@ -37,10 +37,13 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'User Access'
+
     let returnValue = {
         collapsed,
         userId,
         isDataLoaded,
+        moduleTitle,
         isLoading,
         UserManagementManufacturerData,
         isLoadingOnSave,
@@ -91,7 +94,7 @@ const savePayload = {
     manufacturerAdminHeirarchyAdminId: 'facf625b-908b-4f8c-8796-af07c8c9b74c',
 };
 
-export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -124,6 +127,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [DealerData, setDealerData] = useState(UserManagementManufacturerData);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
+
 
     useEffect(() => {
         form.resetFields();
@@ -379,6 +385,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
 
         setIsFormVisible(true);
         setFormBtnActive(true);
+        setIsViewModeVisible(false);
+
 
         setDrawer(true);
         setIsReadOnly(false);
@@ -392,6 +400,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
+        setIsViewModeVisible(false);
+        setIsFormVisible(true);
 
         setIsFormVisible(true);
         setFormBtnActive(true);
@@ -414,6 +424,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
+        setIsViewModeVisible(false);
+        setIsFormVisible(true);
 
         setIsFormVisible(true);
         setFormBtnActive(true);
@@ -434,6 +446,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         setSaveAndSaveNew(false);
         setFooterEdit(true);
         setSaveBtn(false);
+        setIsViewModeVisible(true);
+        setIsFormVisible(true);
 
         setIsFormVisible(true);
         setFormBtnActive(true);
@@ -481,7 +495,9 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         setsaveclick,
         setsaveandnewclick,
         saveandnewclick,
+        isViewModeVisible,
         isVisible: isFormVisible,
+        setClosePanels,
         isLoadingOnSave,
         formBtnDisable,
         isFormBtnActive,
@@ -499,6 +515,8 @@ export const UserManagementManufacturerMain = ({ saveData, userId, saveDealerDet
         isChecked,
         formData,
         setIsChecked,
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Manage ').concat(moduleTitle),
+
         formActionType,
         isReadOnly,
         setFormData,
