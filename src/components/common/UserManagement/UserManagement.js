@@ -169,8 +169,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [valid, setValid] = useState(false);
     const [DealerSearchvalue, setDealerSearchvalue] = useState();
     const [DealerSelected, setDealerSelected] = useState();
-    const [disabled, setdisabled] = useState();
-    const [DealerData, setDealerData] = useState(UserManagementDealerData);
+    const [disabled, setdisabled] = useState(true);
+    const [DealerData, setDealerData] = useState();
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
@@ -178,9 +178,15 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
-        setSearchdata();
         console.log('I am fetching Error');
     };
+    useEffect(() => {
+        console.log('UserManagementDealerData : ', UserManagementDealerData);
+        setDealerData(UserManagementDealerData);
+        if (Object.entries(UserManagementDealerData)?.length > 0) {
+            setSearchdata([UserManagementDealerData]);
+        }
+    }, [UserManagementDealerData]);
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
@@ -207,23 +213,15 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     }, [productHierarchyData, attributeData, qualificationData]);
 
     useEffect(() => {
-        console.log(DealerSelected);
-        if (DealerSearchvalue?.length > 0) {
+        console.log('DealerSelected', DealerSelected);
+        if (DealerSearchvalue?.length > 0 && DealerSelected?.length > 0 && DealerSelected !== undefined) {
             fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
         }
-        if (DealerSelected?.length < 0 || DealerSelected === undefined) {
-            setdisabled(true);
+        if (DealerSelected?.length > 0 && DealerSelected != undefined) {
+            setdisabled(false);
             setDealerData({});
         }
     }, [DealerSearchvalue, DealerSelected]);
-
-    useEffect(() => {
-        console.log('UserManagementDealerData : ', UserManagementDealerData);
-        setDealerData(UserManagementDealerData);
-        if (Object.entries(UserManagementDealerData)?.length > 0) {
-            setSearchdata([UserManagementDealerData]);
-        }
-    }, [UserManagementDealerData, error]);
 
     useEffect(() => {
         if (userId) {
@@ -620,13 +618,13 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 </Row>
                             </Col>
                         </Row>
-                        {Object.keys(DealerData).length > 0 ? (
+                        {DealerData?.employeeCode ? (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={style.successDisplay}>
                                         <Row gutter={20}>
                                             <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
-                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                                                <DataTable  tableColumn={tableDetails} {...tableDetailProps} />
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
                                                 <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>

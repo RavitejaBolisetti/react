@@ -5,6 +5,11 @@ import style from 'components/common/DrawerAndTable.module.css';
 const { Option } = Select;
 const AssignUserRole = ({ userRoleOptions }) => {
     const [checked, setchecked] = useState([]);
+    const FindRoleDetails = (option) => {
+        return userRoleOptions?.filter((el) => {
+            return el?.roleName === option;
+        });
+    };
     useEffect(() => {
         console.log('These are the Roles :', userRoleOptions);
         console.log('These checked :', checked);
@@ -14,7 +19,8 @@ const AssignUserRole = ({ userRoleOptions }) => {
         const newValues = [];
         Object.entries(values).forEach(([key, value]) => {
             console.log(`${key} ${value}`);
-            newValues.push(value);
+            const SelectedDetails = FindRoleDetails(value);
+            newValues.push(SelectedDetails);
         });
         setchecked(newValues);
     };

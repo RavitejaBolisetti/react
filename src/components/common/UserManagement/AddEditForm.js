@@ -9,7 +9,7 @@ import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 
 import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
+import style from './UserManagement.module.css';
 import AssignUserRole from './AssignUserRole';
 import BranchMapping from './BranchMapping';
 import ProductMapping from './ProductMapping';
@@ -44,6 +44,7 @@ const AddEditFormMain = (props) => {
     };
     const handleAddMacid = (event, key) => {
         form.validateFields();
+        form.resetFields();
         const CardData = {
             macid: Macid,
             key: AccessMacid?.length,

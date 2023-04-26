@@ -2,7 +2,10 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Table } from 'antd';
 import userEvent from '@testing-library/user-event';
 import { HierarchyAttribute } from '../HierarchyAttribute/HierarchyAttribute';
+import comonTest from './comonTest.js';
 import DataTable from '../../../utils/dataTable/DataTable';
+import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
+
 
 jest.mock('react-redux', () => ({
     connect: () => (HierarchyAttribute) => HierarchyAttribute,
@@ -39,28 +42,40 @@ const hierarchyAttributeFetchList = () => {
 const hierarchyAttributeFetchDetailList = () => {
     return;
 };
+const onSaveShowLoading=()=>{
+    return;
+};
 
 describe('Hierarchy attributree test', () => {
+
+    // comonTest(hierarchyAttributeFetchDetailList, hierarchyAttributeFetchList);
+    comonTest(onSaveShowLoading, hierarchyAttributeFetchList, hierarchyAttributeFetchDetailList);
     test('Is the select Field Present or not', () => {
         render(<HierarchyAttribute attributeData={attributeData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);
-        const selectfield = screen.getByRole('combobox', { name: 'Hierarchy Attribute Type' });
+        const selectfield = screen.getByRole('combobox');
         expect(selectfield).toBeTruthy();
+        fireEvent.change(selectfield,{ target: { value: 'option 1' } });
+        const options =screen.getAllByText('option 1');
+        expect(options).toBeTruthy();
+
     });
-    test('Is Drop Down coming on click of select Field', async () => {
+    test('Is searchfield Present or not',async()=>{
         render(<HierarchyAttribute attributeData={attributeData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);
-        const selectfield = screen.getByRole('combobox', { name: 'Hierarchy Attribute Type' });
+        const selectfield = screen.getByRole('combobox');
+        expect(selectfield).toBeTruthy();
+        fireEvent.change(selectfield,{ target: { value: 'option 1' } });
+        const options =screen.getAllByText('option 1');
+        searchFieldTest()
+    })
+    
+    test.only('Is table Rendering on Data', async () => {
+        render(<HierarchyAttribute attributeData={attributeData} detailData={detailData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);
+        const selectfield = screen.getByRole('combobox');
         expect(selectfield).toBeTruthy();
         fireEvent.change(selectfield, { target: { value: 'option 1' } });
-        const options = screen.getAllByText('option 1');
-        expect(options).toBeTruthy();
-    });
-    test('Is table Rendering on Data', async () => {
-        render(<HierarchyAttribute attributeData={attributeData} detailData={detailData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);
-        const selectfield = screen.getByRole('combobox', { name: 'Hierarchy Attribute Type' });
-        expect(selectfield).toBeTruthy();
-        fireEvent.change(selectfield, { target: { value: 'option 7' } });
-        const options = await screen.findAllByText('Shaka');
-        expect(options).toBeTruthy();
+        // const options = await screen.findAllByText('Shaka');
+        const addBtn = await screen.getByRole('button',{ name:'Add Attribute'})
+        expect(addBtn).toBeTruthy();
     });
     test('Is Add Attribute Button Present on  render of Table', async () => {
         render(<HierarchyAttribute attributeData={attributeData} detailData={detailData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);

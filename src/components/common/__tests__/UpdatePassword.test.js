@@ -1,8 +1,8 @@
+//done
 import { screen, render, fireEvent, findAllByText, getByPlaceholderText, getAllByPlaceholderText, getByText, findByText, findByRole } from '@testing-library/react';
 import { BrowserRouter, Route, Routes, MemoryRouter } from 'react-router-dom';
 import { async } from 'sonarqube-scanner';
 import { Login } from '../../Auth/Login';
-
 import { UpdatePassword } from '../../Auth/UpdatePassword/UpdatePassword';
 
 jest.mock('react-redux', () => ({
