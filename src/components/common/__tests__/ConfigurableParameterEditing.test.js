@@ -1,11 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { ConfigurableParameterEditing } from '../ConfigurableParameterEditing/ConfigurableParameterEditing';
-import { buttonLookAndFireEventWithLabel, searchFieldTest } from './Common/tableWithDrawer/common';
+import { InputFieldAvailablity, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, searchFieldTest, switchAvailablity } from './Common/tableWithDrawer/common';
+import { tablerender } from './Common/tableWithDrawer/common';
+import { buttonLookAndFireEventByRole } from './Common/tableWithDrawer/common';
 
 jest.mock('react-redux', () => ({
     connect: () => (ConfigurableParameterEditing) => ConfigurableParameterEditing,
-    connect: () => (DataTable) => DataTable,
 }));
 
 window.matchMedia =
@@ -52,21 +52,22 @@ const saveData = () => {
 const fetchDataList = () => {
     return;
 };
+const listShowLoading = () =>{
+    return;
+}
 
 
 describe('Config Param Test', () => {
-    //Passed2!
-    // test('Is Add Group Button Working', async () => {
-    //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchDataList={fetchDataList} configData={configParamData} />);
-    //     const addGroupBtn = await screen.getByTestId('addGroup');
-    //     expect(addGroupBtn).toBeTruthy();
-    //     fireEvent.click(addGroupBtn);
-    //     // expect(Drawer).toBeTruthy();
-    //     // const textArea = await screen.findByPlaceholderText('Enter Data');
-    //     // expect(textArea).toBeTruthy();
-    // });
+    test('Is Add Group Button Present on  render of Table', async () => {
+        render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchDataList={fetchDataList} configData={configParamData} />);
 
-    //Passed1!
+        buttonLookAndFireEventWithText('Add Group')
+        switchAvailablity('fa-switch')
+        InputFieldAvailablity('Select Parameter Type')
+        InputFieldAvailablity('Enter Data')
+        buttonLookAndFireEventWithText('Cancel')
+    });
+
     test('Is the search Field Present or not', async () => {
         render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchDataList={fetchDataList} configData={configParamData} />);
         searchFieldTest()
@@ -80,95 +81,63 @@ describe('Config Param Test', () => {
         buttonLookAndFireEventWithLabel('ai-view')
 
     });
-    // test('Edit Functionality in Table', async () => {
-    //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} configData={configParamData} />);
-    //     const textfield = await screen.findByText('Configurable Parameter Editing');
-    //     expect(textfield).toBeTruthy();
+    test('Is table rendering data', async () => {
+        render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} listShowLoading={listShowLoading} />);
+        tablerender('Configurable Parameter Editing', 'OTP Expiry')
+    });
+    test('is drawer closing on click of cancel button', async () => {
+        render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
+        buttonLookAndFireEventWithText('Add Group');
+        buttonLookAndFireEventWithText('Cancel');
+    });
+    test('View Functionality in Table', async () => {
+        
+        render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
+        const textfield = await screen.findByText('Configurable Parameter Editing');
+        expect(textfield).toBeTruthy();
 
-    //     const editBtn = await screen.getAllByRole('button', { Name: '' });
-    //     expect(editBtn).toBeTruthy();
-    //     userEvent.click(editBtn);
+        buttonLookAndFireEventWithLabel('ai-view')
+        InputFieldAvailablity('Select Parameter Type');
+        InputFieldAvailablity('Enter Data');
+        
+        buttonLookAndFireEventByRole('Edit');
+    });
+    test('is drawer opening on click of Add Qualification', async () => {
+        render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
+        buttonLookAndFireEventWithText('Add Group');
+        InputFieldAvailablity('Select Parameter Type');
+        InputFieldAvailablity('Enter Data');
 
-        // const InputFieldName = await screen.findByPlaceholderText('Enter Data');
-        // expect(InputFieldName.value).toBe('Time (in minutes) for which OTP is valid');
+    });
+    test('is drawer opening on click of Add Qualification to add new', async () => {
+        render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
+        buttonLookAndFireEventWithText('Add Group');
+        switchAvailablity('fa-switch')
+        buttonLookAndFireEventWithText('Save')
 
-        // fireEvent.change(InputFieldName, { target: { value: '' } });
+        InputFieldAvailablity('Select Parameter Type');
+        InputFieldAvailablity('Enter Data');
 
-        // const Validations2 = await screen.findAllByText('Control Description');
-        // const saveBtn = screen.getByRole('button', { name: 'Save' });
-        // fireEvent.click(saveBtn);
+    }, 8000);
+    test('Save drawer element', async () => {
+        const onFinish = jest.fn();
+        render(<ConfigurableParameterEditing configData={configParamData} fetchList={fetchList} saveData={saveData} />);
 
-        // expect(Validations2).toBeTruthy();
-        // expect(saveBtn).toBeTruthy();
+        buttonLookAndFireEventWithText('Add Group');
+        InputFieldAvailablity('Select');
+        InputFieldAvailablity('Enter Data');
 
+        onFinish.mockResolvedValue({
+            controlId: 'OTP Expiry',
+            controlDescription: 'Time (in minutes) for which OTP is valid',
+        });
 
-    // test('Is Selection working', async () => {
-    //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configParamData={configParamData} typeData={typeData} />);
-    //     // const nameField = await screen.findByPlaceholderText('Search');
-    //     // const nameText = await screen.queryByText('Test33');
-    //     // fireEvent.change(nameField, { target: { value: 'Test3' } });
-    //     // expect(nameText).toBeFalsy();
-    //     const addGroupBtn = await screen.getByRole('button',{name:'Add Group'});
-    //     fireEvent.click(addGroupBtn);
-    //     await userEvent.selectOptions(
-    //         // Find the select element
-    //         screen.getByRole('combobox',{name:'Control ID'}),
-    //         // Find and select the Ireland option
-    //         screen.getByRole('option', { name: 'Lock Account' }),
-    //     )
-    //     expect(screen.getByRole('option', { name: 'Lock Account' }).selected).toBe(true)
-    // });
+        const result = await onFinish();
+        buttonLookAndFireEventWithText('Save');
 
-    // test('is drawer opening on click of Add Group', async () => {
-    //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
-    //     const addGroupBtn = await screen.findByText('Add Group');
-    //     fireEvent.click(addGroupBtn);
-    //     const nameField = screen.findAllByPlaceholderText('Enter Data');
-    //     expect(nameField).toBeTruthy();
-    // });
+        expect(result).toBeTruthy();
+        expect(onFinish).toHaveBeenCalled();
+    });
 
-    // test('Save Drawer element', async () => {
-    //     const onFinish = jest.fn();
-    //     const { getByLabelText, getByText } = render(<ConfigurableParameterEditing fetchList={fetchList} onFinish={onFinish} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
-    //     const AddGrp = screen.getByText('Add Group');
-    //     fireEvent.click(AddGrp);
-    //     // console.log("test",SaveBtn)
-    //     const SaveBtn = screen.getByText('Save');
-    //     onFinish.mockResolvedValue({
-    //         controlId: 'Test33',
-    //         controlDescription: 'Time for testing133',
-    //         controlGroup: 'SM',
-    //         configurableParameterType:'Text',
-    //     });
-    //     const result = await onFinish();
-    //     fireEvent.click(SaveBtn);
-    //     expect(result).toBeTruthy();
-    //     expect(onFinish).toHaveBeenCalled();
-    // });
-
-    // //failed successfully
-    // test('is drawer closing on click of cancel button', async () => {
-    //     const onClose = jest.fn();
-    //     render(<ConfigurableParameterEditing onClose={onClose} fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
-    //     const addGroupBtn = await screen.findByText('Add Group');
-    //     fireEvent.click(addGroupBtn);
-    //     const cancelBtn = await screen.getByText('Cancel');
-    //     fireEvent.click(cancelBtn);
-    //     const result = await onClose();
-    //     expect(onClose).toHaveBeenCalled();
-    //     const options = await screen.queryByText('Add Group');
-    //     expect(options).toBeTruthy();
-    // }, 800000);
-
-    // // test('is Configurable Parameter Type Changing', async () => {
-    // //     render(<ConfigurableParameterEditing fetchList={fetchList} saveData={saveData} fetchdataList={fetchdataList} configData={configParamData} />);
-    // //     const addGroupBtn = await screen.findByText('Add Group');
-    // //     fireEvent.click(addGroupBtn);
-    // //     const configParamType= screen.getByRole('combobox', { name: 'Configurable Parameter Type' });
-    // //     fireEvent.change(configParamType, {
-    // //     target: { key: 'N',value:'number'},
-    // //     });
-    // //     const configParamVal=await screen.getByLabelText('Configurable Parameter Values');
-    // //     expect(configParamVal).toBeTruthy();
-    // // });
+    
 });

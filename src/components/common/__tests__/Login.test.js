@@ -28,7 +28,7 @@ describe('Login component', () => {
                 </Routes>
             </BrowserRouter>
         );
-        const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)');
+        const userId = await screen.findByPlaceholderText('User ID (MILE ID.Parent ID)');
         const passInput = await screen.getByPlaceholderText('Password');
         const loginBtn = await screen.getByText('Login');
         fireEvent.change(userId, { target: { value: '11111' } });
@@ -36,8 +36,8 @@ describe('Login component', () => {
         fireEvent.change(userId, { target: { value: '' } });
         fireEvent.change(passInput, { target: { value: '' } });
         fireEvent.click(loginBtn);
-        const validation = screen.findByText('Please Enter User ID (mile id.parent id)');
-        const validation2 = screen.findByText('Please Enter Password');
+        const validation = screen.findByText('Please enter user id');
+        const validation2 = screen.findByText('Please enter password');
         expect(userId).toBeTruthy();
         expect(passInput).toBeTruthy();
         expect(validation).toBeTruthy();
@@ -53,7 +53,7 @@ describe('Login component', () => {
                 </Routes>
             </BrowserRouter>
         );
-        const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)');
+        const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID)');
         const forgotPasswordLink = await screen.getByText('Forgot password?');
         fireEvent.click(forgotPasswordLink);
         const verifyUserBtn = await screen.getByText('Verify User');
