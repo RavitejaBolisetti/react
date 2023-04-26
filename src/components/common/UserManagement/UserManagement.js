@@ -41,6 +41,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'User Access'
+
     let returnValue = {
         collapsed,
         userId,
@@ -48,6 +50,7 @@ const mapStateToProps = (state) => {
         isLoading,
         UserManagementDealerData,
         productHierarchyData,
+        moduleTitle,
         attributeData,
         isLoadingOnSave,
         isFormDataLoaded,
@@ -169,6 +172,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [disabled, setdisabled] = useState();
     const [DealerData, setDealerData] = useState(UserManagementDealerData);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
+
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
@@ -427,6 +433,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         });
 
         setFormActionType('add');
+        setIsViewModeVisible(false);
+
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
@@ -443,6 +451,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const handleUpdate = (record) => {
         setFormActionType('update');
         setSaveAndSaveNew(false);
+        setIsViewModeVisible(false);
+        setIsFormVisible(true);
+
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
@@ -457,6 +468,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
 
     const handleUpdate2 = () => {
         setFormActionType('update');
+        setIsViewModeVisible(false);
+        setIsFormVisible(true);
 
         setSaveAndSaveNew(false);
         setFooterEdit(false);
@@ -473,6 +486,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true);
+        setIsFormVisible(true);
 
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
@@ -522,12 +537,16 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
+
     const formProps = {
+        setClosePanels,
         saveclick,
         setsaveclick,
         setsaveandnewclick,
         saveandnewclick,
         isVisible: isFormVisible,
+        isViewModeVisible,
+        setIsViewModeVisible,
         isLoadingOnSave,
         formBtnDisable,
         isFormBtnActive,
@@ -551,9 +570,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setForceFormReset,
         footerEdit,
         handleUpdate2,
-        titleOverride: formData?.employeecode ? 'Edit User Access ' : 'Manage User Access',
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.employeecode ? 'Edit ' : 'Manage ').concat(moduleTitle),
         DealerData,
-        productHierarchyData, 
+        productHierarchyData,
         tableDetailData,
         style,
         onCloseAction: () => setIsFormVisible(false),
