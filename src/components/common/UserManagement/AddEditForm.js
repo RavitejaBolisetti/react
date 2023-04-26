@@ -10,6 +10,8 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 
 import styles from 'components/common/Common.module.css';
 import style from './UserManagement.module.css';
+import style3 from './UserManagement.module.css';
+
 import AssignUserRole from './AssignUserRole';
 import BranchMapping from './BranchMapping';
 import ProductMapping from './ProductMapping';
@@ -19,7 +21,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
-    const { saveclick, onCloseAction, productHierarchyData, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
+    const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
@@ -104,8 +106,6 @@ const AddEditFormMain = (props) => {
                             <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary">
                             Add
@@ -152,7 +152,7 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <div className={style.manageAccessHeader}>
+                        <div className={style3.manageAccessHeader}>
                             <p>
                                 Access Management<span>*</span>
                             </p>
@@ -171,7 +171,7 @@ const AddEditFormMain = (props) => {
                         >
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                                 <Panel header="Assign User Roles" key="1">
-                                    <AssignUserRole userRoleOptions={DealerData?.roles} />
+                                    <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
