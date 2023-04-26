@@ -597,36 +597,36 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <div className={style.searchAndLabelAlign}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style3.subheading}>
-                                    <div className={style.userManagement}>
-                                        <Button className={style3.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
+                            
+                                <Col xs={24} sm={24} md={5} lg={5} xl={5} >
+                                    {/* <div className={style.}> */}
+                                    <div className={`${styles.userManagement} ${styles.headingToggle}`} >
+                                        <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
                                             Manufacturer
                                         </Button>
-                                        <Button className={style3.actionbtn} type="primary" ghost>
+                                        <Button type="link" ghost>
                                             Dealer
                                         </Button>
                                     </div>
                                 </Col>
-                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                    <Select className={style3.attributeSelet} onChange={handleChange} placeholder="Select" allowClear>
+                                <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.padT5}>
+                                    <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
                                         {dealersData?.map((item) => (
                                             <Option value={item}>{item}</Option>
                                         ))}
                                     </Select>
+                                    
                                 </Col>
-                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                    <Search
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
+                                <Search
                                         placeholder="Search"
-                                        style={{
-                                            width: 300,
-                                        }}
                                         allowClear
                                         onSearch={onSearchHandle}
                                         disabled={disabled}
+                                        className={styles.headerSearchField} 
                                     />
                                 </Col>
-                            </div>
+                           
                         </Row>
                         {DealerData?.employeeCode ? (
                             <Row gutter={20}>
