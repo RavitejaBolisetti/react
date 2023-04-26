@@ -12,7 +12,6 @@ function LocationCard(props) {
     return (
         <Card
             style={{
-                // width: 440,
                 backgroundColor: '#BEBEBE1A',
                 marginTop: '12px',
             }}

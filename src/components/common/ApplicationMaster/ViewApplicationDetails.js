@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import { Col, Row, Card, Space, Collapse, Typography } from 'antd';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
-
 import styles from './ApplicationMaster.module.css';
-
 
 import CardDocument from './CardDocument';
 import CardLocation from './CardLocation';
@@ -26,12 +24,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
         2: 'Restricted Accessible'
     };
     
-
     return (
-        // <Card title="Application Details">
-            // <div className={styles.cardBody}>
-
-
                 <Space direction="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
@@ -135,8 +128,6 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         )}
                     </Row>
                 </Space>
-            // </div>
-        // </Card>
     );
 };
 
