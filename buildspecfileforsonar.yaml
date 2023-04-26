@@ -2,15 +2,16 @@ version: 0.2
 phases:
     pre_build:
         commands:
-            # - n 18
-            # - node -v
-            # - npm -v
+           # - n 18
+           # - node -v
+           # - npm -v
             - npm install -g sonarqube-scanner
-            - npm i
+            - npm i          
     build:
         commands:
-            - npm run coverage || true
             # - codebuild-breakpoint
+            - npm run coverage || true
+            
             - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://10.168.15.236:9000/ -Dsonar.login=squ_f9e7dfe0aeeff99754b4cb402800e65b4fb37d0f
             - npm run build
     post_build:

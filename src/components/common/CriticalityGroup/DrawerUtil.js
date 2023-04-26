@@ -11,7 +11,6 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
 
-
 const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
@@ -28,21 +27,13 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
     }
 
     useEffect(() => {
-        if (formActionType === 'update') {
-            // setDisableAddtime(false);
-        }
-        if (formActionType === 'view') {
-            // setDisableAddtime(true);
-        }
         let timeSegments = form.getFieldValue('allowedTimings');
         if (timeSegments?.length === 1) {
-            console.log('The length is 1');
             setTimeTrack(false);
-            console.log(TimeTrack);
         } else {
             setTimeTrack(true);
-            console.log(TimeTrack);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [TimesegmentLengthTracker]);
 
     const onClose = () => {
@@ -93,11 +84,6 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
                 return;
             }
         });
-        if (flag === 1) {
-            // setDisableAddtime(false);
-        } else {
-            // setDisableAddtime(true);
-        }
     };
     const onValuesChange = (values) => {
         console.log(values);
@@ -137,10 +123,10 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
             maskClosable={false}
             footer={
                 <>
-                  <Row gutter={20} className={styles.formFooter}>
-                  <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                            <Button danger onClick={onClose} >
-                               {!footerEdit ? 'Cancel':'Close'} 
+                    <Row gutter={20} className={styles.formFooter}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onClose}>
+                                {!footerEdit ? 'Cancel' : 'Close'}
                             </Button>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
@@ -195,7 +181,7 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
-                            <Switch aria-label='fa-switch' checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                            <Switch aria-label="fa-switch" checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -281,6 +267,7 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
                                                         {...disabledProps}
                                                         danger
                                                         ghost
+                                                        aria-label="li-trash"
                                                         onClick={() => {
                                                             removeItem(name, fields, restField);
                                                             remove(name);

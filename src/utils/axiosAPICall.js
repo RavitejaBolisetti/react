@@ -37,7 +37,7 @@ const baseAPICall = (params) => {
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
 
-    const onUnAuthenticated = () => {
+    const onUnAuthenticated = (message='') => {
         clearLocalStorageData();
     };
 

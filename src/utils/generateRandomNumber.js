@@ -1,5 +1,3 @@
-
-
 export const generateRandomNumber = () => {
     const typedArray = new Uint8Array(1);
     const randomValue = crypto.getRandomValues(typedArray)[0];

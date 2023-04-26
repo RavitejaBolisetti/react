@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, authorityVisible }) => {
+export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, setDocumentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, authorityVisible }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -25,8 +25,6 @@ export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, at
         title: <div className={styles.contentHeaderRightBackground}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
-
-    console.log(selectedTreeData,'selectedTreeDataselectedTreeData');
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
@@ -38,7 +36,7 @@ export const HierarchyViewMain = ({ viewTitle, buttonData, documentTypesList, at
                 <Descriptions.Item label="Long Description">{selectedTreeData?.manufactureAdminLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
-            <AuthorityDetailPanel selectedTreeData={selectedTreeData} viewMode={true} />
+            {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} viewMode={true} />}
         </div>
     );
 };

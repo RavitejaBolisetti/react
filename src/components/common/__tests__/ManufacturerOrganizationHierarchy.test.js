@@ -3,10 +3,11 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { async } from 'sonarqube-scanner';
 import { ManufacturerOrgHierarchy } from '../ManufacturerOrganizationHierarchy/ManufacturerOrgHierarchy';
-import  { commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
+import  { axiosCall, commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
 import {ManufacturerTreeData as treeDatas} from './Common/Data/data';
 import {fetchList,saveData,hierarchyAttributeFetchList,listShowLoading} from './Common/CommonImports/commonImports';
-
+import { BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY } from '../../../constants/routingApi';
+import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 jest.mock('react-redux', () => ({
     connect: () => (ManufacturerOrgHierarchy) => ManufacturerOrgHierarchy,
 }));
@@ -84,6 +85,16 @@ describe('manufacturerorghierarchy component', () => {
         fireEvent.click(cancelBtn);
         const saveBtn = await screen.queryByText('Save');
         expect(saveBtn).toBeFalsy();
+    })
+    test('close drawer', async() => {
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        screentext('Hierarchy');
+        commonTreeTest();
+
+    })
+    test('render data',async()=>{
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} listShowLoading={listShowLoading} />);
+        axiosCall(BASE_URL_MANUFACTURER_ORGANIZATION_HIERARCHY,manufacturerOrgHierarchyDataActions.fetchList);
     })
 
 
