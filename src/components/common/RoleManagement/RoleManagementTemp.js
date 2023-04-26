@@ -101,7 +101,9 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 if (keyName === 'roleName') {
                     SetRole.push(e[keyName]);
                 }
+                return undefined;
             });
+            return undefined;
         });
         setRoledataset(SetRole);
         setFormData(RoleManagementData);
@@ -319,30 +321,29 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                         values[keyName] = '1';
                     }
                 }
+                return undefined;
             });
             Object.keys(Checkboxdata).map((keyName, i) => {
                 values[keyName] = Checkboxdata[keyName];
+                return undefined;
             });
 
-            const Final_data = { cretdby: "shaka", cretddate: new Date(), modfdby: "Me", modfddate: "adasdad", roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
-            console.log("Final Sending data",Final_data);
+            const Final_data = { cretdby: 'shaka', cretddate: new Date(), modfdby: 'Me', modfddate: 'adasdad', roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
+
             const onSuccess = (res) => {
                 form.resetFields();
                 setForceFormReset(generateRandomNumber());
-    
-               
-    
+
                 if (res?.Final_data) {
                     handleSuccessModal({ title: 'SUCCESS', message: res?.responseMessage });
                     fetchList({ setIsLoading: listShowLoading, userId });
-                    
                 }
             };
-    
+
             const onError = (message) => {
                 handleErrorModal(message);
             };
-    
+
             const requestData = {
                 data: Final_data,
                 setIsLoading: listShowLoading,
@@ -351,13 +352,7 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                 onSuccess,
             };
             saveData(requestData);
-            
-            
-            
-            
-            
-            
-            
+
             setAddchild(!addchilds);
             form.resetFields();
             setMycheckvals([]);
@@ -384,10 +379,10 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
                         setInitialData(formData[keyName]);
                     }
                 }
+                return undefined;
             });
+            return undefined;
         });
-        console.log('No need to open', formData);
-        console.log('This is the intialData', InitialData);
         form.resetFields();
     };
     const oncancel = () => {

@@ -69,9 +69,11 @@
     border-color: transparent;
     background-color: #fff;
 }
-.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+
+.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 36px;
 }
+
 .autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
     border-color: transparent;
 }
@@ -335,6 +337,7 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }
+
 /* .contentHeaderBackground :global .ant-btn-default {
     border-color: transparent !important;
 } */
@@ -565,7 +568,8 @@
     font-weight: 600;
     font-size: 16px;
 }
-.accordianContainer :global( .ant-collapse-header-text::after ){
+
+.accordianContainer :global(.ant-collapse-header-text::after) {
     content: '*';
     color: #ff3e5b;
 }
@@ -606,13 +610,12 @@
     background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
-    background-color: #ffffff;
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -661,7 +664,7 @@
 .hierarchyRightContaners {
     border-radius: 7px 7px 0px 0px;
     border: none;
-   
+
 }
 
 .hierarchyRightContaner {
@@ -835,6 +838,7 @@
     justify-content: flex-end;
     margin-bottom: 0px !important;
 }
+
 .content {
     /* border: 1px solid rgba(200, 200, 200, 0.55);
     border-top: none;
