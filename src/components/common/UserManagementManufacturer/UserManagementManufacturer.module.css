@@ -1,12 +1,19 @@
-.cardBox, .collapsecardBox{ background:#BEBEBE1A; border: 1px solid #3E3E3E1A}
+.manageAccessHeader p{ font-size: 16px; font-weight: 700; line-height: 24px; text-align: left; padding-left: 5px !important;}
+.cardBox, .collapsecardBox{ background:rgba(190, 190, 190, 0.1); border: 1px solid rgba(62, 62, 62, 0.1); border-bottom: none;}
 
+.collapsecardBox .ant-collapse-item-active .ant-collapse-header{ background: #000;}
 .userdetials span{ width: 50%; display: inline-block; color: #747474D9;}
 .userdetials span strong{ display: block; color: #000000D9;} 
-.collapsecardBox span{ font-size: 16px; font-weight: 600; text-align: left; line-height: 20px; }
-.collapsecardBox svg{font-size: 18px !important;}
+.collapsecardBox span{ font-size: 16px; font-weight: 700; text-align: left; line-height: 20px; }
+.collapsecardBox svg{font-size: 20px !important; padding: 1px; border: #DEDEDE solid 1px; border-radius: 5px;}
 .collapsecardBox .chooserole .ant-form-item-control-input span{ font-size: 120px;}
+
 
 /* .collapsecardBox .ant-collapse-item-active span{ color: #E31837;} */
 /* .collapsecardBox .ant-collapse-content.ant-collapse-content-active{ background: #f00;} */
 .collapsecardBox .ant-collapse-content-box { background: none !important;}
 
+
+.userManagementDrawer span{ width: 80%; display: inline-block;}
+/* .userManagementDrawer button { border: 0px;}
+.userManagementDrawer button.removebtn{padding: 2px 5px; height: 25px !important; border: none !important;} */

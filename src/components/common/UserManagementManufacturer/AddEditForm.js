@@ -15,6 +15,7 @@ import styles from 'components/common/Common.module.css';
 import manufacturerstyle from '../UserManagementManufacturer/UserManagementManufacturer.module.css'
 import style from 'components/common/DrawerAndTable.module.css';
 import { dealerData } from '../DealerHierarchy/test';
+import { BiPlus } from 'react-icons/bi';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -100,7 +101,7 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <div className={style.manageAccessHeader}>
+                        <div className={manufacturerstyle.manageAccessHeader}>
                             <p>
                                 Access Management<span>*</span>
                             </p>                            
@@ -108,16 +109,17 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
 
-                <Row gutter={20}>
+                <Row gutter={20} className={manufacturerstyle.cardBoxsection}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space
                             direction="vertical"
                             size="large"
                             style={{
                                 display: 'flex',
+                                gap: '10px'
                             }}
                         >
-                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={({ isActive }) => <AiOutlinePlusSquare rotate={isActive ? 30 : 0} />}>
+                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={({ isActive }) => <BiPlus rotate={isActive ? 30 : 0} />}>
                                 <Panel header="Assign User Roles" key="1">
 
                                 <Row gutter={20}>
@@ -144,9 +146,9 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        {/* <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
+                                        <Button onClick={handleAddMacid} form="myForm" key="Add" type="primary">
                                             Add
-                                        </Button> */}
+                                        </Button>
                                         <Button form="myForm" key="Add" type="primary">
                                             Add
                                         </Button>
@@ -163,18 +165,19 @@ const AddEditFormMain = (props) => {
                                         >
                                             {AccessMacid?.map((el) => {
                                                 return (
-                                                    <Card className={style.userManagementDrawer}>
+                                                    <Card className={manufacturerstyle.userManagementDrawer}>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                                <span>Mac Id</span>
+                                                                <span>Role</span>
+                                                                
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
-                                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                                                            <Col xs={21} sm={21} md={21} lg={21} xl={21} xxl={21}>
                                                                 <span>{el.macid}</span>
                                                             </Col>
-                                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                                <Button>
+                                                            <Col xs={3} sm={3} md={3} lg={3} xl={3} xxl={3}>
+                                                                <Button className={manufacturerstyle.removebtn}>
                                                                     <AiOutlineClose />
                                                                 </Button>
                                                             </Col>
@@ -188,11 +191,11 @@ const AddEditFormMain = (props) => {
 
                                 </Panel>
                             </Collapse>
-                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Branch Mapping" key="2"></Panel>
+                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={() => <BiPlus />}>
+                                <Panel header="Administrative Hierarchy Access" key="2"></Panel>
                             </Collapse>
-                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Product Mapping" key="3"></Panel>
+                            <Collapse className={manufacturerstyle.collapsecardBox} onChange={onChangeCollapse} expandIcon={() => <BiPlus />}>
+                                <Panel header="Assign Products" key="3"></Panel>
                             </Collapse>
                         </Space>
                         {/* <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
