@@ -5,12 +5,11 @@ import style from 'components/common/DrawerAndTable.module.css';
 import style3 from './UserManagement.module.css';
 import styles from 'components/common/Common.module.css';
 
-
 import { PlusOutlined } from '@ant-design/icons';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 
 const { Option } = Select;
-const AssignUserRole = ({ userRoleOptions, DealerSearchvalue }) => {
+const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, setfinalFormdata }) => {
     const [checked, setchecked] = useState([]);
     const [addroles, setaddroles] = useState();
     const FindRoleDetails = (option) => {
@@ -21,6 +20,7 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue }) => {
     useEffect(() => {
         console.log('These are the Roles :', userRoleOptions);
         console.log('These checked :', checked);
+        setfinalFormdata({ ...finalFormdata, AssignUserRole: checked });
     }, [userRoleOptions, checked]);
     const onChange = (values) => {
         console.log('Values : ', values, 'Type of Values', typeof values);
@@ -30,6 +30,7 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue }) => {
             const SelectedDetails = FindRoleDetails(value);
             newValues.push(SelectedDetails);
         });
+
         setchecked(newValues);
     };
     const onChanges = () => {};

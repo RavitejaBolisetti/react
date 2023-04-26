@@ -3,7 +3,7 @@ import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import style from 'components/common/DrawerAndTable.module.css';
 const { Option } = Select;
-const BranchMapping = ({ BranchMappingData }) => {
+const BranchMapping = ({ BranchMappingData, finalFormdata, setfinalFormdata }) => {
     const [checked, setchecked] = useState([]);
     useEffect(() => {
         console.log('BranchMappingData', BranchMappingData);

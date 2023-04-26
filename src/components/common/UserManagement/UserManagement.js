@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'User Access'
+    const moduleTitle = 'User Access';
 
     let returnValue = {
         collapsed,
@@ -138,6 +138,7 @@ const savePayload = {
         },
     ],
 };
+
 export const UserManagementMain = ({ saveData, userId, moduleTitle, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
@@ -174,6 +175,12 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
+    const [finalFormdata, setfinalFormdata] = useState({
+        Macid: [],
+        AssignUserRole: [],
+        BranchMapping: [],
+        ProductMapping: [],
+    });
 
     const FetchError = (message) => {
         setError(true);
@@ -187,6 +194,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             setSearchdata([UserManagementDealerData]);
         }
     }, [UserManagementDealerData]);
+    useEffect(() => {
+        console.log('This is the Final Form data : ', finalFormdata);
+    }, [finalFormdata]);
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
@@ -220,7 +230,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         if (DealerSelected?.length > 0 && DealerSelected != undefined) {
             setdisabled(false);
             setDealerData({});
-            setError(false); 
+            setError(false);
         }
     }, [DealerSearchvalue, DealerSelected]);
 
@@ -296,8 +306,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             dealerName: DealerSelected,
             userName: DealerData?.employeeName,
             designation: DealerData?.employeeDesignation,
-            mobileNumber: DealerData?.mobileNumber,
-            emailid: DealerData?.emailID,
+            mobileNumber: DealerData?.employeeMobileNumber,
+            emailid: DealerData?.employeeEmail,
         },
     ];
 
@@ -576,6 +586,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         tableDetailData,
         style,
         onCloseAction: () => setIsFormVisible(false),
+        finalFormdata,
+        setfinalFormdata,
     };
 
     return (
@@ -684,7 +696,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                     </div>
                 </Col>
             </Row>
-            
+
             {/* <DrawerUtil
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}
