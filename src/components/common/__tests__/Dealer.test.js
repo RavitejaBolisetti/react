@@ -3,6 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { Dealer } from '../DealerHierarchy/Dealer';
 import { handleSuccessModal } from 'utils/responseModal';
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
+import  { commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
+import {dealerHierarchyData as treeDatas} from './Common/Data/data';
+import {fetchList,saveData,hierarchyAttributeFetchList,listShowLoading} from './Common/CommonImports/commonImports';
 
 jest.mock('react-redux', () => ({
     connect: () => (Dealer) => Dealer,
@@ -17,107 +20,86 @@ window.matchMedia =
             removeListener: function () {},
         };
     };
-const treeDatas = [
-    {
-        shortDescription: 'parent 1',
-        id: 'parent 1',
-        children: [
-            {
-                shortDescription: 'asian',
-                id: 'AS',
 
-                children: [
-                    {
-                        shortDescription: 'India',
-                        id: 'IND',
-                    },
-                    {
-                        title: 'node2',
-                        key: 'node2',
 
-                        children: [
-                            {
-                                title: 'randomNode_2',
-                                key: 'randomNode_2',
-
-                                children: [
-                                    {
-                                        title: 'node2',
-                                        key: 'node2',
-
-                                        children: [
-                                            {
-                                                title: 'randomNode_3',
-                                                key: 'randomNode_3',
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        shortDescription: 'topNode',
-        id: 'topNode',
-        children: [
-            {
-                title: 'node1',
-                key: 'node1',
-
-                children: [
-                    {
-                        title: 'randomNode_1',
-                        key: 'randomNode_1',
-                    },
-                    {
-                        title: 'node2',
-                        key: 'node2',
-
-                        children: [
-                            {
-                                title: 'randomNode_2',
-                                key: 'randomNode_2',
-
-                                children: [
-                                    {
-                                        title: 'node2',
-                                        key: 'node2',
-
-                                        children: [
-                                            {
-                                                title: 'randomNode_3',
-                                                key: 'randomNode_3',
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-];
-const fetchList = () => {};
-const hierarchyAttributeFetchList = () => {};
 
 describe('dealer component', () => {
-    test('render add child button', async () => {
-        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const addChildBtn = screen.getByText('Add Child');
-        expect(addChildBtn).toBeInTheDocument();
+    test('Common Tree Test', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas}/>);
+        commonTreeTest();
     });
 
-    test('render form', async () => {
-        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
-        const codeInputField = screen.queryByPlaceholderText('Please Enter Short Description');
-        expect(codeInputField).toBeTruthy();
+    test('Opening Drawer', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        commonDrawer();
+        
     });
+    test('Checking Hierarchy Text on Page', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        screentext('Hierarchy');
+        
+        
+    });
+    test('Manufacturer Organization Heirarchy Page render ', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        
+        findbuttonAndClick('Change History')
+    });
+    test('Is search working', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        
+        searchIsWorking()
+    });
+    test('Is the search Field Present or not', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        
+        searchFieldTest();
+      
+    });
+    test('render form', async () => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+       
+        findplaceholder('Please Enter Attribute Code')
+    });
+
+    test('render hierarchy details element',async() => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        
+        commonTreeTest();
+
+    })
+    test('render form element',async() => {
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} dealerHierarchyData={treeDatas} />);
+        
+        treebranchClickAndTextFinder('Attribute Level');
+
+    })
+  
+    test('close drawer on click of cancel button',async() => {
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        
+        const treeBranch =  await screen.findByText('parent 1');
+        expect(treeBranch).toBeInTheDocument();
+        fireEvent.click(treeBranch);
+        const attributeText = await screen.findByText('Attribute Level');
+        expect(attributeText).toBeInTheDocument();
+        const addiblingBtn = await screen.findByRole('button', { name: 'Add Sibling' });
+        expect(addiblingBtn).toBeInTheDocument();
+        fireEvent.click(addiblingBtn);
+        const cancelBtn = await screen.getByText('Cancel');
+        expect(cancelBtn).toBeTruthy();
+        fireEvent.click(cancelBtn);
+        const saveBtn = await screen.queryByText('Save');
+        expect(saveBtn).toBeFalsy();
+    })
+
+
+
+
+
+
+
+
 
     test('render form element', async () => {
         render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
@@ -149,7 +131,7 @@ describe('dealer component', () => {
     // });
 
     test('input field on enetering data form element', async () => {
-        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
+        render(<Dealer fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList}  />);
         const RootChildButton = screen.getByText('Add Child');
         fireEvent.click(RootChildButton);
         const codeInputField = screen.getByPlaceholderText('Please Enter Code');
@@ -296,13 +278,4 @@ describe('dealer component', () => {
         expect(saveBtn).toBeTruthy();
     });
 });
-global.fetch = jest.fn(() => {
-    Promise.resolve({ data: { id: 'f7d7c0ca-e03f-4d7b-8af8-30c17cd783cc', geoCode: 'ASI12', geoName: 'ASIA24', attributeKey: '59077c54-6cbf-46d0-9729-8cb6fbb7cd87', isActive: 'N', geoParentCode: 'DMS' } });
-});
 
-describe('This is to test the Axios Call using Jest', () => {
-    test('This is the Api call test', async () => {
-        const Fetclists = await dealerHierarchyDataActions.fetchList();
-        console.log(Fetclists);
-    });
-});
