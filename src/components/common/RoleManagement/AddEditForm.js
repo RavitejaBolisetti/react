@@ -196,7 +196,7 @@ const FinalTreedata = [
 const AddEditFormMain = (props) => {
     const { moduleTitle, setClosePanels, setIsViewModeVisible, viewData, showSaveBtn, formData, isFormBtnActive, onCloseAction, setFormBtnActive, handleEditData, open, MenuAlteredData, setSaveClick, form, isReadOnly, setIsReadOnly, handleAdd, formBtnDisable, isLoadingOnSave, saveBtn, saveAndSaveNew, handleUpdate2, setFormBtnDisable, onFinish, openDrawer, setOpenDrawer, setsaveclick, footerEdit, setSaveAndAddNewBtnClicked, isViewModeVisible } = props;
     const disabledProps = { disabled: isReadOnly };
-    console.log("adasda",formData);
+    console.log('adasda', formData);
     // const [selectedActions, setSelectedActions] = useState({})
     const [ParentCheck, setParentCheck] = useState();
     const Mychildren = [
@@ -262,9 +262,9 @@ const AddEditFormMain = (props) => {
     }, [CheckedKeys]);
     useEffect(() => {
         let evalue;
-        FinalTreedata.map((e) => {
-            StateMangement[e?.value] = [];
-        });
+        // FinalTreedata.map((e) => {
+        //     StateMangement[e?.value] = [];
+        // });
     }, []);
 
     useEffect(() => {
@@ -280,8 +280,6 @@ const AddEditFormMain = (props) => {
                 });
             }
         }
-
-        console.log('treeData', treeData);
     }, []);
 
     function Subpanel(arr) {
@@ -290,7 +288,6 @@ const AddEditFormMain = (props) => {
                 const children = Subpanel(row.children);
                 return { ...row, children };
             } else {
-                console.log('key', row);
                 return {
                     ...row,
                     checkable: true,
@@ -393,7 +390,7 @@ const AddEditFormMain = (props) => {
         //  StateMangement.expanded[0]=expanded;
         let ExpandVals = [];
         for (const [key, value] of Object.entries(expanded)) {
-            if (key === 0) {
+            if (key === '0') {
                 ExpandVals.push(value);
             }
         }
@@ -447,7 +444,7 @@ const AddEditFormMain = (props) => {
                                             <CheckboxTree
                                                 nodes={[el]}
                                                 expanded={ExpandedKeys[el?.value]}
-                                                checked={CheckedKeys[el?.value]}
+                                                checked={!!CheckedKeys[el?.value]}
                                                 onCheck={(checked, targetNode) => onTreeCheck(checked, targetNode, el?.value)}
                                                 onExpand={(expanded, targetNode) => OnExpanded(expanded, targetNode, el?.value)}
                                                 onMoveNode={OnChanges}
@@ -479,7 +476,7 @@ const AddEditFormMain = (props) => {
             </>
         );
     };
-  
+
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,
@@ -550,8 +547,7 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </>
                 ) : (
-                    <ViewRoleManagement {...viewProps}  />
-                
+                    <ViewRoleManagement {...viewProps} />
                 )}
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>

@@ -178,7 +178,7 @@ const LeftSideBarMain = (props) => {
         setOpenKeys(getHierarchyParents({ subMenu: menuData }, selectedMenuId, fieldNames));
         setSelectedKeys(selectedMenuId);
     };
-    const menuParentClass = theme === 'light' ? styles.leftMenuBoxLight : styles.leftMenuBoxLight;
+    const menuParentClass = styles.leftMenuBoxLight;
 
     return (
         <>

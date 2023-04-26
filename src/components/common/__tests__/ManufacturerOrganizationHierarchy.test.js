@@ -85,6 +85,12 @@ describe('manufacturerorghierarchy component', () => {
         const saveBtn = await screen.queryByText('Save');
         expect(saveBtn).toBeFalsy();
     })
+    test('close drawer', async() => {
+        render(<ManufacturerOrgHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        screentext('Hierarchy');
+        commonTreeTest();
+
+    })
 
 
     // test('render form element', async () => {

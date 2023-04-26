@@ -83,7 +83,7 @@ export const authUserTokenExpired = () => (dispatch) => {
 
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {
     dispatch(unAuthenticate(errorMessage));
-    dispatch(clearLocalStorageData());
+    clearLocalStorageData();
 };
 
 export const doLogout = (res) => (dispatch) => {
