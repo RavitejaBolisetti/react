@@ -31,6 +31,7 @@ const initialState = {
     changeHistoryAuthorityVisible: false,
     uploadVisible: false,
     authorityVisible: true,
+    recordId: '',
 };
 
 export const ManufacturerAdminHierarchy = (state = initialState, action) => {
@@ -75,7 +76,7 @@ export const ManufacturerAdminHierarchy = (state = initialState, action) => {
             return { ...state, isHistoryLoaded: action.isLoaded, authHistoryData: action.data };
 
         case MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED:
-            return { ...state, isHistoryLoaded: action.isLoaded, tokenNumber: action.data };
+            return { ...state, isHistoryLoaded: action.isLoaded, tokenNumber: action.data, recordId: action.id };
 
         case MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY_SHOW_LOADING:
             return { ...state, isHistoryLoading: action.isLoading };

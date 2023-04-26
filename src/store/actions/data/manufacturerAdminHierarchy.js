@@ -39,10 +39,11 @@ const receiveDetailData = (data) => ({
     data,
 });
 
-const reciveManufacturerSearchData = (data) => ({
+const reciveManufacturerSearchData = (data, recordId) => ({
     type: MANUFACTURER_ADMIN_HIERARCHY_SEARCH_DATA_LOADED,
     isLoaded: true,
     data,
+    recordId,
 });
 
 const receiveChangeHistoryData = (data) => ({
@@ -233,13 +234,14 @@ manufacturerAdminHierarchyDataActions.saveData = withAuthToken((params) => ({ to
 });
 
 manufacturerAdminHierarchyDataActions.searchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, errorAction, data, tokenNumber } = params;
+    const { setIsLoading, errorAction, data, recordId = '', tokenNumber } = params;
+    console.log('🚀 ~ file: manufacturerAdminHierarchy.js:238 ~ manufacturerAdminHierarchyDataActions.searchList=withAuthToken ~ recordId:', recordId);
     setIsLoading(true);
     const onError = () => message.error('Internal Error, Please try again');
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(reciveManufacturerSearchData(res?.data));
+            dispatch(reciveManufacturerSearchData(res?.data, recordId));
         } else {
             onError();
         }
