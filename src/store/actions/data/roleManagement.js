@@ -1,16 +1,29 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_ROLE_MANAGEMENT } from 'constants/routingApi';
+import { BASE_URL_ROLE_MANAGEMENT, BASE_URL_MENU, BASE_URL_ROLE_MANAGEMENT_ROLES } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const ROLE_MANAGEMENT_DATA_LOADED = 'ROLE_MANAGEMENT_DATA_LOADED';
-export const ROLE_MANAGEMENT_SET_FORM_DATA = 'GEO_SET_FORM_DATA';
-export const ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE = 'GEO_SET_FORM_IS_VISIBLE';
-export const ROLE_MANAGEMENT_DATA_SHOW_LOADING = 'GEO_DATA_SHOW_LOADING';
+export const ROLE_MANAGEMENT_SET_FORM_DATA = 'ROLE_MANAGEMENT_SET_FORM_DATA';
+export const ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE = 'ROLE_MANAGEMENT_SET_FORM_IS_VISIBLE';
+export const ROLE_MANAGEMENT_DATA_SHOW_LOADING = 'ROLE_MANAGEMENT_DATA_SHOW_LOADING';
+export const ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING = 'ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING';
+export const MENU_DATA_LOADED = 'MENU_DATA_LOADED';
+export const ROLE_MANAGEMENT_ROLES = 'ROLE_MANAGEMENT_ROLES';
 
 const receiveData = (data) => ({
     type: ROLE_MANAGEMENT_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+const receiveMenuData = (data) => ({
+    type: MENU_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+const receiveRoleData = (data) => ({
+    type: ROLE_MANAGEMENT_ROLES,
     isLoaded: true,
     data,
 });
@@ -35,6 +48,11 @@ rolemanagementDataActions.setFormVisible = (isFormVisible) => ({
     isFormVisible,
 });
 
+rolemanagementDataActions.onSaveShowLoading = (isLoading) => ({
+    type: ROLE_MANAGEMENT_DATA_ON_SAVE_SHOW_LOADING,
+    isLoading,
+});
+
 rolemanagementDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, data, userId } = params;
     setIsLoading(true);
@@ -51,7 +69,7 @@ rolemanagementDataActions.fetchList = withAuthToken((params) => ({ token, access
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + '?id=Mn',
+        url: baseURLPath,
         token,
         accessToken,
         userId,
@@ -74,13 +92,73 @@ rolemanagementDataActions.saveData = withAuthToken((params) => ({ token, accessT
     const apiCallParams = {
         data,
         method: 'post',
-        url: baseURLPath,
+        url: BASE_URL_ROLE_MANAGEMENT_ROLES,
         token,
         accessToken,
         userId,
         onSuccess,
         onError,
         onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+rolemanagementDataActions.fetchMenuList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data, userId, type } = params;
+    setIsLoading(true);
+    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveMenuData(res?.data));
+        } else {
+            onError();
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_MENU + '?type=w',
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => errorAction('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+rolemanagementDataActions.fetchRole = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, errorAction, data, userId, id } = params;
+    setIsLoading(true);
+    const onError = (errorMessage) => message.error(errorMessage);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveRoleData(res?.data));
+        } else {
+            onError();
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_ROLE_MANAGEMENT_ROLES + '?roleId=' + id,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => errorAction('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
         postRequest: () => setIsLoading(false),

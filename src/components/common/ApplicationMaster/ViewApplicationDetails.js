@@ -1,11 +1,8 @@
 import React, {useState} from 'react';
 import { Col, Row, Card, Space, Collapse, Typography } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
-
 import styles from './ApplicationMaster.module.css';
-
 
 import CardDocument from './CardDocument';
 import CardLocation from './CardLocation';
@@ -21,9 +18,13 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
+    const accessibleLocationIdndicator ={
+        0: 'Accessible to all',
+        1: 'Not accessible to all',
+        2: 'Restricted Accessible'
+    };
+    
     return (
-        <Card title="Application Details">
-            <div className={styles.cardBody}>
                 <Space direction="vertical">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
@@ -31,7 +32,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text> {rest?.applicationId || 'AP0001'}</Text>
+                            <Text> {rest?.applicationId }</Text>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
@@ -39,46 +40,47 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.applicationName || 'Application Empowerment'}</Text>
+                            <Text>{rest?.applicationName || 'NA' }</Text>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary"> Application Title</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.applicationTitle || 'application Title'}</Text>
+                            <Text>{rest?.applicationTitle || "NA" }</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Application Type</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text> {rest.applicationType || 'Transaction'}</Text>
+                            <Text> {rest.applicationType || 'NA'}</Text>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Parent Application ID</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.parentApplicationId || 'Geo Product'}</Text>
+                            <Text>{rest?.parentApplicationId || 'NA'}</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Accessible Location</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.accessibleLocation || 'Restricted Access'}</Text>
+                            <Text>{accessibleLocationIdndicator[rest?.accessableIndicator] || 'NA'}</Text>
+
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Status </Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text className={styles.activeText}>{rest?.activeIndicator ? 'Active' : 'Inactive'}</Text>
+                            {rest?.activeIndicator ?<Text type="success">Active</Text> : <Text>Inactive</Text>}
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                             <Text type="secondary">Application Criticality Group</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            <Text>{rest?.criticalityGroupCode || 'Application Criticality'}</Text>
+                            <Text>{rest?.criticalityGroupCode || 'NA' }</Text>
                         </Col>
                     </Row>
                     <Row gutter={20}>
@@ -86,7 +88,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                             <Text type="secondary">Document number to be generated</Text>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
-                            {rest?.documentNumRequired === 'Y'|| rest?.documentNumRequired === true ? <Text className={styles.activeText}> 'Active' </Text> : <Text>Inactive</Text>}
+                            {rest?.documentNumRequired === 'Y'|| rest?.documentNumRequired === true ? <Text  type="success"> Active </Text> : <Text>Inactive</Text>}
                         </Col>
                     </Row>
                     <Row gutter={20} className={styles.viewCollapse }>
@@ -102,7 +104,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                             </Col>
                         )}
 
-                        {documentType.length > 0 && (
+                        {rest?.documentNumRequired && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                                 <Collapse  onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 2 ? styles.viewAccordianHeader : '' }>Document Types</span>}  key="2">
@@ -113,7 +115,7 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                                 </Collapse>
                             </Col>
                         )}
-                        {accessibleLocation?.length > 0 && (
+                        {rest?.accessableIndicator === 2 && (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={12}>
                                 <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span className={openAccordian === 3 ? styles.viewAccordianHeader : '' }>Accessible Dealer Location</span>} key="3">
@@ -126,8 +128,6 @@ const ViewApplicationDetails = ({ applicationDetailsData }) => {
                         )}
                     </Row>
                 </Space>
-            </div>
-        </Card>
     );
 };
 

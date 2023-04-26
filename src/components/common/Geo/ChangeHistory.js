@@ -13,14 +13,14 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
+            Geo: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
         },
     } = state;
 
     let returnValue = {
         userId,
         isHistoryLoading,
-        isVisible: changeHistoryVisible,
+        isVisible,
         isHistoryLoaded,
         changeHistoryData: changeHistoryData,
     };
@@ -47,60 +47,43 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
             width: 220,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
             width: 150,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Attribute Type',
             dataIndex: 'attributeType',
             width: 200,
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'geoCode',
             width: 100,
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'geoName',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Parent Code',
             dataIndex: 'parentCode',
             width: 150,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Parent Name',
             dataIndex: 'parentName',
             width: 200,
-        })
-    );
+        }),
+    ];
 
     const tableProps = {
         isLoading,

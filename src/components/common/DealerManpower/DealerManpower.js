@@ -8,6 +8,7 @@ import { dealerManpowerActions } from 'store/actions/data/dealerManpower';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { ChangeHistory } from '../ChangeHistory';
 
 import LeftPanel from 'components/common/LeftPanel';
@@ -113,7 +114,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     const flatternData = generateList(finalDealerData);
 
     const handleTreeViewClick = (keys) => {
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
         setButtonData({ ...defaultBtnVisiblity, rootChildBtn: false });
         form.resetFields();
         setFormVisible(false);
@@ -146,7 +147,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
         const data = { ...values, id: recordId, isActive: values?.isActive ? 'Y' : 'N', dealerParentCode: codeToBeSaved };
         const onSuccess = (res) => {
             form.resetFields();
-            setForceFormReset(Math.random() * 10000);
+            setForceFormReset(generateRandomNumber());
 
             setReadOnly(true);
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, rootChildBtn: false, childBtn: true, siblingBtn: true });
@@ -180,7 +181,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     };
 
     const handleEditBtn = () => {
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
 
         const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         formData && setFormData(formData?.data);
@@ -191,7 +192,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     };
 
     const handleRootChildBtn = () => {
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
         setFormActionType('rootChild');
         setFormVisible(true);
         setReadOnly(false);
@@ -201,7 +202,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     };
 
     const handleChildBtn = () => {
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
         setFormActionType('child');
         setFormVisible(true);
         setReadOnly(false);
@@ -211,7 +212,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     };
 
     const handleSiblingBtn = () => {
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
 
         setFormActionType('sibling');
         setFormVisible(true);
@@ -222,13 +223,13 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
     };
 
     const handleResetBtn = () => {
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
         form.resetFields();
     };
 
     const handleBack = () => {
         setReadOnly(true);
-        setForceFormReset(Math.random() * 10000);
+        setForceFormReset(generateRandomNumber());
         if (selectedTreeKey && selectedTreeKey.length > 0) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);

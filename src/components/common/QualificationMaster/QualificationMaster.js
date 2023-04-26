@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Row, Input, Space, Form, Empty, ConfigProvider } from 'antd';
@@ -69,7 +69,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(formData?.status === 'Y' ? true : false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
     const [forceFormReset, setForceFormReset] = useState(false);
     const [searchData, setSearchdata] = useState();
     const [refershData, setRefershData] = useState(false);
@@ -124,41 +124,32 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, qualificationData]);
 
-    const tableColumn = [];
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             width: '6%',
             sorter: false,
             render: (_t, _r, i) => i + 1,
-        })
-    );
+        }),
 
-    tableColumn.push(
         tblPrepareColumns({
             title: 'Qualification Code',
             dataIndex: 'qualificationCode',
             width: '17%',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Qualification Name',
             dataIndex: 'qualificationName',
             width: '40%',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
             render: (text, record) => {
                 return <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>;
             },
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Action',
             width: '15%',
@@ -179,8 +170,9 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                     </Space>
                 );
             },
-        })
-    );
+        }),
+    ];
+
     const tableProps = {
         isLoading: isLoading,
         tableData: searchData,
@@ -372,7 +364,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                             </Col>
                             {qualificationData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger></Button>
+                                    <Button icon={<TfiReload />} inputProps={{ 'data-testid': 'ref-btn' }} id="ref" className={styles.refreshBtn} onClick={handleReferesh} danger aria-label="fa-ref"></Button>
 
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add Qualification
@@ -421,7 +413,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                            <DataTable inputProps={{ 'data-testid': 'tbl-data' }} id="tbl" isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
                         </div>
                     </ConfigProvider>
                 </Col>

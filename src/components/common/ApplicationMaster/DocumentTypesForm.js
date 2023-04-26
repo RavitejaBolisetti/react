@@ -15,14 +15,6 @@ function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnD
         // setFormBtnDisable(true);
     };
 
-    // const duplicateValidator = (value, type) => {
-    //     // onUpdate check id
-    //     if (finalFormdata?.documentType.findIndex((el) => el[type] === value) !== -1) {
-    //         return Promise.reject('Duplicate not allowed');
-    //     } else {
-    //         return Promise.resolve();
-    //     }
-    // };
     return (
         <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>

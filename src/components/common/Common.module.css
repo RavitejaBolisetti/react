@@ -69,7 +69,9 @@
     border-color: transparent;
     background-color: #fff;
 }
-
+.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+    height: 36px;
+}
 .autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
     border-color: transparent;
 }
@@ -333,6 +335,12 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }
+/* .contentHeaderBackground :global .ant-btn-default {
+    border-color: transparent !important;
+} */
+
+
+
 
 .contentHeaderBackground .headerSearchField :global .ant-btn-default {
     border-color: transparent !important;
@@ -542,6 +550,26 @@
     border: 1px solid #e8e8e8;
 }
 
+/* applicatiom master css */
+.accordianContainer {
+    padding: 6px;
+}
+
+.accordianHeader {
+    font-weight: 600;
+    font-size: 16px;
+    color: #ff3e5b;
+}
+
+.accordianContainer :global .ant-collapse-header-text {
+    font-weight: 600;
+    font-size: 16px;
+}
+.accordianContainer :global( .ant-collapse-header-text::after ){
+    content: '*';
+    color: #ff3e5b;
+}
+
 .searchAndLabelAlign {
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -630,6 +658,12 @@
     font-size: 14px !important;
 }
 
+.hierarchyRightContaners {
+    border-radius: 7px 7px 0px 0px;
+    border: none;
+   
+}
+
 .hierarchyRightContaner {
     border-radius: 7px 7px 0px 0px;
     -moz-border-radius: 7px 7px 0px 0px;
@@ -703,6 +737,21 @@
 .searchContainer .searchBox :global .ant-input-group:hover {
     border: 1px solid #0b0b0c;
 }
+
+/*for datepicker */
+.datepicker {
+    width: 100%;
+}
+
+.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
+:global .ant-descriptions .ant-descriptions-row>* {
+    padding: 0px;
+}
+
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    background: #f2f2f2;
+}
+
 
 .tableIcons {
     border: none;
@@ -792,20 +841,17 @@
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px; */
     /* overflow-y: auto; */
-    overflow-x: hidden;
-    height: calc(100vh - 240px);
+    /* overflow-x: hidden; */
+    /* height: calc(100vh - 240px); */
     width: 100%;
     /* padding: 4% 2%; */
     /* margin-left: 12px; */
 }
 
-:global(.ant-card.ant-card-actions) {
-    height: 40px;
+.accordianHeader {
+    color: #E31837 !important;
 }
 
-:global(.ant-card.ant-card-actions) {
-    height: 40px;
-}
 @media (max-width: 768px) {
     .headerSearchField {
         vertical-align: middle;

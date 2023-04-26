@@ -6,6 +6,7 @@ import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { Button, Col, Form, Row, Select, Space, Input, notification, ConfigProvider, Empty } from 'antd';
+import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
@@ -92,10 +93,10 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         if (userId) {
             if (!isDataLoaded) {
                 hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: '' });
-                forceUpdate(Math.random() * 1000);
+                forceUpdate(generateRandomNumber());
             }
             if (detailData?.hierarchyAttribute) {
-                forceUpdate(Math.random() * 1000);
+                forceUpdate(generateRandomNumber());
                 setRowsData(detailData?.hierarchyAttribute);
             }
         }
@@ -197,71 +198,48 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         setFilterString(value);
     };
 
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             width: '6%',
             sorter: false,
             render: (_t, _r, i) => i + 1,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'hierarchyAttribueCode',
             width: '10%',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Name',
             dataIndex: 'hierarchyAttribueName',
             width: '20%',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Duplicate Allowed?',
             dataIndex: 'duplicateAllowedAtAttributerLevelInd',
             width: '14%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Duplicate Allowed under different Parent?',
             dataIndex: 'duplicateAllowedAtOtherParent',
             width: '20%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Child Allowed?',
             dataIndex: 'isChildAllowed',
             width: '10%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
             width: '10%',
             render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Action',
             dataIndex: 'action',
@@ -283,8 +261,8 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                     </Space>
                 );
             },
-        })
-    );
+        }),
+    ];
 
     const onFinish = (values) => {
         form.validateFields();

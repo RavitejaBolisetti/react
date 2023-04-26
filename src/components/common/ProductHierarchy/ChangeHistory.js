@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
         },
     } = state;
 
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
         userId,
         isHistoryLoading,
         isHistoryLoaded,
-        isVisible: changeHistoryVisible,
+        isVisible,
         changeHistoryData,
     };
     return returnValue;
@@ -46,56 +46,36 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
-    const tableColumn = [];
-
-    tableColumn.push(
+    const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Attribute',
             dataIndex: 'parentAttributeName',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'prodctCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Parent',
             dataIndex: 'parntHeirarchyCode',
-        })
-    );
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Short Description',
             dataIndex: 'prodctShrtDescription',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Long Description',
             dataIndex: 'prodctLongDiscription',
-        })
-    );
-
-    tableColumn.push(
+        }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
@@ -110,8 +90,8 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
                 },
             ],
             render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
-        })
-    );
+        }),
+    ];
 
     const tableProps = {
         isLoading,
