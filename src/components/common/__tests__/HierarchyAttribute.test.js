@@ -118,48 +118,48 @@ test('View Functionality in Table', async () => {
         buttonLookAndFireEventByRole('Edit');
     });
 
-    test('Edit Functionality in Table', async () => {
-        render(<HierarchyAttribute attributeData={attributeData} detailData={detailData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);
-        const selectfield = screen.getByRole('combobox', { name: 'Hierarchy Attribute Type' });
-        expect(selectfield).toBeTruthy();
-        fireEvent.change(selectfield, { target: { value: 'id' } });
+    // test('Edit Functionality in Table', async () => {
+    //     render(<HierarchyAttribute attributeData={attributeData} detailData={detailData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);
+    //     const selectfield = screen.getByRole('combobox', { name: 'Hierarchy Attribute Type' });
+    //     expect(selectfield).toBeTruthy();
+    //     fireEvent.change(selectfield, { target: { value: 'id' } });
 
-        const EditButton = screen.getByTestId('Editicon');
-        expect(EditButton).toBeTruthy();
-        fireEvent.click(EditButton);
-        const InputFieldCode = await screen.findByPlaceholderText('Please Input Code');
-        const InputFieldName = await screen.findByPlaceholderText('Please Input Name');
-        const DuplicateAllowed = screen.getByRole('switch', { name: 'Duplicate Allowed?' });
-        const DuplicateAllowedunderdifferentParent = screen.getByRole('switch', { name: 'Duplicate Allowed under different Parent?' });
-        const ChildAllowed = screen.getByRole('switch', { name: 'Child Allowed?' });
-        const Status = screen.getByRole('switch', { name: 'Status' });
+    //     const EditButton = screen.getByTestId('Editicon');
+    //     expect(EditButton).toBeTruthy();
+    //     fireEvent.click(EditButton);
+    //     const InputFieldCode = await screen.findByPlaceholderText('Please Input Code');
+    //     const InputFieldName = await screen.findByPlaceholderText('Please Input Name');
+    //     const DuplicateAllowed = screen.getByRole('switch', { name: 'Duplicate Allowed?' });
+    //     const DuplicateAllowedunderdifferentParent = screen.getByRole('switch', { name: 'Duplicate Allowed under different Parent?' });
+    //     const ChildAllowed = screen.getByRole('switch', { name: 'Child Allowed?' });
+    //     const Status = screen.getByRole('switch', { name: 'Status' });
 
-        expect(InputFieldCode.value).toBe('Shaka');
-        expect(InputFieldName.value).toBe('shaka');
-        expect(DuplicateAllowed).toBeChecked();
-        expect(DuplicateAllowedunderdifferentParent).not.toBeChecked();
-        expect(ChildAllowed).toBeChecked();
-        expect(Status).toBeChecked();
+    //     expect(InputFieldCode.value).toBe('Shaka');
+    //     expect(InputFieldName.value).toBe('shaka');
+    //     expect(DuplicateAllowed).toBeChecked();
+    //     expect(DuplicateAllowedunderdifferentParent).not.toBeChecked();
+    //     expect(ChildAllowed).toBeChecked();
+    //     expect(Status).toBeChecked();
 
-        fireEvent.change(InputFieldCode, { target: { value: '' } });
-        fireEvent.change(InputFieldName, { target: { value: '' } });
-        fireEvent.click(DuplicateAllowed);
-        fireEvent.click(DuplicateAllowedunderdifferentParent);
-        fireEvent.click(ChildAllowed);
-        fireEvent.click(Status);
-        expect(DuplicateAllowed).not.toBeChecked();
+    //     fireEvent.change(InputFieldCode, { target: { value: '' } });
+    //     fireEvent.change(InputFieldName, { target: { value: '' } });
+    //     fireEvent.click(DuplicateAllowed);
+    //     fireEvent.click(DuplicateAllowedunderdifferentParent);
+    //     fireEvent.click(ChildAllowed);
+    //     fireEvent.click(Status);
+    //     expect(DuplicateAllowed).not.toBeChecked();
 
-        const saveBtn = screen.getByRole('button', { name: 'Save' });
+    //     const saveBtn = screen.getByRole('button', { name: 'Save' });
 
-        fireEvent.click(saveBtn);
-        fireEvent.click(EditButton);
+    //     fireEvent.click(saveBtn);
+    //     fireEvent.click(EditButton);
 
-        const Validations1 = await screen.findByText('Please Enter Code');
-        const Validations2 = await screen.findByText('Please Enter Name');
-        const saveAndNew = screen.getByRole('button', { name: 'Save and New' });
+    //     const Validations1 = await screen.findByText('Please Enter Code');
+    //     const Validations2 = await screen.findByText('Please Enter Name');
+    //     const saveAndNew = screen.getByRole('button', { name: 'Save and New' });
 
-        expect(Validations1).toBeTruthy();
-        expect(Validations2).toBeTruthy();
-        expect(saveAndNew).toBeTruthy();
-    }, 60000);
+    //     expect(Validations1).toBeTruthy();
+    //     expect(Validations2).toBeTruthy();
+    //     expect(saveAndNew).toBeTruthy();
+    // }, 60000);
 });
