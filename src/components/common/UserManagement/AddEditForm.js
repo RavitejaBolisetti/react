@@ -16,6 +16,7 @@ import AssignUserRole from './AssignUserRole';
 import BranchMapping from './BranchMapping';
 import ProductMapping from './ProductMapping';
 import { ViewUserManagementDealer } from './ViewUserManagementDealer';
+import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -26,6 +27,9 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels } = props;
     const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
+    const [openAccordian, setOpenAccordian] = useState(1);
+
+
     const handleFormValueChange = () => {
         setFormBtnActive(true);
     };
@@ -61,6 +65,10 @@ const AddEditFormMain = (props) => {
         console.log('We are getting dealer data: :', DealerData);
     }, [DealerData]);
 
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,
@@ -76,6 +84,7 @@ const AddEditFormMain = (props) => {
                     size="middle"
                     style={{
                         display: 'flex',
+                        marginBottom:'30px',
                     }}
                 >
                     <Row gutter={20}>
@@ -173,23 +182,23 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space
                             direction="vertical"
-                            size="large"
+                            size="middle"
                             style={{
                                 display: 'flex',
                             }}
                         >
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Assign User Roles" key="1">
+                            <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Assign User Roles</span>} key="1">
                                     <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} />
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Branch Mapping" key="2">
+                            <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Panel  header={<span className={openAccordian === 2 ? styles.accordianHeader : ''}>Branch Mapping</span>} key="2">
                                     <BranchMapping BranchMappingData={DealerData?.branches} />
                                 </Panel>
                             </Collapse>
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Product Mapping" key="3">
+                            <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                                <Panel  header={<span className={openAccordian === 3 ? styles.accordianHeader : ''}>Product Mapping</span>} key="3">
                                     <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
                                 </Panel>
                             </Collapse>

@@ -127,6 +127,7 @@
 .crossButton {
     font-size: 20px;
     color: #ff3e5b;
+    float: right;
 }
 .usermanagementCardTextLeft {
     float: left;
@@ -305,3 +306,8 @@
 .manageAccessHeader p > span {
     color: #ff4d4f;
 }
+.usermanagementCard  :global .ant-card-body
+{
+    padding: 10px 20px;
+}
+
