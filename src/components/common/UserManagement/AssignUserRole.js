@@ -3,8 +3,11 @@ import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import style from 'components/common/DrawerAndTable.module.css';
 import style3 from './UserManagement.module.css';
+import styles from 'components/common/Common.module.css';
+
 
 import { PlusOutlined } from '@ant-design/icons';
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 
 const { Option } = Select;
 const AssignUserRole = ({ userRoleOptions, DealerSearchvalue }) => {
@@ -118,13 +121,14 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue }) => {
                                             </Row>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                    <Button className={style3.dealerBtn} type="primary" ghost onClick={handleApplicationAccess}>
-                                                        <PlusOutlined /> Application Access
-                                                    </Button>
-                                                </Col>
-                                            </Row>
+                                            <div className={styles.cardItemBtn}>
+                                                <Button className={style3.dealerBtn} type="primary" ghost onClick={handleApplicationAccess}>
+                                                    <PlusOutlined /> Application Access
+                                                </Button>
+                                                <Button className={style.crossButton} type="danger">
+                                                    <AiOutlineClose />
+                                                </Button>
+                                            </div>
                                         </Col>
                                     </Row>
                                 </Card>
