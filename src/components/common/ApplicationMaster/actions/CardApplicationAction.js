@@ -3,7 +3,7 @@ import { Col, Card, Row, Button, Divider, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 
-import style from './ApplicationMaster.module.css';
+import style from './../ApplicationMaster.module.css';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 import { Fragment } from 'react';

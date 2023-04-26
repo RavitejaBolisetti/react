@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Row, Typography } from 'antd';
-import style from "./ApplicationMaster.module.css"
+import style from "./../ApplicationMaster.module.css"
 
 const { Text } = Typography;
 

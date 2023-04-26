@@ -9,46 +9,14 @@ import styles from 'components/common/Common.module.css';
 import style from './../../common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
-import ApplicationActions from './ApplicationActions';
-import DocumentTypes from './DocumentTypes';
-import { AccessibleDealerLocations } from './AccessibleDealerLocations';
+import ApplicationActions from './actions/ApplicationActions';
+import DocumentTypes from './documentTypes/DocumentTypes';
+import { AccessibleDealerLocations } from './dealerLocations/AccessibleDealerLocations';
 import { withDrawer } from 'components/withDrawer';
 
 const { Panel } = Collapse;
 
-const DrawerUtilMain = ({
-    setSelectedTreeKey,
-    selectedTreeKey,
-    applicationForm,
-    forceUpdate,
-    setFinalFormdata,
-    finalFormdata,
-    setFormBtnDisable,
-    onFinish,
-    onFinishFailed,
-    form,
-    handleAdd,
-    setForceFormReset,
-    isVisible,
-    setisVisible,
-    isChecked,
-    setIsChecked,
-    formActionType,
-    isReadOnly,
-    formData,
-    setFormData,
-    isDataAttributeLoaded,
-    attributeData,
-    setFieldValue,
-    handleSelectTreeClick,
-    isLoadingOnSave,
-    criticalityGroupData,
-    configurableParamData,
-    actions,
-    menuData,
-    isApplicatinoOnSaveLoading,
-    isFieldDisable,
-}) => {
+const DrawerUtilMain = ({ setSelectedTreeKey, selectedTreeKey, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
@@ -81,6 +49,8 @@ const DrawerUtilMain = ({
 
     return (
         <>
+            {/* <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}> */}
+
             <Spin spinning={isApplicatinoOnSaveLoading}>
                 <Space
                     direction="vertical"
@@ -134,9 +104,9 @@ const DrawerUtilMain = ({
                     </Button>
                 </Col>
             </Row>
+            {/* </Form > */}
         </>
     );
 };
 
-// export default DrawerUtil;
-export const DrawerUtil = withDrawer(DrawerUtilMain, {});
+export const AddEditForm = withDrawer(DrawerUtilMain, {});

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 
 import { Col, Row, Input, AutoComplete } from 'antd';
-import styles from '../../common/Common.module.css';
-import style from './ApplicationMaster.module.css';
+import styles from './../../../common/Common.module.css';
+import style from './../ApplicationMaster.module.css';
 import { Fragment } from 'react';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';

@@ -2,12 +2,11 @@ import { Card, Row, Col, Typography, Button } from 'antd';
 import React from 'react';
 
 import { CloseOutlined } from '@ant-design/icons';
-import style from './ApplicationMaster.module.css';
+import style from './../ApplicationMaster.module.css';
 const { Text } = Typography;
 
 function LocationCard(props) {
     let { locationName, id, handleDeleteLocation } = props;
-    console.log("props",props)
 
     return (
         <Card

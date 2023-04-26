@@ -4,25 +4,19 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-// import styles from 'components/common/Common.module.css';
-// import style from 'components/common/DrawerAndTable.module.css';
-// import styl from './ApplicationMaster.module.css';
-
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import LeftPanel from '../LeftPanel';
-import ViewApplicationDetail from './ViewApplicationDetails';
-import { DrawerUtil } from './DrawerUtil';
+import { AddEditForm } from './AddEditForm';
 import { HierarchyFormButton } from '../Button';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
-import ViewApplicationDetailMain from './ViewApplicationDetailMain';
+import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import styles from 'components/common/Common.module.css';
-import styl from './ApplicationMaster.module.css';
 
 const { Search } = Input;
 
@@ -358,7 +352,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                     <Spin spinning={isApplicationDeatilsLoading}>
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                {/* <ViewApplicationDetail applicationDetailsData={applicationDetailsData} /> */}
                                 <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
                                 <div className={styles.hyrbuttonContainer}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
@@ -384,7 +377,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 </Col>
             </Row>
 
-            <DrawerUtil {...formProp} />
+            <AddEditForm {...formProp} />
         </>
     );
 };

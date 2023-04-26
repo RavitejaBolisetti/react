@@ -17,7 +17,6 @@ const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, o
         docForm.resetFields();
         forceUpdate();
     };
-    console.log('finalForm =p==>>', finalFormdata);
 
     return (
         <Fragment>

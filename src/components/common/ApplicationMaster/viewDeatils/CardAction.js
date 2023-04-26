@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Row, Col, Typography } from 'antd';
 
-import style from "./ApplicationMaster.module.css"
+import style from "./../ApplicationMaster.module.css"
 const { Text } = Typography;
 
 const CardAction = ({ isDeleted, actionName, actionId }) => {

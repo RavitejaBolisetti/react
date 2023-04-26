@@ -169,6 +169,7 @@ const AuthorityFormMin = ({ userId, onFinish, form, isEditing, isBtnDisabled, li
                 </Row>
             )}
 
+
             {!isEditing && (
                 <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtmDisableAction(false)}>
                     Add
