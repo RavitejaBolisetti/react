@@ -1,5 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { async } from 'sonarqube-scanner';
+import axios from 'axios';
 
 export const childSiblingEdit = async () => {
     const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
@@ -77,3 +78,19 @@ export const buttonLookAndFireEventWithText = async (btnText) => {
     expect(CancelBtn).toBeTruthy();
     fireEvent.click(CancelBtn);
 };
+export const axiosCall = async(BASE_URL,fetchList,listShowLoading)=>{
+    axios.get = jest.fn()
+    axios.get(BASE_URL);
+    jest.mock("axios");
+    const users = [
+        { id: 1, name: "reena" },
+        { id: 2, name: "shakambhar" },
+      ];
+      axios.get.mockResolvedValueOnce(users);
+      const result = await fetchList();
+      expect(axios.get).toHaveBeenCalledWith(BASE_URL);
+      console.log(axios.get.mock.calls);
+      expect(result).toMatchObject(users);
+      
+
+}
