@@ -233,10 +233,11 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        applicationForm.resetFields();
         setisVisible(false);
-        // setFormBtnDisable(false);
+        applicationForm.resetFields();
         forceUpdate();
+        applicationCall(finalFormdata?.applicationDetails?.applicationId);
+        // setFormBtnDisable(false);
         // setIsBtnDisabled(false);
     };
 

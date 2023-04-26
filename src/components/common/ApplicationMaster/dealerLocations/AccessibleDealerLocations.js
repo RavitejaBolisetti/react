@@ -143,7 +143,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                         allowSearch
                         notFoundContent="No location found"
                     >
-                        <Input.Search size="large" placeholder={preparePlaceholderAutoComplete('Location name')} />
+                        <Input.Search size="large" placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>
 
