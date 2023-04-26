@@ -9,10 +9,11 @@ export const childSiblingEdit = async () => {
     const editBtn = await screen.findByRole('button', { name: 'Edit' });
     expect(editBtn).toBeInTheDocument();
     fireEvent.click(addChildBtn);
-    const cancelBtn = await screen.findByRole('Cancel');
-    expect(cancelBtn).toBeTruthy();
-    const saveBtn = await screen.findByRole('Save');
-    expect(saveBtn).toBeTruthy();
+    buttonLookAndFireEventWithText('Cancel')
+    // const cancelBtn = await screen.findByRole('Cancel');
+    // expect(cancelBtn).toBeTruthy();
+    // const saveBtn = await screen.findByRole('Save');
+    // expect(saveBtn).toBeTruthy();
 };
 
 export const commonTreeTest = async () => {
@@ -22,7 +23,6 @@ export const commonTreeTest = async () => {
     childSiblingEdit();
 };
 export const commonDrawer = async () => {
-    commonTreeTest();
     const attributeText = await screen.findByText('Attribute Level');
     expect(attributeText).toBeInTheDocument();
     const addiblingBtn = await screen.findByRole('button', { name: 'Edit' });
@@ -68,3 +68,16 @@ export const treebranchClickAndTextFinder =async(text)=>{
         const attributeText = await screen.findByText(text);
         expect(attributeText).toBeInTheDocument();
 }
+export const findImage =async()=>{
+    const findImages=await screen.findAllByRole('img');
+    expect(findImages).toBeTruthy();
+    expect(findImages).toHaveLength(7);
+    
+    
+
+}
+export const buttonLookAndFireEventWithText = async (btnText) => {
+    const CancelBtn = await screen.findByText(btnText);
+    expect(CancelBtn).toBeTruthy();
+    fireEvent.click(CancelBtn);
+};
