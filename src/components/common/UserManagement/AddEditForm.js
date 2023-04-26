@@ -84,6 +84,7 @@ const AddEditFormMain = (props) => {
                     size="middle"
                     style={{
                         display: 'flex',
+                        marginBottom:'30px',
                     }}
                 >
                     <Row gutter={20}>
@@ -181,7 +182,7 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space
                             direction="vertical"
-                            size="large"
+                            size="middle"
                             style={{
                                 display: 'flex',
                             }}
