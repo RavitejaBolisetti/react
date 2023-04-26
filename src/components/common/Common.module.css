@@ -69,7 +69,9 @@
     border-color: transparent;
     background-color: #fff;
 }
-
+.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+    height: 36px;
+}
 .autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
     border-color: transparent;
 }
@@ -333,9 +335,9 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost :hover {
     background-color: #ff3e5b;
 }
-.contentHeaderBackground :global .ant-btn-default {
+/* .contentHeaderBackground :global .ant-btn-default {
     border-color: transparent !important;
-}
+} */
 
 
 
