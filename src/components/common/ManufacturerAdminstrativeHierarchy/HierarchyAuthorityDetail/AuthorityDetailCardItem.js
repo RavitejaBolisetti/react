@@ -24,6 +24,8 @@ const mapStateToProps = (state) => {
 const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, id, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData, authData, authorityVisible }) => {
     const [isEditing, setIsEditing] = useState(false);
 
+    console.log(authData,"AUTHDATA")
+
     const recordId = id;
     const onEdit = () => {
         form.setFieldsValue({
@@ -74,7 +76,7 @@ const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList,
                 }}
             >
                 <Row>
-                    {recordId + 'dsds'}
+                    {/* {recordId + 'dsds'} */}
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                         <Row>
                             <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>

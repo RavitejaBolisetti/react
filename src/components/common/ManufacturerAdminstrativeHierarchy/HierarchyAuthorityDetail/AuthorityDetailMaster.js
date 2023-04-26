@@ -1,7 +1,6 @@
-import React, { Fragment, useState, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Form } from 'antd';
 import moment from 'moment';
-
 import AuthorityDetailCardItem from './AuthorityDetailCardItem';
 import { AddEditForm } from './AddEditForm';
 
@@ -16,6 +15,8 @@ const AuthorityDetailMaster = ({ documentTypesList, setDocumentTypesList, select
         actionForm.resetFields();
         forceUpdate();
     };
+
+    console.log(documentTypesList,'documentTypesList')
 
     return (
         <>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-
+import dayjs from 'dayjs';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
@@ -83,6 +83,8 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    console.log(tokenNumber, 'TOKENNUMBER');
+
     return (
         <Form
             form={form}
@@ -123,16 +125,18 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
                     </Form.Item>
                 </Col>
             </Row>
-            tokenNumber - {recordId}
-            <br />
+            {/* tokenNumber - {recordId}
+            <br /> */}
             {form?.getFieldValue('authorityEmployeeTokenNo' + recordId)}
             {!viewMode && form?.getFieldValue('authorityEmployeeTokenNo' + recordId) !== 0 && (
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item>
-                            <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
-                        </Form.Item>
-                    </Col>
+                    {tokenNumber.length !== 0 ? (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item>
+                                <Text type="primary">Employee Name : {tokenNumber?.employeeName} </Text>
+                            </Form.Item>
+                        </Col>
+                    ) : null}
 
                     <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                         <Form.Item label="" name={'EmployeeName' + recordId} initialValue={tokenNumber?.employeeName}>
@@ -153,13 +157,13 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective From" name={'dateFrom' + recordId} rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
+                        <Form.Item label="Effective From" name={'dateFrom' + recordId} rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker}  />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective To" name={'dateTo' + recordId} rules={[validateRequiredSelectField('Date Required')]}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
+                        <Form.Item label="Effective To" name={'dateTo' + recordId} rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker}  />
                         </Form.Item>
                     </Col>
                 </Row>
