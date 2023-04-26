@@ -21,7 +21,7 @@ const CardDocumentType = (prop) => {
     }, []);
 
     // on Click edit button sets form fields
-    const onEdit = (id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode) => {
+    const onEdit = (id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode) => {
         form.setFieldsValue({
             id,
             termAndConRequired,

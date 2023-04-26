@@ -4,6 +4,7 @@ import { commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, scre
 import { ManufacturerTreeData as treeDatas } from './Common/Data/data';
 import { fetchList, saveData, hierarchyAttributeFetchList, listShowLoading } from './Common/CommonImports/commonImports';
 import { async } from 'sonarqube-scanner';
+import userEvent from '@testing-library/user-event';
 jest.mock('react-redux', () => ({
     connect: () => (ManufacturerAdminstrativeHierarchy) => ManufacturerAdminstrativeHierarchy,
 }));
@@ -48,4 +49,31 @@ describe('manufacturerAdminHierarchy component', () => {
 
         findplaceholder('Please Enter Attribute Code');
     });
+
+    test('render hierarchy details element', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+
+        commonTreeTest();
+    });
+    test('render form element', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        treebranchClickAndTextFinder('Attribute Level');
+    });
+    test('render form element on edit button', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        commonDrawer();
+    });
+
+    test('close drawer', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        screentext('Hierarchy');
+        commonTreeTest();
+    });
+    // test.only('render form card element on edit button', async () => {
+    //     render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+    //     commonDrawer();
+    //     const card = screen.queryByText('Authority Details');
+    //     expect(card).toBeInTheDocument();
+    //     fireEvent.click(card);
+    // });
 });
