@@ -444,7 +444,7 @@ const AddEditFormMain = (props) => {
                                             <CheckboxTree
                                                 nodes={[el]}
                                                 expanded={ExpandedKeys[el?.value]}
-                                                checked={CheckedKeys[el?.value] || false}
+                                                checked={!!CheckedKeys[el?.value]}
                                                 onCheck={(checked, targetNode) => onTreeCheck(checked, targetNode, el?.value)}
                                                 onExpand={(expanded, targetNode) => OnExpanded(expanded, targetNode, el?.value)}
                                                 onMoveNode={OnChanges}

@@ -96,15 +96,15 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     }, [forceFormReset]);
     useEffect(() => {
         const SetRole = [];
-        const finalRoledata = RoleManagementData.map((e) => {
-            Object.keys(e).map((keyName, i) => {
-                if (keyName === 'roleName') {
-                    SetRole.push(e[keyName]);
-                }
-                return undefined;
-            });
-            return undefined;
-        });
+        // const finalRoledata = RoleManagementData.map((e) => {
+        //     Object.keys(e).map((keyName, i) => {
+        //         if (keyName === 'roleName') {
+        //             SetRole.push(e[keyName]);
+        //         }
+        //         return undefined;
+        //     });
+        //     return undefined;
+        // });
         setRoledataset(SetRole);
         setFormData(RoleManagementData);
     }, [RoleManagementData]);
@@ -306,27 +306,28 @@ export const RoleManagementMain = ({ userId, isDataLoaded, RoleManagementData, f
     const onFinisher = (values) => {
         if (Mycheckvals.length === 0) {
         } else {
-            Object.keys(values).map((keyName, i) => {
-                if (keyName === 'Treedata') {
-                    values[keyName] = checkedKeys;
-                }
+            // Object.keys(values).map((keyName, i) => {
+            //     if (keyName === 'Treedata') {
+            //         values[keyName] = checkedKeys;
+            //     }
 
-                if (keyName === 'roleName') {
-                    Roledataset.push(values[keyName]);
-                }
-                if (keyName === 'status') {
-                    if (values[keyName] === false) {
-                        values[keyName] = '0';
-                    } else {
-                        values[keyName] = '1';
-                    }
-                }
-                return undefined;
-            });
-            Object.keys(Checkboxdata).map((keyName, i) => {
-                values[keyName] = Checkboxdata[keyName];
-                return undefined;
-            });
+            //     if (keyName === 'roleName') {
+            //         Roledataset.push(values[keyName]);
+            //     }
+            //     if (keyName === 'status') {
+            //         if (values[keyName] === false) {
+            //             values[keyName] = '0';
+            //         } else {
+            //             values[keyName] = '1';
+            //         }
+            //     }
+            //     return undefined;
+            // });
+
+            // Object.keys(Checkboxdata).map((keyName, i) => {
+            //     values[keyName] = Checkboxdata[keyName];
+            //     return undefined;
+            // });
 
             const Final_data = { cretdby: 'shaka', cretddate: new Date(), modfdby: 'Me', modfddate: 'adasdad', roleDescription: 'Manage2', roleId: 'Mn2', roleName: 'Manager2', status: '1' };
 
