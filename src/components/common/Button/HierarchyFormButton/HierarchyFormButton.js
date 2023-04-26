@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './HierarchyFormButton.module.css';
 
-export const HierarchyFormButton = ({ buttonData, handleButtonClick, cardBtmDisableAction }) => {
+export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
     return (
         <div className={styles.hierarchyButtonContainer}>
             <div className={styles.btnLeft}>
@@ -13,7 +13,6 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick, cardBtmDisa
                         danger
                         onClick={() => {
                             handleButtonClick(FROM_ACTION_TYPE.EDIT);
-                            cardBtmDisableAction(false);
                         }}
                     >
                         Edit

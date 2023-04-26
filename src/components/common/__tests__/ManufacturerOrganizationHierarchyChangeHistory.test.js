@@ -61,7 +61,7 @@ describe('ChangeHistory ManuOrg', () => {
         render(<ManufacturerOrgHierarchyChangeHistory fetchList={fetchList} fetchChangeHistoryList={fetchChangeHistoryList} changeHistoryData={ChangeHistoryDataManuOrg} />);
 
         const ModifiedDatePresent = screen.getByText('Changed Date');
-        const ChangedBy = await screen.getByText('Changed By');
+        const ChangedBy = screen.getByText('Changed By');
         const AttributeType = screen.getByText('Attribute');
         const HierarchyCode = screen.getByText('Code');
         const HierarchyName = screen.getByText('DMS-1');

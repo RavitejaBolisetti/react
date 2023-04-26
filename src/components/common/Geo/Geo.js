@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Empty, Form, Row, Select } from 'antd';
+import { Button, Col, Empty, Form, Row, Select ,Input} from 'antd';
 import { FaHistory } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
@@ -18,10 +18,9 @@ import { ViewGeoDetail } from './ViewGeoDetails';
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
-import Search from 'antd/es/input/Search';
 
+const { Search } = Input;
 const { Option } = Select;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -267,8 +266,8 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
         styles,
         viewTitle,
     };
-    const leftCol = geoData.length > 0 ? 16 : 24;
-    const rightCol = geoData.length > 0 ? 8 : 24;
+    const leftCol = geoData?.length > 0 ? 16 : 24;
+    const rightCol = geoData?.length > 0 ? 8 : 24;
 
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
@@ -291,7 +290,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
                                     className={styles.searchField}
                                 />
                             </Col>
-                            {geoData.length > 0 && (
+                            {geoData?.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
@@ -302,7 +301,7 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {geoData.length <= 0 ? (
+                        {geoData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
