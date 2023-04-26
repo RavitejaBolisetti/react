@@ -106,7 +106,7 @@ describe('Hierarchy attributree test', () => {
             InputFieldAvailablity('Code');
             InputFieldAvailablity('Name');
 
-            // buttonLookAndFireEventByRole('Save')
+            buttonLookAndFireEventByRole('Save')
         });
 test('View Functionality in Table', async () => {
     render(<HierarchyAttribute attributeData={attributeData} detailData={detailData} hierarchyAttributeFetchList={hierarchyAttributeFetchList} hierarchyAttributeFetchDetailList={hierarchyAttributeFetchDetailList} />);

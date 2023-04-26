@@ -12,8 +12,8 @@ export const searchFieldTest = async () => {
     buttonLookAndFireEventByRole('search')
 };
 
-export const buttonLookAndFireEventByRole =(btnText ) => {
-    const Btn = screen.getByRole('button', { name: btnText });
+export const buttonLookAndFireEventByRole =async(btnText ) => {
+    const Btn = await screen.findByRole('button', { name: btnText });
     expect(Btn).toBeTruthy();
     fireEvent.click(Btn);
 
@@ -21,7 +21,7 @@ export const buttonLookAndFireEventByRole =(btnText ) => {
 
 
 export const buttonLookAndFireEventWithLabel = async (btnlabel) => {
-    const refBtn = screen.getByLabelText(btnlabel);
+    const refBtn = await screen.findByLabelText(btnlabel);
     expect(refBtn).toBeTruthy();
     fireEvent.click(refBtn);
 };
