@@ -24,7 +24,7 @@ import { AddEditForm } from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
-
+import style3 from './UserManagement.module.css';
 const { Search } = Input;
 const { Option } = Select;
 
@@ -41,6 +41,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'User Access'
+
     let returnValue = {
         collapsed,
         userId,
@@ -48,6 +50,7 @@ const mapStateToProps = (state) => {
         isLoading,
         UserManagementDealerData,
         productHierarchyData,
+        moduleTitle,
         attributeData,
         isLoadingOnSave,
         isFormDataLoaded,
@@ -169,6 +172,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [disabled, setdisabled] = useState(true);
     const [DealerData, setDealerData] = useState();
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [closePanels, setClosePanels] = React.useState([]);
+
     const FetchError = (message) => {
         setError(true);
         setDealerData({});
@@ -214,6 +220,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         if (DealerSelected?.length > 0 && DealerSelected != undefined) {
             setdisabled(false);
             setDealerData({});
+            setError(false); 
         }
     }, [DealerSearchvalue, DealerSelected]);
 
@@ -230,7 +237,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         tblPrepareColumns({
             title: 'Employee Code',
             dataIndex: 'employeeCode',
-            width: '12%',
+            width: '18%',
             sorter: false,
         })
     );
@@ -238,7 +245,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         tblPrepareColumns({
             title: 'Dealer Name',
             dataIndex: 'dealerName',
-            width: '12%',
+            width: '16%',
             sorter: false,
         })
     );
@@ -246,7 +253,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         tblPrepareColumns({
             title: 'User Name',
             dataIndex: 'userName',
-            width: '18%',
+            width: '16%',
             sorter: false,
         })
     );
@@ -254,7 +261,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         tblPrepareColumns({
             title: 'Designation',
             dataIndex: 'designation',
-            width: '22%',
+            width: '18%',
             sorter: false,
         })
     );
@@ -270,7 +277,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         tblPrepareColumns({
             title: 'Email ID',
             dataIndex: 'emailid',
-            width: '32%',
+            width: '16%',
             sorter: false,
         })
     );
@@ -425,6 +432,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         });
 
         setFormActionType('add');
+        setIsViewModeVisible(false);
+
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
@@ -441,6 +450,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const handleUpdate = (record) => {
         setFormActionType('update');
         setSaveAndSaveNew(false);
+        setIsViewModeVisible(false);
+        setIsFormVisible(true);
+
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
@@ -455,6 +467,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
 
     const handleUpdate2 = () => {
         setFormActionType('update');
+        setIsViewModeVisible(false);
+        setIsFormVisible(true);
 
         setSaveAndSaveNew(false);
         setFooterEdit(false);
@@ -471,6 +485,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true);
+        setIsFormVisible(true);
 
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
@@ -520,12 +536,17 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
+
     const formProps = {
+        setClosePanels,
         saveclick,
+        DealerSearchvalue,
         setsaveclick,
         setsaveandnewclick,
         saveandnewclick,
         isVisible: isFormVisible,
+        isViewModeVisible,
+        setIsViewModeVisible,
         isLoadingOnSave,
         formBtnDisable,
         isFormBtnActive,
@@ -549,7 +570,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setForceFormReset,
         footerEdit,
         handleUpdate2,
-        titleOverride: formData?.employeecode ? 'Edit User Access ' : 'Manage User Access',
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.employeecode ? 'Edit ' : 'Manage ').concat(moduleTitle),
         DealerData,
         productHierarchyData,
         tableDetailData,
@@ -564,51 +585,47 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Row gutter={20}>
-                                    <div className={style.searchAndLabelAlign}>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10} className={style.subheading}>
-                                            <div className={style.userManagement}>
-                                                <Button className={style.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
-                                                    Manufacturer
-                                                </Button>
-                                                <Button className={style.dealerBtn} type="primary" danger>
-                                                    Dealer
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-                                            <Select className={styles.attributeSelet} onChange={handleChange} placeholder="Select" allowClear>
-                                                {dealersData?.map((item) => (
-                                                    <Option value={item}>{item}</Option>
-                                                ))}
-                                            </Select>
-                                        </Col>
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                onSearch={onSearchHandle}
-                                                disabled={disabled}
-                                            />
-                                        </Col>
+                            <div className={style.searchAndLabelAlign}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style3.subheading}>
+                                    <div className={style.userManagement}>
+                                        <Button className={style3.actionbtn} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
+                                            Manufacturer
+                                        </Button>
+                                        <Button className={style3.actionbtn} type="primary" ghost>
+                                            Dealer
+                                        </Button>
                                     </div>
-                                </Row>
-                            </Col>
+                                </Col>
+                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <Select className={style3.attributeSelet} onChange={handleChange} placeholder="Select" allowClear>
+                                        {dealersData?.map((item) => (
+                                            <Option value={item}>{item}</Option>
+                                        ))}
+                                    </Select>
+                                </Col>
+                                <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+                                    <Search
+                                        placeholder="Search"
+                                        style={{
+                                            width: 300,
+                                        }}
+                                        allowClear
+                                        onSearch={onSearchHandle}
+                                        disabled={disabled}
+                                    />
+                                </Col>
+                            </div>
                         </Row>
                         {DealerData?.employeeCode ? (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.successDisplay}>
+                                    <div className={style3.successDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
-                                                <DataTable  tableColumn={tableDetails} {...tableDetailProps} />
+                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style3.subheading}>
+                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
                                             </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
-                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style3.subheading}>
+                                                <Button icon={<PlusOutlined />} className={style3.actionbtn} type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>
@@ -619,9 +636,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                         ) : error ? (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.errorDisplay}>
+                                    <div className={style3.errorDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style3.subheading}>
                                                 <IoBanOutline />
                                                 <span>User token number {DealerSearchvalue} does not exist. Try again with valid token number.</span>
                                             </Col>
@@ -667,6 +684,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                     </div>
                 </Col>
             </Row>
+            
             {/* <DrawerUtil
                 saveclick={saveclick}
                 setsaveclick={setsaveclick}

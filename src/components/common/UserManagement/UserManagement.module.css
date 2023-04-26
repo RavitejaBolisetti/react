@@ -143,3 +143,165 @@
 :global .ant-select-dropdown .ant-select-item-option-state {
     display: none;
 }
+.attributeSelet {
+    width: 100%;
+}
+.dealerBtn {
+    border: none;
+}
+
+/*Common Css for Header*/
+.subheading {
+    font-size: 16px;
+
+    color: #0b0c0c;
+
+    padding-right: 0px !important;
+
+    padding-left: 0px !important;
+}
+
+.errorDisplay {
+    display: flex;
+
+    align-items: center;
+
+    margin-left: 10px;
+
+    margin-right: 10px;
+
+    margin-top: 10px;
+
+    border-top: 1px solid #e6e6e6;
+}
+
+.errorDisplay .subheading {
+    margin-top: 10px;
+
+    margin-left: 10px;
+
+    color: #ed302d;
+}
+
+.errorDisplay .subheading svg {
+    margin-right: 8px;
+
+    vertical-align: middle;
+}
+
+.errorDisplay .subheading span {
+    font-size: 14px;
+
+    font-weight: 500;
+
+    line-height: 20px;
+}
+
+.successDisplay {
+    margin-left: 10px;
+
+    margin-right: 10px;
+
+    margin-top: 10px;
+
+    padding: 10px;
+
+    padding-bottom: 0;
+
+    border-top: 1px solid #e6e6e6;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th,
+.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > td {
+    position: relative;
+
+    color: rgba(0, 0, 0, 0.88);
+
+    font-weight: 600;
+
+    text-align: start;
+
+    border-bottom: none;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > td {
+    padding: 0;
+
+    background: #f4f4f4;
+
+    border-bottom: none;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th {
+    font-size: 12px;
+
+    font-weight: 400;
+
+    line-height: 22px;
+
+    color: #747474;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > td,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > th.ant-table-cell-row-hover > td.ant-table-cell-row-hover {
+    background: #f4f4f4;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
+.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background-color: transparent;
+}
+
+.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > td {
+    font-size: 14px;
+
+    font-weight: 500;
+
+    line-height: 22px;
+}
+
+.successDisplay .subheading button {
+    float: right;
+
+    margin-top: 5px;
+}
+.actionbtn {
+    background-color: #ff3e5b;
+
+    border-radius: 5px;
+
+    padding: 4px 16px;
+
+    font-size: 12px;
+
+    line-height: 20px;
+
+    font-weight: 500;
+}
+.asterisk {
+    color: #ff3e5b;
+}
+.manageAccessHeader {
+    border-top: 1px solid #dedede;
+
+    margin-bottom: 10px;
+}
+
+.manageAccessHeader p {
+    padding-left: 0 !important;
+
+    margin-top: 16px !important;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    line-height: 24px;
+}
+
+.manageAccessHeader p > span {
+    color: #ff4d4f;
+}

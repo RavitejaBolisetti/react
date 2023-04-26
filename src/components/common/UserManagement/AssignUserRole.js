@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Checkbox } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import style from 'components/common/DrawerAndTable.module.css';
+import style3 from './UserManagement.module.css';
+
+import { PlusOutlined } from '@ant-design/icons';
+
 const { Option } = Select;
-const AssignUserRole = ({ userRoleOptions }) => {
+const AssignUserRole = ({ userRoleOptions, DealerSearchvalue }) => {
     const [checked, setchecked] = useState([]);
+    const [addroles, setaddroles] = useState();
     const FindRoleDetails = (option) => {
         return userRoleOptions?.filter((el) => {
             return el?.roleName === option;
@@ -25,7 +30,10 @@ const AssignUserRole = ({ userRoleOptions }) => {
         setchecked(newValues);
     };
     const onChanges = () => {};
-    const handleSelectAdd = () => {};
+    const handleApplicationAccess = () => {};
+    const handleSelectAdd = () => {
+        setaddroles(true);
+    };
     return (
         <Space
             direction="vertical"
@@ -91,28 +99,37 @@ const AssignUserRole = ({ userRoleOptions }) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    {checked?.map((el) => {
-                        return (
-                            <Card className={style.usermanagementCard}>
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                Employee Code
-                                            </Col>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}></Col>
-                                        </Row>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}></Col>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}></Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </Card>
-                        );
-                    })}
+                    {addroles &&
+                        checked?.map((el) => {
+                            console.log('This is the el', el['0']?.roleName);
+                            return (
+                                <Card className={style.usermanagementCard}>
+                                    <Row gutter={20}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                    {el['0']?.roleName}
+                                                </Col>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                    <div>
+                                                        Role id: <span>{DealerSearchvalue}</span>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                    <Button className={style3.dealerBtn} type="primary" ghost onClick={handleApplicationAccess}>
+                                                        <PlusOutlined /> Application Access
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                </Card>
+                            );
+                        })}
                 </Col>
             </Row>
         </Space>
