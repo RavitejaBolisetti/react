@@ -281,6 +281,7 @@ const DrawerUtil = ({ codeIsReadOnly, forceUpdate, deletedItemList, setDeletedIt
                                                         {...disabledProps}
                                                         danger
                                                         ghost
+                                                        aria-label="li-trash"
                                                         onClick={() => {
                                                             removeItem(name, fields, restField);
                                                             remove(name);

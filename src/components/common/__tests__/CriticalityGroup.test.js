@@ -12,8 +12,8 @@ window.matchMedia =
     function () {
         return {
             matches: false,
-            addListener: function () {},
-            removeListener: function () {},
+            addListener: function () { },
+            removeListener: function () { },
         };
     };
 
@@ -33,14 +33,14 @@ const criticalityGroupData1 = [
 ];
 const criticalityGroupData = [
     {
-        critcltyGropCode: 'Hello',
-        critcltyGropName: 'Name',
-        status: 'Y',
-        defaultGroup: 'Y',
+        critcltyGropCode: 'RCB',
+        critcltyGropName: 'RCB1',
+        status: 'N',
+        defaultGroup: 'N',
         allowedTimingResponse: [
             {
-                startTime: '11:00',
-                endTime: '12:00',
+                startTime: '12:00',
+                endTime: '2:00',
             },
         ],
     },
@@ -79,12 +79,6 @@ describe('Criticality Group Test', () => {
         buttonLookAndFireEventWithLabel('fa-ref')
     });
 
-    test('Is the View Button Present or not', () => {
-        render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('ai-view')
-
-    });
-
     test('Is Add Group Button Present on  render of Table', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
         const options = await screen.queryByText('Test50');
@@ -100,28 +94,22 @@ describe('Criticality Group Test', () => {
 
     test('Is table rendering data', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        tablerender('Criticality Group Listt', 'Test50')
+        tablerender('Criticality Group List', 'Test50')
     });
 
-    // test.only('Edit Functionality in Table', async () => {
-    //     render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-    //     buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
+    // test('Edit Functionality in Table', async () => {
+    //     render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
+       
+    //     const textfield = await screen.findByText('Criticality Group List');
+    //     expect(textfield).toBeTruthy();
 
-    //     inputFieldLookAndtextChange('Please enter id', 'Test50', );
-    //     inputFieldLookAndtextChange('Please enter name', 'Test50')
+    //     buttonLookAndFireEventWithLabel('fa-edit');
+    //     inputFieldLookAndtextChange('Please enter id', 'RCB', );
+    //     inputFieldLookAndtextChange('Please enter name', 'RCB1')
 
-    //     const inputCodelabel = await screen.findAllByText('Criticality Group Id');
-    //     const Validations2 = await screen.findAllByText('Criticality Group Name');
-
-    //     expect(inputCodelabel).toBeTruthy();
-    //     expect(Validations2).toBeTruthy();
-        
+    //     InputFieldAvailablity('Criticality Group Id');
+    //     InputFieldAvailablity('Criticality Group Name');
     //     buttonLookAndFireEventByRole('Save')
-    // });
-
-    // test('Is search working', async () => {
-    //     render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-    //     searchFunctionality('Test50')
     // });
 
     test('is drawer closing on click of cancel button', async () => {
@@ -131,15 +119,15 @@ describe('Criticality Group Test', () => {
     });
 
     test('View Functionality in Table', async () => {
-        
+
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
         const textfield = await screen.findByText('Criticality Group List');
         expect(textfield).toBeTruthy();
 
-        buttonLookAndFireEventWithLabel('ai-view')
+        buttonLookAndFireEventWithLabel('ai-view');
         InputFieldAvailablity('Criticality Group Id');
         InputFieldAvailablity('Criticality Group Name');
-        
+
         buttonLookAndFireEventByRole('Edit');
     });
 
@@ -178,4 +166,20 @@ describe('Criticality Group Test', () => {
         buttonLookAndFireEventWithText('Cancel')
     });
 
+    test('is Allowed timing adding on clicking Add time', async () => {
+        render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
+
+        buttonLookAndFireEventWithText('Add Group');
+        buttonLookAndFireEventWithText('Add Time')
+        const startTime = await screen.findByText('Start Time');
+        expect(startTime).toBeTruthy();
+    });
+
+    test('is end time timpicker rendering', async () => {
+        render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
+        buttonLookAndFireEventWithText('Add Group');
+        buttonLookAndFireEventWithText('Add Time');
+        const endTime = await screen.findByText('End Time');
+        expect(endTime).toBeTruthy();
+    });
 });
