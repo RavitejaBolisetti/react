@@ -21,10 +21,12 @@ import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAtt
 
 import DrawerUtil from './DrawerUtil';
 import { AddEditForm } from './AddEditForm';
+import { FiEdit2 } from 'react-icons/fi';
+import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
-import style from 'components/common/DrawerAndTable.module.css';
-// import style3 from './UserManagement.module.css';
+// import style from 'components/common/DrawerAndTable.module.css';
+
 const { Search } = Input;
 const { Option } = Select;
 
@@ -379,12 +381,11 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             render: (text, record, index) => {
                 return (
                     <Space>
-                        <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                            <EditIcon />
+                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <FiEdit2 />
                         </Button>
-
-                        <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
-                            <ViewEyeIcon />
+                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
+                            <FaRegEye />
                         </Button>
                     </Space>
                 );
@@ -393,7 +394,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     );
     const tableProps = {
         isLoading: isLoading,
-        tableData: searchData,
+        tableData: initialTableData,
         tableColumn: tableColumn,
     };
 
@@ -599,7 +600,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         DealerData,
         productHierarchyData,
         tableDetailData,
-        style,
         onCloseAction: () => setIsFormVisible(false),
         finalFormdata,
         setfinalFormdata,
@@ -613,7 +613,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={5} lg={5} xl={5}>
-                                {/* <div className={style.}> */}
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
                                         Manufacturer
@@ -639,7 +638,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={styles.dataDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={20} lg={20} xl={20} >
+                                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Employee Code</div>
@@ -668,8 +667,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                                     </Col>
                                                 </Row>
                                             </Col>
-                                            <Col xs={24} sm={24} md={4} lg={4} xl={4} >
-                                                <Button icon={<PlusOutlined />} className={styles.floatRight}  type="primary" danger onClick={handleAdd}>
+                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>
@@ -693,38 +692,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                         ) : (
                             ''
                         )}
-                        {/* {error && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.errorDisplay}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style.subheading}>
-                                                <IoBanOutline />
-                                                <span>User token number "B6G431" does not exist. Try again with valid token number.</span>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Col>
-                            </Row>
-                        )}
-                        {valid && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.successDisplay}>
-                                        <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style.subheading}>
-                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style.subheading}>
-                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                    Manage Access
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Col>
-                            </Row>
-                        )} */}
                     </div>
                 </Col>
             </Row>
@@ -761,7 +728,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
-                        className={style.userManagementTable}
                         renderEmpty={() => (
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -769,19 +735,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                     height: 60,
                                 }}
                                 description={<span> No record found.</span>}
-                            >
-                                {/* {!qualificationData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Qualification
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )} */}
-                            </Empty>
+                            ></Empty>
                         )}
                     >
                         <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
