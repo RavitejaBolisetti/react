@@ -178,8 +178,8 @@ describe('Criticality Group Test', () => {
         buttonLookAndFireEventWithText('Add Time');
         const endTime = await screen.findByText('End Time');
         expect(endTime).toBeTruthy();
-        buttonLookAndFireEventWithLabel('li-trash');
-        expect(endTime.value).toBeFalsy();
-      
+        const deleteBtn = screen.getByRole('button',{name: 'li-trash'})
+        fireEvent.click(deleteBtn)
+        expect(deleteBtn).toBeFalsy()
     });
 });

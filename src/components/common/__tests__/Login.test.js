@@ -1,9 +1,15 @@
-import { screen, render, fireEvent, findAllByText } from '@testing-library/react';
+import { screen, render, fireEvent, findAllByText, cleanup } from '@testing-library/react';
 import { Logins } from '../../Auth/Login/Login';
 import { ForgotPassword } from '../../Auth/ForgotPassword';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-
+import { initialState } from 'store/reducers/authPages/LoginPage';
+import { configureStore } from 'store/configureStore';
+import createMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import {Form} from 'antd';
+const [form]=Form.useForm();
 jest.mock('react-redux', () => ({
     connect: () => (Logins) => Logins,
 }));
@@ -66,28 +72,48 @@ describe('Login component', () => {
         render(
             <BrowserRouter>
                 <Routes>
-                    <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true} />} />
+                    <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true}  />} />
                 </Routes>
             </BrowserRouter>
         );
         const ssoLogin = screen.getByText('M&M User Login');
         fireEvent.click(ssoLogin);
     });
-    const mockStore = configureStore([])
-describe("Login", () => {
-  function renderComponent(state = initialState) {
-    const store = mockStore(state)
-    return [
-      render(
-        <Provider store={store}>
-          <Logins />
-        </Provider>
-      ),
-      store
-    ]
-  }
-
-  afterAll(cleanup)
-});
+    const middlewares = [thunk];
+    const mockStore = configureMockStore(middlewares);
+    describe('login action', () => {
+        it('should dispatch the correct actions when logging in', () => {
+            render(
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true} Form={Form}  />} />
+                    </Routes>
+                </BrowserRouter>
+            );
+          const store = mockStore({});
+      
+          const mockCredentials = {
+            userId: 'shakambhar',
+            password: 'Wipro@2222',
+          };
+      
+          const expectedActions = [
+            { type: 'LOGIN_REQUEST' },
+            { type: 'LOGIN_SUCCESS' },
+          ];
+      
+          return store.dispatch(Logins(mockCredentials)).then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+          });
+        });
+      });
+     
+      
+      
+      
+      
+      
+      
+      
 });
 
