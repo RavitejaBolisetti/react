@@ -18,8 +18,8 @@
     margin-bottom: 20px;
 }
 
-.allowedTiming :global .ant-picker-input>input:placeholder-shown,
-.allowedTiming :global .ant-picker-input>input {
+.allowedTiming :global .ant-picker-input > input:placeholder-shown,
+.allowedTiming :global .ant-picker-input > input {
     font-size: 14px;
 }
 
@@ -53,6 +53,13 @@
     color: #b5b5b6;
     border-color: white;
     /* text-align: right !important; */
+}
+
+.deleteBtn {
+    background-color: #ffffff;
+    color: #b5b5b6;
+    border-color: none !important;
+    border: none !important;
 }
 
 .searchAndLabelAlign {
@@ -426,7 +433,7 @@
     color: #e31837 !important;
 }
 
-:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
+:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
     font-size: 16px;
 }
