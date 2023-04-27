@@ -177,6 +177,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
+    const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [finalFormdata, setfinalFormdata] = useState({
         Macid: [],
         AssignUserRole: [],
@@ -449,8 +450,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setFormActionType('add');
         setIsViewModeVisible(false);
 
-        setSaveAndSaveNew(true);
         setSaveBtn(true);
+        setShowSaveBtn(true);
         setFooterEdit(false);
         setIsFormVisible(true);
         setFormBtnActive(true);
@@ -510,15 +511,16 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setIsFormVisible(true);
         setFormBtnActive(false);
 
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
         setDrawer(true);
         setIsReadOnly(true);
     };
-
+    const hanndleEditData = (record) => {
+        setIsViewModeVisible(false);
+        setFormActionType('update');
+        setFooterEdit(false);
+        setIsReadOnly(false);
+        setShowSaveBtn(true);
+    };
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
@@ -603,6 +605,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         onCloseAction: () => setIsFormVisible(false),
         finalFormdata,
         setfinalFormdata,
+        setShowSaveBtn,
+        showSaveBtn,
+        hanndleEditData,
     };
 
     return (

@@ -24,11 +24,12 @@ const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
-    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels } = props;
+    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
     const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
     const [openAccordian, setOpenAccordian] = useState(1);
+    const [disableadd, setdisableadd] = useState(false);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -61,6 +62,18 @@ const AddEditFormMain = (props) => {
     };
     const onChangeCollapse = (collapse) => {
         console.log('collapse: :', collapse);
+    };
+    const Checkduplicate = (value) => {
+        const index = AccessMacid?.findIndex((el) => el?.macid === value);
+
+        if (index !== -1) {
+            setdisableadd(true);
+            return Promise.reject('Their are duplicate Macid');
+        } else {
+            setdisableadd(false);
+
+            return Promise.resolve('');
+        }
     };
     useEffect(() => {
         console.log('We are getting dealer data: :', DealerData);
@@ -121,12 +134,22 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="MAC ID" name="macid" rules={[validateRequiredInputField('MAC id'), validationFieldLetterAndNumber('MAC id')]}>
+                            <Form.Item
+                                label="MAC ID"
+                                name="macid"
+                                rules={[
+                                    validateRequiredInputField('MAC id'),
+                                    validationFieldLetterAndNumber('MAC id'),
+                                    {
+                                        validator: (_, value) => Checkduplicate(value),
+                                    },
+                                ]}
+                            >
                                 <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary">
+                            <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary" disabled={disableadd}>
                                 Add
                             </Button>
                         </Col>
@@ -266,7 +289,7 @@ const AddEditFormMain = (props) => {
             ) : (
                 <ViewUserManagementDealer {...viewProps} />
             )}
-            <Row gutter={20} className={styles.formFooter}>
+            {/* <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
@@ -277,6 +300,29 @@ const AddEditFormMain = (props) => {
                     <Button htmlType="submit" danger disabled={!isFormBtnActive}>
                         Save
                     </Button>
+                </Col>
+            </Row> */}
+
+            <Row gutter={20} className={styles.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                    <Button danger onClick={onCloseAction}>
+                        {footerEdit ? 'Close' : 'Cancel'}
+                    </Button>
+                </Col>
+
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    {!footerEdit && showSaveBtn && (
+                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                    )}
+
+
+                    {footerEdit && (
+                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                            Edit
+                        </Button>
+                    )}
                 </Col>
             </Row>
         </Form>

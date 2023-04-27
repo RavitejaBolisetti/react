@@ -14,7 +14,7 @@ import style4 from './UserManagementManufacturer.module.css';
 
 import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
 import AssignProducts from './AssignProducts';
-import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess'
+import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
 
 // import AssignUserRole from './AssignUserRole';
 // import BranchMapping from './BranchMapping';
@@ -79,7 +79,7 @@ const AddEditFormMain = (props) => {
                     direction="vertical"
                     size="middle"
                     style={{
-                        display: 'flex',                        
+                        display: 'flex',
                     }}
                 >
                     <Row gutter={20}>
@@ -87,33 +87,33 @@ const AddEditFormMain = (props) => {
                             {/* <Card>
                             <Meta title="Sandeep Lad" description="Token No.: B6G433" />
                         </Card> */}
-                        <Card className={style4.usermanagementCard}>
-                            <Row gutter={20}>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            Token No
-                                        </Col>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <div className={style4.usermanagementCardTextLeft}> {DealerData.employeeCode}</div>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <div className={styles.floatRight}>User Name</div>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <div className={style4.usermanagementCardTextRight}> {DealerData.employeeName}</div>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Col>
-                </Row>
-                {/* <Row gutter={20}>
+                            <Card className={style4.usermanagementCard}>
+                                <Row gutter={20}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                Token No
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <div className={style4.usermanagementCardTextLeft}> {DealerSearchvalue}</div>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <div className={styles.floatRight}>User Name</div>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <div className={style4.usermanagementCardTextRight}> {DealerData.employeeName}</div>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </Col>
+                    </Row>
+                    {/* <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item label="MAC ID" name="macid" rules={[validateRequiredInputField('MAC id'), validationFieldLetterAndNumber('MAC id')]}>
                             <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
@@ -125,7 +125,7 @@ const AddEditFormMain = (props) => {
                         </Button>
                     </Col>
                 </Row> */}
-                {/* <Row gutter={20}>
+                    {/* <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Space
                             direction="vertical"
@@ -163,46 +163,46 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row> */}
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <div className={style4.manageAccessHeader}>
-                            <p>
-                                Access Management<span>*</span>
-                            </p>
-                        </div>
-                    </Col>
-                </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <div className={style4.manageAccessHeader}>
+                                <p>
+                                    Access Management<span>*</span>
+                                </p>
+                            </div>
+                        </Col>
+                    </Row>
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Space
-                            direction="vertical"
-                            size="large"
-                            style={{
-                                display: 'flex',
-                                gap: '10px',
-                            }}
-                        >
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Assign User Roles" key="1">
-                                    <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue}/>
-                                    {/* <AssignUserRole  /> */}
-                                </Panel>
-                            </Collapse>
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Administrative Hierarchy Access" key="2">
-                                    <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches}/>
-                                    {/* <BranchMapping BranchMappingData={DealerData?.branches} /> */}
-                                </Panel>
-                            </Collapse>
-                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                <Panel header="Assign Products" key="3">
-                                    <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData}/>
-                                    {/* <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} /> */}
-                                </Panel>
-                            </Collapse>
-                        </Space>
-                        {/* <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Space
+                                direction="vertical"
+                                size="large"
+                                style={{
+                                    display: 'flex',
+                                    gap: '10px',
+                                }}
+                            >
+                                <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                                    <Panel header="Assign User Roles" key="1">
+                                        <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue} />
+                                        {/* <AssignUserRole  /> */}
+                                    </Panel>
+                                </Collapse>
+                                <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                                    <Panel header="Administrative Hierarchy Access" key="2">
+                                        <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches} />
+                                        {/* <BranchMapping BranchMappingData={DealerData?.branches} /> */}
+                                    </Panel>
+                                </Collapse>
+                                <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
+                                    <Panel header="Assign Products" key="3">
+                                        <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
+                                        {/* <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} /> */}
+                                    </Panel>
+                                </Collapse>
+                            </Space>
+                            {/* <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
                             <Panel header="Assign User Roles*" key="1">
                                 <Form.Item name="userRole" label="User Role">
                                     <Select placeholder={'Select User Role'} showSearch allowClear>
@@ -260,25 +260,23 @@ const AddEditFormMain = (props) => {
                         </Collapse> */}
                         </Col>
                     </Row>
-
-                  
                 </Space>
             ) : (
                 <ViewUserManagementDealer {...viewProps} />
             )}
-              <Row gutter={20} className={styles.formFooter}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                            <Button danger onClick={onCloseAction}>
-                                Cancel
-                            </Button>
-                        </Col>
+            <Row gutter={20} className={styles.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                    <Button danger onClick={onCloseAction}>
+                        Cancel
+                    </Button>
+                </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                            <Button htmlType="submit" danger disabled={!isFormBtnActive}>
-                                Save
-                            </Button>
-                        </Col>
-                    </Row>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        Save
+                    </Button>
+                </Col>
+            </Row>
         </Form>
     );
 };
