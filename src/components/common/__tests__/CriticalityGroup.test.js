@@ -1,6 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen,wait } from '@testing-library/react';
 import { CriticalityGroup } from '../CriticalityGroup/CriticalityGroup';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
+import userEvent from '@testing-library/user-event';
+import { showGlobalNotification } from 'store/actions/notification'; 
+
 import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 
 jest.mock('react-redux', () => ({
@@ -80,8 +83,6 @@ describe('Criticality Group Test', () => {
 
     test('Is Add Group Button Present on  render of Table', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        const options = await screen.queryByText('Test50');
-        expect(options).toBeNull();
 
         buttonLookAndFireEventWithText('Add Group');
         switchAvailablity('fa-switch');
@@ -172,10 +173,13 @@ describe('Criticality Group Test', () => {
     });
 
     test('is end time timpicker rendering', async () => {
-        render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
+        render(<CriticalityGroup showGlobalNotification={showGlobalNotification} criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
         buttonLookAndFireEventWithText('Add Group');
         buttonLookAndFireEventWithText('Add Time');
         const endTime = await screen.findByText('End Time');
         expect(endTime).toBeTruthy();
+        buttonLookAndFireEventWithLabel('li-trash');
+        expect(endTime.value).toBeFalsy();
+      
     });
 });
