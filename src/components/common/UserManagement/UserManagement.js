@@ -24,7 +24,7 @@ import { AddEditForm } from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
 import style from 'components/common/DrawerAndTable.module.css';
-import style3 from './UserManagement.module.css';
+// import style3 from './UserManagement.module.css';
 const { Search } = Input;
 const { Option } = Select;
 
