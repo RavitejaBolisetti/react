@@ -1,10 +1,36 @@
 @import url('./global.css');
-.marR5{margin-right:5px;}
-.padT5{padding-top: 5px;}
+.marR5 {
+    margin-right: 5px;
+}
+.padT5 {
+    padding-top: 5px;
+}
 .lineHeight33 {
     line-height: 33px;
 }
-
+.txtEllipsis{
+    white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.text-tooltip {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s ease;
+    bottom: 150%;
+    padding: 10px;
+    border-radius: 2px;
+    background: rgb(2, 2, 111);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 12px rgba(2, 2, 111, 0.4);
+  }
+  
+  .text:hover + .text-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
     width: 1.25em;
     height: 1.25em;
@@ -642,16 +668,38 @@
 }
 
 .contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
-    background-color: #E6E6E6;
-    border-left: #E6E6E6;
-    background-color: #E6E6E6;
+    background-color: #e6e6e6;
+    border-left: #e6e6e6;
+    background-color: #e6e6e6;
 }
 
-.contentHeaderBackground .userManagement :global .ant-btn-link{
-    color: #0B0B0C;
+.contentHeaderBackground .userManagement :global .ant-btn-link {
+    color: #0b0b0c;
     font-weight: 500;
 }
-
+.contentHeaderBackground .dataDisplay { 
+    margin-top: 10px;
+    padding: 10px 0 0 0;
+    padding-bottom: 0;
+    border-top: 1px solid #E6E6E6;
+}
+.contentHeaderBackground .errorDisplay { 
+    color: #ed302d;
+}
+.contentHeaderBackground .contentHeading{
+    font-size: 12px;
+    color: rgba(116, 116, 116, 0.85);
+    font-weight: 400;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.contentHeaderBackground .contentData{
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    width: 100%;
+    margin-bottom: 5px;
+}
 .contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
@@ -990,6 +1038,14 @@
         margin-bottom: 8px;
         margin-top: 12px;
         width: '100%';
+    }
+    .contentHeaderBackground .contentHeading{
+       width: 30%;
+       float: left;
+    }
+    .contentHeaderBackground .contentData{
+        width: 70%;
+        float: left;
     }
 }
 

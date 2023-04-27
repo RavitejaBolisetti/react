@@ -152,12 +152,12 @@
 }
 
 /*Common Css for Header*/
-.subheading {
+/* .subheading {
     font-size: 16px;
     color: #0b0c0c;
     padding-right: 0px !important;
     padding-left: 0px !important;
-}
+} */
 
 .errorDisplay {
     display: flex;
@@ -208,7 +208,7 @@
 
     border-top: 1px solid #e6e6e6;
 }
-
+/* 
 .successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th,
 .successDisplay :global .ant-table-wrapper .ant-table-thead > tr > td {
     position: relative;
@@ -259,7 +259,7 @@
     font-weight: 500;
 
     line-height: 22px;
-}
+} */
 
 .successDisplay .subheading button {
     float: right;
