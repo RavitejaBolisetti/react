@@ -66,7 +66,6 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
     const [data, setData] = useState(criticalityGroupData);
-    const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(data?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
@@ -213,7 +212,6 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
             allowedTimings: momentTime,
         });
 
-        setDrawer(true);
         setIsReadOnly(false);
         setcodeIsReadOnly(true);
     };
@@ -267,7 +265,6 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
             activeIndicator: record.activeIndicator,
             allowedTimings: momentTime,
         });
-        setDrawer(true);
         setIsReadOnly(true);
         setcodeIsReadOnly(true);
     };

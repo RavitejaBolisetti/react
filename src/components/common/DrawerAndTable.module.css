@@ -62,6 +62,8 @@
     border: none !important;
 }
 
+
+
 .searchAndLabelAlign {
     display: flex;
     align-items: center;
@@ -77,11 +79,23 @@
     color: #ff3e5b;
 }
 
+
+.viewAllowedTiming button {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    padding-right: 0px;
+}
+
 .addTimeBtn button {
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
     padding-right: 0px;
+}
+
+.hideInViewMode {
+    visibility: hidden;
 }
 
 .timingHeaderBackground {
