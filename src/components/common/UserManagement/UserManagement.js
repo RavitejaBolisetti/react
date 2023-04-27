@@ -597,36 +597,27 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            
-                                <Col xs={24} sm={24} md={5} lg={5} xl={5} >
-                                    {/* <div className={style.}> */}
-                                    <div className={`${styles.userManagement} ${styles.headingToggle}`} >
-                                        <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
-                                            Manufacturer
-                                        </Button>
-                                        <Button type="link" ghost>
-                                            Dealer
-                                        </Button>
-                                    </div>
-                                </Col>
-                                <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.padT5}>
-                                    <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
-                                        {dealersData?.map((item) => (
-                                            <Option value={item}>{item}</Option>
-                                        ))}
-                                    </Select>
-                                    
-                                </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
-                                <Search
-                                        placeholder="Search"
-                                        allowClear
-                                        onSearch={onSearchHandle}
-                                        disabled={disabled}
-                                        className={styles.headerSearchField} 
-                                    />
-                                </Col>
-                           
+                            <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                                {/* <div className={style.}> */}
+                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                    <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
+                                        Manufacturer
+                                    </Button>
+                                    <Button type="link" ghost>
+                                        Dealer
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.padT5}>
+                                <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
+                                    {dealersData?.map((item) => (
+                                        <Option value={item}>{item}</Option>
+                                    ))}
+                                </Select>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
+                                <Search placeholder="Search" allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
+                            </Col>
                         </Row>
                         {DealerData?.employeeCode ? (
                             <Row gutter={20}>
@@ -634,7 +625,28 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                     <div className={style3.successDisplay}>
                                         <Row gutter={20}>
                                             <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style3.subheading}>
-                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                                                {/* <DataTable tableColumn={tableDetails} {...tableDetailProps} /> */}
+                                                <Row gutter={20}>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        {DealerData?.employeeCode}
+                                                    </Col>
+
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        {DealerSelected}
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        {DealerData?.employeeName}
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        {DealerData?.employeeDesignation}
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        {DealerData?.employeeMobileNumber}
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        {DealerData?.employeeEmail}
+                                                    </Col>
+                                                </Row>
                                             </Col>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style3.subheading}>
                                                 <Button icon={<PlusOutlined />} className={style3.actionbtn} type="primary" danger onClick={handleAdd}>
