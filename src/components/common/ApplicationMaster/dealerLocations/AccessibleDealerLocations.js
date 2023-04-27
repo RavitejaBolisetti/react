@@ -1,11 +1,11 @@
-import React, { useReducer, useState, useEffect, useMemo } from 'react';
+import React, { useReducer, useState, useEffect, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 
-import { Col, Row, Input, AutoComplete } from 'antd';
-import styles from './../../../common/Common.module.css';
-import style from './../ApplicationMaster.module.css';
-import { Fragment } from 'react';
+import { Col, Row, Input, AutoComplete, Divider } from 'antd';
+// import styles from './../../../common/Common.module.css';
+import styles from './../../LeftSideBar/LeftSideBar.module.css';
+
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -127,10 +127,12 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
 
     return (
         <Fragment>
+            <Divider />
             <Row gap={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <AutoComplete
-                        className={`${styles.headerSearchField} ${style.autoCompleteBtn}`}
+                        // className={`${styles.headerSearchField} ${style.autoCompleteBtn}`}
+                        className={styles.searchField}
                         options={dealerLocationsList}
                         backfill={false}
                         style={{

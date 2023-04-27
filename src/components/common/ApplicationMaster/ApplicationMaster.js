@@ -352,12 +352,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={`${styles.padRight0} ${styles.viewDetails}`}>
                     <Spin spinning={isApplicationDeatilsLoading}>
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <>
                                 <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
                                 <div className={styles.hyrbuttonContainer}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
                                 </div>
-                            </Col>
+                            </>
                         ) : (
                             <div className={styles.emptyContainer}>
                                 <Empty

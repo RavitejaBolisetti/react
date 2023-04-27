@@ -1,5 +1,5 @@
 import React, { Fragment, useReducer } from 'react';
-import { Form, Card } from 'antd';
+import { Form, Card, Divider } from 'antd';
 
 import CardDocumentType from './CardDocumentType';
 import DocumentTypesForm from './DocumentTypesForm';
@@ -20,6 +20,7 @@ const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, o
 
     return (
         <Fragment>
+            <Divider />
             <div style={{ marginBottom: '14px' }}>
                 <DocumentTypesForm form={docForm} onFinish={onDocumentFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} finalFormdata={finalFormdata} />
             </div>

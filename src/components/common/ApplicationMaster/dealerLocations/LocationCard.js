@@ -1,5 +1,5 @@
-import { Card, Row, Col, Typography, Button } from 'antd';
 import React from 'react';
+import { Card, Row, Col, Typography, Button } from 'antd';
 
 import { CloseOutlined } from '@ant-design/icons';
 import style from './../ApplicationMaster.module.css';
@@ -11,9 +11,9 @@ function LocationCard(props) {
     return (
         <Card
             style={{
-                backgroundColor: '#BEBEBE1A',
                 marginTop: '12px',
             }}
+            className={style.viewCardSize}
             key={id}
         >
             <Row>

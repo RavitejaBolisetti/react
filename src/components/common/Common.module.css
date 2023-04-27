@@ -69,7 +69,7 @@
     border-color: transparent;
     background-color: #fff;
 }
-.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+.contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 36px;
 }
 .autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
@@ -339,9 +339,6 @@
     border-color: transparent !important;
 } */
 
-
-
-
 .contentHeaderBackground .headerSearchField :global .ant-btn-default {
     border-color: transparent !important;
 }
@@ -544,32 +541,59 @@
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
     padding: 13px;
-    border-radius: 7px 7px 0px 0px;
-    -moz-border-radius: 7px 7px 0px 0px;
-    -webkit-border-radius: 7px 7px 0px 0px;
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
     border: 1px solid #e8e8e8;
 }
 
 /* applicatiom master css */
-.accordianContainer {
+/* .accordianContainer {
     padding: 6px;
-}
+} */
 
-.accordianHeader {
+/* .accordianHeader {
     font-weight: 600;
     font-size: 16px;
     color: #ff3e5b;
-}
+} */
 
 .accordianContainer :global .ant-collapse-header-text {
     font-weight: 600;
     font-size: 16px;
 }
-.accordianContainer :global( .ant-collapse-header-text::after ){
+.accordianContainer :global(.ant-collapse-header-text::after) {
     content: '*';
     color: #ff3e5b;
 }
+.accordianContainer :global .ant-collapse {
+    margin-bottom: 12px;
+    background: rgba(190, 190, 190, 0.1);
+}
 
+.accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    padding: 12px 20px;
+}
+.accordianContainer :global .ant-collapse > .ant-collapse-item.ant-collapse-item-active > .ant-collapse-header {
+color:  #E31837;
+background: #f2f2f2;
+}
+.accordianContainer :global .ant-collapse .ant-collapse-content {
+    border-top: transparent;
+}
+.accordianContainer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box  {
+    padding: 16px 20px;
+}
+.accordianContainer :global .ant-collapse .ant-collapse-content .ant-divider-horizontal {
+    margin-top: -16px ;
+    margin-bottom: 16px;
+}
+.accordianContainer :global .ant-card:not(:last-child) {
+    margin-bottom: 10px !important;
+}
+.accordianContainer :global .ant-card .ant-card-body {
+    padding: 6px 20px;
+}
 .searchAndLabelAlign {
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -636,7 +660,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: calc(100vh - 230px);
+    height: calc(100vh - 176px);
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
 }
 
 .viewContainer :global .ant-descriptions-view table tbody tr th {
@@ -661,7 +687,6 @@
 .hierarchyRightContaners {
     border-radius: 7px 7px 0px 0px;
     border: none;
-   
 }
 
 .hierarchyRightContaner {
@@ -669,25 +694,34 @@
     -moz-border-radius: 7px 7px 0px 0px;
     -webkit-border-radius: 7px 7px 0px 0px;
     border: 1px solid #e8e8e8;
-    height: calc(100vh - 234px);
-    overflow-y: auto;
+    /* height: calc(100vh - 234px); */
+    /* overflow-y: auto; */
     margin-top: 0px;
 }
 
-.hierarchyRightContaner::-webkit-scrollbar-track {
+.hierarchyRightContaner :global .ant-descriptions .ant-descriptions-header {
+    margin-bottom: 0px;
+}
+
+.hierarchyRightContaner :global .ant-descriptions .ant-descriptions-view {
+    overflow-y: auto;
+    height: calc(100vh - 286px);
+}
+
+:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
 
-.hierarchyRightContaner::-webkit-scrollbar {
+:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar {
     background-color: #f4f4f4;
     width: 5px;
 }
 
-.hierarchyRightContaner:hover::-webkit-scrollbar {
+:global .ant-descriptions .ant-descriptions-view:hover::-webkit-scrollbar {
     width: 5px !important;
 }
 
-.hierarchyRightContaner::-webkit-scrollbar-thumb {
+:global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34);
     border-radius: 10px;
     /* border: 2px solid ; */
@@ -743,15 +777,14 @@
     width: 100%;
 }
 
-.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
-:global .ant-descriptions .ant-descriptions-row>* {
+.cardDescription :global .ant-descriptions .ant-descriptions-row > th,
+:global .ant-descriptions .ant-descriptions-row > * {
     padding: 0px;
 }
 
-:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     background: #f2f2f2;
 }
-
 
 .tableIcons {
     border: none;
@@ -846,10 +879,6 @@
     width: 100%;
     /* padding: 4% 2%; */
     /* margin-left: 12px; */
-}
-
-.accordianHeader {
-    color: #E31837 !important;
 }
 
 @media (max-width: 768px) {

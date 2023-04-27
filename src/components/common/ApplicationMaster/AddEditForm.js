@@ -17,7 +17,7 @@ import { withDrawer } from 'components/withDrawer';
 const { Panel } = Collapse;
 
 const DrawerUtilMain = ({ setSelectedTreeKey, selectedTreeKey, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
-    const [openAccordian, setOpenAccordian] = useState(1);
+    const [openAccordian, setOpenAccordian] = useState('');
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
@@ -59,25 +59,26 @@ const DrawerUtilMain = ({ setSelectedTreeKey, selectedTreeKey, applicationForm, 
                     style={{
                         display: 'flex',
                         marginBottom: '14px',
+                        gap: '0px',
                     }}
                 >
                     <ApplicationDetails isFieldDisable={isFieldDisable} isReadOnly={isReadOnly} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} menuData={menuData} />
 
                     <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                        <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Application Actions</span>} key="1">
+                        <Panel header={<span>Application Actions</span>} key="1">
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
                         <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                            <Panel header={<span className={openAccordian === 2 ? style.accordianHeader : ''}>Document Type </span>} key="2">
+                            <Panel header={<span>Document Type </span>} key="2">
                                 <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} />
                             </Panel>
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
                         <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-                            <Panel header={<span className={openAccordian === 3 ? style.accordianHeader : ''}>Accessible Dealer Location</span>} key="3">
+                            <Panel header={<span>Accessible Dealer Location</span>} key="3">
                                 <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                             </Panel>
                         </Collapse>

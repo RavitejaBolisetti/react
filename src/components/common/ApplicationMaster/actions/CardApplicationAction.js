@@ -78,7 +78,7 @@ const CardApplicationAction = (props) => {
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                            <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}
+                            <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                         </Col>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                             <Text strong>{actionName }</Text>

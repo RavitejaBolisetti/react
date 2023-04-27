@@ -7,6 +7,6 @@ export const preparePlaceholderSelect = (name) => {
 };
 
 export const preparePlaceholderAutoComplete = (name) => {
-    return 'Search' + name;
+    return 'Select' + name;
 };
 

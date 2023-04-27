@@ -2,12 +2,6 @@
     background: #f2f2f2;
 }
 
-.viewCardSize  {
-    width: 100%;
-    /* margin-top: 12px; */
-    margin-bottom: 10px;
-}
-
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
 .viewCardSize :global .ant-card-body .ant-space .ant-space-item span {
     font-weight: 400;
@@ -24,6 +18,8 @@
 .viewCardSize span.activeText {
     color: #70c922 !important;
 }
+
+.accordianContainer
 
 /* :global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-expand-icon){
     border: 2px solid #E31837;
@@ -50,7 +46,7 @@
 .viewCardSize :global(.ant-card-body) {
     border: 1px solid rgba(62, 62, 62, 0.1);
     border-radius: 6px;
-    background-color: #3E3E3E1A;
+    background-color: rgba(190, 190, 190, 0.1);
     gap: 10px;
 }
 

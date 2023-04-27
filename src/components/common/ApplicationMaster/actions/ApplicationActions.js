@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useReducer } from 'react';
-import { Form, Space } from 'antd';
+import { Form, Space, Divider } from 'antd';
 
 import CardApplicationAction from './CardApplicationAction';
 import ApplicationActionsForm from './ApplicationActionsForms';
@@ -18,6 +18,7 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
 
     return (
         <Fragment>
+            <Divider/>
             <div style={{ marginBottom: '14px' }}>
                 <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} />
             </div>
