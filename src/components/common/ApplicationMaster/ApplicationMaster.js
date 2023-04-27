@@ -31,8 +31,8 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
-        // criticalityGroupData,
+        // criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
+        criticalityGroupData,
         applicationDetailsData,
         dealerLocations,
         userId,
