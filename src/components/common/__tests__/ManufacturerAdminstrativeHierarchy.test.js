@@ -1,10 +1,13 @@
 import { fireEvent, render, screen, waitFor, getByPlaceholderText } from '@testing-library/react';
 import { ManufacturerAdminstrativeHierarchy } from '../ManufacturerAdminstrativeHierarchy/ManufacturerAdminstrativeHierarchy';
-import { commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
+import { axiosCall, commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
 import { ManufacturerTreeData as treeDatas } from './Common/Data/data';
 import { fetchList, saveData, hierarchyAttributeFetchList, listShowLoading } from './Common/CommonImports/commonImports';
 import { async } from 'sonarqube-scanner';
 import userEvent from '@testing-library/user-event';
+import { BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY } from '../../../constants/routingApi';
+import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
+import { buttonLookAndFireEventWithText } from './Common/tableWithDrawer/common';
 jest.mock('react-redux', () => ({
     connect: () => (ManufacturerAdminstrativeHierarchy) => ManufacturerAdminstrativeHierarchy,
 }));
@@ -69,11 +72,29 @@ describe('manufacturerAdminHierarchy component', () => {
         screentext('Hierarchy');
         commonTreeTest();
     });
-    // test.only('render form card element on edit button', async () => {
-    //     render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
-    //     commonDrawer();
-    //     const card = screen.queryByText('Authority Details');
-    //     expect(card).toBeInTheDocument();
-    //     fireEvent.click(card);
-    // });
+
+    test('render data', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} listShowLoading={listShowLoading} />);
+        axiosCall(BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY, manufacturerAdminHierarchyDataActions.fetchList);
+    });
+    test('Save drawer element', async () => {
+        const onFinish = jest.fn();
+        render(<ManufacturerAdminstrativeHierarchy manufacturerOrgHierarchyData={treeDatas} fetchList={fetchList} saveData={saveData} />);
+        screentext('Hierarchy');
+        commonTreeTest();
+        buttonLookAndFireEventWithText('Add Child');
+        findplaceholder('Please enter Short Description');
+        findplaceholder('Please enter Attribute Code');
+
+        onFinish.mockResolvedValue({
+            manufactureAdminShortName: 'MNM',
+            manufactureAdminCode: '1234',
+        });
+
+        const result = await onFinish();
+        buttonLookAndFireEventWithText('Save');
+
+        expect(result).toBeTruthy();
+        expect(onFinish).toHaveBeenCalled();
+    });
 });
