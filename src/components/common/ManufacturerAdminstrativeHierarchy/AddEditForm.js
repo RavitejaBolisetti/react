@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
@@ -14,11 +14,10 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { setDocumentTypesList, documentTypesList, onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData, viewMode, isViewMode } = props;
-    const { selectedTreeKey, setSelectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
+    const { selectedTreeKey, selectedTreeData, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
-    const [openAccordian, setOpenAccordian] = useState('');
 
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
@@ -28,11 +27,6 @@ const AddEditFormMain = (props) => {
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     let selectedAttribute = selectedTreeData?.attributeKey;
-
-    let attributeHierarchyFieldValidation = {
-        rules: [validateRequiredSelectField('attribute level')],
-    };
-
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.manufactureAdminParntId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
@@ -42,18 +36,12 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.manufactureAdminParntId;
-
-        const slectedAttributeData = flatternData.find((i) => i.key === treeCodeId);
-        selectedAttribute = slectedAttributeData && slectedAttributeData?.data?.attributeKey;
     }
 
-    // useEffect(() => {
-    //     if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-    //         setSelectedTreeKey([treeCodeId]);
-    //     }
-    //     setSelectedTreeSelectKey(treeCodeId);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [treeCodeId]);
+    useEffect(() => {
+        setSelectedTreeSelectKey(treeCodeId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [treeCodeId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -73,21 +61,12 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
-
-    // const authorityDetailProps = {
-    //     ...props,
-    //     documentTypesList,
-    //     setDocumentTypesList,
-    // };
     return (
         <>
             <Form form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
+                        <Form.Item name="attributeKey" label="Attribute Level" initialValue={formData?.attributeKey} rules={[validateRequiredSelectField('attribute level')]}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
                                     <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
@@ -105,8 +84,8 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Code" name="manufactureAdminCode" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                            <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        <Form.Item name="manufactureAdminCode" label="Code" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
+                            <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
@@ -133,14 +112,13 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20} className={styles.formFooter}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger form="myForm" onClick={onCloseAction}>
+                        <Button danger onClick={onCloseAction}>
                             Cancel
                         </Button>
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" form="myForm" danger>
-                            {/* disabled={!isFormBtnActive} */}
+                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>

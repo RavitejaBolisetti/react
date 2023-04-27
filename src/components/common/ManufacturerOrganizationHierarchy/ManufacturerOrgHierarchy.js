@@ -225,7 +225,6 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         if (type === FROM_ACTION_TYPE.EDIT) {
             const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
             formData && setFormData(formData?.data);
-            console.log(formData?.data);
         }
         setIsFormVisible(true);
         setFormBtnActive(false);

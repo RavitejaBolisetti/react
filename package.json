@@ -36,9 +36,9 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
+        "test": "react-scripts test --coverage",
         "eject": "react-scripts eject",
-        "coverage": "react-scripts test --coverage --watchAll --collectCoverageFrom='src/components/**/*.{js,.jsx}'  --collectCoverageFrom!='src/components/pages/*.{js,.jsx}'  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+        "coverage": "react-scripts test --coverage --watchAll=false --transformIgnorePatterns \"node_modules/(?!axios)/\"",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
@@ -61,22 +61,10 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.20.2",
-        "jest-sonar-reporter": "^2.0.0",
         "react-app-rewired": "^2.2.1",
-        "react-checkbox-tree": "^1.8.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
         "sonarqube-scanner": "^3.0.1"
-    },
-    "jestSonar": {
-        "reportPath": "coverage",
-        "reportFile": "clover.xml",
-        "indent": 4,
-        "env": {
-            "test": {
-                "reportPath": "reports-test"
-            }
-        }
     },
     "jest": {
         "coverageThreshold": {
