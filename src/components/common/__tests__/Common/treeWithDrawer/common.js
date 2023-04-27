@@ -34,8 +34,8 @@ export const commonDrawer = async () => {
 };
 
 export const screentext = async (text) => {
-    const hierarchyText = await screen.getByText(text);
-    expect(hierarchyText).toBeInTheDocument();
+    const hierarchyText = await screen.findByText(text);
+    expect(hierarchyText).toBeTruthy();
 };
 export const findbuttonAndClick = async (buttonName) => {
     const btn = screen.getByRole('button', { name: buttonName });
@@ -94,3 +94,14 @@ export const axiosCall = async(BASE_URL,fetchList,listShowLoading)=>{
       
 
 }
+export const textFindAfterClick = async (text) => {
+    const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
+    expect(addChildBtn).toBeInTheDocument();
+    const addiblingBtn = await screen.findByRole('button', { name: 'Add Sibling' });
+    expect(addiblingBtn).toBeInTheDocument();
+    const editBtn = await screen.findByRole('button', { name: 'Edit' });
+    expect(editBtn).toBeInTheDocument();
+    fireEvent.click(addChildBtn);
+    screentext(text);
+
+};
