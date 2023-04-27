@@ -224,13 +224,16 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
 
     useEffect(() => {
         console.log('DealerSelected', DealerSelected);
-        if (DealerSearchvalue?.length > 0 && DealerSelected?.length > 0 && DealerSelected !== undefined) {
-            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
-        }
+
         if (DealerSelected?.length > 0 && DealerSelected != undefined) {
             setdisabled(false);
             setDealerData({});
             setError(false);
+        }
+        if (DealerSelected === undefined) {
+            setDealerSearchvalue('');
+            setDealerData({});
+            setdisabled(true);
         }
     }, [DealerSearchvalue, DealerSelected]);
 
@@ -525,6 +528,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const onSearchHandle = (value) => {
         console.log('This is the searched Value : ', value);
         setDealerSearchvalue(value);
+        if (DealerSearchvalue?.length > 0 && DealerSelected?.length > 0 && DealerSelected !== undefined) {
+            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
+        }
         if (value === 'B6G431') {
             setError(true);
             setValid(false);
@@ -542,7 +548,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setdisabled(false);
         setDealerSelected(selectedvalue);
     };
-
+    const ChangeSearchHandler = (event) => {
+        setDealerSearchvalue(event.target.value);
+    };
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
@@ -616,7 +624,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 </Select>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
-                                <Search placeholder="Search" allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
+                                <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
                             </Col>
                         </Row>
                         {DealerData?.employeeCode ? (
@@ -626,6 +634,27 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                         <Row gutter={20}>
                                             <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style3.subheading}>
                                                 {/* <DataTable tableColumn={tableDetails} {...tableDetailProps} /> */}
+                                                <Row gutter={20}>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        Employee Code
+                                                    </Col>
+
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        Dealer Name
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        User Name
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        Designation
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        Mobile Number
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                        Email ID
+                                                    </Col>
+                                                </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                                                         {DealerData?.employeeCode}
