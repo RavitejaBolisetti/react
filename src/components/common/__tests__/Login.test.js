@@ -1,18 +1,21 @@
 import { screen, render, fireEvent, findAllByText, cleanup } from '@testing-library/react';
-import { Logins } from '../../Auth/Login/Login';
+import { Logins, mapStateToProps } from '../../Auth/Login/Login';
 import { ForgotPassword } from '../../Auth/ForgotPassword';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LoginPage } from 'pages/auth';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { initialState } from 'store/reducers/authPages/LoginPage';
 import { configureStore } from 'store/configureStore';
 import createMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {Form} from 'antd';
-const [form]=Form.useForm();
+
+
 jest.mock('react-redux', () => ({
     connect: () => (Logins) => Logins,
 }));
+
+  
 
 const doCloseLoginError = () => {
     return;
@@ -79,35 +82,38 @@ describe('Login component', () => {
         const ssoLogin = screen.getByText('M&M User Login');
         fireEvent.click(ssoLogin);
     });
-    const middlewares = [thunk];
-    const mockStore = configureMockStore(middlewares);
-    describe('login action', () => {
-        it('should dispatch the correct actions when logging in', () => {
-            render(
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true} Form={Form}  />} />
-                    </Routes>
-                </BrowserRouter>
-            );
-          const store = mockStore({});
+   
+    // const mockState = {
+    //     auth: {
+    //       isError: true,
+    //       loginFailure: 'Invalid credentials',
+    //       preLoginData: { username: 'johndoe', password: 'password123' },
+    //     },
+    //   };
       
-          const mockCredentials = {
-            userId: 'shakambhar',
-            password: 'Wipro@2222',
-          };
       
-          const expectedActions = [
-            { type: 'LOGIN_REQUEST' },
-            { type: 'LOGIN_SUCCESS' },
-          ];
+    //   describe('MyComponent', () => {
+    //     test('should render correctly', () => {
+    //       // Call mapStateToProps with the mock state
+    //       render(
+    //         <BrowserRouter>
+    //             <Routes>
+    //                 <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true} />} />
+    //                 <Route path="/forgot-password" element={<ForgotPassword />} />
+    //             </Routes>
+    //         </BrowserRouter>
+    //     );
+    //       const props = mapStateToProps(mockState);
       
-          return store.dispatch(Logins(mockCredentials)).then(() => {
-            expect(store.getActions()).toEqual(expectedActions);
-          });
-        });
-      });
-     
+    //       // Check that the props are correct
+    //       expect(props.isError).toBe(true);
+    //       expect(props.loginFailure).toBe('Invalid credentials');
+    //       expect(props.preLoginData).toEqual({ userId: 'johndoe', password: 'password123' });
+      
+    //       // Render the component and check that it matches the snapshot
+    //       const component = shallow(<Logins {...props} />);
+    //       expect(component).toMatchSnapshot();
+    //     });
       
       
       

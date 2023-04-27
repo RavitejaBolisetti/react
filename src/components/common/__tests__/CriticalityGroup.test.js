@@ -3,6 +3,7 @@ import { CriticalityGroup } from '../CriticalityGroup/CriticalityGroup';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import userEvent from '@testing-library/user-event';
 import { showGlobalNotification } from 'store/actions/notification'; 
+import React from 'react';
 
 import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 
@@ -20,7 +21,7 @@ window.matchMedia =
         };
     };
 
-const criticalityGroupData1 = [
+      const criticalityGroupData1 = [
     {
         criticalityGroupCode: 'Test50',
         criticalityGroupName: 'Test50',
@@ -33,7 +34,7 @@ const criticalityGroupData1 = [
             },
         ],
     },
-];
+];                   
 const criticalityGroupData = [
     {
         criticalityGroupCode: 'RCB',
