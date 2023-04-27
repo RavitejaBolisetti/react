@@ -194,6 +194,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleAdd = () => {
+        setIsFormVisible(false);
         setIsFormVisible(true);
     };
 

@@ -1,2 +1,3 @@
 import { Geo } from './Geo';
-export { Geo };
+import {StateGeo} from './State/StateGeo'
+export { Geo ,StateGeo};

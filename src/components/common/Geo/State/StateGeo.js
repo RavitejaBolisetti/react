@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from '../Geo/State/InputType';
+import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -21,41 +21,41 @@ import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
-        },
-    } = state;
+// const mapStateToProps = (state) => {
+//     const {
+//         auth: { userId },
+//         data: {
+//             ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+//         },
+//     } = state;
 
-    const moduleTitle = 'Configurable Parameter Editing';
+//     const moduleTitle = 'State Master List';
 
-    let returnValue = {
-        userId,
-        isDataLoaded,
-        typeData,
-        isLoading,
-        moduleTitle,
-        configData: configData?.filter((i) => i),
-    };
-    return returnValue;
-};
+//     let returnValue = {
+//         userId,
+//         isDataLoaded,
+//         typeData,
+//         isLoading,
+//         moduleTitle,
+//         configData: configData?.filter((i) => i),
+//     };
+//     return returnValue;
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchList: configParamEditActions.fetchList,
-            saveData: configParamEditActions.saveData,
-            fetchDataList: configParamEditActions.fetchDataList,
-            listShowLoading: configParamEditActions.listShowLoading,
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
-export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+// const mapDispatchToProps = (dispatch) => ({
+//     dispatch,
+//     ...bindActionCreators(
+//         {
+//             fetchList: configParamEditActions.fetchList,
+//             saveData: configParamEditActions.saveData,
+//             fetchDataList: configParamEditActions.fetchDataList,
+//             listShowLoading: configParamEditActions.listShowLoading,
+//             showGlobalNotification,
+//         },
+//         dispatch
+//     ),
+// });
+export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -177,38 +177,33 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         }),
 
         tblPrepareColumns({
-            title: 'Control ID',
+            title: 'State Code',
             dataIndex: 'controlId',
             render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Control Description',
+            title: 'State Name',
             dataIndex: 'controlDescription',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Configurable Parameter Type',
+            title: 'GST State Code',
             dataIndex: 'configurableParameterType',
             render: (text, record, value) => renderTableColumnName(record, 'configurableParameterType', PARAM_MASTER.CFG_PARAM_TYPE.id),
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Configurable Parameter Values',
-            width: '20%',
-            render: (text, record, value) => renderConfigurableParemetarValue(record),
-            sorter: false,
+            title: 'Status',
+            dataIndex: 'activeIndicator',
+            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            width: '15%',
         }),
 
-        tblPrepareColumns({
-            title: 'Control Group',
-            dataIndex: 'controlGroup',
-            render: (text, record, value) => renderTableColumnName(record, 'controlGroup', PARAM_MASTER.CTRL_GRP.id),
-            width: '12%',
-        }),
+    
         {
             title: 'Action',
             dataIndex: '',
@@ -364,7 +359,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add Group
+                                        Add State
                                     </Button>
                                 </Col>
                             ) : (
@@ -419,4 +414,4 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     );
 };
 
-export const ConfigurableParameterEditing = connect(mapStateToProps, mapDispatchToProps)(ConfigurableParameterEditingBase);
+export const StateGeo = connect()(StateGeoBase);

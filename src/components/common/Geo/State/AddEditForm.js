@@ -131,7 +131,8 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </>
             ) : (
-                <ViewConfigDetails {...viewProps} />
+                // <ViewConfigDetails {...viewProps} />
+                null
             )}
 
             <Row gutter={20} className={styles.formFooter}>

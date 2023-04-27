@@ -1,3 +1,3 @@
 import { GeoPage } from "./GeoPage";
-
-export { GeoPage };
+import { StateGeoPage } from "./StateGeo/StateGeoPage"
+export { GeoPage,StateGeoPage };
