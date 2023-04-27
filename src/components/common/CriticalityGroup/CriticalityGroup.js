@@ -295,7 +295,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
-            width: '15%',
+            width: '20%',
         }),
         tblPrepareColumns({
             title: 'Criticality Group Name',
@@ -312,7 +312,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%',
+            width: '10%',
         }),
         tblPrepareColumns({
             title: 'Actions',
