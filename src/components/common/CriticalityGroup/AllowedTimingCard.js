@@ -8,7 +8,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { validateRequiredInputField } from 'utils/validation';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 
-
 const AllowedTimingCard = (props) => {
     const { form, styles, disabledProps, showGlobalNotification, removeItem, setTimesegmentLengthTracker, forceUpdate, onOk, validatedDuplicateTime, TimesegmentLengthTracker } = props;
 
@@ -64,7 +63,7 @@ const AllowedTimingCard = (props) => {
                                     <Space size="middle">
                                         <Row gutter={20}>
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                                <Form.Item {...restField} name={[name, 'timeSlotFrom']} rules={[validateRequiredInputField('Start Time'), { validator: TimesegmentLengthTracker && validatedDuplicateTime('timeSlotFrom') }]}>
+                                                <Form.Item {...restField} name={[name, 'timeSlotFrom']} rules={[validateRequiredInputField('start time'), { validator: TimesegmentLengthTracker && validatedDuplicateTime('timeSlotFrom') }]}>
                                                     <TimePicker use12Hours size="large" format="h:mm A" onOk={onOk} {...disabledProps} />
                                                 </Form.Item>
                                             </Col>
@@ -73,7 +72,7 @@ const AllowedTimingCard = (props) => {
                                                     {...restField}
                                                     name={[name, 'timeSlotTo']}
                                                     rules={[
-                                                        validateRequiredInputField('End Time'),
+                                                        validateRequiredInputField('end time'),
                                                         {
                                                             validator: TimesegmentLengthTracker && validatedDuplicateTime('timeSlotTo'),
                                                         },
