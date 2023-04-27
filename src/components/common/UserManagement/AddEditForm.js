@@ -29,6 +29,7 @@ const AddEditFormMain = (props) => {
     const [Macid, setMacid] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
     const [openAccordian, setOpenAccordian] = useState(1);
+    const [disableadd, setdisableadd] = useState(false);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -61,6 +62,18 @@ const AddEditFormMain = (props) => {
     };
     const onChangeCollapse = (collapse) => {
         console.log('collapse: :', collapse);
+    };
+    const Checkduplicate = (value) => {
+        const index = AccessMacid?.findIndex((el) => el?.macid === value);
+
+        if (index !== -1) {
+            setdisableadd(true);
+            return Promise.reject('Their are duplicate Macid');
+        } else {
+            setdisableadd(false);
+
+            return Promise.resolve('');
+        }
     };
     useEffect(() => {
         console.log('We are getting dealer data: :', DealerData);
@@ -121,12 +134,22 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="MAC ID" name="macid" rules={[validateRequiredInputField('MAC id'), validationFieldLetterAndNumber('MAC id')]}>
+                            <Form.Item
+                                label="MAC ID"
+                                name="macid"
+                                rules={[
+                                    validateRequiredInputField('MAC id'),
+                                    validationFieldLetterAndNumber('MAC id'),
+                                    {
+                                        validator: (_, value) => Checkduplicate(value),
+                                    },
+                                ]}
+                            >
                                 <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary">
+                            <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary" disabled={disableadd}>
                                 Add
                             </Button>
                         </Col>
