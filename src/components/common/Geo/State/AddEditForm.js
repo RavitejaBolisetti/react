@@ -5,8 +5,8 @@ import { withDrawer } from 'components/withDrawer';
 import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from '../Geo/State/InputType';
-import { ViewConfigDetails } from './ViewConfigDetails'
+import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+//import { ViewConfigDetails } from './ViewConfigDetails'
 
 import styles from 'components/common/Common.module.css';
 
