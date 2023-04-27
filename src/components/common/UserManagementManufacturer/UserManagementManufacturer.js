@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'User Access'
+    const moduleTitle = 'User Access';
 
     let returnValue = {
         collapsed,
@@ -94,7 +94,7 @@ const savePayload = {
     manufacturerAdminHeirarchyAdminId: 'facf625b-908b-4f8c-8796-af07c8c9b74c',
 };
 
-export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
+export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, saveDealerDetails, UserManagementDealerData, UserManagementManufacturerData, fetchManufacturerDetails, isDataLoaded, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, isLoadingOnSave, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -130,7 +130,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    
     useEffect(() => {
         form.resetFields();
         form.setFieldValue(formData);
@@ -228,7 +227,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
         tblPrepareColumns({
             title: 'Email ID',
             dataIndex: 'emailID',
-            width: '32%',            
+            width: '32%',
             sorter: false,
         })
     );
@@ -334,7 +333,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
     const tableProps = {
         isLoading: isLoading,
         tableData: initialTableData,
-        tableData: searchData,
         tableColumn: tableColumn,
     };
 
@@ -386,7 +384,6 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
         setIsFormVisible(true);
         setFormBtnActive(true);
         setIsViewModeVisible(false);
-
 
         setDrawer(true);
         setIsReadOnly(false);
@@ -485,7 +482,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
-
+    const ChangeSearchHandler = () => {};
     const filterFunction = (filterString) => (title) => {
         return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
     };
@@ -516,6 +513,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
         formData,
         setIsChecked,
         titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Manage ').concat(moduleTitle),
+        DealerSearchvalue,
 
         formActionType,
         isReadOnly,
@@ -535,7 +533,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
+                        {/* <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
                                     <div className={style.searchAndLabelAlign}>
@@ -573,17 +571,72 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
                             ) : (
                                 ''
                             )}
+                        </Row> */}
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                                {/* <div className={style.}> */}
+                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                    <Button className={styles.marR5} type="primary" danger>
+                                        Manufacturer
+                                    </Button>
+                                    <Button type="link" ghost onClick={() => navigate(ROUTING_USER_MANAGEMENT_DEALER)}>
+                                        Dealer
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
+                                <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
+                            </Col>
                         </Row>
                         {Object.keys(DealerData).length > 0 ? (
+                            // <Row gutter={20}>
+                            //     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            //         <div className={style.successDisplay}>
+                            //             <Row gutter={20}>
+                            //                 <Col xs={20} sm={20} md={20} lg={20} xl={20}>
+                            //                     <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                            //                 </Col>
+                            //                 <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                            //                     <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                            //                         Manage Access
+                            //                     </Button>
+                            //                 </Col>
+                            //             </Row>
+                            //         </div>
+                            //     </Col>
+                            // </Row>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style.successDisplay}>
+                                    <div className={styles.dataDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={20} sm={20} md={20} lg={20} xl={20}>
-                                                <DataTable tableColumn={tableDetails} {...tableDetailProps} />
+                                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>User Name</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeName}</div>
+                                                    </Col>
+
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>Token No.</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerSearchvalue}</div>
+                                                    </Col>
+
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>Designation</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.designation}</div>
+                                                    </Col>
+                                                    <Col xs={24} sm={24} md={4} lg={3} xl={3}>
+                                                        <div className={styles.contentHeading}>Mobile Number</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.contactMobileNumber}</div>
+                                                    </Col>
+                                                    <Col xs={24} sm={24} md={4} lg={5} xl={5}>
+                                                        <div className={styles.contentHeading}>Email ID</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.contactEmail}</div>
+                                                    </Col>
+                                                </Row>
                                             </Col>
-                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>
@@ -695,7 +748,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle,saveData, userId, s
                             </Empty>
                         )}
                     >
-                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} {...tableProps} onChange={onChange} />
+                        <DataTable isLoading={isLoading} {...tableProps} onChange={onChange} />
                     </ConfigProvider>
                 </Col>
             </Row>

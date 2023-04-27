@@ -175,6 +175,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
+    const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [finalFormdata, setfinalFormdata] = useState({
         Macid: [],
         AssignUserRole: [],
@@ -448,8 +449,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setFormActionType('add');
         setIsViewModeVisible(false);
 
-        setSaveAndSaveNew(true);
         setSaveBtn(true);
+        setShowSaveBtn(true);
         setFooterEdit(false);
         setIsFormVisible(true);
         setFormBtnActive(true);
@@ -509,15 +510,16 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setIsFormVisible(true);
         setFormBtnActive(false);
 
-        form.setFieldsValue({
-            qualificationCode: record.qualificationCode,
-            qualificationName: record.qualificationName,
-            status: record.status,
-        });
         setDrawer(true);
         setIsReadOnly(true);
     };
-
+    const hanndleEditData = (record) => {
+        setIsViewModeVisible(false);
+        setFormActionType('update');
+        setFooterEdit(false);
+        setIsReadOnly(false);
+        setShowSaveBtn(true);
+    };
     const handleReferesh = (e) => {
         setRefershData(!refershData);
     };
@@ -603,6 +605,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         onCloseAction: () => setIsFormVisible(false),
         finalFormdata,
         setfinalFormdata,
+        setShowSaveBtn,
+        showSaveBtn,
+        hanndleEditData,
     };
 
     return (
@@ -639,7 +644,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className={styles.dataDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={20} lg={20} xl={20} >
+                                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Employee Code</div>
@@ -668,8 +673,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                                     </Col>
                                                 </Row>
                                             </Col>
-                                            <Col xs={24} sm={24} md={4} lg={4} xl={4} >
-                                                <Button icon={<PlusOutlined />} className={styles.floatRight}  type="primary" danger onClick={handleAdd}>
+                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>
