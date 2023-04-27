@@ -2,6 +2,7 @@ import { screen, render, fireEvent, findAllByText } from '@testing-library/react
 import { Logins } from '../../Auth/Login/Login';
 import { ForgotPassword } from '../../Auth/ForgotPassword';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 jest.mock('react-redux', () => ({
     connect: () => (Logins) => Logins,
@@ -72,5 +73,21 @@ describe('Login component', () => {
         const ssoLogin = screen.getByText('M&M User Login');
         fireEvent.click(ssoLogin);
     });
+    const mockStore = configureStore([])
+describe("Login", () => {
+  function renderComponent(state = initialState) {
+    const store = mockStore(state)
+    return [
+      render(
+        <Provider store={store}>
+          <Logins />
+        </Provider>
+      ),
+      store
+    ]
+  }
+
+  afterAll(cleanup)
+});
 });
 

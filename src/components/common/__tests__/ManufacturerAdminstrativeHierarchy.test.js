@@ -1,13 +1,13 @@
 import { fireEvent, render, screen, waitFor, getByPlaceholderText } from '@testing-library/react';
 import { ManufacturerAdminstrativeHierarchy } from '../ManufacturerAdminstrativeHierarchy/ManufacturerAdminstrativeHierarchy';
-import { axiosCall, commonDrawer, commonTreeTest, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
+import { axiosCall, commonDrawer, commonTreeTest, editClickAfterTreeSelect, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, textFindAfterClick, textFindAfterClickinDrawer, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
 import { ManufacturerTreeData as treeDatas } from './Common/Data/data';
 import { fetchList, saveData, hierarchyAttributeFetchList, listShowLoading } from './Common/CommonImports/commonImports';
 import { async } from 'sonarqube-scanner';
 import userEvent from '@testing-library/user-event';
 import { BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY } from '../../../constants/routingApi';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
-import { buttonLookAndFireEventWithText } from './Common/tableWithDrawer/common';
+import { buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange } from './Common/tableWithDrawer/common';
 jest.mock('react-redux', () => ({
     connect: () => (ManufacturerAdminstrativeHierarchy) => ManufacturerAdminstrativeHierarchy,
 }));
@@ -35,10 +35,7 @@ describe('manufacturerAdminHierarchy component', () => {
         render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} manufacturerOrgHierarchyData={treeDatas} />);
         findbuttonAndClick('Upload');
     });
-    // test.only('Manufacturer adminsration hierarchy page renders', async () => {
-    //     render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} manufacturerOrgHierarchyData={treeDatas} />);
-    //     findbuttonAndClick('Change History');
-    // });
+
     test('Is search working', async () => {
         render(<ManufacturerAdminstrativeHierarchy hierarhyAttributeFetchList={hierarchyAttributeFetchList} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
         searchIsWorking();
@@ -96,5 +93,20 @@ describe('manufacturerAdminHierarchy component', () => {
 
         expect(result).toBeTruthy();
         expect(onFinish).toHaveBeenCalled();
+    });
+    test('after drawer opening clicking on authority details ', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        textFindAfterClickinDrawer();
+        buttonLookAndFireEventWithText('Authority Details');
+        findplaceholder('Select Authority Type');
+        findplaceholder('Please enter Token');
+    });
+    test('after drawer opening clicking on authority details ', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+        textFindAfterClickinDrawer();
+        buttonLookAndFireEventWithText('Authority Details');
+        buttonLookAndFireEventWithLabel('Authority Details');
+        findplaceholder('Select Authority Type');
+        findplaceholder('Please enter Token');
     });
 });
