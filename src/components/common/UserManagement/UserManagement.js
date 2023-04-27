@@ -630,55 +630,39 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                         {DealerData?.employeeCode ? (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style3.successDisplay}>
+                                    <div className={styles.dataDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={16} sm={16} md={16} lg={16} xl={16} className={style3.subheading}>
-                                                {/* <DataTable tableColumn={tableDetails} {...tableDetailProps} /> */}
+                                            <Col xs={24} sm={24} md={20} lg={20} xl={20} >
                                                 <Row gutter={20}>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        Employee Code
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>Employee Code</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeCode}</div>
                                                     </Col>
 
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        Dealer Name
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>Dealer Name</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerSelected}</div>
                                                     </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        User Name
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>User Name</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeName}</div>
                                                     </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        Designation
+                                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                        <div className={styles.contentHeading}>Designation</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeDesignation}</div>
                                                     </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        Mobile Number
+                                                    <Col xs={24} sm={24} md={4} lg={3} xl={3}>
+                                                        <div className={styles.contentHeading}>Mobile Number</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeMobileNumber}</div>
                                                     </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        Email ID
-                                                    </Col>
-                                                </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        {DealerData?.employeeCode}
-                                                    </Col>
-
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        {DealerSelected}
-                                                    </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        {DealerData?.employeeName}
-                                                    </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        {DealerData?.employeeDesignation}
-                                                    </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        {DealerData?.employeeMobileNumber}
-                                                    </Col>
-                                                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                        {DealerData?.employeeEmail}
+                                                    <Col xs={24} sm={24} md={4} lg={5} xl={5}>
+                                                        <div className={styles.contentHeading}>Email ID</div>
+                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeEmail}</div>
                                                     </Col>
                                                 </Row>
                                             </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} className={style3.subheading}>
-                                                <Button icon={<PlusOutlined />} className={style3.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Col xs={24} sm={24} md={4} lg={4} xl={4} >
+                                                <Button icon={<PlusOutlined />} className={styles.floatRight}  type="primary" danger onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>
@@ -689,9 +673,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                         ) : error ? (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={style3.errorDisplay}>
+                                    <div className={styles.dataDisplay}>
                                         <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={style3.subheading}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.errorDisplay}>
                                                 <IoBanOutline />
                                                 <span>User token number {DealerSearchvalue} does not exist. Try again with valid token number.</span>
                                             </Col>
