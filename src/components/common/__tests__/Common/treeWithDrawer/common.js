@@ -78,23 +78,24 @@ export const buttonLookAndFireEventWithText = async (btnText) => {
     expect(CancelBtn).toBeTruthy();
     fireEvent.click(CancelBtn);
 };
-export const axiosCall = async(BASE_URL,fetchList,listShowLoading)=>{
-    axios.get = jest.fn()
+export const axiosCall = async (BASE_URL, fetchList, listShowLoading) => {
+    axios.get = jest.fn();
     axios.get(BASE_URL);
-    jest.mock("axios");
+    jest.mock('axios');
     const users = [
-        { id: 1, name: "reena" },
-        { id: 2, name: "shakambhar" },
-      ];
-      axios.get.mockResolvedValueOnce(users);
-      const result = await fetchList();
-      expect(axios.get).toHaveBeenCalledWith(BASE_URL);
-      console.log(axios.get.mock.calls);
-      //expect(result).toMatchObject(users);
-      
-
-}
-export const textFindAfterClick = async (text) => {
+        { id: 1, name: 'reena' },
+        { id: 2, name: 'shakambhar' },
+    ];
+    axios.get.mockResolvedValueOnce(users);
+    const result = await fetchList();
+    expect(axios.get).toHaveBeenCalledWith(BASE_URL);
+    console.log(axios.get.mock.calls);
+    //expect(result).toMatchObject(users);
+};
+export const textFindAfterClickinDrawer = async (text) => {
+    const Treepresent = screen.getByRole('tree');
+    expect(Treepresent).toBeTruthy();
+    fireEvent.click(Treepresent);
     const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
     expect(addChildBtn).toBeInTheDocument();
     const addiblingBtn = await screen.findByRole('button', { name: 'Add Sibling' });
@@ -103,5 +104,16 @@ export const textFindAfterClick = async (text) => {
     expect(editBtn).toBeInTheDocument();
     fireEvent.click(addChildBtn);
     screentext(text);
-
+};
+export const editClickAfterTreeSelect = async (text) => {
+    const Treepresent = screen.getByRole('tree');
+    expect(Treepresent).toBeTruthy();
+    fireEvent.click(Treepresent);
+    const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
+    expect(addChildBtn).toBeInTheDocument();
+    const addiblingBtn = await screen.findByRole('button', { name: 'Add Sibling' });
+    expect(addiblingBtn).toBeInTheDocument();
+    const editBtn = await screen.findByRole('button', { name: 'Edit' });
+    expect(editBtn).toBeInTheDocument();
+    fireEvent.click(editBtn);
 };
