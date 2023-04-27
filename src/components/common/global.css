@@ -77,9 +77,9 @@
     color: #ffffff !important;
 }
 
-:global .ant-btn-default.ant-btn-dangerous {
+/* :global .ant-btn-default.ant-btn-dangerous {
     margin-bottom: 8px;
-}
+} */
 
 :global .ant-btn-default.ant-btn-dangerous svg {
     padding-top: 2px;

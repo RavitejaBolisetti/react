@@ -19,7 +19,7 @@
     color: #70c922 !important;
 }
 
-.accordianContainer
+/* .accordianContainer */
 
 /* :global(.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-expand-icon){
     border: 2px solid #E31837;
@@ -43,11 +43,15 @@
     border-radius: 0px;
 }
 
-.viewCardSize :global(.ant-card-body) {
+.viewCardSize :global .ant-card-body {
     border: 1px solid rgba(62, 62, 62, 0.1);
     border-radius: 6px;
     background-color: rgba(190, 190, 190, 0.1);
     gap: 10px;
+}
+
+.viewCardSize :global .ant-card-body button {
+    margin-top: -8px;
 }
 
 .viewCollapse {
@@ -108,14 +112,14 @@
 
 .searchicon :global .ant-input-affix-wrapper,
 .searchicon :global .ant-btn-default {
-  height: 32px !important;
-  margin-bottom: -5px;
-  border-radius: 4px;
-  border-color: #DEDEDE;
-  
+    height: 32px !important;
+    margin-bottom: -5px;
+    border-radius: 4px;
+    border-color: #DEDEDE;
+
 }
 
-.autoCompleteBtn :global .ant-input-group >.ant-input-group-addon:last-child {
+.autoCompleteBtn :global .ant-input-group>.ant-input-group-addon:last-child {
     inset-inline-start: -1px;
     padding: 0;
     border: 0;
@@ -124,6 +128,6 @@
     background: white;
 }
 
-.autoCompleteBtn :global .ant-input-group >.ant-input-group-addon:last-child :hover {
+.autoCompleteBtn :global .ant-input-group>.ant-input-group-addon:last-child :hover {
     border: none;
 }

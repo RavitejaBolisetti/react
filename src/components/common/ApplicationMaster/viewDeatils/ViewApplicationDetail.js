@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Descriptions, Typography, Collapse, Space, Row, Col } from 'antd';
+import { Descriptions, Typography, Collapse, Space, Row, Col, Divider } from 'antd';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 
 import CardDocument from './CardDocument';
@@ -53,10 +53,11 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                     }}
                 >
                     <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             {applicationAction.length > 0 && (
                                 <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span>Application Actions</span>} key="1">
+                                        <Divider />
                                         {applicationAction.map((el) => (
                                             <CardAction {...el} />
                                         ))}
@@ -68,6 +69,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                             {documentType.length > 0 && (
                                 <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span>Document Types</span>} key="2">
+                                        <Divider />
                                         {documentType.map((el) => (
                                             <CardDocument {...el} />
                                         ))}
@@ -79,6 +81,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                             {accessibleLocation?.length > 0 && (
                                 <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
                                     <Panel header={<span >Accessible Dealer Location</span>} key="3">
+                                        <Divider />
                                         {accessibleLocation.map((el) => (
                                             <CardLocation {...el} />
                                         ))}

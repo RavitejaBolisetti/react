@@ -82,10 +82,10 @@ const CardDocumentType = (prop) => {
                                 <Text type="secondary">Signature: </Text> {digitalSignatureRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{documentTypeDescription }</Text>
+                                <Text strong>{documentTypeDescription}</Text>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">Code: {documentTypeCode }</Text>
+                                <Text type="secondary">Code: {documentTypeCode}</Text>
                             </Col>
                         </Row>
                     </Col>
@@ -94,11 +94,11 @@ const CardDocumentType = (prop) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id,termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
                                     {!id?.length > 0 && (
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                            <Button onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })} type="link" icon={<FiTrash />}></Button>
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                            <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })} type="link" icon={<FiTrash />}></Button>
                                         </Col>
                                     )}
                                 </>

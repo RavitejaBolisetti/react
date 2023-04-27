@@ -97,9 +97,9 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Location added successfully' });
     };
 
-    const onSearchLocation = debounce(function(text) {
+    const onSearchLocation = debounce(function (text) {
         if (text?.length < 3 || !userId) return;
-         fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
+        fetchDealerLocations({ setIsLoading: applicationMasterDataShowLoading, searchParam: text });
     }, 500);
 
     // function onSearchLocation(text){
@@ -138,22 +138,21 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                         style={{
                             width: '100%',
                         }}
-                        allowClear
                         onSelect={handleSelect}
                         onSearch={onSearchLocation}
                         onChange={handleChange}
                         allowSearch
                         notFoundContent="No location found"
                     >
-                        <Input.Search size="large" placeholder={preparePlaceholderAutoComplete('')} />
+                        <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {finalFormdata?.accessibleLocation?.length > 0
                         ? finalFormdata?.accessibleLocation?.map((location) => {
-                              return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
-                          })
+                            return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
+                        })
                         : ''}
                 </Col>
             </Row>

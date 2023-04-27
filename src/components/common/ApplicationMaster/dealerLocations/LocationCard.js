@@ -10,9 +10,6 @@ function LocationCard(props) {
 
     return (
         <Card
-            style={{
-                marginTop: '12px',
-            }}
             className={style.viewCardSize}
             key={id}
         >

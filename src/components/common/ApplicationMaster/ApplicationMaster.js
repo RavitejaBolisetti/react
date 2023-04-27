@@ -21,7 +21,6 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
-    console.log('state', state);
     const {
         auth: { userId },
         data: {
