@@ -234,6 +234,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             setDealerSearchvalue('');
             setDealerData({});
             setdisabled(true);
+            setError(false);
         }
     }, [DealerSearchvalue, DealerSelected]);
 
@@ -528,6 +529,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const onSearchHandle = (value) => {
         console.log('This is the searched Value : ', value);
         setDealerSearchvalue(value);
+        if (value === '') {
+            return;
+        }
         if (DealerSearchvalue?.length > 0 && DealerSelected?.length > 0 && DealerSelected !== undefined) {
             fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: DealerSearchvalue, FetchError });
         }
@@ -549,6 +553,9 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setDealerSelected(selectedvalue);
     };
     const ChangeSearchHandler = (event) => {
+        if (event.target.value === undefined) {
+            setError(false);
+        }
         setDealerSearchvalue(event.target.value);
     };
     const filterFunction = (filterString) => (title) => {
