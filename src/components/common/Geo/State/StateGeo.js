@@ -60,7 +60,6 @@ const { Option } = Select;
 // });
 export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
-    const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
@@ -79,7 +78,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [parameterType, setParameterType] = useState(defaultParametarType);
 
     const loadDependendData = () => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
@@ -239,7 +237,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType);
+        
     };
 
     const onSearchHandle = (value) => {
@@ -252,7 +250,8 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
+        let data = { ...values, id: recordId };
+        console.log(data);
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -308,9 +307,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        configData,
-        parameterType,
-        setParameterType,
+        tableData,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
