@@ -5,28 +5,19 @@ import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
+import { EN } from 'language/en';
 
 import style from 'components/common/Common.module.css';
-import styles from '../DrawerAndTable.module.css';
 
 import { ViewCriticalityGroup } from './ViewCriticalityGroup';
 import { withDrawer } from 'components/withDrawer';
 import AllowedTimingCard from './AllowedTimingCard';
 
-const AddEditDrawerMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVisible, codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, setFieldValue, contextAlertNotification }) => {
+const AddEditFormMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVisible, codeIsReadOnly, forceUpdate, deletedItemList, setDeletedItemList, showGlobalNotification, isLoading, setsaveclick, alertNotification, formBtnDisable, setFormBtnDisable, successAlert, handleUpdate2, onFinish, onFinishFailed, saveBtn, footerEdit, saveAndSaveNew, setSaveAndSaveNew, form, selectedRecord, setSelectedRecord, handleAdd, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, setFieldValue, contextAlertNotification }) => {
     const disabledProps = { disabled: isReadOnly };
     const [TimesegmentLengthTracker, setTimesegmentLengthTracker] = useState(generateRandomNumber());
     const [TimeTrack, setTimeTrack] = useState(true);
     const codeDisabledProp = { disabled: codeIsReadOnly };
-
-    let drawerTitle = '';
-    if (formActionType === 'add') {
-        drawerTitle = 'Add Application Criticality Group Details';
-    } else if (formActionType === 'update') {
-        drawerTitle = 'Edit Application Criticality Group Details';
-    } else if (formActionType === 'view') {
-        drawerTitle = 'View Application Criticality Group Details';
-    }
 
     useEffect(() => {
         let timeSegments = form.getFieldValue('allowedTimings');
@@ -51,7 +42,6 @@ const AddEditDrawerMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeV
 
     const checkOverlap = () => {
         let timeSegments = form.getFieldValue('allowedTimings');
-        let StoreOldTimeSegment = form.getFieldValue('allowedTimings');
         timeSegments = timeSegments?.map((time) => ({ timeSlotFrom: time?.timeSlotFrom?.format('HH:mm'), timeSlotTo: time?.timeSlotTo?.format('HH:mm') }));
         if (timeSegments?.length === 1) {
             return false;
@@ -63,15 +53,12 @@ const AddEditDrawerMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeV
             const currentEndTime = timeSegments[i]['timeSlotTo'];
             const nextStartTime = timeSegments[i + 1]['timeSlotFrom'];
             if (currentEndTime > nextStartTime) {
-                console.log('yes');
                 return { isOverlap: true, ...timeSegments[i] };
             }
         }
 
         return { isOverlap: false };
     };
-
-    const onOk = (value) => {};
 
     const handleForm = () => {
         setFormBtnDisable(true);
@@ -101,19 +88,17 @@ const AddEditDrawerMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeV
     };
     const validatedDuplicateTime = (field) => (rule, value) => {
         const overlapData = checkOverlap();
-        console.log('TimeTrack', TimeTrack);
-        return overlapData?.isOverlap && TimeTrack ? Promise.reject('Time overlaps with other time') : Promise.resolve();
+        return overlapData?.isOverlap && TimeTrack ? Promise.reject(EN.GENERAL.TIME_OVERLAPPING.MESSAGE) : Promise.resolve();
     };
 
     const cardProps = {
         form,
-        styles,
+        style,
         disabledProps,
         showGlobalNotification,
         removeItem,
         setTimesegmentLengthTracker,
         forceUpdate,
-        onOk,
         validatedDuplicateTime,
         TimesegmentLengthTracker,
     };
@@ -144,7 +129,7 @@ const AddEditDrawerMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeV
                     </Row>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="criticalityDefaultGroup" label="Default Group">
+                            <Form.Item labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="criticalityDefaultGroup" label="Default Group">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -195,4 +180,4 @@ const AddEditDrawerMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeV
     );
 };
 
-export const AddEditDrawer = withDrawer(AddEditDrawerMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, {});

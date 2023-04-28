@@ -12,7 +12,7 @@ import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { qualificationDataActions } from 'store/actions/data/qualificationMaster';
-import { AddEditDrawer } from './AddEditDrawer';
+import { AddEditForm } from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
 
@@ -377,7 +377,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                     </div>
                 </Col>
             </Row>
-            <AddEditDrawer {...formProps} />
+            <AddEditForm {...formProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider

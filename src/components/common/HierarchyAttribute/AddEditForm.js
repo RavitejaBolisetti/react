@@ -1,25 +1,17 @@
 import React, { useEffect } from 'react';
 import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
+
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
-import style from 'components/common/Common.module.css';
 import { withDrawer } from 'components/withDrawer';
 import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 
-const AddUpdateDrawerMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
+import style from 'components/common/Common.module.css';
+
+const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
-
-    let drawerTitle = '';
-    if (formActionType === 'view') {
-        drawerTitle = 'View Hierarchy Attribute';
-    } else if (!!editRow?.id) {
-        drawerTitle = 'Edit Hierarchy Attribute';
-    } else {
-        drawerTitle = 'Add Hierarchy Attribute';
-    }
 
     useEffect(() => {
         form.resetFields();
@@ -148,4 +140,4 @@ const AddUpdateDrawerMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEd
     );
 };
 
-export const AddUpdateDrawer = withDrawer(AddUpdateDrawerMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, {});

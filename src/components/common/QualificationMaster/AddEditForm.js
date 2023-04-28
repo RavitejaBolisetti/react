@@ -8,27 +8,18 @@ import style from 'components/common/Common.module.css';
 import { ViewQualificationList } from './ViewQualificationList';
 import { withDrawer } from 'components/withDrawer';
 
-const AddEditDrawerMain = ({ setIsFormVisible,selectedRecord, isFormVisible, isViewModeVisible, codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
+const AddEditFormMain = ({ setIsFormVisible, selectedRecord, isFormVisible, isViewModeVisible, codeIsReadOnly, handleUpdate2, footerEdit, setsaveclick, isLoading, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, open, setDrawer, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, geoData, isLoadingOnSave }) => {
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };
-
-    let drawerTitle = '';
-    if (formActionType === 'add') {
-        drawerTitle = 'Add Qualification Details';
-    } else if (formActionType === 'update') {
-        drawerTitle = 'Edit Qualification Details';
-    } else if (formActionType === 'view') {
-        drawerTitle = 'View Qualification Details';
-    }
 
     const handleForm = () => {
         setFormBtnDisable(true);
     };
 
     const onClose = () => {
-        setIsFormVisible(false) 
-        setFormBtnDisable(false)
-         form.resetFields();
+        setIsFormVisible(false);
+        setFormBtnDisable(false);
+        form.resetFields();
     };
 
     const viewProps = {
@@ -99,4 +90,4 @@ const AddEditDrawerMain = ({ setIsFormVisible,selectedRecord, isFormVisible, isV
     );
 };
 
-export const AddEditDrawer = withDrawer(AddEditDrawerMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, {});

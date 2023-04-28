@@ -14,7 +14,7 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import { AddEditDrawer } from './AddEditDrawer';
+import { AddEditForm } from './AddEditForm';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
@@ -423,7 +423,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
                 </Col>
             </Row>
 
-            <AddEditDrawer {...formProps} />
+            <AddEditForm {...formProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

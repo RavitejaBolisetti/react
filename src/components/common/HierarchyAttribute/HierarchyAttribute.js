@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
-import { AddUpdateDrawer } from './AddUpdateDrawer';
+import { AddEditForm } from './AddEditForm';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
@@ -362,7 +362,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                             </Button>
                                         </Col>
                                     )}
-                                    {/* </div> */}
+                                   
                                 </Row>
                             </Col>
                         </Row>
@@ -414,7 +414,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                     </Col>
                 </Row>
             </>
-            <AddUpdateDrawer {...formProps} />
+            <AddEditForm {...formProps} />
         </>
     );
 };
