@@ -16,6 +16,20 @@ export const childSiblingEdit = async () => {
     // const saveBtn = await screen.findByRole('Save');
     // expect(saveBtn).toBeTruthy();
 };
+export const siblingClick = async () => {
+    const addChildBtn = await screen.findByRole('button', { name: 'Add Child' });
+    expect(addChildBtn).toBeInTheDocument();
+    const addiblingBtn = await screen.findByRole('button', { name: 'Add Sibling' });
+    expect(addiblingBtn).toBeInTheDocument();
+    const editBtn = await screen.findByRole('button', { name: 'Edit' });
+    expect(editBtn).toBeInTheDocument();
+    fireEvent.click(addiblingBtn);
+    buttonLookAndFireEventWithText('Cancel');
+    // const cancelBtn = await screen.findByRole('Cancel');
+    // expect(cancelBtn).toBeTruthy();
+    // const saveBtn = await screen.findByRole('Save');
+    // expect(saveBtn).toBeTruthy();
+};
 
 export const commonTreeTest = async () => {
     const Treepresent = screen.getByRole('tree');
