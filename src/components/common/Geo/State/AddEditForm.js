@@ -85,7 +85,8 @@ const AddEditFormMain = (props) => {
                     
                 </>
             ) : (
-                <ViewStateDetails {...viewProps} />
+                // <ViewStateDetails {...viewProps} />
+                <></>
                 
             )}
 

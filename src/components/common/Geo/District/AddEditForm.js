@@ -8,12 +8,13 @@ import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { ViewDistrictDetails } from './ViewDistrictDetails';
 
 const { Option } = Select;
 // const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData,hanndleEditData, setSaveAndAddNewBtnClicked } = props;
+    const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
@@ -44,7 +45,14 @@ const AddEditFormMain = (props) => {
     //     parameterType
     // };
 
-    console.log(CONFIGURABLE_PARAMETARS_INPUT_TYPE,'CONFIGURABLE_PARAMETARS_INPUT_TYPE')
+    // console.log(CONFIGURABLE_PARAMETARS_INPUT_TYPE,'CONFIGURABLE_PARAMETARS_INPUT_TYPE')
+
+    const viewProps = {
+        isVisible: isViewModeVisible,
+        //setClosePanels,
+        formData,
+        styles,
+    };
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -57,8 +65,7 @@ const AddEditFormMain = (props) => {
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {CONFIGURABLE_PARAMETARS_INPUT_TYPE?.map((item) => (
                                         <Option value={item?.KEY}>{item?.TITLE}</Option>
-                                        )
-                                    )}
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -91,7 +98,9 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </>
-            ) : null}
+            ) : (
+                <ViewDistrictDetails {...viewProps} />
+            )}
 
             <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>

@@ -111,18 +111,23 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     }, [filterString, isDataLoaded, configData, userId]);
 
     const handleEditBtn = (record) => {
+
+        console.log(record,'RECORD');
+        console.log(configData,"configData")
+
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = configData.find((i) => i.id === record.id);
+        //configData
+        const data = tableData.find((i) => i.id === record.id);
         console.log('data', data);
         if (data) {
             data && setFormData(data);
             console.log('formData', formData);
 
-            setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
+           // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
     };
@@ -133,19 +138,20 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = configData.find((i) => i.id === record.id);
+        //configData
+        const data = tableData.find((i) => i.id === record.id);
         if (data) {
             data && setFormData(data);
-            setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
+            //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
 
         setIsReadOnly(true);
     };
 
-    const renderTableColumnName = (record, key, type) => {
-        return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    };
+    // const renderTableColumnName = (record, key, type) => {
+    //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
+    // };
 
     // const renderConfigurableParemetarValue = (record) => {
     //     let fieldType = '';
@@ -170,24 +176,25 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     // };
 
     const tableColumn = [];
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
-            dataIndex: 'srl',
+            dataIndex: 'id',
             sorter: false,
             width: '5%',
         }),
 
         tblPrepareColumns({
             title: 'District Code',
-            dataIndex: 'controlId',
-            render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
+            dataIndex: 'districtCode',
+           // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'District Name',
-            dataIndex: 'controlDescription',
+            dataIndex: 'districtName',
             width: '20%',
         }),
 
@@ -262,8 +269,9 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     const onFinish = (values) => {
         console.log(values, 'dta');
 
-        const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
+        //const recordId = formData?.id || '';
+        let data = { ...values };
+        //id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD')
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -299,9 +307,25 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
+
+    const tableData = [
+        {
+            id: '1',
+
+            districtCode: 'DO0',
+
+            districtName: 'Ranchi',
+
+            gstCode: 'Test3',
+
+            status: true,
+        },
+    ];
+
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: searchData,
+        tableData: tableData,
+        //searchData,
     };
 
     const formProps = {
@@ -335,7 +359,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
+                        <Row gutter={20} style={{display:'flex',justifyContent:'space-between'}}>
                             <Row xs={24} sm={24} md={24} lg={60} xl={60}>
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
@@ -359,7 +383,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                 </Row>
 
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{margin:'0 0 0 2rem'}}>
+                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             State
                                             {/* <Search
@@ -372,7 +396,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                                 onSearch={onSearchHandle}
                                                 onChange={onChangeHandle}
                                             /> */}
-                                            <Select placeholder="Select" style={{margin:'0 0 0 0.5rem',width:'15rem'}}>
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}>
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                 {CONFIGURABLE_PARAMETARS_INPUT_TYPE?.map((item) => (
                                                     <Option value={item?.KEY}>{item?.TITLE}</Option>
@@ -382,8 +406,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                     </div>
                                 </Row>
                             </Row>
-
-                            {configData?.length ? (
+                            {tableData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
