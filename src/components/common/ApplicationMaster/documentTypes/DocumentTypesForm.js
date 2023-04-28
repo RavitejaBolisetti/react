@@ -19,13 +19,13 @@ function DocumentTypesForm({ form, onFinish, isEditing, isBtnDisabled, setIsBtnD
         <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Code" name="documentTypeCode" rules={[{ max: 3, message: 'Code must be 3 characters long.' }, validateRequiredInputField('Application Code'), validationFieldLetterAndNumber('Application Code'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeCode', finalFormdata?.documentType, documentTypeCode) }]}>
-                        <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('Application Code')} />
+                    <Form.Item label="Code" name="documentTypeCode" rules={[{ max: 3, message: 'Code must be 3 characters long.' }, validateRequiredInputField('application code'), validationFieldLetterAndNumber('application code'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeCode', finalFormdata?.documentType, documentTypeCode) }]}>
+                        <Input disabled={isBtnDisabled} placeholder={preparePlaceholderText('application code')} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Document Name" name="documentTypeDescription" rules={[ { max: 50, message: 'Document Name must be 50 characters long.' }, validateRequiredInputField('Document Name'), validateAlphanumericWithSpace('Document Name'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeDescription', finalFormdata?.documentType, documentTypeDescription) }]}>
-                        <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('Document Name')} />
+                    <Form.Item label="Document Name" name="documentTypeDescription" rules={[ { max: 50, message: 'Document Name must be less then 50 characters.' }, validateRequiredInputField('document name'), validateAlphanumericWithSpace('document name'), { validator: (rule, value) => duplicateValidator(value, 'documentTypeDescription', finalFormdata?.documentType, documentTypeDescription) }]}>
+                        <Input disabled={isBtnDisabled} maxLength={50} placeholder={preparePlaceholderText('document name')} />
                     </Form.Item>
                 </Col>
             </Row>

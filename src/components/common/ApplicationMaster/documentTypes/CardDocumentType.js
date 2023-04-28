@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
-import style from './../ApplicationMaster.module.css';
+import style from './../../Common.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
 const { Text } = Typography;
@@ -14,13 +14,11 @@ const CardDocumentType = (prop) => {
 
     useEffect(() => {
         return () => {
-            // on unmount it clears state
             setIsEditing(false);
             setIsBtnDisabled(false);
         };
     }, []);
 
-    // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
             id,
@@ -33,7 +31,6 @@ const CardDocumentType = (prop) => {
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
-    // on clicking save button updates data
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
         setfinalFormdata((prev) => {
@@ -45,7 +42,6 @@ const CardDocumentType = (prop) => {
         setIsEditing(false);
         setIsBtnDisabled(false);
         form.resetFields();
-        // forceUpdate();
     };
 
     const handleDeleteDocType = (val) => {
@@ -60,7 +56,6 @@ const CardDocumentType = (prop) => {
         form.resetFields();
     };
 
-    // on cancel editing
     const onCancel = () => {
         setIsEditing(false);
         setIsBtnDisabled(false);

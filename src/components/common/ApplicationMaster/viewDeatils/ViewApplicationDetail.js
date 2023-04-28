@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Descriptions, Typography, Collapse, Space, Row, Col, Divider } from 'antd';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
+import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
 
 import CardDocument from './CardDocument';
 import CardLocation from './CardLocation';
@@ -24,11 +25,6 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-    const accessibleLocationIdndicator = {
-        0: 'Accessible to all',
-        1: 'Not accessible to all',
-        2: 'Restricted Accessible',
-    };
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
@@ -38,19 +34,15 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                 <Descriptions.Item label="Application Title">{rest?.applicationTitle || 'NA'}</Descriptions.Item>
                 <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
                 <Descriptions.Item label="Parent Application ID">{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Accessible Location">{accessibleLocationIdndicator[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
+                <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
                 <Descriptions.Item label="Status">{rest?.activeIndicator ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
                 <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired === 'Y' || rest?.documentNumRequired === true ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
 
                 <Space
                     direction="vertical"
                     size="small"
                     className={styles.accordianContainer}
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                    }}
                 >
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

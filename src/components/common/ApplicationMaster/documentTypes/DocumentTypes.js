@@ -1,16 +1,14 @@
 import React, { Fragment, useReducer } from 'react';
-import { Form, Card, Divider } from 'antd';
+import { Form, Divider } from 'antd';
 
 import CardDocumentType from './CardDocumentType';
 import DocumentTypesForm from './DocumentTypesForm';
 
+import styles from './../ApplicationMaster.module.css'
+
 const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [docForm] = Form.useForm();
-
-    const handleAdd = (value) => {
-        docForm.resetFields();
-    };
 
     const onDocumentFormFinish = (val) => {
         setFinalFormdata((prev) => ({ ...prev, documentType: [...finalFormdata.documentType, val] }));
@@ -21,7 +19,7 @@ const DocumentTypes = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, o
     return (
         <Fragment>
             <Divider />
-            <div style={{ marginBottom: '14px' }}>
+            <div>
                 <DocumentTypesForm form={docForm} onFinish={onDocumentFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} finalFormdata={finalFormdata} />
             </div>
 

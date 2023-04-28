@@ -3,7 +3,8 @@ import { Col, Card, Row, Button, Divider, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Typography } from 'antd';
 
-import style from './../ApplicationMaster.module.css';
+import style from './../../Common.module.css';
+
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 import { Fragment } from 'react';
@@ -15,7 +16,6 @@ const CardApplicationAction = (props) => {
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
-    // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
             applicationName: {
@@ -31,7 +31,6 @@ const CardApplicationAction = (props) => {
         setIsBtnDisabled(true);
     };
 
-    // on clicking save button updates data
     const onUpdate = () => {
 
         const newFormData = form.getFieldsValue();
@@ -39,7 +38,6 @@ const CardApplicationAction = (props) => {
             const newList = prev?.applicationAction;
             const index = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
             const prevData = prev?.applicationAction[index];
-            console.log('prevData', prevData)
             newList.splice(index, 1, { ...prevData, status: newFormData?.status });
             return { ...prev, applicationAction: newList };
         });
@@ -50,7 +48,6 @@ const CardApplicationAction = (props) => {
     };
 
     const handleDeleteAction = (val) => {
-        console.log("val", val)
         setFinalFormdata((prev) => {
             const newList = prev?.applicationAction;
             const indx = prev?.applicationAction?.findIndex((el) => el?.actionId === val.actionId);
@@ -63,7 +60,6 @@ const CardApplicationAction = (props) => {
         form.resetFields();
     };
 
-    // on cancel editing
     const onCancel = () => {
         setIsEditing(false);
         setIsBtnDisabled(false);
@@ -72,7 +68,8 @@ const CardApplicationAction = (props) => {
     return (
         <>
             <Card
-                className={style.viewCardSize}
+               className={style.viewCardSize}  
+               key={actionId}                   
             >
                 <Row align="middle">
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>

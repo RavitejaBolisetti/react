@@ -11,10 +11,10 @@ import { showGlobalNotification } from 'store/actions/notification';
 import LeftPanel from '../LeftPanel';
 import { AddEditForm } from './AddEditForm';
 import { HierarchyFormButton } from '../Button';
+import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
-import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import styles from 'components/common/Common.module.css';
 
@@ -30,7 +30,6 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        // criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
         criticalityGroupData,
         applicationDetailsData,
         dealerLocations,
@@ -41,7 +40,6 @@ const mapStateToProps = (state) => {
         isApplicationDeatilsLoading,
         isApplicatinoOnSaveLoading,
         isLoading,
-        // menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
         menuData: applicationData,
         isActionsLoaded,
     };
@@ -80,7 +78,7 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading, detailListShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -113,7 +111,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         if (!criticalityGroupData?.length) {
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
         }
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' }); //fetch menu data
+        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
@@ -161,15 +159,14 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const onFinish = (values) => {
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
-        // let message = '';
         if (applicationAction?.length < 1) {
-            return showGlobalNotification({ message: 'Please add application action to proceed' });
+            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
         }
         if (values?.documentNumRequired && documentType?.length < 1) {
-            return showGlobalNotification({ message: 'Please add document types  to proceed' });
+            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
         }
-        if (values?.accessableIndicator === '2' && accessibleLocation?.length < 1) {
-            return showGlobalNotification({ message: 'Please add accessible location  to proceed' });
+        if (values?.accessableIndicator === 2 && accessibleLocation?.length < 1) {
+            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
         }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
@@ -232,12 +229,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
+        setTimeout(()=> applicationCall(finalFormdata?.applicationDetails?.applicationId), 300)
         setisVisible(false);
-        applicationForm.resetFields();
-        forceUpdate();
-        applicationCall(finalFormdata?.applicationDetails?.applicationId);
-        // setFormBtnDisable(false);
-        // setIsBtnDisabled(false);
     };
 
     const myProps = {

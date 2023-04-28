@@ -1,10 +1,10 @@
 import React from 'react';
 import { Col, Card, Row, Divider } from 'antd';
 import { Typography } from 'antd';
-import style from "./../ApplicationMaster.module.css"
-
+import style from './../../Common.module.css';
 
 const { Text } = Typography;
+
 const CardDocument = ({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode }) => {
     return (
         <>

@@ -598,30 +598,58 @@
     margin-bottom: 16px;
 }
 
-.accordianContainer :global .ant-collapse .ant-collapse-content .ant-divider-horizontal {
-    margin-top: -16px;
-    margin-bottom: 16px;
-}
-
 .accordianContainer :global .ant-collapse .ant-collapse-content .ant-divider-horizontal:not(:first-child) {
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.accordianContainer :global .ant-card:not(:last-child) {
+/* .accordianContainer :global .ant-card:not(:last-child) {
     margin-bottom: 10px !important;
-}
+} */
 
 .accordianContainer :global .ant-card .ant-card-body {
     padding: 6px 20px;
 }
 
-.accordianContainer :global .ant-space-item:last-child .ant-collapse-item-active .ant-card {
+.accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
     margin-top: 10px;
 }
 
 .accordianContainer :global .ant-space-item:last-child .ant-collapse-item-active .ant-card .ant-card-body {
     height: 36px;
+}
+
+.accordianContainer :global .ant-select-single {
+    width: 100%;
+}
+
+.viewCardSize :global .ant-card-body .ant-space .ant-space-item p,
+.viewCardSize :global .ant-card-body .ant-space .ant-space-item span {
+    font-weight: 400;
+    line-height: 22px;
+    font-size: 14px;
+    color: #8e8585;
+}
+
+.viewCardSize :global .ant-card-body .ant-space .ant-space-item p {
+    color: #0b0b0c !important;
+    padding-left: 0px !important;
+}
+
+.viewCardSize span.activeText {
+    color: #70c922 !important;
+}
+
+
+.viewCardSize :global .ant-card-body {
+    border: 1px solid rgba(62, 62, 62, 0.1);
+    border-radius: 6px;
+    background-color: rgba(190, 190, 190, 0.1);
+    gap: 10px;
+}
+
+.viewCardSize :global .ant-card-body button {
+    margin-top: -8px;
 }
 
 .searchAndLabelAlign {
