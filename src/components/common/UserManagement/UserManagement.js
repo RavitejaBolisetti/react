@@ -176,6 +176,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
+    const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
         Macid: [],
         AssignUserRole: [],
@@ -608,6 +609,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setShowSaveBtn,
         showSaveBtn,
         hanndleEditData,
+        AccessMacid,
+        setAccessMacid,
     };
 
     return (

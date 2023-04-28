@@ -17,6 +17,8 @@ import BranchMapping from './BranchMapping';
 import ProductMapping from './ProductMapping';
 import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
+import CommonCard from './CommonCard';
+import MacIdCard from './MacIdCard';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -24,10 +26,10 @@ const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
-    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, setShowSaveBtn, hanndleEditData } = props;
+    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
     const [Macid, setMacid] = useState();
-    const [AccessMacid, setAccessMacid] = useState([]);
+    
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
@@ -86,8 +88,12 @@ const AddEditFormMain = (props) => {
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,
-        formData,
+        finalFormdata,
+        DealerData,
+        setfinalFormdata,
         styles,
+        isViewModeVisible,
+        AccessMacid,
     };
 
     return (
@@ -103,10 +109,7 @@ const AddEditFormMain = (props) => {
                 >
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {/* <Card>
-                            <Meta title="Sandeep Lad" description="Token No.: B6G433" />
-                        </Card> */}
-                            <Card className={style.usermanagementCard}>
+                            {/* <Card className={style.usermanagementCard}>
                                 <Row gutter={20}>
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                         <Row gutter={20}>
@@ -129,7 +132,8 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                     </Col>
                                 </Row>
-                            </Card>
+                            </Card> */}
+                            <CommonCard DealerData={DealerData} />
                         </Col>
                     </Row>
                     <Row gutter={20}>
@@ -145,7 +149,7 @@ const AddEditFormMain = (props) => {
                                     },
                                 ]}
                             >
-                                <Input onChange={(event) => setMacid(event.target.value)} maxLength={6} placeholder={preparePlaceholderText('MAC id')} />
+                                <Input onChange={(event) => setMacid(event.target.value)}  minLength={14} maxLength={14} placeholder={preparePlaceholderText('MAC id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -156,14 +160,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Space
-                                direction="vertical"
-                                size="middle"
-                                style={{
-                                    display: 'flex',
-                                }}
-                            >
-                                {AccessMacid?.map((el) => {
+                            {/* {AccessMacid?.map((el) => {
                                     return (
                                         <Card className={style.usermanagementCard}>
                                             <Row gutter={20} className={style.alignUsermanagementCard}>
@@ -187,8 +184,8 @@ const AddEditFormMain = (props) => {
                                             </Row>
                                         </Card>
                                     );
-                                })}
-                            </Space>
+                                })} */}
+                            <MacIdCard AccessMacid={AccessMacid} handleDelete={handleDelete} isViewModeVisible={isViewModeVisible} />
                         </Col>
                     </Row>
 
@@ -316,7 +313,6 @@ const AddEditFormMain = (props) => {
                             Save
                         </Button>
                     )}
-
 
                     {footerEdit && (
                         <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
