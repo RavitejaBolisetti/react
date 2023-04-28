@@ -1,6 +1,6 @@
  :global .ant-notification-topRight {
-     top: 10px !important;
-     right: -10px !important;
+     top: 16px !important;
+     right: -8px !important;
  }
 
  :global .ant-notification-bottomRight .ant-notification-notice {
@@ -12,13 +12,13 @@
 
  :global .ant-notification-topRight .ant-notification-notice {
      width: 320px !important;
-     padding: 10px !important;
+     padding: 10px 16px !important;
  }
 
  /*--------- Error Notification Start ---------*/
  .error {
      color: #ED302D;
-     background-color: #FEE3D4;
+     background-color: #2B2025;
      border: 1px solid #ED302D;
  }
 
@@ -32,20 +32,20 @@
  }
 
  .error :global .ant-notification-close-icon {
-     color: #EF0000;
+     color: #ED302D;
  }
 
  .error :global .ant-notification-notice-message {
-     color: #EF0000;
-     font-weight: 700;
+     color: #ED302D;
+     font-weight: 500;
      margin-bottom: 0px !important;
      font-size: 14px !important;
      line-height: 22px !important;
  }
 
  .error :global .ant-notification-notice-description {
-     color: #342C2C;
-     font-size: 12px !important;
+     color: #FFFFFF;
+     font-size: 14px !important;
      line-height: 20px !important;
      font-weight: 400 !important;
      padding-right: 20px;
@@ -58,13 +58,13 @@
  }
 
  .error :global .ant-notification-notice-btn .ant-btn-primary {
-     background-color: #EF0000;
+     background-color: #ED302D;
      color: #FFFFFF;
  }
 
  .error :global .ant-notification-notice-btn .ant-btn-dangerous {
-     color: #EF0000;
-     border-color: #EF0000;
+     color: #ED302D;
+     border-color: #ED302D;
  }
 
  .error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
@@ -93,7 +93,7 @@
  /*--------- Success Notification Start ---------*/
  .success {
      color: #70C922;
-     background-color: #EEFCD2;
+     background-color: #222921;
      border: 1px solid #70C922;
  }
 
@@ -112,15 +112,15 @@
 
  .success :global .ant-notification-notice-message {
      color: #00A310;
-     font-weight: 700;
+     font-weight: 500;
      margin-bottom: 0px !important;
      font-size: 14px !important;
      line-height: 22px !important;
  }
 
  .success :global .ant-notification-notice-description {
-     color: #342C2C;
-     font-size: 12px !important;
+     color: #FFFFFF;
+     font-size: 14px !important;
      line-height: 20px !important;
      font-weight: 400 !important;
      padding-right: 20px;
@@ -147,13 +147,13 @@
 
  /*--------- Warning Notification Start ---------*/
  .warning {
-     color: #FF7A00;
-     background-color: #FFEAD7;
-     border: 1px solid #FF7A00;
+     color: #F99C22;
+     background-color: #2B2521;
+     border: 1px solid #F99C22;
  }
 
  .warning :global .ant-notification-notice {
-     width: 395px !important;
+     width: 320px !important;
      padding: 10px !important;
  }
 
@@ -162,21 +162,21 @@
  }
 
  .warning :global .ant-notification-close-icon {
-     color: #FF7A00;
+     color: #F99C22;
  }
 
  .warning :global .ant-notification-notice-message {
-     color: #FF7A00;
-     font-weight: 700;
+     color: #F99C22;
+     font-weight: 500;
      margin-bottom: 0px !important;
      font-size: 14px !important;
      line-height: 22px !important;
  }
 
  .warning :global .ant-notification-notice-description {
-     color: #342C2C;
-     font-size: 12px !important;
-     line-height: 20px !important;
+     color: #FFFFFF;
+     font-size: 14px !important;
+     line-height: 22px !important;
      font-weight: 400 !important;
      padding-right: 20px;
  }
@@ -188,18 +188,18 @@
  }
 
  .warning :global .ant-notification-notice-btn .ant-btn-primary {
-     background-color: #FF7A00;
+     background-color: #F99C22;
      color: #FFFFFF;
  }
 
  .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
-     color: #FF7A00;
-     border-color: #FF7A00;
+     color: #F99C22 !important;
+     border-color: #F99C22;
      background-color: transparent;
  }
 
  .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-     background-color: #FF7A00 !important;
+     background-color: #F99C22 !important;
  }
 
  .warning :global .ant-notification-notice-close {
@@ -216,6 +216,7 @@
      padding: 4px 16px;
      margin-bottom: 0px !important;
      font-size: 12px !important;
+     font-weight: 600;
  }
 
  /*--------- Warning Notification End ---------*/

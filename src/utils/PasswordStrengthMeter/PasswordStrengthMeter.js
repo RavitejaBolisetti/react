@@ -35,7 +35,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
         }
 
         if (strength <= 40) {
-            return 'Week';
+            return 'Weak';
         }
 
         if (strength <= 80) {
@@ -65,6 +65,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
 
     const infoText = (
         <div>
+            <span>Password must include:</span>
             <ul style={{ padding: '0px', color: '#000', paddingLeft: '20px' }}>
                 <li>Have at least 1 uppercase</li>
                 <li>Have at least 1 lowercase</li>
@@ -87,7 +88,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                     {strengthText && (
                         <div className={styles.strength}>
                             <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
-                            <span className={styles.infoIcon}>{addToolTip(infoText, 'bottom', '#e6e6e6')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText, 'right', '#e6e6e6')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
                         </div>
                     )}
                 </Col>

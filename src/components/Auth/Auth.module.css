@@ -280,14 +280,21 @@ p {
     border-color: #ffffff;
 }
 
-.loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
-    color: #ffffff;
-    font-size: 18px;
+.loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
+    margin-inline-end: 8px;
+    line-height: 16px;
+    transform: scaleX(-1) !important;
+    color: #FF3E5B;
 }
 
-.loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
+/* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
     color: #ffffff;
-}
+    font-size: 18px;
+} */
+
+/* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
+    color: #ffffff;
+} */
 
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
@@ -482,9 +489,11 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
-    color: #DEDEDE;
+    color: #FF3E5B;
     text-align: center;
-    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 600;
     width: 100%;
     margin-top: 20px;
 }
