@@ -59,20 +59,16 @@ p {
 
 .button {
     width: 100%;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 26px;
-    /* padding: 10px;
-    */
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
     margin-top: 20px;
-    /* text-transform: uppercase;
-    */
-    height: 50px;
-    background-color: #ff3e5b;
+    height: 40px;
+    background: #FF3E5B;
 }
 
 .button:hover {
-    background-color: #ff3e5b;
+    background: #FF3E5B;
 }
 
 .loginSection {
@@ -139,8 +135,8 @@ p {
 .loginSection .center .loginLogoSection {
     text-align: center;
     margin-top: 12px;
-    margin-bottom: 36px;
-    color: #fff;
+    margin-bottom: 20px;
+    color: #FFFFFF;
 }
 
 .loginSection .center .loginLogoSection .mainLogo {
@@ -156,8 +152,8 @@ p {
 }
 
 .loginSection .center .loginLogoSection .logoText {
-    padding-top: 8px;
-    font-size: 26px;
+    padding-top: 10px;
+    font-size: 24px;
     line-height: 34px;
     font-weight: 400;
 }
@@ -165,11 +161,11 @@ p {
 .loginSection .loginWrap {
     /* margin: 20px;
     */
-    background: rgba(40, 39, 44, .6);
-    box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
-    border-radius: 19px;
-    -moz-border-radius: 19px;
-    -webkit-border-radius: 19px;
+    background: #1C1C1C;
+    /* box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6); */
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
     border: 0px solid #000000;
 }
 
@@ -180,13 +176,13 @@ p {
 
 .loginSection .loginWrap .loginHtml .centerInner,
 .loginSection .loginWrap .logOutHtml .centerInner {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     /* min-height: stretch;
     */
-    padding: 30px;
+    padding: 30px 40px;
 }
 
 .loginSection .loginWrap .loginHtml .verifyUser :global .ant-form-item {
@@ -209,7 +205,7 @@ p {
 }
 
 .inputBox {
-    margin-bottom: 24px !important;
+    margin-bottom: 20px !important;
 }
 
 .marginBottomZero {
@@ -248,12 +244,13 @@ p {
 }
 
 .loginSection :global .ant-input-affix-wrapper {
-    background: transparent;
-    border-style: none none solid none;
+    background: #0B0B0C;
+    height: 36px !important;
+    /* border-style: none none solid none; */
     border-color: #545454;
     color: #ffffff;
     font-size: 16px;
-    border-radius: 0;
+    border-radius: 4px;
     padding: 0;
 }
 
@@ -273,7 +270,9 @@ p {
 }
 
 .loginSection :global .ant-input-affix-wrapper .ant-input-prefix {
-    margin-inline-end: 14px;
+    margin-inline-start: 12px;
+    margin-inline-end: 12px;
+    color: #858585;
 }
 
 .loginSection :global .ant-input-affix-wrapper:hover,
@@ -316,23 +315,24 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading h1,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h1 {
-    font-size: 26px;
-    color: #fff;
+    font-size: 32px;
+    font-style: normal;
+    color: #FFFFFF;
     text-align: center;
     line-height: 34px;
-    font-weight: 400;
+    font-weight: 600;
     margin: 0;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
-    font-size: 14px;
+    font-size: 16px;
     color: #DEDEDE;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 12px;
+    margin-bottom: 30px;
     text-align: center;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 24px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group {
@@ -464,17 +464,17 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 600;
     text-align: right;
     width: 100%;
-    margin-top: -6px;
-    margin-bottom: 10px;
+    margin-top: -16px;
+    /* margin-bottom: 10px; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a {
-    color: #DEDEDE !important;
+    color: #FF3E5B !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a:hover {
@@ -482,26 +482,24 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
-    color: #dedede;
+    color: #DEDEDE;
     text-align: center;
     font-weight: 400;
     width: 100%;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
     color: #ED302D;
-    /* font-size: 16px; */
     line-height: 18px;
     font-weight: 400;
-    /* letter-spacing: 0.8px; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 24px;
-    color: #DEDEDE;
+    color: #FF3E5B;
     text-align: center;
 }
 
