@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 // import { bindActionCreators } from 'redux';
 // import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { STATE_DROPDOWN } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { PARAM_MASTER } from 'constants/paramMaster';
+//import { PARAM_MASTER } from 'constants/paramMaster';
 // import { convertDate } from 'utils/formatDateTime';
 // import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
-    const defaultParametarType = CONFIGURABLE_PARAMETARS_INPUT_TYPE.KEY;
+    const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
@@ -77,6 +77,8 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
+
+    const [ stateCode, isStateCode ] = useState('DO0')
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -109,6 +111,10 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, configData, userId]);
+
+    // useEffect( () =>{
+
+    // },[stateCode] )
 
     const handleEditBtn = (record) => {
 
@@ -262,6 +268,11 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
         setFilterString(value);
     };
 
+    const handleSelectState = (value) =>{
+        console.log(value,'valuevaluevalue');
+        isStateCode(value.target.value)
+    }
+
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
@@ -354,6 +365,9 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
         showSaveBtn,
         saveAndAddNewBtnClicked,
     };
+
+    console.log(stateCode,'valuevalue')
+
     return (
         <>
             <Row gutter={20}>
@@ -396,9 +410,12 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                                 onSearch={onSearchHandle}
                                                 onChange={onChangeHandle}
                                             /> */}
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}>
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
+                                                onChange={handleSelectState}
+                                                value={stateCode}
+                                            >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {CONFIGURABLE_PARAMETARS_INPUT_TYPE?.map((item) => (
+                                                {STATE_DROPDOWN?.map((item) => (
                                                     <Option value={item?.KEY}>{item?.TITLE}</Option>
                                                 ))}
                                             </Select>

@@ -1,7 +1,6 @@
-export const CONFIGURABLE_PARAMETARS_INPUT_TYPE = [
+export const STATE_DROPDOWN = [
    {
         KEY: 'T',
-    
         TITLE: 'New Delhi',
     },
    {
@@ -20,3 +19,25 @@ export const CONFIGURABLE_PARAMETARS_INPUT_TYPE = [
         TITLE: 'Tamil Nadu',
     },
 ]
+
+export const STATE_CODE = [
+    {
+         KEY: 'T',
+         CODE: 'New Delhi',
+     },
+    {
+         KEY: 'N',
+      
+         CODE: 'Maharastra',
+     },
+     {
+         KEY: 'B',
+       
+         CODE: 'Kerala',
+     },
+     {
+         KEY: 'D',
+      
+         CODE: 'Tamil Nadu',
+     },
+ ]

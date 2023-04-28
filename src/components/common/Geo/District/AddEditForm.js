@@ -7,7 +7,7 @@ import { withDrawer } from 'components/withDrawer';
 // import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { STATE_DROPDOWN } from './InputType';
 import { ViewDistrictDetails } from './ViewDistrictDetails';
 
 const { Option } = Select;
@@ -63,7 +63,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="State Name" initialValue={formData?.controlGroup} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select disabled={isReadOnly} placeholder="Select">
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {CONFIGURABLE_PARAMETARS_INPUT_TYPE?.map((item) => (
+                                    {STATE_DROPDOWN?.map((item) => (
                                         <Option value={item?.KEY}>{item?.TITLE}</Option>
                                     ))}
                                 </Select>
