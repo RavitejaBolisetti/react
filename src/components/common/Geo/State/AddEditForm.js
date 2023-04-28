@@ -7,8 +7,8 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 
 import { PARAM_MASTER } from 'constants/paramMaster';
-// import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from '../Geo/State/InputType';
-import { ViewStateDetails } from './ViewStateDetails'
+import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+//import { ViewConfigDetails } from './ViewConfigDetails'
 
 import styles from 'components/common/Common.module.css';
 
