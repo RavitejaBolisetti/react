@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 // import { bindActionCreators } from 'redux';
 // import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
@@ -20,6 +20,7 @@ import { bindActionCreators } from 'redux';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -204,7 +205,6 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
             width: '15%',
         }),
 
-    
         {
             title: 'Action',
             dataIndex: '',
@@ -212,12 +212,12 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
             render: (record) => [
                 <Space wrap>
                     {
-                        <Button data-testid='edit' className={styles.tableIcons} aria-label='fa-edit' onClick={() => handleEditBtn(record, 'edit')}>
+                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
                             <FiEdit2 />
                         </Button>
                     }
                     {
-                        <Button className={styles.tableIcons} aria-label='ai-view' onClick={() => handleView(record)}>
+                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
@@ -260,8 +260,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     };
 
     const onFinish = (values) => {
-
-        console.log(values,'dta')
+        console.log(values, 'dta');
 
         const recordId = formData?.id || '';
         let data = { ...values, id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
@@ -292,13 +291,13 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
             onSuccess,
         };
 
-        console.log(requestData,'requestData')
+        console.log(requestData, 'requestData');
 
         //saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
     const tableProps = {
         tableColumn: tableColumn,
@@ -337,11 +336,11 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                            <Row xs={24} sm={24} md={24} lg={60} xl={60}>
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            District Master
+                                            District List
                                             <Search
                                                 placeholder="Search"
                                                 style={{
@@ -358,7 +357,31 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                         </Col> */}
                                     </div>
                                 </Row>
-                            </Col>
+
+                                <Row gutter={20}>
+                                    <div className={styles.searchBox} style={{margin:'0 0 0 2rem'}}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
+                                            State
+                                            {/* <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                                className={styles.headerSelectField}
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
+                                            /> */}
+                                            <Select placeholder="Select" style={{margin:'0 0 0 0.5rem',width:'15rem'}}>
+                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                {CONFIGURABLE_PARAMETARS_INPUT_TYPE?.map((item) => (
+                                                    <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                                ))}
+                                            </Select>
+                                        </Col>
+                                    </div>
+                                </Row>
+                            </Row>
 
                             {configData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
