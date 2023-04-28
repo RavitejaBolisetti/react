@@ -222,6 +222,14 @@ p {
     color: #838383 !important;
 }
 
+.loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput p {
+    padding-left: 0 !important;
+    color: #70C922 !important;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::-ms-reveal,
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input input::-ms-clear {
     display: none;
@@ -326,16 +334,28 @@ p {
     font-style: normal;
     color: #FFFFFF;
     text-align: center;
-    line-height: 34px;
+    line-height: 48px;
     font-weight: 600;
     margin: 0;
+}
+
+.loginSection .loginWrap .loginHtml .verifyUser .loginForm .loginHeading h1,
+.loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h1 {
+    font-size: 32px;
+    font-style: normal;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 48px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 30px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
     font-size: 16px;
-    color: #DEDEDE;
-    margin-top: 12px;
+    color: #B5B5B6;
+    margin-top: 8px;
     margin-bottom: 30px;
     text-align: center;
     font-weight: 400;
@@ -352,20 +372,39 @@ p {
     display: flex;
 }
 
+.loginSection .loginWrap .loginHtml .verifyUser .loginForm .fielderror {
+    background: #232324;
+    margin-bottom: 10px !important;
+    border-radius: 6px;
+    padding: 8px 16px;
+}
+
 .registered {
     padding: 16px 0 8px;
-    color: #DEDEDE;
+    color: #B5B5B6;
     font-size: 14px;
     line-height: 22px;
     font-weight: 400;
 }
 
 .fielderror .registered {
-    padding: 8px 0;
-    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    color: #FF3E5B;
     font-size: 14px;
     line-height: 24px;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span,
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span p {
+    color: #858585 !important;
+}
+
+.fielderror .registered p {
+    padding-left: 0px !important;
+    color: #FF3E5B;
 }
 
 .fielderror .registered :global .ant-checkbox-checked:checked {
@@ -829,13 +868,20 @@ select.form-control:focus::-ms-value {
 }
 
 .otpTitle {
-    color: #ffffff;
-    font-size: 16px;
+    color: #858585;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .otpNotReceive {
     color: #ff3e5b;
     letter-spacing: 0.8px;
+}
+
+.otpNotReceive svg {
+    margin-right: 5px;
+    vertical-align: unset;
 }
 
 .resendEnabled {
@@ -845,10 +891,16 @@ select.form-control:focus::-ms-value {
 }
 
 .resendDisabled {
-    color: #858585;
+    color: #545454;
     float: right;
     cursor: pointer;
     pointer-events: none;
+}
+
+.resendEnabled svg,
+.resendDisabled svg {
+    transform: scaleX(-1);
+    vertical-align: unset;
 }
 
 .buttonResend {
