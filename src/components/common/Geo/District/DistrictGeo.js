@@ -79,23 +79,23 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
-    const loadDependendData = () => {
-       // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-        // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-        // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    };
+    // const loadDependendData = () => {
+    //    // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
+    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
+    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
+    // };
 
-    useEffect(() => {
-        if (userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
-            loadDependendData();
+    // useEffect(() => {
+    //     if (userId) {
+    //         // const onSuccessAction = (res) => {
+    //         //     refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    //         // };
+    //         loadDependendData();
 
-           // fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    //        // fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, refershData]);
 
     useEffect(() => {
         if (isDataLoaded && configData && userId) {
@@ -260,21 +260,24 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     };
 
     const onFinish = (values) => {
+
+        console.log(values,'dta')
+
         const recordId = formData?.id || '';
         let data = { ...values, id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDataList({ setIsLoading: listShowLoading, userId });
-            loadDependendData();
+            // fetchDataList({ setIsLoading: listShowLoading, userId });
+            // loadDependendData();
 
-            if (showSaveAndAddNewBtn === true || recordId) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            }
+            // if (showSaveAndAddNewBtn === true || recordId) {
+            //     setIsFormVisible(false);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // } else {
+            //     setIsFormVisible(true);
+            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            // }
         };
 
         const onError = (message) => {
@@ -289,7 +292,9 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
             onSuccess,
         };
 
-        saveData(requestData);
+        console.log(requestData,'requestData')
+
+        //saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {

@@ -63,20 +63,20 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.shortDescription} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
-                                <Input placeholder={preparePlaceholderText('State Name')} className={styles.inputBox} disabled={true} />
+                            <Form.Item initialValue={'JH001'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                                <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.shortDescription} label="District Code" name="shortDescription" rules={[validateRequiredInputField('District Code')]}>
+                            <Form.Item initialValue={null} label="District Code" name="districtCode" rules={[validateRequiredInputField('District Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.shortDescription} label="District Name" name="shortDescription" rules={[validateRequiredInputField('District Name')]}>
+                            <Form.Item initialValue={null} label="District Name" name="districtName" rules={[validateRequiredInputField('District Name')]}>
                                 <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
