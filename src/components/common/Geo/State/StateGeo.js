@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider ,Select} from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import style from 'components/common/ProductHierarchy/producthierarchy.module.css'
+import style from 'components/common/ProductHierarchy/producthierarchy.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import { DataTable } from 'utils/dataTable';
@@ -78,7 +78,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-
     const loadDependendData = () => {
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
         fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
@@ -121,7 +120,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
             data && setFormData(data);
             console.log('formData', formData);
 
-           
             setIsFormVisible(true);
         }
     };
@@ -140,10 +138,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
 
         setIsReadOnly(true);
     };
-
-   
-
-   
 
     const tableColumn = [];
     tableColumn.push(
@@ -202,7 +196,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
 
     const tableData = [
         {
-            id : '1',
+            id: '1',
 
             stateCd: 'Test50',
 
@@ -211,7 +205,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
             gstCode: 'Test50',
 
             status: 1,
-
         },
     ];
 
@@ -237,7 +230,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        
     };
 
     const onSearchHandle = (value) => {
@@ -319,22 +311,31 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                    <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
                                         State List
                                     </Col>
-                                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                    <Col xs={24} sm={24} md={16} lg={19} xl={19}>
+                                        <Search
+                                            placeholder="Search"
+                                            style={{
+                                                width: 300,
+                                            }}
+                                            allowClearclassName={styles.headerSelectField}
+                                            onSearch={onSearchHandle}
+                                            onChange={onChangeHandle}
+                                        />
                                         <Select placeholder="Country" allowClear className={styles.headerSelectField}>
                                             <Option value="India">India</Option>
                                         </Select>
-                                        <Search placeholder="Search" allowClear onChangeHandle={onChangeHandle} className={styles.headerSearchField} />
                                     </Col>
                                 </Row>
                             </Col>
+
                             {tableData?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
@@ -344,8 +345,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
                             ) : (
                                 ''
                             )}
-                    </Row>
-                        
+                        </Row>
                     </div>
                 </Col>
             </Row>
