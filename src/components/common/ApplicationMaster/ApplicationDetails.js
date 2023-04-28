@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
 import TreeSelectField from '../TreeSelectField';
 
@@ -42,19 +42,19 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
             <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="applicationId" rules={[validationFieldLetteNumberandPeriod('application ID')]}>
+                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID'),validationFieldLetteNumberandPeriod('application ID')]}>
                             <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application ID')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('application name')]}>
+                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('application name'), validateAlphanumericWithSpace('application name')]}>
                             <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application name')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('application title')]}>
+                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('application title'), validateAlphanumericWithSpace('application title')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('application title')} />
                         </Form.Item>
                     </Col>
