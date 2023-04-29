@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
-import style from './ApplicationMaster.module.css';
+import style from './../../Common.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
 const { Text } = Typography;
@@ -14,13 +14,11 @@ const CardDocumentType = (prop) => {
 
     useEffect(() => {
         return () => {
-            // on unmount it clears state
             setIsEditing(false);
             setIsBtnDisabled(false);
         };
     }, []);
 
-    // on Click edit button sets form fields
     const onEdit = (values) => {
         form.setFieldsValue({
             id,
@@ -33,7 +31,6 @@ const CardDocumentType = (prop) => {
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
-    // on clicking save button updates data
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
         setfinalFormdata((prev) => {
@@ -45,7 +42,6 @@ const CardDocumentType = (prop) => {
         setIsEditing(false);
         setIsBtnDisabled(false);
         form.resetFields();
-        // forceUpdate();
     };
 
     const handleDeleteDocType = (val) => {
@@ -60,7 +56,6 @@ const CardDocumentType = (prop) => {
         form.resetFields();
     };
 
-    // on cancel editing
     const onCancel = () => {
         setIsEditing(false);
         setIsBtnDisabled(false);
@@ -73,19 +68,19 @@ const CardDocumentType = (prop) => {
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <Row align="middle">
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Text type="secondary">T&C Required: </Text> {termAndConRequired ? <Text type="success">Active</Text> : <Text>Inactive</Text>}
+                                <Text type="secondary">T&C Required: </Text> {termAndConRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                             </Col>
 
                             <Divider type="vertical" />
 
                             <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
-                                <Text type="secondary">Signature: </Text> {digitalSignatureRequired ? <Text type="success">Active</Text> : <Text>Inactive</Text>}
+                                <Text type="secondary">Signature: </Text> {digitalSignatureRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text strong>{documentTypeDescription || 'Document name 1'}</Text>
+                                <Text strong>{documentTypeDescription}</Text>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">Code: {documentTypeCode || 'B6G431'}</Text>
+                                <Text type="secondary">Code: {documentTypeCode}</Text>
                             </Col>
                         </Row>
                     </Col>
@@ -94,11 +89,11 @@ const CardDocumentType = (prop) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id,termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
                                     {!id?.length > 0 && (
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                            <Button onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })} type="link" icon={<FiTrash />}></Button>
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                            <Button disabled={isBtnDisabled} onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })} type="link" icon={<FiTrash />}></Button>
                                         </Col>
                                     )}
                                 </>
