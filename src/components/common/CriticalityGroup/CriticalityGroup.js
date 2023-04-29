@@ -14,7 +14,7 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import DrawerUtil from './DrawerUtil';
+import { AddEditForm } from './AddEditForm';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
@@ -33,10 +33,13 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'Application Criticality Group';
+
     let returnValue = {
         collapsed,
         userId,
         isDataLoaded,
+        moduleTitle,
         isLoading,
         criticalityGroupData,
         isLoadingOnSave,
@@ -58,12 +61,11 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
+export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listShowLoading, isLoading, userId, criticalityGroupData, isDataLoaded, showGlobalNotification, onSaveShowLoading, isLoadingOnSave }) => {
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [RefershData, setRefershData] = useState(false);
     const [data, setData] = useState(criticalityGroupData);
-    const [drawer, setDrawer] = useState(false);
     const [formData, setFormData] = useState({});
     const [isChecked, setIsChecked] = useState(data?.status === 'Y' ? true : false);
     const [forceFormReset, setForceFormReset] = useState(false);
@@ -82,6 +84,9 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
     const errorAction = (message) => {
         showGlobalNotification(message);
@@ -136,14 +141,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
+            setForceFormReset(generateRandomNumber());
             setSelectedRecord({});
             setSuccessAlert(true);
             fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
-                setDrawer(false);
+                setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
-                setDrawer(true);
+                setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
@@ -162,7 +168,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         };
 
         saveData(requestData);
-        setForceFormReset(generateRandomNumber());
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -171,10 +176,11 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleAdd = () => {
         setFormActionType('add');
+        setIsFormVisible(true);
+        setSelectedRecord({});
         setSaveAndSaveNew(true);
         setSaveBtn(true);
         setFooterEdit(false);
-        setDrawer(true);
         setIsReadOnly(false);
         setsaveclick(false);
         setsaveandnewclick(true);
@@ -184,6 +190,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
     const handleUpdate = (record) => {
         setFormActionType('update');
         setSaveAndSaveNew(false);
+        setIsFormVisible(true);
+
         setFooterEdit(false);
         setSaveBtn(true);
         setSelectedRecord(record);
@@ -204,13 +212,15 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             allowedTimings: momentTime,
         });
 
-        setDrawer(true);
         setIsReadOnly(false);
         setcodeIsReadOnly(true);
     };
 
     const handleUpdate2 = () => {
         setFormActionType('update');
+        setIsFormVisible(true);
+        setIsViewModeVisible(false);
+
         setSaveAndSaveNew(false);
         setFooterEdit(false);
         setSaveBtn(true);
@@ -235,6 +245,8 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
 
     const handleView = (record) => {
         setFormActionType('view');
+        setIsViewModeVisible(true);
+        setIsFormVisible(true);
 
         setSelectedRecord(record);
         setSaveAndSaveNew(false);
@@ -253,7 +265,6 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             activeIndicator: record.activeIndicator,
             allowedTimings: momentTime,
         });
-        setDrawer(true);
         setIsReadOnly(true);
         setcodeIsReadOnly(true);
     };
@@ -281,7 +292,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
         tblPrepareColumns({
             title: 'Criticality Group ID',
             dataIndex: 'criticalityGroupCode',
-            width: '15%',
+            width: '20%',
         }),
         tblPrepareColumns({
             title: 'Criticality Group Name',
@@ -298,7 +309,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%',
+            width: '10%',
         }),
         tblPrepareColumns({
             title: 'Actions',
@@ -322,6 +333,59 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
             width: '15%',
         }),
     ];
+
+    const formProps = {
+        isVisible: isFormVisible,
+        isViewModeVisible,
+        codeIsReadOnly,
+        showGlobalNotification,
+        deletedItemList,
+        setDeletedItemList,
+        setFormBtnDisable,
+        formBtnDisable,
+        successAlert,
+        handleUpdate2,
+        form,
+        saveBtn,
+        onFinish,
+        onFinishFailed,
+        footerEdit,
+        handleUpdate,
+        saveAndSaveNew,
+        setSaveAndSaveNew,
+        setSelectedRecord,
+        selectedRecord,
+        setIsViewModeVisible,
+        handleAdd,
+        data,
+        isChecked,
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            form.resetFields();
+            setIsViewModeVisible(false);
+            form.setFieldsValue({
+                allowedTimings: [],
+            });
+            setFormBtnDisable(false);
+            setSelectedRecord(null);
+        },
+        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        formData,
+        setIsFormVisible,
+        setIsChecked,
+        formActionType,
+        isReadOnly,
+        setFormData,
+        saveclick,
+        setsaveclick,
+        setsaveandnewclick,
+        saveandnewclick,
+        alertNotification,
+        contextAlertNotification,
+        isDataLoaded: isLoadingOnSave,
+        isLoading: isLoadingOnSave,
+        forceUpdate,
+    };
 
     return (
         <>
@@ -359,45 +423,7 @@ export const CriticalityGroupMain = ({ fetchData, saveData, listShowLoading, isL
                 </Col>
             </Row>
 
-            <DrawerUtil
-                codeIsReadOnly={codeIsReadOnly}
-                showGlobalNotification={showGlobalNotification}
-                deletedItemList={deletedItemList}
-                setDeletedItemList={setDeletedItemList}
-                setFormBtnDisable={setFormBtnDisable}
-                formBtnDisable={formBtnDisable}
-                successAlert={successAlert}
-                handleUpdate2={handleUpdate2}
-                form={form}
-                saveBtn={saveBtn}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                footerEdit={footerEdit}
-                handleUpdate={handleUpdate}
-                saveAndSaveNew={saveAndSaveNew}
-                setSaveAndSaveNew={setSaveAndSaveNew}
-                setSelectedRecord={setSelectedRecord}
-                selectedRecord={selectedRecord}
-                handleAdd={handleAdd}
-                open={drawer}
-                data={data}
-                setDrawer={setDrawer}
-                isChecked={isChecked}
-                formData={formData}
-                setIsChecked={setIsChecked}
-                formActionType={formActionType}
-                isReadOnly={isReadOnly}
-                setFormData={setFormData}
-                saveclick={saveclick}
-                setsaveclick={setsaveclick}
-                setsaveandnewclick={setsaveandnewclick}
-                saveandnewclick={saveandnewclick}
-                alertNotification={alertNotification}
-                contextAlertNotification={contextAlertNotification}
-                isDataLoaded={isLoadingOnSave}
-                isLoading={isLoadingOnSave}
-                forceUpdate={forceUpdate}
-            />
+            <AddEditForm {...formProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
