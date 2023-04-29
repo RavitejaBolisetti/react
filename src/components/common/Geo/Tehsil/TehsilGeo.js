@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -485,4 +485,4 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
 
 // export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);
 
-export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);
+export const TehsilGeo = connect(mapStateToProps, mapDispatchToProps)(TehsilGeoBase);
