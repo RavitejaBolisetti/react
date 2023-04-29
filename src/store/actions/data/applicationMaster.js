@@ -14,10 +14,11 @@ export const APPLICATION_DATA_LOADED = 'APPLICATION_DATA_LOADED';
 export const CONFIG_PARAM_DATA_LOADED = 'CONFIG_PARAM_DATA_LOADED';
 export const APPLICATION_ON_SAVE_DATA_SHOW_LOADING = 'APPLICATION_ON_SAVE_DATA_SHOW_LOADING';
 export const APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING = 'APPLICATION_MASTER_DETAIL_DATA_SHOW_LOADING';
+export const APPLICATION_LOCATION_DATA = 'APPLICATION_LOCATION_DATA';
 
 const receiveApplicationDetailsData = (data) => ({
     type: APPLICATION_MASTER_APPLICATION_DETAILS_DATA_LOADED,
-    isLoaded: true,
+    isLoaded: false,
     data,
 });
 const receiveCriticalityGroupData = (data) => ({
@@ -60,6 +61,11 @@ applicationMasterDataActions.detailListShowLoading = (isLoading) => ({
 });
 applicationMasterDataActions.onSaveShowLoading = (isLoading) => ({
     type: APPLICATION_ON_SAVE_DATA_SHOW_LOADING,
+    isLoading,
+});
+
+applicationMasterDataActions.locationDataLoding = (isLoading) => ({
+    type: APPLICATION_LOCATION_DATA,
     isLoading,
 });
 

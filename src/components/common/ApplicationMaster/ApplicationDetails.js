@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Select, TreeSelect } from 'antd';
+import { Input, Form, Col, Row, Switch, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 
 import TreeSelectField from '../TreeSelectField';
 
@@ -42,28 +42,28 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
             <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('Application ID')]}>
-                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('Application ID')} />
+                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID'),validationFieldLetteNumberandPeriod('application ID')]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application ID')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('Application Name')]}>
-                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('Application Name')} />
+                        <Form.Item label="Application Name" name="applicationName" rules={[validateRequiredInputField('application name'), validateAlphanumericWithSpace('application name')]}>
+                            <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application name')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('Application Title')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Application Title')} />
+                        <Form.Item label="Application Title" name="applicationTitle" rules={[validateRequiredInputField('application title'), validateAlphanumericWithSpace('application title')]}>
+                            <Input maxLength={50} placeholder={preparePlaceholderText('application title')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item  label="Application Type" name="applicationType" rules={[validateRequiredSelectField('Application Type')]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('Application Type')}>
+                        <Form.Item  label="Application Type" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('application type')}>
                                 {configurableParamData?.map((type) => (
-                                    <Option value={type.value}>{type.value}</Option>
+                                    <Option value={type?.value}>{type?.value}</Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -71,7 +71,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item  name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('Parent Application ID')]}>
+                        <Form.Item  name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('parent application ID')]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
@@ -91,8 +91,8 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Criticality Group" name="criticalityGroupMasterId" rules={[validateRequiredInputField('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                {criticalityGroupData?.map((cg) => (
-                                    <Option value={cg?.id}>{cg?.criticalityGroupName}</Option>
+                                {criticalityGroupData?.map((group) => (
+                                    <Option value={group?.id} disabled={!group?.activeIndicator}>{group?.criticalityGroupName}</Option>
                                 ))}
                             </Select>
                         </Form.Item>

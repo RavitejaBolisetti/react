@@ -7,6 +7,6 @@ export const preparePlaceholderSelect = (name) => {
 };
 
 export const preparePlaceholderAutoComplete = (name) => {
-    return 'Please enter loaction keyword to view ' + name;
+    return 'Select' + name;
 };
 

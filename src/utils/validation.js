@@ -48,6 +48,12 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     pattern: /^[a-zA-Z0-9 ]*$/,
 });
 
+
+export const validationFieldLetteNumberandPeriod = (fieldName) => ({
+    pattern: /^[a-zA-Z0-9.]*$/,
+    message: 'Please use only letters, numbers and period in' + fieldName,
+});
+
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {    
     let dataListToCheck = dataList || [];
     if (updateVal && dataList?.length > 1) {

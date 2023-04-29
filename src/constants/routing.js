@@ -15,6 +15,8 @@ export const ROUTING_COMMON_PRODUCT_MASTER = ROUTING_COMMON.concat('product-mast
 export const ROUTING_COMMON_PRODUCT_HIERARCHY = ROUTING_COMMON.concat('product-hierarchy');
 export const ROUTING_COMMON_APPLICATION_MASTER = ROUTING_COMMON.concat('application-master');
 export const ROUTING_COMMON_CRITICALITY_GROUP = ROUTING_COMMON.concat('criticality-group');
+export const ROUTING_COMMON_ROLE_MANAGEMENT = ROUTING_COMMON.concat('role-management');
+export const ROUTING_COMMON_USER_MANAGEMENT = ROUTING_COMMON.concat('user-management');
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
 export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branch-dealer-mapping');
 
@@ -22,7 +24,6 @@ export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualif
 export const ROUTING_COMMON_DEALER_MANPOWER = ROUTING_COMMON.concat('dealer-manpower');
 
 export const ROUTING_COMMON_CONFIG_PARAM_EDIT = ROUTING_COMMON.concat('config-param-edit');
-export const ROUTING_COMMON_ROLE_MANAGEMENT = ROUTING_COMMON.concat('role-management');
 
 
 export const ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY = ROUTING_COMMON.concat('manufacturer-adminstrative-hierarchy');
@@ -43,3 +44,9 @@ export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
 export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
 export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
 export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');
+
+export const ROUTING_ADMIN = '/admin/';
+
+export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-management/');
+export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
+export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
