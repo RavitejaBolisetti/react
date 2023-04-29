@@ -210,7 +210,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleButtonClick = (type) => {

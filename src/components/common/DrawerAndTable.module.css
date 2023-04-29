@@ -18,8 +18,8 @@
     margin-bottom: 20px;
 }
 
-.allowedTiming :global .ant-picker-input>input:placeholder-shown,
-.allowedTiming :global .ant-picker-input>input {
+.allowedTiming :global .ant-picker-input > input:placeholder-shown,
+.allowedTiming :global .ant-picker-input > input {
     font-size: 14px;
 }
 
@@ -55,6 +55,17 @@
     /* text-align: right !important; */
 }
 
+.deleteBtn {
+    background-color: #ffffff;
+    color: #b5b5b6;
+    border-color: none !important;
+    border: none !important;
+}
+
+.allowedTiming :global .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only:hover {
+    color: #ff3e5b !important;
+}
+
 .searchAndLabelAlign {
     display: flex;
     align-items: center;
@@ -70,11 +81,23 @@
     color: #ff3e5b;
 }
 
+
+.viewAllowedTiming button {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    padding-right: 0px;
+}
+
 .addTimeBtn button {
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
     padding-right: 0px;
+}
+
+.hideInViewMode {
+    visibility: hidden;
 }
 
 .timingHeaderBackground {
@@ -423,7 +446,7 @@
     color: #e31837 !important;
 }
 
-:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
+:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
     font-size: 16px;
 }

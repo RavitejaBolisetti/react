@@ -166,4 +166,11 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'RPT',
     },
+
+    [getMenyKey('COMN-03.02')]: {
+        key: 'COMN-03.02',
+        link: routing.ROUTING_COMMON_APPLICATION_MASTER,
+        icon: undefined,
+        parentMenuId: 'ADMN',
+    },
 };

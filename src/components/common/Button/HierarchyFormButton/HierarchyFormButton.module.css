@@ -1,8 +1,7 @@
 .hierarchyButtonContainer {
-  margin-top: 10px;
   display: inline-block;
   width: 100%;
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .hierarchyButtonContainer .buttonIcon {
@@ -17,7 +16,6 @@
 
 .hierarchyButtonContainer .btnRight {
   text-align: right;
-  float: right;
 }
 
 .hierarchyButtonContainer .btnRight button {
