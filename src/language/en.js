@@ -1,4 +1,4 @@
-export const EN = {
+export const LANGUAGE_EN = {
     GENERAL: {
         NETWORK_ERROR: { TITLE: 'Network Error', MESSAGE: 'Please check your internet connection.' },
         REQUEST_TIMEOUT: { TITLE: 'Request Timeout', MESSAGE: 'Request timeout. Please try again.' },

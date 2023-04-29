@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import userEvent from '@testing-library/user-event';
 import { HierarchyAttribute } from '../HierarchyAttribute/HierarchyAttribute';
 import comonTest from './comonTest.js';
-import DataTable from '../../../utils/dataTable/DataTable';
+import DataTable from 'utils/dataTable/DataTable';
 import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 
 

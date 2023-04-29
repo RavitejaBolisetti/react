@@ -9,7 +9,7 @@ import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { AddEditForm } from './AddEditForm';
@@ -21,7 +21,7 @@ import { FaHistory } from 'react-icons/fa';
 
 import { ViewProductDetail } from './ViewProductDetail';
 
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -69,9 +69,9 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
             skulist: productHierarchyDataActions.skulist,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
@@ -308,8 +308,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const leftCol = productHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 8 : 24;
 
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
     return (
         <>

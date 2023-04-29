@@ -4,25 +4,19 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-// import styles from 'components/common/Common.module.css';
-// import style from 'components/common/DrawerAndTable.module.css';
-// import styl from './ApplicationMaster.module.css';
-
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import LeftPanel from '../LeftPanel';
-import ViewApplicationDetail from './ViewApplicationDetails';
 import { DrawerUtil } from './DrawerUtil';
 import { HierarchyFormButton } from '../Button';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 import ViewApplicationDetailMain from './ViewApplicationDetailMain';
 
 import styles from 'components/common/Common.module.css';
-import styl from './ApplicationMaster.module.css';
 
 const { Search } = Input;
 
@@ -281,8 +275,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
     const rightCol = menuData?.length > 0 ? 8 : 24;
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     return (
         <>
             <Row gutter={20} span={24}>

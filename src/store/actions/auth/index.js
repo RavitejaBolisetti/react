@@ -6,7 +6,7 @@ import { withAuthToken } from 'utils//withAuthToken';
 import { axiosAPICall } from 'utils//axiosAPICall';
 
 import { BASE_URL_LOGIN, BASE_URL_LOGOUT } from 'constants/routingApi';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_PRE_SUCCESS = 'AUTH_LOGIN_PRE_SUCCESS';
@@ -78,7 +78,7 @@ export const authUserLogout = (res) => (dispatch) => {
 export const authUserTokenExpired = () => (dispatch) => {
     clearLocalStorageData();
     dispatch(authDoLogout());
-    dispatch(showGlobalNotification({ notificationType: 'success', title: EN.GENERAL.SESSION_EXPIRED.TITLE, message: EN.GENERAL.SESSION_EXPIRED.MESSAGE }));
+    dispatch(showGlobalNotification({ notificationType: 'success', title: LANGUAGE_EN.GENERAL.SESSION_EXPIRED.TITLE, message: LANGUAGE_EN.GENERAL.SESSION_EXPIRED.MESSAGE }));
 };
 
 export const unAuthenticateUser = (errorMessage) => (dispatch) => {

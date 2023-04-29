@@ -5,7 +5,7 @@ import { Button, Col, Form, Row, Empty, Input, Tree } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaAngleDoubleRight, FaAngleDoubleLeft, FaRegTimesCircle } from 'react-icons/fa';
 
 import style from '../Common.module.css';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { menuDataActions } from 'store/actions/data/menu';
 import { PlusOutlined } from '@ant-design/icons';
 // import { ParentHierarchy } from '../parentHierarchy/ParentHierarchy';
@@ -89,9 +89,9 @@ const mapDispatchToProps = (dispatch) => ({
             // saveData: geoDataActions.saveData,
             // listShowLoading: geoDataActions.listShowLoading,
 
-            // hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            // hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            // hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            // hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            // hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            // hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
         },
         dispatch
     ),
