@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'District Details';
+    const moduleTitle = 'Tehsil Details';
 
     let returnValue = {
         userId,
@@ -320,17 +320,17 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
     };
 
     const tableData = [
-        // {
-        //     id: '1',
+        {
+            id: '1',
 
-        //     tehsilCode: 'DO0',
+            tehsilCode: 'DO0',
 
-        //     tehsilName: 'Ranchi',
+            tehsilName: 'Ranchi',
 
-        //     tehsilCategory: 'Test3',
+            tehsilCategory: 'Test3',
 
-        //     status: true,
-        // },
+            status: true,
+        },
     ];
 
     const tableProps = {

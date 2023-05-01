@@ -14,9 +14,9 @@ const ViewTehsilDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Tehsil Code">{formData?.districtCode}</Descriptions.Item>
-                    <Descriptions.Item label="Tehsil Name">{formData?.districtName}</Descriptions.Item>
-                    {/* <Descriptions.Item label="GST State Code">{formData?.gstCode}</Descriptions.Item> */}
+                    <Descriptions.Item label="Tehsil Code">{formData?.tehsilCode}</Descriptions.Item>
+                    <Descriptions.Item label="Tehsil Name">{formData?.tehsilName}</Descriptions.Item>
+                    <Descriptions.Item label="Tehsil Category">{formData?.tehsilCategory}</Descriptions.Item>
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
                 </Descriptions>
             </>
