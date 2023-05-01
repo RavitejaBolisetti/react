@@ -185,7 +185,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Srl.',
+            title: 'Srl No.',
             dataIndex: 'id',
             sorter: false,
             width: '5%',
@@ -450,7 +450,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                 description={
                                     !configData?.length ? (
                                         <span>
-                                            No records found. Please add new District <br />
+                                            No records found. Please add <span style={{color:'rgba(0,0,0,0.7)'}}>"New District Details"</span><br />
                                             using below button
                                         </span>
                                     ) : (

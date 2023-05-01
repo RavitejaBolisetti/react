@@ -4,7 +4,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const TehsilGeoBase = (props) => {
-    const pageTitle = 'District List';
+    const pageTitle = 'Tehsil Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

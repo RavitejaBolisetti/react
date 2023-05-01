@@ -118,8 +118,8 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
 
     const handleEditBtn = (record) => {
 
-        console.log(record,'RECORD');
-        console.log(configData,"configData")
+        // console.log(record,'RECORD');
+        // console.log(configData,"configData")
 
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
@@ -185,31 +185,31 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Srl.',
+            title: 'Srl No.',
             dataIndex: 'id',
             sorter: false,
             width: '5%',
         }),
 
         tblPrepareColumns({
-            title: 'District Code',
-            dataIndex: 'districtCode',
+            title: 'Tehsil Code',
+            dataIndex: 'tehsilCode',
            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'District Name',
-            dataIndex: 'districtName',
+            title: 'Tehsil Name',
+            dataIndex: 'tehsilName',
             width: '20%',
         }),
 
-        // tblPrepareColumns({
-        //     title: 'GST District Code',
-        //     dataIndex: 'configurableParameterType',
-        //     render: (text, record, value) => renderTableColumnName(record, 'configurableParameterType', PARAM_MASTER.CFG_PARAM_TYPE.id),
-        //     width: '20%',
-        // }),
+        tblPrepareColumns({
+            title: 'Tehsil Category',
+            dataIndex: 'tehsilCategory',
+            //render: (text, record, value) => renderTableColumnName(record, 'configurableParameterType', PARAM_MASTER.CFG_PARAM_TYPE.id),
+            width: '20%',
+        }),
 
         tblPrepareColumns({
             title: 'Status',
@@ -320,17 +320,17 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
     };
 
     const tableData = [
-        {
-            id: '1',
+        // {
+        //     id: '1',
 
-            districtCode: 'DO0',
+        //     tehsilCode: 'DO0',
 
-            districtName: 'Ranchi',
+        //     tehsilName: 'Ranchi',
 
-            gstCode: 'Test3',
+        //     tehsilCategory: 'Test3',
 
-            status: true,
-        },
+        //     status: true,
+        // },
     ];
 
     const tableProps = {
@@ -366,7 +366,7 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
         saveAndAddNewBtnClicked,
     };
 
-    console.log(stateCode,'valuevalue')
+    //console.log(stateCode,'valuevalue')
 
     return (
         <>
@@ -378,11 +378,11 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            District List
+                                            Tehsil List
                                             <Search
                                                 placeholder="Search"
                                                 style={{
-                                                    width: 300,
+                                                    width: 200,
                                                 }}
                                                 allowClear
                                                 className={styles.headerSelectField}
@@ -410,7 +410,34 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                                 onSearch={onSearchHandle}
                                                 onChange={onChangeHandle}
                                             /> */}
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }}
+                                                onChange={handleSelectState}
+                                                value={stateCode}
+                                            >
+                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                {STATE_DROPDOWN?.map((item) => (
+                                                    <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                                ))}
+                                            </Select>
+                                        </Col>
+                                    </div>
+                                </Row>
+
+                                <Row gutter={20}>
+                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
+                                            District
+                                            {/* <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                allowClear
+                                                className={styles.headerSelectField}
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
+                                            /> */}
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }}
                                                 onChange={handleSelectState}
                                                 value={stateCode}
                                             >
@@ -424,7 +451,7 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                 </Row>
                             </Row>
                             {tableData?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
@@ -450,7 +477,7 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                 description={
                                     !configData?.length ? (
                                         <span>
-                                            No records found. Please add new District <br />
+                                            No records found. Please add <span style={{color:'rgba(0,0,0,0.7)'}}>"New Tehsil Details"</span><br />
                                             using below button
                                         </span>
                                     ) : (
