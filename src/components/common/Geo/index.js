@@ -1,4 +1,6 @@
 import { Geo } from './Geo';
 import {StateGeo} from './State/StateGeo'
 import {DistrictGeo} from './District/DistrictGeo'
-export { Geo ,StateGeo,DistrictGeo };
+import {CityGeo} from './City/CityGeo'
+
+export { Geo ,StateGeo,DistrictGeo,CityGeo };

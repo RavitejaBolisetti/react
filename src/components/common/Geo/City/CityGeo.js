@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import style from 'components/common/ProductHierarchy/producthierarchy.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
