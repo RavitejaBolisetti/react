@@ -28,6 +28,7 @@ export const ROUTING_COMMON_SATE_GEO = ROUTING_COMMON.concat('state-geo');
 export const ROUTING_COMMON_DISTRICT_GEO = ROUTING_COMMON.concat('district-geo');
 export const ROUTING_COMMON_CITY_GEO = ROUTING_COMMON.concat('city-geo');
 
+export const ROUTING_COMMON_TEHSIL_GEO = ROUTING_COMMON.concat('tehsil-geo');
 export const ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY = ROUTING_COMMON.concat('manufacturer-adminstrative-hierarchy');
 export const ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY = ROUTING_COMMON.concat('manufacturer-organization-hierarchy');
 export const ROUTING_COMMON_DEALER_HIERARCHY = ROUTING_COMMON.concat('dealer-hierarchy');
