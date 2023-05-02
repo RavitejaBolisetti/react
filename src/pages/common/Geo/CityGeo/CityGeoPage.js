@@ -1,5 +1,5 @@
 import React from 'react';
-import { DistrictGeo } from 'components/common/Geo';
+import { CityGeo } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
