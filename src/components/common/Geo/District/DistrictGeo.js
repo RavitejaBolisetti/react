@@ -9,14 +9,14 @@ import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 //import { PARAM_MASTER } from 'constants/paramMaster';
 // import { convertDate } from 'utils/formatDateTime';
-// import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification } from 'store/actions/notification';
+import { geoStateDataActions } from 'store/actions/data/geoState';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 import { bindActionCreators } from 'redux';
-
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -26,7 +26,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+            //ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+            GeoState: {isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
 
@@ -35,10 +36,10 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        typeData,
+        data,
         isLoading,
         moduleTitle,
-        configData: configData?.filter((i) => i),
+        //configData: configData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -51,13 +52,17 @@ const mapDispatchToProps = (dispatch) => ({
             // saveData: configParamEditActions.saveData,
             // fetchDataList: configParamEditActions.fetchDataList,
             // listShowLoading: configParamEditActions.listShowLoading,
-            // showGlobalNotification,
+            
+            fetchList: geoStateDataActions.fetchList,
+            listShowLoading: geoStateDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+    console.log(data,"DISTRICTDATA");
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -82,39 +87,27 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
-    // const loadDependendData = () => {
-    //    // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    // };
-
-    // useEffect(() => {
-    //     if (userId) {
-    //         // const onSuccessAction = (res) => {
-    //         //     refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    //         // };
-    //         loadDependendData();
-
-    //        // fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, refershData]);
+    useEffect(() => {
+        if (userId) {
+            const onSuccessAction = (res) => {
+                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            };
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && configData && userId) {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, configData, userId]);
-
-    // useEffect( () =>{
-
-    // },[stateCode] )
+    }, [filterString, isDataLoaded, data, userId]);
 
     const handleEditBtn = (record) => {
 
@@ -402,23 +395,14 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                     <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             State
-                                            {/* <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            /> */}
+                                            
                                             <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
                                                 onChange={handleSelectState}
                                                 //value={stateCode}
                                             >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {STATE_DROPDOWN?.map((item) => (
-                                                    <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                                {data?.map((item) => (
+                                                    <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>
                                         </Col>

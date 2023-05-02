@@ -8,9 +8,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { AddEditForm } from './AddEditForm';
-
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
@@ -28,6 +26,8 @@ const mapStateToProps = (state) => {
             GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
+
+    console.log(state,'DEER')
 
     const moduleTitle = 'State Master List';
 
@@ -54,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+    console.log(data,"DATA")
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
