@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, ProductHierarchyPage, ProductMasterPage, StateGeoPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage } from 'pages/common';
+import { GeoPage, CityGeoPage,ProductHierarchyPage, ProductMasterPage, StateGeoPage,HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage } from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -26,6 +26,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
             <Route path={routing.ROUTING_COMMON_SATE_GEO} element={<StateGeoPage />} />
+            <Route path={routing.ROUTING_COMMON_CITY_GEO} element={<CityGeoPage />} />
             <Route path={routing.ROUTING_COMMON_DISTRICT_GEO} element={<DistrictGeoPage />} />
             <Route path={routing.ROUTING_COMMON_TEHSIL_GEO} element={<TehsilGeoPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
