@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
@@ -16,7 +16,7 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateCode, handleSelectState } = props;
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -54,6 +54,11 @@ const AddEditFormMain = (props) => {
         styles,
     };
 
+    // useEffect(() => {
+    //     form.setFieldsValue(defaultValues)
+    // }, [form, defaultValues])
+       
+
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
@@ -61,7 +66,9 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="State Name" initialValue={formData?.controlGroup} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect("State Name")}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect("State Name")}
+                                    onChange={handleSelectState}
+                                >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {STATE_DROPDOWN?.map((item) => (
                                         <Option value={item?.KEY}>{item?.TITLE}</Option>
@@ -70,7 +77,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={'JH001'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            { console.log(stateCode,'CODECOE') }
+                            <Form.Item initialValue={stateCode} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>

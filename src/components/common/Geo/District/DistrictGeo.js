@@ -78,7 +78,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [ stateCode, isStateCode ] = useState('DO0')
+    const [ stateCode, isStateCode ] = useState('qw')
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -270,7 +270,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
 
     const handleSelectState = (value) =>{
         console.log(value,'valuevaluevalue');
-        isStateCode(value.target.value)
+        isStateCode(value);
     }
 
     const onChangeHandle = (e) => {
@@ -320,17 +320,17 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
     };
 
     const tableData = [
-        {
-            id: '1',
+        // {
+        //     id: '1',
 
-            districtCode: 'DO0',
+        //     districtCode: 'DO0',
 
-            districtName: 'Ranchi',
+        //     districtName: 'Ranchi',
 
-            gstCode: 'Test3',
+        //     gstCode: 'Test3',
 
-            status: true,
-        },
+        //     status: true,
+        // },
     ];
 
     const tableProps = {
@@ -364,9 +364,11 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        stateCode,
+        handleSelectState,
     };
 
-    console.log(stateCode,'valuevalue')
+    //console.log(stateCode,'valuevalue')
 
     return (
         <>
@@ -412,7 +414,7 @@ export const DistrictGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveDat
                                             /> */}
                                             <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
                                                 onChange={handleSelectState}
-                                                value={stateCode}
+                                                //value={stateCode}
                                             >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                 {STATE_DROPDOWN?.map((item) => (
