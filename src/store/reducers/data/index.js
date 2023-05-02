@@ -17,6 +17,7 @@ import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { GeoState } from './geoState';
 import { GeoDistrict } from './geoDistrict';
+import { GeoCity } from './geoCity';
 
 export const data = combineReducers({
     Menu,
@@ -37,4 +38,5 @@ export const data = combineReducers({
     UserManagementManufacturer,
     GeoState,
     GeoDistrict,
+    GeoCity,
 });
