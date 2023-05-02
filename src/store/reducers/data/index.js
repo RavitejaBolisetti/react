@@ -16,6 +16,7 @@ import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { GeoState } from './geoState';
+import { GeoDistrict } from './geoDistrict';
 
 export const data = combineReducers({
     Menu,
@@ -35,4 +36,5 @@ export const data = combineReducers({
     UserManagement,
     UserManagementManufacturer,
     GeoState,
+    GeoDistrict,
 });

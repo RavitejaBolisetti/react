@@ -11,6 +11,7 @@ import { filterFunction } from 'utils/filterFunction';
 // import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geoState';
+import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
@@ -27,9 +28,13 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             //ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
-            GeoState: {isLoaded: isDataLoaded = false, isLoading, data },
+            //GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
+            GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
+           // GeoDistrict: { isDistrictLoaded: isDataLoaded = false, isDistrictLoading = isLoading, districtData = data },
         },
     } = state;
+
+    console.log(state, 'STATETET');
 
     const moduleTitle = 'District Details';
 
@@ -39,6 +44,9 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
+        // isDistrictLoaded,
+        // isDistrictLoading,
+        // districtData,
         //configData: configData?.filter((i) => i),
     };
     return returnValue;
@@ -52,17 +60,20 @@ const mapDispatchToProps = (dispatch) => ({
             // saveData: configParamEditActions.saveData,
             // fetchDataList: configParamEditActions.fetchDataList,
             // listShowLoading: configParamEditActions.listShowLoading,
-            
-            fetchList: geoStateDataActions.fetchList,
-            listShowLoading: geoStateDataActions.listShowLoading,
+
+            // fetchList: geoStateDataActions.fetchList,
+            // listShowLoading: geoStateDataActions.listShowLoading,
             showGlobalNotification,
+            saveData: geoDistrictDataActions.saveData,
+            fetchList: geoDistrictDataActions.fetchList,
+            listShowLoading: geoDistrictDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
 export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
-    console.log(data,"DISTRICTDATA");
+    //console.log(data,"DISTRICTDATA");
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -83,7 +94,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [ stateCode, isStateCode ] = useState('qw')
+    const [stateCode, isStateCode] = useState('qw');
 
     const [parameterType, setParameterType] = useState(defaultParametarType);
 
@@ -100,7 +111,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.stateCode) || filterFunction(filterString)(item?.districtName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -110,9 +121,8 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     }, [filterString, isDataLoaded, data, userId]);
 
     const handleEditBtn = (record) => {
-
-        console.log(record,'RECORD');
-        console.log(configData,"configData")
+        // console.log(record, 'RECORD');
+        // console.log(configData, 'configData');
 
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
@@ -120,13 +130,13 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         setFooterEdit(false);
         setIsReadOnly(false);
         //configData
-        const data = tableData.find((i) => i.id === record.id);
-        console.log('data', data);
+        const data = searchData.find((i) => i.id === record.id);
+       // console.log('data', data);
         if (data) {
             data && setFormData(data);
             console.log('formData', formData);
 
-           // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
+            // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
     };
@@ -138,7 +148,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
         //configData
-        const data = tableData.find((i) => i.id === record.id);
+        const data = searchData.find((i) => i.stateCode === record.stateCode);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -179,7 +189,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl No.',
-            dataIndex: 'id',
+            dataIndex: 'srl',
             sorter: false,
             width: '5%',
         }),
@@ -187,7 +197,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         tblPrepareColumns({
             title: 'District Code',
             dataIndex: 'districtCode',
-           // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
+            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
@@ -261,34 +271,34 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         setFilterString(value);
     };
 
-    const handleSelectState = (value) =>{
-        console.log(value,'valuevaluevalue');
+    const handleSelectState = (value) => {
+        console.log(value, 'valuevaluevalue');
         isStateCode(value);
-    }
+    };
 
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
 
     const onFinish = (values) => {
-        console.log(values, 'dta');
+        //console.log(values, 'dta');
 
-        //const recordId = formData?.id || '';
+        const recordId = formData?.id || '';
         let data = { ...values };
         //id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD')
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchDataList({ setIsLoading: listShowLoading, userId });
+            fetchDataList({ setIsLoading: listShowLoading, userId });
             // loadDependendData();
 
-            // if (showSaveAndAddNewBtn === true || recordId) {
-            //     setIsFormVisible(false);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            // } else {
-            //     setIsFormVisible(true);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            // }
+            if (showSaveAndAddNewBtn === true || recordId) {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
         };
 
         const onError = (message) => {
@@ -303,9 +313,9 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
             onSuccess,
         };
 
-        console.log(requestData, 'requestData');
+        // console.log(requestData, 'requestData');
 
-        //saveData(requestData);
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -315,20 +325,18 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     const tableData = [
         // {
         //     id: '1',
-
         //     districtCode: 'DO0',
-
         //     districtName: 'Ranchi',
-
         //     gstCode: 'Test3',
-
         //     status: true,
         // },
     ];
 
+    const stateDropdown = data;
+
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: tableData,
+        tableData: data,
         //searchData,
     };
 
@@ -359,16 +367,15 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         saveAndAddNewBtnClicked,
         stateCode,
         handleSelectState,
+        stateDropdown,
     };
-
-    //console.log(stateCode,'valuevalue')
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{display:'flex',justifyContent:'space-between'}}>
+                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Row xs={24} sm={24} md={24} lg={60} xl={60}>
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
@@ -395,13 +402,14 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                                     <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             State
-                                            
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
+                                            <Select
+                                                placeholder="Select"
+                                                style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
                                                 onChange={handleSelectState}
                                                 //value={stateCode}
                                             >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {data?.map((item) => (
+                                                {stateDropdown?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>
@@ -409,7 +417,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                                     </div>
                                 </Row>
                             </Row>
-                            {tableData?.length ? (
+                            {data?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
@@ -434,9 +442,10 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                                     height: 60,
                                 }}
                                 description={
-                                    !configData?.length ? (
+                                    !data?.length ? (
                                         <span>
-                                            No records found. Please add <span style={{color:'rgba(0,0,0,0.7)'}}>"New District Details"</span><br />
+                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New District Details"</span>
+                                            <br />
                                             using below button
                                         </span>
                                     ) : (
@@ -444,7 +453,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                                     )
                                 }
                             >
-                                {!configData?.length ? (
+                                {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>

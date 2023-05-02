@@ -13,7 +13,6 @@ const ViewStateDetailsMain = ({ formData, styles, parameterType }) => {
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Country">{formData?.countryCode}</Descriptions.Item>
-
                     <Descriptions.Item label="State Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="State Name">{formData?.name}</Descriptions.Item>
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
