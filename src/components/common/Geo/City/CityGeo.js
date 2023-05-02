@@ -148,22 +148,22 @@ export const CityGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
         }),
 
         tblPrepareColumns({
-            title: 'State Code',
+            title: 'City Code',
             dataIndex: 'stateCd',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'State Name',
+            title: 'City Name',
             dataIndex: 'stateName',
             width: '20%',
         }),
 
-        tblPrepareColumns({
-            title: 'GST State Code',
-            dataIndex: 'gstCode',
-            width: '20%',
-        }),
+        // tblPrepareColumns({
+        //     title: 'GST State Code',
+        //     dataIndex: 'gstCode',
+        //     width: '20%',
+        // }),
 
         tblPrepareColumns({
             title: 'Status',
@@ -293,7 +293,7 @@ export const CityGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
         typeData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat('State Details'),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat('City Details'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,

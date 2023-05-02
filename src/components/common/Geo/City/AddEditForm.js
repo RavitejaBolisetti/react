@@ -5,7 +5,7 @@ import { withDrawer } from 'components/withDrawer';
 import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-
+import { STATE_DROPDOWN } from '../Tehsil/InputType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { ViewStateDetails } from './ViewStateDetails'
 
@@ -53,26 +53,71 @@ const AddEditFormMain = (props) => {
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.stateCd} label="State Code" name="stateCd" rules={[validateRequiredInputField('State Code')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={50} {...disabledProps} />
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item label="State Name" initialValue={formData?.controlGroup} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')}>
+                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                    {STATE_DROPDOWN?.map((item) => (
+                                        <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
-                        </Row>
-                        <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="State Name" initialValue={formData?.stateName} rules={[validateRequiredInputField('State Name')]} name="stateName">
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} {...disabledProps} />
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={'JH001'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                                <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
+
                     <Row gutter={16}>
-                        <Col  xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="GST State Code" initialValue={formData?.gstCode} name="gstCode" rules={[validateRequiredSelectField('GST State Code')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('GST State Code')} maxLength={50} {...disabledProps} />
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item label="District Name" initialValue={formData?.controlGroup} name="districtName" rules={[validateRequiredSelectField('District Name')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect("District Name")}>
+                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                    {STATE_DROPDOWN?.map((item) => (
+                                        <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
-                        </Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={'JH001'} label="District Code" name="districtCode" rules={[validateRequiredInputField('District Code')]}>
+                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={null} label="City Code" name="tehsilCode" rules={[validateRequiredInputField('Tehsil Code')]}>
+                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={null} label="City Name" name="tehsilName" rules={[validateRequiredInputField('Tehsil Name')]}>
+                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    {/* <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item label="Tehsil Category" initialValue={formData?.controlGroup} name="tehsilCategory" rules={[validateRequiredSelectField('Tehsil Category')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect("Tehsil Category")}>
+                                    
+                                    {STATE_DROPDOWN?.map((item) => (
+                                        <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.dateOfRegistertion ? dayjs(formData?.dateOfRegistertion, 'YYYY-MM-DD') : ''} label="Included On" name={''} rules={[validateRequiredInputField('Included On Date')]}>
+                                <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} className={styles.inputBox} />
+                            </Form.Item>
+                        </Col>
+                    </Row> */}
                         <Row gutter ={16}>
                         <Col  xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">

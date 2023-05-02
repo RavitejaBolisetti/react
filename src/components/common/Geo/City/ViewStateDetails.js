@@ -13,9 +13,9 @@ const ViewStateDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="State Code">{formData?.stateCd}</Descriptions.Item>
-                    <Descriptions.Item label="State Name">{formData?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label="GST State Code">{formData?.gstCode}</Descriptions.Item>
+                    <Descriptions.Item label="City Code">{formData?.stateCd}</Descriptions.Item>
+                    <Descriptions.Item label="City Name">{formData?.stateName}</Descriptions.Item>
+                    {/* <Descriptions.Item label="GST State Code">{formData?.gstCode}</Descriptions.Item> */}
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
                     
                 </Descriptions>
