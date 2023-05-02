@@ -921,7 +921,7 @@ select.form-control:focus::-ms-value {
     background: black;
     border: white !important;
     border-radius: 5px;
-    margin-right: 19px !important;
+    margin-right: 15px !important;
     padding: 6px;
     font-size: 20px;
     color: white;
@@ -945,7 +945,7 @@ select.form-control:focus::-ms-value {
 
 .otpFilled input {
     border: solid 1px #ED302D !important;
-    margin-right: 17px !important;
+    margin-right: 13px !important;
 }
 
 .otpEmpty {

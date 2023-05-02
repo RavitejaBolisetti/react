@@ -66,7 +66,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     const infoText = (
         <div>
             <span>Password must include:</span>
-            <ul style={{ padding: '0px', color: '#000', paddingLeft: '20px' }}>
+            <ul className={styles.passwordStrengthRequirements}>
                 <li>Have at least 1 uppercase</li>
                 <li>Have at least 1 lowercase</li>
                 <li>Have at least 1 number</li>
