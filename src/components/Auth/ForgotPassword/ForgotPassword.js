@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
 import { UndoOutlined } from '@ant-design/icons';
+import { addToolTip } from 'utils/customMenuLink';
 import { TbRefresh } from 'react-icons/tb';
 import { RxCrossCircled } from 'react-icons/rx';
 import { AiOutlineEyeInvisible, AiOutlineEye, AiOutlineInfoCircle } from 'react-icons/ai';
@@ -49,14 +50,13 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedUserId, setSelectedUserId] = useState();
     const [otpMessage, setOTPMessage] = useState();
-    const [otpSentOnMobile, setOTPSentOnMobile] = useState(true);
-    const [otpSentOnEmail, setOTPSentOnEmail] = useState(true);
     const [counter, setCounter] = useState(RESEND_OTP_TIME);
     const [otpInput, setOTPInput] = useState();
     const [validationKey, setValidationKey] = useState();
     const [inValidOTP, setInValidOTP] = useState(false);
     const [showPassword, setShowPassword] = useState({ newPassword: false, confirmNewPassword: false });
     const [password, setPassword] = useState('');
+    const [verifiedUserData, setVerifiedUserData] = useState();
 
     useEffect(() => {
         const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
@@ -84,7 +84,8 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
             const data = { userId };
             setSelectedUserId(userId);
 
-            const onSuccess = () => {
+            const onSuccess = (res) => {
+                setVerifiedUserData(res?.data);
                 setCurrentStep(2);
             };
 
@@ -101,15 +102,17 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     const onSentOTP = (values) => {
         if (values) {
             hideGlobalNotification();
-            handleSendOTP();
+            handleSendOTP(values);
         }
     };
 
-    const handleSendOTP = () => {
+    const handleSendOTP = (values) => {
         setOTPInput();
         setInValidOTP(false);
 
         if (selectedUserId) {
+            const otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
+            const otpSentOnEmail = values?.otpSentOn.includes('sentOnEmail');
             if (otpSentOnMobile || otpSentOnEmail) {
                 hideGlobalNotification();
                 const data = { userId: selectedUserId, sentOnMobile: otpSentOnMobile, sentOnEmail: otpSentOnEmail };
@@ -176,16 +179,8 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         updatePassword(requestData);
     };
 
-    const otpSentOnMobileChange = (event) => {
-        setOTPSentOnMobile(event.target.checked);
-    };
-
-    const otpSentOnEmailChange = (event) => {
-        setOTPSentOnEmail(event.target.checked);
-    };
-
     const validateOTPOption = (_, value) => {
-        if (!(otpSentOnMobile || otpSentOnEmail)) {
+        if (!value || value?.length <= 0) {
             return Promise.reject(new Error('Please choose at least one option'));
         }
         return Promise.resolve();
@@ -279,42 +274,35 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                 <div className={styles.registered}>Please choose the option for getting the OTP</div>
                                                             </Col>
                                                         </Row>
-
-                                                        <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item
-                                                                    name="sentOnMobile"
-                                                                    className={styles.fielderror}
-                                                                    rules={[
-                                                                        {
-                                                                            validator: validateOTPOption,
-                                                                        },
-                                                                    ]}>
-                                                                    <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnMobileChange}>
-                                                                        Registered Mobile Number
-                                                                        <p>+91-XXXX XXX1 226</p>
-                                                                    </Checkbox>
-                                                                </Form.Item>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Form.Item
-                                                                    name="sentOnEmail"
-                                                                    className={styles.fielderror}
-                                                                    rules={[
-                                                                        {
-                                                                            validator: validateOTPOption,
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Checkbox className={styles.registered} defaultChecked="true" onChange={otpSentOnEmailChange}>
-                                                                        Registered Email Address
-                                                                        <p>xxxxdscksd@mahindra.com</p>
-                                                                    </Checkbox>
-                                                                </Form.Item>
-                                                            </Col>
-                                                        </Row>
+                                                        <Form.Item
+                                                            name="otpSentOn"
+                                                            rules={[
+                                                                {
+                                                                    validator: validateOTPOption,
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Checkbox.Group
+                                                                style={{
+                                                                    width: '100%',
+                                                                }}
+                                                            >
+                                                                <Row>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
+                                                                        <Checkbox className={styles.registered} value="sentOnMobile">
+                                                                            Registered Mobile Number
+                                                                            <p>{verifiedUserData?.contactNumber}</p>
+                                                                        </Checkbox>
+                                                                    </Col>
+                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
+                                                                        <Checkbox className={styles.registered} value="sentOnEmail">
+                                                                            Registered Email Address
+                                                                            <p>{verifiedUserData?.email}</p>
+                                                                        </Checkbox>
+                                                                    </Col>
+                                                                </Row>
+                                                            </Checkbox.Group>
+                                                        </Form.Item>
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -344,7 +332,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className={styles.otpTitle}>Enter OTP <AiOutlineInfoCircle /></div>
+                                                        <div className={styles.otpTitle}>Enter OTP {addToolTip('Please enter 6 digit OTP', 'right')(<AiOutlineInfoCircle size={13} />)}</div>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
@@ -356,7 +344,20 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Row gutter={20} className={styles.otpVerificationContainer}>
                                                             <Col xs={16} sm={16} md={16} lg={16} xl={16}>
-                                                                {counter ? <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div> : <div className={styles.otpNotReceive}>{inValidOTP ? <span><RxCrossCircled />{'Incorrect OTP'}</span> : <span>{"Didn't receive an OTP?"}</span>}</div>}
+                                                                {counter ? (
+                                                                    <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div>
+                                                                ) : (
+                                                                    <div className={styles.otpNotReceive}>
+                                                                        {inValidOTP ? (
+                                                                            <span>
+                                                                                <RxCrossCircled />
+                                                                                {'Incorrect OTP'}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span>{"Didn't receive an OTP?"}</span>
+                                                                        )}
+                                                                    </div>
+                                                                )}
                                                             </Col>
                                                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                                                 <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
