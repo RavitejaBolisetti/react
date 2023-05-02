@@ -69,7 +69,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     // const delarAvtarData = dealerName?.split(' ');
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
-    
+
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchData({ setIsLoading: listShowLoading, userId, onError });
@@ -93,7 +93,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             title: 'Logout',
             icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
             content: 'Are you sure you want to logout?',
-            okText: 'Yes',
+            okText: 'Yes, Logout',
             okType: 'danger',
             cancelText: 'No',
             wrapClassName: styles.confirmModal,
