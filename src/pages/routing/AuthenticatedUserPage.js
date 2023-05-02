@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, CityGeoPage,ProductHierarchyPage,UserManagementPage,UserManagementManufacturerPage, ProductMasterPage, StateGeoPage,HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage } from 'pages/common';
+import { GeoPage,CityGeoPage,ProductHierarchyPage,UserManagementPage,UserManagementManufacturerPage, ProductMasterPage, StateGeoPage,HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage } from 'pages/common';
 import { LoginPage } from 'pages/auth';
 
 import * as routing from 'constants/routing';
