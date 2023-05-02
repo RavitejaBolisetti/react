@@ -2,22 +2,17 @@ import React,{ useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-// import { convertCalenderDate } from 'utils/formatDateTime';
-//import { PARAM_MASTER } from 'constants/paramMaster';
-// import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { ViewDistrictDetails } from './ViewDistrictDetails';
 
 const { Option } = Select;
-// const { TextArea } = Input;
+
 
 const AddEditFormMain = (props) => {
     const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateDropdown } = props;
-
-    //console.log(stateDropdown,'stateDropdownstateDropdown');
 
     const [ selectedState, isSelectedState ] = useState('');
 

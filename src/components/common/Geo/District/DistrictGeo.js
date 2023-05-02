@@ -34,8 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, 'STATETET');
-
     const moduleTitle = 'District Details';
 
     let returnValue = {
@@ -56,11 +54,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: configParamEditActions.fetchList,
-            // saveData: configParamEditActions.saveData,
-            // fetchDataList: configParamEditActions.fetchDataList,
-            // listShowLoading: configParamEditActions.listShowLoading,
-
             // fetchList: geoStateDataActions.fetchList,
             // listShowLoading: geoStateDataActions.listShowLoading,
             showGlobalNotification,
@@ -75,7 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
 export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     //console.log(data,"DISTRICTDATA");
     const [form] = Form.useForm();
-    const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
@@ -95,8 +87,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     const [closePanels, setClosePanels] = React.useState([]);
 
     const [stateCode, isStateCode] = useState('qw');
-
-    const [parameterType, setParameterType] = useState(defaultParametarType);
 
     useEffect(() => {
         if (userId) {
@@ -121,22 +111,16 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     }, [filterString, isDataLoaded, data, userId]);
 
     const handleEditBtn = (record) => {
-        // console.log(record, 'RECORD');
-        // console.log(configData, 'configData');
 
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        //configData
         const data = searchData.find((i) => i.id === record.id);
        // console.log('data', data);
         if (data) {
             data && setFormData(data);
-            console.log('formData', formData);
-
-            // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
     };
@@ -147,7 +131,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        //configData
         const data = searchData.find((i) => i.stateCode === record.stateCode);
         if (data) {
             data && setFormData(data);
@@ -160,28 +143,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
 
     // const renderTableColumnName = (record, key, type) => {
     //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    // };
-
-    // const renderConfigurableParemetarValue = (record) => {
-    //     let fieldType = '';
-    //     switch (record?.configurableParameterType) {
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY:
-    //             fieldType = record?.textValue;
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY:
-    //             fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-    //             fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
-    //             fieldType = record?.booleanValue ? 'Yes' : 'No';
-    //             break;
-    //         default:
-    //             fieldType = undefined;
-    //             break;
-    //     }
-    //     return fieldType;
     // };
 
     const tableColumn = [];
@@ -264,7 +225,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
@@ -290,7 +250,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchDataList({ setIsLoading: listShowLoading, userId });
-            // loadDependendData();
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
@@ -313,8 +272,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
             onSuccess,
         };
 
-        // console.log(requestData, 'requestData');
-
         saveData(requestData);
     };
 
@@ -322,22 +279,12 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         form.validateFields().then((values) => {});
     };
 
-    const tableData = [
-        // {
-        //     id: '1',
-        //     districtCode: 'DO0',
-        //     districtName: 'Ranchi',
-        //     gstCode: 'Test3',
-        //     status: true,
-        // },
-    ];
-
+    /******* GeoState *******/
     const stateDropdown = data;
 
     const tableProps = {
         tableColumn: tableColumn,
         tableData: data,
-        //searchData,
     };
 
     const formProps = {
@@ -358,8 +305,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        parameterType,
-        setParameterType,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,

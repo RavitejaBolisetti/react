@@ -7,16 +7,18 @@ import { STATE_DROPDOWN } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-//import { PARAM_MASTER } from 'constants/paramMaster';
-// import { convertDate } from 'utils/formatDateTime';
-// import { showGlobalNotification } from 'store/actions/notification';
+
+import { geoStateDataActions } from 'store/actions/data/geoState';
+import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
+import { geoTehsilDataActions } from 'store/actions/data/geoTehsil';
+
+import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 import { bindActionCreators } from 'redux';
-
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -26,7 +28,9 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+            //GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
+            //GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
+            GeoTehsil: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
 
@@ -35,10 +39,13 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        typeData,
+        data,
         isLoading,
         moduleTitle,
-        configData: configData?.filter((i) => i),
+        // isDistrictLoaded,
+        // isDistrictLoading,
+        // districtData,
+        //configData: configData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -47,17 +54,25 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: configParamEditActions.fetchList,
-            // saveData: configParamEditActions.saveData,
-            // fetchDataList: configParamEditActions.fetchDataList,
-            // listShowLoading: configParamEditActions.listShowLoading,
-            // showGlobalNotification,
+            showGlobalNotification,
+
+            /** For State DropDown **/
+            // fetchList: geoStateDataActions.fetchList,
+            // listShowLoading: geoStateDataActions.listShowLoading,
+
+            /** For District DropDown **/
+            // fetchList: geoDistrictDataActions.fetchList,
+            // listShowLoading: geoDistrictDataActions.listShowLoading,
+
+            saveData: geoTehsilDataActions.saveData,
+            fetchList: geoTehsilDataActions.fetchList,
+            listShowLoading: geoTehsilDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -78,62 +93,42 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [ stateCode, isStateCode ] = useState('DO0')
-
-    const [parameterType, setParameterType] = useState(defaultParametarType);
-
-    // const loadDependendData = () => {
-    //    // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    // };
-
-    // useEffect(() => {
-    //     if (userId) {
-    //         // const onSuccessAction = (res) => {
-    //         //     refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    //         // };
-    //         loadDependendData();
-
-    //        // fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, refershData]);
+    const [stateCode, isStateCode] = useState('DO0');
 
     useEffect(() => {
-        if (isDataLoaded && configData && userId) {
+        if (userId) {
+            const onSuccessAction = (res) => {
+                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            };
+
+           fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
+
+    useEffect(() => {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.stateCode) || filterFunction(filterString)(item?.districtName));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, configData, userId]);
+    }, [filterString, isDataLoaded, data, userId]);
 
-    // useEffect( () =>{
-
-    // },[stateCode] )
 
     const handleEditBtn = (record) => {
-
-        // console.log(record,'RECORD');
-        // console.log(configData,"configData")
-
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        //configData
-        const data = tableData.find((i) => i.id === record.id);
+        const data = searchData.find((i) => i.id === record.id);
         console.log('data', data);
         if (data) {
             data && setFormData(data);
-            console.log('formData', formData);
-
-           // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
     };
@@ -144,8 +139,8 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        //configData
-        const data = tableData.find((i) => i.id === record.id);
+
+        const data = searchData.find((i) => i.stateCode === record.stateCode);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -157,28 +152,6 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
 
     // const renderTableColumnName = (record, key, type) => {
     //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    // };
-
-    // const renderConfigurableParemetarValue = (record) => {
-    //     let fieldType = '';
-    //     switch (record?.configurableParameterType) {
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY:
-    //             fieldType = record?.textValue;
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY:
-    //             fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-    //             fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
-    //             fieldType = record?.booleanValue ? 'Yes' : 'No';
-    //             break;
-    //         default:
-    //             fieldType = undefined;
-    //             break;
-    //     }
-    //     return fieldType;
     // };
 
     const tableColumn = [];
@@ -194,7 +167,7 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
         tblPrepareColumns({
             title: 'Tehsil Code',
             dataIndex: 'tehsilCode',
-           // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
+            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
@@ -261,17 +234,16 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
         setFilterString(value);
     };
 
-    const handleSelectState = (value) =>{
-        console.log(value,'valuevaluevalue');
-        isStateCode(value.target.value)
-    }
+    const handleSelectState = (value) => {
+        console.log(value, 'valuevaluevalue');
+        isStateCode(value.target.value);
+    };
 
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
@@ -280,22 +252,21 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
     const onFinish = (values) => {
         console.log(values, 'dta');
 
-        //const recordId = formData?.id || '';
+        const recordId = formData?.id || '';
         let data = { ...values };
         //id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD')
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchDataList({ setIsLoading: listShowLoading, userId });
-            // loadDependendData();
+            fetchDataList({ setIsLoading: listShowLoading, userId });
 
-            // if (showSaveAndAddNewBtn === true || recordId) {
-            //     setIsFormVisible(false);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            // } else {
-            //     setIsFormVisible(true);
-            //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            // }
+            if (showSaveAndAddNewBtn === true || recordId) {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
         };
 
         const onError = (message) => {
@@ -310,32 +281,23 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
             onSuccess,
         };
 
-        console.log(requestData, 'requestData');
-
-        //saveData(requestData);
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
 
-    const tableData = [
-        {
-            id: '1',
 
-            tehsilCode: 'DO0',
+    /******* GeoState *******/
+    const stateDropdown = data;
 
-            tehsilName: 'Ranchi',
-
-            tehsilCategory: 'Test3',
-
-            status: true,
-        },
-    ];
+    /********* GeoDistrict *********/
+    const districtDropdown = data;
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: tableData,
+        tableData: data,
         //searchData,
     };
 
@@ -357,13 +319,13 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        parameterType,
-        setParameterType,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        stateDropdown, 
+        districtDropdown,
     };
 
     //console.log(stateCode,'valuevalue')
@@ -373,7 +335,7 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{display:'flex',justifyContent:'space-between'}}>
+                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Row xs={24} sm={24} md={24} lg={60} xl={60}>
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
@@ -400,23 +362,10 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                     <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             State
-                                            {/* <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            /> */}
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }}
-                                                onChange={handleSelectState}
-                                                value={stateCode}
-                                            >
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState} value={stateCode}>
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {STATE_DROPDOWN?.map((item) => (
-                                                    <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                                {stateDropdown?.map((item) => (
+                                                    <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>
                                         </Col>
@@ -427,30 +376,16 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                     <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             District
-                                            {/* <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            /> */}
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }}
-                                                onChange={handleSelectState}
-                                                value={stateCode}
-                                            >
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {STATE_DROPDOWN?.map((item) => (
-                                                    <Option value={item?.KEY}>{item?.TITLE}</Option>
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState} value={stateCode}>
+                                                {districtDropdown?.map((item) => (
+                                                    <Option value={item?.districtCode}>{item?.districtName}</Option>
                                                 ))}
                                             </Select>
                                         </Col>
                                     </div>
                                 </Row>
                             </Row>
-                            {tableData?.length ? (
+                            {data?.length ? (
                                 <Col className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
@@ -475,9 +410,10 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                     height: 60,
                                 }}
                                 description={
-                                    !configData?.length ? (
+                                    !data?.length ? (
                                         <span>
-                                            No records found. Please add <span style={{color:'rgba(0,0,0,0.7)'}}>"New Tehsil Details"</span><br />
+                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New Tehsil Details"</span>
+                                            <br />
                                             using below button
                                         </span>
                                     ) : (
@@ -485,7 +421,7 @@ export const TehsilGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData,
                                     )
                                 }
                             >
-                                {!configData?.length ? (
+                                {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
