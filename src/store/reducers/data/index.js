@@ -15,7 +15,7 @@ import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
-
+import { GeoState } from './geoState';
 
 export const data = combineReducers({
     Menu,
@@ -34,4 +34,5 @@ export const data = combineReducers({
     QualificationMaster,
     UserManagement,
     UserManagementManufacturer,
+    GeoState,
 });

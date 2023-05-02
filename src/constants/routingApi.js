@@ -17,6 +17,7 @@ export const BASE_URL_CHANGE_PASSWORD = BASE_URL + 'changepassword';
 export const BASE_URL_UPDATE_PASSWORD = BASE_URL + 'changepassword';
 
 export const BASE_URL_GEO_GRAPHY = BASE_URL + 'geography';
+export const BASE_URL_GEO_GRAPHY_STATE = BASE_URL + 'geography/states';
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';
 export const BASE_URL_ROLE_MANAGEMENT_ROLES = BASE_URL + 'application/rolemanagement';

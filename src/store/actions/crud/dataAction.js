@@ -132,17 +132,16 @@ export const dataActions = (params) => {
         }),
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, onError, data, userId, onSuccess } = params;
+            const { setIsLoading, onError, data, userId, onSuccess, method = 'post' } = params;
             setIsLoading(true);
 
-            const onSuccessAction = () => {
-                dispatch(saveData());
-                onSuccess();
+            const onSuccessAction = (res) => {
+                onSuccess(res);
             };
 
             const apiCallParams = {
                 data,
-                method: 'post',
+                method: method,
                 url: inBaseURL,
                 token,
                 accessToken,

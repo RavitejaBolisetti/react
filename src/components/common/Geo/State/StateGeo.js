@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import style from 'components/common/ProductHierarchy/producthierarchy.module.css';
+import { geoStateDataActions } from 'store/actions/data/geoState';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDate } from 'utils/formatDateTime';
-import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 
 import { PlusOutlined } from '@ant-design/icons';
@@ -24,41 +21,39 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 const { Option } = Select;
 
-// const mapStateToProps = (state) => {
-//     const {
-//         auth: { userId },
-//         data: {
-//             ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
-//         },
-//     } = state;
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
+        },
+    } = state;
 
-//     const moduleTitle = 'State Master List';
+    const moduleTitle = 'State Master List';
 
-//     let returnValue = {
-//         userId,
-//         isDataLoaded,
-//         typeData,
-//         isLoading,
-//         moduleTitle,
-//         configData: configData?.filter((i) => i),
-//     };
-//     return returnValue;
-// };
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        data,
+        isLoading,
+        moduleTitle,
+    };
+    return returnValue;
+};
 
-// const mapDispatchToProps = (dispatch) => ({
-//     dispatch,
-//     ...bindActionCreators(
-//         {
-//             fetchList: configParamEditActions.fetchList,
-//             saveData: configParamEditActions.saveData,
-//             fetchDataList: configParamEditActions.fetchDataList,
-//             listShowLoading: configParamEditActions.listShowLoading,
-//             showGlobalNotification,
-//         },
-//         dispatch
-//     ),
-// });
-export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: geoStateDataActions.fetchList,
+            saveData: geoStateDataActions.saveData,
+            listShowLoading: geoStateDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -78,35 +73,27 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const loadDependendData = () => {
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    };
-
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
-            loadDependendData();
-
-            fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && configData && userId) {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, configData, userId]);
+    }, [filterString, isDataLoaded, data, userId]);
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -114,7 +101,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = tableData.find((i) => i.id === record.id);
+        const data = searchData.find((i) => i.code === record.code);
         console.log('data', data);
         if (data) {
             data && setFormData(data);
@@ -130,7 +117,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = tableData.find((i) => i.id === record.id);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -150,19 +137,19 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
 
         tblPrepareColumns({
             title: 'State Code',
-            dataIndex: 'stateCd',
+            dataIndex: 'code',
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'State Name',
-            dataIndex: 'stateName',
+            dataIndex: 'name',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'GST State Code',
-            dataIndex: 'gstCode',
+            title: 'Country',
+            dataIndex: 'countryCode',
             width: '20%',
         }),
 
@@ -193,20 +180,6 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
             ],
         }
     );
-
-    const tableData = [
-        {
-            id: '1',
-
-            stateCd: 'Test50',
-
-            stateName: 'Test50',
-
-            gstCode: 'Test50',
-
-            status: 1,
-        },
-    ];
 
     const handleReferesh = () => {
         setRefershData(!refershData);
@@ -242,13 +215,12 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId };
-        console.log(data);
+        let data = { ...values, id: recordId, countryCode: 'IND' };
+
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDataList({ setIsLoading: listShowLoading, userId });
-            loadDependendData();
+            fetchList({ setIsLoading: listShowLoading, userId });
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
@@ -264,7 +236,8 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
         };
 
         const requestData = {
-            data: [data],
+            data: data,
+            method: formActionType === 'update' ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -279,7 +252,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
     };
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: tableData,
+        tableData: searchData,
     };
 
     const formProps = {
@@ -294,12 +267,12 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
         typeData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat('State Details'),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('State Details'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        tableData,
+        tableData: searchData,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
@@ -312,43 +285,50 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                        State List
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.subheading}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                                State List
+                                            </Col>
+                                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                                <Select
+                                                    style={{
+                                                        width: 300,
+                                                    }}
+                                                    placeholder="Country"
+                                                    allowClear
+                                                    className={styles.headerSelectField}
+                                                >
+                                                    <Option value="India">India</Option>
+                                                </Select>
+                                                <Search
+                                                    placeholder="Search"
+                                                    style={{
+                                                        width: 300,
+                                                    }}
+                                                    allowClearclassName={styles.headerSelectField}
+                                                    onSearch={onSearchHandle}
+                                                    onChange={onChangeHandle}
+                                                />{' '}
+                                            </Col>
+                                        </Row>
                                     </Col>
-                                    <Col xs={24} sm={24} md={16} lg={19} xl={19}>
-                                        <Search
-                                            placeholder="Search"
-                                            style={{
-                                                width: 300,
-                                            }}
-                                            allowClearclassName={styles.headerSelectField}
-                                            onSearch={onSearchHandle}
-                                            onChange={onChangeHandle}
-                                        />
-                                        <Select placeholder="Country" allowClear className={styles.headerSelectField}>
-                                            <Option value="India">India</Option>
-                                        </Select>
+
+                                    <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
+                                        <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            Add State
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Col>
-
-                            {tableData?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add State
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
                         </Row>
                     </div>
                 </Col>
             </Row>
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -359,7 +339,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
                                     height: 60,
                                 }}
                                 description={
-                                    !tableData?.length ? (
+                                    !searchData?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
@@ -369,7 +349,7 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
                                     )
                                 }
                             >
-                                {!tableData?.length ? (
+                                {!searchData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
@@ -394,4 +374,4 @@ export const StateGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, 
     );
 };
 
-export const StateGeo = connect()(StateGeoBase);
+export const StateGeo = connect(mapStateToProps, mapDispatchToProps)(StateGeoBase);
