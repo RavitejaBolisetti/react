@@ -5,7 +5,7 @@ import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 import style from 'components/common/Common.module.css';
 
@@ -88,7 +88,7 @@ const AddEditFormMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVis
     };
     const validatedDuplicateTime = (field) => (rule, value) => {
         const overlapData = checkOverlap();
-        return overlapData?.isOverlap && TimeTrack ? Promise.reject(EN.GENERAL.TIME_OVERLAPPING.MESSAGE) : Promise.resolve();
+        return overlapData?.isOverlap && TimeTrack ? Promise.reject(LANGUAGE_EN.GENERAL.TIME_OVERLAPPING.MESSAGE) : Promise.resolve();
     };
 
     const cardProps = {
