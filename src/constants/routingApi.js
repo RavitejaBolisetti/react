@@ -19,6 +19,7 @@ export const BASE_URL_UPDATE_PASSWORD = BASE_URL + 'changepassword';
 export const BASE_URL_GEO_GRAPHY = BASE_URL + 'geography';
 export const BASE_URL_GEO_GRAPHY_STATE = 'https://apidev.mahindradealerrise.com/' + 'geography/states';
 export const BASE_URL_GEO_GRAPHY_DISTRICT = 'https://apidev.mahindradealerrise.com/' + 'geography/districts';
+export const BASE_URL_GEO_GRAPHY_TEHSIL = 'https://apidev.mahindradealerrise.com/' + 'geography/tehsils';
 export const BASE_URL_GEO_GRAPHY_CITY = 'https://apidev.mahindradealerrise.com/' + 'geography/cities';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
