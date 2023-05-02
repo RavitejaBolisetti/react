@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { HierarchyView } from './HierarchyView';
 
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { ManufactureAdminHierarchyUpload } from '../ManufacturerAdminstrativeHierarchy';
 import { ManufacturerAdminHierarchyChangeHistory, ManufacturerAdminAuthorityChangeHistory } from './ChangeHistory';
@@ -19,7 +19,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
 
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {
@@ -67,9 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
             onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
             cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -319,8 +319,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const leftCol = manufacturerAdminHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 ? 8 : 24;
 
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
     const historyOptions = [
         {

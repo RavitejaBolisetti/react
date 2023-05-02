@@ -2,7 +2,7 @@ import React from 'react'
 import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { Table } from 'antd';
 import userEvent from '@testing-library/user-event';
-import DataTable from '../../../utils/dataTable/DataTable';
+import DataTable from 'utils/dataTable/DataTable';
 import { QualificationMaster } from '../QualificationMaster/QualificationMaster';
 
 

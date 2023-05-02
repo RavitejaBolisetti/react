@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Empty, Form, Row, Select ,Input} from 'antd';
+import { Button, Col, Empty, Form, Row, Select, Input } from 'antd';
 import { FaHistory } from 'react-icons/fa';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
 
 import { geoDataActions } from 'store/actions/data/geo';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { ChangeHistory } from './ChangeHistory';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewGeoDetail } from './ViewGeoDetails';
@@ -22,6 +22,7 @@ import style from '../ProductHierarchy/producthierarchy.module.css';
 const { Search } = Input;
 const { Option } = Select;
 const mapStateToProps = (state) => {
+    console.log("🚀 ~ file: Geo.js:25 ~ mapStateToProps ~ state:", state)
     const {
         auth: { userId },
         data: {
@@ -34,6 +35,8 @@ const mapStateToProps = (state) => {
     } = state;
     const moduleTitle = 'Geographical Detail';
     const viewTitle = 'Hierarchy Details';
+
+    console.log('attributeData', attributeData);
 
     let returnValue = {
         collapsed,
@@ -57,9 +60,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: geoDataActions.saveData,
             listShowLoading: geoDataActions.listShowLoading,
             changeHistoryModelOpen: geoDataActions.changeHistoryModelOpen,
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -269,8 +272,8 @@ export const GeoMain = ({ isChangeHistoryGeoVisible, changeHistoryModelOpen, mod
     const leftCol = geoData?.length > 0 ? 16 : 24;
     const rightCol = geoData?.length > 0 ? 8 : 24;
 
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     return (
         <>
             <Row gutter={20} span={24}>

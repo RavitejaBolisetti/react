@@ -1,2 +1,2 @@
-import { EN } from 'en';
-export { EN };
+import { LANGUAGE_EN } from 'en';
+export { LANGUAGE_EN };
