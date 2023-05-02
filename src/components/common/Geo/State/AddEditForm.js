@@ -49,11 +49,21 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item initialValue={formData?.countryCode} label="Country" name="countryCode" rules={[validateRequiredInputField('Country')]}>
+                                <Select placeholder="Select" showSearch allowClear>
+                                    <Option value='IND'>India</Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
+
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">

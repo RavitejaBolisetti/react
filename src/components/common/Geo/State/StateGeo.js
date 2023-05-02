@@ -237,7 +237,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
 
         const requestData = {
             data: data,
-            method: formActionType === 'update' ? 'put' : 'post',
+             method: formActionType === 'update' ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
