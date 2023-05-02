@@ -12,6 +12,7 @@ import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 
 import { CMSPage } from 'pages/cms';
+import { PincodeGeoPage } from 'pages/common/Geo';
 
 export const AuthenticatedUserPage = () => {
     return (
@@ -31,6 +32,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_CITY_GEO} element={<CityGeoPage />} />
             <Route path={routing.ROUTING_COMMON_DISTRICT_GEO} element={<DistrictGeoPage />} />
             <Route path={routing.ROUTING_COMMON_TEHSIL_GEO} element={<TehsilGeoPage />} />
+            <Route path={routing.ROUTING_COMMON_PINCODE_GEO} element={<PincodeGeoPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
