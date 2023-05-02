@@ -1,6 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen,wait } from '@testing-library/react';
 import { CriticalityGroup } from '../CriticalityGroup/CriticalityGroup';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
+import userEvent from '@testing-library/user-event';
+import { showGlobalNotification } from 'store/actions/notification'; 
+import React from 'react';
+
 import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 
 jest.mock('react-redux', () => ({
@@ -17,39 +21,39 @@ window.matchMedia =
         };
     };
 
-const criticalityGroupData1 = [
+      const criticalityGroupData1 = [
     {
-        critcltyGropCode: 'Test50',
-        critcltyGropName: 'Test50',
-        status: 'Y',
-        defaultGroup: 'Y',
-        allowedTimingResponse: [
+        criticalityGroupCode: 'Test50',
+        criticalityGroupName: 'Test50',
+        status: 1,
+        defaultGroup: '1',
+        allowedTimings: [
             {
                 startTime: '11:00',
                 endTime: '12:00',
             },
         ],
     },
-];
+];                   
 const criticalityGroupData = [
     {
-        critcltyGropCode: 'Hello',
-        critcltyGropName: 'Name',
-        status: 'Y',
-        defaultGroup: 'Y',
-        allowedTimingResponse: [
+        criticalityGroupCode: 'RCB',
+        criticalityGroupName: 'RCB1',
+        status: 1,
+        defaultGroup: '1',
+        allowedTimings: [
             {
-                startTime: '11:00',
-                endTime: '12:00',
+                startTime: '12:00',
+                endTime: '02:00',
             },
         ],
     },
     {
-        critcltyGropCode: 'NONON',
-        critcltyGropName: 'Ndhdjd',
-        status: 'Y',
-        defaultGroup: 'Y',
-        allowedTimingResponse: [
+        criticalityGroupCode: 'NONON',
+        criticalityGroupName: 'Ndhdjd',
+        status: 0,
+        defaultGroup: '0',
+        allowedTimings: [
             {
                 startTime: '11:00',
                 endTime: '12:00',
@@ -68,60 +72,44 @@ const listShowLoading = () => {
 };
 
 describe('Criticality Group Test', () => {
-
     test('Is the search Field Present or not', () => {
         render(<CriticalityGroup fetchData={fetchData} saveData={saveData} />);
-        searchFieldTest()
+        searchFieldTest();
     });
 
     test('Is the Refresh Button Present or not', () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('fa-ref')
-    });
-
-    test('Is the View Button Present or not', () => {
-        render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('ai-view')
-
+        buttonLookAndFireEventWithLabel('fa-ref');
     });
 
     test('Is Add Group Button Present on  render of Table', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        const options = await screen.queryByText('Test50');
-        expect(options).toBeNull();
 
-        buttonLookAndFireEventWithText('Add Group')
-        switchAvailablity('fa-switch')
-        InputFieldAvailablity('Please enter id')
-        InputFieldAvailablity('Please enter name')
-        buttonLookAndFireEventWithText('Cancel')
-
+        buttonLookAndFireEventWithText('Add Group');
+        switchAvailablity('fa-switch');
+        InputFieldAvailablity('Please enter id');
+        InputFieldAvailablity('Please enter name');
+        buttonLookAndFireEventWithText('Cancel');
     });
 
     test('Is table rendering data', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-        tablerender('Criticality Group Listt', 'Test50')
+        tablerender('Criticality Group List', 'Test50');
     });
 
-    // test.only('Edit Functionality in Table', async () => {
-    //     render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-    //     buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
+    // test('Edit Functionality in Table', async () => {
+    //     render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
 
-    //     inputFieldLookAndtextChange('Please enter id', 'Test50', );
-    //     inputFieldLookAndtextChange('Please enter name', 'Test50')
+    //     const textfield = await screen.findByText('Criticality Group List');
+    //     expect(textfield).toBeTruthy();
 
-    //     const inputCodelabel = await screen.findAllByText('Criticality Group Id');
-    //     const Validations2 = await screen.findAllByText('Criticality Group Name');
+    //     buttonLookAndFireEventWithLabel('fa-edit');
+    //     inputFieldLookAndtextChange('Please enter id', 'RCB', );
+    //     inputFieldLookAndtextChange('Please enter name', 'RCB1')
 
-    //     expect(inputCodelabel).toBeTruthy();
-    //     expect(Validations2).toBeTruthy();
-        
+    //     InputFieldAvailablity('Criticality Group Id');
+    //     InputFieldAvailablity('Criticality Group Name');
     //     buttonLookAndFireEventByRole('Save')
-    // });
-
-    // test('Is search working', async () => {
-    //     render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
-    //     searchFunctionality('Test50')
     // });
 
     test('is drawer closing on click of cancel button', async () => {
@@ -131,37 +119,35 @@ describe('Criticality Group Test', () => {
     });
 
     test('View Functionality in Table', async () => {
-        
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
         const textfield = await screen.findByText('Criticality Group List');
         expect(textfield).toBeTruthy();
 
-        buttonLookAndFireEventWithLabel('ai-view')
+        buttonLookAndFireEventWithLabel('ai-view');
         InputFieldAvailablity('Criticality Group Id');
         InputFieldAvailablity('Criticality Group Name');
-        
+
         buttonLookAndFireEventByRole('Edit');
     });
 
-    test('is drawer opening on click of Add Qualification', async () => {
+    test('is drawer opening on click of Add Criticality', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
         buttonLookAndFireEventWithText('Add Group');
         InputFieldAvailablity('Please enter id');
         InputFieldAvailablity('Please enter code');
-
     });
 
     test('Save drawer element', async () => {
         const onFinish = jest.fn();
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
 
-        buttonLookAndFireEventWithText('Add Group')
+        buttonLookAndFireEventWithText('Add Group');
         InputFieldAvailablity('Please enter id');
         InputFieldAvailablity('Please enter code');
 
         onFinish.mockResolvedValue({
-            qualificationCode: 'Test50',
-            qualificationName: 'Test50',
+            criticalityGroupCode: 'Test50',
+            criticalityGroupName: 'Test50',
         });
 
         const result = await onFinish();
@@ -175,7 +161,26 @@ describe('Criticality Group Test', () => {
     test('is drawer closing on click of cancel button', async () => {
         render(<CriticalityGroup criticalityGroupData={criticalityGroupData1} fetchData={fetchData} saveData={saveData} />);
         buttonLookAndFireEventWithText('Add Group');
-        buttonLookAndFireEventWithText('Cancel')
+        buttonLookAndFireEventWithText('Cancel');
     });
 
+    test('is Allowed timing adding on clicking Add time', async () => {
+        render(<CriticalityGroup criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
+
+        buttonLookAndFireEventWithText('Add Group');
+        buttonLookAndFireEventWithText('Add Time');
+        const startTime = await screen.findByText('Start Time');
+        expect(startTime).toBeTruthy();
+    });
+
+    test('is end time timpicker rendering', async () => {
+        render(<CriticalityGroup showGlobalNotification={showGlobalNotification} criticalityGroupData={criticalityGroupData} fetchData={fetchData} saveData={saveData} />);
+        buttonLookAndFireEventWithText('Add Group');
+        buttonLookAndFireEventWithText('Add Time');
+        const endTime = await screen.findByText('End Time');
+        expect(endTime).toBeTruthy();
+        const deleteBtn = screen.getByRole('button',{name: 'li-trash'})
+        fireEvent.click(deleteBtn)
+        expect(deleteBtn).toBeFalsy()
+    });
 });

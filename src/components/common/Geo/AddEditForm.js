@@ -12,8 +12,8 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, selectedTreeData, isDataAttributeLoaded, attributeData, unFilteredAttributeData, geoData } = props;
-    const { selectedTreeKey, selectedTreeSelectKey, handleSelectTreeClick, flatternData, setSelectedTreeKey, setSelectedTreeSelectKey } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, unFilteredAttributeData, geoData } = props;
+    const { selectedTreeKey, selectedTreeSelectKey, handleSelectTreeClick, flatternData, setSelectedTreeSelectKey } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed } = props;
 

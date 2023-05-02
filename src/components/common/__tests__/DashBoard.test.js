@@ -24,7 +24,9 @@ describe('Testing DashBoard', () => {
         );
         const HomeText = await screen.findByText('Home');
         const DashboardCardTitle = await screen.findByText('Dashboard');
-        const ViewDashboardButton = await screen.findByText('View Dashboard');
+        // const ViewDashboardButton = await screen.findByText('View Dashboard');
+        const ViewDashboardButton = screen.getByRole('button', { name: 'View Dashboard' });
+
         const ActionItems = await screen.findByText('Action Items');
         const BirthdayCalendar = await screen.findByText('Birthday Calendar');
         const Enquiriestobefollowedup = await screen.findByText('Enquiries to be followed up');
@@ -33,13 +35,14 @@ describe('Testing DashBoard', () => {
         const News = await screen.findByText('News');
         const anandMahindra = await screen.findByText('Anand Mahindra Highlights Car Price Hikes Over 50 Years Ago');
         const AnandMahindra = await screen.findByText('Anand Mahindra continues to amuse the netizens with his posts. This time he has highlighted car price hikes from 50 years ago.');
-        const ViewDashboard = await screen.findByText('View Dashboard');
         const ElectriSuv = await screen.findByText("What to expect from Mahindra's' Born Electric concept SUVs");
         const Sales66 = await screen.findByText('Mahindra SUV sales up 66%');
         const UpcomingTrainings = await screen.findByText('Upcoming Trainings');
         const FirstNameLastName = await screen.findByText('First Name, Last Name');
         const Today = await screen.findByText('Today');
         const KnowledgeCenter = await screen.findByText('Knowledge Center');
+        const bornElectricconceptSUV = await screen.findByText("What to expect from Mahindra's Born Electric concept SUVs")
+        const driveGrowthMahindra = screen.findByText("Mahindra SUV sales up 66% in Jan 2023: Scorpio-N, Thar, XUV700 drive growthMahindra & Mahindra Ltd today announced that its overall auto sales for the month of January 2023 stood at 64,335 vehicles.");
 
         expect(HomeText).toBeTruthy();
         expect(DashboardCardTitle).toBeTruthy();
@@ -52,13 +55,15 @@ describe('Testing DashBoard', () => {
         expect(News).toBeTruthy();
         expect(anandMahindra).toBeTruthy();
         expect(AnandMahindra).toBeTruthy();
-        expect(ViewDashboard).toBeTruthy();
         expect(ElectriSuv).toBeTruthy();
         expect(Sales66).toBeTruthy();
         expect(UpcomingTrainings).toBeTruthy();
         expect(FirstNameLastName).toBeTruthy();
         expect(Today).toBeTruthy();
         expect(KnowledgeCenter).toBeTruthy();
+        expect(bornElectricconceptSUV).toBeTruthy();
+        expect(driveGrowthMahindra).toBeTruthy();
+        
     });
     
     test('Testing Routing', async () => {

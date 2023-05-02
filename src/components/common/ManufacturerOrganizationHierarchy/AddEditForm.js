@@ -73,7 +73,7 @@ const AddEditFormMain = (props) => {
     };
     return (
         <>
-            <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form}  layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
@@ -127,7 +127,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger disabled={!isFormBtnActive}>
+                        <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
                             Save
                         </Button>
                     </Col>

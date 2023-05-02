@@ -208,13 +208,13 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleResetBtn = () => {
         form.resetFields();
     };
-    const handleAdd = () => {
+     const handleAdd = () => {
         setFormBtnActive(false);
         setIsFormVisible(true);
     };
@@ -302,7 +302,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                             </Col>
                             {manufacturerOrgHierarchyData?.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
+                                    <Button  type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>

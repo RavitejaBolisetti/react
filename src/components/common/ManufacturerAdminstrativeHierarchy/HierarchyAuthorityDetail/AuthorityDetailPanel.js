@@ -25,7 +25,7 @@ const AuthorityDetailPanel = (props) => {
     };
     return (
         <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
-            <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Authority Details</span>} key="1">
+            <Panel header={<span className={openAccordian === '1' ? styles.accordianHeader : ''}>Authority Details</span>} key="1">
                 <AuthorityDetailMaster {...authorityDetailProps} />
             </Panel>
         </Collapse>
