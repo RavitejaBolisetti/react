@@ -96,6 +96,8 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
+    
+
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
