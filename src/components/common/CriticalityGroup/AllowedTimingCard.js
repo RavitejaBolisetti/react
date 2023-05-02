@@ -7,7 +7,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 const AllowedTimingCard = (props) => {
     const { form, style, disabledProps, showGlobalNotification, removeItem, setTimesegmentLengthTracker, forceUpdate, validatedDuplicateTime, TimesegmentLengthTracker } = props;
@@ -98,7 +98,7 @@ const AllowedTimingCard = (props) => {
                                                         remove(name);
                                                         setTimesegmentLengthTracker(generateRandomNumber());
                                                         forceUpdate();
-                                                        showGlobalNotification({ notificationType: 'success', message: EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight', showTitle: false });
+                                                        showGlobalNotification({ notificationType: 'success', message: LANGUAGE_EN.GENERAL.ALLOWED_TIMING_DELETED.MESSAGE, placement: 'bottomRight', showTitle: false });
                                                     }}
                                                 />
                                             </Col>

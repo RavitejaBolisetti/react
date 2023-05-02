@@ -14,7 +14,7 @@ import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
 
@@ -160,13 +160,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
         if (applicationAction?.length < 1) {
-            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
+            return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
         }
         if (values?.documentNumRequired && documentType?.length < 1) {
-            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
+            return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
         }
         if (values?.accessableIndicator === 2 && accessibleLocation?.length < 1) {
-            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
+            return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
         }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
@@ -229,7 +229,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        setTimeout(()=> applicationCall(finalFormdata?.applicationDetails?.applicationId), 300)
+        setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
         setisVisible(false);
     };
 
@@ -268,8 +268,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
     const rightCol = menuData?.length > 0 ? 8 : 24;
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     return (
         <>
             <Row gutter={20} span={24}>

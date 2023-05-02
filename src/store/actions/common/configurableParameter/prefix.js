@@ -1,0 +1,1 @@
+export const prefix = 'CONFIGURABLE_PARAMETER_';

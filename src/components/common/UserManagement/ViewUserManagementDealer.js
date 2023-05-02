@@ -5,7 +5,13 @@ import styles from 'components/common/Common.module.css';
 import style from './UserManagement.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import MacIdCard from './MacIdCard';
-const ViewUserManagementDealerMain = ({ formData, styles, finalFormdata, AccessMacid, isViewModeVisible, handleDelete, DealerData, setfinalFormdata }) => {
+import AssignUserRole from './AssignUserRole';
+import BranchMapping from './BranchMapping';
+import ProductMapping from './ProductMapping';
+import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
+const { Panel } = Collapse;
+
+const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, handleCollapse, openAccordian, productHierarchyData, finalFormdata, AccessMacid, isViewModeVisible, handleDelete, DealerData, setfinalFormdata }) => {
     console.log('AccessMacid in View', AccessMacid);
     const viewProps = {
         bordered: false,
@@ -47,6 +53,22 @@ const ViewUserManagementDealerMain = ({ formData, styles, finalFormdata, AccessM
                             Access Management<span style={{ color: 'red' }}>*</span>
                         </Col>
                     </Row>
+
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                        <Panel header={<span className={openAccordian === 1 ? styles.accordianHeader : ''}>Assign User Roles</span>} key="1">
+                            <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse(2)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                        <Panel header={<span className={openAccordian === 2 ? styles.accordianHeader : ''}>Branch Mapping</span>} key="2">
+                            <BranchMapping BranchMappingData={DealerData?.branches} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse(3)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)} activeKey={openAccordian}>
+                        <Panel header={<span className={openAccordian === 3 ? styles.accordianHeader : ''}>Product Mapping</span>} key="3">
+                            <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
+                        </Panel>
+                    </Collapse>
                 </Space>
             </>
         </div>
