@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData, isStateDataLoaded, isStateLoading, stateData }) => {
+export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, moduleTitle, fetchDataList, tableData,isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData, isStateDataLoaded, isStateLoading, stateData }) => {
     //console.log(data,"DISTRICTDATA");
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);

@@ -5,6 +5,7 @@ import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { STATE_DROPDOWN } from '../District/InputType';
+import { GeoDistrict } from 'store/reducers/data/geoDistrict';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -12,7 +13,7 @@ const { TextArea } = Input;
 const AdvanceSearchMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form,setClosePanels, isReadOnly, showSaveBtn, formData,onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed,stateDropdown,cityDropdown,tehsildropdown,districtDropdown } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed,geoStateData,geoDistrictData,geoTehsilData,geoCityData } = props;
     const disabledProps = { disabled: isReadOnly };
 
     // const [ selectedState, isSelectedState ] = useState('');
@@ -62,9 +63,16 @@ const AdvanceSearchMain = (props) => {
         formData,
         styles,
     };
+    const formProps = {
+      
+        geoStateData,
+        geoDistrictData,
+        geoTehsilData,
+        geoCityData,
+    };
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...viewProps}>
+        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...viewProps} {...formProps}>
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -81,9 +89,9 @@ const AdvanceSearchMain = (props) => {
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                            <Select disabled={isReadOnly} >
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {stateDropdown?.map((item) => (
+                                    {geoStateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -93,9 +101,9 @@ const AdvanceSearchMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select District" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District')]}>
-                            <Select disabled={isReadOnly} >
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('district')} >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {districtDropdown?.map((item) => (
+                                    {geoDistrictData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -105,9 +113,9 @@ const AdvanceSearchMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select City" initialValue={formData?.cityName} name="cityName" rules={[validateRequiredSelectField('City')]}>
-                            <Select disabled={isReadOnly}>
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('city')} >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {cityDropdown?.map((item) => (
+                                    {geoCityData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -117,9 +125,9 @@ const AdvanceSearchMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select Tehsil" initialValue={formData?.tehsilName} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
-                            <Select disabled={isReadOnly} >
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('tehsil')} >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {tehsildropdown?.map((item) => (
+                                    {geoTehsilData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
