@@ -118,7 +118,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         setFooterEdit(false);
         setIsReadOnly(false);
         //console.log(searchData,'searchGeo')
-        const data = searchData.find((i) => i.districtCode === record.districtCode);
+        const data = searchData.find((i) => i.code === record.code);
         // console.log('data', data);
         if (data) {
             data && setFormData(data);
@@ -132,7 +132,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = searchData.find((i) => i.districtCode === record.districtCode);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -272,6 +272,8 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
             onError,
             onSuccess,
         };
+
+        console.log(requestData,'JAAAAAn');
 
         saveData(requestData);
     };
