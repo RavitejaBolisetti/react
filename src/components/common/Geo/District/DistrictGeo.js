@@ -24,7 +24,6 @@ const mapStateToProps = (state) => {
         data: {
             GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
             GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
-            //    GeoDistrict: { isLoaded : isDistrictDataLoaded = false, isLoading : isDistrictLoading, data : districtData },
         },
     } = state;
 
@@ -280,9 +279,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-
-    /******* GeoState *******/
-    const stateDropdown = data;
 
     const tableProps = {
         tableColumn: tableColumn,

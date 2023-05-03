@@ -13,7 +13,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, stateDropdown, districtDropdown } = props;
+    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, stateData,districtData, } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const handleFormValueChange = () => {
@@ -24,26 +24,13 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    // const handleControlChange = (control, e) => {
-    //     const controlData = configData?.find((i) => i.controlId === control);
-    //     form.setFieldsValue({
-    //         parameterType: controlData?.parameterType,
-    //     });
-    // };
+    // const handleStateChange = () =>{
 
-    // const changeSelectOptionHandler = (event) => {
-    //     setParameterType(event);
-    // };
+    // }
 
-    // const viewProps = {
-    //     isVisible: isViewModeVisible,
-    //     setClosePanels,
-    //     formData,
-    //     styles,
-    //     parameterType
-    // };
-
-    // console.log(CONFIGURABLE_PARAMETARS_INPUT_TYPE,'CONFIGURABLE_PARAMETARS_INPUT_TYPE')
+    // const handleDistrictChange = () =>{
+        
+    // }
 
     const viewProps = {
         isVisible: isViewModeVisible,
@@ -60,7 +47,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="State Name" initialValue={formData?.controlGroup} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')}>
-                                    {stateDropdown?.map((item) => (
+                                    {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -77,7 +64,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District Name" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}>
-                                    {districtDropdown?.map((item) => (
+                                    {districtData?.map((item) => (
                                         <Option value={item?.districtCode}>{item?.districtName}</Option>
                                     ))}
                                 </Select>

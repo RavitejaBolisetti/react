@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification,  }) => {
+export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification,fetchStateList,fetchDistrictList,listStateShowLoading,listDistrictShowLoading,stateData,districtData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -112,6 +112,8 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
             };
 
            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+           fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+           fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -336,9 +338,11 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         saveAndAddNewBtnClicked,
         stateDropdown, 
         districtDropdown,
+        stateData,
+        districtData,
     };
 
-    //console.log(stateCode,'valuevalue')
+    console.log(stateCode,'valuevalue')
 
     return (
         <>
@@ -374,7 +378,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                             State
                                             <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState} value={stateCode}>
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {stateDropdown?.map((item) => (
+                                                {stateData?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>
@@ -387,7 +391,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             District
                                             <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState} value={stateCode}>
-                                                {districtDropdown?.map((item) => (
+                                                {districtData?.map((item) => (
                                                     <Option value={item?.districtCode}>{item?.districtName}</Option>
                                                 ))}
                                             </Select>
