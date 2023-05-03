@@ -13,7 +13,7 @@ const ViewPincodeDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="PIN Code">{formData?.stateCd}</Descriptions.Item>
+                    <Descriptions.Item label="PIN Code">{formData?.pinCode}</Descriptions.Item>
                     <Descriptions.Item label="Locality">{formData?.stateName}</Descriptions.Item>
                     <Descriptions.Item label="Within 50 Km of GPO">{formData?.gstCode}</Descriptions.Item>
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>

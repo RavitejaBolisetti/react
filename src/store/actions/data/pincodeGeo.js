@@ -1,92 +1,22 @@
-import { doLogout, unAuthenticateUser } from 'store/actions/auth';
-import { axiosAPICall } from 'utils/axiosAPICall';
-import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_GEO_GRAPHY_PINCODE} from 'constants/routingApi';
-import { message } from 'antd';
+import { dataActions } from 'store/actions/crud/dataAction';
+import { BASE_URL_GEO_GRAPHY_PINCODE } from 'constants/routingApi';
 
-export const GEO_DATA_PINCODE_LOADED = 'GEO_DATA_PINCODE_LOADED';
-export const GEO_PINCODE_SET_FORM_DATA = 'GEO_PINCODE_SET_FORM_DATA';
-export const GEO_PINCODE_SET_FORM_IS_VISIBLE = 'GEO_PINCODE_SET_FORM_IS_VISIBLE';
-export const GEO_PINCODE_DATA_SHOW_LOADING = ' GEO_PINCODE_DATA_SHOW_LOADING';
+export const GEO_PINCODE_LOADING_DATA = 'GEO_PINCODE_LOADING_DATA,';
+export const GEO_PINCODE_LIST_RECIEVE_DATA = 'GEO_PINCODE_LIST_RECIEVE_DATA';
+export const GEO_PINCODE_FILTERED_LIST_RECIEVE_DATA = 'GEO_PINCODE_FILTERED_LIST_RECIEVE_DATA';
+export const GEO_PINCODE_RECIEVE_DETAIL_DATA = 'GEO_PINCODE_RECIEVE_DETAIL_DATA';
+export const GEO_PINCODE_SAVE_DATA = 'GEO_PINCODE_SAVE_DATA';
+export const GEO_PINCODE_RESET_DATA = 'GEO_PINCODE_RESET_DATA';
 
-const receiveData = (data) => ({
-    type: GEO_DATA_PINCODE_LOADED,
-    isLoaded: true,
-    data,
+const baseURL = BASE_URL_GEO_GRAPHY_PINCODE;
+
+export const geoPincodeDataActions = dataActions({
+    baseURL,
+    moduleName: 'PIN Master',
+    RECEIVE_DATA_LOADING_ACTION_CONSTANT: GEO_PINCODE_LOADING_DATA,
+    RECEIVE_DATA_ACTION_CONSTANT: GEO_PINCODE_LIST_RECIEVE_DATA,
+    RECEIVE_FILTERED_DATA_ACTION_CONSTANT: GEO_PINCODE_FILTERED_LIST_RECIEVE_DATA,
+    RECIEVE_DATA_DETAIL_ACTION_CONSTANT: GEO_PINCODE_RECIEVE_DETAIL_DATA,
+    SAVE_DATA_ACTION_CONSTANT: GEO_PINCODE_SAVE_DATA,
+    RESET_DATA_ACTION_CONSTANT: GEO_PINCODE_RESET_DATA,
 });
-
-const geoPincodeActions = {};
-
-const baseURLPath = BASE_URL_GEO_GRAPHY_PINCODE;
-
-geoPincodeActions.listShowLoading = (isLoading) => ({
-    type: GEO_PINCODE_DATA_SHOW_LOADING,
-    isLoading,
-});
-
-geoPincodeActions.setFormData = (formData) => ({
-    type: GEO_PINCODE_SET_FORM_DATA,
-    isFormDataLoaded: true,
-    formData,
-});
-
-geoPincodeActions.setFormVisible = (isFormVisible) => ({
-    type: GEO_PINCODE_SET_FORM_IS_VISIBLE,
-    isFormVisible,
-});
-
-geoPincodeActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data } = params;
-    setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(receiveData(res?.data));
-        } else {
-            onError('Internal Error, Please try again');
-        }
-    };
-
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: baseURLPath,
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-geoPincodeActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, onSuccess } = params;
-
-    setIsLoading(true);
-
-    const apiCallParams = {
-        data,
-        method: 'post',
-        url: baseURLPath,
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-export { geoPincodeActions };

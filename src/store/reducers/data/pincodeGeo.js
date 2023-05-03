@@ -1,29 +1,4 @@
-import { GEO_DATA_PINCODE_LOADED, GEO_PINCODE_SET_FORM_IS_VISIBLE, GEO_PINCODE_SET_FORM_DATA,  GEO_PINCODE_DATA_SHOW_LOADING } from 'store/actions/data/geo';
+import { crudDataReducer } from 'store/reducers/crud/crudData';
+import { GEO_PINCODE_LOADING_DATA, GEO_PINCODE_LIST_RECIEVE_DATA, GEO_PINCODE_FILTERED_LIST_RECIEVE_DATA, GEO_PINCODE_RECIEVE_DETAIL_DATA, GEO_PINCODE_SAVE_DATA, GEO_PINCODE_RESET_DATA } from 'store/actions/data/pincodeGeo';
 
-const initialState = {
-    isLoaded: false,
-    data: [],
-    isFormDataLoaded: false,
-    formData: undefined,
-    isFormVisible: false,
-    isLoading: false,
-    isHistoryLoaded: false,
-    historyData: [],
-    isHistoryLoading: false,
-    changeHistoryVisible: false,
-};
-
-export const PincodeGeo = (state = initialState, action) => {
-    switch (action.type) {
-        case GEO_DATA_PINCODE_LOADED:
-            return { ...state, isLoaded: action.isLoaded, data: action.data };
-        case GEO_PINCODE_SET_FORM_DATA:
-            return { ...state, isFormDataLoaded: action.isFormDataLoaded, formData: action.formData };
-        case GEO_PINCODE_SET_FORM_IS_VISIBLE:
-            return { ...state, isFormVisible: true };
-        case  GEO_PINCODE_DATA_SHOW_LOADING:
-            return { ...state, isLoading: action.isLoading };
-        default:
-            return { ...state };
-    }
-};
+export const GeoPincode = crudDataReducer(GEO_PINCODE_LOADING_DATA, GEO_PINCODE_LIST_RECIEVE_DATA, GEO_PINCODE_FILTERED_LIST_RECIEVE_DATA, GEO_PINCODE_RECIEVE_DETAIL_DATA, GEO_PINCODE_SAVE_DATA, GEO_PINCODE_RESET_DATA);

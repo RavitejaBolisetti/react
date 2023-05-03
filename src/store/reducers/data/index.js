@@ -18,6 +18,7 @@ import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { GeoState } from './geoState';
 import { GeoDistrict } from './geoDistrict';
 import { GeoCity } from './geoCity';
+import { GeoPincode } from './pincodeGeo'
 
 export const data = combineReducers({
     Menu,
@@ -39,4 +40,5 @@ export const data = combineReducers({
     GeoState,
     GeoDistrict,
     GeoCity,
+    GeoPincode,
 });

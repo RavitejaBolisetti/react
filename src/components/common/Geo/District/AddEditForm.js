@@ -33,27 +33,6 @@ const AddEditFormMain = (props) => {
         isSelectedState(props)
     }
 
-    // const handleControlChange = (control, e) => {
-    //     const controlData = configData?.find((i) => i.controlId === control);
-    //     form.setFieldsValue({
-    //         parameterType: controlData?.parameterType,
-    //     });
-    // };
-
-    // const changeSelectOptionHandler = (event) => {
-    //     setParameterType(event);
-    // };
-
-    // const viewProps = {
-    //     isVisible: isViewModeVisible,
-    //     setClosePanels,
-    //     formData,
-    //     styles,
-    //     parameterType
-    // };
-
-    // console.log(CONFIGURABLE_PARAMETARS_INPUT_TYPE,'CONFIGURABLE_PARAMETARS_INPUT_TYPE')
-
     const viewProps = {
         isVisible: isViewModeVisible,
         //setClosePanels,

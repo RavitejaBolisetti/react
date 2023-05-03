@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select, Checkbox } from 'antd';
 import { bindActionCreators } from 'redux';
-import { geoPincodeActions } from 'store/actions/data/pincodeGeo';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import { DataTable } from 'utils/dataTable';
@@ -11,6 +10,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PinCodeAddEditForm } from './PinCodeAddEditForm';
+import { geoPincodeDataActions } from 'store/actions/data/pincodeGeo';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
@@ -19,26 +19,47 @@ import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
 import { AdvancedSearch } from './AdvancedSearch';
+// import { data } from 'store/reducers/data';
 
 const { Search } = Input;
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
+    console.log('state', state)
     const {
         auth: { userId },
         data: {
-            Geo: { isLoading, isLoaded: isDataLoaded = false, data: geoPinData = [] },
+            GeoState: {isLoaded:isStateDataLoaded = false, isLoading : isStateLoading, data:geoStateData},
+            GeoDistrict:{isLoaded:isDistrictLoaded = false, isLoading: isDistrictLoading, data:geoDistrictData},
+            GeoTehsil:{isLoaded:isTehsilLoaded = false, isLoading:isTehsilLoading, data:geoTehsilData},
+            GeoCity:{isLoaded:isCityLoaded = false, isLoading:isCityLoading, data:geoCityData},
+            GeoPincode: {isLoaded: isPinDataLoaded = false, isLoading:isPinLoading, data:geoPindata },
         },
     } = state;
 
+console.log(state, 'aman');
     const moduleTitle = 'Pincode Master List';
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        isLoading,
+        isPinLoading,
+        isDistrictLoaded,
+        isStateLoading,
+        isDistrictLoading,
+        geoDistrictData,
+        isTehsilLoaded,
+        isTehsilLoading,
+        geoTehsilData,
+        isCityLoaded,
+        isCityLoading,
+        geoCityData,
+        geoPindata,
+        geoStateData,
+        isPinDataLoaded,
+        isStateDataLoaded,
         moduleTitle,
-        geoPinData: geoPinData?.filter((i) => i),
+    
+        // geoPinData: geoPinData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -47,15 +68,16 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: geoPincodeActions.fetchList,
-            saveData: geoPincodeActions.saveData,
-            listShowLoading: geoPincodeActions.listShowLoading,
+            fetchList: geoPincodeDataActions.fetchList,
+            saveData: geoPincodeDataActions.saveData,
+            listShowLoading: geoPincodeDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
-export const PincodeGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading, isDistrictLoaded,isPinDataLoaded,isStateDataLoaded,isStateLoading,isDistrictLoading,geoDistrictData,isTehsilLoaded,isTehsilLoading,geoTehsilData,isCityLoaded,isCityLoading,geoCityData,geoPindata,geoStateData,data, saveData, fetchList, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+    console.log(data,"PINCODEDATA");
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -76,35 +98,30 @@ export const PincodeGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const loadDependendData = () => {
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-        fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    };
+   
 
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
-            loadDependendData();
 
-            fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && configData && userId) {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, configData, userId]);
+    }, [filterString, isDataLoaded, configData, userId,data]);
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -112,7 +129,7 @@ export const PincodeGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = tableData.find((i) => i.id === record.id);
+        const data = tableData.find((i) => i.code === record.code);
         console.log('data', data);
         if (data) {
             data && setFormData(data);
@@ -128,7 +145,7 @@ export const PincodeGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = tableData.find((i) => i.id === record.id);
+        const data = tableData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -148,7 +165,7 @@ export const PincodeGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData
 
         tblPrepareColumns({
             title: 'PIN Code',
-            dataIndex: 'stateCd',
+            dataIndex: 'pinCode',
             width: '15%',
         }),
 
@@ -255,8 +272,7 @@ export const PincodeGeoBase = ({ moduleTitle, fetchDataList, isLoading, saveData
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDataList({ setIsLoading: listShowLoading, userId });
-            loadDependendData();
+            fetchList({ setIsLoading: listShowLoading, userId });
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
