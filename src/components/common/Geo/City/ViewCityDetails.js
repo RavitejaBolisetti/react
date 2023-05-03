@@ -2,7 +2,7 @@ import React from 'react';
 import { Descriptions, Row, Col } from 'antd';
 import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 
-const ViewStateDetailsMain = ({ formData, styles, parameterType }) => {
+const ViewCityDetailsMain = ({ formData, styles, parameterType }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -13,8 +13,9 @@ const ViewStateDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="City Code">{formData?.stateCd}</Descriptions.Item>
-                    <Descriptions.Item label="City Name">{formData?.stateName}</Descriptions.Item>
+                   
+                    <Descriptions.Item label="City Code">{formData?.code}</Descriptions.Item>
+                    <Descriptions.Item label="City Name">{formData?.name}</Descriptions.Item>
                     {/* <Descriptions.Item label="GST State Code">{formData?.gstCode}</Descriptions.Item> */}
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
                     
@@ -24,4 +25,4 @@ const ViewStateDetailsMain = ({ formData, styles, parameterType }) => {
     );
 };
 
-export const ViewStateDetails = ViewStateDetailsMain;
+export const ViewCityDetails = ViewCityDetailsMain;
