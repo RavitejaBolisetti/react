@@ -88,7 +88,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                     {strengthText && (
                         <div className={styles.strength}>
                             <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
-                            <span className={styles.infoIcon}>{addToolTip(infoText, 'right', '#e6e6e6')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText, 'right', '#2B2521')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
                         </div>
                     )}
                 </Col>
