@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                             <Form.Item label="District Name" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}>
                                     {districtData?.map((item) => (
-                                        <Option value={item?.districtCode}>{item?.districtName}</Option>
+                                        <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>

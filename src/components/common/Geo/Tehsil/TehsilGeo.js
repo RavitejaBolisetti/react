@@ -34,8 +34,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state,'statestatestate')
-
     const moduleTitle = 'Tehsil Details';
 
     let returnValue = {
@@ -103,7 +101,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [stateCode, isStateCode] = useState('D');
+    const [stateCode, isStateCode] = useState(null);
 
     useEffect(() => {
         if (userId) {
@@ -392,7 +390,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                             District
                                             <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState} value={stateCode}>
                                                 {districtData?.map((item) => (
-                                                    <Option value={item?.districtCode}>{item?.districtName}</Option>
+                                                    <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>
                                         </Col>
