@@ -12,9 +12,11 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateDropdown } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateData } = props;
 
     const [ selectedState, isSelectedState ] = useState('');
+
+    console.log(stateData,"stateDatastateDatastateDatastateDatastateData")
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -66,7 +68,7 @@ const AddEditFormMain = (props) => {
     //     form.setFieldsValue(defaultValues)
     // }, [form, defaultValues])
 
-    console.log(selectedState,'selectedState')
+    // console.log(formData,'selectedState')
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -75,19 +77,19 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         {/* formData?.stateName */}
-                            <Form.Item label="State Name" initialValue={'Text'} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
+                            <Form.Item label="State Name" initialValue={formData?.stateName} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect("State Name")}
                                     onChange={handleSelectState}
                                 >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {stateDropdown?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
+                                    {stateData?.map((item) => (
+                                        <Option value={item?.name}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={'JHK'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item initialValue={33} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
