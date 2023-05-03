@@ -24,11 +24,10 @@ const mapStateToProps = (state) => {
         data: {
             GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
             GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
-            //    GeoDistrict: { isLoaded : isDistrictDataLoaded = false, isLoading : isDistrictLoading, data : districtData },
         },
     } = state;
 
-    console.log(state, '');
+    console.log(data, 'suckIt');
 
     const moduleTitle = 'District Details';
 
@@ -159,14 +158,14 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
 
         tblPrepareColumns({
             title: 'District Code',
-            dataIndex: 'districtCode',
+            dataIndex: 'code',
             // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'District Name',
-            dataIndex: 'districtName',
+            dataIndex: 'name',
             width: '20%',
         }),
 
@@ -280,9 +279,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-
-    /******* GeoState *******/
-    const stateDropdown = data;
 
     const tableProps = {
         tableColumn: tableColumn,

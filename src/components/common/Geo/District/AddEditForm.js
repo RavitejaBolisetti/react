@@ -16,7 +16,6 @@ const AddEditFormMain = (props) => {
 
     const [ selectedState, isSelectedState ] = useState('');
 
-    console.log(stateData,"stateDatastateDatastateDatastateDatastateData")
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -29,27 +28,6 @@ const AddEditFormMain = (props) => {
     const handleSelectState = (props) =>{
         isSelectedState(props)
     }
-
-    // const handleControlChange = (control, e) => {
-    //     const controlData = configData?.find((i) => i.controlId === control);
-    //     form.setFieldsValue({
-    //         parameterType: controlData?.parameterType,
-    //     });
-    // };
-
-    // const changeSelectOptionHandler = (event) => {
-    //     setParameterType(event);
-    // };
-
-    // const viewProps = {
-    //     isVisible: isViewModeVisible,
-    //     setClosePanels,
-    //     formData,
-    //     styles,
-    //     parameterType
-    // };
-
-    // console.log(CONFIGURABLE_PARAMETARS_INPUT_TYPE,'CONFIGURABLE_PARAMETARS_INPUT_TYPE')
 
     const viewProps = {
         isVisible: isViewModeVisible,
@@ -64,9 +42,6 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue();
     }, [selectedState,form])
 
-    // useEffect(() => {
-    //     form.setFieldsValue(defaultValues)
-    // }, [form, defaultValues])
 
     // console.log(formData,'selectedState')
 
