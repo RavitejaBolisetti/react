@@ -28,11 +28,13 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            //GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
-            //GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
+            GeoState: { isLoaded: isStateDataLoaded = false, isLoading : isStateLoading, data : stateData },
+            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data : districtData},
             GeoTehsil: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
+
+    console.log(state,'statestatestate')
 
     const moduleTitle = 'Tehsil Details';
 
@@ -42,6 +44,14 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
+
+        isStateDataLoaded,
+        isStateLoading,
+        stateData,
+
+        isDistrictDataLoaded,
+        isDistrictLoading,
+        districtData,
         // isDistrictLoaded,
         // isDistrictLoading,
         // districtData,
@@ -57,12 +67,12 @@ const mapDispatchToProps = (dispatch) => ({
             showGlobalNotification,
 
             /** For State DropDown **/
-            // fetchList: geoStateDataActions.fetchList,
-            // listShowLoading: geoStateDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
 
             /** For District DropDown **/
-            // fetchList: geoDistrictDataActions.fetchList,
-            // listShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchDistrictList: geoDistrictDataActions.fetchList,
+            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
 
             saveData: geoTehsilDataActions.saveData,
             fetchList: geoTehsilDataActions.fetchList,
@@ -72,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification,  }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -93,7 +103,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [stateCode, isStateCode] = useState('DO0');
+    const [stateCode, isStateCode] = useState('D');
 
     useEffect(() => {
         if (userId) {
@@ -101,7 +111,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
-           fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+           fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -125,7 +135,8 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = searchData.find((i) => i.id === record.id);
+        console.log(searchData,'searchTehsil')
+        const data = searchData.find((i) => i.code === record.code);
         console.log('data', data);
         if (data) {
             data && setFormData(data);
@@ -140,7 +151,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
 
-        const data = searchData.find((i) => i.stateCode === record.stateCode);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -166,14 +177,14 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
 
         tblPrepareColumns({
             title: 'Tehsil Code',
-            dataIndex: 'tehsilCode',
+            dataIndex: 'code',
             // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Tehsil Name',
-            dataIndex: 'tehsilName',
+            dataIndex: 'name',
             width: '20%',
         }),
 
@@ -241,7 +252,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     };
 
     const handleSelectState = (value) => {
-        console.log(value, 'valuevaluevalue');
         isStateCode(value.target.value);
     };
 
@@ -274,7 +284,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -390,7 +400,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add District
+                                        Add Tehsil
                                     </Button>
                                 </Col>
                             ) : (

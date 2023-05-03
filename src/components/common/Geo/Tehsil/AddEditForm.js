@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name" initialValue={formData?.controlGroup} name="districtName" rules={[validateRequiredSelectField('District Name')]}>
+                            <Form.Item label="District Name" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}>
                                     {districtDropdown?.map((item) => (
                                         <Option value={item?.districtCode}>{item?.districtName}</Option>
@@ -92,12 +92,12 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={null} label="Tehsil Code" name="tehsilCode" rules={[validateRequiredInputField('Tehsil Code')]}>
+                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="tehsilCode" rules={[validateRequiredInputField('Tehsil Code')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={null} label="Tehsil Name" name="tehsilName" rules={[validateRequiredInputField('Tehsil Name')]}>
+                            <Form.Item initialValue={formData?.name} label="Tehsil Name" name="tehsilName" rules={[validateRequiredInputField('Tehsil Name')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>

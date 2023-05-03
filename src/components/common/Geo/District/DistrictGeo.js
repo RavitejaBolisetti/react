@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
-// import { bindActionCreators } from 'redux';
-// import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { STATE_DROPDOWN } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-//import { PARAM_MASTER } from 'constants/paramMaster';
-// import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geoState';
 import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
@@ -27,12 +22,13 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            //ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
-            //GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
+            GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
             GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
-           // GeoDistrict: { isDistrictLoaded: isDataLoaded = false, isDistrictLoading = isLoading, districtData = data },
+            //    GeoDistrict: { isLoaded : isDistrictDataLoaded = false, isLoading : isDistrictLoading, data : districtData },
         },
     } = state;
+
+    console.log(state, '');
 
     const moduleTitle = 'District Details';
 
@@ -42,6 +38,10 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
+
+        isStateDataLoaded,
+        isStateLoading,
+        stateData,
         // isDistrictLoaded,
         // isDistrictLoading,
         // districtData,
@@ -54,8 +54,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: geoStateDataActions.fetchList,
-            // listShowLoading: geoStateDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
+
             showGlobalNotification,
             saveData: geoDistrictDataActions.saveData,
             fetchList: geoDistrictDataActions.fetchList,
@@ -65,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData, isStateDataLoaded, isStateLoading, stateData }) => {
     //console.log(data,"DISTRICTDATA");
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -94,6 +95,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -111,14 +113,14 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     }, [filterString, isDataLoaded, data, userId]);
 
     const handleEditBtn = (record) => {
-
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = searchData.find((i) => i.id === record.id);
-       // console.log('data', data);
+        //console.log(searchData,'searchGeo')
+        const data = searchData.find((i) => i.districtCode === record.districtCode);
+        // console.log('data', data);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -131,7 +133,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = searchData.find((i) => i.stateCode === record.stateCode);
+        const data = searchData.find((i) => i.districtCode === record.districtCode);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -265,7 +267,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -312,7 +314,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         saveAndAddNewBtnClicked,
         stateCode,
         handleSelectState,
-        stateDropdown,
+        stateData,
     };
 
     return (
@@ -354,7 +356,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                                                 //value={stateCode}
                                             >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {stateDropdown?.map((item) => (
+                                                {stateData?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>
