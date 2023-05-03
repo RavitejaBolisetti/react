@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
-// import { bindActionCreators } from 'redux';
-// import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { STATE_DROPDOWN } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-//import { PARAM_MASTER } from 'constants/paramMaster';
-// import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geoState';
 import { AddEditForm } from './AddEditForm';
@@ -26,9 +21,12 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: {isLoaded: isDataLoaded = false, isLoading, data },
+            GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+            GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
+
+    console.log(state, '');
 
     const moduleTitle = 'District Details';
 
@@ -38,6 +36,13 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
+
+        isStateDataLoaded,
+        isStateLoading,
+        stateData,
+        // isDistrictLoaded,
+        // isDistrictLoading,
+        // districtData,
         //configData: configData?.filter((i) => i),
     };
     return returnValue;
@@ -47,23 +52,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: configParamEditActions.fetchList,
-            // saveData: configParamEditActions.saveData,
-            // fetchDataList: configParamEditActions.fetchDataList,
-            // listShowLoading: configParamEditActions.listShowLoading,
-            
-            fetchList: geoStateDataActions.fetchList,
-            listShowLoading: geoStateDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
-    console.log(data,"DISTRICTDATA");
+export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData, isStateDataLoaded, isStateLoading, stateData }) => {
+    //console.log(data,"DISTRICTDATA");
     const [form] = Form.useForm();
-    const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
@@ -84,14 +84,13 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
 
     const [ stateCode, isStateCode ] = useState('qw')
 
-    const [parameterType, setParameterType] = useState(defaultParametarType);
-
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -109,23 +108,16 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
     }, [filterString, isDataLoaded, data, userId]);
 
     const handleEditBtn = (record) => {
-
-        console.log(record,'RECORD');
-        console.log(configData,"configData")
-
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        //configData
-        const data = tableData.find((i) => i.id === record.id);
-        console.log('data', data);
+        //console.log(searchData,'searchGeo')
+        const data = searchData.find((i) => i.districtCode === record.districtCode);
+        // console.log('data', data);
         if (data) {
             data && setFormData(data);
-            console.log('formData', formData);
-
-           // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
     };
@@ -136,8 +128,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        //configData
-        const data = tableData.find((i) => i.id === record.id);
+        const data = searchData.find((i) => i.districtCode === record.districtCode);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -149,28 +140,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
 
     // const renderTableColumnName = (record, key, type) => {
     //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    // };
-
-    // const renderConfigurableParemetarValue = (record) => {
-    //     let fieldType = '';
-    //     switch (record?.configurableParameterType) {
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY:
-    //             fieldType = record?.textValue;
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY:
-    //             fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-    //             fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
-    //             fieldType = record?.booleanValue ? 'Yes' : 'No';
-    //             break;
-    //         default:
-    //             fieldType = undefined;
-    //             break;
-    //     }
-    //     return fieldType;
     // };
 
     const tableColumn = [];
@@ -253,7 +222,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
@@ -278,8 +246,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchDataList({ setIsLoading: listShowLoading, userId });
-            // loadDependendData();
+            fetchDataList({ setIsLoading: listShowLoading, userId });
 
             // if (showSaveAndAddNewBtn === true || recordId) {
             //     setIsFormVisible(false);
@@ -295,40 +262,23 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         };
 
         const requestData = {
-            data: [data],
+            data: data,
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
-        console.log(requestData, 'requestData');
-
-        //saveData(requestData);
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
 
-    const tableData = [
-        // {
-        //     id: '1',
-
-        //     districtCode: 'DO0',
-
-        //     districtName: 'Ranchi',
-
-        //     gstCode: 'Test3',
-
-        //     status: true,
-        // },
-    ];
-
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: tableData,
-        //searchData,
+        tableData: data,
     };
 
     const formProps = {
@@ -349,8 +299,6 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        parameterType,
-        setParameterType,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
@@ -358,6 +306,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
         saveAndAddNewBtnClicked,
         stateCode,
         handleSelectState,
+        stateData,
     };
 
     //console.log(stateCode,'valuevalue')
@@ -400,7 +349,7 @@ export const DistrictGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, s
                                                 //value={stateCode}
                                             >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {data?.map((item) => (
+                                                {stateData?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
                                                 ))}
                                             </Select>

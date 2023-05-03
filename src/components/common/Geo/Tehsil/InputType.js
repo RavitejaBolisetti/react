@@ -1,7 +1,7 @@
 export const STATE_DROPDOWN = [
    {
-        KEY: 'T',
-        TITLE: 'New Delhi',
+        KEY: 'Daman and Diu',
+        TITLE: 'Daman and Diu',
     },
    {
         KEY: 'N',

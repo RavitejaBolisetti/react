@@ -19,6 +19,7 @@ import { GeoState } from './geoState';
 import { GeoDistrict } from './geoDistrict';
 import { GeoCity } from './geoCity';
 import { GeoPincode } from './pincodeGeo'
+import { GeoTehsil } from './geoTehsil';
 
 export const data = combineReducers({
     Menu,
@@ -41,4 +42,5 @@ export const data = combineReducers({
     GeoDistrict,
     GeoCity,
     GeoPincode,
+    GeoTehsil,
 });
