@@ -96,6 +96,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
+    const [parentAppCode, setparentAppCode] = useState();
 
     const moduleTitle = 'Application Master';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
@@ -157,16 +158,17 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onFinish = (values) => {
+        
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
         if (applicationAction?.length < 1) {
-            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
+            return showGlobalNotification({ message: EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
         }
         if (values?.documentNumRequired && documentType?.length < 1) {
-            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
+            return showGlobalNotification({ message: EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
         }
         if (values?.accessableIndicator === 2 && accessibleLocation?.length < 1) {
-            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
+            return showGlobalNotification({ message: EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
         }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
@@ -175,6 +177,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 nodeType: '',
                 id: values.id || '',
                 ...values,
+                parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
                 accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),
                 deviceType: menuType,
@@ -229,7 +232,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        setTimeout(()=> applicationCall(finalFormdata?.applicationDetails?.applicationId), 300)
+        setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
         setisVisible(false);
     };
 
@@ -247,6 +250,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
     const formProp = {
         isReadOnly,
+        parentAppCode,
+        setparentAppCode,
         isVisible,
         isFieldDisable,
         applicationForm,
