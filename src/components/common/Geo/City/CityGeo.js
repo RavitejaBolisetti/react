@@ -21,6 +21,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
+import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -30,26 +31,26 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             GeoState: { isLoaded: isDataLoaded = false, isLoading, data: statedata },
-            GeoCity :{ isLoaded: iscityDataLoaded = false, isCityLoading, data : cityData }
+            GeoCity: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
+            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isDistrictLoading, data: districtData },
         },
     } = state;
-    
+
     const moduleTitle = 'City Master List';
-    console.log('city', statedata)
+    console.log('city', state);
     let returnValue = {
         userId,
         isDataLoaded,
         cityData,
         statedata,
-        iscityDataLoaded,
-        
+        isCityDataLoaded,
+        districtData,
+        isDistrictDataLoaded,
         isCityLoading,
         isLoading,
         moduleTitle,
     };
     return returnValue;
-    
-
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -60,20 +61,22 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: geoStateDataActions.listShowLoading,
             listCityShowLoading: geoCityDataActions.listShowLoading,
             saveData: geoCityDataActions.saveData,
-            fetchDataList:geoCityDataActions.fetchList,
-            
+            fetchCityList: geoCityDataActions.fetchList,
+            fetchDistrictList: geoDistrictDataActions.fetchList,
+            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
-export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityData,data,fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, statedata, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
-
+    const [show, setShow] = useState([]);
+    const [city, setCity] = useState(cityData);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
@@ -82,6 +85,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
+    //const [districtdata,setDistrictData] = useState([];)
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
@@ -93,9 +97,9 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
-            fetchDataList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
+            fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-            
+            fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -112,10 +116,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
 
-  
-
-
-    
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
@@ -145,6 +145,12 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
         setIsReadOnly(true);
     };
 
+    
+    const onChange2 = (e) =>{
+        setCity(cityData.filter((i)=>i.districtCode=== e));
+        setShow([]);
+    }
+    
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -166,7 +172,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
             width: '20%',
         }),
 
-       
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
@@ -195,10 +200,9 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
         }
     );
 
-    
-
     const handleReferesh = () => {
         setRefershData(!refershData);
+        setCity(cityData);
     };
 
     const hanndleEditData = (record) => {
@@ -263,11 +267,20 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
+    
+
+
+    const onChange = (e) => {
+        setShow(districtData.filter((i)=>i.stateCode === e));
+    };
+
+  
+
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: cityData,
+        tableData: city,
     };
 
     const formProps = {
@@ -294,6 +307,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
         showSaveBtn,
         saveAndAddNewBtnClicked,
     };
+
     return (
         <>
             <Row gutter={20}>
@@ -302,40 +316,43 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={5} lg={3} xl={3} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Select
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        placeholder="State"
-                                        allowClear
-                                        className={styles.headerSelectField}
-                                    >
-                                        {statedata?.map((item) => (
-                                            <Option value={item?.code}>{item?.name}</Option>
-                                        ))}
-                                    </Select>
-                                    <Select
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        placeholder="District"
-                                        allowClear
-                                        className={styles.headerSelectField}
-                                    >
-                                        <Option value="India">India</Option>
-                                    </Select>
-                                    <Search
-                                        placeholder="Search"
-                                        style={{
-                                            width: 300,
-                                        }}
-                                        allowClearclassName={styles.headerSelectField}
-                                        onSearch={onSearchHandle}
-                                        onChange={onChangeHandle}
-                                    />{' '}
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} >
+                                        <Select
+                                            placeholder="State"
+                                            allowClear
+                                            className={styles.headerSelectField}
+                                            onChange={onChange}
+                                        >
+                                            {statedata?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} >
+                                        <Select
+                                            placeholder="District"
+                                            allowClear
+                                            className={styles?.headerSelectField}
+                                            onChange={onChange2}
+                                        >
+                                            {show
+                                            ?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
+                                        <Search
+                                            placeholder="Search"
+                                            allowClear
+                                            className={styles.headerSearchField}
+                                            onSearch={onSearchHandle}
+                                            onChange={onChangeHandle}
+                                        />
+                                    </Col>
                                 </Row>
                             </Col>
 
@@ -344,7 +361,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityDat
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add State
+                                        Add City
                                     </Button>
                                 </Col>
                             ) : (
