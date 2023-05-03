@@ -219,7 +219,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, countryCode: 'IND' };
+        let data = { ...values, id: recordId};
 
         const onSuccess = (res) => {
             form.resetFields();

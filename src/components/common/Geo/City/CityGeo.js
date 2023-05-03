@@ -29,25 +29,26 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
+            GeoState: { isLoaded: isDataLoaded = false, isLoading, data: statedata },
             GeoCity :{ isLoaded: iscityDataLoaded = false, isCityLoading, data : cityData }
         },
     } = state;
     
-    const moduleTitle = 'State Master List';
-
+    const moduleTitle = 'City Master List';
+    console.log('city', statedata)
     let returnValue = {
         userId,
         isDataLoaded,
         cityData,
+        statedata,
         iscityDataLoaded,
-        data,
+        
         isCityLoading,
         isLoading,
         moduleTitle,
     };
     return returnValue;
-    console.log('city', cityData)
+    
 
 };
 
@@ -56,16 +57,17 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: geoStateDataActions.fetchList,
+            listShowLoading: geoStateDataActions.listShowLoading,
+            listCityShowLoading: geoCityDataActions.listShowLoading,
             saveData: geoCityDataActions.saveData,
             fetchDataList:geoCityDataActions.fetchList,
-
-            listShowLoading: geoStateDataActions.listShowLoading,
+            
             showGlobalNotification,
         },
         dispatch
     ),
 });
-export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const CityGeoBase = ({ moduleTitle, listCityShowLoading,statedata,cityData,data,fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -91,7 +93,8 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
-            fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            fetchDataList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,8 +112,9 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
 
+  
 
-    console.log('serahcdtaa', searchData);
+
     
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -118,7 +122,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = searchData.find((i) => i.id === record.id);
+        const data = cityData.find((i) => i.id === record.id);
         if (data) {
             data && setFormData(data);
 
@@ -132,7 +136,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = searchData.find((i) => i.id === record.id);
+        const data = cityData.find((i) => i.id === record.id);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -247,7 +251,8 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
         };
 
         const requestData = {
-            data: [data],
+            data: data,
+            method: formActionType === 'update' ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -282,7 +287,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        tableData: searchData,
+        tableData: cityData,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
@@ -308,7 +313,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
                                         allowClear
                                         className={styles.headerSelectField}
                                     >
-                                        {data?.map((item) => (
+                                        {statedata?.map((item) => (
                                             <Option value={item?.code}>{item?.name}</Option>
                                         ))}
                                     </Select>
@@ -334,7 +339,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
                                 </Row>
                             </Col>
 
-                            {searchData?.length ? (
+                            {cityData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
@@ -360,7 +365,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
                                     height: 60,
                                 }}
                                 description={
-                                    !searchData?.length ? (
+                                    !cityData?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
@@ -370,7 +375,7 @@ export const CityGeoBase = ({ moduleTitle, cityData,data,fetchDataList, isLoadin
                                     )
                                 }
                             >
-                                {!searchData?.length ? (
+                                {!cityData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
