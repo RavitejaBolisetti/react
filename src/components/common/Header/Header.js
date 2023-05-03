@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { IoIosLogOut } from 'react-icons/io';
+import { FiLock, FiUser, FiSettings } from 'react-icons/fi';
+import { CgProfile } from 'react-icons/cg';
 
 import * as routing from 'constants/routing';
 import { setCollapsed } from 'store/actions/common/leftsidebar';
@@ -91,7 +93,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const showConfirm = () => {
         confirm({
             title: 'Logout',
-            icon: <AiOutlineInfoCircle size={22} className={styles.modalIconAlert} />,
+            icon: <IoIosLogOut size={22} className={styles.modalIconLogout} />,
             content: 'Are you sure you want to logout?',
             okText: 'Yes, Logout',
             okType: 'danger',
@@ -129,16 +131,22 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const userSettingMenu = [
         customMenuLink({
+            key: '0',
+            title: 'My Roles',
+            link: routing.ROUTING_USER_PROFILE,
+            icon: <CgProfile size={18} />,
+        }),
+        customMenuLink({
             key: '1',
             title: 'My Profile',
             link: routing.ROUTING_USER_PROFILE,
-            icon: <Icon component={ProfileIcon} />,
+            icon: <FiUser size={18} />,
         }),
         customMenuLink({
             key: '2',
-            title: 'Settings',
+            title: 'Account Settings',
             link: routing.ROUTING_USER_SETTING,
-            icon: <Icon component={SettingsIcon} />,
+            icon: <FiSettings size={18} />,
         }),
         // customMenuLink({
         //     key: '3',
@@ -166,7 +174,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             customMenuLink({
                 key: '5',
                 title: 'Change Password',
-                icon: <Icon component={ChangePasswordIcon} />,
+                icon: <FiLock size={18} />,
                 onClick: () => setChangePasswordModalOpen(true),
             })
         );
@@ -176,7 +184,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             key: '7',
             title: 'Logout',
             onClick: showConfirm,
-            icon: <Icon component={LogoutIcon} />,
+            icon: <IoIosLogOut size={20} />,
         })
     );
 
@@ -284,7 +292,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>Superadmin</span>
+                                                    <span className={styles.userRoleName}>Super Admin</span>
                                                     {/* <span className={styles.userServiceArea}>{formatPhoneNumber(mobileNo)}</span> */}
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>

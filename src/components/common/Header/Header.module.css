@@ -239,8 +239,10 @@
 }
 
 .welcomeUser .userAvatar .userAvatarInside {
-    background-color: #808080;
+    background-color: #E6E6E6;
+    color: #0B0B0C;
     font-size: 16px;
+    font-weight: 500;
     line-height: 30px;
 }
 
@@ -308,6 +310,11 @@
     padding-right: 8px;
 }
 
+.modalIconLogout {
+    color: #ff3e5b;
+    padding-right: 8px;
+}
+
 .mrt6 {
     margin-top: 6px;
 }
@@ -332,13 +339,22 @@
     box-shadow: none;
 }
 
-:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item .ant-dropdown-menu-title-content .anticon {
-    color: #ff3e5b;
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
+    margin-top: 16px;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:not(:last-child) {
+    margin-bottom: 4px;
 }
 
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:hover {
     color: #ff3e5b;
     background-color: #FFD8DE;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item .ant-dropdown-menu-title-content svg {
+    color: #ff3e5b;
+    vertical-align: sub;
 }
 
 .confirmModal :global .ant-modal-confirm-confirm {
