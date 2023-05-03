@@ -84,7 +84,6 @@ const AddEditFormMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVis
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
-        form.validateFields();
     };
     const validatedDuplicateTime = (field) => (rule, value) => {
         const overlapData = checkOverlap();
