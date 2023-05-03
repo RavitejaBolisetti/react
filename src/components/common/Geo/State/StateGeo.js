@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state,'DEER')
+    console.log(state, 'DEER')
 
     const moduleTitle = 'State Master List';
 
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
-    console.log(data,"DATA")
+    console.log(data, "DATA")
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -97,7 +97,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    
+
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -219,7 +219,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId};
+        let data = { ...values, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -241,7 +241,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
 
         const requestData = {
             data: data,
-             method: formActionType === 'update' ? 'put' : 'post',
+            method: formActionType === 'update' ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -252,7 +252,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
     const tableProps = {
         tableColumn: tableColumn,
@@ -289,49 +289,42 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.subheading}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                                State List
-                                            </Col>
-                                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                                <Select
-                                                    style={{
-                                                        width: 300,
-                                                    }}
-                                                    placeholder="Country"
-                                                    allowClear
-                                                    className={styles.headerSelectField}
-                                                >
-                                                    <Option value="India">India</Option>
-                                                </Select>
-                                                <Search
-                                                    placeholder="Search"
-                                                    style={{
-                                                        width: 300,
-                                                    }}
-                                                    allowClearclassName={styles.headerSelectField}
-                                                    onSearch={onSearchHandle}
-                                                    onChange={onChangeHandle}
-                                                />{' '}
-                                            </Col>
-                                        </Row>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
+                                        State List
                                     </Col>
-
-                                    <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            Add State
-                                        </Button>
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                        <Select
+                                            placeholder="Country"
+                                            allowClear
+                                            className={styles.headerSelectField}
+                                        >
+                                            <Option value="India">India</Option>
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                        <Search
+                                            placeholder="Search"
+                                            allowClear
+                                            className={styles.headerSearchField}
+                                            onSearch={onSearchHandle}
+                                            onChange={onChangeHandle}
+                                        />{' '}
                                     </Col>
                                 </Row>
                             </Col>
+
+                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    Add State
+                                </Button>
+                            </Col>
                         </Row>
                     </div>
-                </Col>
-            </Row>
+                </Col >
+            </Row >
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

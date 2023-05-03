@@ -259,7 +259,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
     const districtdata = [];
 
@@ -277,7 +277,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     console.log(show, 'gggggggggggggggggggggggggggggggggggggggggggggggggg');
 
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
     const tableProps = {
         tableColumn: tableColumn,
@@ -322,9 +322,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                     </Col>
                                     <Col xs={24} sm={12} md={7} lg={7} xl={7}>
                                         <Select
-                                            style={{
-                                                width: 300,
-                                            }}
                                             placeholder="State"
                                             allowClear
                                             className={styles.headerSelectField}
@@ -337,9 +334,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                     </Col>
                                     <Col xs={24} sm={12} md={7} lg={7} xl={7}>
                                         <Select
-                                            style={{
-                                                width: 300,
-                                            }}
                                             placeholder="District"
                                             allowClear
                                             className={styles?.headerSelectField}
@@ -349,13 +343,11 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24}sm={12} md={7} lg={7} xl={7} >
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
                                         <Search
                                             placeholder="Search"
-                                            style={{
-                                                width: 300,
-                                            }}
-                                            allowClearclassName={styles.headerSearchField}
+                                            allowClear
+                                            className={styles.headerSearchField}
                                             onSearch={onSearchHandle}
                                             onChange={onChangeHandle}
                                         />
@@ -368,7 +360,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add State
+                                        Add City
                                     </Button>
                                 </Col>
                             ) : (
