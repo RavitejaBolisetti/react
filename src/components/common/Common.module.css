@@ -727,19 +727,18 @@
 
 .headerSearchField {
     vertical-align: middle;
-    margin: 0 5px;
-    width: 90%;
+    width: 100%;
 }
 
 .headerSearchField :global .anticon svg {
     width: 1.25em;
     height: 1.25em;
+    margin-top: 4px;
 }
 
 .headerSelectField {
     vertical-align: middle;
-    margin: 0 5px;
-    width: 90%;
+    width: 100%;
 }
 
 .contentHeaderBackground .addGroup button {
