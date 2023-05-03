@@ -75,7 +75,8 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
-
+    const [show, setShow] = useState([]);
+    const [city, setCity] = useState(cityData);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
@@ -144,6 +145,12 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         setIsReadOnly(true);
     };
 
+    
+    const onChange2 = (e) =>{
+        setCity(cityData.filter((i)=>i.districtCode=== e));
+        setShow([]);
+    }
+    
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -195,6 +202,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const handleReferesh = () => {
         setRefershData(!refershData);
+        setCity(cityData);
     };
 
     const hanndleEditData = (record) => {
@@ -261,27 +269,18 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-    const districtdata = [];
+    
 
-    const [show, setShow] = useState([]);
 
     const onChange = (e) => {
-        const { value } = e;
-
-        for (let j in districtData) {
-            if (districtData[j].stateCode === e) {
-                setShow(districtData[j]);
-            }
-        }
+        setShow(districtData.filter((i)=>i.stateCode === e));
     };
 
-    console.log(show, 'gggggggggggggggggggggggggggggggggggggggggggggggggg');
-
-    useEffect(() => {}, []);
+  
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: cityData,
+        tableData: city,
     };
 
     const formProps = {
@@ -317,10 +316,10 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} >
                                         <Select
                                             style={{
                                                 width: 300,
@@ -335,7 +334,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} >
                                         <Select
                                             style={{
                                                 width: 300,
@@ -343,13 +342,15 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                             placeholder="District"
                                             allowClear
                                             className={styles?.headerSelectField}
+                                            onChange={onChange2}
                                         >
-                                            {show?.map((item) => (
+                                            {show
+                                            ?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24}sm={12} md={7} lg={7} xl={7} >
+                                    <Col xs={24}sm={12} md={6} lg={6} xl={6}  >
                                         <Search
                                             placeholder="Search"
                                             style={{
