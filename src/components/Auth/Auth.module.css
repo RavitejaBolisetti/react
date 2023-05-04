@@ -283,6 +283,11 @@ p {
     color: #858585;
 }
 
+.loginSection :global .ant-input-affix-wrapper-focused .ant-input-prefix,
+.loginSection :global .ant-input-affix-wrapper-status-success .ant-input-prefix {
+    color: #FFFFFF;
+}
+
 .loginSection :global .ant-input-affix-wrapper:hover,
 .loginSection :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-color: #ffffff;
@@ -312,6 +317,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
+    /* border-color: #FFFFFF; */
 }
 
 .loginSection input:-webkit-autofill,
