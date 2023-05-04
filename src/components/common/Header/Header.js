@@ -92,9 +92,9 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const showConfirm = () => {
         confirm({
-            title: 'Logout',
+            title: 'Are you sure you want to logout?',
             icon: <IoIosLogOut size={22} className={styles.modalIconLogout} />,
-            content: 'Are you sure you want to logout?',
+            content: 'Your password has been changed successfully. Please login with your new credentials',
             okText: 'Yes, Logout',
             okType: 'danger',
             cancelText: 'No',
