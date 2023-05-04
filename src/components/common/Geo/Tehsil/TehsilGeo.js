@@ -28,8 +28,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isStateDataLoaded = false, isLoading : isStateLoading, data : stateData },
-            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data : districtData},
+            GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
             GeoTehsil: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification,fetchStateList,fetchDistrictList,listStateShowLoading,listDistrictShowLoading,stateData,districtData }) => {
+export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -109,9 +109,9 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
-           fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-           fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
-           fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -135,7 +135,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        console.log(searchData,'searchTehsil')
+        console.log(searchData, 'searchTehsil')
         const data = searchData.find((i) => i.code === record.code);
         console.log('data', data);
         if (data) {
@@ -291,13 +291,13 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
             onSuccess,
         };
 
-        console.log(requestData,'pranjal')
+        console.log(requestData, 'pranjal')
 
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
 
@@ -336,71 +336,63 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
-        stateDropdown, 
+        stateDropdown,
         districtDropdown,
         stateData,
         districtData,
     };
 
-    console.log(stateCode,'valuevalue')
+    console.log(stateCode, 'valuevalue')
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Row xs={24} sm={24} md={24} lg={60} xl={60}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            Tehsil List
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 200,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            />
-                                        </Col>
-                                        {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            
-                                        </Col> */}
-                                    </div>
+                                    <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
+                                        Tehsil List
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
+                                        <Select
+                                            placeholder="State"
+                                            allowClear
+                                            className={styles.headerSelectField}
+                                            onChange={handleSelectState}
+                                        >
+                                            {stateData?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
+                                        <Select
+                                            placeholder="District"
+                                            allowClear
+                                            className={styles?.headerSelectField}
+                                            onChange={handleSelectState}
+                                        >
+                                            {districtData?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}  >
+                                        <Search
+                                            placeholder="Search"
+                                            allowClear
+                                            className={styles.headerSearchField}
+                                            onSearch={onSearchHandle}
+                                            onChange={onChangeHandle}
+                                        />
+                                    </Col>
                                 </Row>
+                            </Col>
 
-                                <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            State
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState}>
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {stateData?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Col>
-                                    </div>
-                                </Row>
-
-                                <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            District
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState}>
-                                                {districtData?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Col>
-                                    </div>
-                                </Row>
-                            </Row>
                             {data?.length ? (
-                                <Col className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
