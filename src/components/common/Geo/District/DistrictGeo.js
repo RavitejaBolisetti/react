@@ -159,13 +159,13 @@ export const DistrictGeoBase = (props) => {
         tblPrepareColumns({
             title: 'District Name',
             dataIndex: 'name',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'State Name',
             dataIndex: 'stateName',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({

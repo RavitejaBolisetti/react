@@ -270,7 +270,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: city.length != 0 ? city : cityData,
+        tableData: searchData,
     };
 
     const formProps = {

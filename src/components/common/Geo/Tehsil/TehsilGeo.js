@@ -281,7 +281,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: data,
+        tableData: searchData,
     };
 
     const formProps = {
