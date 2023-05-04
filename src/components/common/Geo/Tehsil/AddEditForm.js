@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
@@ -50,7 +50,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={stateFilter} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item initialValue={stateFilter} label="State Code" name="stateCode" rules={[validationFieldLetterAndNumber('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name" initialValue={formData?.districtName} rules={[validateRequiredSelectField('District Name')]}>
+                            <Form.Item label="District Name" initialValue={formData?.districtName} rules={[validateAlphanumericWithSpace('District Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
                                     {districtData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>

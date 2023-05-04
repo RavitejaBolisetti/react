@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -76,12 +76,12 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City Code" initialValue={formData?.code} name="code" rules={[validateRequiredInputField('City Code')]}>
+                            <Form.Item label="City Code" initialValue={formData?.code} name="code" rules={[validationFieldLetterAndNumber('City Code')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City Name" name="name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name')]}>
+                            <Form.Item label="City Name" name="name" initialValue={formData?.name} rules={[validateAlphanumericWithSpace('City Name')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>

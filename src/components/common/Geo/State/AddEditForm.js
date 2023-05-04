@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
-import { validateRequiredInputField, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewStateDetails } from './ViewStateDetails';
@@ -50,7 +50,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validationFieldLetterAndNumber('State Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
