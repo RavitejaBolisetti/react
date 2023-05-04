@@ -368,7 +368,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            Country Type List
+                                            Location Type List
                                             <Search
                                                 placeholder="Search"
                                                 style={{

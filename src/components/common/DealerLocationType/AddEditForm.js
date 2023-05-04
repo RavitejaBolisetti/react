@@ -76,9 +76,10 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={stateCode} label="Location Type Description" name="locationtypedescription" rules={[validateRequiredInputField('Location Type Description')]}>
+                            <Form.Item label="Location Type Description" name="locationtypedescription" rules={[validateRequiredInputField('Location Type Description')]}>
                                 <Input placeholder={preparePlaceholderText('Location Type Description')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
+                            {/* initialValue={stateCode} */}
                         </Col>
                     </Row>
 
