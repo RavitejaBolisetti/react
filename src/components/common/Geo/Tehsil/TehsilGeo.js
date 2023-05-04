@@ -92,6 +92,8 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
+    const [filterDistrict, setFilterDistrict] = useState([]);
+
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -237,6 +239,10 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setRefershData(!refershData);
     };
 
+    const onChange = (e) => {
+        setFilterDistrict(districtData.filter((i) => i.stateCode === e));
+    };
+
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
@@ -304,6 +310,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
 
         const requestData = {
             data: data,
+            method: formActionType === 'update' ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -390,7 +397,9 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                     <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             State
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState}>
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState,onChange}
+                                             
+                                            >
                                                 {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                 {stateData?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
@@ -405,9 +414,12 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             District
                                             <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectDistrict}>
-                                                {districtData?.map((item) => (
+                                                {/* {districtData?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
+                                                ))} */}
+                                                {filterDistrict?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
                                             </Select>
                                         </Col>
                                     </div>

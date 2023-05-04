@@ -99,7 +99,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
             fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
-           
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -145,12 +144,11 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         setIsReadOnly(true);
     };
 
-    
-    const onChange2 = (e) =>{
-        setCity(cityData.filter((i)=>i.districtCode=== e));
+    const onChange2 = (e) => {
+        setCity(cityData.filter((i) => i.districtCode === e));
         setShow([]);
-    }
-    
+    };
+
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -267,22 +265,17 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
-    
-
 
     const onChange = (e) => {
-        setShow(districtData.filter((i)=>i.stateCode === e));
+        setShow(districtData.filter((i) => i.stateCode === e));
     };
-
-  
 
     const tableProps = {
         tableColumn: tableColumn,
         tableData: city,
     };
-
 
     const formProps = {
         formActionType,
@@ -324,39 +317,22 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                     <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} >
-                                        <Select
-                                            placeholder="State"
-                                            allowClear
-                                            className={styles.headerSelectField}
-                                            onChange={onChange}
-                                        >
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={onChange}>
                                             {statedata?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} >
-                                        <Select
-                                            placeholder="District"
-                                            allowClear
-                                            className={styles?.headerSelectField}
-                                            onChange={onChange2}
-                                        >
-                                            {show
-                                            ?.map((item) => (
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={onChange2}>
+                                            {show?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24}sm={12} md={6} lg={6} xl={6}  >
-                                        <Search
-                                            placeholder="Search"
-                                            allowClear
-                                            className={styles.headerSearchField}
-                                            onSearch={onSearchHandle}
-                                            onChange={onChangeHandle}
-                                        />
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
                             </Col>

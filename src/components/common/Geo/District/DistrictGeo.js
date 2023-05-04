@@ -77,6 +77,8 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
+    const [filterData, setFilterData] = useState([]);
+
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -268,6 +270,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
+            method: formActionType === 'update' ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
@@ -282,9 +285,14 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         form.validateFields().then((values) => { });
     };
 
+    const onChange2 = (e) => {
+        setFilterData([]);
+        setFilterData(data.filter((i) => i.stateCode === e));
+    };
+
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: data,
+        tableData: filterData,
     };
 
     const formProps = {
@@ -331,7 +339,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
                                             placeholder="State"
                                             allowClear
                                             className={styles.headerSelectField}
-                                            onChange={handleSelectState}
+                                            onChange={handleSelectState,onChange2}
                                         >
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
