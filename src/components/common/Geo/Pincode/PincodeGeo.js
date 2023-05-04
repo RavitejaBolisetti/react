@@ -108,6 +108,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
+    const [savebtnclick,setsavebtnclick]=useState(false);
 
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
@@ -133,29 +134,28 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
             const coddd = 'UEIW'
             const types=`?stateCode=${coddd}`;
             fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction,mytype:types});
-            setdistrictdata(geoPindata)
             fetchTehsilList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchCityList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
              
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData,isPinDataLoaded]);
-    useEffect(()=>{
-        setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
-
-    },[])
+   
 
     useEffect(() => {
         if (geoPindata &&  userId) {
             if (filterString) {
                 const filterDataItem = geoPindata?.filter((item) => filterFunction(filterString)(item?.localityName) || filterFunction(filterString)(item?.pinCode));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-            } else {
+            } 
+            if(geoPindata)
+            {
                 setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, userId]);
+    }, [filterString, isDataLoaded, userId,geoPindata]);
 
     const handleEditBtn = (record) => {
         setAdvanceSearchVisible(false);
@@ -226,13 +226,13 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
             dataIndex: 'withIn50KmFromGpo',
             width: '20%',
             render: (record) => {
-                return <Checkbox className={styles.registered}></Checkbox>;
+                return <Checkbox disabled defaultChecked className={styles.registered}></Checkbox>;
             }
         }),
 
         tblPrepareColumns({
             title: 'Approval Status',
-            dataIndex: 'status',
+            dataIndex: 'approvalStatus',
             render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>}</>,
             width: '15%',
         }),
@@ -298,17 +298,31 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
-
+    const requestaData ={
+        "pinCode": "764748",
+        "localityCode": "F1795",
+        "tehsilCode": "T11841",
+        "districtCode": "D00565",
+        "stateCode": "23",
+        "countryCode": "IN",
+        "status": true,
+        "approvalStatus": true,
+        "localityName": "TEST",
+        "pinDescription": "TESTING",
+        "withIn50KmFromGpo": true,
+        "jdpUniverse": true
+      }
     const onFinish = (values) => {
         const recordId = formData?.data || '';
-        let data = { ...values, data: recordId };
-        console.log(data);
+        // let data = { ...values, data: recordId };
+        const finalSubmitdata={...values};
+        console.log(values,'DATATATATATATATTA');
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDataList({ setIsLoading: listShowLoading, userId });
+            // fetchDataList({ setIsLoading: listShowLoading, userId });
 
-            if (showSaveAndAddNewBtn === true || recordId) {
+            if (saveAndAddNewBtnClicked === false ) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
@@ -322,7 +336,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         };
 
         const requestData = {
-            data: [data],
+            data: finalSubmitdata,
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -371,7 +385,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         geoCityData,
         geoPindata,
         setrowdata,
-        rowdata,
+        rowdata,setsavebtnclick,
     };
     
     const viewProps = {
