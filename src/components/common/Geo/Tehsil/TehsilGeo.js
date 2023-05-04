@@ -250,7 +250,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
-        
+
     };
 
     const handleAdd = () => {
@@ -323,7 +323,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const tableProps = {
@@ -370,63 +370,50 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Row xs={24} sm={24} md={24} lg={60} xl={60}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            Tehsil List
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 200,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            />
-                                        </Col>
-                                        {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            
-                                        </Col> */}
-                                    </div>
-                                </Row>
-
-                                <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            State
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState,onChange}
-                                             
-                                            >
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {stateData?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Col>
-                                    </div>
-                                </Row>
-
-                                <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            District
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectDistrict}>
-                                                {/* {districtData?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))} */}
-                                                {filterDistrict?.map((item) => (
+                                    <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
+                                        Tehsil List
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
+                                        <Select
+                                            placeholder="State"
+                                            allowClear
+                                            className={styles.headerSelectField}
+                                            onChange={handleSelectState}
+                                        >
+                                            {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
-                                            </Select>
-                                        </Col>
-                                    </div>
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
+                                        <Select
+                                            placeholder="District"
+                                            allowClear
+                                            className={styles?.headerSelectField}
+                                            onChange={handleSelectState}
+                                        >
+                                            {districtData?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}  >
+                                        <Search
+                                            placeholder="Search"
+                                            allowClear
+                                            className={styles.headerSearchField}
+                                            onSearch={onSearchHandle}
+                                            onChange={onChangeHandle}
+                                        />
+                                    </Col>
                                 </Row>
-                            </Row>
+                            </Col>
+
                             {data?.length ? (
-                                <Col className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
