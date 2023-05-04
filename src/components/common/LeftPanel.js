@@ -49,7 +49,7 @@ const LeftPanel = (props) => {
         const newExpandedKeys = dataList
             ?.map((item) => {
                 if (item?.title?.indexOf(searchValue) > -1) {
-                    return getParentKey(item?.id, treeData, fieldNames);
+                    return getParentKey(item?.id, treeData);
                 }
                 return null;
             })
@@ -113,5 +113,3 @@ const LeftPanel = (props) => {
     );
 };
 export default LeftPanel;
-
-

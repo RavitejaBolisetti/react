@@ -78,14 +78,9 @@ p {
 .loginSection {
     background: url(assets/images/mainbg.png) no-repeat center center fixed;
     background-size: cover;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-around;
-    */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     justify-content: space-between;
 }
 
@@ -1133,7 +1128,7 @@ select.form-control:focus::-ms-value {
 
     .changer input {
         height: 18px !important;
-        width: 18px !important;
+        /* width: 18px !important; */
         margin-right: 15px !important;
         font-size: 16px;
     }

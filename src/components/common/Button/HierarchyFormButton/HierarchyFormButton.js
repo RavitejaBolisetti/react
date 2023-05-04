@@ -22,7 +22,7 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
 
             <div className={styles.btnRight}>
                 {buttonData?.childBtn && (
-                    <Button danger type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
+                    <Button danger  type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
                         Add Child
                     </Button>
                 )}

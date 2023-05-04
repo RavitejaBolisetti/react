@@ -186,7 +186,7 @@ export const ProductDatas = [
                         title: 'node2',
                         key: 'node2',
 
-                    children: [
+                        children: [
                             {
                                 title: 'randomNode_2',
                                 key: 'randomNode_2',
@@ -312,7 +312,7 @@ export const geoTreeData = [
                         title: 'node2',
                         key: 'node2',
 
-                    children: [
+                        children: [
                             {
                                 title: 'randomNode_2',
                                 key: 'randomNode_2',
@@ -448,5 +448,27 @@ export const qualificationMasterData = [
         qualificationName: 'Name',
 
         status: 'N',
+    },
+];
+export const rolemanagementdata1 = [
+    {
+        roleId: 'Hello1',
+        roleName: 'Hello',
+        roleDesceription: 'water',
+        activeIndicator: 'Y',
+    },
+];
+export const rolemanagementdata = [
+    {
+        RoleId: 'Hello2',
+        RoleName: 'Hello',
+        RoleDescription: 'water2',
+        Status: 'N',
+    },
+    {
+        RoleId: 'Hello3',
+        RoleName: 'Hello',
+        RoleDescription: 'water3',
+        Status: 'Y',
     },
 ];

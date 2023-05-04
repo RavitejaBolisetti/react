@@ -105,7 +105,6 @@
 }
 
 .timingHeader {
-    border-radius: 8px;
     background-color: #f4f4f4;
     padding: 10px;
     margin-bottom: 10px;
@@ -149,9 +148,7 @@
 
 .contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
-    background-color: #ffffff;
     border-left: #ffffff;
-    background-color: #ffffff;
 }
 
 .contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {

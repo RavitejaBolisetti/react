@@ -171,7 +171,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleAdd = () => {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
+import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from '../Geo/State/InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -216,12 +216,12 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             render: (record) => [
                 <Space wrap>
                     {
-                        <Button data-testid='edit' className={styles.tableIcons} aria-label='fa-edit' onClick={() => handleEditBtn(record, 'edit')}>
+                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
                             <FiEdit2 />
                         </Button>
                     }
                     {
-                        <Button className={styles.tableIcons} aria-label='ai-view' onClick={() => handleView(record)}>
+                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
@@ -297,7 +297,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
     const tableProps = {
         tableColumn: tableColumn,

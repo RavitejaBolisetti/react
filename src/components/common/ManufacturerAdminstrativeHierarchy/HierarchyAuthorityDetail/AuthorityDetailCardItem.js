@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 const AuthorityCardItemMain = ({ viewMode, form, onFinish, setDocumentTypesList, authorityTypeCode, setfinalFormdata, id, authorityEmployeeTokenNo, EffectiveTo, EffectiveFrom, forceUpdate, setIsBtnDisabled, isBtnDisabled, documentTypesList, selectedTreeData, authData, authorityVisible }) => {
     const [isEditing, setIsEditing] = useState(false);
 
-    console.log(authData,"AUTHDATA")
+    console.log(authData, 'AUTHDATA');
 
     const recordId = id;
     const onEdit = () => {

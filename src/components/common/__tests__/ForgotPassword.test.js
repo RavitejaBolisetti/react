@@ -24,11 +24,11 @@ window.matchMedia =
                     <Route path="*" element= {<ForgotPassword verifyUser = {verifyUser} sendOTP = {sendOTP} validateOTP = {validateOTP} updatePassword = {updatePassword} />}/>
                 </Routes>
             </BrowserRouter>);
-             const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)')
+             const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID)')
              const verifyUserBtn = await screen.getByText('Verify User')
              fireEvent.change(userId, {target: {value:''}});
              fireEvent.click(verifyUserBtn)
-             const validation =  screen.findByText('Please Enter User ID (mile id.parent id)')
+             const validation =  screen.findByText('Please enter user id')
              expect(userId).toBeTruthy();
              expect(verifyUserBtn).toBeInTheDocument();
              expect(validation).toBeTruthy();

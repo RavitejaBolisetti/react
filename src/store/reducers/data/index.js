@@ -13,6 +13,9 @@ import { ConfigurableParameterEditing } from './configurableParamterEditing';
 import { dealerManpower } from './dealerManpower';
 import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
+import { UserManagement } from './userManagement';
+import { UserManagementManufacturer } from './UserManagementManufacturer';
+
 
 export const data = combineReducers({
     Menu,
@@ -28,5 +31,7 @@ export const data = combineReducers({
     ConfigurableParameterEditing,
     dealerManpower,
     ApplicationMaster,
-    QualificationMaster
+    QualificationMaster,
+    UserManagement,
+    UserManagementManufacturer,
 });

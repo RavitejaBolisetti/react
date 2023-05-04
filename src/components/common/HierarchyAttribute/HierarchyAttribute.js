@@ -290,7 +290,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleChange = (attributeType) => {
@@ -343,12 +343,14 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                             <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                                 Hierarchy Attribute Type
                                             </Col>
-                                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                            <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                                 <Select className={styles.headerSelectField} showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                                     {attributeData?.map((item) => (
                                                         <Option value={item}>{item}</Option>
                                                     ))}
                                                 </Select>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                                 {detailData?.hierarchyAttributeType && <Search placeholder="Search" className={styles.headerSearchField} allowClear onSearch={onSearchHandle} onChange={onChangeHandle} />}
                                             </Col>
                                         </Row>

@@ -4,30 +4,23 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Empty, Input, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-// import styles from 'components/common/Common.module.css';
-// import style from 'components/common/DrawerAndTable.module.css';
-// import styl from './ApplicationMaster.module.css';
-
 import { menuDataActions } from 'store/actions/data/menu';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import LeftPanel from '../LeftPanel';
-import ViewApplicationDetail from './ViewApplicationDetails';
-import { DrawerUtil } from './DrawerUtil';
+import { AddEditForm } from './AddEditForm';
 import { HierarchyFormButton } from '../Button';
+import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { EN } from 'language/en';
-import ViewApplicationDetailMain from './ViewApplicationDetailMain';
 
 import styles from 'components/common/Common.module.css';
-import styl from './ApplicationMaster.module.css';
 
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
-    console.log('state', state);
     const {
         auth: { userId },
         data: {
@@ -37,8 +30,7 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Application Details';
 
     let returnValue = {
-        criticalityGroupData: criticalityGroupData?.filter((i) => i?.activeIndicator),
-        // criticalityGroupData,
+        criticalityGroupData,
         applicationDetailsData,
         dealerLocations,
         userId,
@@ -48,7 +40,6 @@ const mapStateToProps = (state) => {
         isApplicationDeatilsLoading,
         isApplicatinoOnSaveLoading,
         isLoading,
-        // menuData: applicationData?.filter((el) => el?.menuId !== 'FAV'),
         menuData: applicationData,
         isActionsLoaded,
     };
@@ -87,7 +78,7 @@ const initialFormData = {
     accessibleLocation: [],
 };
 
-export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading }) => {
+export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLoading, applicationMasterDataShowLoading, fetchApplication, fetchApplicationCriticality, criticalityGroupData, fetchDealerLocations, fetchApplicationAction, saveApplicationDetails, menuData, fetchList, applicationDetailsData, configurableParamData, fetchCriticalitiData, actions, showGlobalNotification, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, onSaveShowLoading, applicationDetailListShowLoading, detailListShowLoading }) => {
     const [form] = Form.useForm();
     const [applicationForm] = Form.useForm();
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -120,7 +111,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         if (!criticalityGroupData?.length) {
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
         }
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' }); //fetch menu data
+        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
@@ -148,12 +139,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         form.resetFields();
         setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         if (res?.data) {
-            const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data;
+            const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
 
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
 
-            applicationCall(res?.data);
+            applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);
 
             setFormActionType('view');
@@ -168,15 +159,14 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const onFinish = (values) => {
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
-        // let message = '';
         if (applicationAction?.length < 1) {
-            return showGlobalNotification({ message: 'Please add application action to proceed' });
+            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
         }
         if (values?.documentNumRequired && documentType?.length < 1) {
-            return showGlobalNotification({ message: 'Please add document types  to proceed' });
+            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
         }
-        if (values?.accessableIndicator === '2' && accessibleLocation?.length < 1) {
-            return showGlobalNotification({ message: 'Please add accessible location  to proceed' });
+        if (values?.accessableIndicator === 2 && accessibleLocation?.length < 1) {
+            return showGlobalNotification({ message:EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
         }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
@@ -239,11 +229,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        applicationForm.resetFields();
+        setTimeout(()=> applicationCall(finalFormdata?.applicationDetails?.applicationId), 300)
         setisVisible(false);
-        // setFormBtnDisable(false);
-        forceUpdate();
-        // setIsBtnDisabled(false);
     };
 
     const myProps = {
@@ -357,13 +344,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={`${styles.padRight0} ${styles.viewDetails}`}>
                     <Spin spinning={isApplicationDeatilsLoading}>
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                {/* <ViewApplicationDetail applicationDetailsData={applicationDetailsData} /> */}
+                            <>
                                 <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
                                 <div className={styles.hyrbuttonContainer}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
                                 </div>
-                            </Col>
+                            </>
                         ) : (
                             <div className={styles.emptyContainer}>
                                 <Empty
@@ -384,7 +370,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 </Col>
             </Row>
 
-            <DrawerUtil {...formProp} />
+            <AddEditForm {...formProp} />
         </>
     );
 };
