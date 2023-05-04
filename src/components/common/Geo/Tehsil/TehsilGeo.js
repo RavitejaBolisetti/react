@@ -28,8 +28,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isStateDataLoaded = false, isLoading : isStateLoading, data : stateData },
-            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data : districtData},
+            GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
             GeoTehsil: { isLoaded: isDataLoaded = false, isLoading, data },
         },
     } = state;
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification,fetchStateList,fetchDistrictList,listStateShowLoading,listDistrictShowLoading,stateData,districtData }) => {
+export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -101,7 +101,8 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
 
-    const [stateCode, isStateCode] = useState(null);
+    const [stateFilter, setStateFilter] = useState('');
+    const [districtFilter, setDistrictFilter] = useState('');
 
     useEffect(() => {
         if (userId) {
@@ -109,9 +110,9 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
-           fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-           fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
-           fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -119,7 +120,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.stateCode) || filterFunction(filterString)(item?.districtName));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -128,14 +129,13 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        console.log(searchData,'searchTehsil')
+        console.log(searchData, 'searchTehsil');
         const data = searchData.find((i) => i.code === record.code);
         console.log('data', data);
         if (data) {
@@ -161,9 +161,19 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setIsReadOnly(true);
     };
 
+    console.log(data, 'QWERTTYYUU');
+
     // const renderTableColumnName = (record, key, type) => {
     //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
     // };
+
+    // let newArray = obj.Students.filter(function (el)
+    // {
+    //   return el.Age >=15 &&
+    //          el.RollNumber <= 200 &&
+    //          el.Marks >= 80 ;
+    // }
+    // );
 
     const tableColumn = [];
 
@@ -234,13 +244,13 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
+        
     };
 
     const handleAdd = () => {
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
-
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
@@ -252,7 +262,17 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     };
 
     const handleSelectState = (value) => {
-        isStateCode(value.target.value);
+        let newArray = stateData.filter(function (el) {
+            return el.code === value.code;
+        });
+        setStateFilter(newArray);
+    };
+
+    const handleSelectDistrict = (value) => {
+        let newArray = stateData.filter(function (el) {
+            return el.code === value.code;
+        });
+        setDistrictFilter(newArray);
     };
 
     const onChangeHandle = (e) => {
@@ -260,7 +280,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     };
 
     const onFinish = (values) => {
-        console.log(values, 'dta');
 
         const recordId = formData?.id || '';
         let data = { ...values };
@@ -291,7 +310,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
             onSuccess,
         };
 
-        console.log(requestData,'pranjal')
+        // console.log(requestData,'pranjal')
 
         saveData(requestData);
     };
@@ -299,13 +318,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-
-
-    /******* GeoState *******/
-    const stateDropdown = data;
-
-    /********* GeoDistrict *********/
-    const districtDropdown = data;
 
     const tableProps = {
         tableColumn: tableColumn,
@@ -336,13 +348,15 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
-        stateDropdown, 
-        districtDropdown,
         stateData,
         districtData,
+        stateFilter,
+        setStateFilter,
+        districtFilter,
+        setDistrictFilter,
     };
 
-    console.log(stateCode,'valuevalue')
+    console.log(stateFilter, 'valuevalue');
 
     return (
         <>
@@ -390,7 +404,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                     <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                                             District
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectState}>
+                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '12rem' }} onChange={handleSelectDistrict}>
                                                 {districtData?.map((item) => (
                                                     <Option value={item?.code}>{item?.name}</Option>
                                                 ))}

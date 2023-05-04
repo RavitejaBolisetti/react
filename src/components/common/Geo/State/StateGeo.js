@@ -88,6 +88,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
+                console.log(data,'SEARCH');
                 const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
@@ -310,7 +311,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                                             className={styles.headerSearchField}
                                             onSearch={onSearchHandle}
                                             onChange={onChangeHandle}
-                                        />{' '}
+                                        />
                                     </Col>
                                 </Row>
                             </Col>
