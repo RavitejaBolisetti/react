@@ -8,9 +8,9 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
-import { geoStateDataActions } from 'store/actions/data/geoState';
-import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
-import { geoTehsilDataActions } from 'store/actions/data/geoTehsil';
+import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoDistrictDataActions } from 'store/actions/data/geo/district';
+import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';

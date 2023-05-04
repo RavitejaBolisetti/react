@@ -17,10 +17,11 @@ export const BASE_URL_CHANGE_PASSWORD = BASE_URL + 'changepassword';
 export const BASE_URL_UPDATE_PASSWORD = BASE_URL + 'changepassword';
 
 export const BASE_URL_GEO_GRAPHY = BASE_URL + 'geography';
-export const BASE_URL_GEO_GRAPHY_STATE = 'https://apidev.mahindradealerrise.com/' + 'geography/states';
-export const BASE_URL_GEO_GRAPHY_DISTRICT = 'https://apidev.mahindradealerrise.com/' + 'geography/districts';
-export const BASE_URL_GEO_GRAPHY_TEHSIL = 'https://apidev.mahindradealerrise.com/' + 'geography/tehsils';
-export const BASE_URL_GEO_GRAPHY_CITY = 'https://apidev.mahindradealerrise.com/' + 'geography/cities';
+export const BASE_URL_GEO_GRAPHY_COUNTRY = BASE_URL + 'geography/countries';
+export const BASE_URL_GEO_GRAPHY_STATE = BASE_URL + 'geography/states';
+export const BASE_URL_GEO_GRAPHY_DISTRICT = BASE_URL + 'geography/districts';
+export const BASE_URL_GEO_GRAPHY_TEHSIL = BASE_URL + 'geography/tehsils';
+export const BASE_URL_GEO_GRAPHY_CITY = BASE_URL + 'geography/cities';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';
@@ -31,7 +32,6 @@ export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU = BASE_URL + 'product/skuattribute';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE = BASE_URL + 'product/skuattribute';
-
 
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 

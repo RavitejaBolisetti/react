@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
-import { geoStateDataActions } from 'store/actions/data/geoState';
+import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -23,11 +23,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isDataLoaded = false, isLoading, data },
+            Geo: {
+                State: { isLoaded: isDataLoaded = false, isLoading, data },
+            },
         },
     } = state;
-
-    console.log(state, 'DEER')
 
     const moduleTitle = 'State Master List';
 
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
-    console.log(data, "DATA")
+    console.log(data, 'DATA');
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -88,7 +88,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                console.log(data,'SEARCH');
+                console.log(data, 'SEARCH');
                 const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
@@ -97,8 +97,6 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
-
-
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -253,7 +251,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
     const tableProps = {
         tableColumn: tableColumn,
@@ -296,22 +294,12 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                                         State List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select
-                                            placeholder="Country"
-                                            allowClear
-                                            className={styles.headerSelectField}
-                                        >
+                                        <Select placeholder="Country" allowClear className={styles.headerSelectField}>
                                             <Option value="India">India</Option>
                                         </Select>
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search
-                                            placeholder="Search"
-                                            allowClear
-                                            className={styles.headerSearchField}
-                                            onSearch={onSearchHandle}
-                                            onChange={onChangeHandle}
-                                        />
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
                             </Col>
@@ -324,8 +312,8 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                             </Col>
                         </Row>
                     </div>
-                </Col >
-            </Row >
+                </Col>
+            </Row>
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

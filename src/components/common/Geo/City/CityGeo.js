@@ -12,8 +12,8 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { geoStateDataActions } from 'store/actions/data/geoState';
-import { geoCityDataActions } from 'store/actions/data/geoCity';
+import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoCityDataActions } from 'store/actions/data/geo/city';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
@@ -21,7 +21,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
-import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
+import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 
 const { Search } = Input;
 const { Option } = Select;
