@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
@@ -12,11 +12,12 @@ const { Option } = Select;
 const PinCodeAddEditFormMain = (props) => {
     const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish,geoStateData,geoDistrictData,geoTehsilData,geoCityData,onFinishFailed,stateDropdown,cityDropdown,tehsilDropdown,districtDropdown } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish,geoStateData,geoPindata,geoDistrictData,geoTehsilData,geoCityData,onFinishFailed,stateDropdown,cityDropdown,tehsilDropdown,districtDropdown } = props;
     const [ selectedState, isSelectedState ] = useState('');
-    const [selectedCity, isSelectedCity] = useState('');
-    const [selectedDistrict, isSelectedDistrict] = useState('');
-    const [selectedTehsil, isSelectedTehsil] = useState('');
+    const [show, setShow] = useState([]);
+    const [showCity, setShowCity] = useState([]);
+    const [showTehsil, setShowTehsil] = useState([]);
+    const [city, setPin] = useState([]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -25,19 +26,17 @@ const PinCodeAddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
-    const handleSelectState = (props) =>{
-        isSelectedState(props)
+    const handleSelectState = (e) =>{
+        setShow(geoDistrictData.filter((i)=>i.stateCode === e))
     }
-    const handleSelectCity = (props) => {
-        isSelectedCity(props);
+    const handleSelectDistrict = (e) => {
+        setShowCity(geoCityData.filter((i)=>i.districtCode === e))
     };
-    const handleSelectTehsil = (props) => {
-        isSelectedTehsil(props);
+    const handleSelectTehsil = (e) => {
+        setShowTehsil(geoTehsilData.filter((i)=>i.districtCode === e));
     };
-    const handleSelectDistrict = (props) => {
-        isSelectedDistrict(props);
-    };
-
+   
+    
     
     const viewProps = {
         isVisible: isViewModeVisible,
@@ -50,21 +49,9 @@ const PinCodeAddEditFormMain = (props) => {
         geoDistrictData,
         geoTehsilData,
         geoCityData,
+        geoPindata,
     };
     const [form] = Form.useForm()
-
-    useEffect(() => {
-        form.setFieldsValue();
-    }, [selectedState,form])
-    useEffect(() => {
-        form.setFieldsValue();
-    }, [selectedCity,form])
-    useEffect(() => {
-        form.setFieldsValue();
-    }, [selectedDistrict,form])
-    useEffect(() => {
-        form.setFieldsValue();
-    }, [selectedTehsil,form])
 
    
     return (
@@ -96,20 +83,20 @@ const PinCodeAddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District" initialValue={formData?.controlGroup} name="districtName" rules={[validateRequiredSelectField('District')]}>
+                            <Form.Item label="District" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')}  onChange={handleSelectDistrict}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoDistrictData?.map((item) => (
+                                    {show?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label="City" initialValue={formData?.controlGroup} name="cityName" rules={[validateRequiredSelectField('City')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')}  onChange={handleSelectCity}>
+                        <Form.Item label="City" initialValue={formData?.cityName} name="cityName" rules={[validateRequiredSelectField('City')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')}  onChange={handleSelectTehsil}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoCityData?.map((item) => (
+                                    {showCity?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -119,8 +106,8 @@ const PinCodeAddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        <Form.Item label="Tehsil" initialValue={formData?.controlGroup} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}  onChange={handleSelectTehsil}>
+                        <Form.Item label="Tehsil" initialValue={formData?.tehsilName} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}  >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {geoTehsilData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
@@ -129,7 +116,7 @@ const PinCodeAddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code')]}>
+                            <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code'),validationNumber('Pincode')]}>
                                 <Input placeholder={preparePlaceholderText('PIN code')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>
@@ -143,7 +130,7 @@ const PinCodeAddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.withIn50KmFromGpo} label="Is Locality Under 50Km of GPO" name="withIn50KmFromGpo">
-                                <Switch checkedChildren="Yes" unCheckedChildren="No" />
+                                <Switch checkedChildren="Yes" unCheckedChildren="No"  value={formData?.withIn50KmFromGpo === null || false ? false : true} defaultChecked />
                                 {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>
@@ -152,7 +139,7 @@ const PinCodeAddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name="status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive"  value={formData?.status === null || false ? false : true} defaultChecked/>
                                 {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>

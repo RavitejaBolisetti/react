@@ -96,13 +96,14 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetchCityList,fetchTehsilList,listCityShowLoading,fetchList,listTehsilShowLoading,listPinShowLoading,listStateShowLoading,listStateShowoading,listDistrictShowLoading,fetchStateList,fetchDistrictList, isDistrictLoaded,isPinDataLoaded,isStateDataLoaded,isStateLoading,isDistrictLoading,geoDistrictData,isTehsilLoaded,isTehsilLoading,geoTehsilData,isCityLoaded,isCityLoading,geoCityData,geoPindata,geoStateData,data, saveData, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchDataList,fetchCityList,fetchTehsilList,listCityShowLoading,fetchList,listTehsilShowLoading,listPinShowLoading,listStateShowLoading,listStateShowoading,listDistrictShowLoading,fetchStateList,fetchDistrictList, isDistrictLoaded,isPinDataLoaded,isStateDataLoaded,isStateLoading,isDistrictLoading,geoDistrictData,isTehsilLoaded,isTehsilLoading,geoTehsilData,isCityLoaded,isCityLoading,geoCityData,geoPindata,geoStateData,data, saveData, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     console.log(data,"PINCODEDATA");
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [districtdata,setdistrictdata]=useState();
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [pin, setPin] = useState([]);
 
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
@@ -115,11 +116,13 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [advanceSearch, setAdvanceSearch] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
+    const [rowdata,setrowdata]=useState();
 
    
-
+    
     useEffect(() => {
         if (!isDataLoaded && userId) {
             const onSuccessAction = (res) => {
@@ -137,33 +140,42 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData,isPinDataLoaded]);
+    useEffect(()=>{
+        setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
+
+    },[])
 
     useEffect(() => {
-        if (isDataLoaded && data && userId) {
+        if (geoPindata &&  userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.pinCode) || filterFunction(filterString)(item?.localityName));
+                const filterDataItem = geoPindata?.filter((item) => filterFunction(filterString)(item?.localityName) || filterFunction(filterString)(item?.pinCode));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, userId,data]);
+    }, [filterString, isDataLoaded, userId]);
 
     const handleEditBtn = (record) => {
+        setAdvanceSearchVisible(false);
+        
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = searchData.find((i) => i.districtCode === record.districtCode);
-        console.log('data', data);
-        if (data) {
-            data && setFormData(data);
-            console.log('formData', formData);
+        // const data = searchData.find((i) => i.districtCode === record.districtCode);
+        // console.log('data', data);
+        // if (data) {
+        //     data && setFormData(data);
+        //     console.log('formData', formData);
 
-            setIsFormVisible(true);
-        }
+        //     setIsFormVisible(true);
+        // }
+        // setrowdata(record);
+        setIsFormVisible(true);
+
     };
 
     const handleView = (record) => {
@@ -172,14 +184,21 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = tableData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
+        setAdvanceSearchVisible(false);
+
+        
+        // const data = tableData.find((i) => i.code === record.code);
+        // if (data) {
+        //     data && setFormData(data);
+        //     setIsFormVisible(true);
+        // }
+        setFormData(record);
+
+        setIsFormVisible(true);
 
         setIsReadOnly(true);
     };
+
 
     const tableColumn = [];
     tableColumn.push(
@@ -206,7 +225,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
             title: 'Within 50Km from the GPO',
             dataIndex: 'withIn50KmFromGpo',
             width: '20%',
-            render: () => {
+            render: (record) => {
                 return <Checkbox className={styles.registered}></Checkbox>;
             }
         }),
@@ -245,22 +264,10 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
         }
     );
 
-    const tableData = [
-        {
-            id: '1',
-
-            stateCd: 'Test50',
-
-            stateName: 'Test50',
-
-            gstCode: 'Test50',
-
-            status: 1,
-        },
-    ];
 
     const handleReferesh = () => {
         setRefershData(!refershData);
+        setPin(geoPindata);
     };
 
     const hanndleEditData = (record) => {
@@ -293,8 +300,8 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        let data = { ...values, id: recordId };
+        const recordId = formData?.data || '';
+        let data = { ...values, data: recordId };
         console.log(data);
         const onSuccess = (res) => {
             form.resetFields();
@@ -322,6 +329,8 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
             onSuccess,
         };
 
+        console.log(requestData,'REQDATA')
+
         saveData(requestData);
     };
 
@@ -330,8 +339,9 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
     };
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: geoPindata,
+        tableData: searchData,
     };
+    console.log(pin,'PINDATA')
 
     const formProps = {
         formActionType,
@@ -344,12 +354,12 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
         setFooterEdit,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat('PIN Details'),
+        titleOverride:!isAdvanceSearchVisible? ( (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('PIN Details')):('Advanced Search'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        tableData,
+        tableData:geoPindata,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
@@ -360,7 +370,10 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
         geoTehsilData,
         geoCityData,
         geoPindata,
+        setrowdata,
+        rowdata,
     };
+    
     const viewProps = {
         isVisible: isAdvanceSearchVisible,
         formData,
@@ -399,7 +412,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
                                 </Row>
                             </Col>
 
-                            {tableData?.length ? (
+                            {geoPindata?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
@@ -424,7 +437,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
                                     height: 60,
                                 }}
                                 description={
-                                    !tableData?.length ? (
+                                    !geoPindata?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
@@ -434,7 +447,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,isPinLoading,fetchDataList,fetch
                                     )
                                 }
                             >
-                                {!tableData?.length ? (
+                                {!geoPindata?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>

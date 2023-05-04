@@ -15,12 +15,19 @@ const AdvanceSearchMain = (props) => {
     const { footerEdit, form,setClosePanels, isReadOnly, showSaveBtn, formData,onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed,geoStateData,geoDistrictData,geoTehsilData,geoCityData } = props;
     const disabledProps = { disabled: isReadOnly };
+    const [show, setShow] = useState([]);
+    const [showCity, setShowCity] = useState([]);
+    const [showTehsil, setShowTehsil] = useState([]);
 
-    // const [ selectedState, isSelectedState ] = useState('');
-    // const [selectedCity, isSelectedCity] = useState('');
-    // const [selectedDistrict, isSelectedDistrict] = useState('');
-    // const [selectedTehsil, isSelectedTehsil] = useState('');
-
+    const handleSelectState = (e) =>{
+        setShow(geoDistrictData.filter((i)=>i.stateCode === e))
+    }
+    const handleSelectDistrict = (e) => {
+        setShowCity(geoCityData.filter((i)=>i.districtCode === e))
+    };
+    const handleSelectTehsil = (e) => {
+        setShowTehsil(geoTehsilData.filter((i)=>i.districtCode === e));
+    };
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -89,7 +96,7 @@ const AdvanceSearchMain = (props) => {
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')}>
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {geoStateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
@@ -101,9 +108,9 @@ const AdvanceSearchMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select District" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District')]}>
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('district')} >
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('district')} onChange={handleSelectDistrict} >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoDistrictData?.map((item) => (
+                                    {show?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
@@ -113,13 +120,14 @@ const AdvanceSearchMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Select City" initialValue={formData?.cityName} name="cityName" rules={[validateRequiredSelectField('City')]}>
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('city')} >
+                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('city')} onChange={handleSelectTehsil}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoCityData?.map((item) => (
+                                    {showCity?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
+                            {console.log(geoCityData,'GEOCITY')}
                         </Col>
                     </Row>
                     <Row gutter={16}>
@@ -132,6 +140,7 @@ const AdvanceSearchMain = (props) => {
                                     ))}
                                 </Select>
                             </Form.Item>
+                            {console.log(geoTehsilData,'GEOTEHSIL')}
                         </Col>
                     </Row>
                 </>
