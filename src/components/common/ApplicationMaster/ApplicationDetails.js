@@ -11,7 +11,7 @@ const { Option } = Select;
 const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
-        setSelectedTreeKey(finalFormdata?.applicationDetails.parentApplicationId);
+        setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
 
     const handleChangeLocations = (value) => {

@@ -615,9 +615,9 @@
     margin-top: 10px;
 }
 
-.accordianContainer :global .ant-space-item:last-child .ant-collapse-item-active .ant-card .ant-card-body {
+/* .accordianContainer :global .ant-space-item:last-child .ant-collapse-item-active .ant-card .ant-card-body {
     height: 36px;
-}
+} */
 
 .accordianContainer :global .ant-select-single {
     width: 100%;

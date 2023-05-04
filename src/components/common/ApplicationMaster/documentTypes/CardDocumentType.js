@@ -31,17 +31,23 @@ const CardDocumentType = (prop) => {
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
-    const onUpdate = () => {
-        const newFormData = form.getFieldsValue();
-        setfinalFormdata((prev) => {
-            const newList = prev;
-            const indx = prev?.documentType.findIndex((el) => el?.documentTypeCode === documentTypeCode);
-            newList?.documentType?.splice(indx, 1, { ...newFormData });
-            return { ...prev, documentType: newList?.documentType };
-        });
-        setIsEditing(false);
-        setIsBtnDisabled(false);
-        form.resetFields();
+    const onUpdate = (value) => {
+        console.log('val', value);
+        form.validateFields()
+            .then((newFormData) => {
+                setfinalFormdata((prev) => {
+                    const newList = prev;
+                    const indx = prev?.documentType.findIndex((el) => el?.documentTypeCode === documentTypeCode);
+                    newList?.documentType?.splice(indx, 1, { ...newFormData });
+                    return { ...prev, documentType: newList?.documentType };
+                });
+                setIsEditing(false);
+                setIsBtnDisabled(false);
+                form.resetFields();
+            })
+            .catch((err) => {
+                return;
+            });
     };
 
     const handleDeleteDocType = (val) => {
@@ -119,7 +125,7 @@ const CardDocumentType = (prop) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <DocumentTypesForm termAndConRequired={termAndConRequired} digitalSignatureRequired={digitalSignatureRequired} documentTypeDescription={documentTypeDescription} documentTypeCode={documentTypeCode} form={form} isEditing={isEditing} />
+                        <DocumentTypesForm onFinish={onUpdate} termAndConRequired={termAndConRequired} digitalSignatureRequired={digitalSignatureRequired} documentTypeDescription={documentTypeDescription} documentTypeCode={documentTypeCode} form={form} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>
