@@ -1,6 +1,5 @@
 import React from 'react';
-import { Descriptions, Row, Col } from 'antd';
-import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
+import { Descriptions } from 'antd';
 
 const ViewCityDetailsMain = ({ formData, styles, parameterType }) => {
     const viewProps = {
@@ -13,12 +12,9 @@ const ViewCityDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                   
                     <Descriptions.Item label="City Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="City Name">{formData?.name}</Descriptions.Item>
-                    {/* <Descriptions.Item label="GST State Code">{formData?.gstCode}</Descriptions.Item> */}
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
-                    
                 </Descriptions>
             </>
         </div>
