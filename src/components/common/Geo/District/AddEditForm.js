@@ -13,7 +13,7 @@ const AddEditFormMain = (props) => {
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateData } = props;
 
-    const [selectedState, isSelectedState] = useState('');
+    const [selectedState, isSelectedState] = useState(formData?.stateCode);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -23,8 +23,9 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleSelectState = (props) => {
-        isSelectedState(props);
+    const handleSelectState = (state) => {
+        isSelectedState(state);
+        form.setFieldValue('stateCode', stateData?.find((i) => i?.name === state)?.code);
     };
 
     const viewProps = {
@@ -34,10 +35,6 @@ const AddEditFormMain = (props) => {
     };
 
     const [form] = Form.useForm();
-
-    // useEffect(() => {
-    //     form.setFieldsValue();
-    // }, [selectedState, form]);
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -54,7 +51,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={'UEIW'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item initialValue={selectedState} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>

@@ -80,12 +80,11 @@ export const DistrictGeoBase = (props) => {
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
-    console.log('🚀 ~ file: DistrictGeo.js:83 ~ DistrictGeoBase ~ filterString:', filterString);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
-    const [stateCode, isStateCode] = useState('qw');
+    const [stateCode, isStateCode] = useState();
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
