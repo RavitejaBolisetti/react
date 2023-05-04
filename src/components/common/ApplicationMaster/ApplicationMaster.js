@@ -158,7 +158,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onFinish = (values) => {
-        
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
         if (applicationAction?.length < 1) {
@@ -232,8 +231,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
+        if (finalFormdata?.applicationDetails?.applicationId) {
+            setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
+        }
         setisVisible(false);
+        const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
+        setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+
     };
 
     const myProps = {
