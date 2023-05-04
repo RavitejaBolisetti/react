@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogin, isOpen = false, onOk = () => {}, onCancel = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
+const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogin, isOpen = false, onOk = () => { }, onCancel = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId, isTrue = true }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const canSkip = preLoginData?.passwordStatus?.status === 'A';
@@ -125,14 +125,14 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password*" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="newPassword" rules={[validateRequiredInputField('New Password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                            <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="Enter new password" suffix={passwordSuffix('newPassword')} />
+                                                            <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="New password*" suffix={passwordSuffix('newPassword')} />
                                                         </Form.Item>
                                                         <PasswordStrengthMeter password={password} beforeLogin={true} />
                                                     </Col>
@@ -149,13 +149,13 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                                         if (!value || getFieldValue('newPassword') === value) {
                                                                             return Promise.resolve();
                                                                         }
-                                                                        return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
+                                                                        return Promise.reject(new Error("New Password and Confirm Password don't match!"));
                                                                     },
                                                                 }),
                                                             ]}
                                                             className={styles.inputBox}
                                                         >
-                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Re-enter new password" suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input prefix={<FiLock size={18} />} type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder="Confirm password*" suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>

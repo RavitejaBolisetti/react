@@ -239,8 +239,10 @@
 }
 
 .welcomeUser .userAvatar .userAvatarInside {
-    background-color: #808080;
+    background-color: #E6E6E6;
+    color: #0B0B0C;
     font-size: 16px;
+    font-weight: 500;
     line-height: 30px;
 }
 
@@ -308,6 +310,11 @@
     padding-right: 8px;
 }
 
+.modalIconLogout {
+    color: #ff3e5b;
+    padding-right: 8px;
+}
+
 .mrt6 {
     margin-top: 6px;
 }
@@ -321,8 +328,37 @@
     display: inline;
 }
 
+.webmenuDropDownArrow.dropdownArrow :global .ant-dropdown-open .ant-space .ant-space-item span {
+    transform: rotate(180deg) !important;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
+    padding: 10px;
+    border: 1px solid #0B0B0C;
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
+    margin-top: 16px;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:not(:last-child) {
+    margin-bottom: 4px;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:hover {
+    color: #ff3e5b;
+    background-color: #FFD8DE;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item .ant-dropdown-menu-title-content svg {
+    color: #ff3e5b;
+    vertical-align: sub;
+}
+
 .confirmModal :global .ant-modal-confirm-confirm {
-    width: 316px !important;
+    width: 376px !important;
 }
 
 .confirmModal :global .ant-modal-confirm-title {
@@ -331,15 +367,24 @@
 
 .confirmModal :global .ant-modal-confirm-content {
     text-align: center !important;
+    padding: 20px 0px 10px !important;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-content .ant-modal-close {
+    display: none;
 }
 
 .confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns button {
-    width: auto;
+    width: 48%;
     padding: 4px 16px !important;
     height: 28px !important;
     font-size: 12px !important;
     line-height: 20px !important;
     font-weight: 700;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns .ant-btn-default {
+    height: 36px !important;
 }
 
 @media (min-width: 997px) and (max-width: 1280px) {

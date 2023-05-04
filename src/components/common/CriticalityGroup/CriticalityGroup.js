@@ -144,7 +144,6 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
             setForceFormReset(generateRandomNumber());
             setSelectedRecord({});
             setSuccessAlert(true);
-            fetchData({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -153,6 +152,11 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
+
+        setTimeout(() => {
+            fetchData({ setIsLoading: listShowLoading, userId });
+            
+        }, 2000);
 
         const onError = (message) => {
             onSaveShowLoading(false);
@@ -399,7 +403,7 @@ export const CriticalityGroupMain = ({ moduleTitle, fetchData, saveData, listSho
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         Criticality Group List
                                     </Col>
-                                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                         <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
                                     </Col>
                                 </Row>

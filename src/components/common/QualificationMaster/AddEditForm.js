@@ -57,12 +57,12 @@ const AddEditFormMain = ({ setIsFormVisible, selectedRecord, isFormVisible, isVi
                 <ViewQualificationList {...viewProps} />
             )}
             <Row gutter={20} className={style.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
+                <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
                     <Button danger onClick={onClose}>
                         {!footerEdit ? 'Cancel' : 'Close'}
                     </Button>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
+                <Col xs={24} sm={18} md={18} lg={18} xl={18} className={style.footerBtnRight}>
                     {saveBtn ? (
                         <Button loading={isLoadingOnSave} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                             Save

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Input, Form, Col, Row, Switch, Button } from 'antd';
+import { Input, Form, Col, Row, Switch, Button, Tooltip } from 'antd';
 
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
-import { LANGUAGE_EN } from 'language/en';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { EN } from 'language/en';
 
 import style from 'components/common/Common.module.css';
 
@@ -84,7 +85,6 @@ const AddEditFormMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVis
                 saveDeletedItem && setDeletedItemList([...deletedItemList, { ...saveDeletedItem, isDeleted: 'Y' }]);
             }
         }
-        form.validateFields();
     };
     const validatedDuplicateTime = (field) => (rule, value) => {
         const overlapData = checkOverlap();
@@ -117,25 +117,62 @@ const AddEditFormMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVis
                 <>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="criticalityGroupCode" label="Criticality Group Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                            <Form.Item
+                                name="criticalityGroupCode"
+                                label="Criticality Group Id"
+                                tooltip={{
+                                    title: 'Tooltip with customize icon',
+                                    icon: <AiOutlineInfoCircle size={13} />,
+                                }}
+                                rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}
+                            >
                                 <Input maxLength={6} placeholder={preparePlaceholderText('id')} {...codeDisabledProp} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item name="criticalityGroupName" label="Criticality Group Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
+                            <Form.Item
+                                name="criticalityGroupName"
+                                label="Criticality Group Name"
+                                tooltip={{
+                                    title: 'Tooltip with customize icon',
+                                    icon: <AiOutlineInfoCircle size={13} />,
+                                }}
+                                rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}
+                            >
                                 <Input placeholder={preparePlaceholderText('name')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="criticalityDefaultGroup" label="Default Group">
+                            <Form.Item
+                                labelAlign="left"
+                                wrapperCol={{ span: 24 }}
+                                valuePropName="checked"
+                                name="criticalityDefaultGroup"
+                                label="Default Group"
+                                tooltip={{
+                                    title: 'Tooltip with customize icon',
+                                    icon: <AiOutlineInfoCircle size={13} />,
+                                }}
+                            >
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status" valuePropName="checked">
+                            <Form.Item
+                                initialValue={true}
+                                labelAlign="left"
+                                wrapperCol={{ span: 24 }}
+                                name="activeIndicator"
+                                label="Status"
+                                tooltip={{
+                                    title: 'Tooltip with customize icon',
+                                    icon: <AiOutlineInfoCircle size={13} />,
+                                }}
+                                valuePropName="checked"
+                            >
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                             </Form.Item>
                         </Col>
@@ -147,12 +184,12 @@ const AddEditFormMain = ({ setIsViewModeVisible, setIsFormVisible, isViewModeVis
                 <ViewCriticalityGroup {...viewProps} {...cardProps} />
             )}
             <Row gutter={20} className={style.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
+                <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>
                     <Button danger onClick={onClose}>
                         {!footerEdit ? 'Cancel' : 'Close'}
                     </Button>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
+                <Col xs={24} sm={18} md={18} lg={18} xl={18} className={style.footerBtnRight}>
                     {saveBtn ? (
                         <Button loading={isLoading} disabled={!formBtnDisable} onClick={() => setsaveclick(true)} form="myForm" key="submit" htmlType="submit" type="primary">
                             Save
