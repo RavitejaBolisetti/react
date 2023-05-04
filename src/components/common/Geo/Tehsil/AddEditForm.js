@@ -45,7 +45,8 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" initialValue={formData?.controlGroup} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
+                        {/* name="stateName" */}
+                            <Form.Item label="State Name" initialValue={formData?.controlGroup}  rules={[validateRequiredSelectField('State Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
@@ -54,24 +55,25 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={'JH001'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item initialValue={'07'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={16}>
+                    {/* name="districtName" */}
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District Name')]}>
+                            <Form.Item label="District Name" initialValue={formData?.districtName}  rules={[validateRequiredSelectField('District Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}>
                                     {districtData?.map((item) => (
-                                        <Option value={item?.districtCode}>{item?.districtName}</Option>
+                                        <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={'JH001'} label="District Code" name="districtCode" rules={[validateRequiredInputField('District Code')]}>
+                            <Form.Item initialValue={'D00192'} label="District Code" name="districtCode" rules={[validateRequiredInputField('District Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -79,12 +81,12 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="tehsilCode" rules={[validateRequiredInputField('Tehsil Code')]}>
+                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="Tehsil Name" name="tehsilName" rules={[validateRequiredInputField('Tehsil Name')]}>
+                            <Form.Item initialValue={formData?.name} label="Tehsil Name" name="name" rules={[validateRequiredInputField('Tehsil Name')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
                             </Form.Item>
                         </Col>
@@ -92,7 +94,8 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Tehsil Category" initialValue={formData?.controlGroup} name="tehsilCategory" rules={[validateRequiredSelectField('Tehsil Category')]}>
+                        {/* name="tehsilCategory" */}
+                            <Form.Item label="Tehsil Category" initialValue={formData?.tehsilCategory} rules={[validateRequiredSelectField('Tehsil Category')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil Category')}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {STATE_DROPDOWN?.map((item) => (

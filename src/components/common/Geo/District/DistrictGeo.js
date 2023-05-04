@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, '');
+    console.log(data, 'suckIt');
 
     const moduleTitle = 'District Details';
 
@@ -114,7 +114,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         setFooterEdit(false);
         setIsReadOnly(false);
         //console.log(searchData,'searchGeo')
-        const data = searchData.find((i) => i.districtCode === record.districtCode);
+        const data = searchData.find((i) => i.code === record.code);
         // console.log('data', data);
         if (data) {
             data && setFormData(data);
@@ -128,7 +128,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = searchData.find((i) => i.districtCode === record.districtCode);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
@@ -154,14 +154,14 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
 
         tblPrepareColumns({
             title: 'District Code',
-            dataIndex: 'districtCode',
-           // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
+            dataIndex: 'code',
+            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'District Name',
-            dataIndex: 'districtName',
+            dataIndex: 'name',
             width: '20%',
         }),
 
@@ -269,11 +269,13 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
             onSuccess,
         };
 
+        console.log(requestData,'JAAAAAn');
+
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const tableProps = {
@@ -316,48 +318,36 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{display:'flex',justifyContent:'space-between'}}>
-                            <Row xs={24} sm={24} md={24} lg={60} xl={60}>
+                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            District List
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            />
-                                        </Col>
-                                        {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            
-                                        </Col> */}
-                                    </div>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
+                                        District List
+                                    </Col>
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                        <Select
+                                            placeholder="State"
+                                            allowClear
+                                            className={styles.headerSelectField}
+                                            onChange={handleSelectState}
+                                        >
+                                            {stateData?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                        <Search
+                                            placeholder="Search"
+                                            allowClear
+                                            className={styles.headerSearchField}
+                                            onSearch={onSearchHandle}
+                                            onChange={onChangeHandle}
+                                        />{' '}
+                                    </Col>
                                 </Row>
-
-                                <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            State
-                                            
-                                            <Select placeholder="Select" style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
-                                                onChange={handleSelectState}
-                                                //value={stateCode}
-                                            >
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {stateData?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Col>
-                                    </div>
-                                </Row>
-                            </Row>
-                            {tableData?.length ? (
+                            </Col>
+                            {data?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
