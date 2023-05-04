@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
-// import { bindActionCreators } from 'redux';
-// import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { STATE_DROPDOWN } from './InputType';
+
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -50,10 +48,6 @@ const mapStateToProps = (state) => {
         isDistrictDataLoaded,
         isDistrictLoading,
         districtData,
-        // isDistrictLoaded,
-        // isDistrictLoading,
-        // districtData,
-        //configData: configData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -63,12 +57,9 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             showGlobalNotification,
-
-            /** For State DropDown **/
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
 
-            /** For District DropDown **/
             fetchDistrictList: geoDistrictDataActions.fetchList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
 
@@ -82,7 +73,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData }) => {
     const [form] = Form.useForm();
-    const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
@@ -101,7 +91,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     const [stateFilter, setStateFilter] = useState('');
     const [districtFilter, setDistrictFilter] = useState('');
@@ -163,20 +152,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setIsReadOnly(true);
     };
 
-    console.log(data, 'QWERTTYYUU');
-
-    // const renderTableColumnName = (record, key, type) => {
-    //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    // };
-
-    // let newArray = obj.Students.filter(function (el)
-    // {
-    //   return el.Age >=15 &&
-    //          el.RollNumber <= 200 &&
-    //          el.Marks >= 80 ;
-    // }
-    // );
-
     const tableColumn = [];
 
     tableColumn.push(
@@ -190,20 +165,12 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         tblPrepareColumns({
             title: 'Tehsil Code',
             dataIndex: 'code',
-            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Tehsil Name',
             dataIndex: 'name',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Tehsil Category',
-            dataIndex: 'tehsilCategory',
-            //render: (text, record, value) => renderTableColumnName(record, 'configurableParameterType', PARAM_MASTER.CFG_PARAM_TYPE.id),
             width: '20%',
         }),
 
@@ -239,10 +206,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setRefershData(!refershData);
     };
 
-    const onChange = (e) => {
-        setFilterDistrict(districtData.filter((i) => i.stateCode === e));
-    };
-
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
@@ -250,7 +213,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
-
     };
 
     const handleAdd = () => {
@@ -274,22 +236,13 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setStateFilter(newArray);
     };
 
-    const handleSelectDistrict = (value) => {
-        let newArray = stateData.filter(function (el) {
-            return el.code === value.code;
-        });
-        setDistrictFilter(newArray);
-    };
-
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
 
     const onFinish = (values) => {
-
         const recordId = formData?.id || '';
         let data = { ...values };
-        //id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD')
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -317,19 +270,16 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
             onSuccess,
         };
 
-        // console.log(requestData,'pranjal')
-
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const tableProps = {
         tableColumn: tableColumn,
         tableData: data,
-        //searchData,
     };
 
     const formProps = {
@@ -350,7 +300,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
@@ -363,8 +312,6 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         setDistrictFilter,
     };
 
-    console.log(stateFilter, 'valuevalue');
-
     return (
         <>
             <Row gutter={20}>
@@ -376,38 +323,22 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                     <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
                                         Tehsil List
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
-                                        <Select
-                                            placeholder="State"
-                                            allowClear
-                                            className={styles.headerSelectField}
-                                            onChange={handleSelectState}
-                                        >
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleSelectState}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
-                                        <Select
-                                            placeholder="District"
-                                            allowClear
-                                            className={styles?.headerSelectField}
-                                            onChange={handleSelectState}
-                                        >
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleSelectState}>
                                             {districtData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}  >
-                                        <Search
-                                            placeholder="Search"
-                                            allowClear
-                                            className={styles.headerSearchField}
-                                            onSearch={onSearchHandle}
-                                            onChange={onChangeHandle}
-                                        />
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
                             </Col>

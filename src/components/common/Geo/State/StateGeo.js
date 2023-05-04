@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
+
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
+
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -24,15 +27,22 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
                 State: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
 
+    console.log('countryData', countryData);
+
     const moduleTitle = 'State Master List';
 
     let returnValue = {
         userId,
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+
         isDataLoaded,
         data,
         isLoading,
@@ -45,6 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchCountryList: geoCountryDataActions.fetchList,
+            countryShowLoading: geoCountryDataActions.listShowLoading,
+
             fetchList: geoStateDataActions.fetchList,
             saveData: geoStateDataActions.saveData,
             listShowLoading: geoStateDataActions.listShowLoading,
@@ -54,8 +67,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
-    console.log(data, 'DATA');
+export const StateGeoBase = (props) => {
+    const { data, isLoading, saveData, fetchList, userId, typeData, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, fetchCountryList, countryShowLoading } = props;
+
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -73,7 +88,6 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     useEffect(() => {
         if (userId) {
@@ -81,14 +95,16 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    }, [userId, isDataCountryLoaded, refershData]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                console.log(data, 'SEARCH');
                 const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
@@ -105,11 +121,8 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = searchData.find((i) => i.code === record.code);
-        console.log('data', data);
         if (data) {
             data && setFormData(data);
-            console.log('formData', formData);
-
             setIsFormVisible(true);
         }
     };
@@ -276,11 +289,13 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
         isFormBtnActive,
         setFormBtnActive,
         tableData: searchData,
-        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
     };
     return (
         <>
@@ -294,8 +309,10 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                                         State List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select placeholder="Country" allowClear className={styles.headerSelectField}>
-                                            <Option value="India">India</Option>
+                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                            {countryData?.map((item) => (
+                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                            ))}
                                         </Select>
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>

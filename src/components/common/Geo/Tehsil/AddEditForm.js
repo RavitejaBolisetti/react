@@ -1,18 +1,15 @@
 import React from 'react';
-import { Col, Input, Form, Row, Select, Button, Switch, DatePicker } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
-import { STATE_DROPDOWN } from './InputType';
 import { ViewTehsilDetails } from './ViewTehsilDetails';
-import dayjs from 'dayjs';
 
 const { Option } = Select;
-// const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
+    const { hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, stateData, districtData, stateFilter, setStateFilter, setDistrictFilter, districtFilter } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
@@ -28,13 +25,12 @@ const AddEditFormMain = (props) => {
         setStateFilter(props);
     };
 
-    const handleDistrictChange = (props) =>{
-        setDistrictFilter(props)
-    }
+    const handleDistrictChange = (props) => {
+        setDistrictFilter(props);
+    };
 
     const viewProps = {
         isVisible: isViewModeVisible,
-        //setClosePanels,
         formData,
         styles,
     };
@@ -45,11 +41,8 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {/* name="stateName" */}
                             <Form.Item label="State Name" initialValue={formData?.controlGroup} rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')}
-                                    onChange={handleStateChange}
-                                >
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -64,12 +57,9 @@ const AddEditFormMain = (props) => {
                     </Row>
 
                     <Row gutter={16}>
-                        {/* name="districtName" */}
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District Name" initialValue={formData?.districtName} rules={[validateRequiredSelectField('District Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}
-                                    onChange={handleDistrictChange}
-                                >
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
                                     {districtData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -96,30 +86,10 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
 
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {/* name="tehsilCategory" */}
-                            <Form.Item label="Tehsil Category" initialValue={formData?.tehsilCategory} rules={[validateRequiredSelectField('Tehsil Category')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil Category')}>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {STATE_DROPDOWN?.map((item) => (
-                                        <Option value={item?.KEY}>{item?.TITLE}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.dateOfRegistertion ? dayjs(formData?.dateOfRegistertion, 'YYYY-MM-DD') : ''} label="Included On" name={''} rules={[validateRequiredInputField('Included On Date')]}>
-                                <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} className={styles.inputBox} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name="status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
-                                {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>
                     </Row>

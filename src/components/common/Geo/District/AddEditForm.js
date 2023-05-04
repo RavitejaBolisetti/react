@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
@@ -8,14 +8,12 @@ import { ViewDistrictDetails } from './ViewDistrictDetails';
 
 const { Option } = Select;
 
-
 const AddEditFormMain = (props) => {
-    const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
+    const { hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateData } = props;
 
-    const [ selectedState, isSelectedState ] = useState('');
-
+    const [selectedState, isSelectedState] = useState('');
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -25,25 +23,21 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleSelectState = (props) =>{
-        isSelectedState(props)
-    }
+    const handleSelectState = (props) => {
+        isSelectedState(props);
+    };
 
     const viewProps = {
         isVisible: isViewModeVisible,
-        //setClosePanels,
         formData,
         styles,
     };
 
-    const [form] = Form.useForm()
+    const [form] = Form.useForm();
 
-    useEffect(() => {
-        form.setFieldsValue();
-    }, [selectedState,form])
-
-
-    // console.log(formData,'selectedState')
+    // useEffect(() => {
+    //     form.setFieldsValue();
+    // }, [selectedState, form]);
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -51,11 +45,9 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        {/* formData?.stateName */}
+                            {/* formData?.stateName */}
                             <Form.Item label="State Name" initialValue={formData?.stateName} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect("State Name")}
-                                    onChange={handleSelectState}
-                                >
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleSelectState}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {stateData?.map((item) => (
                                         <Option value={item?.name}>{item?.name}</Option>
@@ -64,7 +56,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={"UEIW"} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item initialValue={'UEIW'} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>

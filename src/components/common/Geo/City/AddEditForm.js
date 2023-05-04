@@ -1,22 +1,18 @@
 import React from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, Switch, DatePicker } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { STATE_DROPDOWN } from '../Tehsil/InputType';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { ViewCityDetails } from './ViewCityDetails';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, configData, parameterType, setParameterType, hanndleEditData, districtData,setSaveAndAddNewBtnClicked,statedata,show,setShow} = props;
-    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, setisViewModeVisible,cityData } = props;
+    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, statedata, show, setShow } = props;
+    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
     const disabledProps = { disabled: isReadOnly };
 
@@ -28,17 +24,6 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleControlChange = (control, e) => {
-        const controlData = configData?.find((i) => i.controlId === control);
-        form.setFieldsValue({
-            parameterType: controlData?.parameterType,
-        });
-    };
-
-    const changeSelectOptionHandler = (event) => {
-        setParameterType(event);
-    };
-
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,
@@ -47,19 +32,17 @@ const AddEditFormMain = (props) => {
     };
 
     const onChange = (e) => {
-        setShow(districtData.filter((i)=>i.stateCode === e));
+        setShow(districtData.filter((i) => i.stateCode === e));
     };
 
-console.log(formData)
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name"  name="stateName" rules={[validateRequiredSelectField('State Name')]}>
+                            <Form.Item label="State Name" name="stateName" rules={[validateRequiredSelectField('State Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={onChange}>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {statedata?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -75,7 +58,7 @@ console.log(formData)
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name"name="districtName" rules={[validateRequiredSelectField('District Name')]}>
+                            <Form.Item label="District Name" name="districtName" rules={[validateRequiredSelectField('District Name')]}>
                                 <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}>
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                     {show?.map((item) => (
@@ -94,12 +77,12 @@ console.log(formData)
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City Code" initialValue={formData?.code} name="code" rules={[validateRequiredInputField('City Code')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={ isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City Name" name="name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={  isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>
                     </Row>

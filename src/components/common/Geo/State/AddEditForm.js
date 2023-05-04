@@ -1,20 +1,21 @@
 import React from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, Switch, DatePicker } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
+import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
+import { validateRequiredInputField, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewStateDetails } from './ViewStateDetails';
+import { withDrawer } from 'components/withDrawer';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
+    const { hanndleEditData, setSaveAndAddNewBtnClicked } = props;
+    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { isDataCountryLoaded, countryData } = props;
+
     const disabledProps = { disabled: isReadOnly };
 
     const handleFormValueChange = () => {
@@ -23,17 +24,6 @@ const AddEditFormMain = (props) => {
 
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
-    };
-
-    const handleControlChange = (control, e) => {
-        const controlData = configData?.find((i) => i.controlId === control);
-        form.setFieldsValue({
-            parameterType: controlData?.parameterType,
-        });
-    };
-
-    const changeSelectOptionHandler = (event) => {
-        setParameterType(event);
     };
 
     const viewProps = {
@@ -49,9 +39,11 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.countryCode} label="Country" name="countryCode" rules={[validateRequiredInputField('Country')]}>
-                                <Select placeholder="Select" showSearch allowClear>
-                                    <Option value='IND'>India</Option>
+                            <Form.Item initialValue={formData?.countryCode} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                    {countryData?.map((item) => (
+                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -66,7 +58,7 @@ const AddEditFormMain = (props) => {
 
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">
+                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateAlphanumericWithSpace('State Name')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} {...disabledProps} />
                             </Form.Item>
                         </Col>

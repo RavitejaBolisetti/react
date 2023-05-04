@@ -41,10 +41,6 @@ const mapStateToProps = (state) => {
         isStateDataLoaded,
         isStateLoading,
         stateData,
-        // isDistrictLoaded,
-        // isDistrictLoading,
-        // districtData,
-        //configData: configData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -86,7 +82,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     const [stateCode, isStateCode] = useState('qw');
 
@@ -119,9 +114,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        //console.log(searchData,'searchGeo')
         const data = searchData.find((i) => i.code === record.code);
-        // console.log('data', data);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -137,16 +130,11 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
-            //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
 
         setIsReadOnly(true);
     };
-
-    // const renderTableColumnName = (record, key, type) => {
-    //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    // };
 
     const tableColumn = [];
 
@@ -161,7 +149,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         tblPrepareColumns({
             title: 'District Code',
             dataIndex: 'code',
-            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
             width: '15%',
         }),
 
@@ -170,13 +157,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
             dataIndex: 'name',
             width: '20%',
         }),
-
-        // tblPrepareColumns({
-        //     title: 'GST District Code',
-        //     dataIndex: 'configurableParameterType',
-        //     render: (text, record, value) => renderTableColumnName(record, 'configurableParameterType', PARAM_MASTER.CFG_PARAM_TYPE.id),
-        //     width: '20%',
-        // }),
 
         tblPrepareColumns({
             title: 'Status',
@@ -276,17 +256,17 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
             onSuccess,
         };
 
-        console.log(requestData,'JAAAAAn');
+        console.log(requestData, 'JAAAAAn');
 
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onChange2 = (e) => {
-        setFilterData([]); 
+        setFilterData([]);
         setFilterData(data.filter((i) => i.stateCode === e));
     };
 
@@ -313,7 +293,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
@@ -335,25 +314,14 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
                                         District List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select
-                                            placeholder="State"
-                                            allowClear
-                                            className={styles.headerSelectField}
-                                            onChange={handleSelectState,onChange2}
-                                        >
+                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={(handleSelectState, onChange2)}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search
-                                            placeholder="Search"
-                                            allowClear
-                                            className={styles.headerSearchField}
-                                            onSearch={onSearchHandle}
-                                            onChange={onChangeHandle}
-                                        />{' '}
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />{' '}
                                     </Col>
                                 </Row>
                             </Col>
@@ -417,7 +385,5 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         </>
     );
 };
-
-// export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);
 
 export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);

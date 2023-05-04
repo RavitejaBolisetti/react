@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import style from 'components/common/ProductHierarchy/producthierarchy.module.css';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
@@ -30,9 +26,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isDataLoaded = false, isLoading, data: statedata },
-            GeoCity: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
-            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isDistrictLoading, data: districtData },
+            Geo: {
+                State: { isLoaded: isDataLoaded = false, isLoading, data: statedata },
+                City: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
+                District: { isLoaded: isDistrictDataLoaded = false, data: districtData },
+            },
         },
     } = state;
 
@@ -84,11 +82,9 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
-    //const [districtdata,setDistrictData] = useState([];)
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
 
     useEffect(() => {
         if (userId) {
@@ -274,7 +270,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: (city.length!=0) ? city : cityData,
+        tableData: city.length != 0 ? city : cityData,
     };
 
     const formProps = {
@@ -300,7 +296,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         isFormBtnActive,
         setFormBtnActive,
         tableData: cityData,
-        setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
