@@ -120,7 +120,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.stateCode) || filterFunction(filterString)(item?.districtName));
+                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));

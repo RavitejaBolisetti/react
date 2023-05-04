@@ -311,7 +311,7 @@ export const StateGeoBase = ({ moduleTitle, data, fetchDataList, isLoading, save
                                             className={styles.headerSearchField}
                                             onSearch={onSearchHandle}
                                             onChange={onChangeHandle}
-                                        />{' '}
+                                        />
                                     </Col>
                                 </Row>
                             </Col>
