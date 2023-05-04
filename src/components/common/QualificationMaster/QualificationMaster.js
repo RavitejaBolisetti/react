@@ -188,7 +188,6 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
             form.resetFields();
             setSelectedRecord({});
             setSuccessAlert(true);
-            fetchList({ setIsLoading: listShowLoading, userId });
             if (saveclick === true) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -197,6 +196,10 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
+
+        setTimeout(() => {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }, 2000);
 
         const onError = (message) => {
             onSaveShowLoading(false);
@@ -215,7 +218,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleAdd = () => {
@@ -321,7 +324,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         saveandnewclick,
         setIsFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
-        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id  ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? 'View ' : selectedRecord?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         selectedRecord,
         formBtnDisable,
         saveAndSaveNew,
@@ -357,7 +360,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
                                     <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
                                         Qualification List
                                     </Col>
-                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
+                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                         <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
                                     </Col>
                                 </Row>
