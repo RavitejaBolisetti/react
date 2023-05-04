@@ -358,7 +358,7 @@
 }
 
 .confirmModal :global .ant-modal-confirm-confirm {
-    width: 316px !important;
+    width: 376px !important;
 }
 
 .confirmModal :global .ant-modal-confirm-title {
@@ -367,6 +367,7 @@
 
 .confirmModal :global .ant-modal-confirm-content {
     text-align: center !important;
+    padding: 20px 0px 10px !important;
 }
 
 .confirmModal :global .ant-modal-confirm .ant-modal-content .ant-modal-close {

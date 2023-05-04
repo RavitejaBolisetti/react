@@ -139,7 +139,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const updatePasswordStatusInfo = (data) => {
@@ -214,7 +214,7 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <Form.Item name="userId" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)*" />}
+                                                            {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} placeholder="User ID (MILE ID.Parent ID)*" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
