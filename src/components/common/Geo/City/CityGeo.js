@@ -37,7 +37,6 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'City Master List';
-    console.log('city', state);
     let returnValue = {
         userId,
         isDataLoaded,
@@ -76,7 +75,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [show, setShow] = useState([]);
-    const [city, setCity] = useState(cityData);
+    const [city, setCity] = useState([]);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
@@ -100,6 +99,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
             fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
+           
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -122,7 +122,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = cityData.find((i) => i.id === record.id);
+        const data = cityData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
 
@@ -136,7 +136,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = cityData.find((i) => i.id === record.id);
+        const data = cityData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -283,6 +283,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         tableData: city,
     };
 
+
     const formProps = {
         formActionType,
         setFormActionType,
@@ -307,6 +308,10 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         showSaveBtn,
         saveAndAddNewBtnClicked,
     };
+
+    // useEffect( () => {
+    //     setCity();
+    // }, [city] )
 
     return (
         <>
@@ -344,7 +349,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7} >
+                                    <Col xs={24}sm={12} md={6} lg={6} xl={6}  >
                                         <Search
                                             placeholder="Search"
                                             allowClear
