@@ -270,7 +270,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
-            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
             setFormBtnDisable(false);
             if (saveclick === true) {
                 setIsFormVisible(false);
@@ -281,6 +280,12 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
             }
             forceUpdate();
         };
+
+        setTimeout(() => {
+            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
+            
+        }, 2000);
+
         const onError = (message) => {
             onSaveShowLoading(false);
             showGlobalNotification({ message, placement: 'bottomRight' });
