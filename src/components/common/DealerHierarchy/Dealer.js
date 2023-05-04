@@ -273,8 +273,8 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         viewTitle,
     };
 
-    const leftCol = dealerHierarchyData.length > 0 ? 16 : 24;
-    const rightCol = dealerHierarchyData.length > 0 ? 8 : 24;
+    const leftCol = dealerHierarchyData?.length > 0 ? 16 : 24;
+    const rightCol = dealerHierarchyData?.length > 0 ? 8 : 24;
 
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
@@ -300,7 +300,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {dealerHierarchyData.length <= 0 ? (
+                        {dealerHierarchyData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}

@@ -316,8 +316,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setDocumentTypesList,
         cardBtmDisableAction,
     };
-    const leftCol = manufacturerAdminHierarchyData.length > 0 ? 16 : 24;
-    const rightCol = manufacturerAdminHierarchyData.length > 0 ? 8 : 24;
+    const leftCol = manufacturerAdminHierarchyData?.length > 0 ? 16 : 24;
+    const rightCol = manufacturerAdminHierarchyData?.length > 0 ? 8 : 24;
 
     const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
@@ -359,7 +359,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     {/* <FaAngleUp className={styles.buttonIcon} /> */}
                                     Upload
                                 </Button>
-                                {manufacturerAdminHierarchyData.length > 0 && (
+                                {manufacturerAdminHierarchyData?.length > 0 && (
                                     <Col className={styles.buttonHeadingContainer} xs={5} sm={5} md={5} lg={5} xl={5}>
                                         <Dropdown
                                             menu={{
@@ -378,7 +378,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {manufacturerAdminHierarchyData.length <= 0 ? (
+                        {manufacturerAdminHierarchyData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}

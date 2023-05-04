@@ -29,7 +29,7 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
     const [Macid, setMacid] = useState();
-    
+
     const [openAccordian, setOpenAccordian] = useState(1);
     const [disableadd, setdisableadd] = useState(false);
 
@@ -87,6 +87,8 @@ const AddEditFormMain = (props) => {
 
     const viewProps = {
         isVisible: isViewModeVisible,
+        handleCollapse,
+        openAccordian,
         setClosePanels,
         finalFormdata,
         DealerData,
@@ -94,6 +96,8 @@ const AddEditFormMain = (props) => {
         styles,
         isViewModeVisible,
         AccessMacid,
+        DealerSearchvalue,
+        productHierarchyData,
     };
 
     return (
@@ -149,7 +153,7 @@ const AddEditFormMain = (props) => {
                                     },
                                 ]}
                             >
-                                <Input onChange={(event) => setMacid(event.target.value)}  minLength={14} maxLength={14} placeholder={preparePlaceholderText('MAC id')} />
+                                <Input onChange={(event) => setMacid(event.target.value)} minLength={14} maxLength={14} placeholder={preparePlaceholderText('MAC id')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

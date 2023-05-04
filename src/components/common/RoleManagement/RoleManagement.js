@@ -398,7 +398,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                             {/*code to be changed once API is integrated */}
                             {true ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger />
+                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger aria-label="fa-ref" />
 
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add New Role

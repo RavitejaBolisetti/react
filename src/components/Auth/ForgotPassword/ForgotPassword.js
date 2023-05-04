@@ -68,7 +68,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
     const onError = (message) => {
         showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
-        if (otpInput.length === 6) {
+        if (otpInput?.length === 6) {
             setCounter(0);
         }
         setInValidOTP(true);

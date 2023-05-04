@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, ProductHierarchyPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, BranchDealerMappingPage, UserManagementPage, UserManagementManufacturerPage } from 'pages/common';
+import { GeoPage,CityGeoPage,ProductHierarchyPage,UserManagementPage,UserManagementManufacturerPage, ProductMasterPage, StateGeoPage,HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage } from 'pages/common';
 import { LoginPage } from 'pages/auth';
 
 import * as routing from 'constants/routing';
@@ -12,7 +12,6 @@ import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 
 import { CMSPage } from 'pages/cms';
-
 
 export const AuthenticatedUserPage = () => {
     return (
@@ -27,7 +26,11 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT} element={<UserManagementPage />} />
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
-            
+
+            <Route path={routing.ROUTING_COMMON_SATE_GEO} element={<StateGeoPage />} />
+            <Route path={routing.ROUTING_COMMON_CITY_GEO} element={<CityGeoPage />} />
+            <Route path={routing.ROUTING_COMMON_DISTRICT_GEO} element={<DistrictGeoPage />} />
+            <Route path={routing.ROUTING_COMMON_TEHSIL_GEO} element={<TehsilGeoPage />} />
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
@@ -37,7 +40,7 @@ export const AuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
-            <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage/>}/>
+            <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />

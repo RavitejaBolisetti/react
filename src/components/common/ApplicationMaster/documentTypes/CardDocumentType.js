@@ -19,14 +19,15 @@ const CardDocumentType = (prop) => {
         };
     }, []);
 
-    const onEdit = (values) => {
+    // on Click edit button sets form fields
+    const onEdit = (id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode) => {
         form.setFieldsValue({
             id,
             termAndConRequired,
             digitalSignatureRequired,
             documentTypeDescription,
             documentTypeCode,
-            status: values?.status,
+            status: status,
         });
         setIsEditing(true);
         setIsBtnDisabled(true);

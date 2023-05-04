@@ -194,6 +194,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleAdd = () => {
+        setIsFormVisible(false);
         setIsFormVisible(true);
     };
 
@@ -283,7 +284,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setSelectedTreeSelectKey,
         handleAttributeChange,
         isVisible: isFormVisible,
-        onCloseAction: () => setIsFormVisible(false),
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
         handleResetBtn,
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),

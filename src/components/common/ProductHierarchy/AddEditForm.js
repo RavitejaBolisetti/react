@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
@@ -126,7 +126,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
+                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description'), validateAlphanumericWithSpaceHyphenPeriod('short description')]}>
                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -134,14 +134,14 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
+                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description'), validateAlphanumericWithSpaceHyphenPeriod('long description')]}>
                             <TextArea rows={2} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formData?.active} label="Status" name="active">
-                            <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
+                            <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -160,7 +160,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
 
-                {showProductAttribute === 'Product SKU' ? (
+                {showProductAttribute == 'Product SKU' ? (
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
                             <ProductAttributeAddEditForm {...attributeFormProps} />
@@ -168,7 +168,6 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                 ) : null}
-                
             </Form>
         </>
     );
