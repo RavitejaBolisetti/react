@@ -75,7 +75,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [show, setShow] = useState([]);
-    const [city, setCity] = useState([]);
+    const [city, setCity] = useState(cityData);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
@@ -280,20 +280,25 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: city,
+        tableData: (city.length!=0) ? city : cityData,
     };
 
 
     const formProps = {
         formActionType,
+        statedata,
+        show,
+        setShow,
         setFormActionType,
         setIsViewModeVisible,
         isViewModeVisible,
         isReadOnly,
         formData,
         footerEdit,
+        districtData,
         setFooterEdit,
         typeData,
+        cityData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
         titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat('City Details'),
