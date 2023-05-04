@@ -286,13 +286,13 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     };
 
     const onChange2 = (e) => {
-        setFilterData([]);
+        setFilterData([]); 
         setFilterData(data.filter((i) => i.stateCode === e));
     };
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: filterData,
+        tableData: filterData.length === 0 ? data : filterData,
     };
 
     const formProps = {
