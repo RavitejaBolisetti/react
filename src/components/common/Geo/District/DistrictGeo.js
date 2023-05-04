@@ -181,16 +181,12 @@ export const DistrictGeoBase = (props) => {
             width: '8%',
             render: (record) => [
                 <Space wrap>
-                    {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                            <FiEdit2 />
-                        </Button>
-                    }
-                    {
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                            <FaRegEye />
-                        </Button>
-                    }
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
+                        <FiEdit2 />
+                    </Button>
+                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
+                        <FaRegEye />
+                    </Button>
                 </Space>,
             ],
         }
@@ -237,7 +233,7 @@ export const DistrictGeoBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const recordId = formData?.code || '';
         let data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();

@@ -228,7 +228,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const recordId = formData?.code || '';
         let data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();

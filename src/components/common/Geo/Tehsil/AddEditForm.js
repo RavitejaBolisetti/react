@@ -112,7 +112,7 @@ const AddEditFormMain = (props) => {
                         </Button>
                     )}
 
-                    {!formData?.id && (
+                    {!formData?.code && (
                         <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>

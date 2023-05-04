@@ -243,7 +243,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
+        const recordId = formData?.code || '';
         let data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
@@ -296,7 +296,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         typeData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
