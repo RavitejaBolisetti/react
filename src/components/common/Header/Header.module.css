@@ -358,7 +358,7 @@
 }
 
 .confirmModal :global .ant-modal-confirm-confirm {
-    width: 316px !important;
+    width: 376px !important;
 }
 
 .confirmModal :global .ant-modal-confirm-title {
@@ -380,6 +380,10 @@
     font-size: 12px !important;
     line-height: 20px !important;
     font-weight: 700;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns .ant-btn-default {
+    height: 36px !important;
 }
 
 @media (min-width: 997px) and (max-width: 1280px) {

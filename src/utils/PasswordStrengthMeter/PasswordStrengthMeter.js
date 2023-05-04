@@ -64,7 +64,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     };
 
     const infoText = (
-        <div>
+        <div className={styles.tooltipDesign}>
             <span>Password must include:</span>
             <ul>
                 <li>Have at least 1 uppercase</li>
