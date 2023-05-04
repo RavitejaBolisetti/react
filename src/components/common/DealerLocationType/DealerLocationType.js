@@ -368,7 +368,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
                                 <Row gutter={20}>
                                     <div className={styles.searchBox}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            CountryType List
+                                            Country Type List
                                             <Search
                                                 placeholder="Search"
                                                 style={{
@@ -442,7 +442,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
                                 description={
                                     !configData?.length ? (
                                         <span>
-                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New District Details"</span>
+                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New Dealer Location Type"</span>
                                             <br />
                                             using below button
                                         </span>
