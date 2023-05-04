@@ -26,9 +26,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
-            GeoDistrict: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
-            GeoTehsil: { isLoaded: isDataLoaded = false, isLoading, data },
+            Geo: {
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
+                Tehsil: { isLoaded: isDataLoaded = false, isLoading, data },
+            },
         },
     } = state;
 
@@ -177,7 +179,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
             width: '15%',
         }),
 

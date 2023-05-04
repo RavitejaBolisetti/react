@@ -172,7 +172,7 @@ export const StateGeoBase = (props) => {
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
             width: '15%',
         }),
 

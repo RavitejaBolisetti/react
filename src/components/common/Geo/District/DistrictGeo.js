@@ -22,12 +22,12 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
-            GeoDistrict: { isLoaded: isDataLoaded = false, isLoading, data },
+            Geo: {
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+                District: { isLoaded: isDataLoaded = false, isLoading, data },
+            },
         },
     } = state;
-
-    console.log(data, 'suckIt');
 
     const moduleTitle = 'District Details';
 
@@ -61,8 +61,8 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData, isStateDataLoaded, isStateLoading, stateData }) => {
-    //console.log(data,"DISTRICTDATA");
+export const DistrictGeoBase = (props) => {
+    const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData } = props;
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -80,16 +80,19 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
+    console.log('🚀 ~ file: DistrictGeo.js:83 ~ DistrictGeoBase ~ filterString:', filterString);
+
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
     const [stateCode, isStateCode] = useState('qw');
 
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
     useEffect(() => {
         if (userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
         }
@@ -99,7 +102,9 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.stateCode) || filterFunction(filterString)(item?.districtName));
+                const keyword = filterString?.keyword;
+                const state = filterString?.state;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -159,9 +164,15 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
         }),
 
         tblPrepareColumns({
+            title: 'State Name',
+            dataIndex: 'stateName',
+            width: '20%',
+        }),
+
+        tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
             width: '15%',
         }),
 
@@ -211,28 +222,29 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        setFilterString({ ...filterString, keyword: value });
     };
 
     const handleSelectState = (value) => {
-        console.log(value, 'valuevaluevalue');
         isStateCode(value);
     };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
+    };
+
+    const onStateChangeHandle = (value) => {
+        setFilterString({ ...filterString, state: value });
     };
 
     const onFinish = (values) => {
-        //console.log(values, 'dta');
-
         const recordId = formData?.id || '';
         let data = { ...values };
-        //id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD')
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDataList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
@@ -255,9 +267,6 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
             onError,
             onSuccess,
         };
-
-        console.log(requestData, 'JAAAAAn');
-
         saveData(requestData);
     };
 
@@ -272,7 +281,8 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: filterData.length === 0 ? data : filterData,
+        tableData: searchData,
+        // tableData: filterData.length === 0 ? data : filterData,
     };
 
     const formProps = {
@@ -314,7 +324,7 @@ export const DistrictGeoBase = ({ fetchStateList, listStateShowLoading, data, mo
                                         District List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={(handleSelectState, onChange2)}>
+                                        <Select placeholder="State" onChange={onStateChangeHandle} allowClear className={styles.headerSelectField}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
