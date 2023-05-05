@@ -104,7 +104,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const state = filterString?.state;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
+                const filterDataItem = cityData?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(cityData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -121,7 +121,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = cityData.find((i) => i.code === record.code);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
 
@@ -135,7 +135,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        const data = cityData.find((i) => i.code === record.code);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -274,7 +274,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: searchData,
+        tableData: city.length!=0 ? city : cityData,
     };
 
     const formProps = {
