@@ -6,7 +6,8 @@ import { validateAlphanumericWithSpace, validateRequiredInputField, validationFi
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
+
 
 import style from 'components/common/Common.module.css';
 
