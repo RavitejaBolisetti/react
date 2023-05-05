@@ -201,6 +201,8 @@ export const StateGeoBase = (props) => {
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType(FROM_ACTION_TYPE?.EDIT);
@@ -210,6 +212,8 @@ export const StateGeoBase = (props) => {
     };
 
     const handleAdd = () => {
+        form.resetFields();
+        setFormData([]);
         setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
@@ -217,7 +221,6 @@ export const StateGeoBase = (props) => {
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {

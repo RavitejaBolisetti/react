@@ -117,6 +117,8 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     }, [filterString, isDataLoaded, cityData, userId]);
 
     const handleEditBtn = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType(FROM_ACTION_TYPE?.EDIT);
@@ -125,7 +127,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
-
             setIsFormVisible(true);
         }
     };
@@ -217,6 +218,8 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType(FROM_ACTION_TYPE?.EDIT);
@@ -226,13 +229,14 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     };
 
     const handleAdd = () => {
+        form.resetFields();
+        setFormData([]);
         setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {
@@ -313,7 +317,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         typeData,
         cityData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
+        onCloseAction: () => (form.resetFields(), setIsFormVisible(false), setFormBtnActive(false)),
         titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
         onFinish,
         onFinishFailed,

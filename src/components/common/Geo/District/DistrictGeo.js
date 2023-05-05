@@ -199,6 +199,8 @@ export const DistrictGeoBase = (props) => {
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType(FROM_ACTION_TYPE?.EDIT);
@@ -208,6 +210,8 @@ export const DistrictGeoBase = (props) => {
     };
 
     const handleAdd = () => {
+        form.resetFields();
+        setFormData([]);
         setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
@@ -215,7 +219,6 @@ export const DistrictGeoBase = (props) => {
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {
