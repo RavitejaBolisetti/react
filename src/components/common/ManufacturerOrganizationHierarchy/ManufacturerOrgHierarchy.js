@@ -7,13 +7,13 @@ import { PlusOutlined } from '@ant-design/icons';
 import { FaHistory } from 'react-icons/fa';
 import { HierarchyFormButton } from 'components/common/Button';
 
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { ManufacturerOrgHierarchyChangeHistory } from '../ManufacturerOrganizationHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ViewManufacturerOrgDetail } from './ViewManufacturerOrgDetails';
 
@@ -62,9 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: manufacturerOrgHierarchyDataActions.changeHistoryModelOpen,
             fetchChangeHistoryList: manufacturerOrgHierarchyDataActions.fetchChangeHistoryList,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -277,8 +277,8 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         viewTitle,
     };
 
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
     return (

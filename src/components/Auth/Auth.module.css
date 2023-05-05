@@ -59,20 +59,16 @@ p {
 
 .button {
     width: 100%;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 26px;
-    /* padding: 10px;
-    */
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
     margin-top: 20px;
-    /* text-transform: uppercase;
-    */
-    height: 50px;
-    background-color: #ff3e5b;
+    height: 40px;
+    background: #FF3E5B;
 }
 
 .button:hover {
-    background-color: #ff3e5b;
+    background: #FF3E5B;
 }
 
 .loginSection {
@@ -134,8 +130,8 @@ p {
 .loginSection .center .loginLogoSection {
     text-align: center;
     margin-top: 12px;
-    margin-bottom: 36px;
-    color: #fff;
+    margin-bottom: 20px;
+    color: #FFFFFF;
 }
 
 .loginSection .center .loginLogoSection .mainLogo {
@@ -151,8 +147,8 @@ p {
 }
 
 .loginSection .center .loginLogoSection .logoText {
-    padding-top: 8px;
-    font-size: 26px;
+    padding-top: 10px;
+    font-size: 24px;
     line-height: 34px;
     font-weight: 400;
 }
@@ -160,11 +156,11 @@ p {
 .loginSection .loginWrap {
     /* margin: 20px;
     */
-    background: rgba(40, 39, 44, .6);
-    box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6);
-    border-radius: 19px;
-    -moz-border-radius: 19px;
-    -webkit-border-radius: 19px;
+    background: #1C1C1C;
+    /* box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6); */
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
     border: 0px solid #000000;
 }
 
@@ -175,13 +171,13 @@ p {
 
 .loginSection .loginWrap .loginHtml .centerInner,
 .loginSection .loginWrap .logOutHtml .centerInner {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     /* min-height: stretch;
     */
-    padding: 30px;
+    padding: 30px 40px;
 }
 
 .loginSection .loginWrap .loginHtml .verifyUser :global .ant-form-item {
@@ -204,7 +200,7 @@ p {
 }
 
 .inputBox {
-    margin-bottom: 24px !important;
+    margin-bottom: 20px !important;
 }
 
 .marginBottomZero {
@@ -219,6 +215,14 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput input {
     background: transparent;
     color: #838383 !important;
+}
+
+.loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput p {
+    padding-left: 0 !important;
+    color: #70C922 !important;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::-ms-reveal,
@@ -243,12 +247,13 @@ p {
 }
 
 .loginSection :global .ant-input-affix-wrapper {
-    background: transparent;
-    border-style: none none solid none;
+    background: #0B0B0C;
+    height: 36px !important;
+    /* border-style: none none solid none; */
     border-color: #545454;
     color: #ffffff;
     font-size: 16px;
-    border-radius: 0;
+    border-radius: 4px;
     padding: 0;
 }
 
@@ -268,7 +273,14 @@ p {
 }
 
 .loginSection :global .ant-input-affix-wrapper .ant-input-prefix {
-    margin-inline-end: 14px;
+    margin-inline-start: 12px;
+    margin-inline-end: 12px;
+    color: #858585;
+}
+
+.loginSection :global .ant-input-affix-wrapper-focused .ant-input-prefix,
+.loginSection :global .ant-input-affix-wrapper-status-success .ant-input-prefix {
+    color: #FFFFFF;
 }
 
 .loginSection :global .ant-input-affix-wrapper:hover,
@@ -276,14 +288,21 @@ p {
     border-color: #ffffff;
 }
 
-.loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
-    color: #ffffff;
-    font-size: 18px;
+.loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
+    margin-inline-end: 8px;
+    line-height: 16px;
+    transform: scaleX(-1) !important;
+    color: #FF3E5B;
 }
 
-.loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
+/* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
     color: #ffffff;
-}
+    font-size: 18px;
+} */
+
+/* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon:hover {
+    color: #ffffff;
+} */
 
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
@@ -293,6 +312,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
+    /* border-color: #FFFFFF; */
 }
 
 .loginSection input:-webkit-autofill,
@@ -311,23 +331,36 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading h1,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h1 {
-    font-size: 26px;
-    color: #fff;
+    font-size: 32px;
+    font-style: normal;
+    color: #FFFFFF;
     text-align: center;
-    line-height: 34px;
-    font-weight: 400;
+    line-height: 48px;
+    font-weight: 600;
     margin: 0;
+}
+
+.loginSection .loginWrap .loginHtml .verifyUser .loginForm .loginHeading h1,
+.loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h1 {
+    font-size: 32px;
+    font-style: normal;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 48px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 30px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
-    font-size: 14px;
-    color: #DEDEDE;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    font-size: 16px;
+    color: #B5B5B6;
+    margin-top: 8px;
+    margin-bottom: 30px;
     text-align: center;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 24px;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group {
@@ -340,20 +373,39 @@ p {
     display: flex;
 }
 
+.loginSection .loginWrap .loginHtml .verifyUser .loginForm .fielderror {
+    background: #232324;
+    margin-bottom: 10px !important;
+    border-radius: 6px;
+    padding: 8px 16px;
+}
+
 .registered {
     padding: 16px 0 8px;
-    color: #DEDEDE;
+    color: #B5B5B6;
     font-size: 14px;
     line-height: 22px;
     font-weight: 400;
 }
 
 .fielderror .registered {
-    padding: 8px 0;
-    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    color: #FF3E5B;
     font-size: 14px;
     line-height: 24px;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span,
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span p {
+    color: #858585 !important;
+}
+
+.fielderror .registered p {
+    padding-left: 0px !important;
+    color: #FF3E5B;
 }
 
 .fielderror .registered :global .ant-checkbox-checked:checked {
@@ -459,17 +511,17 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 600;
     text-align: right;
     width: 100%;
-    margin-top: -6px;
-    margin-bottom: 10px;
+    margin-top: -16px;
+    /* margin-bottom: 10px; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a {
-    color: #DEDEDE !important;
+    color: #FF3E5B !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a:hover {
@@ -477,26 +529,26 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
-    color: #dedede;
+    color: #FF3E5B;
     text-align: center;
-    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 600;
     width: 100%;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
     color: #ED302D;
-    /* font-size: 16px; */
     line-height: 18px;
     font-weight: 400;
-    /* letter-spacing: 0.8px; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter a {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 24px;
-    color: #DEDEDE;
+    color: #FF3E5B;
     text-align: center;
 }
 
@@ -817,13 +869,20 @@ select.form-control:focus::-ms-value {
 }
 
 .otpTitle {
-    color: #ffffff;
-    font-size: 16px;
+    color: #858585;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .otpNotReceive {
     color: #ff3e5b;
     letter-spacing: 0.8px;
+}
+
+.otpNotReceive svg {
+    margin-right: 5px;
+    vertical-align: unset;
 }
 
 .resendEnabled {
@@ -833,10 +892,16 @@ select.form-control:focus::-ms-value {
 }
 
 .resendDisabled {
-    color: #858585;
+    color: #545454;
     float: right;
     cursor: pointer;
     pointer-events: none;
+}
+
+.resendEnabled svg,
+.resendDisabled svg {
+    transform: scaleX(-1);
+    vertical-align: unset;
 }
 
 .buttonResend {
@@ -857,7 +922,7 @@ select.form-control:focus::-ms-value {
     background: black;
     border: white !important;
     border-radius: 5px;
-    margin-right: 19px !important;
+    margin-right: 15px !important;
     padding: 6px;
     font-size: 20px;
     color: white;
@@ -881,7 +946,7 @@ select.form-control:focus::-ms-value {
 
 .otpFilled input {
     border: solid 1px #ED302D !important;
-    margin-right: 17px !important;
+    margin-right: 13px !important;
 }
 
 .otpEmpty {

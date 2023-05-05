@@ -1,6 +1,6 @@
 import React from 'react';
 import { Descriptions, Row, Col } from 'antd';
-import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from '../Geo/State/InputType';
+import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { convertCalenderDate, convertDate } from 'utils/formatDateTime';
 
 const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {

@@ -11,7 +11,7 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
 
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -52,12 +52,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeFetchDetailList: hierarchyAttributeMasterActions.fetchDetailList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-            detailDataListShowLoading: hierarchyAttributeMasterActions.detailDataListShowLoading,
-            onSaveShowLoading: hierarchyAttributeMasterActions.onSaveShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetailList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
+            detailDataListShowLoading: hierarchyAttributeMasterDataActions.detailDataListShowLoading,
+            onSaveShowLoading: hierarchyAttributeMasterDataActions.onSaveShowLoading,
 
             showGlobalNotification,
         },
@@ -270,7 +270,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
-            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
             setFormBtnDisable(false);
             if (saveclick === true) {
                 setIsFormVisible(false);
@@ -281,6 +280,12 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
             }
             forceUpdate();
         };
+
+        setTimeout(() => {
+            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
+            
+        }, 2000);
+
         const onError = (message) => {
             onSaveShowLoading(false);
             showGlobalNotification({ message, placement: 'bottomRight' });

@@ -4,7 +4,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const DistrictGeoBase = (props) => {
-    const pageTitle = 'District List';
+    const pageTitle = 'District Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

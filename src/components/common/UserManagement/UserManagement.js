@@ -17,7 +17,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';
 import { userManagementDataActions } from 'store/actions/data/userManagement';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 import DrawerUtil from './DrawerUtil';
 import { AddEditForm } from './AddEditForm';
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveDealerDetails: userManagementDataActions.saveDealerDetails,
             saveManufacturerDetails: userManagementDataActions.saveManufacturerDetails,
             fetchList: productHierarchyDataActions.fetchList,
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             showGlobalNotification,
         },
         dispatch
