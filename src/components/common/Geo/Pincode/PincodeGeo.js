@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select, Checkbox } from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select, Checkbox, Collapse, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
@@ -23,10 +23,14 @@ import { geoStateDataActions } from 'store/actions/data/geoState';
 import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
 import { geoCityDataActions } from 'store/actions/data/geoCity';
 import { geoTehsilDataActions } from 'store/actions/data/geoTehsil';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { STATE_DROPDOWN } from '../Tehsil/InputType';
 // import { data } from 'store/reducers/data';
 
 const { Search } = Input;
 const { Option } = Select;
+const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
     console.log('state', state)
@@ -121,6 +125,9 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
     const [rowdata,setrowdata]=useState();
+    const [showTehsil, setShowTehsil] = useState([]);
+    const [show, setShow] = useState([]);
+    const [showCity, setShowCity] = useState([]);
 
    
     
@@ -158,24 +165,19 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     }, [filterString, isDataLoaded, userId,geoPindata]);
 
     const handleEditBtn = (record) => {
-        setAdvanceSearchVisible(false);
         
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        // const data = searchData.find((i) => i.districtCode === record.districtCode);
-        // console.log('data', data);
-        // if (data) {
-        //     data && setFormData(data);
-        //     console.log('formData', formData);
-
-        //     setIsFormVisible(true);
-        // }
-        // setrowdata(record);
-        setIsFormVisible(true);
-
+        const data = searchData.find((i) => i.code === record.code);
+        console.log('data', data);
+        if (data) {
+            console.log('formData', formData);
+            data && setFormData(data);
+            setIsFormVisible(true);
+        }
     };
 
     const handleView = (record) => {
@@ -197,6 +199,15 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         setIsFormVisible(true);
 
         setIsReadOnly(true);
+    };
+    const handleSelectState = (e) =>{
+        setShow(geoDistrictData.filter((i)=>i.stateCode === e))
+    }
+    const handleSelectDistrict = (e) => {
+        setShowCity(geoCityData.filter((i)=>i.districtCode === e))
+    };
+    const handleSelectTehsil = (e) => {
+        setShowTehsil(geoTehsilData.filter((i)=>i.cityCode === e));
     };
 
 
@@ -368,7 +379,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         setFooterEdit,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride:!isAdvanceSearchVisible? ( (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('PIN Details')):('Advanced Search'),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('PIN Details'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
@@ -401,46 +412,112 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     console.log(handleButtonClick,'clicked');
     return (
         <>
+            <Form layout="vertical">
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <div className={styles.contentHeaderBackground}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                            PIN Code List
+                                        </Col>
+                                        <Col xs={24} sm={24} md={16} lg={19} xl={19}>
+                                            <Search
+                                                placeholder="Search"
+                                                style={{
+                                                    width: 300,
+                                                }}
+                                                onSearch={onSearchHandle}
+                                                onChange={onChangeHandle}
+                                            />{' '}
+                                            <Button danger type="link" onClick={handleButtonClick}>
+                                                Advanced Search
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+
+                                {geoPindata?.length ? (
+                                    <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+
+                                        <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                            Add
+                                        </Button>
+                                    </Col>
+                                ) : (
+                                    ''
+                                )}
+                            </Row>
+                        </div>
+                    </Col>
+                </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
+                    <Card
+                        style={{
+                            width: '100%',
+                            background:'#f4f4f4',
+                        }}
+                    >
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                    {/* <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
                                         PIN Code List
+                                    </Col> */}
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
+                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
+                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                {geoStateData?.map((item) => (
+                                                    <Option value={item?.code}>{item?.name}</Option>
+                                                ))}
+                                            </Select>
+                                        </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={24} md={16} lg={19} xl={19}>
-                                        <Search
-                                            placeholder="Search"
-                                            style={{
-                                                width: 300,
-                                            }}
-                                            onSearch={onSearchHandle}
-                                            onChange={onChangeHandle}
-                                        />{' '}
-                                        <Button danger type="link" onClick={handleButtonClick}>
-                                            Advanced Search
-                                        </Button>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')} onChange={handleSelectDistrict}>
+                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                {show?.map((item) => (
+                                                    <Option value={item?.code}>{item?.name}</Option>
+                                                ))}
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleSelectTehsil}>
+                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                {showCity?.map((item) => (
+                                                    <Option value={item?.code}>{item?.name}</Option>
+                                                ))}
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
+                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}>
+                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                {showTehsil?.map((item) => (
+                                                    <Option value={item?.code}>{item?.name}</Option>
+                                                ))}
+                                                {console.log(showTehsil)}
+                                            </Select>
+                                        </Form.Item>
                                     </Col>
                                 </Row>
                             </Col>
-
-                            {geoPindata?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
                         </Row>
-                    </div>
+                    </Card>
                 </Col>
             </Row>
+            </Form>
+
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -465,7 +542,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add 
+                                                Add
                                             </Button>
                                         </Col>
                                     </Row>

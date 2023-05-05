@@ -13,8 +13,9 @@ const { TextArea } = Input;
 const AdvanceSearchMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form,setClosePanels, isReadOnly, showSaveBtn, formData,onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed,geoStateData,geoDistrictData,geoTehsilData,geoCityData } = props;
+    const { isFormBtnActive, setFormBtnActive,geoStateData,geoDistrictData,geoTehsilData,geoCityData } = props;
     const disabledProps = { disabled: isReadOnly };
+    const [searchForm] = Form.useForm();
     const [show, setShow] = useState([]);
     const [showCity, setShowCity] = useState([]);
     const [showTehsil, setShowTehsil] = useState([]);
@@ -40,6 +41,12 @@ const AdvanceSearchMain = (props) => {
     const changeSelectOptionHandler = (event) => {
         setParameterType(event);
     };
+    const onFinish = (values) =>{
+        console.log('advance values',values)
+    }
+    const onFinishFailed =()=>{
+        return;
+    }
     // useEffect(() => {
     //     form.setFieldsValue();
     // }, [selectedState,form])
@@ -70,16 +77,10 @@ const AdvanceSearchMain = (props) => {
         formData,
         styles,
     };
-    const formProps = {
-      
-        geoStateData,
-        geoDistrictData,
-        geoTehsilData,
-        geoCityData,
-    };
+    
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...viewProps} {...formProps}>
+        <Form layout="vertical" searchForm={searchForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...viewProps}>
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -135,7 +136,7 @@ const AdvanceSearchMain = (props) => {
                             <Form.Item label="Select Tehsil" initialValue={formData?.tehsilName} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
                             <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('tehsil')} >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoTehsilData?.map((item) => (
+                                    {setShowTehsil?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>

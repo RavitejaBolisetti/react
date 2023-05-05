@@ -54,7 +54,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (type ? '?type=' + type : mytype),
+                url: inBaseURL + (type ? '?type=' + type : '') + (mytype ? mytype : ''),
                 token,
                 accessToken,
                 userId,
