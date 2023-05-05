@@ -8,7 +8,7 @@ import DocumentTypesForm from './DocumentTypesForm';
 const { Text } = Typography;
 
 const CardDocumentType = (prop) => {
-    const { id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
+    const { id,status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -19,7 +19,6 @@ const CardDocumentType = (prop) => {
         };
     }, []);
 
-    // on Click edit button sets form fields
     const onEdit = (id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode) => {
         form.setFieldsValue({
             id,
@@ -33,7 +32,6 @@ const CardDocumentType = (prop) => {
         setIsBtnDisabled(true);
     };
     const onUpdate = (value) => {
-        console.log('val', value);
         form.validateFields()
             .then((newFormData) => {
                 setfinalFormdata((prev) => {
@@ -96,7 +94,7 @@ const CardDocumentType = (prop) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id,status,  termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
                                     {!id?.length > 0 && (
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -126,7 +124,7 @@ const CardDocumentType = (prop) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <DocumentTypesForm onFinish={onUpdate} termAndConRequired={termAndConRequired} digitalSignatureRequired={digitalSignatureRequired} documentTypeDescription={documentTypeDescription} documentTypeCode={documentTypeCode} form={form} isEditing={isEditing} />
+                        <DocumentTypesForm termAndConRequired={termAndConRequired} digitalSignatureRequired={digitalSignatureRequired} documentTypeDescription={documentTypeDescription} documentTypeCode={documentTypeCode} form={form} isEditing={isEditing} />
                     </Fragment>
                 )}
             </Card>

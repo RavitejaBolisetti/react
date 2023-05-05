@@ -208,7 +208,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
-            setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map(el => ({...el})), documentType, accessibleLocation });
             setIsReadOnly(false);
             setIsFieldDisable(true);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
@@ -231,9 +231,9 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        if (finalFormdata?.applicationDetails?.applicationId) {
-            setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
-        }
+        // if (finalFormdata?.applicationDetails?.applicationId) {
+        //     setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
+        // }
         setisVisible(false);
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
