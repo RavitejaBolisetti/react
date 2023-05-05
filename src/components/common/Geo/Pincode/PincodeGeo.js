@@ -32,26 +32,24 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
-    console.log('state', state)
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
-            GeoState: {isLoaded:isDataLoaded = false, isLoading : isStateLoading, data:geoStateData},
-            GeoDistrict:{isLoaded:isDistrictLoaded = false, isLoading: isDistrictLoading, data:geoDistrictData},
-            GeoTehsil:{isLoaded:isTehsilLoaded = false, isLoading:isTehsilLoading, data:geoTehsilData},
-            GeoCity:{isLoaded:isCityLoaded = false, isLoading:isCityLoading, data:geoCityData},
-            GeoPincode: {isLoaded: isPinDataLoaded = false, isLoading:isPinLoading, data:geoPindata },
+            GeoState: { isLoaded: isDataLoaded = false, isLoading: isStateLoading, data: geoStateData },
+            GeoDistrict: { isLoaded: isDistrictLoaded = false, isLoading: isDistrictLoading, data: geoDistrictData },
+            GeoTehsil: { isLoaded: isTehsilLoaded = false, isLoading: isTehsilLoading, data: geoTehsilData },
+            GeoCity: { isLoaded: isCityLoaded = false, isLoading: isCityLoading, data: geoCityData },
+            GeoPincode: { isLoaded: isPinDataLoaded = false, isLoading: isPinLoading, data: geoPindata },
         },
     } = state;
 
-console.log(state, 'aman');
     const moduleTitle = 'Pincode Master List';
 
-    console.log(geoStateData,'STATEDATA')
     let returnValue = {
         userId,
         isDataLoaded,
-         isPinLoading,
+        isPinLoading,
         isDistrictLoaded,
         // isStateLoading,
         // isDistrictLoading,
@@ -67,12 +65,11 @@ console.log(state, 'aman');
         isPinDataLoaded,
         //isStateDataLoaded,
         moduleTitle,
-    
+
         // geoPinData: geoPinData?.filter((i) => i),
     };
     return returnValue;
 };
-
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
@@ -89,8 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchCityList: geoCityDataActions.fetchList,
             listCityShowLoading: geoCityDataActions.listShowLoading,
-        
-            
+
             fetchList: geoPincodeDataActions.fetchList,
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
@@ -99,11 +95,50 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchDataList,fetchCityList,fetchTehsilList,listCityShowLoading,fetchList,listTehsilShowLoading,listPinShowLoading,listStateShowLoading,listStateShowoading,listDistrictShowLoading,fetchStateList,fetchDistrictList, isDistrictLoaded,isPinDataLoaded,isStateDataLoaded,isStateLoading,isDistrictLoading,geoDistrictData,isTehsilLoaded,isTehsilLoading,geoTehsilData,isCityLoaded,isCityLoading,geoCityData,geoPindata,geoStateData,data, saveData, userId, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
-    console.log(data,"PINCODEDATA");
+const PincodeGeoBase = ({
+    isLoading,
+    moduleTitle,
+    tableData,
+    isPinLoading,
+    fetchDataList,
+    fetchCityList,
+    fetchTehsilList,
+    listCityShowLoading,
+    fetchList,
+    listTehsilShowLoading,
+    listPinShowLoading,
+    listStateShowLoading,
+    listStateShowoading,
+    listDistrictShowLoading,
+    fetchStateList,
+    fetchDistrictList,
+    isDistrictLoaded,
+    isPinDataLoaded,
+    isStateDataLoaded,
+    isStateLoading,
+    isDistrictLoading,
+    geoDistrictData,
+    isTehsilLoaded,
+    isTehsilLoading,
+    geoTehsilData,
+    isCityLoaded,
+    isCityLoading,
+    geoCityData,
+    geoPindata,
+    geoStateData,
+    data,
+    saveData,
+    userId,
+    configData,
+    isDataLoaded,
+    listShowLoading,
+    isDataAttributeLoaded,
+    showGlobalNotification,
+    attributeData,
+}) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-    const [districtdata,setdistrictdata]=useState();
+    const [districtdata, setdistrictdata] = useState();
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [pin, setPin] = useState([]);
@@ -111,7 +146,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-    const [savebtnclick,setsavebtnclick]=useState(false);
+    const [savebtnclick, setsavebtnclick] = useState(false);
 
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
@@ -123,50 +158,43 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     const [advanceSearch, setAdvanceSearch] = useState([]);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [closePanels, setClosePanels] = React.useState([]);
-    const [rowdata,setrowdata]=useState();
+    const [rowdata, setrowdata] = useState();
     const [showTehsil, setShowTehsil] = useState([]);
     const [show, setShow] = useState([]);
     const [showCity, setShowCity] = useState([]);
-    const [pinCodeSearch,setpinCodeSearch]=useState();
+    const [ditrict, setDistrict] = useState();
+    const [myFilter, setmyFilter] = useState({});
 
-    
-    
     useEffect(() => {
         if (!isDataLoaded && userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
-           
-            fetchStateList({ setIsLoading:listShowLoading , userId, onSuccessAction });
-            const coddd = 'UEIW'
-            const types=`?stateCode=${coddd}`;
-            fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction,mytype:types});
+
+            fetchStateList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            const coddd = 'UEIW';
+            const types = `?stateCode=${coddd}`;
+            fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction, mytype: types });
             fetchTehsilList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchCityList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-             
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData,isPinDataLoaded,pinCodeSearch]);
-    useEffect(()=>{
+    }, [userId, refershData, isPinDataLoaded]);
+    useEffect(() => {
         setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
-
-
-    },[geoPindata])
-   
+    }, [geoPindata]);
 
     useEffect(() => {
-        if (geoPindata &&  userId) {
+        if (geoPindata && userId) {
             if (filterString) {
                 const filterDataItem = geoPindata?.filter((item) => filterFunction(filterString)(item?.localityName) || filterFunction(filterString)(item?.pinCode));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-            } 
-            
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, userId,geoPindata]);
+    }, [filterString, isDataLoaded, userId, geoPindata]);
 
     const handleEditBtn = (record) => {
-        
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
@@ -189,7 +217,6 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         setFooterEdit(true);
         setAdvanceSearchVisible(false);
 
-        
         // const data = tableData.find((i) => i.code === record.code);
         // if (data) {
         //     data && setFormData(data);
@@ -201,21 +228,38 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
 
         setIsReadOnly(true);
     };
-    const handleSelectState = (e) =>{
-        setShow(geoDistrictData.filter((i)=>i.stateCode === e))
-    }
+    const handleSelectState = (e) => {
+        console.log('This is the state', e);
+        setmyFilter({ ...myFilter, State: e });
+        setShow(geoDistrictData.filter((i) => i.stateCode === e));
+    };
     const handleSelectDistrict = (e) => {
-        setShowCity(geoCityData.filter((i)=>i.districtCode === e))
-    };
-    const handleSelectTehsil = (e) => {
-        setShowTehsil(geoTehsilData?.filter((i)=>i.cityCode === e));
-    };
+        setmyFilter({ ...myFilter, District: e });
 
+        setDistrict(e);
+
+        setShowCity(geoCityData.filter((i) => i.districtCode === e));
+    };
+    const handleselectcity = (e) => {
+        setmyFilter({ ...myFilter, city: e });
+
+        setShowTehsil(geoTehsilData?.filter((i) => i.districtCode === ditrict));
+    };
+    const handleTehsil = (values) => {
+        setmyFilter({ ...myFilter, Tehsil: values });
+    };
     const onSearchHandle = (value) => {
-        fetchList({ setIsLoading: listShowLoading, userId,mytype:'?code='.concat(value) });
-
+        const apiParams = `?stateCode=${myFilter?.state}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
+        console.log('apiParams', apiParams);
+        fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
 
         // setFilterString({ ...filterString, keyword: value });
+    };
+    const handlefilteredSearch = (value) => {
+        const apiParams = `?stateCode=${myFilter?.State}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
+        console.log('apiParams', apiParams);
+
+        fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
     };
     const tableColumn = [];
     tableColumn.push(
@@ -244,7 +288,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
             width: '20%',
             render: (record) => {
                 return <Checkbox disabled defaultChecked className={styles.registered}></Checkbox>;
-            }
+            },
         }),
 
         tblPrepareColumns({
@@ -281,7 +325,6 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         }
     );
 
-
     const handleReferesh = () => {
         setRefershData(!refershData);
         setPin(geoPindata);
@@ -308,36 +351,34 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         setFormData([]);
     };
 
-    
-
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
     };
-    const requestaData ={
-        "pinCode": "764748",
-        "localityCode": "F1795",
-        "tehsilCode": "T11841",
-        "districtCode": "D00565",
-        "stateCode": "23",
-        "countryCode": "IN",
-        "status": true,
-        "approvalStatus": true,
-        "localityName": "TEST",
-        "pinDescription": "TESTING",
-        "withIn50KmFromGpo": true,
-        "jdpUniverse": true
-      }
+    const requestaData = {
+        pinCode: '764748',
+        localityCode: 'F1795',
+        tehsilCode: 'T11841',
+        districtCode: 'D00565',
+        stateCode: '23',
+        countryCode: 'IN',
+        status: true,
+        approvalStatus: true,
+        localityName: 'TEST',
+        pinDescription: 'TESTING',
+        withIn50KmFromGpo: true,
+        jdpUniverse: true,
+    };
     const onFinish = (values) => {
         const recordId = formData?.data || '';
         // let data = { ...values, data: recordId };
-        const finalSubmitdata={...values};
-        console.log(values,'DATATATATATATATTA');
+        const finalSubmitdata = { ...values };
+        console.log(values, 'DATATATATATATATTA');
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             // fetchDataList({ setIsLoading: listShowLoading, userId });
 
-            if (saveAndAddNewBtnClicked === false ) {
+            if (saveAndAddNewBtnClicked === false) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
@@ -358,7 +399,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
             onSuccess,
         };
 
-        console.log(requestData,'REQDATA')
+        console.log(requestData, 'REQDATA');
 
         saveData(requestData);
     };
@@ -370,8 +411,6 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         tableColumn: tableColumn,
         tableData: searchData,
     };
-    console.log(pin,'PINDATA')
-    
 
     const formProps = {
         formActionType,
@@ -389,7 +428,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        tableData:geoPindata,
+        tableData: geoPindata,
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
@@ -401,9 +440,10 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         geoCityData,
         geoPindata,
         setrowdata,
-        rowdata,setsavebtnclick,
+        rowdata,
+        setsavebtnclick,
     };
-    
+
     const viewProps = {
         isVisible: isAdvanceSearchVisible,
         formData,
@@ -411,9 +451,8 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     };
     const handleButtonClick = () => {
         setAdvanceSearchVisible(!isAdvanceSearchVisible);
-        
     };
-    console.log(handleButtonClick,'clicked');
+    console.log(handleButtonClick, 'clicked');
     return (
         <>
             <Form layout="vertical">
@@ -493,7 +532,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                             </Col>
                                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                                 <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleSelectTehsil}>
+                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleselectcity}>
                                                         {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                         {showCity?.map((item) => (
                                                             <Option value={item?.code}>{item?.name}</Option>
@@ -504,7 +543,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
 
                                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                                 <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}>
+                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')} onChange={handleTehsil}>
                                                         {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                         {showTehsil?.map((item) => (
                                                             <Option value={item?.code}>{item?.name}</Option>
@@ -513,6 +552,13 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                                 </Form.Item>
                                             </Col>
                                         </Row>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col span={24}>
+                                        <Button danger type="link" onClick={handlefilteredSearch}>
+                                            Search
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Card>
