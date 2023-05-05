@@ -4,7 +4,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
-import { ViewTehsilDetails } from './ViewTehsilDetails';
+import { ViewDetail } from './ViewDetail';
 
 const { Option } = Select;
 
@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </>
             ) : (
-                <ViewTehsilDetails {...viewProps} />
+                <ViewDetail {...viewProps} />
             )}
 
             <Row gutter={20} className={styles.formFooter}>

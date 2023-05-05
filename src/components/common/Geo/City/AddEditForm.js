@@ -4,18 +4,16 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { ViewCityDetails } from './ViewCityDetails';
+import { ViewDetail } from './ViewDetail';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, stateData, show, setShow } = props;
+    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, stateData } = props;
     const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
-    const [selectedState, setSelectedState] = useState(formData?.stateCode || undefined);
-    const [selectedDistrict, setSelectedDistrict] = useState(formData?.stateCode || undefined);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const disabledProps = { disabled: isReadOnly };
@@ -35,15 +33,9 @@ const AddEditFormMain = (props) => {
         styles,
     };
 
-    const onChange = (e) => {
-        setShow(districtData.filter((i) => i.stateCode === e));
-    };
-
     const handleStateChange = (state) => {
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('districtCodeDisplay', undefined);
-
-        setSelectedState(state);
 
         const stateCode = stateData?.find((i) => i?.code === state)?.code;
         stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
@@ -52,7 +44,6 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDistrictChange = (district) => {
-        setSelectedDistrict(district);
         const districtCode = districtData?.find((i) => i?.code === district)?.code;
         districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
     };
@@ -117,7 +108,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </>
             ) : (
-                <ViewCityDetails {...viewProps} />
+                <ViewDetail {...viewProps} />
             )}
 
             <Row gutter={20} className={styles.formFooter}>

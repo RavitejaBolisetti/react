@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DistrictGeoBase = (props) => {
+export const ListDistrictBase = (props) => {
     const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData } = props;
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -274,11 +274,6 @@ export const DistrictGeoBase = (props) => {
         form.validateFields().then((values) => {});
     };
 
-    const onChange2 = (e) => {
-        setFilterData([]);
-        setFilterData(data.filter((i) => i.stateCode === e));
-    };
-
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
@@ -375,7 +370,7 @@ export const DistrictGeoBase = (props) => {
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add District
+                                                Add Group
                                             </Button>
                                         </Col>
                                     </Row>
@@ -396,4 +391,4 @@ export const DistrictGeoBase = (props) => {
     );
 };
 
-export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);
+export const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);

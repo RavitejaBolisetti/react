@@ -39,7 +39,7 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '' } = params;
+            const { setIsLoading, data, type = '',mytype='' } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
@@ -54,7 +54,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (type ? '?type=' + type : ''),
+                url: inBaseURL + (type ? '?type=' + type : '') + (mytype ? mytype : ''),
                 token,
                 accessToken,
                 userId,

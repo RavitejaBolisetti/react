@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewCityDetailsMain = ({ formData, styles, parameterType }) => {
+const ViewDetailBase = ({ formData, styles, parameterType }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -12,10 +12,9 @@ const ViewCityDetailsMain = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="State Name">{formData?.stateName}</Descriptions.Item>
-                    <Descriptions.Item label="District Name">{formData?.districtName}</Descriptions.Item>
-                    <Descriptions.Item label="City Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="City Name">{formData?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Country">{formData?.countryName}</Descriptions.Item>
+                    <Descriptions.Item label="State Code">{formData?.code}</Descriptions.Item>
+                    <Descriptions.Item label="State Name">{formData?.name}</Descriptions.Item>
                     <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
                 </Descriptions>
             </>
@@ -23,4 +22,4 @@ const ViewCityDetailsMain = ({ formData, styles, parameterType }) => {
     );
 };
 
-export const ViewCityDetails = ViewCityDetailsMain;
+export const ViewDetail = ViewDetailBase;

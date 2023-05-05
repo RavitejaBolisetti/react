@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const StateGeoBase = (props) => {
+export const ListStateMasterBase = (props) => {
     const { data, isLoading, saveData, fetchList, userId, typeData, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, fetchCountryList, countryShowLoading } = props;
 
@@ -203,12 +203,15 @@ export const StateGeoBase = (props) => {
     const hanndleEditData = (record) => {
         form.resetFields();
         setFormData([]);
+
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
+        
+        setFormData(record);
     };
 
     const handleAdd = () => {
@@ -255,7 +258,7 @@ export const StateGeoBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType === 'update' ? 'put' : 'post',
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -274,6 +277,7 @@ export const StateGeoBase = (props) => {
     };
 
     const formProps = {
+        form,
         formActionType,
         setFormActionType,
         setIsViewModeVisible,
@@ -284,7 +288,11 @@ export const StateGeoBase = (props) => {
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
+        onCloseAction: () => {
+            form.resetFields();
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
         titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('State Details'),
         onFinish,
         onFinishFailed,
@@ -379,4 +387,4 @@ export const StateGeoBase = (props) => {
     );
 };
 
-export const StateGeo = connect(mapStateToProps, mapDispatchToProps)(StateGeoBase);
+export const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
