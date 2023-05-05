@@ -14,7 +14,7 @@ import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { LANGUAGE_EN, EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
 
@@ -161,13 +161,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         const { applicationDetails, applicationAction, documentType, accessibleLocation } = finalFormdata;
 
         if (applicationAction?.length < 1) {
-            return showGlobalNotification({ message: EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
+            return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'application action') });
         }
         if (values?.documentNumRequired && documentType?.length < 1) {
-            return showGlobalNotification({ message: EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
+            return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'document types') });
         }
         if (values?.accessableIndicator === 2 && accessibleLocation?.length < 1) {
-            return showGlobalNotification({ message: EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
+            return showGlobalNotification({ message: LANGUAGE_EN.GENERAL.NO_DATA_VALIDATOIN.MESSAGE.replace('{NAME}', 'accessible location') });
         }
 
         const actionData = applicationAction?.map(({ id, actionMasterId, status, ...rest }) => ({ id: id || '', actionMasterId, status }));
