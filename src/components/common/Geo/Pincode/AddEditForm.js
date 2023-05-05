@@ -4,16 +4,16 @@ import { validateRequiredInputField, validateRequiredSelectField, validationNumb
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
-import { ViewPincodeDetails } from './ViewPincodeDetails';
+import { ViewDetail } from './ViewDetail';
 
 const { Option } = Select;
 // const { TextArea } = Input;
 
-const PinCodeAddEditFormMain = (props) => {
+const AddEditFormMain = (props) => {
     const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish,geoStateData,geoPindata,geoDistrictData,geoTehsilData,geoCityData,onFinishFailed,stateDropdown,cityDropdown,tehsilDropdown,districtDropdown } = props;
-    const [ selectedState, isSelectedState ] = useState('');
+    const { isFormBtnActive, setFormBtnActive, onFinish, geoStateData, geoPindata, geoDistrictData, geoTehsilData, geoCityData, onFinishFailed, stateDropdown, cityDropdown, tehsilDropdown, districtDropdown } = props;
+    const [selectedState, isSelectedState] = useState('');
     const [show, setShow] = useState([]);
     const [showCity, setShowCity] = useState([]);
     const [showTehsil, setShowTehsil] = useState([]);
@@ -26,34 +26,30 @@ const PinCodeAddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
-    const handleSelectState = (e) =>{
-        setShow(geoDistrictData.filter((i)=>i.stateCode === e))
-    }
+    const handleSelectState = (e) => {
+        setShow(geoDistrictData.filter((i) => i.stateCode === e));
+    };
     const handleSelectDistrict = (e) => {
-        setShowCity(geoCityData.filter((i)=>i.districtCode === e))
+        setShowCity(geoCityData.filter((i) => i.districtCode === e));
     };
     const handleSelectTehsil = (e) => {
-        setShowTehsil(geoTehsilData.filter((i)=>i.cityCode === e));
+        setShowTehsil(geoTehsilData.filter((i) => i.cityCode === e));
     };
-   
-    
-    
+
     const viewProps = {
         isVisible: isViewModeVisible,
         formData,
         styles,
     };
     const formProps = {
-      
         geoStateData,
         geoDistrictData,
         geoTehsilData,
         geoCityData,
         geoPindata,
     };
-    const [form] = Form.useForm()
+    const [form] = Form.useForm();
 
-   
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
             {!isViewModeVisible ? (
@@ -111,7 +107,7 @@ const PinCodeAddEditFormMain = (props) => {
                                     {geoTehsilData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
-                                    {console.log(formData,'FORMDATA')}
+                                    {console.log(formData, 'FORMDATA')}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -146,7 +142,7 @@ const PinCodeAddEditFormMain = (props) => {
                     </Row>
                 </>
             ) : (
-                <ViewPincodeDetails {...viewProps} />
+                <ViewDetail {...viewProps} />
             )}
 
             <Row gutter={20} className={styles.formFooter}>
@@ -180,4 +176,4 @@ const PinCodeAddEditFormMain = (props) => {
     );
 };
 
-export const PinCodeAddEditForm = withDrawer(PinCodeAddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, {});

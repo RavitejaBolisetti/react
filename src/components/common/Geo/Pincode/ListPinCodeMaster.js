@@ -9,7 +9,7 @@ import { filterFunction } from 'utils/filterFunction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDate } from 'utils/formatDateTime';
 import { showGlobalNotification } from 'store/actions/notification';
-import { PinCodeAddEditForm } from './PinCodeAddEditForm';
+import { AddEditForm } from './AddEditForm';
 import { geoPincodeDataActions } from 'store/actions/data/pincodeGeo';
 
 import { PlusOutlined } from '@ant-design/icons';
@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const PincodeGeoBase = ({
+const ListPinCodeMasterBase = ({
     isLoading,
     moduleTitle,
     tableData,
@@ -249,8 +249,6 @@ const PincodeGeoBase = ({
         setmyFilter({ ...myFilter, Tehsil: values });
     };
     const onSearchHandle = (value) => {
-        const apiParams = `?stateCode=${myFilter?.state}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
-        console.log('apiParams', apiParams);
         fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
 
         // setFilterString({ ...filterString, keyword: value });
@@ -512,7 +510,7 @@ const PincodeGeoBase = ({
                                 </Col> */}
                                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                                 <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
+                                                    <Select disabled={isReadOnly} allowClear placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
                                                         {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                         {geoStateData?.map((item) => (
                                                             <Option value={item?.code}>{item?.name}</Option>
@@ -521,7 +519,7 @@ const PincodeGeoBase = ({
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                                                <Form.Item label="District" allowClear initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
                                                     <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')} onChange={handleSelectDistrict}>
                                                         {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                         {show?.map((item) => (
@@ -531,7 +529,7 @@ const PincodeGeoBase = ({
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                                                <Form.Item label="City" allowClear initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
                                                     <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleselectcity}>
                                                         {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                         {showCity?.map((item) => (
@@ -542,7 +540,7 @@ const PincodeGeoBase = ({
                                             </Col>
 
                                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
+                                                <Form.Item label="Tehsil" allowClear initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
                                                     <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')} onChange={handleTehsil}>
                                                         {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
                                                         {showTehsil?.map((item) => (
@@ -556,7 +554,7 @@ const PincodeGeoBase = ({
                                 </Row>
                                 <Row gutter={20}>
                                     <Col span={24}>
-                                        <Button danger type="link" onClick={handlefilteredSearch}>
+                                        <Button type="primary" onClick={handlefilteredSearch}>
                                             Search
                                         </Button>
                                     </Col>
@@ -608,9 +606,9 @@ const PincodeGeoBase = ({
                 </Col>
             </Row>
 
-            <PinCodeAddEditForm {...formProps} />
+            <AddEditForm {...formProps} />
         </>
     );
 };
 
-export const PincodeGeo = connect(mapStateToProps, mapDispatchToProps)(PincodeGeoBase);
+export const ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);
