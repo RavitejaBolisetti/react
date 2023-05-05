@@ -53,9 +53,6 @@ const AddEditFormMain = (props) => {
     }
 
     useEffect(() => {
-        // if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        //     setSelectedTreeKey([treeCodeId]);
-        // }
         setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
@@ -79,7 +76,7 @@ const AddEditFormMain = (props) => {
     };
     return (
         <>
-            <Form form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" {...attributeHierarchyFieldValidation}>

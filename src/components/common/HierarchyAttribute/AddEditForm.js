@@ -62,7 +62,7 @@ const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRo
                 display: 'flex',
             }}
         >
-            <Form id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+            <Form autoComplete="off" id="myForm" form={form} onFieldsChange={handleFormSubmitBtn} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                 {!isViewModeVisible ? (
                     <>
                         <Row gutter={20}>
