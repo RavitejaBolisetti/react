@@ -7,6 +7,8 @@ import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { DataTable } from 'utils/dataTable';
@@ -117,7 +119,8 @@ export const StateGeoBase = (props) => {
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
+
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = searchData.find((i) => i.code === record.code);
@@ -128,7 +131,7 @@ export const StateGeoBase = (props) => {
     };
 
     const handleView = (record) => {
-        setFormActionType('view');
+        setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
@@ -198,23 +201,26 @@ export const StateGeoBase = (props) => {
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
-        setFormActionType('add');
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
 
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {

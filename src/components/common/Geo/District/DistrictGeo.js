@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -115,7 +117,7 @@ export const DistrictGeoBase = (props) => {
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = searchData.find((i) => i.code === record.code);
@@ -126,7 +128,7 @@ export const DistrictGeoBase = (props) => {
     };
 
     const handleView = (record) => {
-        setFormActionType('view');
+        setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
@@ -197,23 +199,26 @@ export const DistrictGeoBase = (props) => {
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
-        setFormActionType('add');
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
 
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {
@@ -228,7 +233,7 @@ export const DistrictGeoBase = (props) => {
         setFilterString({ ...filterString, keyword: e.target.value });
     };
 
-    const onStateChangeHandle = (value) => {
+    const handleStateChange = (value) => {
         setFilterString({ ...filterString, state: value });
     };
 
@@ -257,7 +262,7 @@ export const DistrictGeoBase = (props) => {
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
-            method: formActionType === 'update' ? 'put' : 'post',
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
@@ -319,7 +324,7 @@ export const DistrictGeoBase = (props) => {
                                         District List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select placeholder="State" onChange={onStateChangeHandle} allowClear className={styles.headerSelectField}>
+                                        <Select placeholder="State" onChange={handleStateChange} allowClear className={styles.headerSelectField}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}

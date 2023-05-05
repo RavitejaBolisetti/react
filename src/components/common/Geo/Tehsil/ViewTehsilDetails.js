@@ -9,12 +9,14 @@ const ViewTehsilDetailsMain = ({ formData, styles, parameterType }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-    console.log(formData,'DATA');
+    console.log(formData, 'DATA');
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
+                    <Descriptions.Item label="State Name">{formData?.stateName}</Descriptions.Item>
+                    <Descriptions.Item label="District Name">{formData?.districtName}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil Name">{formData?.name}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil Category">{formData?.tehsilCategory}</Descriptions.Item>
