@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 
@@ -125,12 +126,10 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
-        console.log(searchData, 'searchTehsil');
         const data = searchData.find((i) => i.code === record.code);
-        console.log('data', data);
         if (data) {
             data && setFormData(data);
             setIsFormVisible(true);
@@ -138,7 +137,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     };
 
     const handleView = (record) => {
-        setFormActionType('view');
+        setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
@@ -211,14 +210,15 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
     const hanndleEditData = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
+
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
-        setFormActionType('add');
+        setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
         setFooterEdit(false);
@@ -265,7 +265,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
 
         const requestData = {
             data: data,
-            method: formActionType === 'update' ? 'put' : 'post',
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
