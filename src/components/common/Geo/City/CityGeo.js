@@ -102,7 +102,9 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     useEffect(() => {
         if (isDataLoaded && cityData && userId) {
             if (filterString) {
-                const filterDataItem = cityData?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
+                const keyword = filterString?.keyword;
+                const state = filterString?.state;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(cityData?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -110,6 +112,8 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
+
+  
 
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
@@ -220,11 +224,11 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        setFilterString({ ...filterString, keyword: value });
     };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
     };
 
     const onFinish = (values) => {
