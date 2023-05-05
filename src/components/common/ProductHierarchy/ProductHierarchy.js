@@ -9,7 +9,7 @@ import { HierarchyFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 import style from '../ProductHierarchy/producthierarchy.module.css';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { AddEditForm } from './AddEditForm';
@@ -21,7 +21,7 @@ import { FaHistory } from 'react-icons/fa';
 
 import { ViewProductDetail } from './ViewProductDetail';
 
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -69,9 +69,9 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
             skulist: productHierarchyDataActions.skulist,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
         },
@@ -194,6 +194,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleAdd = () => {
+        setIsFormVisible(false);
         setIsFormVisible(true);
     };
 
@@ -283,7 +284,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setSelectedTreeSelectKey,
         handleAttributeChange,
         isVisible: isFormVisible,
-        onCloseAction: () => setIsFormVisible(false),
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
         handleResetBtn,
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
@@ -308,8 +312,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const leftCol = productHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 8 : 24;
 
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
     return (
         <>
@@ -319,13 +323,15 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={24} md={5} lg={5} xl={5} className={styles.lineHeight33}>
                                         Hierarchy
                                     </Col>
-                                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                         <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
                                             <Option value="hyr">Hyr</Option>
                                         </Select>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                         <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
                                     </Col>
                                 </Row>

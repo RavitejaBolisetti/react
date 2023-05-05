@@ -10,3 +10,9 @@ export const hierarchyAttributeFetchList = () => {
 export const listShowLoading = () => {
     return;
 };
+export const fetchMenuList = () => {
+    return;
+};
+export const fetchRole = () => {
+    return;
+};

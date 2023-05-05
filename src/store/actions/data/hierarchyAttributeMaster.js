@@ -1,132 +1,22 @@
-import { doLogout, unAuthenticateUser } from 'store/actions/auth';
-import { axiosAPICall } from 'utils/axiosAPICall';
-import { withAuthToken } from 'utils/withAuthToken';
+import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_ATTRIBUTE_MASTER } from 'constants/routingApi';
-import { message } from 'antd';
 
-export const HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED';
-export const HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING';
-export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED';
-export const HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING';
-export const HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING = 'HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING';
+export const HIERARCHY_ATTRIBUTE_MASTER_LOADING_DATA = 'HIERARCHY_ATTRIBUTE_MASTER_LOADING_DATA';
+export const HIERARCHY_ATTRIBUTE_MASTER_LIST_RECIEVE_DATA = 'HIERARCHY_ATTRIBUTE_MASTER_LIST_RECIEVE_DATA';
+export const HIERARCHY_ATTRIBUTE_MASTER_FILTERED_LIST_RECIEVE_DATA = 'HIERARCHY_ATTRIBUTE_MASTER_FILTERED_LIST_RECIEVE_DATA';
+export const HIERARCHY_ATTRIBUTE_MASTER_RECIEVE_DETAIL_DATA = 'HIERARCHY_ATTRIBUTE_MASTER_RECIEVE_DETAIL_DATA';
+export const HIERARCHY_ATTRIBUTE_MASTER_SAVE_DATA = 'HIERARCHY_ATTRIBUTE_MASTER_SAVE_DATA';
+export const HIERARCHY_ATTRIBUTE_MASTER_RESET_DATA = 'HIERARCHY_ATTRIBUTE_MASTER_RESET_DATA';
 
-const receiveData = (data) => ({
-    type: HIERARCHY_ATTRIBUTE_MASTER_DATA_LOADED,
-    isLoaded: true,
-    data,
+const baseURL = BASE_URL_ATTRIBUTE_MASTER;
+
+export const hierarchyAttributeMasterDataActions = dataActions({
+    baseURL,
+    moduleName: 'Hierarchy Attribute Master',
+    RECEIVE_DATA_LOADING_ACTION_CONSTANT: HIERARCHY_ATTRIBUTE_MASTER_LOADING_DATA,
+    RECEIVE_DATA_ACTION_CONSTANT: HIERARCHY_ATTRIBUTE_MASTER_LIST_RECIEVE_DATA,
+    RECEIVE_FILTERED_DATA_ACTION_CONSTANT: HIERARCHY_ATTRIBUTE_MASTER_FILTERED_LIST_RECIEVE_DATA,
+    RECIEVE_DATA_DETAIL_ACTION_CONSTANT: HIERARCHY_ATTRIBUTE_MASTER_RECIEVE_DETAIL_DATA,
+    SAVE_DATA_ACTION_CONSTANT: HIERARCHY_ATTRIBUTE_MASTER_SAVE_DATA,
+    RESET_DATA_ACTION_CONSTANT: HIERARCHY_ATTRIBUTE_MASTER_RESET_DATA,
 });
-
-const receiveHeirarchyDetailData = (data) => ({
-    type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_LOADED,
-    isLoaded: true,
-    data,
-});
-
-const hierarchyAttributeMasterActions = {};
-
-const baseURLPath = BASE_URL_ATTRIBUTE_MASTER;
-
-hierarchyAttributeMasterActions.listShowLoading = (isLoading) => ({
-    type: HIERARCHY_ATTRIBUTE_MASTER_DATA_SHOW_LOADING,
-    isLoading,
-});
-
-hierarchyAttributeMasterActions.detailDataListShowLoading = (isLoading) => ({
-    type: HIERARCHY_ATTRIBUTE_MASTER_DETAIL_DATA_SHOW_LOADING,
-    isLoading,
-});
-
-hierarchyAttributeMasterActions.onSaveShowLoading = (isLoading) => ({
-    type: HIERARCHY_ATTRIBUTE_ON_SAVE_DATA_SHOW_LOADING,
-    isLoading,
-});
-
-hierarchyAttributeMasterActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, type = '' } = params;
-    setIsLoading(true);
-    const onError = (errorMessage) => message.error(errorMessage);
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(receiveData(res?.data));
-        } else {
-            onError('Internal Error, Please try again');
-        }
-    };
-
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: baseURLPath + (type ? '?type=' + type : ''),
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-hierarchyAttributeMasterActions.fetchDetailList = withAuthToken((params) => ({ token, accessToken }) => (dispatch) => {
-    const { setIsLoading, data, userId, type = '' } = params;
-    setIsLoading(true);
-    const onError = (errorMessage) =>{
-        setIsLoading(false);
-         message.error(errorMessage)
-        };
-
-    const onSuccess = (res) => {
-        setIsLoading(false);
-        if (res?.data) {
-            dispatch(receiveHeirarchyDetailData(res?.data));
-        } else {
-            onError('Internal Error, Please try again');
-        }
-    };
-
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: baseURLPath + (type ? '?type=' + type : ''),
-        token,
-        userId,
-        accessToken,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-hierarchyAttributeMasterActions.saveData = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, onSuccess } = params;
-    setIsLoading(true);
-
-    const apiCallParams = {
-        data,
-        method: 'post',
-        url: baseURLPath,
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
-export { hierarchyAttributeMasterActions };

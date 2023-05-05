@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { Menu } from './menu';
-import { Geo } from './geo';
+// import { Geo } from './geo';
 import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { criticalityGroup } from './criticalityGroup';
@@ -13,10 +13,12 @@ import { ConfigurableParameterEditing } from './configurableParamterEditing';
 import { dealerManpower } from './dealerManpower';
 import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
+import { UserManagement } from './userManagement';
+import { UserManagementManufacturer } from './UserManagementManufacturer';
+import { Geo } from './geo';
 
 export const data = combineReducers({
     Menu,
-    Geo,
     ProductHierarchy,
     HierarchyAttributeMaster,
     criticalityGroup,
@@ -28,5 +30,8 @@ export const data = combineReducers({
     ConfigurableParameterEditing,
     dealerManpower,
     ApplicationMaster,
-    QualificationMaster
+    QualificationMaster,
+    UserManagement,
+    UserManagementManufacturer,
+    Geo,
 });

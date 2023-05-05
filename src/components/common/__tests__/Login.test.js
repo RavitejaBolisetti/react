@@ -1,11 +1,21 @@
-import { screen, render, fireEvent, findAllByText } from '@testing-library/react';
-import { Logins } from '../../Auth/Login/Login';
+import { screen, render, fireEvent, findAllByText, cleanup } from '@testing-library/react';
+import { Logins, mapStateToProps } from '../../Auth/Login/Login';
 import { ForgotPassword } from '../../Auth/ForgotPassword';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LoginPage } from 'pages/auth';
+import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { initialState } from 'store/reducers/authPages/LoginPage';
+import { configureStore } from 'store/configureStore';
+import createMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 
 jest.mock('react-redux', () => ({
     connect: () => (Logins) => Logins,
 }));
+
+  
 
 const doCloseLoginError = () => {
     return;
@@ -28,7 +38,7 @@ describe('Login component', () => {
                 </Routes>
             </BrowserRouter>
         );
-        const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)');
+        const userId = await screen.findByPlaceholderText('User ID (MILE ID.Parent ID)');
         const passInput = await screen.getByPlaceholderText('Password');
         const loginBtn = await screen.getByText('Login');
         fireEvent.change(userId, { target: { value: '11111' } });
@@ -36,8 +46,8 @@ describe('Login component', () => {
         fireEvent.change(userId, { target: { value: '' } });
         fireEvent.change(passInput, { target: { value: '' } });
         fireEvent.click(loginBtn);
-        const validation = screen.findByText('Please Enter User ID (mile id.parent id)');
-        const validation2 = screen.findByText('Please Enter Password');
+        const validation = screen.findByText('Please enter user id');
+        const validation2 = screen.findByText('Please enter password');
         expect(userId).toBeTruthy();
         expect(passInput).toBeTruthy();
         expect(validation).toBeTruthy();
@@ -53,7 +63,7 @@ describe('Login component', () => {
                 </Routes>
             </BrowserRouter>
         );
-        const userId = await screen.getByPlaceholderText('User ID (mile id.parent id)');
+        const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID)');
         const forgotPasswordLink = await screen.getByText('Forgot password?');
         fireEvent.click(forgotPasswordLink);
         const verifyUserBtn = await screen.getByText('Verify User');
@@ -65,12 +75,51 @@ describe('Login component', () => {
         render(
             <BrowserRouter>
                 <Routes>
-                    <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true} />} />
+                    <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true}  />} />
                 </Routes>
             </BrowserRouter>
         );
         const ssoLogin = screen.getByText('M&M User Login');
         fireEvent.click(ssoLogin);
     });
+   
+    // const mockState = {
+    //     auth: {
+    //       isError: true,
+    //       loginFailure: 'Invalid credentials',
+    //       preLoginData: { username: 'johndoe', password: 'password123' },
+    //     },
+    //   };
+      
+      
+    //   describe('MyComponent', () => {
+    //     test('should render correctly', () => {
+    //       // Call mapStateToProps with the mock state
+    //       render(
+    //         <BrowserRouter>
+    //             <Routes>
+    //                 <Route path="*" element={<Logins doCloseLoginError={doCloseLoginError} errorMessage={errorMessage} isError={true} />} />
+    //                 <Route path="/forgot-password" element={<ForgotPassword />} />
+    //             </Routes>
+    //         </BrowserRouter>
+    //     );
+    //       const props = mapStateToProps(mockState);
+      
+    //       // Check that the props are correct
+    //       expect(props.isError).toBe(true);
+    //       expect(props.loginFailure).toBe('Invalid credentials');
+    //       expect(props.preLoginData).toEqual({ userId: 'johndoe', password: 'password123' });
+      
+    //       // Render the component and check that it matches the snapshot
+    //       const component = shallow(<Logins {...props} />);
+    //       expect(component).toMatchSnapshot();
+    //     });
+      
+      
+      
+      
+      
+      
+      
 });
 

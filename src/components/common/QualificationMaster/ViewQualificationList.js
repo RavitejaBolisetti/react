@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewQualificationListMain = ({formData,styles}) => {
+const ViewQualificationListMain = ({ selectedRecord, style }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -9,13 +9,12 @@ const ViewQualificationListMain = ({formData,styles}) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
             <>
-            {console.log(formData)}
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>
-                    <Descriptions.Item label="Qualification Name">{formData?.qualificationName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
+                    <Descriptions.Item label="Qualification Code">{selectedRecord?.qualificationCode}</Descriptions.Item>
+                    <Descriptions.Item label="Qualification Name">{selectedRecord?.qualificationName}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{selectedRecord?.status === 1 ? <text className={style.activeText}>Active</text> : <text className={style.inactiveText}>InActive</text>}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>
@@ -23,7 +22,3 @@ const ViewQualificationListMain = ({formData,styles}) => {
 };
 
 export const ViewQualificationList = ViewQualificationListMain;
-
-{
-    /* </div> */
-}

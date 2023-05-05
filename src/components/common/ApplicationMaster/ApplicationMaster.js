@@ -14,7 +14,7 @@ import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { EN } from 'language/en';
+import { LANGUAGE_EN, EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
 
@@ -277,8 +277,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
 
     const leftCol = menuData?.length > 0 ? 16 : 24;
     const rightCol = menuData?.length > 0 ? 8 : 24;
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     return (
         <>
             <Row gutter={20} span={24}>

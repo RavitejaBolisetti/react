@@ -65,11 +65,46 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('COMN-07.01')]: {
-        key: 'COMN-07.01',
-        link: routing.ROUTING_COMMON_GEO,
+    [getMenyKey('COMN-05.04')]: {
+        key: 'COMN-05.04',
+        link: routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY,
         icon: undefined,
-        parentMenuId: 'FAV',
+        parentMenuId: 'ADMN',
+    },
+
+    // [getMenyKey('COMN-07.01')]: {
+    //     key: 'COMN-07.01',
+    //     link: routing.ROUTING_COMMON_GEO,
+    //     icon: undefined,
+    //     parentMenuId: 'FAV',
+    // },
+
+    [getMenyKey('COMN-07.03')]: {
+        key: 'COMN-07.03',
+        link: routing.ROUTING_COMMON_GEO_STATE,
+        icon: undefined,
+        parentMenuId: 'COMN-07',
+    },
+
+    [getMenyKey('COMN-07.04')]: {
+        key: 'COMN-07.04',
+        link: routing.ROUTING_COMMON_GEO_DISTRICT,
+        icon: undefined,
+        parentMenuId: 'COMN-07',
+    },
+
+    [getMenyKey('COMN-07.05')]: {
+        key: 'COMN-07.05',
+        link: routing.ROUTING_COMMON_GEO_CITY,
+        icon: undefined,
+        parentMenuId: 'COMN-07',
+    },
+
+    [getMenyKey('COMN-07.06')]: {
+        key: 'COMN-07.06',
+        link: routing.ROUTING_COMMON_GEO_CITY,
+        icon: undefined,
+        parentMenuId: 'COMN-07',
     },
 
     [getMenyKey('COMN-03.01')]: {
@@ -79,11 +114,32 @@ export const MenuConstant = {
         parentMenuId: 'COMN-03',
     },
 
+    [getMenyKey('COMN-02.01')]: {
+        key: 'COMN-02.01',
+        link: routing.ROUTING_COMMON_ROLE_MANAGEMENT,
+        icon: undefined,
+        parentMenuId: 'COMN-02',
+    },
+
+    [getMenyKey('COMN-03.02')]: {
+        key: 'COMN-03.02',
+        link: routing.ROUTING_COMMON_APPLICATION_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-03',
+    },
+
     [getMenyKey('COMN-03.07')]: {
         key: 'COMN-03.07',
         link: routing.ROUTING_COMMON_CONFIG_PARAM_EDIT,
         icon: undefined,
         parentMenuId: 'COMN-03',
+    },
+
+    [getMenyKey('COMN-05.03')]: {
+        key: 'COMN-05.03',
+        link: routing.ROUTING_COMMON_BRANCH_DEALER_MAPPING,
+        icon: undefined,
+        parentMenuId: 'COMN-05',
     },
 
     [getMenyKey('DBP')]: {

@@ -11,10 +11,10 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
 
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { showGlobalNotification } from 'store/actions/notification';
-import AddUpdateDrawer from './AddUpdateDrawer';
+import { AddEditForm } from './AddEditForm';
 import DataTable from '../../../utils/dataTable/DataTable';
 import { escapeRegExp } from 'utils/escapeRegExp';
 
@@ -32,12 +32,15 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+    const moduleTitle = 'Hierarchy Attribute Master';
+
     let returnValue = {
         collapsed,
         userId,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
         detailData,
+        moduleTitle,
         isDataLoading,
         isLoadingOnSave,
     };
@@ -49,12 +52,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeFetchDetailList: hierarchyAttributeMasterActions.fetchDetailList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
-            detailDataListShowLoading: hierarchyAttributeMasterActions.detailDataListShowLoading,
-            onSaveShowLoading: hierarchyAttributeMasterActions.onSaveShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetailList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
+            detailDataListShowLoading: hierarchyAttributeMasterDataActions.detailDataListShowLoading,
+            onSaveShowLoading: hierarchyAttributeMasterDataActions.onSaveShowLoading,
 
             showGlobalNotification,
         },
@@ -62,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, detailDataListShowLoading, isDataLoading, onSaveShowLoading, isLoadingOnSave }) => {
+export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, detailDataListShowLoading, isDataLoading, onSaveShowLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
@@ -83,6 +86,8 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
     const [alertNotification, contextAlertNotification] = notification.useNotification();
     const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
     useEffect(() => {
         if (userId) {
@@ -141,8 +146,10 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     const handleEditView = () => {
         setFormActionType('edit');
         setIsReadOnly(false);
+        setIsViewModeVisible(false);
         setFormBtnDisable(false);
         setcodeIsReadOnly(true);
+        setIsFormVisible(true);
     };
 
     const onError = (message) => {
@@ -152,13 +159,15 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
 
     const handleAdd = () => {
         setFormActionType('add');
+        setIsFormVisible(true);
+        setIsViewModeVisible(false);
+
         setEditRow({
             duplicateAllowedAtAttributerLevelInd: true,
             duplicateAllowedAtOtherParent: true,
             isChildAllowed: true,
             status: true,
         });
-        setShowDrawer(true);
         setcodeIsReadOnly(false);
     };
     const filterFunction = (filterString) => (title) => {
@@ -166,12 +175,14 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
     const edit = (record, type) => {
         setFormActionType(type);
+        setIsFormVisible(true);
         setEditRow(record);
-        setShowDrawer(true);
         setFormBtnDisable(false);
+        setIsViewModeVisible(false);
 
         if (type === 'view') {
             setIsReadOnly(true);
+            setIsViewModeVisible(true);
         }
         setcodeIsReadOnly(true);
     };
@@ -259,17 +270,22 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         const onSuccess = (res) => {
             onSaveShowLoading(false);
             form.resetFields();
-            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
             setFormBtnDisable(false);
             if (saveclick === true) {
-                setShowDrawer(false);
+                setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'topRight' });
             } else {
-                setShowDrawer(true);
+                setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
             forceUpdate();
         };
+
+        setTimeout(() => {
+            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
+            
+        }, 2000);
+
         const onError = (message) => {
             onSaveShowLoading(false);
             showGlobalNotification({ message, placement: 'bottomRight' });
@@ -279,7 +295,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleChange = (attributeType) => {
@@ -291,6 +307,31 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
         isLoading: isDataLoading,
         tableData: searchData,
         tableColumn: tableColumn,
+    };
+
+    const formProps = {
+        isVisible: isFormVisible,
+        isViewModeVisible,
+        codeIsReadOnly,
+        tableData: detailData?.hierarchyAttribute,
+        setsaveclick,
+        setsaveandnewclick,
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnDisable(false), form.resetFields()),
+        titleOverride: (isViewModeVisible ? 'View ' : editRow?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        selectedHierarchy,
+        onFinishFailed,
+        onFinish,
+        setCheckFields,
+        setEditRow,
+        editRow,
+        saveandnewclick,
+        formActionType,
+        handleEditView,
+        isReadOnly,
+        setIsReadOnly,
+        setFormBtnDisable,
+        formBtnDisable,
+        isLoadingOnSave,
     };
 
     return (
@@ -307,12 +348,14 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                             <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                                 Hierarchy Attribute Type
                                             </Col>
-                                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                            <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                                 <Select className={styles.headerSelectField} showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                                     {attributeData?.map((item) => (
                                                         <Option value={item}>{item}</Option>
                                                     ))}
                                                 </Select>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                                                 {detailData?.hierarchyAttributeType && <Search placeholder="Search" className={styles.headerSearchField} allowClear onSearch={onSearchHandle} onChange={onChangeHandle} />}
                                             </Col>
                                         </Row>
@@ -326,7 +369,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                                             </Button>
                                         </Col>
                                     )}
-                                    {/* </div> */}
+                                   
                                 </Row>
                             </Col>
                         </Row>
@@ -378,29 +421,7 @@ export const HierarchyAttributeBase = ({ userId, isDataLoaded, isDataAttributeLo
                     </Col>
                 </Row>
             </>
-            <AddUpdateDrawer
-                codeIsReadOnly={codeIsReadOnly}
-                tableData={detailData?.hierarchyAttribute}
-                setsaveclick={setsaveclick}
-                setsaveandnewclick={setsaveandnewclick}
-                selectedHierarchy={selectedHierarchy}
-                onFinishFailed={onFinishFailed}
-                onFinish={onFinish}
-                setCheckFields={setCheckFields}
-                setForceReset={setForceReset}
-                setEditRow={setEditRow}
-                editRow={editRow}
-                showDrawer={showDrawer}
-                setShowDrawer={setShowDrawer}
-                saveandnewclick={saveandnewclick}
-                formActionType={formActionType}
-                handleEditView={handleEditView}
-                isReadOnly={isReadOnly}
-                setIsReadOnly={setIsReadOnly}
-                setFormBtnDisable={setFormBtnDisable}
-                formBtnDisable={formBtnDisable}
-                isLoadingOnSave={isLoadingOnSave}
-            />
+            <AddEditForm {...formProps} />
         </>
     );
 };

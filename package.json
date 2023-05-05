@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "@nastyox/rando.js": "^2.0.5",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
@@ -38,7 +39,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test --coverage",
         "eject": "react-scripts eject",
-        "coverage": "react-scripts test --coverage --watchAll=false --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+        "coverage": "react-scripts test --coverage --watchAll=false  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {

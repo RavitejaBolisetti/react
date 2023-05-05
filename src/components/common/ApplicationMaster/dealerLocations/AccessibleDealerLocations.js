@@ -11,14 +11,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { debounce } from 'utils/debounce';
 
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
-const locationDeleteTitle = EN.GENERAL.REMOVE_DEALER_LOCATION.TITLE;
-const locationDeleteMessage = EN.GENERAL.REMOVE_DEALER_LOCATION.MESSAGE.replace('{NAME}', 'Location');
-const addDealerLocation = EN.GENERAL.ADD_DEALER_LOCATION.MESSAGE;
-const addDealerLocationTitle = EN.GENERAL.ADD_DEALER_LOCATION.TITLE;
-const addDuplicateDealerLocation = EN.GENERAL.ADD_DUPLICATE_DEALER_LOCATION.MESSAGE;
-const addDuplicateDealerLocationTitle = EN.GENERAL.ADD_DUPLICATE_DEALER_LOCATION.TITLE;
+const locationDeleteTitle = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.TITLE;
+const locationDeleteMessage = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.MESSAGE.replace('{NAME}', 'Location');
+const addDealerLocation = LANGUAGE_EN.GENERAL.ADD_DEALER_LOCATION.MESSAGE;
+const addDealerLocationTitle = LANGUAGE_EN.GENERAL.ADD_DEALER_LOCATION.TITLE;
+const addDuplicateDealerLocation = LANGUAGE_EN.GENERAL.ADD_DUPLICATE_DEALER_LOCATION.MESSAGE;
+const addDuplicateDealerLocationTitle = LANGUAGE_EN.GENERAL.ADD_DUPLICATE_DEALER_LOCATION.TITLE;
 
 const mapStateToProps = (state) => {
     const {
@@ -92,15 +92,14 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
         }
     }, [dealerLocations, searchValue]);
 
-
     const handleSelect = (value) => {
         let locationDetails = dealerLocations?.find((location) => location?.dealerLocationName === value);
         if (finalFormdata?.accessibleLocation?.findIndex((el) => el?.dealerMasterLocationId === locationDetails?.id) !== -1) {
-            showGlobalNotification({ notificationType: 'error', title: addDuplicateDealerLocationTitle, message: addDuplicateDealerLocation,  placement: 'bottomRight' });
+            showGlobalNotification({ notificationType: 'error', title: addDuplicateDealerLocationTitle, message: addDuplicateDealerLocation, placement: 'bottomRight' });
             return;
         }
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '' }] }));
-        showGlobalNotification({ notificationType: 'success', title: addDealerLocationTitle, message: addDealerLocation,  placement: 'bottomRight' });
+        showGlobalNotification({ notificationType: 'success', title: addDealerLocationTitle, message: addDealerLocation, placement: 'bottomRight' });
     };
 
     const onSearchLocation = debounce(function (text) {
@@ -128,16 +127,7 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
             <Divider />
             <Row gap={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <AutoComplete
-                        className={styles.searchField}
-                        options={dealerLocationsList}
-                        backfill={false}
-                        onSelect={handleSelect}
-                        onSearch={onSearchLocation}
-                        onChange={handleChange}
-                        allowSearch
-                        notFoundContent="No location found"
-                    >
+                    <AutoComplete className={styles.searchField} options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} onChange={handleChange} allowSearch notFoundContent="No location found">
                         <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>
@@ -145,8 +135,8 @@ const AccessibleDealerLocationMain = ({ userId, dealerLocations, setFinalFormdat
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {finalFormdata?.accessibleLocation?.length > 0
                         ? finalFormdata?.accessibleLocation?.map((location) => {
-                            return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
-                        })
+                              return <LocationCard {...location} handleDeleteLocation={handleDeleteLocation} />;
+                          })
                         : ''}
                 </Col>
             </Row>

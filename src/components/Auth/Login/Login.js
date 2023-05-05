@@ -183,7 +183,7 @@ const Login = (props) => {
 
     const passowrdSuffix = (
         <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword}>
-            {!showPassword ? <AiOutlineEyeInvisible size={24} /> : <AiOutlineEye size={24} />}
+            {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
         </span>
     );
     return (
@@ -213,15 +213,15 @@ const Login = (props) => {
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="userId" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />}
+                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            {<Input prefix={<BiUser size={18} />} type="text" maxLength={25} placeholder="User ID (MILE ID.Parent ID)*" />}
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input type={showPassword ? 'text' : 'password'} placeholder="Password" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
+                                                        <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                            <Input type={showPassword ? 'text' : 'password'} placeholder="Password*" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
@@ -231,7 +231,7 @@ const Login = (props) => {
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
+                                                        <Button data-testid="Login"className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
                                                     </Col>

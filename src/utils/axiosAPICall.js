@@ -1,4 +1,4 @@
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 import axios from 'axios';
 import { clearLocalStorageData } from 'store/actions/auth';
@@ -30,14 +30,14 @@ const baseAPICall = (params) => {
         };
     }
 
-    const unAuthorizedTtitle = EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
-    const unAuthorizedMessage = EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
+    const unAuthorizedTtitle = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
+    const unAuthorizedMessage = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
     const handleErrorMessage = ({ onError, displayErrorTitle, errorTitle, errorMessage }) => {
         onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : onError(errorMessage));
     };
 
-    const onUnAuthenticated = () => {
+    const onUnAuthenticated = (message='') => {
         clearLocalStorageData();
     };
 
@@ -63,7 +63,7 @@ const baseAPICall = (params) => {
                     } else if (response.statusCode === 500) {
                         onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: response?.data?.errors || response?.data?.responseMessage || EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: response?.data?.errors || response?.data?.responseMessage || LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
                     }
                 }
             })
@@ -72,31 +72,31 @@ const baseAPICall = (params) => {
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 if (error.response) {
-                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.ERROR.TITLE, errorMessage: EN.GENERAL.ERROR.MESSAGE });
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.ERROR.MESSAGE });
                 } else if (error.code) {
                     if (error.code === 'ECONNABORTED') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.TITLE, errorMessage: LANGUAGE_EN.GENERAL.REQUEST_TIMEOUT.MESSAGE });
                         onTimeout();
                     } else if (error.code === 'ERR_NETWORK') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE, errorMessage: LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE });
                     } else if (error.code === 'ERR_NAME_NOT_RESOLVED') {
-                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: EN.GENERAL.NETWORK_ERROR.MESSAGE });
+                        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.NETWORK_ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.NETWORK_ERROR.MESSAGE });
                     } else {
                         onError(AXIOS_ERROR_OTHER_ERROR);
                     }
                 } else if (error.request) {
                     // The request was made but no response was received
-                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: EN.GENERAL.NO_RESPONSE.MESSAGE });
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: LANGUAGE_EN.GENERAL.NO_RESPONSE.MESSAGE });
                 } else {
                     // Something happened in setting up the request that triggered an Error
-                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: EN.GENERAL.NO_RESPONSE.MESSAGE });
+                    handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.NO_RESPONSE.TITLE, errorMessage: LANGUAGE_EN.GENERAL.NO_RESPONSE.MESSAGE });
                 }
             })
             .finally(() => {
                 postRequest();
             });
     } catch (err) {
-        handleErrorMessage({ onError, displayErrorTitle, errorTitle: EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
+        handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.INTERNAL_SERVER_ERROR.MESSAGE });
     }
 };
 

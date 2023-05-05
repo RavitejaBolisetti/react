@@ -79,17 +79,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
-            render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
+            render: (text) => (text ? 'Active' : 'In Active'),
         }),
     ];
 

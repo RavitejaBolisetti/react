@@ -1,6 +1,6 @@
 import { LOGIN_PAGE_LOGGING_IN, LOGIN_PAGE_CLEAR } from 'store/actions/authPages/LoginPage';
 
-const initialState = {
+export const initialState = {
     isLoading: false,
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { async } from 'sonarqube-scanner';
 
 
 export const searchFieldTest = async () => {
@@ -11,16 +12,16 @@ export const searchFieldTest = async () => {
     buttonLookAndFireEventByRole('search')
 };
 
-export const buttonLookAndFireEventByRole =(btnText ) => {
-    const Btn = screen.getByRole('button', { name: btnText });
+export const buttonLookAndFireEventByRole =async(btnText ) => {
+    const Btn = await screen.findByRole('button', { name: btnText });
     expect(Btn).toBeTruthy();
     fireEvent.click(Btn);
 
 };
 
 
-export const buttonLookAndFireEventWithLabel = (btnlabel) => {
-    const refBtn = screen.getByLabelText(btnlabel);
+export const buttonLookAndFireEventWithLabel = async (btnlabel) => {
+    const refBtn = await screen.findByLabelText(btnlabel);
     expect(refBtn).toBeTruthy();
     fireEvent.click(refBtn);
 };

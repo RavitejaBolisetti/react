@@ -155,7 +155,7 @@
 }
 
 :global .ant-drawer-body .ant-form-item {
-    margin-bottom: 12px;
+    margin-bottom: 24px;
 }
 
 :global .ant-drawer-body .ant-input-number {
@@ -226,11 +226,6 @@
 
 :global .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
     background: #70c922;
-}
-
-:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    margin-inline-end: 8px;
-    margin-top: -2px;
 }
 
 :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {

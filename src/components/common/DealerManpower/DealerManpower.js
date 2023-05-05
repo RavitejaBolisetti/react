@@ -5,7 +5,7 @@ import { Button, Col, Form, Row } from 'antd';
 import { FaEdit, FaUserPlus, FaUserFriends, FaSave, FaUndo, FaRegTimesCircle } from 'react-icons/fa';
 
 import { dealerManpowerActions } from 'store/actions/data/dealerManpower';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { handleErrorModal, handleSuccessModal } from 'utils/responseModal';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
@@ -45,9 +45,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: dealerManpowerActions.saveData,
             listShowLoading: dealerManpowerActions.listShowLoading,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
         },
         dispatch
     ),

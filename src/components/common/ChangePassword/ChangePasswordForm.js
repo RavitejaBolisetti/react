@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { FiLock } from 'react-icons/fi';
 import { changePasswordActions } from 'store/actions/data/changePassword';
 import { showGlobalNotification } from 'store/actions/notification';
 import { validateRequiredInputField } from 'utils/validation';
@@ -46,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotification, isOpen = false, onOk = () => {}, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
+const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotification, isOpen = false, onOk = () => { }, title = '', discreption = '', doLogout, saveData, isDataLoaded, listShowLoading, userId }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState({ oldPassword: false, newPassword: false, confirmNewPassword: false });
 
@@ -92,16 +93,16 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
         <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item label="Old Password" name="oldPassword" rules={[validateRequiredInputField('old password')]}>
-                        <Input type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('old password')} suffix={passwordSuffix('oldPassword')} />
+                    <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password')]}>
+                        <Input type={showPassword?.oldPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('old password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('oldPassword')} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {/* validateFieldsPassword('New password') */}
-                    <Form.Item label="New Password" name="newPassword" rules={[validateRequiredInputField('new password')]}>
-                        <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} suffix={passwordSuffix('newPassword')} />
+                    <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
+                        <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
                     </Form.Item>
                     {/* {password && <PasswordStrengthBar minLength={8} barColors={['#ddd', '#ef4836', '#f6b44d', '#2b90ef', '#25c281']} scoreWords={['poor', 'weak', 'okay', 'good', 'strong']} password={password} />}
                     <PasswordStrength password={password} /> */}
@@ -111,7 +112,6 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item
-                        label="Confirm Password"
                         name="confirmNewPassword"
                         dependencies={['newPassword']}
                         rules={[
@@ -126,7 +126,7 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
                             }),
                         ]}
                     >
-                        <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} suffix={passwordSuffix('confirmNewPassword')} />
+                        <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('confirmNewPassword')} />
                     </Form.Item>
                 </Col>
             </Row>

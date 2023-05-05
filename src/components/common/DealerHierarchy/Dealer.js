@@ -6,14 +6,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 
 import { dealerHierarchyDataActions } from 'store/actions/data/dealerHierarchy';
-import { hierarchyAttributeMasterActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { AddEditForm } from './AddEditForm';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 import { DEALER_HIERARCHY } from 'constants/modules/dealerHierarchy';
 
 import LeftPanel from 'components/common/LeftPanel';
 
-import { EN } from 'language/en';
+import { LANGUAGE_EN } from 'language/en';
 
 import { ViewDealerDetails } from './ViewDealerDetails';
 import { HierarchyFormButton } from 'components/common/Button';
@@ -55,9 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryModelOpen: dealerHierarchyDataActions.changeHistoryModelOpen,
             showGlobalNotification,
 
-            hierarchyAttributeFetchList: hierarchyAttributeMasterActions.fetchList,
-            hierarchyAttributeSaveData: hierarchyAttributeMasterActions.saveData,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterActions.listShowLoading,
+            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
+            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
         },
         dispatch
     ),
@@ -210,7 +210,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleButtonClick = (type) => {
@@ -273,11 +273,11 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
         viewTitle,
     };
 
-    const leftCol = dealerHierarchyData.length > 0 ? 16 : 24;
-    const rightCol = dealerHierarchyData.length > 0 ? 8 : 24;
+    const leftCol = dealerHierarchyData?.length > 0 ? 16 : 24;
+    const rightCol = dealerHierarchyData?.length > 0 ? 8 : 24;
 
-    const noDataTitle = EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
 
     return (
         <>
@@ -300,7 +300,7 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {dealerHierarchyData.length <= 0 ? (
+                        {dealerHierarchyData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
