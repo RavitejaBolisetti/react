@@ -27,7 +27,6 @@ export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hie
 export const BASE_URL_PRODUCT_HIERARCHY_SKU = BASE_URL + 'product/skuattribute';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE = BASE_URL + 'product/skuattribute';
 
-
 export const BASE_URL_ATTRIBUTE_MASTER = BASE_URL + 'hierarchyattributes';
 
 export const BASE_URL_CONFIG_PARAM_EDIT_TYPE = BASE_URL + 'configurableparametertypes';
@@ -64,3 +63,6 @@ export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';
 
 export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';
+
+export const BASE_URL_DEALER_LOCATION_TYPE = BASE_URL + 'dealer/locationtypes';
+export const BASE_URL_DEALER_LOCATION_TYPE_SAVE = BASE_URL + 'dealer/locationtypes';

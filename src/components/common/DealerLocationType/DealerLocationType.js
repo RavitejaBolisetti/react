@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 // import { bindActionCreators } from 'redux';
 // import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+// import { dealerlocationDataActions } from 'store/actions/data/dealerLocationType';
 import { STATE_DROPDOWN } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
@@ -26,9 +27,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: configData = [], paramdata: typeData = [] },
+            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: dealerlocationData = [], paramdata: typeData = [] },
         },
     } = state;
+
+    // dealerlocationData
 
     const moduleTitle = 'Dealer Location Type Master';
 
@@ -38,7 +41,7 @@ const mapStateToProps = (state) => {
         typeData,
         isLoading,
         moduleTitle,
-        configData: configData?.filter((i) => i),
+        dealerlocationData: dealerlocationData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -57,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, dealerlocationData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -101,16 +104,16 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
     // }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && configData && userId) {
+        if (isDataLoaded && dealerlocationData && userId) {
             if (filterString) {
-                const filterDataItem = configData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
+                const filterDataItem = dealerlocationData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
-                setSearchdata(configData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(dealerlocationData?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, configData, userId]);
+    }, [filterString, isDataLoaded, dealerlocationData, userId]);
 
     // useEffect( () =>{
 
@@ -118,14 +121,14 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
 
     const handleEditBtn = (record) => {
         console.log(record, 'RECORD');
-        console.log(configData, 'configData');
+        console.log(dealerlocationData, 'dealerlocationData');
 
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        //configData
+        //dealerlocationData
         const data = tableData.find((i) => i.id === record.id);
         console.log('data', data);
         if (data) {
@@ -143,7 +146,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        //configData
+        //dealerlocationData
         const data = tableData.find((i) => i.id === record.id);
         if (data) {
             data && setFormData(data);
@@ -344,7 +347,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        configData,
+        dealerlocationData,
         parameterType,
         setParameterType,
         setClosePanels,
@@ -440,7 +443,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
                                     height: 60,
                                 }}
                                 description={
-                                    !configData?.length ? (
+                                    !dealerlocationData?.length ? (
                                         <span>
                                             No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New Dealer Location Type"</span>
                                             <br />
@@ -451,7 +454,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
                                     )
                                 }
                             >
-                                {!configData?.length ? (
+                                {!dealerlocationData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>

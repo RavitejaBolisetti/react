@@ -45,8 +45,6 @@ const AddEditFormMain = (props) => {
     //     parameterType
     // };
 
-    // console.log(CONFIGURABLE_PARAMETARS_INPUT_TYPE,'CONFIGURABLE_PARAMETARS_INPUT_TYPE')
-
     const viewProps = {
         isVisible: isViewModeVisible,
         //setClosePanels,
@@ -65,19 +63,22 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             {/* {console.log(stateCode, 'CODECOE')} */}
-                            <Form.Item label="Location Type Code" initialValue={formData?.controlGroup} name="locationtypecode" rules={[validateRequiredSelectField('Location Type Code')]}>
-                                {/* <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Location Type Code')} onChange={handleSelectState}>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                {/* {STATE_DROPDOWN?.map((item) => (
-                                        <Option value={item?.KEY}>{item?.TITLE}</Option>
-                                    ))} */}
-                                {/* </Select> */}
-                                <Input placeholder={preparePlaceholderText('Location Type Code')} className={styles.inputBox} disabled={true} />
+                            <Form.Item label="Location Type Code" initialValue={formData?.locationCode} name="locationCode" rules={[validateRequiredSelectField('Location Type Code')]}>
+                                <Input
+                                    placeholder={preparePlaceholderText('Location Type Code')}
+                                    className={styles.inputBox}
+
+                                    // addonAfter={
+                                    //     <>
+                                    //         <Button type="primary">Submit</Button>
+                                    //     </>
+                                    // }
+                                />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Location Type Description" name="locationtypedescription" rules={[validateRequiredInputField('Location Type Description')]}>
-                                <Input placeholder={preparePlaceholderText('Location Type Description')} className={styles.inputBox} disabled={true} />
+                            <Form.Item initialValue={formData?.locationDescription} label="Location Type Description" name="locationDescription" rules={[validateRequiredInputField('Location Type Description')]}>
+                                <Input placeholder={preparePlaceholderText('Location Type Description')} className={styles.inputBox} />
                             </Form.Item>
                             {/* initialValue={stateCode} */}
                         </Col>

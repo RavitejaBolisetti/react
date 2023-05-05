@@ -1,8 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
-export const ViewDealerLocationTypeMain = ({ viewTitle, selectedTreeData, styles }) => {
+export const ViewDealerLocationTypeMain = ({ formData, viewTitle, selectedTreeData, styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -14,11 +13,9 @@ export const ViewDealerLocationTypeMain = ({ viewTitle, selectedTreeData, styles
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                <Descriptions.Item label="Code">{selectedTreeData?.geoCode}</Descriptions.Item>
-                <Descriptions.Item label="Name">{selectedTreeData?.geoName}</Descriptions.Item>
-                <Descriptions.Item label="Status">{selectedTreeData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label="Location Type Description">{formData?.locationDescription}</Descriptions.Item>
+                <Descriptions.Item label="Location Type Code">{formData?.locationCode}</Descriptions.Item>
+                <Descriptions.Item label="Status">{formData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );
