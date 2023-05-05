@@ -113,8 +113,6 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
 
-  
-
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
@@ -274,7 +272,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: city.length!=0 ? city : cityData,
+        tableData: city.length != 0 ? city : cityData,
     };
 
     const formProps = {
@@ -381,7 +379,7 @@ export const CityGeoBase = ({ moduleTitle, listCityShowLoading, listDistrictShow
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add City
                                             </Button>
                                         </Col>
                                     </Row>

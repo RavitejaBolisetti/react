@@ -352,7 +352,7 @@ export const StateGeoBase = (props) => {
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add State
                                             </Button>
                                         </Col>
                                     </Row>

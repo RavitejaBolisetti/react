@@ -385,7 +385,7 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add Tehsil
                                             </Button>
                                         </Col>
                                     </Row>
@@ -405,7 +405,5 @@ export const TehsilGeoBase = ({ data, moduleTitle, fetchDataList, isLoading, sav
         </>
     );
 };
-
-// export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);
 
 export const TehsilGeo = connect(mapStateToProps, mapDispatchToProps)(TehsilGeoBase);
