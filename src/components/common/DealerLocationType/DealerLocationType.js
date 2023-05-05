@@ -50,10 +50,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: configParamEditActions.fetchList,
-            // saveData: configParamEditActions.saveData,
-            // fetchDataList: configParamEditActions.fetchDataList,
-            // listShowLoading: configParamEditActions.listShowLoading,
+            // fetchList: dealerlocationDataActions.fetchList,
+            // saveData: dealerlocationDataActions.saveData,
+            // fetchDataList: dealerlocationDataActions.fetchList,
+            // listShowLoading: dealerlocationDataActions.listShowLoading,
             // showGlobalNotification,
         },
         dispatch
