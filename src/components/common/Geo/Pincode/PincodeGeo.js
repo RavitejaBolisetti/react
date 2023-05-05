@@ -18,7 +18,6 @@ import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
-import { AdvancedSearch } from './AdvancedSearch';
 import { geoStateDataActions } from 'store/actions/data/geoState';
 import { geoDistrictDataActions } from 'store/actions/data/geoDistrict';
 import { geoCityDataActions } from 'store/actions/data/geoCity';
@@ -128,26 +127,31 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
     const [showTehsil, setShowTehsil] = useState([]);
     const [show, setShow] = useState([]);
     const [showCity, setShowCity] = useState([]);
+    const [pinCodeSearch,setpinCodeSearch]=useState();
 
-   
+    
     
     useEffect(() => {
         if (!isDataLoaded && userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction,mytype:'?code=799253' });
+           
             fetchStateList({ setIsLoading:listShowLoading , userId, onSuccessAction });
             const coddd = 'UEIW'
             const types=`?stateCode=${coddd}`;
             fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction,mytype:types});
             fetchTehsilList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchCityList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-
              
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData,isPinDataLoaded]);
+    }, [userId, refershData,isPinDataLoaded,pinCodeSearch]);
+    useEffect(()=>{
+        setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
+
+
+    },[geoPindata])
    
 
     useEffect(() => {
@@ -156,10 +160,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                 const filterDataItem = geoPindata?.filter((item) => filterFunction(filterString)(item?.localityName) || filterFunction(filterString)(item?.pinCode));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } 
-            if(geoPindata)
-            {
-                setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
-            }
+            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, userId,geoPindata]);
@@ -207,10 +208,15 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         setShowCity(geoCityData.filter((i)=>i.districtCode === e))
     };
     const handleSelectTehsil = (e) => {
-        setShowTehsil(geoTehsilData.filter((i)=>i.cityCode === e));
+        setShowTehsil(geoTehsilData?.filter((i)=>i.cityCode === e));
     };
 
+    const onSearchHandle = (value) => {
+        fetchList({ setIsLoading: listShowLoading, userId,mytype:'?code='.concat(value) });
 
+
+        // setFilterString({ ...filterString, keyword: value });
+    };
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -302,9 +308,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         setFormData([]);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString(value);
-    };
+    
 
     const onChangeHandle = (e) => {
         setFilterString(e.target.value);
@@ -367,6 +371,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         tableData: searchData,
     };
     console.log(pin,'PINDATA')
+    
 
     const formProps = {
         formActionType,
@@ -405,8 +410,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
         styles,
     };
     const handleButtonClick = () => {
-        setAdvanceSearchVisible(true);
-        setIsFormVisible(true)
+        setAdvanceSearchVisible(!isAdvanceSearchVisible);
         
     };
     console.log(handleButtonClick,'clicked');
@@ -429,7 +433,6 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                                     width: 300,
                                                 }}
                                                 onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
                                             />{' '}
                                             <Button danger type="link" onClick={handleButtonClick}>
                                                 Advanced Search
@@ -438,7 +441,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                     </Row>
                                 </Col>
 
-                                {geoPindata?.length ? (
+                                {searchData?.length ? (
                                     <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
@@ -453,70 +456,70 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                         </div>
                     </Col>
                 </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Card
-                        style={{
-                            width: '100%',
-                            background:'#f4f4f4',
-                        }}
-                    >
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        {isAdvanceSearchVisible && (
+                            <Card
+                                style={{
+                                    width: '100%',
+                                    background: '#f4f4f4',
+                                }}
+                            >
                                 <Row gutter={20}>
-                                    {/* <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                        PIN Code List
-                                    </Col> */}
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {geoStateData?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')} onChange={handleSelectDistrict}>
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {show?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleSelectTehsil}>
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {showCity?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Row gutter={20}>
+                                            {/* <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
+                                    PIN Code List
+                                </Col> */}
+                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                                <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
+                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
+                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                        {geoStateData?.map((item) => (
+                                                            <Option value={item?.code}>{item?.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                                <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')} onChange={handleSelectDistrict}>
+                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                        {show?.map((item) => (
+                                                            <Option value={item?.code}>{item?.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                                <Form.Item label="City" initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleSelectTehsil}>
+                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                        {showCity?.map((item) => (
+                                                            <Option value={item?.code}>{item?.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
 
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}>
-                                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                {showTehsil?.map((item) => (
-                                                    <Option value={item?.code}>{item?.name}</Option>
-                                                ))}
-                                                {console.log(showTehsil)}
-                                            </Select>
-                                        </Form.Item>
+                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                                <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
+                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}>
+                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                        {showTehsil?.map((item) => (
+                                                            <Option value={item?.code}>{item?.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
                                     </Col>
                                 </Row>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Col>
-            </Row>
+                            </Card>
+                        )}
+                    </Col>
+                </Row>
             </Form>
-
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -528,9 +531,9 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                     height: 60,
                                 }}
                                 description={
-                                    !geoPindata?.length ? (
+                                    !searchData?.length ? (
                                         <span>
-                                            No records found. Please add new parameter <br />
+                                            No records found. Please add new Pincode here <br />
                                             using below button
                                         </span>
                                     ) : (
@@ -538,11 +541,11 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                                     )
                                 }
                             >
-                                {!geoPindata?.length ? (
+                                {!searchData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add
+                                                Add Pincode
                                             </Button>
                                         </Col>
                                     </Row>
@@ -559,7 +562,7 @@ const PincodeGeoBase = ({ isLoading,moduleTitle,tableData,isPinLoading,fetchData
                 </Col>
             </Row>
 
-            {isAdvanceSearchVisible ? <AdvancedSearch {...formProps} /> : <PinCodeAddEditForm {...formProps} />}
+            <PinCodeAddEditForm {...formProps} />
         </>
     );
 };
