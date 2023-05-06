@@ -40,26 +40,16 @@ const AddEditFormMain = (props) => {
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.parntProdctId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        console.log("child",treeCodeId)
-        console.log("selectedTreeKey",selectedTreeKey)
+
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-        console.log("sibling",treeCodeId)
-        console.log("selectedTreeKeyS",selectedTreeKey)
-
     }
 
     useEffect(() => {
-        if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-            setSelectedTreeKey([treeCodeId]);
-        console.log("selectedTreeKeyS use efeect",selectedTreeKey)
-
-        }
         setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
@@ -149,7 +139,7 @@ const AddEditFormMain = (props) => {
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                         <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
-                        <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true :formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
+                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -177,11 +167,9 @@ const AddEditFormMain = (props) => {
                         </Panel>
                     </Collapse>
                 ) : null}
-                
             </Form>
         </>
     );
 };
 
 export const AddEditForm = withDrawer(AddEditFormMain, {});
-
