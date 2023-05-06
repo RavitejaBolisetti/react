@@ -4,7 +4,7 @@ import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } f
 // import { bindActionCreators } from 'redux';
 // import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 // import { dealerlocationDataActions } from 'store/actions/data/dealerLocationType';
-import { STATE_DROPDOWN } from './InputType';
+// import { STATE_DROPDOWN } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, dealerlocationData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
-    const defaultParametarType = STATE_DROPDOWN.KEY;
+    // const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
@@ -83,7 +83,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
 
     const [stateCode, isStateCode] = useState('qw');
 
-    const [parameterType, setParameterType] = useState(defaultParametarType);
+    // const [parameterType, setParameterType] = useState(defaultParametarType);
 
     // const loadDependendData = () => {
     //    // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
@@ -256,7 +256,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
         setIsFormVisible(true);
         setIsReadOnly(false);
         setFormData([]);
-        setParameterType(defaultParametarType);
+        // setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
@@ -348,8 +348,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, fetchDataList, isLoading, 
         isFormBtnActive,
         setFormBtnActive,
         dealerlocationData,
-        parameterType,
-        setParameterType,
+
         setClosePanels,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
