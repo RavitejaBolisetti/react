@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
-import { bindActionCreators } from 'redux';
-
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import { showGlobalNotification } from 'store/actions/notification';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
+import { showGlobalNotification } from 'store/actions/notification';
+import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-
+import { bindActionCreators } from 'redux';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -27,26 +25,24 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
-                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
-                State: { isLoaded: isDataLoaded = false, isLoading, data },
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+                District: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
 
-    console.log('countryData', countryData);
-
-    const moduleTitle = 'State Master List';
+    const moduleTitle = 'District Details';
 
     let returnValue = {
         userId,
-        isDataCountryLoaded,
-        isCountryLoading,
-        countryData,
-
         isDataLoaded,
         data,
         isLoading,
         moduleTitle,
+
+        isStateDataLoaded,
+        isStateLoading,
+        stateData,
     };
     return returnValue;
 };
@@ -55,22 +51,20 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCountryList: geoCountryDataActions.fetchList,
-            countryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
 
-            fetchList: geoStateDataActions.fetchList,
-            saveData: geoStateDataActions.saveData,
-            listShowLoading: geoStateDataActions.listShowLoading,
             showGlobalNotification,
+            saveData: geoDistrictDataActions.saveData,
+            fetchList: geoDistrictDataActions.fetchList,
+            listShowLoading: geoDistrictDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const StateGeoBase = (props) => {
-    const { data, isLoading, saveData, fetchList, userId, typeData, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, fetchCountryList, countryShowLoading } = props;
-
+export const ListDistrictBase = (props) => {
+    const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData } = props;
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -81,31 +75,37 @@ export const StateGeoBase = (props) => {
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
+    const [filterData, setFilterData] = useState([]);
+
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
+
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
+    const [stateCode, isStateCode] = useState();
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
     useEffect(() => {
         if (userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
-            }
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded, refershData]);
+    }, [userId, refershData]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
+                const keyword = filterString?.keyword;
+                const state = filterString?.state;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -117,7 +117,7 @@ export const StateGeoBase = (props) => {
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = searchData.find((i) => i.code === record.code);
@@ -128,7 +128,7 @@ export const StateGeoBase = (props) => {
     };
 
     const handleView = (record) => {
-        setFormActionType('view');
+        setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
@@ -143,35 +143,36 @@ export const StateGeoBase = (props) => {
     };
 
     const tableColumn = [];
+
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Srl.',
+            title: 'Srl No.',
             dataIndex: 'srl',
             sorter: false,
             width: '5%',
         }),
 
         tblPrepareColumns({
-            title: 'State Code',
+            title: 'District Code',
             dataIndex: 'code',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'State Name',
+            title: 'District Name',
             dataIndex: 'name',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Country',
-            dataIndex: 'countryName',
-            width: '20%',
+            title: 'State Name',
+            dataIndex: 'stateName',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'status',
+            dataIndex: 'activeIndicator',
             render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
             width: '15%',
         }),
@@ -198,41 +199,52 @@ export const StateGeoBase = (props) => {
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
-        setFormActionType('add');
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
 
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        setFilterString({ ...filterString, keyword: value });
+    };
+
+    const handleSelectState = (value) => {
+        isStateCode(value);
     };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
+    };
+
+    const handleStateChange = (value) => {
+        setFilterString({ ...filterString, state: value });
     };
 
     const onFinish = (values) => {
         const recordId = formData?.code || '';
-        let data = { ...values, id: recordId };
-
+        let data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
@@ -249,22 +261,23 @@ export const StateGeoBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType === 'update' ? 'put' : 'post',
             setIsLoading: listShowLoading,
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
         };
-
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
+
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
+        // tableData: filterData.length === 0 ? data : filterData,
     };
 
     const formProps = {
@@ -279,55 +292,59 @@ export const StateGeoBase = (props) => {
         typeData,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('State Details'),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        tableData: searchData,
+        configData,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
-        isDataCountryLoaded,
-        isCountryLoading,
-        countryData,
+        stateCode,
+        handleSelectState,
+        stateData,
     };
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
+                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        State List
+                                        District List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                            {countryData?.map((item) => (
-                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                        <Select placeholder="State" onChange={handleStateChange} allowClear className={styles.headerSelectField}>
+                                            {stateData?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />{' '}
                                     </Col>
                                 </Row>
                             </Col>
+                            {data?.length ? (
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                    Add State
-                                </Button>
-                            </Col>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                        Add District
+                                    </Button>
+                                </Col>
+                            ) : (
+                                ''
+                            )}
                         </Row>
                     </div>
                 </Col>
             </Row>
-
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -338,9 +355,10 @@ export const StateGeoBase = (props) => {
                                     height: 60,
                                 }}
                                 description={
-                                    !searchData?.length ? (
+                                    !data?.length ? (
                                         <span>
-                                            No records found. Please add new parameter <br />
+                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New District Details"</span>
+                                            <br />
                                             using below button
                                         </span>
                                     ) : (
@@ -348,7 +366,7 @@ export const StateGeoBase = (props) => {
                                     )
                                 }
                             >
-                                {!searchData?.length ? (
+                                {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
@@ -373,4 +391,4 @@ export const StateGeoBase = (props) => {
     );
 };
 
-export const StateGeo = connect(mapStateToProps, mapDispatchToProps)(StateGeoBase);
+export const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);

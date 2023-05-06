@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { ViewCityDetails } from './ViewCityDetails';
+import { ViewDetail } from './ViewDetail';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, statedata, show, setShow } = props;
+    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, stateData } = props;
     const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+
     const disabledProps = { disabled: isReadOnly };
 
     const handleFormValueChange = () => {
@@ -31,8 +33,19 @@ const AddEditFormMain = (props) => {
         styles,
     };
 
-    const onChange = (e) => {
-        setShow(districtData.filter((i) => i.stateCode === e));
+    const handleStateChange = (state) => {
+        form.setFieldValue('districtCode', undefined);
+        form.setFieldValue('districtCodeDisplay', undefined);
+
+        const stateCode = stateData?.find((i) => i?.code === state)?.code;
+        stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
+
+        setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === state));
+    };
+
+    const handleDistrictChange = (district) => {
+        const districtCode = districtData?.find((i) => i?.code === district)?.code;
+        districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
     };
 
     return (
@@ -41,16 +54,16 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" name="stateName" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={onChange}>
-                                    {statedata?.map((item) => (
+                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
+                                    {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateCode} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item label="State Code" initialValue={formData?.stateCode} name="stateCodeDisplay" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -58,17 +71,16 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District Name" name="districtName" rules={[validateRequiredSelectField('District Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')}>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {show?.map((item) => (
+                            <Form.Item initialValue={formData?.districtCode} label="District Name" name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
+                                <Select placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
+                                    {filteredDistrictData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCode" rules={[validateRequiredInputField('District Code')]}>
+                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -96,7 +108,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </>
             ) : (
-                <ViewCityDetails {...viewProps} />
+                <ViewDetail {...viewProps} />
             )}
 
             <Row gutter={20} className={styles.formFooter}>

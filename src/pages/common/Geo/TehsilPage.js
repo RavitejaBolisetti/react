@@ -1,10 +1,10 @@
 import React from 'react';
-import { StateGeo } from 'components/common/Geo';
+import { ListTehsilMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
-export const StateGeoBase = (props) => {
-    const pageTitle = 'State Master';
+export const TehsilGeoBase = (props) => {
+    const pageTitle = 'Tehsil Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -15,9 +15,9 @@ export const StateGeoBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <StateGeo />
+            <ListTehsilMaster />
         </>
     );
 };
 
-export const StateGeoPage = withLayoutMaster(StateGeoBase);
+export const TehsilPage = withLayoutMaster(TehsilGeoBase);

@@ -23,9 +23,9 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const handleSelectState = (state) => {
+    const handleStateChange = (state) => {
         isSelectedState(state);
-        form.setFieldValue('stateCode', stateData?.find((i) => i?.name === state)?.code);
+        form.setFieldValue('stateCodeDisplay', stateData?.find((i) => i?.code === state)?.code);
     };
 
     const viewProps = {
@@ -42,16 +42,16 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" initialValue={formData?.stateName} name="stateName" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleSelectState}>
+                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
+                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
-                                        <Option value={item?.name}>{item?.name}</Option>
+                                        <Option value={item?.code}>{item?.name}</Option>
                                     ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={selectedState} label="State Code" name="stateCode" rules={[validateRequiredInputField('State Code')]}>
+                            <Form.Item label="State Code" initialValue={formData?.stateCode} name="stateCodeDisplay" rules={[validateRequiredInputField('State Code')]}>
                                 <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -74,7 +74,6 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formData?.status} label="Status" name="status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
-                                {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>
                     </Row>

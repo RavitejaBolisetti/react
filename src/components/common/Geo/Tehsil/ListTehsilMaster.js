@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
+
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-import { showGlobalNotification } from 'store/actions/notification';
+
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
+import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
+
+import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
@@ -24,12 +29,13 @@ const mapStateToProps = (state) => {
         data: {
             Geo: {
                 State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
-                District: { isLoaded: isDataLoaded = false, isLoading, data },
+                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
+                Tehsil: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
 
-    const moduleTitle = 'District Details';
+    const moduleTitle = 'Tehsil Details';
 
     let returnValue = {
         userId,
@@ -41,6 +47,10 @@ const mapStateToProps = (state) => {
         isStateDataLoaded,
         isStateLoading,
         stateData,
+
+        isDistrictDataLoaded,
+        isDistrictLoading,
+        districtData,
     };
     return returnValue;
 };
@@ -49,51 +59,53 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            showGlobalNotification,
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
 
-            showGlobalNotification,
-            saveData: geoDistrictDataActions.saveData,
-            fetchList: geoDistrictDataActions.fetchList,
-            listShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchDistrictList: geoDistrictDataActions.fetchList,
+            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+
+            saveData: geoTehsilDataActions.saveData,
+            fetchList: geoTehsilDataActions.fetchList,
+            listShowLoading: geoTehsilDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const DistrictGeoBase = (props) => {
-    const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData } = props;
+export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-
-    const [filterData, setFilterData] = useState([]);
 
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
-
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
-    const [stateCode, isStateCode] = useState();
-
-    const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
+    const [stateFilter, setStateFilter] = useState('');
+    const [districtFilter, setDistrictFilter] = useState('');
 
     useEffect(() => {
         if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            const onSuccessAction = (res) => {
+                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            };
+
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -103,7 +115,9 @@ export const DistrictGeoBase = (props) => {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const state = filterString?.state;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
+                const district = filterString?.district;
+                const tehsil = filterString?.tehsil;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true) && (tehsil ? filterFunction(tehsil)(item?.tehsilCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -115,7 +129,7 @@ export const DistrictGeoBase = (props) => {
     const handleEditBtn = (record) => {
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         const data = searchData.find((i) => i.code === record.code);
@@ -126,14 +140,16 @@ export const DistrictGeoBase = (props) => {
     };
 
     const handleView = (record) => {
-        setFormActionType('view');
+        setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
+
         const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
+            //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
 
@@ -144,41 +160,47 @@ export const DistrictGeoBase = (props) => {
 
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Srl No.',
+            title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
             width: '5%',
         }),
 
         tblPrepareColumns({
-            title: 'District Code',
+            title: 'Tehsil Code',
             dataIndex: 'code',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'District Name',
+            title: 'Tehsil Name',
             dataIndex: 'name',
-            width: '15%',
+            width: '20%',
+        }),
+
+        tblPrepareColumns({
+            title: 'District Name',
+            dataIndex: 'districtName',
+            width: '20%',
         }),
 
         tblPrepareColumns({
             title: 'State Name',
             dataIndex: 'stateName',
-            width: '15%',
+            width: '20%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'activeIndicator',
             render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '15%',
+            width: '10%',
         }),
 
         {
             title: 'Action',
             dataIndex: '',
-            width: '8%',
+            width: '10%',
             render: (record) => [
                 <Space wrap>
                     <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
@@ -197,39 +219,42 @@ export const DistrictGeoBase = (props) => {
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
+
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
-        setFormActionType('add');
+        form.resetFields();
+        setFormData([]);
+
+        setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
-
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
     };
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
     };
 
-    const handleSelectState = (value) => {
-        isStateCode(value);
-    };
-
     const onChangeHandle = (e) => {
         setFilterString({ ...filterString, keyword: e.target.value });
     };
 
-    const onStateChangeHandle = (value) => {
-        setFilterString({ ...filterString, state: value });
+    const handleFilterChange = (name) => (value) => {
+        if (name === 'state') {
+            setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
+        }
+        setFilterString({ ...filterString, [name]: value });
     };
 
     const onFinish = (values) => {
@@ -238,8 +263,7 @@ export const DistrictGeoBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            fetchDataList({ setIsLoading: listShowLoading, userId });
 
             if (showSaveAndAddNewBtn === true || recordId) {
                 setIsFormVisible(false);
@@ -256,12 +280,13 @@ export const DistrictGeoBase = (props) => {
 
         const requestData = {
             data: data,
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             setIsLoading: listShowLoading,
-            method: formActionType === 'update' ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
         };
+
         saveData(requestData);
     };
 
@@ -269,18 +294,13 @@ export const DistrictGeoBase = (props) => {
         form.validateFields().then((values) => {});
     };
 
-    const onChange2 = (e) => {
-        setFilterData([]);
-        setFilterData(data.filter((i) => i.stateCode === e));
-    };
-
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
-        // tableData: filterData.length === 0 ? data : filterData,
     };
 
     const formProps = {
+        form,
         formActionType,
         setFormActionType,
         setIsViewModeVisible,
@@ -291,8 +311,12 @@ export const DistrictGeoBase = (props) => {
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        onCloseAction: () => {
+            form.resetFields();
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
@@ -302,9 +326,12 @@ export const DistrictGeoBase = (props) => {
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
-        stateCode,
-        handleSelectState,
         stateData,
+        districtData,
+        stateFilter,
+        setStateFilter,
+        districtFilter,
+        setDistrictFilter,
     };
 
     return (
@@ -312,30 +339,38 @@ export const DistrictGeoBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        District List
+                                    <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
+                                        Tehsil List
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select placeholder="State" onChange={onStateChangeHandle} allowClear className={styles.headerSelectField}>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />{' '}
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
+                                            {filteredDistrictData?.map((item) => (
+                                                <Option value={item?.code}>{item?.name}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
                             </Col>
+
                             {data?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add District
+                                        Add Tehsil
                                     </Button>
                                 </Col>
                             ) : (
@@ -357,7 +392,7 @@ export const DistrictGeoBase = (props) => {
                                 description={
                                     !data?.length ? (
                                         <span>
-                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New District Details"</span>
+                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New Tehsil Details"</span>
                                             <br />
                                             using below button
                                         </span>
@@ -370,7 +405,7 @@ export const DistrictGeoBase = (props) => {
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Group
+                                                Add Tehsil
                                             </Button>
                                         </Col>
                                     </Row>
@@ -391,4 +426,4 @@ export const DistrictGeoBase = (props) => {
     );
 };
 
-export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DistrictGeoBase);
+export const ListTehsilMaster = connect(mapStateToProps, mapDispatchToProps)(ListTehsilBase);
