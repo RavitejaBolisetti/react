@@ -12,6 +12,7 @@ const AddEditFormMain = (props) => {
     const { hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateData } = props;
+    const { isDataCountryLoaded, countryData, defaultCountry } = props;
 
     const [selectedState, isSelectedState] = useState(formData?.stateCode);
 
@@ -34,12 +35,33 @@ const AddEditFormMain = (props) => {
         styles,
     };
 
+    const handleCountryChange = (countryCode) => {
+        form.setFieldValue('countryCodeDisplay', countryData?.find((i) => i?.countryCode === countryCode)?.countryCode);
+    };
+
     const [form] = Form.useForm();
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                    {countryData?.map((item) => (
+                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item label="Country Code" initialValue={formData?.countryCode || defaultCountry} rules={[validateRequiredInputField('Country Code'), validateAlphanumericWithSpace('Country Code')]} name="countryCodeDisplay">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Country Code')} maxLength={6} disabled={true} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>

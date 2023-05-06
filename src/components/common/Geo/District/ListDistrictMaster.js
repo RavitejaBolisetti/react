@@ -9,6 +9,8 @@ import { filterFunction } from 'utils/filterFunction';
 import { showGlobalNotification } from 'store/actions/notification';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
+
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
@@ -25,6 +27,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
                 State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
                 District: { isLoaded: isDataLoaded = false, isLoading, data },
             },
@@ -32,6 +35,10 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'District Details';
+    const finalCountryData = countryData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
+    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
 
     let returnValue = {
         userId,
@@ -39,7 +46,10 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
-
+        isCountryLoading,
+        countryData: finalCountryData,
+        isDataCountryLoaded,
+        defaultCountry,
         isStateDataLoaded,
         isStateLoading,
         stateData,
@@ -53,7 +63,8 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
-
+            countryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchCountryList: geoCountryDataActions.fetchList,
             showGlobalNotification,
             saveData: geoDistrictDataActions.saveData,
             fetchList: geoDistrictDataActions.fetchList,
@@ -64,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListDistrictBase = (props) => {
-    const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData } = props;
+    const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry } = props;
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -94,9 +105,17 @@ export const ListDistrictBase = (props) => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    }, [userId, isDataCountryLoaded, refershData]);
+
+    useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
@@ -306,6 +325,9 @@ export const ListDistrictBase = (props) => {
         stateCode,
         handleSelectState,
         stateData,
+        defaultCountry,
+        isDataCountryLoaded,
+        countryData,
     };
 
     return (
@@ -319,14 +341,21 @@ export const ListDistrictBase = (props) => {
                                     <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
                                         District List
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                            {countryData?.map((item) => (
+                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                                         <Select placeholder="State" onChange={handleStateChange} allowClear className={styles.headerSelectField}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />{' '}
                                     </Col>
                                 </Row>
