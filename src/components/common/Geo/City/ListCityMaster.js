@@ -4,6 +4,7 @@ import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } f
 import { bindActionCreators } from 'redux';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
                 State: { isLoaded: isDataLoaded = false, isLoading, data: stateData },
                 City: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
                 District: { isLoaded: isDistrictDataLoaded = false, data: districtData },
@@ -36,8 +38,16 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'City Master List';
+    const finalCountryData = countryData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
+
+    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
+        isCountryLoading,
+        countryData: finalCountryData,
+        isDataCountryLoaded,
         isDataLoaded,
         cityData,
         stateData,
@@ -47,6 +57,7 @@ const mapStateToProps = (state) => {
         isCityLoading,
         isLoading,
         moduleTitle,
+        defaultCountry,
     };
     return returnValue;
 };
@@ -55,6 +66,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            countryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchCountryList: geoCountryDataActions.fetchList,
             fetchList: geoStateDataActions.fetchList,
             listShowLoading: geoStateDataActions.listShowLoading,
             listCityShowLoading: geoCityDataActions.listShowLoading,
@@ -67,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -95,11 +108,19 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
             };
 
             fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+            }
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    }, [userId, isDataCountryLoaded, refershData]);
+
+    useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
 
     useEffect(() => {
         if (isDataLoaded && cityData && userId) {
@@ -328,6 +349,9 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        defaultCountry,
+        isDataCountryLoaded,
+        countryData,
     };
     return (
         <>
@@ -340,21 +364,28 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
                                     <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
+                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                            {countryData?.map((item) => (
+                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
                                             {filteredDistrictData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
