@@ -20,4 +20,6 @@ export const CityGeoBase = (props) => {
     );
 };
 
-export const CityPage = withLayoutMaster(CityGeoBase);
+const CityPage = withLayoutMaster(CityGeoBase);
+
+export default CityPage;

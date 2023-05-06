@@ -87,7 +87,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [show, setShow] = useState([]);
-    const [city, setCity] = useState(cityData);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
@@ -167,11 +166,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         setIsReadOnly(true);
     };
 
-    const onChange2 = (e) => {
-        setCity(cityData.filter((i) => i.districtCode === e));
-        setShow([]);
-    };
-
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -235,7 +229,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
 
     const handleReferesh = () => {
         setRefershData(!refershData);
-        setCity(cityData);
     };
 
     const hanndleEditData = (record) => {
@@ -312,10 +305,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         form.validateFields().then((values) => {});
     };
 
-    const onChange = (e) => {
-        setShow(districtData.filter((i) => i.stateCode === e));
-    };
-
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
@@ -338,7 +327,10 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         typeData,
         cityData,
         isVisible: isFormVisible,
-        onCloseAction: () => (form.resetFields(), setIsFormVisible(false), setFormBtnActive(false)),
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
         titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
         onFinish,
         onFinishFailed,
@@ -452,4 +444,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     );
 };
 
-export const ListCityMaster = connect(mapStateToProps, mapDispatchToProps)(ListCityMasterBase);
+const ListCityMaster = connect(mapStateToProps, mapDispatchToProps)(ListCityMasterBase);
+
+export default ListCityMaster;

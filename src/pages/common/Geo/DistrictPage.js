@@ -20,4 +20,6 @@ export const DistrictGeoBase = (props) => {
     );
 };
 
-export const DistrictPage = withLayoutMaster(DistrictGeoBase);
+const DistrictPage = withLayoutMaster(DistrictGeoBase);
+
+export default DistrictPage;

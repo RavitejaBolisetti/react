@@ -20,4 +20,6 @@ export const StateGeoBase = (props) => {
     );
 };
 
-export const StatePage = withLayoutMaster(StateGeoBase);
+const StatePage = withLayoutMaster(StateGeoBase);
+
+export default StatePage;

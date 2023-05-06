@@ -28,6 +28,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                                         fieldNames={fieldNames}
                                         options={actions?.filter((el) => el?.actionName)}
                                         disabled={isBtnDisabled || disableStatus}
+                                        allowClear
                                     />
                                 </Form.Item>
                             </Col>

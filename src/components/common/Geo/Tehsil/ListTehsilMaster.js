@@ -426,4 +426,6 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
     );
 };
 
-export const ListTehsilMaster = connect(mapStateToProps, mapDispatchToProps)(ListTehsilBase);
+const ListTehsilMaster = connect(mapStateToProps, mapDispatchToProps)(ListTehsilBase);
+
+export default ListTehsilMaster;

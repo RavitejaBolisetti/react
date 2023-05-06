@@ -20,4 +20,6 @@ export const TehsilGeoBase = (props) => {
     );
 };
 
-export const TehsilPage = withLayoutMaster(TehsilGeoBase);
+const TehsilPage = withLayoutMaster(TehsilGeoBase);
+
+export default TehsilPage;
