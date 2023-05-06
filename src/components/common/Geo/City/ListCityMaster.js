@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
+import { tableColumn } from './tableColumn';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -100,6 +101,10 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
@@ -136,122 +141,12 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
 
-    const handleEditBtn = (record) => {
-        form.resetFields();
-        setFormData([]);
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-    };
-
-    const handleView = (record) => {
-        setFormActionType(FROM_ACTION_TYPE?.VIEW);
-        setIsViewModeVisible(true);
-
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(true);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-
-        setIsReadOnly(true);
-    };
-
-    const tableColumn = [];
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
-            title: 'City Code',
-            dataIndex: 'code',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'City Name',
-            dataIndex: 'name',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'District Name',
-            dataIndex: 'districtName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'State Name',
-            dataIndex: 'stateName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '10%',
-        }),
-
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '10%',
-            render: (record) => [
-                <Space wrap>
-                    {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                            <FiEdit2 />
-                        </Button>
-                    }
-                    {
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                            <FaRegEye />
-                        </Button>
-                    }
-                </Space>,
-            ],
-        }
-    );
 
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
 
-    const hanndleEditData = (record) => {
-        form.resetFields();
-        setFormData([]);
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-    };
 
-    const handleAdd = () => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType(FROM_ACTION_TYPE?.ADD);
-        setShowSaveAndAddNewBtn(true);
-        setIsViewModeVisible(false);
-        setFooterEdit(false);
-        setIsFormVisible(true);
-        setIsReadOnly(false);
-    };
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
@@ -267,6 +162,15 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         }
         setFilterString({ ...filterString, [name]: value });
     };
+
+    const handleFormAction = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(buttonAction);
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
+
 
     const onFinish = (values) => {
         const recordId = formData?.code || '';
@@ -306,7 +210,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     };
 
     const tableProps = {
-        tableColumn: tableColumn,
+        tableColumn: tableColumn(handleFormAction),
         tableData: searchData,
     };
 
@@ -317,9 +221,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         show,
         setShow,
         setFormActionType,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        isReadOnly,
         formData,
         footerEdit,
         districtData,
@@ -331,19 +232,23 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
             setIsFormVisible(false);
             setFormBtnActive(false);
         },
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
+        titleOverride:(formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
+        
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         tableData: cityData,
-        hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
         defaultCountry,
         isDataCountryLoaded,
         countryData,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        handleFormAction,
     };
     return (
         <>
@@ -387,7 +292,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add City
                                     </Button>
                                 </Col>
@@ -422,7 +327,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                                 {!cityData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add City
                                             </Button>
                                         </Col>

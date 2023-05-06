@@ -255,36 +255,38 @@ export const ListStateMasterBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !searchData?.length ? (
-                                        <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
-                                        </span>
+                        renderEmpty={() =>
+                            isDataLoaded && (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        !searchData?.length ? (
+                                            <span>
+                                                No records found. Please add new parameter <br />
+                                                using below button
+                                            </span>
+                                        ) : (
+                                            <span> No records found.</span>
+                                        )
+                                    }
+                                >
+                                    {!searchData?.length ? (
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                    Add State
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!searchData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                Add State
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
+                                        ''
+                                    )}
+                                </Empty>
+                            )
+                        }
                     >
                         <div className={styles.tableProduct}>
                             <DataTable isLoading={isLoading} {...tableProps} />

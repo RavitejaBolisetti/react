@@ -100,7 +100,7 @@ const AddEditFormMain = (props) => {
                         </Button>
                     )}
 
-                    {!isAddMode && (
+                    {isAddMode && (
                         <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndNewClicked(true)} type="primary">
                             Save & Add New
                         </Button>
