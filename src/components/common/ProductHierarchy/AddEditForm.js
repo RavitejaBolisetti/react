@@ -3,8 +3,8 @@ import { Col, Input, Form, Row, Collapse, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import style from '../../common/DrawerAndTable.module.css';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
-import ProductAttributeAddEditForm from './ProductAttributeDetail/ProductAttributeAddEditForm';
-import ListProductAttribute from './ProductAttributeDetail/ListProductAttribute';
+// import ProductAttributeAddEditForm from './ProductAttributeDetail/ProductAttributeAddEditForm';
+// import ListProductAttribute from './ProductAttributeDetail/ListProductAttribute';
 
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
@@ -163,8 +163,9 @@ const AddEditFormMain = (props) => {
                 {showProductAttribute === 'Product SKU' ? (
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
-                            <ProductAttributeAddEditForm {...attributeFormProps} />
-                            <ListProductAttribute {...attributeFormProps} />
+                            {/* <ProductAttributeAddEditForm {...attributeFormProps} />
+                            <ListProductAttribute {...attributeFormProps} /> */}
+                            <p>hello</p>
                         </Panel>
                     </Collapse>
                 ) : null}
@@ -175,3 +176,4 @@ const AddEditFormMain = (props) => {
 };
 
 export const AddEditForm = withDrawer(AddEditFormMain, {});
+
