@@ -75,8 +75,6 @@ export const ListDistrictBase = (props) => {
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
-    const [filterData, setFilterData] = useState([]);
-
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -291,7 +289,10 @@ export const ListDistrictBase = (props) => {
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
         titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
@@ -391,4 +392,6 @@ export const ListDistrictBase = (props) => {
     );
 };
 
-export const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);
+const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);
+
+export default ListDistrictMaster;
