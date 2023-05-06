@@ -1,10 +1,10 @@
 import React from 'react';
-import { TehsilGeo } from 'components/common/Geo';
+import { ListPinCodeMaster } from 'components/common/Geo/Pincode/ListPinCodeMaster';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
-export const TehsilGeoBase = (props) => {
-    const pageTitle = 'Tehsil Master';
+export const PincodeGeoBase = (props) => {
+    const pageTitle = 'PIN Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -15,9 +15,9 @@ export const TehsilGeoBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <TehsilGeo />
+            <ListPinCodeMaster />
         </>
     );
 };
 
-export const TehsilGeoPage = withLayoutMaster(TehsilGeoBase);
+export const PinCodePage = withLayoutMaster(PincodeGeoBase);
