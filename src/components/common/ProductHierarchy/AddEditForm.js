@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber,validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 const { Option } = Select;
@@ -124,7 +124,7 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
+                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description'),validateAlphanumericWithSpaceHyphenPeriod('short description')]}>
                             <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -132,7 +132,7 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
+                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description'),validateAlphanumericWithSpaceHyphenPeriod('long description')]}>
                             <TextArea rows={2} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} {...disabledProps} />
                         </Form.Item>
                     </Col>
