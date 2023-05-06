@@ -35,16 +35,19 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('countryData', countryData);
-
     const moduleTitle = 'State Master List';
 
+    const finalCountryData = countryData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
+
+    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
         isDataCountryLoaded,
         isCountryLoading,
-        countryData,
-
+        countryData: finalCountryData,
+        defaultCountry,
         isDataLoaded,
         data,
         isLoading,
@@ -71,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ListStateMasterBase = (props) => {
     const { data, isLoading, saveData, fetchList, userId, typeData, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, fetchCountryList, countryShowLoading } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
@@ -92,6 +95,11 @@ export const ListStateMasterBase = (props) => {
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
     useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
+
+    useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -107,7 +115,9 @@ export const ListStateMasterBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
+                const keyword = filterString?.keyword;
+                const countryCode = filterString?.countryCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -210,7 +220,7 @@ export const ListStateMasterBase = (props) => {
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
-        
+
         setFormData(record);
     };
 
@@ -227,16 +237,16 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        setFilterString({ ...filterString, keyword: value });
     };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
     };
 
     const onFinish = (values) => {
         const recordId = formData?.code || '';
-        let data = { ...values, id: recordId };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -306,6 +316,7 @@ export const ListStateMasterBase = (props) => {
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
+        defaultCountry,
     };
     return (
         <>
@@ -319,7 +330,7 @@ export const ListStateMasterBase = (props) => {
                                         State List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                             {countryData?.map((item) => (
                                                 <Option value={item?.countryCode}>{item?.countryName}</Option>
                                             ))}
