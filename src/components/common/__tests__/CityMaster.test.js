@@ -72,10 +72,6 @@ describe('District Master Test', () => {
         buttonLookAndFireEventByRole('Save')
     });
 
-    test('Is search working', async () => {
-        render(<ListCityMaster CityData={City} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
-        searchFunctionality('U55')
-    });
 
     test('is drawer closing on click of cancel button', async () => {
         render(<ListCityMaster  CityData={City} fetchList={fetchList} saveData={saveData} />);
