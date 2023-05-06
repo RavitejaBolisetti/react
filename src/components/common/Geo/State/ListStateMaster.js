@@ -297,6 +297,6 @@ export const ListStateMasterBase = (props) => {
     );
 };
 
-const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
+export const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
 
-export default ListStateMaster;
+

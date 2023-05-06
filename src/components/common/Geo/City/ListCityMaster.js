@@ -444,6 +444,4 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     );
 };
 
-const ListCityMaster = connect(mapStateToProps, mapDispatchToProps)(ListCityMasterBase);
-
-export default ListCityMaster;
+export const ListCityMaster = connect(mapStateToProps, mapDispatchToProps)(ListCityMasterBase);
