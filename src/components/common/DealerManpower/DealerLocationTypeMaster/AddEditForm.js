@@ -4,7 +4,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validationFiel
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { ViewDealerLocationType } from './ViewDealerLocationType';
+import { ViewDealerLocationType } from './ViewDealerLocationTypeMasterDetails';
 
 import styles from 'components/common/Common.module.css';
 

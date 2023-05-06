@@ -11,7 +11,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 // import { geoStateDataActions } from 'store/actions/data/geo/state';
 // import { geoCityDataActions } from 'store/actions/data/geo/city';
-import { dealerLocationDataActions } from 'store/actions/data/dealerManpower/dealerLocationType';
+import { dealerLocationDataActions } from 'store/actions/data/dealerManpower/dealerLocationTypeMaster';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';

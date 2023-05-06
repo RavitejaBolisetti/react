@@ -1,4 +1,4 @@
 import { DealerManpowerPage } from './DealerManpowerPage';
-import { DealerLocationTypePage } from './DealerLocationTypePage';
+import { DealerLocationTypePage } from './DealerLocationTypeMasterPage';
 
 export { DealerManpowerPage,DealerLocationTypePage };
