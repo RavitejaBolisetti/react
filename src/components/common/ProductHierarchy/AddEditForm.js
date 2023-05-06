@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Collapse, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import style from '../../common/DrawerAndTable.module.css';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
-// import ProductAttributeAddEditForm from './ProductAttributeDetail/ProductAttributeAddEditForm';
-// import ListProductAttribute from './ProductAttributeDetail/ListProductAttribute';
+import ProductAttributeAddEditForm from './ProductAttributeDetail/ProductAttributeAddEditForm';
+import ListProductAttribute from './ProductAttributeDetail/ListProductAttribute';
 
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
@@ -23,10 +23,11 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, skuAttributes, setSKUAttributes } = props;
 
+    console.log('formData', formData);
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
-    const [isAddBtnDisabled, setAddBtnDisabled] = useState(true);
-    const [showProductAttribute, setShowProductAttribute] = useState(false);
+    const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
+    const [showProductAttribute, setShowProductAttribute] = useState(true);
 
     const { onFinish, onFinishFailed } = props;
 
@@ -41,7 +42,6 @@ const AddEditFormMain = (props) => {
         treeCodeId = formData?.parntProdctId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
-
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
 
     const attributeFormProps = {
         form,
-        skuAttributes,
+        skuAttributes: formData?.skuAttributes,
         setSKUAttributes,
         isAddBtnDisabled,
         setAddBtnDisabled,
@@ -158,12 +158,11 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
 
-                {showProductAttribute === 'Product SKU' ? (
+                {showProductAttribute ? (
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
-                            {/* <ProductAttributeAddEditForm {...attributeFormProps} />
-                            <ListProductAttribute {...attributeFormProps} /> */}
-                            <p>hello</p>
+                            <ProductAttributeAddEditForm {...attributeFormProps} />
+                            <ListProductAttribute {...attributeFormProps} />
                         </Panel>
                     </Collapse>
                 ) : null}

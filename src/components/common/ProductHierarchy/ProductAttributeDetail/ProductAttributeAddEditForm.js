@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, Col,Row, Button, Select } from 'antd';
+import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -43,7 +43,7 @@ const ProductAttributeAddEditForm = ({ form, onFinish, status, name, id, canAdd 
     return (
         <Row gutter={20}>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item get label="Attribute Name" name="attributeName" rules={[validateRequiredSelectField('Attribute Name')]}>
+                <Form.Item get label="Attribute Name" name="attributeName" rules={[!isAddBtnDisabled && validateRequiredSelectField('Attribute Name')]}>
                     <Select
                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
                         placeholder={preparePlaceholderSelect('attribute name')}
@@ -55,12 +55,13 @@ const ProductAttributeAddEditForm = ({ form, onFinish, status, name, id, canAdd 
                         allowClear
                         labelInValue
                         onChange={handleFieldChange}
+                        disabled={isAddBtnDisabled}
                     ></Select>
                 </Form.Item>
             </Col>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item labelAlign="left" name="attributeValue" label="Attribute Value" onChange={handleFieldChange} rules={[validateRequiredInputField('Attribute Value')]}>
-                    <Input placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
+                <Form.Item labelAlign="left" name="attributeValue" label="Attribute Value" onChange={handleFieldChange} rules={[!isAddBtnDisabled && validateRequiredInputField('Attribute Value')]}>
+                    <Input placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} disabled={isAddBtnDisabled} />
                 </Form.Item>
             </Col>
 
