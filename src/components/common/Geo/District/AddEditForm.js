@@ -113,7 +113,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                     {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                        <Button data-testid="save" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
                             Save
                         </Button>
                     )}

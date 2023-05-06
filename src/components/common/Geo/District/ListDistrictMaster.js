@@ -203,7 +203,7 @@ export const ListDistrictBase = (props) => {
                     <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
                         <FiEdit2 />
                     </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
+                    <Button data-testid ="view" className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
                         <FaRegEye />
                     </Button>
                 </Space>,
@@ -421,6 +421,5 @@ export const ListDistrictBase = (props) => {
     );
 };
 
-const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);
+export const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);
 
-export default ListDistrictMaster;
