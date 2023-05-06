@@ -54,7 +54,9 @@ const mapStateToProps = (state) => {
         moduleTitle,
         viewTitle,
         isDataAttributeLoaded,
-        attributeData: attributeData?.filter((i) => i),
+        attributeData: attributeData?.filter((item) => item?.status),
+        unFilteredAttributeData: attributeData,
+        //attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -79,15 +81,14 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification,unFilteredAttributeData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [skuAttributes, setSKUAttributes] = useState([]);
-    console.log('🚀 ~ file: ProductHierarchy.js:89 ~ ProductHierarchyMain ~ skuAttributes:', skuAttributes);
-    const [openPanels, setOpenPanels] = React.useState([]);
+    //console.log('🚀 ~ file: ProductHierarchy.js:89 ~ ProductHierarchyMain ~ skuAttributes:', skuAttributes);
     const [closePanels, setClosePanels] = React.useState([]);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -162,7 +163,18 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const flatternData = generateList(productHierarchyData);
 
+    const formModifiedData = (selectedData) => {
+        console.log(selectedData,'selectedDataselectedDataselectedDataselectedData')
+        const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === selectedData?.attributeKey)?.hierarchyAttribueName;
+        const productName = flatternData.find((i) => selectedData?.parentCode === i.attributeKey)?.data?.prodctShrtName;
+
+        return { ...selectedData, hierarchyAttribueName, parentName: productName };
+    };
+
     const handleTreeViewClick = (keys) => {
+
+        console.log(keys,'KEYKEYKEY')
+        
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
@@ -218,6 +230,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const onFinish = (values) => {
+        // console.log(values,'ValueCheck');
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
 
@@ -227,11 +240,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
+
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId });
-                formData && setSelectedTreeData(formData?.data);
+                //formData && setSelectedTreeData(formData?.data);
+                res?.data && setSelectedTreeData(formModifiedData(res?.data));
                 setSelectedTreeKey([res?.data?.id]);
                 setFormActionType('view');
+                setFormBtnActive(false);
                 setIsFormVisible(false);
             }
         };
@@ -246,6 +262,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onSuccess,
         };
         saveData(requestData);
+        //setSelectedTreeSelectKey(values?.attributeKey);
+        // setSelectedTreeData(values?.attributeKey);
+        //handleTreeViewClick([values?.attributeKey]);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -294,7 +313,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         skuAttributes,
         setSKUAttributes,
     };
-    console.log('🚀 ~ file: ProductHierarchy.js:294 ~ ProductHierarchyMain ~ skuAttributes:', skuAttributes);
+    //console.log('🚀 ~ file: ProductHierarchy.js:294 ~ ProductHierarchyMain ~ skuAttributes:', skuAttributes);
 
     const viewProps = {
         buttonData,
@@ -318,16 +337,16 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                    Hierarchy
-                                </Col>
-                                <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                    <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
-                                        <Option value="hyr">Hyr</Option>
-                                    </Select>
-                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                </Col>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                        Hierarchy
+                                    </Col>
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                        <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                                            <Option value="hyr">Hyr</Option>
+                                        </Select>
+                                        <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                    </Col>
                                 </Row>
                             </Col>
                             {productHierarchyData.length > 0 && (
