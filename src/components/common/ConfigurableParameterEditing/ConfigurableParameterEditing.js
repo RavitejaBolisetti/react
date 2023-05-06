@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
+
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'antd';
+
+import dayjs from 'dayjs';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -114,13 +118,19 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
+        form.setFieldsValue({
+            toDate : formData?.toDate  ? dayjs(formData?.toDate,'DD-MM-YYYY') : null ,
+            fromDate : formData?.fromDate  ? dayjs(formData?.fromDate,'DD-MM-YYYY') : null
+
+        })
         const data = configData.find((i) => i.id === record.id);
         console.log('data', data);
         if (data) {
             data && setFormData(data);
             console.log('formData', formData);
 
-            setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
+            setParameterType(data?.configurableParameterType.toString() || defaultParametarType);
+            console.log("parameterType",parameterType)
             setIsFormVisible(true);
         }
     };
@@ -305,6 +315,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
     };
 
     const formProps = {
+        form,
         formActionType,
         setFormActionType,
         setIsViewModeVisible,
@@ -315,7 +326,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
         setFooterEdit,
         typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
+        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false), form.resetFields() ),
         titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
@@ -352,9 +363,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                                                 onChange={onChangeHandle}
                                             />
                                         </Col>
-                                        {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            
-                                        </Col> */}
+                                       
                                     </div>
                                 </Row>
                             </Col>

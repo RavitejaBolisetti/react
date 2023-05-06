@@ -78,7 +78,7 @@ const DrawerUtil = ({ handleUpdate2, footerEdit, UserManagementDealerData, Deale
                 </>
             }
         >
-            <Form form={form} className={style.userManagementDrawer} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form autoComplete="off" form={form} className={style.userManagementDrawer} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Space
                     direction="vertical"
                     size="small"

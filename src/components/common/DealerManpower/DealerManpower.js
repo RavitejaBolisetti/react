@@ -282,7 +282,7 @@ export const DealerManpowerMain = ({ isChangeHistoryVisible, userId, isDataLoade
                         {isChangeHistoryVisible ? (
                             <ChangeHistory />
                         ) : (
-                            <Form form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                            <Form autoComplete="off" form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                 {isFormVisible && <AddEditForm {...formProps} />}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonContainer}>
