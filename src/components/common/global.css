@@ -101,6 +101,7 @@
     transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 6px;
     box-shadow: none;
+    height: 34px;
 }
 
 :global .ant-empty .ant-empty-footer {
@@ -174,15 +175,6 @@
     width: 100%;
 }
 
-:global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 6px;
-    box-shadow: none;
-}
-
 :global .ant-form-vertical .ant-form-item-label {
     margin: 0;
     padding: 0px;
@@ -250,6 +242,12 @@
 
 :global(.ant-card.ant-card-actions) {
     height: 40px;
+}
+
+:global .ant-pagination .ant-pagination-options {
+    position: absolute;
+    left: 0;
+    margin-inline-start: 0px;
 }
 
 @media (max-width: 768px) {
