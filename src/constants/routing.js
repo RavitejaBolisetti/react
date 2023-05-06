@@ -12,6 +12,7 @@ export const ROUTING_DASHBOARD = '/dashboard';
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_COMMON_GEO = ROUTING_COMMON.concat('geo/');
 
+export const ROUTING_COMMON_GEO_COUNTRY = ROUTING_COMMON_GEO.concat('country');
 export const ROUTING_COMMON_GEO_STATE = ROUTING_COMMON_GEO.concat('state');
 export const ROUTING_COMMON_GEO_DISTRICT = ROUTING_COMMON_GEO.concat('district');
 export const ROUTING_COMMON_GEO_CITY = ROUTING_COMMON_GEO.concat('city');
