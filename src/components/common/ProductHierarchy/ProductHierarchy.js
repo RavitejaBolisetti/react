@@ -186,10 +186,10 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
 
         setSelectedTreeKey(keys);
+        console.log("selectedTreeKey",selectedTreeKey)
     };
 
     const handleSelectTreeClick = (value) => {
-        // setSelectedTreeKey([value]);
         setSelectedTreeSelectKey(value);
     };
 
@@ -198,6 +198,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleButtonClick = (type) => {
+        console.log("type",type)
         setFormData([]);
         form.resetFields();
         if (type === FROM_ACTION_TYPE.EDIT) {

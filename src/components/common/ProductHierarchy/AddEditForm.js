@@ -40,17 +40,25 @@ const AddEditFormMain = (props) => {
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.parntProdctId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
+        console.log("child",treeCodeId)
+        console.log("selectedTreeKey",selectedTreeKey)
         treeCodeReadOnly = true;
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+        console.log("sibling",treeCodeId)
+        console.log("selectedTreeKeyS",selectedTreeKey)
+
     }
 
     useEffect(() => {
         if (formActionType === FROM_ACTION_TYPE.SIBLING) {
             setSelectedTreeKey([treeCodeId]);
+        console.log("selectedTreeKeyS use efeect",selectedTreeKey)
+
         }
         setSelectedTreeSelectKey(treeCodeId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
