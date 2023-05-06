@@ -74,7 +74,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="State Code" initialValue={formData?.stateCode} name="stateCodeDisplay" rules={[validateRequiredInputField('State Code')]}>
-                                <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} />
+                                <Input placeholder={preparePlaceholderText('State Code')} className={styles.inputBox} disabled={true} maxLength={6} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -82,12 +82,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validationFieldLetterAndNumber('District Code')]}>
-                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateAlphanumericWithSpace('District Name')]}>
-                                <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
                     </Row>

@@ -17,7 +17,6 @@ const AddEditFormMain = (props) => {
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
 
-
     const handleFormValueChange = () => {
         setFormBtnActive(true);
     };
@@ -111,12 +110,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} maxLength={6} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.name} label="Tehsil Name" name="name" rules={[validateRequiredInputField('Tehsil Name')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={formData?.shortDescription || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>

@@ -258,31 +258,31 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                             {countryData?.map((item) => (
                                                 <Option value={item?.countryCode}>{item?.countryName}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
                                             {filteredDistrictData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>

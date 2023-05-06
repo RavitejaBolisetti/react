@@ -7,7 +7,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
-
 export const tableColumn = (handleFormAction) => {
     const tableColumn = [];
     tableColumn.push(

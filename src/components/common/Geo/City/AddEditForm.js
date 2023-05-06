@@ -18,8 +18,6 @@ const AddEditFormMain = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
-    const disabledProps = { disabled: isReadOnly };
-
     const isAddMode = formActionType === ADD_ACTION;
     const isViewMode = formActionType === VIEW_ACTION;
 
@@ -117,12 +115,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City Code" initialValue={formData?.code} name="code" rules={[validationFieldLetterAndNumber('City Code')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('City Code')} className={styles.inputBox} disabled={isReadOnly} maxLength={6} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City Name" name="name" initialValue={formData?.name} rules={[validateAlphanumericWithSpace('City Name')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('City Name')} className={styles.inputBox} disabled={isReadOnly} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -130,7 +128,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                     </Row>
