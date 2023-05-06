@@ -66,7 +66,7 @@ const receiveAuthorityTypeData = (data) => ({
 
 const manufacturerAdminHierarchyDataActions = {};
 
-manufacturerAdminHierarchyDataActions.cardBtmDisableAction = (value) => ({
+manufacturerAdminHierarchyDataActions.cardBtnDisableAction = (value) => ({
     type: CARD_BTN_DISABLE,
     isDisable: value,
 });

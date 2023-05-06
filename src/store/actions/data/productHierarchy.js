@@ -1,7 +1,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE,BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE} from 'constants/routingApi';
+import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE, BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_HIERARCHY_SKU_SAVE } from 'constants/routingApi';
 import { message } from 'antd';
 
 export const PRODUCT_HIERARCHY_DATA_LOADED = 'PRODUCT_HIERARCHY_DATA_LOADED';
@@ -10,6 +10,7 @@ export const PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'PRODUCT_HIERARCHY_C
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
 export const PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE';
 export const PRODUCT_HIERARCHY_DATA_LOADED_SKU = 'PRODUCT_HIERARCHY_DATA_LOADED_SKU';
+export const PRODUCT_HIERARCHY_CARD_BTN_DISABLE = 'PRODUCT_HIERARCHY_CARD_BTN_DISABLE';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
@@ -49,6 +50,11 @@ productHierarchyDataActions.changeHistoryModelClose = (visible) => ({
 productHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
     type: PRODUCT_HIERARCHY_DATA_SHOW_LOADING,
     isLoading,
+});
+
+productHierarchyDataActions.cardBtnDisableAction = (value) => ({
+    type: PRODUCT_HIERARCHY_CARD_BTN_DISABLE,
+    isDisable: value,
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
@@ -151,7 +157,7 @@ productHierarchyDataActions.skulist = withAuthToken((params) => ({ token, access
     const apiCallParams = {
         data,
         method: 'get',
-        url:  BASE_URL_PRODUCT_HIERARCHY_SKU + (skuId ? '?skuId=' + skuId : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY_SKU + (skuId ? '?skuId=' + skuId : ''),
         token,
         accessToken,
         userId,

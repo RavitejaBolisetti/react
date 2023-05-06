@@ -20,7 +20,6 @@ import { ViewManufacturerOrgDetail } from './ViewManufacturerOrgDetails';
 import LeftPanel from '../LeftPanel';
 
 import styles from 'components/common/Common.module.css';
-import style from '../ProductHierarchy/producthierarchy.module.css';
 
 const { Search } = Input;
 
@@ -208,13 +207,13 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleResetBtn = () => {
         form.resetFields();
     };
-     const handleAdd = () => {
+    const handleAdd = () => {
         setFormBtnActive(false);
         setIsFormVisible(true);
     };
@@ -287,22 +286,13 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18} className={style.contentHeaderRightBackground}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.contentHeaderRightBackground}>
                                 Hierarchy
-                                <Search
-                                    placeholder="Search"
-                                    // style={{
-                                    //     width: '43%',
-                                    // }}
-                                    className={styles.headerSelectField}
-                                    allowClear
-                                    onChange={onChange}
-                                    // className={style.searchField}
-                                />
+                                <Search placeholder="Search" className={styles.headerSelectField} allowClear onChange={onChange} />
                             </Col>
                             {manufacturerOrgHierarchyData?.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button  type="primary" onClick={changeHistoryModelOpen}>
+                                    <Button type="primary" onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
                                         Change History
                                     </Button>
@@ -324,7 +314,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Empty>

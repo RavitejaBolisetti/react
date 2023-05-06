@@ -3,14 +3,13 @@ import { Col, Card, Row, Button, Divider, Form } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { Typography } from 'antd';
 import styles from 'components/common/Common.module.css';
-import { Fragment } from 'react';
-import { ProductHierarchyActions } from '.';
+import ProductActionForms from './ProductActionForms';
 
 const { Text } = Typography;
 
 const CardItemProductAttribute = (props) => {
-    const { code, value, id, setSKUAttributes, forceUpdate, isAddBtnDisabled, setAddBtnDisabled, skuData } = props;
-    console.log('🚀 ~ file: CardProductHiearchy.js:17 ~ CardProductHiearchy ~ props:', props);
+    const { code, value, id, setSKUAttributes, forceUpdate, isAddBtnDisabled, setAddBtnDisabled, skuData, viewMode } = props;
+
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -45,24 +44,27 @@ const CardItemProductAttribute = (props) => {
         setAddBtnDisabled(false);
     };
 
+    const colLeft = viewMode ? 24 : 18;
+    const colRight = viewMode ? 24 : 6;
+
     return (
-        <>
-            <Card
-                style={{
-                    backgroundColor: '#BEBEBE1A',
-                    marginTop: '12px',
-                }}
-            >
-                <Row align="middle">
-                    <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                        <div>
-                            <Text strong>{code}</Text>
-                        </div>
-                        <div>
-                            <Text type="secondary">{value}</Text>
-                        </div>
-                    </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+        <Card
+            style={{
+                backgroundColor: '#BEBEBE1A',
+                marginTop: '12px',
+            }}
+        >
+            <Row align="middle">
+                <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
+                    <div>
+                        <Text strong>{code}</Text>
+                    </div>
+                    <div>
+                        <Text type="secondary">{value}</Text>
+                    </div>
+                </Col>
+                {!viewMode && (
+                    <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
                         {!isEditing ? (
                             <div className={styles.cardItemBtn}>
                                 <Button disabled={isAddBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ id, code, value })} />
@@ -78,16 +80,16 @@ const CardItemProductAttribute = (props) => {
                             </div>
                         )}
                     </Col>
-                </Row>
-
-                {isEditing && (
-                    <Fragment>
-                        <Divider />
-                        <ProductHierarchyActions value={value} skuData={skuData} name={code} id={id} form={form} canAdd={false} canEdit={true} />
-                    </Fragment>
                 )}
-            </Card>
-        </>
+            </Row>
+
+            {isEditing && (
+                <>
+                    <Divider />
+                    <ProductActionForms value={value} skuData={skuData} name={code} id={id} form={form} canAdd={false} canEdit={true} />
+                </>
+            )}
+        </Card>
     );
 };
 

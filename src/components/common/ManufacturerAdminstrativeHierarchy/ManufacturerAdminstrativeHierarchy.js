@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
             changeHistoryAuthorityModelOpen: manufacturerAdminHierarchyDataActions.changeHistoryAuthorityModelOpen,
             uploadModelOpen: manufacturerAdminHierarchyDataActions.uploadModelOpen,
             onCloseAction: manufacturerAdminHierarchyDataActions.changeHistoryVisible,
-            cardBtmDisableAction: manufacturerAdminHierarchyDataActions.cardBtmDisableAction,
+            cardBtnDisableAction: manufacturerAdminHierarchyDataActions.cardBtnDisableAction,
 
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ManufacturerAdminstrativeHierarchyMain = (props) => {
-    const { moduleTitle, viewTitle, isDetailLoaded, detailData, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, fetchDetail, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, cardBtmDisableAction } = props;
+    const { moduleTitle, viewTitle, isDetailLoaded, detailData, changeHistoryAuthorityModelOpen, changeHistoryModelOpen, userId, manufacturerAdminHierarchyData, isDataLoaded, fetchList, fetchDetail, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, uploadModelOpen, authTypeDataLoaded, cardBtnDisableAction } = props;
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -164,8 +164,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const flatternData = generateList(finalManufacturerAdministrativeHirarchyData);
 
     const handleTreeViewClick = (keys) => {
-        // console.log("Visible Function Working")
-
         setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         setFormData([]);
@@ -178,7 +176,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             const ID = formData.data.id;
 
             setSelectedId(ID);
-            cardBtmDisableAction(true);
+            cardBtnDisableAction(true);
 
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
@@ -314,7 +312,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         viewTitle,
         documentTypesList,
         setDocumentTypesList,
-        cardBtmDisableAction,
+        cardBtnDisableAction,
     };
     const leftCol = manufacturerAdminHierarchyData?.length > 0 ? 16 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 ? 8 : 24;

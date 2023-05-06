@@ -25,7 +25,7 @@ const applicationData = [
 
 const fieldNames = { label: 'applicationName', value: 'id' };
 
-const ProductHierarchyActions = ({ form, onFinish, status, name, id, value, isEditing, isBtnDisabled, skuData }) => {
+const ProductActionForms = ({ form, onFinish, status, name, id, value, isEditing, isBtnDisabled, skuData }) => {
     const onFinishFailed = (err) => {
         console.error(err);
     };
@@ -41,7 +41,7 @@ const ProductHierarchyActions = ({ form, onFinish, status, name, id, value, isEd
                     <Form form={form} onFieldsChange={handleForm} id="productHierarchy" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item get label="Attribute Name" name="attributeName" rules={[validateRequiredSelectField('Attribute Name')]}>
+                                <Form.Item get label="Attribute Name" name="attributeName" rules={[!isBtnDisabled && validateRequiredSelectField('Attribute Name')]}>
                                     <Select
                                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                         placeholder="Select Application Action"
@@ -52,16 +52,17 @@ const ProductHierarchyActions = ({ form, onFinish, status, name, id, value, isEd
                                         options={applicationData}
                                         fieldNames={fieldNames}
                                         initialValue={id}
+                                        disabled={isBtnDisabled}
                                     >
                                         {skuData?.map((item) => (
                                             <Option value={item?.code}>{item?.name}</Option>
                                         ))}
                                     </Select>
-                                </Form.Item>
+                                </Form.Item>sdsdsd
                             </Col>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={value} labelAlign="left" name="attributeValue" label="Attribute Value" rules={[validateRequiredSelectField('Attribute Value')]}>
-                                    <Input placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
+                                <Form.Item initialValue={value} labelAlign="left" name="attributeValue" label="Attribute Value" rules={[!isBtnDisabled &&  validateRequiredSelectField('Attribute Value')]}>
+                                    <Input disabled={isBtnDisabled} placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
                                 </Form.Item>
                             </Col>
                             {!isEditing && (
@@ -79,4 +80,4 @@ const ProductHierarchyActions = ({ form, onFinish, status, name, id, value, isEd
     );
 };
 
-export default ProductHierarchyActions;
+export default ProductActionForms;

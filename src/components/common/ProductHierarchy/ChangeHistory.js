@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import styles from '../ChangeHistory/ChangeHistory.module.css';
-import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+
+import { DataTable } from 'utils/dataTable';
+
+import styles from '../ChangeHistory/ChangeHistory.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -45,6 +49,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
+    
     const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',

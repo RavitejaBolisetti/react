@@ -1,6 +1,6 @@
 import CardItemProductAttribute from './CardItemProductAttribute';
 import ListProductAttribute from './ListProductAttribute';
 import ProductAttributeAddEditForm from './ProductAttributeAddEditForm';
-import ProductHierarchyActions from './ProductActionForms';
+import ProductActionForms from './ProductActionForms';
 
-export { CardItemProductAttribute,ListProductAttribute, ProductAttributeAddEditForm, ProductHierarchyActions };
+export { CardItemProductAttribute,ListProductAttribute, ProductAttributeAddEditForm, ProductActionForms };
