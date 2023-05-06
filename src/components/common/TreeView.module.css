@@ -7,7 +7,7 @@
     /* border-top-left-radius: 0; */
     margin-bottom: 20px;
     white-space: nowrap;
-    margin-top: 4px;
+    /* margin-top: 4px; */
 }
 
 /* .panelVisible {
@@ -15,12 +15,9 @@
 } */
 
 .panelVisible {
-    height: calc(100vh - 274px);
+    height: calc(100vh - 280px);
 }
 
-.panelVisible {
-    height: calc(100vh - 274px);
-}
 .panelHidden {
     background: none;
     /* box-shadow: none; */
@@ -32,7 +29,8 @@
 }
 
 .treemenu {
-    margin: 24px 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     /* padding-left: 25px; */
     padding-left: 0px;
     padding-bottom: 0px;
