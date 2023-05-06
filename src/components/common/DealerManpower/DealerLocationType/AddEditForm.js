@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-// import { convertCalenderDate } from 'utils/formatDateTime';
-//import { PARAM_MASTER } from 'constants/paramMaster';
-// import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
-// import { STATE_DROPDOWN } from './InputType';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+
 import { ViewDealerLocationType } from './ViewDealerLocationType';
 
+import styles from 'components/common/Common.module.css';
+
 const { Option } = Select;
-// const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateCode, handleSelectState } = props;
+    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, stateData } = props;
+    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+
+    const disabledProps = { disabled: isReadOnly };
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -26,35 +26,33 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    // const handleControlChange = (control, e) => {
-    //     const controlData = configData?.find((i) => i.controlId === control);
-    //     form.setFieldsValue({
-    //         parameterType: controlData?.parameterType,
-    //     });
-    // };
-
-    // const changeSelectOptionHandler = (event) => {
-    //     setParameterType(event);
-    // };
-
-    // const viewProps = {
-    //     isVisible: isViewModeVisible,
-    //     setClosePanels,
-    //     formData,
-    //     styles,
-    //     parameterType
-    // };
-
     const viewProps = {
         isVisible: isViewModeVisible,
-        //setClosePanels,
+        setClosePanels,
         formData,
         styles,
     };
 
-    // useEffect(() => {
-    //     form.setFieldsValue(defaultValues)
-    // }, [form, defaultValues])
+    // const handleStateChange = (state) => {
+    //     form.setFieldValue('districtCode', undefined);
+    //     form.setFieldValue('districtCodeDisplay', undefined);
+
+    //     const stateCode = stateData?.find((i) => i?.code === state)?.code;
+    //     stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
+
+    //     setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === state));
+    // };
+
+    // const handleDistrictChange = (district) => {
+    //     const districtCode = districtData?.find((i) => i?.code === district)?.code;
+    //     districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
+    // };
+
+    const data = {
+        locationCode: 'D123',
+        locationDescription: 'delhi',
+        status: true,
+    };
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -62,33 +60,21 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {/* {console.log(stateCode, 'CODECOE')} */}
-                            <Form.Item label="Location Type Code" initialValue={formData?.locationCode} name="locationCode" rules={[validateRequiredSelectField('Location Type Code')]}>
-                                <Input
-                                    placeholder={preparePlaceholderText('Location Type Code')}
-                                    className={styles.inputBox}
-
-                                    // addonAfter={
-                                    //     <>
-                                    //         <Button type="primary">Submit</Button>
-                                    //     </>
-                                    // }
-                                />
+                            <Form.Item label="Location Type Code" initialValue={data?.locationCode} name="locationCode" rules={[validateRequiredInputField('Location Type Code')]}>
+                                <Input placeholder={preparePlaceholderText('Location  Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.locationDescription} label="Location Type Description" name="locationDescription" rules={[validateRequiredInputField('Location Type Description')]}>
-                                <Input placeholder={preparePlaceholderText('Location Type Description')} className={styles.inputBox} />
+                            <Form.Item initialValue={data?.locationDescription} label="Location Type Description" name="locationDescription" rules={[validateRequiredInputField('Location Type Description')]}>
+                                <Input placeholder={preparePlaceholderText('Location Description')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
-                            {/* initialValue={stateCode} */}
                         </Col>
                     </Row>
 
-                    <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item initialValue={formData?.status} label="Status" name="status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
-                                {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -111,7 +97,7 @@ const AddEditFormMain = (props) => {
                         </Button>
                     )}
 
-                    {!formData?.id && (
+                    {!formData?.code && (
                         <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>

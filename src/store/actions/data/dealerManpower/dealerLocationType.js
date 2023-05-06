@@ -10,7 +10,7 @@ export const DEALER_LOCATION_TYPE_RESET_DATA = 'DEALER_LOCATION_TYPE_RESET_DATA'
 
 const baseURL = BASE_URL_DEALER_LOCATION_TYPE;
 
-export const geoCityDataActions = dataActions({
+export const dealerLocationDataActions = dataActions({
     baseURL,
     moduleName: 'Dealer Location Type Master',
     RECEIVE_DATA_LOADING_ACTION_CONSTANT: DEALER_LOCATION_TYPE_LOADING_DATA,
