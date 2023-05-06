@@ -4,7 +4,7 @@ import { Button, Drawer, Switch, Row, Col, Input, Form, Space } from 'antd';
 import { validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { withDrawer } from 'components/withDrawer';
-import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
+// import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 
 import style from 'components/common/Common.module.css';
 
@@ -106,7 +106,8 @@ const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRo
                         </Form.Item>
                     </>
                 ) : (
-                    <ViewHierarchyAttribute {...viewProps} />
+                    // <ViewHierarchyAttribute {...viewProps} />
+                    ''
                 )}
                 <Row gutter={20} className={style.formFooter}>
                     <Col xs={24} sm={6} md={6} lg={6} xl={6} className={style.footerBtnLeft}>

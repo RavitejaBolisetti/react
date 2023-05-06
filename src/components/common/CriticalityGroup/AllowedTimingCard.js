@@ -90,6 +90,7 @@ const AllowedTimingCard = (props) => {
                                             <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
                                                 <Button
                                                     icon={<LinearTrash />}
+                                                    aria-label='li-trash'
                                                     className={!disabledProps?.disabled ? style.deleteBtn : style.hideInViewMode}
                                                     danger
                                                     ghost

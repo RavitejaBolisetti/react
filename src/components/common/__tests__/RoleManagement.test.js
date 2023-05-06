@@ -78,8 +78,6 @@ describe('Qualification Master Test', () => {
         render(<RoleManagement RoleManagementData={rolemanagementdata1} fetchList={fetchList} saveData={saveData} fetchMenuList={fetchMenuList} fetchRole={fetchRole} />);
         const textfield = await screen.findByText('Role List');
         expect(textfield).toBeTruthy();
-        //click on edit button
-
         buttonLookAndFireEventWithLabel('ai-view');
         InputFieldAvailablity('Role Id');
         InputFieldAvailablity('Role Name');
@@ -129,7 +127,6 @@ describe('Qualification Master Test', () => {
         });
 
         const result = await onFinish();
-        // fireEvent.click(SaveBtn);
         buttonLookAndFireEventWithText('Save');
 
         expect(result).toBeTruthy();
