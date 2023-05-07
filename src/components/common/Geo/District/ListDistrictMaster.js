@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { tableColumn } from './tableColumn';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -97,6 +98,10 @@ export const ListDistrictBase = (props) => {
 
     const [stateCode, isStateCode] = useState();
 
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -131,112 +136,21 @@ export const ListDistrictBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    const handleEditBtn = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
+    const handleFormAction = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(buttonAction);
+        record && setFormData(record);
+        setIsFormVisible(true);
     };
 
-    const handleView = (record) => {
-        setFormActionType(FROM_ACTION_TYPE?.VIEW);
-        setIsViewModeVisible(true);
-
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(true);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-
-        setIsReadOnly(true);
-    };
-
-    const tableColumn = [];
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl No.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
-            title: 'District Code',
-            dataIndex: 'code',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'District Name',
-            dataIndex: 'name',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'State Name',
-            dataIndex: 'stateName',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '15%',
-        }),
-
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '8%',
-            render: (record) => [
-                <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                        <FiEdit2 />
-                    </Button>
-                    <Button data-testid ="view" className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                        <FaRegEye />
-                    </Button>
-                </Space>,
-            ],
-        }
-    );
+   
 
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
 
-    const hanndleEditData = (record) => {
-        form.resetFields();
-        setFormData([]);
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-    };
-
-    const handleAdd = () => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType(FROM_ACTION_TYPE?.ADD);
-        setShowSaveAndAddNewBtn(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
-        setIsFormVisible(true);
-        setIsReadOnly(false);
-    };
+   
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
@@ -292,7 +206,7 @@ export const ListDistrictBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn,
+        tableColumn: tableColumn(handleFormAction),
         tableData: searchData,
         // tableData: filterData.length === 0 ? data : filterData,
     };
@@ -318,7 +232,6 @@ export const ListDistrictBase = (props) => {
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
@@ -328,6 +241,10 @@ export const ListDistrictBase = (props) => {
         defaultCountry,
         isDataCountryLoaded,
         countryData,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        handleFormAction,
     };
 
     return (
@@ -364,7 +281,7 @@ export const ListDistrictBase = (props) => {
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add District
                                     </Button>
                                 </Col>
@@ -399,7 +316,7 @@ export const ListDistrictBase = (props) => {
                                 {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add Group
                                             </Button>
                                         </Col>
