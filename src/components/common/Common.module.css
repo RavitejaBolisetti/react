@@ -31,7 +31,7 @@
     box-shadow: 0px 0px 12px rgba(2, 2, 111, 0.4);
 }
 
-.text:hover + .text-tooltip {
+.text:hover+.text-tooltip {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
@@ -629,6 +629,7 @@
     display: flex;
     flex-direction: column;
 }
+
 .accordianContainer :global .ant-collapse-header-text {
     font-weight: 600;
     font-size: 16px;
@@ -644,11 +645,11 @@
     background: rgba(190, 190, 190, 0.1);
 }
 
-.accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+.accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 12px 20px;
 }
 
-.accordianContainer :global .ant-collapse > .ant-collapse-item.ant-collapse-item-active > .ant-collapse-header {
+.accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
     color: #e31837;
     background: #f2f2f2;
 }
@@ -657,7 +658,7 @@
     border-top: transparent;
 }
 
-.accordianContainer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+.accordianContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 16px 20px;
 }
 
@@ -747,6 +748,7 @@
     vertical-align: middle;
     width: 100%;
 }
+
 .headerSelectField :global .ant-select-single.ant-select-show-arrow .ant-select-selector .ant-select-selection-item,
 .headerSelectField :global .ant-select-single.ant-select-show-arrow .ant-select-selector .ant-select-selection-placeholder {
     line-height: 30px;
@@ -758,13 +760,13 @@
     background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
     background-color: #e6e6e6;
@@ -802,7 +804,7 @@
     margin-bottom: 5px;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -963,8 +965,8 @@
     margin-bottom: 0;
 }
 
-.allowedTiming :global .ant-picker-input > input:placeholder-shown,
-.allowedTiming :global .ant-picker-input > input {
+.allowedTiming :global .ant-picker-input>input:placeholder-shown,
+.allowedTiming :global .ant-picker-input>input {
     font-size: 14px;
 }
 
@@ -1037,12 +1039,12 @@
     width: 100%;
 }
 
-.cardDescription :global .ant-descriptions .ant-descriptions-row > th,
-:global .ant-descriptions .ant-descriptions-row > * {
+.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
+:global .ant-descriptions .ant-descriptions-row>* {
     padding: 0px;
 }
 
-:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
 }
 
@@ -1151,6 +1153,32 @@
 /* padding: 4% 2%; */
 /* margin-left: 12px; */
 /* } */
+
+/*Pincode hierarchy CSS*/
+.alignSearchButton {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 18px;
+}
+
+.alignSearchButton button {
+    margin-right: 10px;
+}
+
+.CardFormitemMargin {
+    width: 100%;
+    background: #f4f4f4;
+    margin-bottom: 20px;
+}
+
+.CardFormitemMargin :global .ant-card-body {
+    padding: 16px !important;
+}
+
+.CardFormitemMargin :global .ant-card-body .ant-form-item {
+    margin-bottom: 0px !important;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */

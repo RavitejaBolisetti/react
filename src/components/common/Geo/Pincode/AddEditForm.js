@@ -10,14 +10,25 @@ const { Option } = Select;
 // const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, geoStateData, geoPindata, geoDistrictData, geoTehsilData, geoCityData, onFinishFailed, stateDropdown, cityDropdown, tehsilDropdown, districtDropdown } = props;
+    const { typeData, hanndleEditData, setSaveAndAddNewBtnClicked, ditrict, setDistrict } = props;
+    const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, showSaveAndAddNewBtn, formActionType } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, actionform, geoStateData, geoPindata, geoDistrictData, geoTehsilData, geoCityData, onFinishFailed, stateDropdown, cityDropdown, tehsilDropdown, districtDropdown } = props;
     const [selectedState, isSelectedState] = useState('');
     const [show, setShow] = useState([]);
     const [showCity, setShowCity] = useState([]);
     const [showTehsil, setShowTehsil] = useState([]);
     const [city, setPin] = useState([]);
+    useEffect(() => {
+        console.log('formData', formData);
+        console.log('formData', formData?.localityName);
+        actionform.resetFields();
+
+        if (formData?.stateName) {
+            handleSelectState(formData?.stateCode);
+            handleSelectDistrict(formData?.districtCode);
+            handleSelectTehsil(formData?.tehsilCode);
+        }
+    }, [formData]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -30,10 +41,11 @@ const AddEditFormMain = (props) => {
         setShow(geoDistrictData.filter((i) => i.stateCode === e));
     };
     const handleSelectDistrict = (e) => {
+        setDistrict(e);
         setShowCity(geoCityData.filter((i) => i.districtCode === e));
     };
     const handleSelectTehsil = (e) => {
-        setShowTehsil(geoTehsilData.filter((i) => i.cityCode === e));
+        setShowTehsil(geoTehsilData.filter((i) => i.districtCode === ditrict));
     };
 
     const viewProps = {
@@ -48,10 +60,9 @@ const AddEditFormMain = (props) => {
         geoCityData,
         geoPindata,
     };
-    const [form] = Form.useForm();
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
+        <Form id="configForm" layout="vertical" form={actionform} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={16}>
@@ -65,8 +76,16 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateName} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State')} onChange={handleSelectState}>
+                            <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
+                                <Select
+                                    showSearch
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                    }}
+                                    disabled={isReadOnly}
+                                    placeholder={preparePlaceholderSelect('State')}
+                                    onChange={handleSelectState}
+                                >
                                     {geoStateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -77,8 +96,16 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="District" initialValue={formData?.districtName} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')} onChange={handleSelectDistrict}>
+                            <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                                <Select
+                                    showSearch
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                    }}
+                                    disabled={isReadOnly}
+                                    placeholder={preparePlaceholderSelect('District')}
+                                    onChange={handleSelectDistrict}
+                                >
                                     {show?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -87,7 +114,15 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City" initialValue={formData?.cityName} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleSelectTehsil}>
+                                <Select
+                                    showSearch
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                    }}
+                                    disabled={isReadOnly}
+                                    placeholder={preparePlaceholderSelect('City')}
+                                    onChange={handleSelectTehsil}
+                                >
                                     {showCity?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -98,13 +133,19 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Tehsil" initialValue={formData?.tehsilName} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')}>
+                            <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
+                                <Select
+                                    showSearch
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                    }}
+                                    disabled={isReadOnly}
+                                    placeholder={preparePlaceholderSelect('Tehsil')}
+                                >
                                     {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoTehsilData?.map((item) => (
+                                    {showTehsil?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
-                                    {console.log(formData, 'FORMDATA')}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -117,13 +158,13 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.localityName} label="Locality" name="localityCode" rules={[validateRequiredInputField('Locality')]}>
+                            <Form.Item initialValue={formData?.localityName} label="Locality" name="localityName" rules={[validateRequiredInputField('Locality')]}>
                                 <Input placeholder={preparePlaceholderText('Locality')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item initialValue={formData?.withIn50KmFromGpo} label="Is Locality Under 50Km of GPO" name="withIn50KmFromGpo">
-                                <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked />
+                            <Form.Item initialValue={formActionType === 'update' ? formData?.withIn50KmFromGpo : true} label="Is Locality Under 50Km of GPO" name="withIn50KmFromGpo">
+                                <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={formActionType === 'update' ? formData?.withIn50KmFromGpo : true} />
                                 {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>
@@ -131,8 +172,8 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item initialValue={formData?.status} label="Status" name="status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked />
+                            <Form.Item initialValue={formActionType === 'update' ? formData?.status : true} label="Status" name="status">
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'update' ? formData?.status : true} />
                                 {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>
@@ -156,7 +197,7 @@ const AddEditFormMain = (props) => {
                         </Button>
                     )}
 
-                    {!formData?.id && (
+                    {!formData?.id && showSaveAndAddNewBtn && (
                         <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>
