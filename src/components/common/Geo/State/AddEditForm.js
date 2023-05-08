@@ -13,7 +13,15 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
+    const {
+        form,
+        formData,
+        onCloseAction,
+        formActionType: { editMode, viewMode },
+        onFinish,
+        onFinishFailed,
+    } = props;
+    
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
@@ -30,7 +38,7 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
-        isVisible: formActionType?.viewMode,
+        isVisible: viewMode,
         formData,
         styles,
     };
@@ -45,7 +53,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {formActionType?.viewMode ? (
+            {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
@@ -68,7 +76,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code'), validationFieldLetterAndNumber('State Code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={6} />
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -79,7 +87,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formActionType?.editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>

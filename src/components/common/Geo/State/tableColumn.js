@@ -5,16 +5,20 @@ import { FaRegEye } from 'react-icons/fa';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 
 import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = (handleButtonClick, page = 1, pageSize = DEFAULT_PAGE_SIZE) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
             dataIndex: 'srl',
             sorter: false,
+            render: (_, __, index) => {
+                return (page - 1) * pageSize + (index + 1);
+            },
             width: '5%',
         }),
 

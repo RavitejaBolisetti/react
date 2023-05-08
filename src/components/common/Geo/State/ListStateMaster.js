@@ -78,6 +78,7 @@ export const ListStateMasterBase = (props) => {
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -99,17 +100,25 @@ export const ListStateMasterBase = (props) => {
     }, [defaultCountry]);
 
     useEffect(() => {
-        if (userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        if (userId && !isDataCountryLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId });
             if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+                fetchCountryList({ setIsLoading: countryShowLoading, userId });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded, refershData]);
+    }, [userId, isDataCountryLoaded]);
+
+    useEffect(() => {
+        if (userId && refershData) {
+            const onSuccessAction = (res) => {
+                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                setRefershData(false);
+            };
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
@@ -130,7 +139,6 @@ export const ListStateMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
-        console.log('🚀 ~ file: ListStateMaster.js:133 ~ handleButtonClick ~ buttonAction:', buttonAction);
         form.resetFields();
         setFormData([]);
 
@@ -220,8 +228,9 @@ export const ListStateMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
+        setPage,
     };
     return (
         <>
@@ -235,11 +244,13 @@ export const ListStateMasterBase = (props) => {
                                         State List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                            {countryData?.map((item) => (
-                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                            ))}
-                                        </Select>
+                                        {defaultCountry && (
+                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                                {countryData?.map((item) => (
+                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                                ))}
+                                            </Select>
+                                        )}
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
