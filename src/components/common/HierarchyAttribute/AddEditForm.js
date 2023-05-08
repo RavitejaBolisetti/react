@@ -8,7 +8,7 @@ import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 
 import style from 'components/common/Common.module.css';
 
-const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, setCheckFields, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
+const AddEditFormMain = ({ isViewModeVisible, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, formActionType, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const disabledProps = { disabled: isReadOnly };
     const codeDisabledProp = { disabled: codeIsReadOnly };

@@ -57,7 +57,6 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetail,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
-            onSaveShowLoading: hierarchyAttributeMasterDataActions.onSaveShowLoading,
 
             showGlobalNotification,
         },
@@ -65,12 +64,11 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, onSaveShowLoading, isLoadingOnSave }) => {
+export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
     const [searchData, setSearchdata] = useState('');
-    const [checkfields, setCheckFields] = useState(false);
     const [ForceReset, setForceReset] = useState();
     const [selectedHierarchy, setSelectedHierarchy] = useState('');
     const [saveclick, setsaveclick] = useState();
@@ -152,7 +150,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     };
 
     const onError = (message) => {
-        onSaveShowLoading(false);
         showGlobalNotification({ icon: 'error', message: 'Error', description: message, className: styles.error, placement: 'bottomRight' });
     };
 
@@ -267,7 +264,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         form.validateFields();
 
         const onSuccess = (res) => {
-            onSaveShowLoading(false);
             form.resetFields();
             setFormBtnDisable(false);
             if (saveclick === true) {
@@ -285,11 +281,10 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         }, 2000);
 
         const onError = (message) => {
-            onSaveShowLoading(false);
             showGlobalNotification({ message, placement: 'bottomRight' });
         };
 
-        hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: onSaveShowLoading, userId, onError, onSuccess });
+        hierarchyAttributeSaveData({ data: [{ ...values, id: values?.id || '', hierarchyAttribueType: selectedHierarchy }], setIsLoading: hierarchyAttributeListShowLoading, userId, onError, onSuccess });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -319,7 +314,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         selectedHierarchy,
         onFinishFailed,
         onFinish,
-        setCheckFields,
         setEditRow,
         editRow,
         saveandnewclick,
