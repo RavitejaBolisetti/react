@@ -15,7 +15,7 @@ const ViewDetailMain = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="District Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="District Name">{formData?.name}</Descriptions.Item>
                     {/* <Descriptions.Item label="GST State Code">{formData?.gstCode}</Descriptions.Item> */}
-                    <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

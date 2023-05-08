@@ -8,10 +8,10 @@ import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { tableColumn } from './tableColumn';
 
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -30,10 +30,10 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
-                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
-                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
-                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
-                Tehsil: { isLoaded: isDataLoaded = false, isLoading, data },
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
+                State: { isLoaded: isStateLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
+                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
+                Tehsil: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
         },
     } = state;
@@ -42,24 +42,24 @@ const mapStateToProps = (state) => {
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
+
     const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
-        isDataLoaded,
-        data,
-        isLoading,
-        moduleTitle,
+        isDataCountryLoaded,
         isCountryLoading,
         countryData: finalCountryData,
-        isDataCountryLoaded,
         defaultCountry,
-        isStateDataLoaded,
+        isStateLoaded,
         isStateLoading,
         stateData,
-
         isDistrictDataLoaded,
         isDistrictLoading,
         districtData,
+        isDataLoaded,
+        isLoading,
+        data,
+        moduleTitle,
     };
     return returnValue;
 };
@@ -68,67 +68,82 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            showGlobalNotification,
+            fetchCountryList: geoCountryDataActions.fetchList,
+            listCountryShowLoading: geoCountryDataActions.listShowLoading,
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
-            countryShowLoading: geoCountryDataActions.listShowLoading,
-            fetchCountryList: geoCountryDataActions.fetchList,
             fetchDistrictList: geoDistrictDataActions.fetchList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-
-            saveData: geoTehsilDataActions.saveData,
             fetchList: geoTehsilDataActions.fetchList,
+            saveData: geoTehsilDataActions.saveData,
             listShowLoading: geoTehsilDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry }) => {
-    const [form] = Form.useForm();
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+export const ListTehsilBase = (props) => {
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
-    const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
+    const { stateData, listStateShowLoading, fetchStateList } = props;
+    const { districtData, listDistrictShowLoading, fetchDistrictList } = props;
+
+    const [form] = Form.useForm();
+
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
-    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-
-    const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [page, setPage] = useState(1);
+
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
 
-    const [stateFilter, setStateFilter] = useState('');
-    const [districtFilter, setDistrictFilter] = useState('');
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    useEffect(() => {
-        if (userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
 
+    useEffect(() => {
+        if (userId && !isDataCountryLoaded) {
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
-            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
+
+            fetchStateList({ setIsLoading: listStateShowLoading, userId });
+            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
             if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+                fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded, refershData]);
+    }, [userId, isDataCountryLoaded]);
+
+    useEffect(() => {
+        if (userId && refershData) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
+
     useEffect(() => {
         setFilterString({ countryCode: defaultCountry });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultCountry]);
+
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
@@ -138,28 +153,30 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                 const tehsil = filterString?.tehsil;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true) && (tehsil ? filterFunction(tehsil)(item?.tehsilCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    const handleFormAction = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType(buttonAction);
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
-
-   
-
     const handleReferesh = () => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
 
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
@@ -177,19 +194,21 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.code || '';
         let data = { ...values };
+
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchDataList({ setIsLoading: listShowLoading, userId });
+            setShowDataLoading(true);
 
-            if (showSaveAndAddNewBtn === true || recordId) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
@@ -199,7 +218,7 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
 
         const requestData = {
             data: data,
-            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -213,50 +232,43 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
         form.validateFields().then((values) => {});
     };
 
-    const tableProps = {
-        tableColumn: tableColumn(handleFormAction),
-        tableData: searchData,
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
         form,
+        formData,
         formActionType,
         setFormActionType,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        isReadOnly,
-        formData,
-        footerEdit,
-        setFooterEdit,
-        typeData,
-        isVisible: isFormVisible,
-        onCloseAction: () => {
-            form.resetFields();
-            setIsFormVisible(false);
-            setFormBtnActive(false);
-        },
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
-        isFormBtnActive,
-        setFormBtnActive,
-        configData,
-        setSaveAndAddNewBtnClicked,
-        showSaveBtn,
-        saveAndAddNewBtnClicked,
-        stateData,
-        districtData,
-        stateFilter,
-        setStateFilter,
-        districtFilter,
-        setDistrictFilter,
-        defaultCountry,
+
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        tableData: searchData,
+
         isDataCountryLoaded,
+        isCountryLoading,
         countryData,
+        defaultCountry,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
-        handleFormAction,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+    };
+
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableData: searchData,
+        setPage,
     };
 
     return (
@@ -265,17 +277,20 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
                                         Tehsil List
                                     </Col>
+
                                     <Col xs={24} sm={12} md={4} lg={4} xl={4}>
-                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                            {countryData?.map((item) => (
-                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                            ))}
-                                        </Select>
+                                        {defaultCountry && (
+                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                                {countryData?.map((item) => (
+                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                                ))}
+                                            </Select>
+                                        )}
                                     </Col>
                                     <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
@@ -298,10 +313,10 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                             </Col>
 
                             {data?.length ? (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add Tehsil
                                     </Button>
                                 </Col>
@@ -336,7 +351,7 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                                 {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add Tehsil
                                             </Button>
                                         </Col>
@@ -348,7 +363,7 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={showDataLoading} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>
@@ -358,6 +373,4 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
     );
 };
 
-  
 export const ListTehsilMaster = connect(mapStateToProps, mapDispatchToProps)(ListTehsilBase);
-

@@ -27,10 +27,10 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
-                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
-                State: { isLoaded: isDataLoaded = false, isLoading, data: stateData },
-                City: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
-                District: { isLoaded: isDistrictDataLoaded = false, data: districtData },
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
+                State: { isLoaded: isStateLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
+                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
+                City: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
         },
     } = state;
@@ -43,19 +43,20 @@ const mapStateToProps = (state) => {
     const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
+        isDataCountryLoaded,
         isCountryLoading,
         countryData: finalCountryData,
-        isDataCountryLoaded,
-        isDataLoaded,
-        cityData,
-        stateData,
-        isCityDataLoaded,
-        districtData,
-        isDistrictDataLoaded,
-        isCityLoading,
-        isLoading,
-        moduleTitle,
         defaultCountry,
+        isStateLoaded,
+        isStateLoading,
+        stateData,
+        isDistrictDataLoaded,
+        isDistrictLoading,
+        districtData,
+        isDataLoaded,
+        isLoading,
+        data,
+        moduleTitle,
     };
     return returnValue;
 };
@@ -64,56 +65,75 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            countryShowLoading: geoCountryDataActions.listShowLoading,
             fetchCountryList: geoCountryDataActions.fetchList,
-            fetchList: geoStateDataActions.fetchList,
-            listShowLoading: geoStateDataActions.listShowLoading,
-            listCityShowLoading: geoCityDataActions.listShowLoading,
-            saveData: geoCityDataActions.saveData,
-            fetchCityList: geoCityDataActions.fetchList,
+            listCountryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictList: geoDistrictDataActions.fetchList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchList: geoCityDataActions.fetchList,
+            saveData: geoCityDataActions.saveData,
+            listShowLoading: geoCityDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
-export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ListCityMasterBase = (props) => {
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
+
+    const { stateData, listStateShowLoading, fetchStateList } = props;
+    const { districtData, listDistrictShowLoading, fetchDistrictList } = props;
+
     const [form] = Form.useForm();
 
-    const [formActionType, setFormActionType] = useState('');
-    const [show, setShow] = useState([]);
-    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
-    const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [page, setPage] = useState(1);
+
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [isSaveAndNewClicked, setSaveAndNewClicked] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    useEffect(() => {
-        if (userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
 
-            fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
-            if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
-            }
+    useEffect(() => {
+        if (userId && !isDataCountryLoaded) {
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-            fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
+
+            fetchStateList({ setIsLoading: listStateShowLoading, userId });
+            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded, refershData]);
+    }, [userId, isDataCountryLoaded]);
+
+    useEffect(() => {
+        if (userId && refershData) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
 
     useEffect(() => {
         setFilterString({ countryCode: defaultCountry });
@@ -121,21 +141,35 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     }, [defaultCountry]);
 
     useEffect(() => {
-        if (isDataLoaded && cityData && userId) {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
                 const state = filterString?.state;
                 const district = filterString?.district;
-                const filterDataItem = cityData?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
-                setSearchdata(cityData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, cityData, userId]);
+    }, [filterString, isDataLoaded, data, userId]);
+
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
 
     const handleReferesh = () => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -154,28 +188,21 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         setFilterString({ ...filterString, [name]: value });
     };
 
-    const handleFormAction = ({ record = null, buttonAction }) => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType(buttonAction);
-        record && setFormData(record);
-        setIsFormVisible(true);
-    };
-
     const onFinish = (values) => {
-        const recordId = formData?.code || '';
         let data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
+            setShowDataLoading(true);
+
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
-            if (isSaveAndNewClicked === true || recordId) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
@@ -185,7 +212,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
 
         const requestData = {
             data: data,
-            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -199,44 +226,47 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         form.validateFields().then((values) => {});
     };
 
-    const tableProps = {
-        tableColumn: tableColumn(handleFormAction),
-        tableData: searchData,
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
         form,
-        formActionType,
-        stateData,
-        show,
-        setShow,
-        setFormActionType,
         formData,
-        footerEdit,
-        districtData,
-        setFooterEdit,
-        typeData,
-        cityData,
-        isVisible: isFormVisible,
-        onCloseAction: () => {
-            setIsFormVisible(false);
-            setFormBtnActive(false);
-        },
-        titleOverride: (formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
-
+        formActionType,
+        setFormActionType,
         onFinish,
         onFinishFailed,
-        isFormBtnActive,
-        setFormBtnActive,
-        tableData: cityData,
-        defaultCountry,
+
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        tableData: searchData,
+
         isDataCountryLoaded,
+        isCountryLoading,
         countryData,
-        setSaveAndNewClicked,
+        defaultCountry,
+
+        districtData,
+        stateData,
+        data,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
-        handleFormAction,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+    };
+
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableData: searchData,
+        setPage,
     };
     return (
         <>
@@ -250,11 +280,13 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                                         City List
                                     </Col>
                                     <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                            {countryData?.map((item) => (
-                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                            ))}
-                                        </Select>
+                                        {defaultCountry && (
+                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                                {countryData?.map((item) => (
+                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                                ))}
+                                            </Select>
+                                        )}
                                     </Col>
                                     <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
@@ -276,11 +308,11 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                                 </Row>
                             </Col>
 
-                            {cityData?.length ? (
+                            {data?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add City
                                     </Button>
                                 </Col>
@@ -302,7 +334,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                                     height: 60,
                                 }}
                                 description={
-                                    !cityData?.length ? (
+                                    !searchData?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
@@ -312,10 +344,10 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                                     )
                                 }
                             >
-                                {!cityData?.length ? (
+                                {!searchData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add City
                                             </Button>
                                         </Col>
@@ -327,7 +359,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={showDataLoading} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>

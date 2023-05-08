@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -13,15 +13,8 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const {
-        form,
-        formData,
-        onCloseAction,
-        formActionType: { editMode, viewMode },
-        onFinish,
-        onFinishFailed,
-    } = props;
-    
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 

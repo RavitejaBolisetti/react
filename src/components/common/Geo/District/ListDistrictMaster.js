@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { tableColumn } from './tableColumn';
 
@@ -15,9 +16,7 @@ import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
-import { bindActionCreators } from 'redux';
+
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -76,27 +75,26 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListDistrictBase = (props) => {
-    const { fetchStateList, listStateShowLoading, data, moduleTitle, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, stateData, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry } = props;
+    const { data, isLoading, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
+    const { fetchStateList, listStateShowLoading, stateData } = props;
+
     const [form] = Form.useForm();
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
-    const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
-    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-
-    const [footerEdit, setFooterEdit] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [page, setPage] = useState(1);
+
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
-
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
 
-    const [stateCode, isStateCode] = useState();
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -104,18 +102,27 @@ export const ListDistrictBase = (props) => {
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
     };
 
     useEffect(() => {
-        if (userId) {
+        if (userId && !isDataCountryLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId });
             if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+                fetchCountryList({ setIsLoading: countryShowLoading, userId });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded, refershData]);
+    }, [userId, isDataCountryLoaded]);
+
+    useEffect(() => {
+        if (userId && refershData) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
 
     useEffect(() => {
         setFilterString({ countryCode: defaultCountry });
@@ -129,35 +136,33 @@ export const ListDistrictBase = (props) => {
                 const state = filterString?.state;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    const handleFormAction = ({ record = null, buttonAction }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        setFormActionType(buttonAction);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
         record && setFormData(record);
         setIsFormVisible(true);
     };
 
-   
-
     const handleReferesh = () => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
-   
-
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
-    };
-
-    const handleSelectState = (value) => {
-        isStateCode(value);
     };
 
     const onChangeHandle = (e) => {
@@ -169,20 +174,21 @@ export const ListDistrictBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.code || '';
         let data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
+            setShowDataLoading(true);
+
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
+            fetchStateList({ setIsLoading: listStateShowLoading, userId });
 
-            if (showSaveAndAddNewBtn === true || recordId) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
@@ -193,7 +199,7 @@ export const ListDistrictBase = (props) => {
         const requestData = {
             data: data,
             setIsLoading: listShowLoading,
-            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
@@ -205,46 +211,44 @@ export const ListDistrictBase = (props) => {
         form.validateFields().then((values) => {});
     };
 
-    const tableProps = {
-        tableColumn: tableColumn(handleFormAction),
-        tableData: searchData,
-        // tableData: filterData.length === 0 ? data : filterData,
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
+        form,
+        formData,
         formActionType,
         setFormActionType,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        isReadOnly,
-        formData,
-        footerEdit,
-        setFooterEdit,
-        typeData,
-        isVisible: isFormVisible,
-        onCloseAction: () => {
-            setIsFormVisible(false);
-            setFormBtnActive(false);
-        },
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         onFinishFailed,
-        isFormBtnActive,
-        setFormBtnActive,
-        configData,
-        setSaveAndAddNewBtnClicked,
-        showSaveBtn,
-        saveAndAddNewBtnClicked,
-        stateCode,
-        handleSelectState,
-        stateData,
-        defaultCountry,
+
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('District Details'),
+        tableData: searchData,
+
         isDataCountryLoaded,
+        isCountryLoading,
         countryData,
+        defaultCountry,
+        stateData,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
-        handleFormAction,
+
+        buttonData,
+        setButtonData,
+        handleButtonClick,
+    };
+
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableData: searchData,
+        setPage,
     };
 
     return (
@@ -259,11 +263,13 @@ export const ListDistrictBase = (props) => {
                                         District List
                                     </Col>
                                     <Col xs={24} sm={12} md={6} lg={6} xl={6}>
-                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                            {countryData?.map((item) => (
-                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                            ))}
-                                        </Select>
+                                        {defaultCountry && (
+                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                                {countryData?.map((item) => (
+                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                                ))}
+                                            </Select>
+                                        )}
                                     </Col>
                                     <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                                         <Select placeholder="State" onChange={handleStateChange} allowClear className={styles.headerSelectField}>
@@ -281,7 +287,7 @@ export const ListDistrictBase = (props) => {
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add District
                                     </Button>
                                 </Col>
@@ -316,7 +322,7 @@ export const ListDistrictBase = (props) => {
                                 {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add Group
                                             </Button>
                                         </Col>
@@ -328,7 +334,7 @@ export const ListDistrictBase = (props) => {
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={showDataLoading} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>
@@ -339,4 +345,3 @@ export const ListDistrictBase = (props) => {
 };
 
 export const ListDistrictMaster = connect(mapStateToProps, mapDispatchToProps)(ListDistrictBase);
-

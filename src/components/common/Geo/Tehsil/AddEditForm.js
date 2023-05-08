@@ -1,39 +1,41 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
+
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+
 import { ViewDetail } from './ViewDetail';
+import { withDrawer } from 'components/withDrawer';
+import { DrawerFormButton } from 'components/common/Button';
+
+import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { ADD_ACTION, EDIT_ACTION, VIEW_ACTION } = props;
-    const { hanndleEditData, setSaveAndAddNewBtnClicked,formActionType,handleFormAction } = props;
-    const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, stateData, districtData, stateFilter, setStateFilter, setDistrictFilter, districtFilter } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
-    const [selectedState, setSelectedState] = useState(formData?.stateCode || undefined);
-    const [selectedDistrict, setSelectedDistrict] = useState(formData?.stateCode || undefined);
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
-    const { isDataCountryLoaded, countryData, defaultCountry } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
-    const isAddMode = formActionType === ADD_ACTION;
-    const isViewMode = formActionType === VIEW_ACTION;
+    const { isDataCountryLoaded, countryData, defaultCountry } = props;
+    const { buttonData, setButtonData, handleButtonClick } = props;
+
+    const { stateData, districtData } = props;
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const handleFormValueChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const handleFormFieldChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const handleCountryChange = (countryCode) => {
+        form.setFieldValue('countryCodeDisplay', countryData?.find((i) => i?.countryCode === countryCode)?.countryCode);
     };
 
     const handleStateChange = (state) => {
         form.setFieldValue('districtCode', undefined);
         form.setFieldValue('districtCodeDisplay', undefined);
-
-        setSelectedState(state);
 
         const stateCode = stateData?.find((i) => i?.code === state)?.code;
         stateCode && form.setFieldValue('stateCodeDisplay', stateCode);
@@ -42,31 +44,34 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDistrictChange = (district) => {
-        setSelectedDistrict(district);
         const districtCode = districtData?.find((i) => i?.code === district)?.code;
         districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
     };
 
     const viewProps = {
-        isVisible: isViewModeVisible,
+        isVisible: viewMode,
         formData,
         styles,
     };
 
-    const handleCountryChange = (countryCode) => {
-        form.setFieldValue('countryCodeDisplay', countryData?.find((i) => i?.countryCode === countryCode)?.countryCode);
+    const buttonProps = {
+        formData,
+        onCloseAction,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
     };
 
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {isViewMode ? (
+            {viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange} disabled={true}>
                                     {countryData?.map((item) => (
                                         <Option value={item?.countryCode}>{item?.countryName}</Option>
                                     ))}
@@ -82,7 +87,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="State Name" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
+                                <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -99,7 +104,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District Name" initialValue={formData?.districtCode} name="districtCode" rules={[validateAlphanumericWithSpace('District Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
+                                <Select placeholder={preparePlaceholderSelect('District Name')} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -128,42 +133,15 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item initialValue={formData?.status} label="Status" name="status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
+                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                     </Row>
                 </>
-                
             )}
 
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {isViewMode ? 'Close' : 'Cancel'}
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!isViewMode && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    )}
-
-                    {isAddMode && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
-                            Save & Add New
-                        </Button>
-                    )}
-
-                    {isViewMode && (
-                        <Button  onClick={() => handleFormAction({ buttonAction: EDIT_ACTION, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
-                </Col>
-            </Row>
+            <DrawerFormButton {...buttonProps} />
         </Form>
     );
 };

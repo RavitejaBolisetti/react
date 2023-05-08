@@ -71,11 +71,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListStateMasterBase = (props) => {
-    const { data, isLoading, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
 
+    const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
@@ -94,6 +95,12 @@ export const ListStateMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         setFilterString({ countryCode: defaultCountry });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,7 +108,7 @@ export const ListStateMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && !isDataCountryLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             if (!isDataCountryLoaded) {
                 fetchCountryList({ setIsLoading: countryShowLoading, userId });
             }
@@ -111,10 +118,6 @@ export const ListStateMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && refershData) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                setRefershData(false);
-            };
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,14 +130,17 @@ export const ListStateMasterBase = (props) => {
                 const countryCode = filterString?.countryCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
     const handleReferesh = () => {
+        setShowDataLoading(true);
         setRefershData(!refershData);
     };
 
@@ -162,8 +168,10 @@ export const ListStateMasterBase = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
+            setShowDataLoading(true);
+
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -210,7 +218,7 @@ export const ListStateMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('State Details'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         tableData: searchData,
 
         isDataCountryLoaded,
@@ -306,7 +314,7 @@ export const ListStateMasterBase = (props) => {
                         }
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={showDataLoading} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>

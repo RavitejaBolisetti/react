@@ -1,26 +1,11 @@
-import React from 'react';
-import { Button, Space } from 'antd';
-import { FiEdit2 } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
-
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import { DEFAULT_PAGE_SIZE } from 'constants/constants';
+import { tblPrepareColumns, tblSerialNumberColumn, tblStatusColumn, tblActionColumn } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick, page = 1, pageSize = DEFAULT_PAGE_SIZE) => {
+export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            render: (_, __, index) => {
-                return (page - 1) * pageSize + (index + 1);
-            },
-            width: '5%',
-        }),
+        tblSerialNumberColumn({ page, pageSize }),
 
         tblPrepareColumns({
             title: 'State Code',
@@ -40,28 +25,9 @@ export const tableColumn = (handleButtonClick, page = 1, pageSize = DEFAULT_PAGE
             width: '20%',
         }),
 
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '15%',
-        }),
+        tblStatusColumn({ styles }),
 
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '8%',
-            render: (record) => [
-                <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
-                        <FiEdit2 />
-                    </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                        <FaRegEye />
-                    </Button>
-                </Space>,
-            ],
-        }
+        tblActionColumn({ handleButtonClick, styles })
     );
 
     return tableColumn;
