@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [], detailData = [], isDataLoading, isLoadingOnSave },
+            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [], isDetailLoaded, detailData = [], isDataLoading, isLoadingOnSave },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((i) => i),
+        isDetailLoaded,
         detailData,
         moduleTitle,
         isDataLoading,
@@ -53,10 +54,9 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
-            hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetailList,
+            hierarchyAttributeFetchDetailList: hierarchyAttributeMasterDataActions.fetchDetail,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
-            detailDataListShowLoading: hierarchyAttributeMasterDataActions.detailDataListShowLoading,
             onSaveShowLoading: hierarchyAttributeMasterDataActions.onSaveShowLoading,
 
             showGlobalNotification,
@@ -65,11 +65,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, detailDataListShowLoading, isDataLoading, onSaveShowLoading, isLoadingOnSave }) => {
+export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDataAttributeLoaded, attributeData, hierarchyAttributeFetchList, hierarchyAttributeListShowLoading, hierarchyAttributeSaveData, hierarchyAttributeFetchDetailList, detailData, showGlobalNotification, isDataLoading, onSaveShowLoading, isLoadingOnSave }) => {
     const [form] = Form.useForm();
     const [rowdata, setRowsData] = useState([]);
     const [editRow, setEditRow] = useState({});
-    const [showDrawer, setShowDrawer] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [checkfields, setCheckFields] = useState(false);
     const [ForceReset, setForceReset] = useState();
@@ -132,7 +131,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     useEffect(() => {
         if (!selectedHierarchy || !RefershData) return;
         setRefershData((prev) => !prev);
-        hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
         if (filterString) {
             const filterDataItem = detailData?.hierarchyAttribute?.filter((item) => filterFunction(filterString)(item?.hierarchyAttribueCode) || filterFunction(filterString)(item?.hierarchyAttribueName));
             setSearchdata(filterDataItem);
@@ -282,8 +281,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
         };
 
         setTimeout(() => {
-            hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: selectedHierarchy });
-            
+            hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: selectedHierarchy });
         }, 2000);
 
         const onError = (message) => {
@@ -295,11 +293,11 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleChange = (attributeType) => {
-        hierarchyAttributeFetchDetailList({ setIsLoading: detailDataListShowLoading, userId, type: attributeType });
+        hierarchyAttributeFetchDetailList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: attributeType });
         setSelectedHierarchy(attributeType);
     };
 
@@ -369,7 +367,6 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, isDataLoaded, isDa
                                             </Button>
                                         </Col>
                                     )}
-                                   
                                 </Row>
                             </Col>
                         </Row>

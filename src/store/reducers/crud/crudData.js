@@ -9,6 +9,8 @@ export const initialState = {
     isLoading: false,
     isDataSave: false,
     saveDataId: undefined,
+    detailData: [],
+    extraParam: [],
 };
 
 const recieveDataCF = (state, action) => ({
@@ -28,7 +30,8 @@ const filteredListRecieveDataCF = (state, action) => ({
 const recieveDataDetailCF = (state, action) => ({
     ...state,
     isDetailLoaded: true,
-    dataDetail: action.data,
+    detailData: action.data,
+    extraParam: action.extraParam,
 });
 
 const saveDataCF = (state, action) => ({

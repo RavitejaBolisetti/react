@@ -5,7 +5,7 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, SAVE_DATA_ACTION_CONSTANT, RECIEVE_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT } = params;
 
     const listShowLoading = (isLoading) => ({
         type: RECEIVE_DATA_LOADING_ACTION_CONSTANT,
@@ -22,15 +22,10 @@ export const dataActions = (params) => {
         filteredListData,
     });
 
-    const recieveDataDetail = (data, id) => ({
-        type: RECIEVE_DETAIL_ACTION_CONSTANT,
+    const recieveDataDetail = (data, extraParam) => ({
+        type: RECIEVE_DATA_DETAIL_ACTION_CONSTANT,
         data,
-        id,
-    });
-
-    const saveData = (data) => ({
-        type: SAVE_DATA_ACTION_CONSTANT,
-        data,
+        extraParam,
     });
 
     const resetData = () => ({
@@ -39,7 +34,7 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '',mytype='' } = params;
+            const { setIsLoading, data, type = '', mytype = '' } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
@@ -101,13 +96,13 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, id = '' } = params;
+            const { setIsLoading, data, id = '', type = '' } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
             const onSuccess = (res) => {
                 if (res?.data) {
-                    dispatch(recieveDataDetail(res?.data, id));
+                    dispatch(recieveDataDetail(res?.data, { id, type }));
                 } else {
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
@@ -116,7 +111,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (id ? '?id=' + id : ''),
+                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : ''),
                 token,
                 accessToken,
                 userId,
