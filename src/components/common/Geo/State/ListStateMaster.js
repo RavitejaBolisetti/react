@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -16,8 +16,6 @@ import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
 
@@ -35,16 +33,19 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log('countryData', countryData);
-
     const moduleTitle = 'State Master List';
 
+    const finalCountryData = countryData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
+
+    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
         isDataCountryLoaded,
         isCountryLoading,
-        countryData,
-
+        countryData: finalCountryData,
+        defaultCountry,
         isDataLoaded,
         data,
         isLoading,
@@ -70,26 +71,30 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListStateMasterBase = (props) => {
-    const { data, isLoading, saveData, fetchList, userId, typeData, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, fetchCountryList, countryShowLoading } = props;
+    const { data, isLoading, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
 
-    const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [isSaveAndNewClicked, setSaveAndNewClicked] = useState(false);
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
+    useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
 
     useEffect(() => {
         if (userId) {
@@ -107,7 +112,9 @@ export const ListStateMasterBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = data?.filter((item) => filterFunction(filterString)(item?.code) || filterFunction(filterString)(item?.name));
+                const keyword = filterString?.keyword;
+                const countryCode = filterString?.countryCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
             } else {
                 setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -116,134 +123,36 @@ export const ListStateMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    const handleEditBtn = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-    };
-
-    const handleView = (record) => {
-        setFormActionType(FROM_ACTION_TYPE?.VIEW);
-        setIsViewModeVisible(true);
-
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(true);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-
-        setIsReadOnly(true);
-    };
-
-    const tableColumn = [];
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
-            title: 'State Code',
-            dataIndex: 'code',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'State Name',
-            dataIndex: 'name',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Country',
-            dataIndex: 'countryName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '15%',
-        }),
-
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '8%',
-            render: (record) => [
-                <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                        <FiEdit2 />
-                    </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                        <FaRegEye />
-                    </Button>
-                </Space>,
-            ],
-        }
-    );
-
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
 
-    const hanndleEditData = (record) => {
+    const handleFormAction = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-        
-        setFormData(record);
-    };
-
-    const handleAdd = () => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType(FROM_ACTION_TYPE?.ADD);
-        setShowSaveAndAddNewBtn(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
+        setFormActionType(buttonAction);
+        record && setFormData(record);
         setIsFormVisible(true);
-        setIsReadOnly(false);
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        setFilterString({ ...filterString, keyword: value });
     };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
     };
 
     const onFinish = (values) => {
         const recordId = formData?.code || '';
-        let data = { ...values, id: recordId };
+        let data = { ...values };
 
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
-            if (showSaveAndAddNewBtn === true || recordId) {
+            if (isSaveAndNewClicked === true || recordId) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
@@ -271,41 +180,42 @@ export const ListStateMasterBase = (props) => {
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
-    const tableProps = {
-        tableColumn: tableColumn,
-        tableData: searchData,
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setFormBtnActive(false);
     };
 
     const formProps = {
         form,
         formActionType,
         setFormActionType,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        isReadOnly,
         formData,
-        footerEdit,
-        setFooterEdit,
-        typeData,
         isVisible: isFormVisible,
-        onCloseAction: () => {
-            form.resetFields();
-            setIsFormVisible(false);
-            setFormBtnActive(false);
-        },
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('State Details'),
+        onCloseAction,
+        titleOverride: (formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('State Details'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         tableData: searchData,
-        hanndleEditData,
         setSaveAndAddNewBtnClicked,
-        showSaveBtn,
         saveAndAddNewBtnClicked,
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
+        defaultCountry,
+        setSaveAndNewClicked,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        handleFormAction,
+    };
+
+    const tableProps = {
+        tableColumn: tableColumn(handleFormAction),
+        tableData: searchData,
     };
     return (
         <>
@@ -319,7 +229,7 @@ export const ListStateMasterBase = (props) => {
                                         State List
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                             {countryData?.map((item) => (
                                                 <Option value={item?.countryCode}>{item?.countryName}</Option>
                                             ))}
@@ -333,7 +243,7 @@ export const ListStateMasterBase = (props) => {
 
                             <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add State
                                 </Button>
                             </Col>
@@ -345,36 +255,38 @@ export const ListStateMasterBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !searchData?.length ? (
-                                        <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
-                                        </span>
+                        renderEmpty={() =>
+                            isDataLoaded && (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        !searchData?.length ? (
+                                            <span>
+                                                No records found. Please add new parameter <br />
+                                                using below button
+                                            </span>
+                                        ) : (
+                                            <span> No records found.</span>
+                                        )
+                                    }
+                                >
+                                    {!searchData?.length ? (
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                    Add State
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!searchData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add State
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
+                                        ''
+                                    )}
+                                </Empty>
+                            )
+                        }
                     >
                         <div className={styles.tableProduct}>
                             <DataTable isLoading={isLoading} {...tableProps} />
@@ -388,3 +300,5 @@ export const ListStateMasterBase = (props) => {
 };
 
 export const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
+
+

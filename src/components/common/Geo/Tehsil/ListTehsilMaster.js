@@ -10,6 +10,7 @@ import { filterFunction } from 'utils/filterFunction';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
                 State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
                 District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
                 Tehsil: { isLoaded: isDataLoaded = false, isLoading, data },
@@ -36,14 +38,20 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Tehsil Details';
-
+    const finalCountryData = countryData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
+    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
         isDataLoaded,
         data,
         isLoading,
         moduleTitle,
-
+        isCountryLoading,
+        countryData: finalCountryData,
+        isDataCountryLoaded,
+        defaultCountry,
         isStateDataLoaded,
         isStateLoading,
         stateData,
@@ -62,7 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
             showGlobalNotification,
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
-
+            countryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchCountryList: geoCountryDataActions.fetchList,
             fetchDistrictList: geoDistrictDataActions.fetchList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
 
@@ -74,7 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData }) => {
+export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, showGlobalNotification, fetchStateList, fetchDistrictList, listStateShowLoading, listDistrictShowLoading, stateData, districtData, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -106,10 +115,16 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
             fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId, onSuccessAction });
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
-
+    }, [userId, isDataCountryLoaded, refershData]);
+    useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
@@ -332,6 +347,9 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
         setStateFilter,
         districtFilter,
         setDistrictFilter,
+        defaultCountry,
+        isDataCountryLoaded,
+        countryData,
     };
 
     return (
@@ -345,21 +363,28 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                                     <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
                                         Tehsil List
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
+                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                            {countryData?.map((item) => (
+                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
                                             {filteredDistrictData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={7} lg={7} xl={7}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
@@ -426,4 +451,6 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
     );
 };
 
+  
 export const ListTehsilMaster = connect(mapStateToProps, mapDispatchToProps)(ListTehsilBase);
+

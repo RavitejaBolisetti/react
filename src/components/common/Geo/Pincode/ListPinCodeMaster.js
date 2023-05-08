@@ -603,4 +603,4 @@ const ListPinCodeMasterBase = ({
     );
 };
 
-export const ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);
+ export const  ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);

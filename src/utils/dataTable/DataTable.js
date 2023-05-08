@@ -1,11 +1,11 @@
-import { Table } from 'antd';
 import { useState } from 'react';
+import { Table, Pagination, Row, Col, Select } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 
 export default function DataTable({ isLoading, tableColumn, tableData }) {
     const showTotal = (total) => `Total ${!isLoading ? tableData?.length : null} items`;
 
-    const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, showTotal });
+    const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
 
     const handleTableChange = (pagination, filters, sorter) => {
         setPagination({ ...pagination, showTotal });
@@ -16,12 +16,16 @@ export default function DataTable({ isLoading, tableColumn, tableData }) {
     });
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+    const onChange = (page, pageSize) => {
+        setPagination({ ...tablePagination, current: page });
+    };
     return (
         <Table
             columns={isLoading ? tableSkeletonColumn : tableColumn}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
-            pagination={tableData?.length > 10 ? tablePagination : false}
+            pagination={tablePagination}
             scroll={{
                 x: 'auto',
             }}

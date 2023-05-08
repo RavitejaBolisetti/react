@@ -194,7 +194,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
     const handleAdd = () => {
-        setIsFormVisible(false);
         setIsFormVisible(true);
     };
 
@@ -284,10 +283,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setSelectedTreeSelectKey,
         handleAttributeChange,
         isVisible: isFormVisible,
-        onCloseAction: () => {
-            setIsFormVisible(false);
-            setFormBtnActive(false);
-        },
+        onCloseAction: () => setIsFormVisible(false),
         handleResetBtn,
         buttonData,
         titleOverride: (formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
@@ -309,8 +305,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         styles,
         viewTitle,
     };
-    const leftCol = productHierarchyData?.length > 0 ? 16 : 24;
-    const rightCol = productHierarchyData?.length > 0 ? 8 : 24;
+    const leftCol = productHierarchyData.length > 0 ? 16 : 24;
+    const rightCol = productHierarchyData.length > 0 ? 8 : 24;
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
@@ -322,21 +318,19 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20} className={styles.searchAndLabelAlign}>
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={style.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={5} lg={5} xl={5} className={styles.lineHeight33}>
-                                        Hierarchy
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
-                                            <Option value="hyr">Hyr</Option>
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                    </Col>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                    Hierarchy
+                                </Col>
+                                <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                    <Select placeholder="Select Hierarchy" allowClear className={styles.headerSelectField}>
+                                        <Option value="hyr">Hyr</Option>
+                                    </Select>
+                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                </Col>
                                 </Row>
                             </Col>
-                            {productHierarchyData?.length > 0 && (
+                            {productHierarchyData.length > 0 && (
                                 <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={5} lg={5} xl={5}>
                                     <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
                                         <FaHistory className={styles.buttonIcon} />
@@ -347,7 +341,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         </Row>
                     </div>
                     <div className={styles.content}>
-                        {productHierarchyData?.length <= 0 ? (
+                        {productHierarchyData.length <= 0 ? (
                             <div className={styles.emptyContainer}>
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -373,7 +367,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     </div>
                 </Col>
 
-                {productHierarchyData?.length > 0 && (
+                {productHierarchyData.length > 0 && (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
                         {isCollapsableView ? <></> : null}
 

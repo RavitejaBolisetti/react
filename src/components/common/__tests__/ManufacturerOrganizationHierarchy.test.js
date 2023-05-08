@@ -222,7 +222,7 @@ describe('manufacturerorghierarchy component', () => {
           await waitFor(() => expect(nodes.length).toBe(1));
         });
       
-        test.only('calls fetchList and hierarchyAttributeFetchList when the component is rendered', () => {
+        test('calls fetchList and hierarchyAttributeFetchList when the component is rendered', () => {
           render(<ManufacturerOrgHierarchyMain userId="123" fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} />);
           const spyFunction = jest.spyOn(global,'showGlobalNotification');
           const result = showGlobalNotification();

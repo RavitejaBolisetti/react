@@ -4,6 +4,8 @@ import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } f
 import { bindActionCreators } from 'redux';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
+import { tableColumn } from './tableColumn';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -28,6 +30,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             Geo: {
+                Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData },
                 State: { isLoaded: isDataLoaded = false, isLoading, data: stateData },
                 City: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
                 District: { isLoaded: isDistrictDataLoaded = false, data: districtData },
@@ -36,8 +39,16 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'City Master List';
+    const finalCountryData = countryData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
+
+    const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
     let returnValue = {
         userId,
+        isCountryLoading,
+        countryData: finalCountryData,
+        isDataCountryLoaded,
         isDataLoaded,
         cityData,
         stateData,
@@ -47,6 +58,7 @@ const mapStateToProps = (state) => {
         isCityLoading,
         isLoading,
         moduleTitle,
+        defaultCountry,
     };
     return returnValue;
 };
@@ -55,6 +67,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            countryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchCountryList: geoCountryDataActions.fetchList,
             fetchList: geoStateDataActions.fetchList,
             listShowLoading: geoStateDataActions.listShowLoading,
             listCityShowLoading: geoCityDataActions.listShowLoading,
@@ -67,14 +81,13 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [show, setShow] = useState([]);
-    const [city, setCity] = useState(cityData);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
@@ -88,6 +101,10 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
 
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
@@ -95,11 +112,19 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
             };
 
             fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: countryShowLoading, userId, onSuccessAction });
+            }
             fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
+    }, [userId, isDataCountryLoaded, refershData]);
+
+    useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
 
     useEffect(() => {
         if (isDataLoaded && cityData && userId) {
@@ -116,128 +141,12 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
 
-    const handleEditBtn = (record) => {
-        form.resetFields();
-        setFormData([]);
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-    };
-
-    const handleView = (record) => {
-        setFormActionType(FROM_ACTION_TYPE?.VIEW);
-        setIsViewModeVisible(true);
-
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(true);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
-
-        setIsReadOnly(true);
-    };
-
-    const onChange2 = (e) => {
-        setCity(cityData.filter((i) => i.districtCode === e));
-        setShow([]);
-    };
-
-    const tableColumn = [];
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
-            title: 'City Code',
-            dataIndex: 'code',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'City Name',
-            dataIndex: 'name',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'District Name',
-            dataIndex: 'districtName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'State Name',
-            dataIndex: 'stateName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '10%',
-        }),
-
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '10%',
-            render: (record) => [
-                <Space wrap>
-                    {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                            <FiEdit2 />
-                        </Button>
-                    }
-                    {
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                            <FaRegEye />
-                        </Button>
-                    }
-                </Space>,
-            ],
-        }
-    );
 
     const handleReferesh = () => {
         setRefershData(!refershData);
-        setCity(cityData);
     };
 
-    const hanndleEditData = (record) => {
-        form.resetFields();
-        setFormData([]);
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-    };
 
-    const handleAdd = () => {
-        form.resetFields();
-        setFormData([]);
-        setFormActionType(FROM_ACTION_TYPE?.ADD);
-        setShowSaveAndAddNewBtn(true);
-        setIsViewModeVisible(false);
-        setFooterEdit(false);
-        setIsFormVisible(true);
-        setIsReadOnly(false);
-    };
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
@@ -253,6 +162,15 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
         }
         setFilterString({ ...filterString, [name]: value });
     };
+
+    const handleFormAction = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(buttonAction);
+        record && setFormData(record);
+        setIsFormVisible(true);
+    };
+
 
     const onFinish = (values) => {
         const recordId = formData?.code || '';
@@ -291,12 +209,8 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
         form.validateFields().then((values) => {});
     };
 
-    const onChange = (e) => {
-        setShow(districtData.filter((i) => i.stateCode === e));
-    };
-
     const tableProps = {
-        tableColumn: tableColumn,
+        tableColumn: tableColumn(handleFormAction),
         tableData: searchData,
     };
 
@@ -307,9 +221,6 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
         show,
         setShow,
         setFormActionType,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        isReadOnly,
         formData,
         footerEdit,
         districtData,
@@ -317,17 +228,27 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
         typeData,
         cityData,
         isVisible: isFormVisible,
-        onCloseAction: () => (form.resetFields(), setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
+        onCloseAction: () => {
+            setIsFormVisible(false);
+            setFormBtnActive(false);
+        },
+        titleOverride:(formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
+        
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         tableData: cityData,
-        hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
+        defaultCountry,
+        isDataCountryLoaded,
+        countryData,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        handleFormAction,
     };
     return (
         <>
@@ -337,24 +258,31 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
+                                        <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                            {countryData?.map((item) => (
+                                                <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
                                             {stateData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
                                             {filteredDistrictData?.map((item) => (
                                                 <Option value={item?.code}>{item?.name}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
@@ -364,7 +292,7 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add City
                                     </Button>
                                 </Col>
@@ -399,7 +327,7 @@ export const ListCityMasterBase = ({ moduleTitle, listCityShowLoading, listDistr
                                 {!cityData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add City
                                             </Button>
                                         </Col>

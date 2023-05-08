@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
@@ -79,7 +78,17 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text) => (text ? 'Active' : 'In Active'),
+            filters: [
+                {
+                    text: 'Active',
+                    value: 'Active',
+                },
+                {
+                    text: 'Inactive',
+                    value: 'Inactive',
+                },
+            ],
+            render: (text) => (text === 'Y' ? 'Active' : 'In Active'),
         }),
     ];
 
