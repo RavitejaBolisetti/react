@@ -75,9 +75,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListDistrictBase = (props) => {
-    const { data, isLoading, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
-    const { fetchStateList, listStateShowLoading, stateData } = props;
+    const { isStateDataLoaded, fetchStateList, listStateShowLoading, stateData } = props;
 
     const [form] = Form.useForm();
 
@@ -107,15 +107,19 @@ export const ListDistrictBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isDataCountryLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchStateList({ setIsLoading: listStateShowLoading, userId });
+        if (userId) {
             if (!isDataCountryLoaded) {
                 fetchCountryList({ setIsLoading: countryShowLoading, userId });
             }
+            if (!isStateDataLoaded) {
+                fetchStateList({ setIsLoading: listStateShowLoading, userId });
+            }
+            if (!isDataLoaded) {
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded]);
+    }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {

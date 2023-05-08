@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         data: {
             Geo: {
                 Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
-                State: { isLoaded: isStateLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
                 District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
                 City: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
         isCountryLoading,
         countryData: finalCountryData,
         defaultCountry,
-        isStateLoaded,
+        isStateDataLoaded,
         isStateLoading,
         stateData,
         isDistrictDataLoaded,
@@ -83,8 +83,8 @@ export const ListCityMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
-    const { stateData, listStateShowLoading, fetchStateList } = props;
-    const { districtData, listDistrictShowLoading, fetchDistrictList } = props;
+    const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
+    const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
 
     const [form] = Form.useForm();
 
@@ -116,17 +116,22 @@ export const ListCityMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isDataCountryLoaded) {
-            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-
-            fetchStateList({ setIsLoading: listStateShowLoading, userId });
-            fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+        if (userId) {
             if (!isDataCountryLoaded) {
                 fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
             }
+            if (!isStateDataLoaded) {
+                fetchStateList({ setIsLoading: listStateShowLoading, userId });
+            }
+            if (!isDistrictDataLoaded) {
+                fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+            }
+            if (!isDataLoaded) {
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded]);
+    }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
