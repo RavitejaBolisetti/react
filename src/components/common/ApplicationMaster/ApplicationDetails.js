@@ -24,11 +24,9 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, is
 
     const handleSelectTreeClick = (value) => {
         if (value === finalFormdata?.applicationDetails?.applicationId) {
-            console.log('handleSelectTreeClick of parent', value);
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Select different parent', placement: 'bottomRight' });
         }
 
-        // setSelectedTreeKey(value);
         setparentAppCode(value);
     };
 
