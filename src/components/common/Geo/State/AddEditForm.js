@@ -13,7 +13,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, setSaveAndNewClicked, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
@@ -36,11 +36,11 @@ const AddEditFormMain = (props) => {
     };
 
     const buttonProps = {
-        buttonData,
-        handleButtonClick,
-        onCloseAction,
         formData,
-        setSaveAndNewClicked,
+        onCloseAction,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
     };
 
     return (
@@ -65,7 +65,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code'), validationFieldLetterAndNumber('State Code')]}>
@@ -78,10 +77,9 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.status} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                            <Form.Item initialValue={formActionType?.editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>

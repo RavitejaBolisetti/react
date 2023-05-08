@@ -82,9 +82,8 @@ export const ListStateMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isSaveAndNewClicked, setSaveAndNewClicked] = useState(false);
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
@@ -131,6 +130,7 @@ export const ListStateMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
+        console.log('🚀 ~ file: ListStateMaster.js:133 ~ handleButtonClick ~ buttonAction:', buttonAction);
         form.resetFields();
         setFormData([]);
 
@@ -150,7 +150,6 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.code || '';
         let data = { ...values };
 
         const onSuccess = (res) => {
@@ -158,12 +157,12 @@ export const ListStateMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
-            if (isSaveAndNewClicked === true || recordId) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
@@ -195,24 +194,27 @@ export const ListStateMasterBase = (props) => {
 
     const formProps = {
         form,
+        formData,
         formActionType,
         setFormActionType,
-        formData,
+        onFinish,
+        onFinishFailed,
+
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('State Details'),
-        onFinish,
-        onFinishFailed,
         tableData: searchData,
+
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
         defaultCountry,
-        setSaveAndNewClicked,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
+
         setButtonData,
         handleButtonClick,
     };

@@ -4,7 +4,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './DrawerFormButton.module.css';
 
-export const DrawerFormButton = ({ buttonData, handleButtonClick, onCloseAction, formData, setSaveAndNewClicked }) => {
+export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButtonData, handleButtonClick }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -23,13 +23,13 @@ export const DrawerFormButton = ({ buttonData, handleButtonClick, onCloseAction,
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                 {buttonData?.saveBtn && (
-                    <Button disabled={!buttonData?.formBtnActive} onClick={() => setSaveAndNewClicked(false)} htmlType="submit" type="primary">
+                    <Button disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         Save
                     </Button>
                 )}
 
                 {buttonData?.saveAndNewBtn && (
-                    <Button htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={() => setSaveAndNewClicked(true)} type="primary">
+                    <Button htmlType="submit" disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: true })} type="primary">
                         Save & Add New
                     </Button>
                 )}

@@ -49,10 +49,10 @@ export const tableColumn = (handleButtonClick) => {
             width: '8%',
             render: (record) => [
                 <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
                         <FiEdit2 />
                     </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                         <FaRegEye />
                     </Button>
                 </Space>,
