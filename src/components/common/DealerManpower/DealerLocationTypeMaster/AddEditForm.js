@@ -48,25 +48,19 @@ const AddEditFormMain = (props) => {
     //     districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
     // };
 
-    const data = {
-        locationCode: 'D123',
-        locationDescription: 'delhi',
-        status: true,
-    };
-
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Location Type Code" initialValue={data?.locationCode} name="locationCode" rules={[validateRequiredInputField('Location Type Code')]}>
-                                <Input placeholder={preparePlaceholderText('Location  Code')} className={styles.inputBox} disabled={true} />
+                            <Form.Item label="Location Type Code" initialValue={formData?.locationCode} name="locationCode" rules={[validateRequiredInputField('Location Type Code')]}>
+                                <Input placeholder={preparePlaceholderText('Location  Code')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={data?.locationDescription} label="Location Type Description" name="locationDescription" rules={[validateRequiredInputField('Location Type Description')]}>
-                                <Input placeholder={preparePlaceholderText('Location Description')} className={styles.inputBox} disabled={true} />
+                            <Form.Item initialValue={formData?.locationDescription} label="Location Type Description" name="locationDescription" rules={[validateRequiredInputField('Location Type Description')]}>
+                                <Input placeholder={preparePlaceholderText('Location Description')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
                     </Row>
