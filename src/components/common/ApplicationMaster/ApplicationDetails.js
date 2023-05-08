@@ -8,7 +8,7 @@ import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
+const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
         setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
@@ -23,7 +23,11 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, is
     const fieldNames = { label: 'menuTitle', value: 'menuId', children: 'subMenu' };
 
     const handleSelectTreeClick = (value) => {
-        console.log('handleSelectTreeClick', value);
+        if (value === finalFormdata?.applicationDetails?.applicationId) {
+            console.log('handleSelectTreeClick of parent', value);
+            return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Select different parent', placement: 'bottomRight' });
+        }
+
         // setSelectedTreeKey(value);
         setparentAppCode(value);
     };

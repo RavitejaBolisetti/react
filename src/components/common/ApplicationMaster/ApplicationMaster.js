@@ -208,7 +208,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
-            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map(el => ({...el})), documentType, accessibleLocation });
+            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map((el) => ({ ...el })), documentType, accessibleLocation });
             setIsReadOnly(false);
             setIsFieldDisable(true);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
@@ -237,7 +237,6 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         setisVisible(false);
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
-
     };
 
     const myProps = {
@@ -273,6 +272,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         selectedTreeKey,
         isApplicatinoOnSaveLoading,
         onCloseAction: onClose,
+        showGlobalNotification,
     };
 
     const leftCol = menuData?.length > 0 ? 16 : 24;

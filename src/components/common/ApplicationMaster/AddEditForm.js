@@ -13,7 +13,7 @@ import { accordianExpandIcon } from './../../../utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
-const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
+const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isRestrictedLocation, setIsRestrictedLocation] = useState(false);
     const [isDocumentToGenerate, setIsDocumentToGenerate] = useState(true);
@@ -44,7 +44,24 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, setparentAppCode
         <>
             <Spin spinning={isApplicatinoOnSaveLoading}>
                 <Space direction="vertical" size="small" className={style.accordianContainer}>
-                    <ApplicationDetails isFieldDisable={isFieldDisable} isReadOnly={isReadOnly} setSelectedTreeKey={setSelectedTreeKey} selectedTreeKey={selectedTreeKey} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} onFinish={onFinish} form={applicationForm} setIsRestrictedLocation={setIsRestrictedLocation} setIsDocumentToGenerate={setIsDocumentToGenerate} criticalityGroupData={criticalityGroupData} configurableParamData={configurableParamData} menuData={menuData} setparentAppCode={setparentAppCode} parentAppCode={parentAppCode} />
+                    <ApplicationDetails
+                        showGlobalNotification={showGlobalNotification}
+                        isFieldDisable={isFieldDisable}
+                        isReadOnly={isReadOnly}
+                        setSelectedTreeKey={setSelectedTreeKey}
+                        selectedTreeKey={selectedTreeKey}
+                        setFinalFormdata={setFinalFormdata}
+                        finalFormdata={finalFormdata}
+                        onFinish={onFinish}
+                        form={applicationForm}
+                        setIsRestrictedLocation={setIsRestrictedLocation}
+                        setIsDocumentToGenerate={setIsDocumentToGenerate}
+                        criticalityGroupData={criticalityGroupData}
+                        configurableParamData={configurableParamData}
+                        menuData={menuData}
+                        setparentAppCode={setparentAppCode}
+                        parentAppCode={parentAppCode}
+                    />
 
                     <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel header={'Application Actions'} key="1">
