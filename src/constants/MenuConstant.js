@@ -80,12 +80,12 @@ export const MenuConstant = {
     // },
 
     
-    [getMenyKey('COMN-07.02')]: {
-        key: 'COMN-07.02',
-        link: routing.ROUTING_COMMON_GEO_COUNTRY,
-        icon: undefined,
-        parentMenuId: 'COMN-07',
-    },
+    // [getMenyKey('COMN-07.02')]: {
+    //     key: 'COMN-07.02',
+    //     link: routing.ROUTING_COMMON_GEO_COUNTRY,
+    //     icon: undefined,
+    //     parentMenuId: 'COMN-07',
+    // },
 
     [getMenyKey('COMN-07.03')]: {
         key: 'COMN-07.03',

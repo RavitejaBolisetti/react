@@ -23,7 +23,7 @@ export default function DataTable({ isLoading, tableColumn, tableData, rowKey = 
             columns={isLoading ? tableSkeletonColumn : tableColumn}
             dataSource={isLoading ? skeletonData : tableData}
             onChange={handleTableChange}
-            pagination={tablePagination}
+            pagination={!isLoading && tablePagination}
             rowKey={rowKey}
             scroll={{
                 x: 'auto',
