@@ -29,11 +29,12 @@ const AddEditFormMain = (props) => {
     const handleControlChange = (control, e) => {
         const controlData = configData?.find((i) => i.controlId === control);
         form.setFieldsValue({
-            parameterType: controlData?.parameterType,
+            controlDescription: controlData?.controlDescription,
         });
     };
 
     const changeSelectOptionHandler = (event) => {
+        
         setParameterType(event);
     };
 
@@ -47,7 +48,7 @@ const AddEditFormMain = (props) => {
 
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={16}>
@@ -73,8 +74,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={parameterType} label="Configurable Parameter Type" name="configurableParameterType" rules={[validateRequiredSelectField('ConfigParamType')]}>
-                                <Select placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
+                            <Form.Item  label="Configurable Parameter Type" name="configurableParameterType" rules={[validateRequiredSelectField('ConfigParamType')]}>
+                                <Select defaultValue={parameterType} placeholder="Select Parameter Type" onChange={changeSelectOptionHandler} disabled={isReadOnly}>
                                     {typeData && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id] && typeData[PARAM_MASTER.CFG_PARAM_TYPE.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)}
                                 </Select>
                             </Form.Item>
@@ -104,13 +105,13 @@ const AddEditFormMain = (props) => {
                             ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="From Date" name="fromDate" initialValue={convertCalenderDate(formData?.fromDate)} rules={[validateRequiredInputField('Number')]}>
+                                        <Form.Item label="From Date" name="fromDate"  rules={[validateRequiredInputField('Number')]}>
                                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="To Date" name="toDate" initialValue={convertCalenderDate(formData?.toDate)} rules={[validateRequiredInputField('Number')]}>
+                                        <Form.Item label="To Date" name="toDate"  rules={[validateRequiredInputField('Number')]}>
                                             <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>

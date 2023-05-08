@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { geoDataActions } from 'store/actions/data/geo';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import styles from '../ChangeHistory/ChangeHistory.module.css';
@@ -13,16 +13,16 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Geo: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
+            ProductHierarchy: { isHistoryLoading, isHistoryLoaded = false, historyData: changeHistoryData = [], changeHistoryVisible: isVisible },
         },
     } = state;
 
     let returnValue = {
         userId,
         isHistoryLoading,
-        isVisible,
         isHistoryLoaded,
-        changeHistoryData: changeHistoryData,
+        isVisible,
+        changeHistoryData,
     };
     return returnValue;
 };
@@ -31,57 +31,55 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchChangeHistoryList: geoDataActions.fetchChangeHistoryList,
-            changeHistoryShowLoading: geoDataActions.changeHistoryShowLoading,
-            onCloseAction: geoDataActions.changeHistoryModelClose,
+            fetchChangeHistoryList: productHierarchyDataActions.fetchChangeHistoryList,
+            changeHistoryShowLoading: productHierarchyDataActions.changeHistoryShowLoading,
+            onCloseAction: productHierarchyDataActions.changeHistoryModelClose,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
         if (!isHistoryLoaded) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHistoryLoaded]);
-
     const tableColumn = [
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
             render: (text) => convertDateTime(text),
-            width: 220,
         }),
         tblPrepareColumns({
             title: 'Changed By',
             dataIndex: 'changedBy',
-            width: 150,
         }),
         tblPrepareColumns({
-            title: 'Attribute Type',
-            dataIndex: 'attributeType',
-            width: 200,
+            title: 'Attribute',
+            dataIndex: 'parentAttributeName',
         }),
         tblPrepareColumns({
             title: 'Code',
-            dataIndex: 'geoCode',
-            width: 100,
+            dataIndex: 'prodctCode',
         }),
         tblPrepareColumns({
-            title: 'Name',
-            dataIndex: 'geoName',
+            title: 'Parent',
+            dataIndex: 'parntHeirarchyCode',
         }),
         tblPrepareColumns({
-            title: 'Parent Code',
-            dataIndex: 'parentCode',
-            width: 150,
+            title: 'Short Description',
+            dataIndex: 'prodctShrtDescription',
         }),
         tblPrepareColumns({
-            title: 'Parent Name',
-            dataIndex: 'parentName',
-            width: 200,
+            title: 'Long Description',
+            dataIndex: 'prodctLongDiscription',
+        }),
+        tblPrepareColumns({
+            title: 'Status',
+            dataIndex: 'status',
+            render: (text) => (text ? 'Active' : 'In Active'),
         }),
     ];
 
@@ -90,15 +88,11 @@ const ChangeHistoryGeoMain = ({ fetchChangeHistoryList, changeHistoryShowLoading
         tableColumn,
         tableData: changeHistoryData,
     };
-
     return (
         <div className={styles.changeHistoryContainer}>
-            {/* <div>
-                <h3>Change History</h3>
-            </div> */}
             <DataTable {...tableProps} />
         </div>
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryGeoMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));

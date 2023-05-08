@@ -281,6 +281,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                     validator: validateOTPOption,
                                                                 },
                                                             ]}
+                                                            initialValue={['sentOnMobile', 'sentOnEmail']}
                                                         >
                                                             <Checkbox.Group
                                                                 style={{

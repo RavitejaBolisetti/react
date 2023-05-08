@@ -27,24 +27,20 @@ export const dataActions = (params) => {
         data,
         id,
     });
-
-    const saveData = (data) => ({
-        type: SAVE_DATA_ACTION_CONSTANT,
-        data,
-    });
-
+ 
     const resetData = () => ({
         type: RESET_DATA_ACTION_CONSTANT,
     });
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '' } = params;
+            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
             const onSuccess = (res) => {
                 if (res?.data) {
+                    onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
                 } else {
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
@@ -54,7 +50,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (type ? '?type=' + type : ''),
+                url: inBaseURL + (type ? '?type=' + type : '') + (mytype ? mytype : ''),
                 token,
                 accessToken,
                 userId,

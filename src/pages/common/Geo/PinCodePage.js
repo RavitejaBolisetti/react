@@ -1,10 +1,10 @@
 import React from 'react';
-import { DistrictGeo } from 'components/common/Geo';
+import { ListPinCodeMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
-export const DistrictGeoBase = (props) => {
-    const pageTitle = 'District Master';
+export const PincodeGeoBase = (props) => {
+    const pageTitle = 'PIN Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -15,9 +15,11 @@ export const DistrictGeoBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <DistrictGeo />
+            <ListPinCodeMaster />
         </>
     );
 };
 
-export const DistrictGeoPage = withLayoutMaster(DistrictGeoBase);
+const PinCodePage = withLayoutMaster(PincodeGeoBase);
+
+export default PinCodePage;

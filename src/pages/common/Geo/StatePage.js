@@ -1,10 +1,10 @@
 import React from 'react';
-import { CityGeo } from 'components/common/Geo';
+import { ListStateMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
-export const CityGeoBase = (props) => {
-    const pageTitle = 'City List';
+export const StateGeoBase = (props) => {
+    const pageTitle = 'State Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -15,9 +15,11 @@ export const CityGeoBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <CityGeo />
+            <ListStateMaster />
         </>
     );
 };
 
-export const CityGeoPage = withLayoutMaster(CityGeoBase);
+const StatePage = withLayoutMaster(StateGeoBase);
+
+export default StatePage;

@@ -44,7 +44,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, is
 
     return (
         <Fragment>
-            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID'), validationFieldLetteNumberandPeriod('application ID')]}>

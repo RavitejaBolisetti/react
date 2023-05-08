@@ -87,6 +87,7 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
 
     return (
         <Form
+            autoComplete="off"
             form={form}
             id="myForm"
             onFinish={onFinish}
@@ -158,12 +159,12 @@ const AuthorityFormMin = ({ recordId = '', formRecordId, viewMode, userId, onFin
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective From" name={'dateFrom' + recordId} rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker}  />
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective To" name={'dateTo' + recordId} rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs('2015-01-01', 'YYYY-MM-DD')}>
-                            <DatePicker format="YYYY-MM-DD" className={style.datepicker}  />
+                            <DatePicker format="YYYY-MM-DD" className={style.datepicker} />
                         </Form.Item>
                     </Col>
                 </Row>

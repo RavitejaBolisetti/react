@@ -3,6 +3,7 @@ import { CriticalityGroup } from '../CriticalityGroup/CriticalityGroup';
 import { criticalityDataActions } from 'store/actions/data/criticalityGroup';
 import userEvent from '@testing-library/user-event';
 import { showGlobalNotification } from 'store/actions/notification'; 
+
 import React from 'react';
 
 import { InputFieldAvailablity, InputFieldAvailablityWithTextFilled, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
@@ -171,6 +172,7 @@ describe('Criticality Group Test', () => {
         buttonLookAndFireEventWithText('Add Time');
         const startTime = await screen.findByText('Start Time');
         expect(startTime).toBeTruthy();
+        buttonLookAndFireEventByRole('Save');
     });
 
     test('is end time timpicker rendering', async () => {
@@ -179,8 +181,10 @@ describe('Criticality Group Test', () => {
         buttonLookAndFireEventWithText('Add Time');
         const endTime = await screen.findByText('End Time');
         expect(endTime).toBeTruthy();
-        const deleteBtn = screen.getByRole('button',{name: 'li-trash'})
-        fireEvent.click(deleteBtn)
-        expect(deleteBtn).toBeFalsy()
+        // InputFieldAvailablity('Select Time')
+        // buttonLookAndFireEventWithText('Now')
+        buttonLookAndFireEventByRole('li-trash');
+        expect(endTime.value).toBeFalsy();
+        buttonLookAndFireEventByRole('Save & Add New');
     });
 });
