@@ -61,7 +61,7 @@ const UploadMain = (props) => {
     const { onCloseAction } = props;
     return (
         <>
-            <Form>
+            <Form autoComplete="off">
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         {/* <Text>Please download file and after filling the details upload it</Text> */}

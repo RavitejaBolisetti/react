@@ -38,11 +38,12 @@ const ProductActionForms = ({ form, onFinish, status, name, id, value, isEditing
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form form={form} onFieldsChange={handleForm} id="productHierarchy" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Form autoComplete="off" form={form} onFieldsChange={handleForm} id="productHierarchy" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item get label="Attribute Name" name="attributeName" rules={[!isBtnDisabled && validateRequiredSelectField('Attribute Name')]}>
                                     <Select
+                                    
                                         getPopupContainer={(triggerNode) => triggerNode.parentElement}
                                         placeholder="Select Application Action"
                                         style={{

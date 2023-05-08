@@ -8,11 +8,10 @@ import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 
-const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey }) => {
-
+const ApplicationDetails = ({ form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
     useEffect(() => {
         form.setFieldsValue({ ...finalFormdata?.applicationDetails });
-        setSelectedTreeKey(finalFormdata?.applicationDetails.parentApplicationId);
+        setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
 
     const handleChangeLocations = (value) => {
@@ -24,14 +23,18 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
     const fieldNames = { label: 'menuTitle', value: 'menuId', children: 'subMenu' };
 
     const handleSelectTreeClick = (value) => {
-        setSelectedTreeKey(value);
+        if (value === finalFormdata?.applicationDetails?.applicationId) {
+            return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Select different parent', placement: 'bottomRight' });
+        }
+
+        setparentAppCode(value);
     };
 
     const treeSelectFieldProps = {
         treeFieldNames: fieldNames,
         treeData: menuData,
         treeDisabled: isReadOnly,
-        selectedTreeSelectKey: selectedTreeKey,
+        selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
         defaultValue: finalFormdata?.applicationDetails?.parentApplicationId,
         placeholder: preparePlaceholderSelect('parent'),
@@ -39,10 +42,10 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
 
     return (
         <Fragment>
-            <Form form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID'),validationFieldLetteNumberandPeriod('application ID')]}>
+                        <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID'), validationFieldLetteNumberandPeriod('application ID')]}>
                             <Input disabled={isFieldDisable} maxLength={50} placeholder={preparePlaceholderText('application ID')} />
                         </Form.Item>
                     </Col>
@@ -60,7 +63,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item  label="Application Type" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
+                        <Form.Item label="Application Type" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
                             <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('application type')}>
                                 {configurableParamData?.map((type) => (
                                     <Option value={type?.value}>{type?.value}</Option>
@@ -71,7 +74,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item  name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('parent application ID')]}>
+                        <Form.Item name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('parent application ID')]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
@@ -92,7 +95,9 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
                         <Form.Item label="Application Criticality Group" name="criticalityGroupMasterId" rules={[validateRequiredInputField('Application Criticality Group')]}>
                             <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 {criticalityGroupData?.map((group) => (
-                                    <Option value={group?.id} disabled={!group?.activeIndicator}>{group?.criticalityGroupName}</Option>
+                                    <Option value={group?.id} disabled={!group?.activeIndicator}>
+                                        {group?.criticalityGroupName}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -101,7 +106,7 @@ const ApplicationDetails = ({ form, onFinishFailed = () => {}, isReadOnly, isFie
 
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item initialValue={false}  labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document number to be generated" valuePropName="checked">
+                        <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="documentNumRequired" label="Document number to be generated" valuePropName="checked">
                             <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={handleDocReq} />
                         </Form.Item>
                     </Col>

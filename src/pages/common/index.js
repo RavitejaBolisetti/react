@@ -1,7 +1,13 @@
 import { ProductMasterPage } from './ProductMaster/ProductMasterPage';
 import { RoleManagementPage } from './RoleManagement/RoleManagementPage';
 import { ProductHierarchyPage } from './ProductHierarchy';
-import { StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage } from './Geo';
+// import { StatePage } from './Geo/StatePage';
+// import { DistrictPage } from './Geo/DistrictPage';
+// import { CityPage } from './Geo/CityPage';
+// import { TehsilPage } from './Geo/TehsilPage';
+// import { PinCodePage } from './Geo/PinCodePage';
+import { StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
+
 import { CriticalityGroupPage } from './CriticalityGroup';
 import { HierarchyAttributeMasterPage } from './HierarchyAttributeMaster/HierarchyAttributeMasterPage';
 import { ManufacturerAdministrativeHierarchyPage } from './ManufacturerAdministrativeHierarchy';

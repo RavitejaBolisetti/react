@@ -79,6 +79,14 @@ export const MenuConstant = {
     //     parentMenuId: 'FAV',
     // },
 
+    
+    // [getMenyKey('COMN-07.02')]: {
+    //     key: 'COMN-07.02',
+    //     link: routing.ROUTING_COMMON_GEO_COUNTRY,
+    //     icon: undefined,
+    //     parentMenuId: 'COMN-07',
+    // },
+
     [getMenyKey('COMN-07.03')]: {
         key: 'COMN-07.03',
         link: routing.ROUTING_COMMON_GEO_STATE,
@@ -102,7 +110,14 @@ export const MenuConstant = {
 
     [getMenyKey('COMN-07.06')]: {
         key: 'COMN-07.06',
-        link: routing.ROUTING_COMMON_GEO_CITY,
+        link: routing.ROUTING_COMMON_GEO_TEHSIL,
+        icon: undefined,
+        parentMenuId: 'COMN-07',
+    },
+
+    [getMenyKey('COMN-07.07')]: {
+        key: 'COMN-07.07',
+        link: routing.ROUTING_COMMON_GEO_PINCODE,
         icon: undefined,
         parentMenuId: 'COMN-07',
     },

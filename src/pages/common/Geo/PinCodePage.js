@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListPinCodeMaster } from 'components/common/Geo/Pincode/ListPinCodeMaster';
+import { ListPinCodeMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
@@ -20,4 +20,6 @@ export const PincodeGeoBase = (props) => {
     );
 };
 
-export const PinCodePage = withLayoutMaster(PincodeGeoBase);
+const PinCodePage = withLayoutMaster(PincodeGeoBase);
+
+export default PinCodePage;

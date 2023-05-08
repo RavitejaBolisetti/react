@@ -8,9 +8,8 @@ import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { geoPincodeDataActions } from 'store/actions/data/pincodeGeo';
 
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
@@ -20,6 +19,7 @@ import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
+import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -27,15 +27,17 @@ const { Search } = Input;
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
-    console.log('state', state);
+    // console.log('state', state);
     const {
         auth: { userId },
         data: {
-            GeoState: { isLoaded: isDataLoaded = false, isLoading: isStateLoading, data: geoStateData },
-            GeoDistrict: { isLoaded: isDistrictLoaded = false, isLoading: isDistrictLoading, data: geoDistrictData },
-            GeoTehsil: { isLoaded: isTehsilLoaded = false, isLoading: isTehsilLoading, data: geoTehsilData },
-            GeoCity: { isLoaded: isCityLoaded = false, isLoading: isCityLoading, data: geoCityData },
-            GeoPincode: { isLoaded: isPinDataLoaded = false, isLoading: isPinLoading, data: geoPindata },
+            Geo: {
+                State: { isLoaded: isDataLoaded = false, isLoading: isStateLoading, data: geoStateData },
+                District: { isLoaded: isDistrictLoaded = false, isLoading: isDistrictLoading, data: geoDistrictData },
+                Tehsil: { isLoaded: isTehsilLoaded = false, isLoading: isTehsilLoading, data: geoTehsilData },
+                City: { isLoaded: isCityLoaded = false, isLoading: isCityLoading, data: geoCityData },
+                Pincode: { isLoaded: isPinDataLoaded = false, isLoading: isPinLoading, data: geoPindata },
+            },
         },
     } = state;
 
@@ -45,6 +47,8 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         isPinLoading,
+        isDistrictLoading,
+        isStateLoading,
         isDistrictLoaded,
         geoDistrictData,
         isTehsilLoaded,
@@ -108,11 +112,11 @@ const ListPinCodeMasterBase = ({
     isDistrictLoaded,
     isPinDataLoaded,
     isStateDataLoaded,
-    isStateLoading,
     isDistrictLoading,
     geoDistrictData,
     isTehsilLoaded,
     isTehsilLoading,
+    isStateLoading,
     geoTehsilData,
     isCityLoaded,
     isCityLoading,
@@ -130,6 +134,7 @@ const ListPinCodeMasterBase = ({
     attributeData,
 }) => {
     const [form] = Form.useForm();
+    const [actionform] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -158,29 +163,41 @@ const ListPinCodeMasterBase = ({
     const [myFilter, setmyFilter] = useState({});
 
     useEffect(() => {
+        console.log('refersh data', refershData);
         if (!isDataLoaded && userId) {
             const onSuccessAction = (res) => {
                 refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
             fetchStateList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            const coddd = 'UEIW';
-            const types = `?stateCode=${coddd}`;
-            fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction, mytype: types });
+
+            fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchTehsilList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchCityList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData, isPinDataLoaded]);
     useEffect(() => {
-        setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
-    }, [geoPindata]);
+        if (geoPindata) {
+            setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
+        }
+    }, [geoPindata, isAdvanceSearchVisible]);
+    useEffect(() => {
+        if (geoPindata?.length > 0) {
+            const apiParams = `?stateCode=${myFilter?.State}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
+
+            fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
+            setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
+        }
+    }, [refershData]);
 
     useEffect(() => {
         if (geoPindata && userId) {
             if (filterString) {
                 const filterDataItem = geoPindata?.filter((item) => filterFunction(filterString)(item?.localityName) || filterFunction(filterString)(item?.pinCode));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+            } else {
+                setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,13 +209,9 @@ const ListPinCodeMasterBase = ({
         setFormActionType('update');
         setFooterEdit(false);
         setIsReadOnly(false);
-        const data = searchData.find((i) => i.code === record.code);
-        console.log('data', data);
-        if (data) {
-            console.log('formData', formData);
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
+
+        setFormData(record);
+        setIsFormVisible(true);
     };
 
     const handleView = (record) => {
@@ -207,13 +220,13 @@ const ListPinCodeMasterBase = ({
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        setAdvanceSearchVisible(false);
 
         // const data = tableData.find((i) => i.code === record.code);
         // if (data) {
         //     data && setFormData(data);
         //     setIsFormVisible(true);
         // }
+
         setFormData(record);
 
         setIsFormVisible(true);
@@ -233,23 +246,29 @@ const ListPinCodeMasterBase = ({
         setShowCity(geoCityData.filter((i) => i.districtCode === e));
     };
     const handleselectcity = (e) => {
-        setmyFilter({ ...myFilter, city: e });
+        setmyFilter({ ...myFilter, City: e });
 
         setShowTehsil(geoTehsilData?.filter((i) => i.districtCode === ditrict));
     };
     const handleTehsil = (values) => {
         setmyFilter({ ...myFilter, Tehsil: values });
     };
+    const onChangeSearch = (event) => {
+        console.log('apiParams', event?.target?.value);
+
+        setFilterString(event?.target?.value);
+    };
     const onSearchHandle = (value) => {
         fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
-
-        // setFilterString({ ...filterString, keyword: value });
     };
     const handlefilteredSearch = (value) => {
         const apiParams = `?stateCode=${myFilter?.State}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
         console.log('apiParams', apiParams);
-
-        fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
+        form.validateFields()
+            .then(() => {
+                fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
+            })
+            .catch((error) => { });
     };
     const tableColumn = [];
     tableColumn.push(
@@ -276,21 +295,21 @@ const ListPinCodeMasterBase = ({
             title: 'Within 50Km from the GPO',
             dataIndex: 'withIn50KmFromGpo',
             width: '20%',
-            render: (record) => {
-                return <Checkbox disabled defaultChecked className={styles.registered}></Checkbox>;
+            render: (text, record) => {
+                return <Checkbox disabled defaultChecked={text ? true : false} className={styles.registered}></Checkbox>;
             },
         }),
 
         tblPrepareColumns({
             title: 'Approval Status',
             dataIndex: 'approvalStatus',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>}</>,
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>}</>,
             width: '15%',
         }),
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
+            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
             width: '15%',
         }),
 
@@ -321,6 +340,8 @@ const ListPinCodeMasterBase = ({
     };
 
     const hanndleEditData = (record) => {
+        actionform.resetFields();
+
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
         setFormActionType('update');
@@ -330,7 +351,7 @@ const ListPinCodeMasterBase = ({
     };
 
     const handleAdd = () => {
-        setAdvanceSearchVisible(false);
+        actionform.resetFields();
         setFormActionType('add');
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
@@ -361,10 +382,10 @@ const ListPinCodeMasterBase = ({
     const onFinish = (values) => {
         const recordId = formData?.data || '';
         // let data = { ...values, data: recordId };
-        const finalSubmitdata = { ...values };
-        console.log(values, 'DATATATATATATATTA');
+        const finalSubmitdata = { ...values, countryCode: 'IND', pinCategory: 'URBAN' };
+        console.log('finalSubmitdata', finalSubmitdata);
         const onSuccess = (res) => {
-            form.resetFields();
+            actionform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             // fetchDataList({ setIsLoading: listShowLoading, userId });
 
@@ -375,6 +396,7 @@ const ListPinCodeMasterBase = ({
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
+            handleReferesh();
         };
 
         const onError = (message) => {
@@ -384,6 +406,7 @@ const ListPinCodeMasterBase = ({
         const requestData = {
             data: finalSubmitdata,
             setIsLoading: listShowLoading,
+            method: formActionType === 'update' ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
@@ -395,7 +418,7 @@ const ListPinCodeMasterBase = ({
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        actionform.validateFields().then((values) => { });
     };
     const tableProps = {
         tableColumn: tableColumn,
@@ -413,7 +436,7 @@ const ListPinCodeMasterBase = ({
         setFooterEdit,
         isVisible: isFormVisible,
         onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('PIN Details'),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.stateCode ? 'Edit ' : 'Add ').concat('PIN Details'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
@@ -432,6 +455,10 @@ const ListPinCodeMasterBase = ({
         setrowdata,
         rowdata,
         setsavebtnclick,
+        ditrict,
+        setDistrict,
+        actionform,
+        showSaveAndAddNewBtn,
     };
 
     const viewProps = {
@@ -442,10 +469,119 @@ const ListPinCodeMasterBase = ({
     const handleButtonClick = () => {
         setAdvanceSearchVisible(!isAdvanceSearchVisible);
     };
-    console.log(handleButtonClick, 'clicked');
     return (
         <>
-            <Form layout="vertical">
+            <Form layout="vertical" form={form} id="searchFields">
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Card className={styles.CardFormitemMargin}>
+                            <Row gutter={20}>
+                                <Col xs={20} sm={20} md={18} lg={18} xl={18}>
+                                    <Row gutter={20}>
+                                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                            <Form.Item label="Country" initialValue={'India'} rules={[validateRequiredInputField('Country')]} name="countryCode">
+                                                <Select disabled={true} allowClear placeholder={preparePlaceholderSelect('Country')}>
+                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+
+                                                    <Option value={'IND'}>{'India'}</Option>
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
+                                            <Form.Item label="State" initialValue={myFilter?.State} rules={[validateRequiredInputField('State')]} name="stateCode">
+                                                <Select
+                                                    showSearch
+                                                    filterOption={(input, option) => {
+                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                                    }}
+                                                    allowClear
+                                                    placeholder={preparePlaceholderSelect('state')}
+                                                    onChange={handleSelectState}
+                                                >
+                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                    {geoStateData?.map((item) => (
+                                                        <Option value={item?.code}>{item?.name}</Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
+                                            <Form.Item label="District" initialValue={myFilter?.District} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                                                <Select
+                                                    showSearch
+                                                    filterOption={(input, option) => {
+                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                                    }}
+                                                    allowClear
+                                                    placeholder={preparePlaceholderSelect('District')}
+                                                    onChange={handleSelectDistrict}
+                                                >
+                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                    {show?.map((item) => (
+                                                        <Option value={item?.code}>{item?.name}</Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
+                                            <Form.Item label="City" initialValue={myFilter?.City} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                                                <Select
+                                                    showSearch
+                                                    filterOption={(input, option) => {
+                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                                    }}
+                                                    allowClear
+                                                    placeholder={preparePlaceholderSelect('City')}
+                                                    onChange={handleselectcity}
+                                                >
+                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                    {showCity?.map((item) => (
+                                                        <Option value={item?.code}>{item?.name}</Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+
+                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
+                                            <Form.Item label="Tehsil" allowClear initialValue={myFilter?.Tehsil} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
+                                                <Select
+                                                    showSearch
+                                                    filterOption={(input, option) => {
+                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                                    }}
+                                                    allowClear
+                                                    placeholder={preparePlaceholderSelect('Tehsil')}
+                                                    onChange={handleTehsil}
+                                                >
+                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
+                                                    {showTehsil?.map((item) => (
+                                                        <Option value={item?.code}>{item?.name}</Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col xs={4} sm={4} md={6} lg={6} xl={6}>
+                                    <Row gutter={20}>
+                                        <Col xs={12} sm={12} md={8} lg={8} xl={8} offset={8} className={styles.alignSearchButton}>
+                                            <Button form="searchFields" style={{ marginRight: '20px' }} type="primary" onClick={handlefilteredSearch} icon={<SearchOutlined />}>
+                                                Search
+                                            </Button>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={8} lg={8} xl={8} className={styles.alignSearchButton}>
+                                            <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                                Add
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                </Row>
+            </Form>
+            {geoPindata?.length > 0 && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className={styles.contentHeaderBackground}>
@@ -461,11 +597,8 @@ const ListPinCodeMasterBase = ({
                                                 style={{
                                                     width: 300,
                                                 }}
-                                                onSearch={onSearchHandle}
+                                                onChange={onChangeSearch}
                                             />{' '}
-                                            <Button danger type="link" onClick={handleButtonClick}>
-                                                Advanced Search
-                                            </Button>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -473,10 +606,6 @@ const ListPinCodeMasterBase = ({
                                 {searchData?.length ? (
                                     <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                        <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                            Add
-                                        </Button>
                                     </Col>
                                 ) : (
                                     ''
@@ -485,77 +614,7 @@ const ListPinCodeMasterBase = ({
                         </div>
                     </Col>
                 </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        {isAdvanceSearchVisible && (
-                            <Card
-                                style={{
-                                    width: '100%',
-                                    background: '#f4f4f4',
-                                }}
-                            >
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Row gutter={20}>
-                                            {/* <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                    PIN Code List
-                                </Col> */}
-                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                                                    <Select disabled={isReadOnly} allowClear placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
-                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                        {geoStateData?.map((item) => (
-                                                            <Option value={item?.code}>{item?.name}</Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="District" allowClear initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('District')} onChange={handleSelectDistrict}>
-                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                        {show?.map((item) => (
-                                                            <Option value={item?.code}>{item?.name}</Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="City" allowClear initialValue={formData?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('City')} onChange={handleselectcity}>
-                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                        {showCity?.map((item) => (
-                                                            <Option value={item?.code}>{item?.name}</Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-
-                                            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                                <Form.Item label="Tehsil" allowClear initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                                    <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('Tehsil')} onChange={handleTehsil}>
-                                                        {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                        {showTehsil?.map((item) => (
-                                                            <Option value={item?.code}>{item?.name}</Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col span={24}>
-                                        <Button type="primary" onClick={handlefilteredSearch}>
-                                            Search
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Card>
-                        )}
-                    </Col>
-                </Row>
-            </Form>
+            )}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -592,7 +651,7 @@ const ListPinCodeMasterBase = ({
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={!isCityLoaded} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>

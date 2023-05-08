@@ -34,12 +34,13 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '', mytype = '' } = params;
+            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
             const onSuccess = (res) => {
                 if (res?.data) {
+                    onSuccessAction && onSuccessAction(res);
                     dispatch(recieveData(type ? res?.data?.hierarchyAttribute : res?.data));
                 } else {
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);

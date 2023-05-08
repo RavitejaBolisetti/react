@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
+
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
+import { withDrawer } from 'components/withDrawer';
+import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, stateData } = props;
-    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+
+    const { isDataCountryLoaded, countryData, defaultCountry } = props;
+    const { buttonData, setButtonData, handleButtonClick } = props;
+
+    const { stateData, districtData } = props;
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
-    const disabledProps = { disabled: isReadOnly };
-
     const handleFormValueChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const handleFormFieldChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const viewProps = {
-        isVisible: isViewModeVisible,
-        setClosePanels,
-        formData,
-        styles,
+    const handleCountryChange = (countryCode) => {
+        form.setFieldValue('countryCodeDisplay', countryData?.find((i) => i?.countryCode === countryCode)?.countryCode);
     };
 
     const handleStateChange = (state) => {
@@ -48,14 +48,47 @@ const AddEditFormMain = (props) => {
         districtCode && form.setFieldValue('districtCodeDisplay', districtCode);
     };
 
+    const viewProps = {
+        isVisible: viewMode,
+        formData,
+        styles,
+    };
+
+    const buttonProps = {
+        formData,
+        onCloseAction,
+        buttonData,
+        setButtonData,
+        handleButtonClick,
+    };
+
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {!isViewModeVisible ? (
+            {viewMode ? (
+                <ViewDetail {...viewProps} />
+            ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange} disabled={true}>
+                                    {countryData?.map((item) => (
+                                        <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item label="Country Code" initialValue={formData?.countryCode || defaultCountry} rules={[validateRequiredInputField('Country Code'), validateAlphanumericWithSpace('Country Code')]} name="countryCodeDisplay">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Country Code')} maxLength={6} disabled={true} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
+                                <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -88,56 +121,28 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City Code" initialValue={formData?.code} name="code" rules={[validationFieldLetterAndNumber('City Code')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} disabled={isReadOnly} />
+                            <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code'), validationFieldLetterAndNumber('City Code')]}>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="City Name" name="name" initialValue={formData?.name} rules={[validateAlphanumericWithSpace('City Name')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Name')} className={styles.inputBox} disabled={isReadOnly} />
+                            <Form.Item label="City Name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name'), validateAlphanumericWithSpace('City Name')]} name="name">
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                     </Row>
                 </>
-            ) : (
-                <ViewDetail {...viewProps} />
             )}
 
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    )}
-
-                    {!formData?.code && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
-                            Save & Add New
-                        </Button>
-                    )}
-
-                    {footerEdit && (
-                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
-                </Col>
-            </Row>
+            <DrawerFormButton {...buttonProps} />
         </Form>
     );
 };

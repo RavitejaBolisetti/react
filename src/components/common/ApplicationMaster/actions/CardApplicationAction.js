@@ -39,7 +39,7 @@ const CardApplicationAction = (props) => {
             const index = prev?.applicationAction?.findIndex((el) => el.actionId === actionId);
             const prevData = prev?.applicationAction[index];
             newList.splice(index, 1, { ...prevData, status: newFormData?.status });
-            return { ...prev, applicationAction: newList };
+            return { ...prev, applicationAction: [...newList] };
         });
         setIsEditing(false);
         setIsBtnDisabled(false);
