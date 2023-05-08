@@ -8,7 +8,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleFormAction) => {
+export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -49,10 +49,10 @@ export const tableColumn = (handleFormAction) => {
             width: '8%',
             render: (record) => [
                 <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
                         <FiEdit2 />
                     </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                         <FaRegEye />
                     </Button>
                 </Space>,

@@ -6,27 +6,23 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
+import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { ADD_ACTION, EDIT_ACTION, VIEW_ACTION } = props;
-    const { handleFormAction, setSaveAndNewClicked, formActionType } = props;
-    const { form, setClosePanels, formData, onCloseAction } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { form, formData, setSaveAndNewClicked, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
-
-    const isAddMode = formActionType === ADD_ACTION;
-    const isViewMode = formActionType === VIEW_ACTION;
+    const { buttonData, setButtonData, handleButtonClick } = props;
 
     const handleFormValueChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const handleFormFieldChange = () => {
-        setFormBtnActive(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const handleCountryChange = (countryCode) => {
@@ -34,22 +30,29 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
-        isVisible: isViewMode,
-        setClosePanels,
+        isVisible: formActionType?.viewMode,
         formData,
         styles,
     };
 
+    const buttonProps = {
+        buttonData,
+        handleButtonClick,
+        onCloseAction,
+        formData,
+        setSaveAndNewClicked,
+    };
+
     return (
         <Form layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {isViewMode ? (
+            {formActionType?.viewMode ? (
                 <ViewDetail {...viewProps} />
             ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange} disabled={true}>
                                     {countryData?.map((item) => (
                                         <Option value={item?.countryCode}>{item?.countryName}</Option>
                                     ))}
@@ -86,33 +89,7 @@ const AddEditFormMain = (props) => {
                 </>
             )}
 
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {isViewMode ? 'Close' : 'Cancel'}
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!isViewMode && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndNewClicked(false)} htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    )}
-
-                    {isAddMode && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndNewClicked(true)} type="primary">
-                            Save & Add New
-                        </Button>
-                    )}
-
-                    {isViewMode && (
-                        <Button onClick={() => handleFormAction({ buttonAction: EDIT_ACTION, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
-                </Col>
-            </Row>
+            <DrawerFormButton {...buttonProps} />
         </Form>
     );
 };

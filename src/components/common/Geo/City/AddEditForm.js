@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
+import { withDrawer } from 'components/withDrawer';
 import { ViewDetail } from './ViewDetail';
 
 import styles from 'components/common/Common.module.css';
@@ -12,10 +12,11 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { ADD_ACTION, EDIT_ACTION, VIEW_ACTION } = props;
-    const { handleFormAction, districtData, setSaveAndAddNewBtnClicked, stateData, formActionType } = props;
-    const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
+    const { handleFormAction, setSaveAndNewClicked, stateData, districtData, formActionType } = props;
+    const { form, setClosePanels, isReadOnly, formData, onCloseAction } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
+
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const isAddMode = formActionType === ADD_ACTION;
@@ -144,13 +145,13 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                     {!isViewMode && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndNewClicked(false)} htmlType="submit" type="primary">
                             Save
                         </Button>
                     )}
 
                     {isAddMode && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
+                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndNewClicked(true)} type="primary">
                             Save & Add New
                         </Button>
                     )}

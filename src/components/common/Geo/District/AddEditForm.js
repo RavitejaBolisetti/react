@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
-import { ViewDistrictDetails } from './ViewDistrictDetails';
+import { ViewDetail } from './ViewDetail';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { ADD_ACTION, EDIT_ACTION, VIEW_ACTION } = props;
 
-    const { hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible,formActionType,handleFormAction } = props;
+    const { setSaveAndAddNewBtnClicked } = props;
+    const { isReadOnly, formData, onCloseAction, formActionType, handleFormAction } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, stateData } = props;
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
-    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const [selectedState, isSelectedState] = useState(formData?.stateCode);
 
@@ -51,11 +50,11 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {isViewMode ? (
                 <>
-                   <ViewDistrictDetails {...viewProps} /> 
+                    <ViewDetail {...viewProps} />
                 </>
             ) : (
                 <>
-                <Row gutter={16}>
+                    <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
                                 <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
@@ -120,7 +119,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                {!isViewMode && (
+                    {!isViewMode && (
                         <Button data-testid="save" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
                             Save
                         </Button>
