@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerManpower: {
-                BayTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+                DesignationMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
@@ -103,7 +103,7 @@ export const DesignationMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -205,7 +205,7 @@ export const DesignationMasterBase = (props) => {
         handleButtonClick,
     };
 
-    console.log(searchData,'SSS');
+    
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
