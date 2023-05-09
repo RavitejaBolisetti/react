@@ -13,7 +13,7 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { hanndleEditData, districtData, setSaveAndAddNewBtnClicked, stateData } = props;
     const { footerEdit, form, setClosePanels, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, isLoadingOnSave } = props;
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const disabledProps = { disabled: isReadOnly };
@@ -68,7 +68,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} {...disabledProps} />
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -86,13 +86,13 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
                     {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                        <Button loading={isLoadingOnSave} disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
                             Save
                         </Button>
                     )}
 
                     {!formData?.code && (
-                        <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
+                        <Button loading={isLoadingOnSave} htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>
                     )}

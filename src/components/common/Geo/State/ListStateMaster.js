@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     });
 
     const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
+
     let returnValue = {
         userId,
         isDataCountryLoaded,
@@ -300,5 +301,3 @@ export const ListStateMasterBase = (props) => {
 };
 
 export const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
-
-

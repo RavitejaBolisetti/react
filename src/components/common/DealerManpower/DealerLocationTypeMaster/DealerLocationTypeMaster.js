@@ -25,13 +25,19 @@ const { Search } = Input;
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
-            Geo: {
-                State: { isLoaded: isDataLoaded = false, isLoading, data: stateData },
-                City: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
-                District: { isLoaded: isDistrictDataLoaded = false, data: districtData },
+            DealerLocationType: {
+                isLoaded: isDataLoaded = false,
+                data: dealerLocationData = [],
+                isLoading,
+                isLoadingOnSave,
+                isFormDataLoaded,
+                // State: { isLoaded: isDataLoaded = false, isLoading, data: stateData },
+                // City: { isLoaded: isCityDataLoaded = false, isCityLoading, data: cityData },
+                // District: { isLoaded: isDistrictDataLoaded = false, data: districtData },
             },
         },
     } = state;
@@ -40,14 +46,20 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        cityData,
-        stateData,
-        isCityDataLoaded,
-        districtData,
-        isDistrictDataLoaded,
-        isCityLoading,
         isLoading,
+        dealerLocationData,
+        isLoadingOnSave,
+        isFormDataLoaded,
         moduleTitle,
+        // isDataLoaded,
+        // cityData,
+        // stateData,
+        // isCityDataLoaded,
+        // districtData,
+        // isDistrictDataLoaded,
+        // isCityLoading,
+        // isLoading,
+        // moduleTitle,
     };
     return returnValue;
 };
@@ -56,19 +68,19 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: geoStateDataActions.fetchList,
-            // listShowLoading: geoStateDataActions.listShowLoading,
-            // listCityShowLoading: geoCityDataActions.listShowLoading,
-            // saveData: geoCityDataActions.saveData,
-            // fetchCityList: geoCityDataActions.fetchList,
-            // fetchDistrictList: geoDistrictDataActions.fetchList,
-            // listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            // showGlobalNotification,
+            fetchList: dealerLocationDataActions.fetchList,
+            listShowLoading: dealerLocationDataActions.listShowLoading,
+            // listCityShowLoading: dealerLocationDataActions.listShowLoading,
+            saveData: dealerLocationDataActions.saveData,
+            // fetchCityList: dealerLocationDataActions.fetchList,
+            // fetchDistrictList: dealerLocationDataActions.fetchList,
+            // listDistrictShowLoading: dealerLocationDataActions.listShowLoading,
+            showGlobalNotification,
         },
         dispatch
     ),
 });
-export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, isLoadingOnSave, listDistrictShowLoading, districtData, dealerLocationData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
@@ -80,6 +92,8 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+    const [successAlert, setSuccessAlert] = useState(false);
+    const [saveclick, setsaveclick] = useState();
 
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
@@ -92,35 +106,55 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
     useEffect(() => {
         if (userId) {
             const onSuccessAction = (res) => {
-                // refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             };
 
             // fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
-            // fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
             // fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
+    // useEffect(() => {
+    //     if (isDataLoaded && cityData && userId) {
+    //         if (filterString) {
+    //             const keyword = filterString?.keyword;
+    //             const state = filterString?.state;
+    //             const district = filterString?.district;
+    //             const filterDataItem = cityData?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+    //             setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+    //         } else {
+    //             setSearchdata(cityData?.map((el, i) => ({ ...el, srl: i + 1 })));
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString, isDataLoaded, cityData, userId]);
+
     useEffect(() => {
-        if (isDataLoaded && cityData && userId) {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
+
+    useEffect(() => {
+        if (isDataLoaded && dealerLocationData) {
             if (filterString) {
-                const keyword = filterString?.keyword;
-                const state = filterString?.state;
-                const district = filterString?.district;
-                const filterDataItem = cityData?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                const filterDataItem = dealerLocationData?.filter((item) => filterFunction(filterString)(item?.locationCode) || filterFunction(filterString)(item?.locationDescription));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(cityData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(dealerLocationData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, cityData, userId]);
+    }, [filterString, isDataLoaded, dealerLocationData]);
 
     const handleEditBtn = (record) => {
-        form.resetFields();
-        setFormData([]);
+        form.setFieldsValue(record);
+        setFormData(record);
         setShowSaveAndAddNewBtn(false);
+        setsaveclick(false);
         setIsViewModeVisible(false);
         setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
@@ -135,6 +169,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
     const handleView = (record) => {
         setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
+        setsaveclick(false);
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
@@ -147,29 +182,31 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
         setIsReadOnly(true);
     };
 
-    const onChange2 = (e) => {
-        setCity(cityData.filter((i) => i.districtCode === e));
-        setShow([]);
-    };
+    // const onChange2 = (e) => {
+    //     setCity(cityData.filter((i) => i.districtCode === e));
+    //     setShow([]);
+    // };
 
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
-            dataIndex: 'srl',
+            // dataIndex: 'srl',
+            render: (_t, _r, i) => i + 1,
             sorter: false,
             width: '5%',
         }),
 
         tblPrepareColumns({
             title: 'Location Type Code',
-            dataIndex: 'code',
+            dataIndex: 'locationCode',
+
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Location Type Description',
-            dataIndex: 'description',
+            dataIndex: 'locationDescription',
             width: '20%',
         }),
 
@@ -203,7 +240,6 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
 
     const handleReferesh = () => {
         setRefershData(!refershData);
-        setCity(cityData);
     };
 
     const hanndleEditData = (record) => {
@@ -236,16 +272,16 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
         setFilterString({ ...filterString, keyword: e.target.value });
     };
 
-    const handleFilterChange = (name) => (value) => {
-        if (name === 'state') {
-            setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
-        }
-        setFilterString({ ...filterString, [name]: value });
-    };
+    // const handleFilterChange = (name) => (value) => {
+    //     if (name === 'state') {
+    //         setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
+    //     }
+    //     setFilterString({ ...filterString, [name]: value });
+    // };
 
     const onFinish = (values) => {
-        const recordId = formData?.code || '';
-        let data = { ...values };
+        const recordId = formData?.id || '';
+        let data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
             // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -258,7 +294,21 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
             //     setIsFormVisible(true);
             //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             // }
+            // onSaveShowLoading(false);
+            setFormData({});
+            setSuccessAlert(true);
+            if (saveclick === true) {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
         };
+
+        setTimeout(() => {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }, 2000);
 
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -280,16 +330,24 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
         form.validateFields().then((values) => {});
     };
 
-    const onChange = (e) => {
-        setShow(districtData.filter((i) => i.stateCode === e));
+    // const onChange = (e) => {
+    //     setShow(districtData.filter((i) => i.stateCode === e));
+    // };
+
+    const onChange = (sorter, filters) => {
+        form.resetFields();
     };
 
     const tableProps = {
         tableColumn: tableColumn,
         tableData: searchData,
+        isLoading: isLoading,
     };
 
     const formProps = {
+        saveclick,
+        setsaveclick,
+        isLoadingOnSave,
         form,
         formActionType,
         stateData,
@@ -303,6 +361,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
         footerEdit,
         districtData,
         setFooterEdit,
+        handleAdd,
         typeData,
         cityData,
         isVisible: isFormVisible,
@@ -312,12 +371,13 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        tableData: cityData,
+        tableData: dealerLocationData,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
     };
+
     return (
         <>
             <Row gutter={20}>
@@ -336,7 +396,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
                                 </Row>
                             </Col>
 
-                            {cityData?.length ? (
+                            {dealerLocationData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
@@ -362,7 +422,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
                                     height: 60,
                                 }}
                                 description={
-                                    !cityData?.length ? (
+                                    !dealerLocationData?.length ? (
                                         <span>
                                             No records found. Please add new parameter <br />
                                             using below button
@@ -372,7 +432,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
                                     )
                                 }
                             >
-                                {!cityData?.length ? (
+                                {!dealerLocationData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
@@ -387,7 +447,7 @@ export const DealerLocationTypeBase = ({ moduleTitle, listCityShowLoading, listD
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={isLoading} {...tableProps} onChange={onChange} tableData={searchData} tableColumn={tableColumn} />
                         </div>
                     </ConfigProvider>
                 </Col>
