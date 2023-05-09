@@ -1,3 +1,3 @@
 import DealerLocationTypePage from './DealerLocationTypePage';
-
-export { DealerLocationTypePage };
+import BayTypeMasterPage from './BayMasterTypePage'
+export { DealerLocationTypePage, BayTypeMasterPage };

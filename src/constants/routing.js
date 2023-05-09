@@ -32,6 +32,8 @@ export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualif
 
 export const ROUTING_COMMON_DEALER_MANPOWER = ROUTING_COMMON.concat('dealer-manpower/');
 export const ROUTING_COMMON_DEALER_MANPOWER_LOCATION_TYPE_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('location-type-master');
+export const ROUTING_COMMON_DEALER_MANPOWER_BAY_TYPE_MASTER = ROUTING_COMMON_DEALER_MANPOWER.concat('bay-type-master');
+
 
 export const ROUTING_COMMON_CONFIG_PARAM_EDIT = ROUTING_COMMON.concat('config-param-edit');
 

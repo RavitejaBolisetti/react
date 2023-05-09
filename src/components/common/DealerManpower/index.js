@@ -1,3 +1,3 @@
 import { ListDealerLocationTypeMaster } from './DealerLocationTypeMaster/ListDealerLocationTypeMaster';
-
-export { ListDealerLocationTypeMaster };
+import {BayTypeMaster} from './BayTypeMaster/BayTypeMaster'
+export { ListDealerLocationTypeMaster,BayTypeMaster };
