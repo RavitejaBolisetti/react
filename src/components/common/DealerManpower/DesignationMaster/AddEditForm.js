@@ -1,11 +1,12 @@
 import React from 'react';
-import { Col, Input, Form, Row, Switch, Select, Checkbox  } from 'antd';
+import { Col, Input, Form, Row, Switch, Select, Checkbox, Upload, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
+import { UploadOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 
@@ -81,7 +82,6 @@ const AddEditFormMain = (props) => {
                     </Row>
 
                     <Row gutter={16}>
-                        
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Designation Description" initialValue={formData?.name} rules={[validateRequiredInputField('Designation Description'), validateAlphanumericWithSpace('Location Type Description')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Description')} maxLength={50} />
@@ -93,7 +93,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-     
+
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status">
@@ -107,7 +107,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status">
-                                <Checkbox>Manpower Required</Checkbox>
+                                <Checkbox>Leadship</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -141,6 +141,9 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                    </Upload>
                 </>
             )}
 
