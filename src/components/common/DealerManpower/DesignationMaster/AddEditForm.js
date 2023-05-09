@@ -66,6 +66,19 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.name} label="Role Description" name="roleDescription" rules={[validateRequiredSelectField('Role Description')]}>
+                                <Select placeholder={preparePlaceholderSelect('Role Description')} >
+                                    {/* {filteredDistrictData?.map((item) => (
+                                        <Option value={item?.code}>{item?.name}</Option>
+                                    ))} */}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                    
+                    </Row>
+
+                    <Row gutter={16}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="Designation Code" name="code" rules={[validateRequiredInputField('Designation Code'), validationFieldLetterAndNumber('Location Type Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
