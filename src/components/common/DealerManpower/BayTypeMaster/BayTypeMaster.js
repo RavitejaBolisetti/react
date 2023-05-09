@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
-// import { bindActionCreators } from 'redux';
-// import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-// import { dealerlocationDataActions } from 'store/actions/data/dealerLocationType';
-// import { STATE_DROPDOWN } from './InputType';
+import { bindActionCreators } from 'redux';
 import { tblPrepareColumns } from 'utils/tableCloumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
-//import { PARAM_MASTER } from 'constants/paramMaster';
-// import { convertDate } from 'utils/formatDateTime';
-// import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
+import { bayTypeMasterDataActions } from 'store/actions/data/dealerManpower/bayTypeMaster';
+
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit2 } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
-import { bindActionCreators } from 'redux';
 
 import styles from 'components/common/Common.module.css';
 
@@ -24,24 +22,31 @@ const { Search } = Input;
 const { Option } = Select;
 
 const mapStateToProps = (state) => {
+    console.log('state', state);
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { isLoaded: isDataLoaded = false, isLoading, data: dealerlocationData = [], paramdata: typeData = [] },
+            DealerManPower: {
+                BayTypeMaster:{
+                isLoaded: isDataLoaded = false,
+                data: bayTypeData = [],
+                isLoading,
+                isLoadingOnSave,
+                isFormDataLoaded,
+                },
+            },
         },
     } = state;
 
-    // dealerlocationData
-
-    const moduleTitle = 'Dealer Location Type Master';
-
+    const moduleTitle = 'Bay Type Master List';
     let returnValue = {
         userId,
         isDataLoaded,
-        typeData,
         isLoading,
+        bayTypeData,
+        isLoadingOnSave,
+        isFormDataLoaded,
         moduleTitle,
-        dealerlocationData: dealerlocationData?.filter((i) => i),
     };
     return returnValue;
 };
@@ -50,27 +55,29 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // fetchList: dealerlocationDataActions.fetchList,
-            // saveData: dealerlocationDataActions.saveData,
-            // fetchDataList: dealerlocationDataActions.fetchList,
-            // listShowLoading: dealerlocationDataActions.listShowLoading,
-            // showGlobalNotification,
+            fetchList: bayTypeMasterDataActions.fetchList,
+            listShowLoading: bayTypeMasterDataActions.listShowLoading,
+            saveData: bayTypeMasterDataActions.saveData,
+          
+            showGlobalNotification,
         },
         dispatch
     ),
 });
-
-export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, fetchList, userId, typeData, dealerlocationData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
+const BayTypeBase = ({ moduleTitle, listCityShowLoading, isLoadingOnSave, listDistrictShowLoading, districtData, bayTypeData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
-    // const defaultParametarType = STATE_DROPDOWN.KEY;
     const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
-
+    const [show, setShow] = useState([]);
+    const [city, setCity] = useState(cityData);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
     const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+    const [successAlert, setSuccessAlert] = useState(false);
+    const [saveclick, setsaveclick] = useState();
 
     const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
@@ -79,144 +86,125 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
-
-    const [stateCode, isStateCode] = useState('qw');
-
-    // const [parameterType, setParameterType] = useState(defaultParametarType);
-
-    // const loadDependendData = () => {
-    //    // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM_TYPE.id });
-    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CFG_PARAM.id });
-    //     // fetchList({ setIsLoading: listShowLoading, userId, parameterType: PARAM_MASTER.CTRL_GRP.id });
-    // };
-
-    // useEffect(() => {
-    //     if (userId) {
-    //         // const onSuccessAction = (res) => {
-    //         //     refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    //         // };
-    //         loadDependendData();
-
-    //        // fetchDataList({ setIsLoading: listShowLoading, onSuccessAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, refershData]);
 
     useEffect(() => {
-        if (isDataLoaded && dealerlocationData && userId) {
+        if (userId) {
+            const onSuccessAction = (res) => {
+                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            };
+
+            // fetchCityList({ setIsLoading: listCityShowLoading, onSuccessAction, userId });
+            fetchList({ setIsLoading: listShowLoading, onSuccessAction, userId });
+            // fetchDistrictList({ setIsLoading: listDistrictShowLoading, onSuccessAction, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
+
+    // useEffect(() => {
+    //     if (isDataLoaded && cityData && userId) {
+    //         if (filterString) {
+    //             const keyword = filterString?.keyword;
+    //             const state = filterString?.state;
+    //             const district = filterString?.district;
+    //             const filterDataItem = cityData?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+    //             setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+    //         } else {
+    //             setSearchdata(cityData?.map((el, i) => ({ ...el, srl: i + 1 })));
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString, isDataLoaded, cityData, userId]);
+
+    useEffect(() => {
+        if (!isDataLoaded && userId) {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, userId]);
+
+    useEffect(() => {
+        if (isDataLoaded && bayTypeData) {
             if (filterString) {
-                const filterDataItem = dealerlocationData?.filter((item) => filterFunction(filterString)(item?.controlId) || filterFunction(filterString)(item?.controlDescription));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                const filterDataItem = bayTypeData?.filter((item) => filterFunction(filterString)(item?.locationCode) || filterFunction(filterString)(item?.locationDescription));
+                setSearchdata(filterDataItem);
             } else {
-                setSearchdata(dealerlocationData?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(bayTypeData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, dealerlocationData, userId]);
-
-    // useEffect( () =>{
-
-    // },[stateCode] )
+    }, [filterString, isDataLoaded, bayTypeData]);
 
     const handleEditBtn = (record) => {
-        console.log(record, 'RECORD');
-        console.log(dealerlocationData, 'dealerlocationData');
-
+        form.setFieldsValue(record);
+        setFormData(record);
         setShowSaveAndAddNewBtn(false);
+        setsaveclick(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
-        //dealerlocationData
-        const data = tableData.find((i) => i.id === record.id);
-        console.log('data', data);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
-            console.log('formData', formData);
-
-            // setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
     };
 
     const handleView = (record) => {
-        setFormActionType('view');
+        setFormActionType(FROM_ACTION_TYPE?.VIEW);
         setIsViewModeVisible(true);
+        setsaveclick(false);
 
         setShowSaveAndAddNewBtn(false);
         setFooterEdit(true);
-        //dealerlocationData
-        const data = tableData.find((i) => i.id === record.id);
+        const data = searchData.find((i) => i.code === record.code);
         if (data) {
             data && setFormData(data);
-            //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
             setIsFormVisible(true);
         }
 
         setIsReadOnly(true);
     };
 
-    // const renderTableColumnName = (record, key, type) => {
-    //     return typeData && typeData[type]?.find((item) => item?.key === record?.[key])?.value;
-    // };
-
-    // const renderConfigurableParemetarValue = (record) => {
-    //     let fieldType = '';
-    //     switch (record?.configurableParameterType) {
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.TEXT.KEY:
-    //             fieldType = record?.textValue;
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.NUMBER.KEY:
-    //             fieldType = fieldType.concat(record?.fromNumber).concat(' - ').concat(record?.toNumber);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY:
-    //             fieldType = fieldType.concat(record?.fromDate).concat('  ').concat(record?.toDate);
-    //             break;
-    //         case CONFIGURABLE_PARAMETARS_INPUT_TYPE.BOOLEAN.KEY:
-    //             fieldType = record?.booleanValue ? 'Yes' : 'No';
-    //             break;
-    //         default:
-    //             fieldType = undefined;
-    //             break;
-    //     }
-    //     return fieldType;
+    // const onChange2 = (e) => {
+    //     setCity(cityData.filter((i) => i.districtCode === e));
+    //     setShow([]);
     // };
 
     const tableColumn = [];
-
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Srl No.',
-            dataIndex: 'id',
+            title: 'Srl.',
+            // dataIndex: 'srl',
+            render: (_t, _r, i) => i + 1,
             sorter: false,
             width: '5%',
         }),
 
         tblPrepareColumns({
             title: 'Location Type Code',
-            dataIndex: 'districtCode',
-            // render: (text, record, value) => renderTableColumnName(record, 'controlId', PARAM_MASTER.CFG_PARAM.id),
+            dataIndex: 'locationCode',
+
             width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Location Type Description',
-            dataIndex: 'districtName',
+            dataIndex: 'locationDescription',
             width: '20%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%',
+            dataIndex: 'status',
+            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
+            width: '10%',
         }),
 
         {
             title: 'Action',
             dataIndex: '',
-            width: '8%',
+            width: '10%',
             render: (record) => [
                 <Space wrap>
                     {
@@ -239,50 +227,49 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
     };
 
     const hanndleEditData = (record) => {
+        form.resetFields();
+        setFormData([]);
         setShowSaveAndAddNewBtn(false);
         setIsViewModeVisible(false);
-        setFormActionType('update');
+        setFormActionType(FROM_ACTION_TYPE?.EDIT);
         setFooterEdit(false);
         setIsReadOnly(false);
         setShowSaveBtn(true);
     };
 
     const handleAdd = () => {
-        setFormActionType('add');
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(FROM_ACTION_TYPE?.ADD);
         setShowSaveAndAddNewBtn(true);
         setIsViewModeVisible(false);
-
         setFooterEdit(false);
         setIsFormVisible(true);
         setIsReadOnly(false);
-        setFormData([]);
-        // setParameterType(defaultParametarType);
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
-    };
-
-    const handleSelectState = (value) => {
-        console.log(value, 'valuevaluevalue');
-        isStateCode(value);
+        setFilterString({ ...filterString, keyword: value });
     };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
     };
 
-    const onFinish = (values) => {
-        console.log(values, 'dta');
+    // const handleFilterChange = (name) => (value) => {
+    //     if (name === 'state') {
+    //         setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
+    //     }
+    //     setFilterString({ ...filterString, [name]: value });
+    // };
 
-        //const recordId = formData?.id || '';
-        let data = { ...values };
-        //id: recordId, isActive: true, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD')
+    const onFinish = (values) => {
+        const recordId = formData?.id || '';
+        let data = { ...values, id: recordId };
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchDataList({ setIsLoading: listShowLoading, userId });
-            // loadDependendData();
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // fetchList({ setIsLoading: listShowLoading, userId });
 
             // if (showSaveAndAddNewBtn === true || recordId) {
             //     setIsFormVisible(false);
@@ -291,138 +278,114 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
             //     setIsFormVisible(true);
             //     showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             // }
+            // onSaveShowLoading(false);
+            setFormData({});
+            setSuccessAlert(true);
+            if (saveclick === true) {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            } else {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            }
         };
+
+        setTimeout(() => {
+            fetchList({ setIsLoading: listShowLoading, userId });
+        }, 2000);
 
         const onError = (message) => {
             showGlobalNotification({ message });
         };
 
         const requestData = {
-            data: [data],
+            data: data,
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
-        console.log(requestData, 'requestData');
-
-        //saveData(requestData);
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
 
-    const tableData = [
-        // {
-        //     id: '1',
-        //     districtCode: 'DO0',
-        //     districtName: 'Ranchi',
-        //     gstCode: 'Test3',
-        //     status: true,
-        // },
-    ];
+    // const onChange = (e) => {
+    //     setShow(districtData.filter((i) => i.stateCode === e));
+    // };
+
+    const onChange = (sorter, filters) => {
+        form.resetFields();
+    };
 
     const tableProps = {
         tableColumn: tableColumn,
-        tableData: tableData,
-        //searchData,
+        tableData: searchData,
+        isLoading: isLoading,
     };
 
     const formProps = {
+        saveclick,
+        setsaveclick,
+        isLoadingOnSave,
+        form,
         formActionType,
+        stateData,
+        show,
+        setShow,
         setFormActionType,
         setIsViewModeVisible,
         isViewModeVisible,
         isReadOnly,
         formData,
         footerEdit,
+        districtData,
         setFooterEdit,
+        handleAdd,
         typeData,
+        cityData,
         isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.id ? 'Edit ' : 'Add ').concat(moduleTitle),
+        onCloseAction: () => (form.resetFields(), setIsFormVisible(false), setFormBtnActive(false)),
+        titleOverride: (isViewModeVisible ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('Location Type Master'),
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
-        dealerlocationData,
-
-        setClosePanels,
+        tableData: bayTypeData,
         hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
-        stateCode,
-        handleSelectState,
     };
-
-    //console.log(stateCode,'valuevalue')
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Row xs={24} sm={24} md={24} lg={60} xl={60}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            Location Type List
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            />
-                                        </Col>
-                                        {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            
-                                        </Col> */}
-                                    </div>
-                                </Row>
+                                    <Col xs={24} sm={12} md={6} lg={6} xl={6} className={styles.lineHeight33}>
+                                        Dealer Location Type
+                                    </Col>
 
-                                {/* <Row gutter={20}>
-                                    <div className={styles.searchBox} style={{ margin: '0 0 0 2rem' }}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            State
-                                            {/* <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                                onChange={onChangeHandle}
-                                            /> */}
-                                {/* <Select
-                                                placeholder="Select"
-                                                style={{ margin: '0 0 0 0.5rem', width: '15rem' }}
-                                                onChange={handleSelectState}
-                                                //value={stateCode}
-                                            > */}
-                                {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                {/* {STATE_DROPDOWN?.map((item) => (
-                                                    <Option value={item?.KEY}>{item?.TITLE}</Option>
-                                                ))}
-                                            </Select>
-                                        </Col>
-                                    </div>
-                                </Row> */}
-                            </Row>
-                            {tableData?.length ? (
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
+                                    </Col>
+                                </Row>
+                            </Col>
+
+                            {bayTypeData?.length ? (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
                                     <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                        Add Location
+                                        Add Dealer Location
                                     </Button>
                                 </Col>
                             ) : (
@@ -432,6 +395,7 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
                     </div>
                 </Col>
             </Row>
+
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
@@ -442,10 +406,9 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
                                     height: 60,
                                 }}
                                 description={
-                                    !dealerlocationData?.length ? (
+                                    !bayTypeData?.length ? (
                                         <span>
-                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New Dealer Location Type"</span>
-                                            <br />
+                                            No records found. Please add new parameter <br />
                                             using below button
                                         </span>
                                     ) : (
@@ -453,11 +416,11 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
                                     )
                                 }
                             >
-                                {!dealerlocationData?.length ? (
+                                {!bayTypeData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Location
+                                                Add Dealer Location
                                             </Button>
                                         </Col>
                                     </Row>
@@ -468,7 +431,7 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
                         )}
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
+                            <DataTable isLoading={isLoading} {...tableProps} onChange={onChange} tableData={searchData} tableColumn={tableColumn} />
                         </div>
                     </ConfigProvider>
                 </Col>
@@ -477,7 +440,5 @@ export const BayTypeBase = ({ moduleTitle, fetchDataList, isLoading, saveData, f
         </>
     );
 };
-
-// export const DistrictGeo = connect(mapStateToProps, mapDispatchToProps)(DealerLocationTypeBase);
 
 export const BayTypeMaster = connect(mapStateToProps, mapDispatchToProps)(BayTypeBase);

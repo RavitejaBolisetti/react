@@ -74,3 +74,7 @@ export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufactu
 
 export const BASE_URL_DEALER_LOCATION_TYPE = BASE_URL + 'dealer/locationtypes';
 export const BASE_URL_DEALER_LOCATION_TYPE_SAVE = BASE_URL + 'dealer/locationtypes';
+export const BASE_URL_BAY_MASTER_TYPE_SAVE = BASE_URL + 'dealer/baytypes';
+export const BASE_URL_BAY_MASTER_TYPE= BASE_URL + 'dealer/baytypes';
+
+
