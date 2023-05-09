@@ -556,4 +556,22 @@ export const StateData = [
 
     },
 ];
+export const DealerDivisionMasterData =[
+    {
+        code: 'DIV001',
+        divisionName: 'Dealer One',
+    }
+];
+export const BayTypeMasterData = [
+    {
+        code: 'COD3',
+        name: 'CODE',
+    }
+]
+export const RoleMasterData = [
+    {
+        roleCode: 'ROLE1',
+        roleDescription: 'ROLE ONE',
+    }
+]
 
