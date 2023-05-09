@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Table, Pagination, Row, Col, Select } from 'antd';
+import { Table} from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 
 export default function DataTable({ isLoading, tableColumn, tableData }) {
@@ -17,9 +17,6 @@ export default function DataTable({ isLoading, tableColumn, tableData }) {
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
-    const onChange = (page, pageSize) => {
-        setPagination({ ...tablePagination, current: page });
-    };
     return (
         <Table
             columns={isLoading ? tableSkeletonColumn : tableColumn}

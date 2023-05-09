@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
-import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { tableColumn } from './tableColumn';
@@ -16,8 +15,6 @@ import { geoCityDataActions } from 'store/actions/data/geo/city';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
@@ -83,13 +80,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countryShowLoading, countryData, fetchCountryList, defaultCountry, listCityShowLoading, listDistrictShowLoading, districtData, fetchDistrictList, stateData, cityData, data, fetchCityList, isLoading, saveData, fetchList, userId, typeData, configData, isDataLoaded, listShowLoading, isDataAttributeLoaded, showGlobalNotification, attributeData }) => {
     const [form] = Form.useForm();
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
 
     const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
     const [show, setShow] = useState([]);
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
@@ -100,6 +93,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [isSaveAndNewClicked, setSaveAndNewClicked] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -141,12 +135,9 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, cityData, userId]);
 
-
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
-
-
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
@@ -171,7 +162,6 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
         setIsFormVisible(true);
     };
 
-
     const onFinish = (values) => {
         const recordId = formData?.code || '';
         let data = { ...values };
@@ -180,7 +170,7 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
-            if (showSaveAndAddNewBtn === true || recordId) {
+            if (isSaveAndNewClicked === true || recordId) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             } else {
@@ -232,19 +222,17 @@ export const ListCityMasterBase = ({ moduleTitle, isDataCountryLoaded, countrySh
             setIsFormVisible(false);
             setFormBtnActive(false);
         },
-        titleOverride:(formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
-        
+        titleOverride: (formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('City Details'),
+
         onFinish,
         onFinishFailed,
         isFormBtnActive,
         setFormBtnActive,
         tableData: cityData,
-        setSaveAndAddNewBtnClicked,
-        showSaveBtn,
-        saveAndAddNewBtnClicked,
         defaultCountry,
         isDataCountryLoaded,
         countryData,
+        setSaveAndNewClicked,
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

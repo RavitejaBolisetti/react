@@ -7,9 +7,9 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 
 import styles from 'components/common/Common.module.css';
-
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = (handleFormAction) => {
     const tableColumn = [];
+
     tableColumn.push(
         tblPrepareColumns({
             title: 'Srl.',
@@ -19,40 +19,46 @@ export const tableColumn = (handleButtonClick) => {
         }),
 
         tblPrepareColumns({
-            title: 'State Code',
+            title: 'Tehsil Code',
             dataIndex: 'code',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'State Name',
+            title: 'Tehsil Name',
             dataIndex: 'name',
             width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Country',
-            dataIndex: 'countryName',
+            title: 'District Name',
+            dataIndex: 'districtName',
+            width: '20%',
+        }),
+
+        tblPrepareColumns({
+            title: 'State Name',
+            dataIndex: 'stateName',
             width: '20%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'status',
+            dataIndex: 'activeIndicator',
             render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '15%',
+            width: '10%',
         }),
 
         {
             title: 'Action',
             dataIndex: '',
-            width: '8%',
+            width: '10%',
             render: (record) => [
                 <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
                         <FiEdit2 />
                     </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                         <FaRegEye />
                     </Button>
                 </Space>,

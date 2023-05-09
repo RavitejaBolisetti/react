@@ -6,6 +6,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
+import { tableColumn } from './tableColumn';
 
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
@@ -105,6 +106,9 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
 
     const [stateFilter, setStateFilter] = useState('');
     const [districtFilter, setDistrictFilter] = useState('');
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     useEffect(() => {
         if (userId) {
@@ -141,121 +145,21 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    const handleEditBtn = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            setIsFormVisible(true);
-        }
+    const handleFormAction = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
+        setFormActionType(buttonAction);
+        record && setFormData(record);
+        setIsFormVisible(true);
     };
 
-    const handleView = (record) => {
-        setFormActionType(FROM_ACTION_TYPE?.VIEW);
-        setIsViewModeVisible(true);
-
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(true);
-
-        const data = searchData.find((i) => i.code === record.code);
-        if (data) {
-            data && setFormData(data);
-            //setParameterType((data?.configurableParameterType).toString() || defaultParametarType);
-            setIsFormVisible(true);
-        }
-
-        setIsReadOnly(true);
-    };
-
-    const tableColumn = [];
-
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Tehsil Code',
-            dataIndex: 'code',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Tehsil Name',
-            dataIndex: 'name',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'District Name',
-            dataIndex: 'districtName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'State Name',
-            dataIndex: 'stateName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
-            width: '10%',
-        }),
-
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '10%',
-            render: (record) => [
-                <Space wrap>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                        <FiEdit2 />
-                    </Button>
-                    <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                        <FaRegEye />
-                    </Button>
-                </Space>,
-            ],
-        }
-    );
+   
 
     const handleReferesh = () => {
         setRefershData(!refershData);
     };
 
-    const hanndleEditData = (record) => {
-        form.resetFields();
-        setFormData([]);
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType(FROM_ACTION_TYPE?.EDIT);
 
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-    };
-
-    const handleAdd = () => {
-        form.resetFields();
-        setFormData([]);
-
-        setFormActionType(FROM_ACTION_TYPE?.ADD);
-        setShowSaveAndAddNewBtn(true);
-        setIsViewModeVisible(false);
-        setFooterEdit(false);
-        setIsFormVisible(true);
-        setIsReadOnly(false);
-    };
 
     const onSearchHandle = (value) => {
         setFilterString({ ...filterString, keyword: value });
@@ -310,7 +214,7 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
     };
 
     const tableProps = {
-        tableColumn: tableColumn,
+        tableColumn: tableColumn(handleFormAction),
         tableData: searchData,
     };
 
@@ -337,7 +241,6 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
         isFormBtnActive,
         setFormBtnActive,
         configData,
-        hanndleEditData,
         setSaveAndAddNewBtnClicked,
         showSaveBtn,
         saveAndAddNewBtnClicked,
@@ -350,6 +253,10 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
         defaultCountry,
         isDataCountryLoaded,
         countryData,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        handleFormAction,
     };
 
     return (
@@ -394,7 +301,7 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         Add Tehsil
                                     </Button>
                                 </Col>
@@ -429,7 +336,7 @@ export const ListTehsilBase = ({ data, moduleTitle, fetchDataList, isLoading, sa
                                 {!data?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                 Add Tehsil
                                             </Button>
                                         </Col>

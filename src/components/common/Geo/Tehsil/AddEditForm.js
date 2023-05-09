@@ -9,13 +9,17 @@ import { ViewDetail } from './ViewDetail';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { hanndleEditData, setSaveAndAddNewBtnClicked } = props;
+    const { ADD_ACTION, EDIT_ACTION, VIEW_ACTION } = props;
+    const { hanndleEditData, setSaveAndAddNewBtnClicked,formActionType,handleFormAction } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible, stateData, districtData, stateFilter, setStateFilter, setDistrictFilter, districtFilter } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
     const [selectedState, setSelectedState] = useState(formData?.stateCode || undefined);
     const [selectedDistrict, setSelectedDistrict] = useState(formData?.stateCode || undefined);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
+
+    const isAddMode = formActionType === ADD_ACTION;
+    const isViewMode = formActionType === VIEW_ACTION;
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -55,7 +59,9 @@ const AddEditFormMain = (props) => {
 
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {!isViewModeVisible ? (
+            {isViewMode ? (
+                <ViewDetail {...viewProps} />
+            ) : (
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -128,32 +134,31 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </>
-            ) : (
-                <ViewDetail {...viewProps} />
+                
             )}
 
             <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
+                        {isViewMode ? 'Close' : 'Cancel'}
                     </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
+                    {!isViewMode && (
                         <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
                             Save
                         </Button>
                     )}
 
-                    {!formData?.code && (
+                    {isAddMode && (
                         <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
                             Save & Add New
                         </Button>
                     )}
 
-                    {footerEdit && (
-                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                    {isViewMode && (
+                        <Button  onClick={() => handleFormAction({ buttonAction: EDIT_ACTION, record: formData })} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
                             Edit
                         </Button>
                     )}

@@ -77,16 +77,18 @@ export const ListStateMasterBase = (props) => {
 
     const [form] = Form.useForm();
 
-    const [formActionType, setFormActionType] = useState('');
-    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [isSaveAndNewClicked, setSaveAndNewClicked] = useState(false);
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -128,10 +130,14 @@ export const ListStateMasterBase = (props) => {
         setRefershData(!refershData);
     };
 
-    const handleFormAction = ({ record = null, buttonAction }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        console.log('🚀 ~ file: ListStateMaster.js:133 ~ handleButtonClick ~ buttonAction:', buttonAction);
         form.resetFields();
         setFormData([]);
-        setFormActionType(buttonAction);
+
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -145,7 +151,6 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.code || '';
         let data = { ...values };
 
         const onSuccess = (res) => {
@@ -153,12 +158,12 @@ export const ListStateMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
 
-            if (isSaveAndNewClicked === true || recordId) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
         };
 
@@ -168,7 +173,7 @@ export const ListStateMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -185,37 +190,38 @@ export const ListStateMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
-        setFormBtnActive(false);
+        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
         form,
+        formData,
         formActionType,
         setFormActionType,
-        formData,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: (formActionType === VIEW_ACTION ? 'View ' : formData?.code ? 'Edit ' : 'Add ').concat('State Details'),
         onFinish,
         onFinishFailed,
-        isFormBtnActive,
-        setFormBtnActive,
+
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('State Details'),
         tableData: searchData,
-        setSaveAndAddNewBtnClicked,
-        saveAndAddNewBtnClicked,
+
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
         defaultCountry,
-        setSaveAndNewClicked,
+
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
-        handleFormAction,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleFormAction),
+        tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
     };
     return (
@@ -244,7 +250,7 @@ export const ListStateMasterBase = (props) => {
 
                             <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add State
                                 </Button>
                             </Col>
@@ -277,7 +283,7 @@ export const ListStateMasterBase = (props) => {
                                     {!searchData?.length ? (
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleFormAction({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                                     Add State
                                                 </Button>
                                             </Col>
