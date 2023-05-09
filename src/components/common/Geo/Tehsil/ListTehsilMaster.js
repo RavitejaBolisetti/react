@@ -260,12 +260,16 @@ export const ListTehsilBase = (props) => {
         isCountryLoading,
         countryData,
         defaultCountry,
+        
+        districtData,
+        stateData,
+        data,
 
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
-        buttonData,
 
+        buttonData,
         setButtonData,
         handleButtonClick,
     };

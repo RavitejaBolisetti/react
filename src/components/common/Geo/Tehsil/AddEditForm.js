@@ -121,7 +121,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
-                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} maxLength={6} />
+                                <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
