@@ -8,18 +8,24 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblSerialNumberColumn({ page, pageSize }),
 
         tblPrepareColumns({
-            title: 'Location Type Code',
-            dataIndex: 'locationCode',
-            width: '20%',
+            title: 'Department Code',
+            dataIndex: 'departmentCode',
+            width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'Location Type Description',
-            dataIndex: 'locationDescription',
-            width: '30%',
+            title: 'Department Description',
+            dataIndex: 'departmentName',
+            width: '25%',
+        }),
+        
+        tblPrepareColumns({
+            title: 'Division Name',
+            dataIndex: 'divisionName',
+            width: '25%',
         }),
 
-        tblStatusColumn({ styles, width: '20%' }),
+        tblStatusColumn({ styles, width: '15%' }),
 
         tblActionColumn({ handleButtonClick, styles })
     );
