@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, BayTypeMasterPage } from 'pages/common';
+import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage } from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -32,9 +32,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_GEO_PINCODE} element={<PinCodePage />} />
 
             <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_LOCATION_TYPE_MASTER} element={<DealerLocationTypePage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
 
-            
+            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_DIVISION_MASTER} element={<DealerDivisionMasterPage />} />
+            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
 
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />

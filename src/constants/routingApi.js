@@ -28,7 +28,7 @@ export const BASE_URL_GEO_GRAPHY_PINCODE = BASE_URL + 'geography/pincodes';
 export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';
 export const BASE_URL_DEALER_MANPOWER_LOCATION_TYPE = BASE_URL_DEALER_MANPOWER + '/locationtypes';
 export const BASE_URL_DEALER_MANPOWER_BAY_TYPE = BASE_URL_DEALER_MANPOWER + '/baytypes';
-
+export const BASE_URL_DEALER_MANPOWER_DIVISION_MASTER = BASE_URL_DEALER_MANPOWER + '/divisions';
 
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
@@ -70,6 +70,7 @@ export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationd
 export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
 export const BASE_URL_APPLICATION_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
 export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/dealerlocation';
+
 
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 

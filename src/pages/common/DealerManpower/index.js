@@ -1,3 +1,5 @@
 import DealerLocationTypePage from './DealerLocationTypePage';
-import BayTypeMasterPage from './BayMasterTypePage'
-export { DealerLocationTypePage, BayTypeMasterPage };
+import DealerDivisionMasterPage from './DealerDivisionMasterPage';
+import BayTypeMasterPage from './BayMasterTypePage';
+
+export { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage };
