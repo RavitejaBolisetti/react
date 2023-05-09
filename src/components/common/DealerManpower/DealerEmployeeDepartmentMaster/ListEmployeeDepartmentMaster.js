@@ -9,7 +9,6 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
@@ -25,12 +24,12 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerManpower: {
-                DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+                DealerEmployeeDepartmentMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
 
-    const moduleTitle = 'Dealer Location Type Master';
+    const moduleTitle = 'Dealer Employee Department Master';
 
     let returnValue = {
         userId,
@@ -55,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ListDealerLocationTypeMasterBase = (props) => {
+export const ListEmployeeDepartmentMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
@@ -285,4 +284,4 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     );
 };
 
-export const ListDealerLocationTypeMaster = connect(mapStateToProps, mapDispatchToProps)(ListDealerLocationTypeMasterBase);
+export const ListEmployeeDepartmentMaster = connect(mapStateToProps, mapDispatchToProps)(ListEmployeeDepartmentMasterBase);
