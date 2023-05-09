@@ -16,10 +16,10 @@ import { QualificationMasterPage } from './QualificationMaster/QualificationMast
 import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarchy';
 import { DealerHierarchyPage } from './DealerHierarchy';
 
-import { DealerLocationTypePage } from './DealerManpower';
+import { DealerLocationTypePage , DealerDivisionMasterPage} from './DealerManpower';
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
 import { UserManagementManufacturerPage } from './UserManagementManufacturer';
 
-export { ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage };
+export { ProductMasterPage, ProductHierarchyPage,DealerDivisionMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage };
