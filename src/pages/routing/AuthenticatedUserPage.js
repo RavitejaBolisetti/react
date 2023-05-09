@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, CityGeoPage, ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, StateGeoPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage, DealerLocationTypePage } from 'pages/common';
+import { GeoPage, CityGeoPage, ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, StateGeoPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage, DealerLocationTypePage,BayTypeMasterPage } from 'pages/common';
 import { LoginPage } from 'pages/auth';
 
 import * as routing from 'constants/routing';
@@ -35,9 +35,12 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER} element={<DealerManpowerPage />} />
+
             <Route path={routing.ROUTING_COMMON_CRITICALITY_GROUP} element={<CriticalityGroupPage />} />
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
             <Route path={routing.ROUTING_COMMON_DEALER_LOCATTION_TYPE_MASTER} element={<DealerLocationTypePage />} />
+            <Route path={routing.ROUTING_COMMON_BAY_TYPE} element={<BayTypeMasterPage />} />
+
 
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />

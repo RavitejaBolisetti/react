@@ -22,6 +22,8 @@ export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branc
 
 export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualification-master');
 export const ROUTING_COMMON_DEALER_MANPOWER = ROUTING_COMMON.concat('dealer-manpower');
+export const ROUTING_COMMON_BAY_TYPE = ROUTING_COMMON.concat('bay-type');
+
 
 export const ROUTING_COMMON_CONFIG_PARAM_EDIT = ROUTING_COMMON.concat('config-param-edit');
 

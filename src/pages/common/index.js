@@ -12,10 +12,12 @@ import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarch
 import { DealerHierarchyPage } from './DealerHierarchy';
 
 import { DealerManpowerPage } from './DealerManpower/DealerManpowerPage';
+import { BayTypeMasterPage } from './DealerManpower/BayTypeMaster';
+
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
 import { UserManagementManufacturerPage } from './UserManagementManufacturer';
 import { DealerLocationTypePage } from './DealerManpower/DealerLocationType';
 
-export { GeoPage, ProductMasterPage, DealerLocationTypePage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, DealerManpowerPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StateGeoPage, DistrictGeoPage, CityGeoPage, TehsilGeoPage };
+export { GeoPage, ProductMasterPage, DealerLocationTypePage, BayTypeMasterPage,ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, DealerManpowerPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StateGeoPage, DistrictGeoPage, CityGeoPage, TehsilGeoPage };
