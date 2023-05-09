@@ -1,4 +1,4 @@
 import { DealerManpower } from './DealerManpower';
-import { DealerLocationType } from './DealerLocationType/DealerLocationType';
+import { DealerLocationType } from './DealerLocationTypeMaster/DealerLocationTypeMaster';
 
 export { DealerManpower, DealerLocationType };

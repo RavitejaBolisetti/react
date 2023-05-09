@@ -11,17 +11,22 @@
     border-radius: 0px;
 }
 
-
 .viewCollapse {
     gap: 10px;
 }
 
+.anticon {
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    height: 10px !important;
+
+}
 .anticon svg {
-    color: #FF3E5B;
+    color: #ff3e5b;
 }
 
 .viewAccordianHeader {
-    color: #E31837 !important;
+    color: #e31837 !important;
 }
 
 .viewAccordianHeader::after {
@@ -42,7 +47,6 @@
     border: 1px solid #e8e8e8;
     margin-top: 0px;
 }
-
 
 .leftPanelScroll::-webkit-scrollbar-track {
     background-color: #f4f4f4;
@@ -71,11 +75,10 @@
     height: 32px !important;
     margin-bottom: -5px;
     border-radius: 4px;
-    border-color: #DEDEDE;
-
+    border-color: #dedede;
 }
 
-.autoCompleteBtn :global .ant-input-group>.ant-input-group-addon:last-child {
+.autoCompleteBtn :global .ant-input-group > .ant-input-group-addon:last-child {
     inset-inline-start: -1px;
     padding: 0;
     border: 0;
@@ -84,6 +87,6 @@
     background: white;
 }
 
-.autoCompleteBtn :global .ant-input-group>.ant-input-group-addon:last-child :hover {
+.autoCompleteBtn :global .ant-input-group > .ant-input-group-addon:last-child :hover {
     border: none;
 }

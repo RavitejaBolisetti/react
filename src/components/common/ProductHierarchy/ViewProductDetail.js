@@ -17,7 +17,7 @@ export const ViewProductDetailMain = ({ viewTitle, buttonData, attributeData, se
                 <Descriptions.Item label="Code">{selectedTreeData.prodctCode}</Descriptions.Item>
                 <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
-                <Descriptions.Item label="Status">{selectedTreeData?.active ? 'Active' : 'InActive'}</Descriptions.Item>
+                <Descriptions.Item label="Status">{selectedTreeData?.active === 'Y' ? 'Active' : 'InActive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );

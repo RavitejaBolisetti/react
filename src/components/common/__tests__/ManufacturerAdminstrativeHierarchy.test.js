@@ -3,8 +3,6 @@ import { ManufacturerAdminstrativeHierarchy } from '../ManufacturerAdminstrative
 import { axiosCall, commonDrawer, commonTreeTest, editClickAfterTreeSelect, findbuttonAndClick, findplaceholder, screentext, searchFieldTest, searchIsWorking, textFindAfterClick, textFindAfterClickinDrawer, treebranchClickAndTextFinder } from './Common/treeWithDrawer/common';
 import { ManufacturerTreeData as treeDatas } from './Common/Data/data';
 import { fetchList, saveData, hierarchyAttributeFetchList, listShowLoading } from './Common/CommonImports/commonImports';
-import { async } from 'sonarqube-scanner';
-import userEvent from '@testing-library/user-event';
 import { BASE_URL_MANUFACTURER_ADMINISTRATION_HIERARCHY } from '../../../constants/routingApi';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange } from './Common/tableWithDrawer/common';
@@ -109,4 +107,65 @@ describe('manufacturerAdminHierarchy component', () => {
         findplaceholder('Select Authority Type');
         findplaceholder('Please enter Token');
     });
+    test('on hover change history admin change history open ', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+
+        buttonLookAndFireEventWithText('Change History');
+
+        await waitFor(() => {
+            buttonLookAndFireEventWithText('Administrative Change History');
+            // buttonLookAndFireEventWithText('Authority Change History');
+            const admin = screen.findByText('Admin Change History');
+            expect(admin).toBeTruthy();
+            const find = screen.findByText('Changed/Modified Date');
+            expect(find).toBeTruthy();
+            const find1 = screen.findByText('Changed By');
+            expect(find1).toBeTruthy();
+            const find2 = screen.findByText('Attribute Code');
+            expect(find2).toBeTruthy();
+            const find3 = screen.findByText('Short Description');
+            expect(find3).toBeTruthy();
+            const find4 = screen.findByText('Long Description');
+            expect(find4).toBeTruthy();
+            const find5 = screen.findByText('Hierarchy Code');
+            expect(find5).toBeTruthy();
+            const find6 = screen.findByText('Status');
+            expect(find6).toBeTruthy();
+        });
+    });
+    test('on hover change history authority change history opens ', async () => {
+        render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+
+        buttonLookAndFireEventWithText('Change History');
+
+        await waitFor(() => {
+            buttonLookAndFireEventWithText('Authority Change History');
+            const admin = screen.findByText('Authority Change History');
+            expect(admin).toBeTruthy();
+            const find = screen.findByText('Created Date');
+            expect(find).toBeTruthy();
+            const find1 = screen.findByText('Created By');
+            expect(find1).toBeTruthy();
+            const find2 = screen.findByText('Authority Type Code');
+            expect(find2).toBeTruthy();
+            const find3 = screen.findByText('Employee Name');
+            expect(find3).toBeTruthy();
+            const find4 = screen.findByText('Employee Token No.');
+            expect(find4).toBeTruthy();
+            const find5 = screen.findByText('Authority Id');
+            expect(find5).toBeTruthy();
+            const find6 = screen.findByText('Effective From');
+            expect(find6).toBeTruthy();
+            const find7 = screen.findByText('Effective To');
+            expect(find7).toBeTruthy();
+        });
+    });
+    // test.only('selecting combobox', async () => {
+    //     render(<ManufacturerAdminstrativeHierarchy fetchList={fetchList} hierarchyAttributeFetchList={hierarchyAttributeFetchList} manufacturerOrgHierarchyData={treeDatas} />);
+    //     textFindAfterClickinDrawer();
+    //     // buttonLookAndFireEventByRole('Change Histor');
+    //     expect(screen.getByRole('heading')).toHaveTextContent('Attribute Level');
+    //     expect(screen.getByRole('combobox')).toHaveDisplayValue('Please select attribute level');
+    //     expect(await screen.findByRole('option', { name: 'Cluster' })).toBeInTheDocument();
+    // });
 });

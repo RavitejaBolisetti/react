@@ -96,6 +96,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
+    const [parentAppCode, setparentAppCode] = useState();
 
     const moduleTitle = 'Application Master';
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
@@ -175,6 +176,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 nodeType: '',
                 id: values.id || '',
                 ...values,
+                parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
                 accessibleLocation: accessibleLocation?.map(({ dealerMasterLocationId, id }) => ({ id: id || '', dealerMasterLocationId: dealerMasterLocationId })),
                 deviceType: menuType,
@@ -206,7 +208,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
         if (FROM_ACTION_TYPE.EDIT === type && applicationDetailsData?.length) {
             applicationForm.setFieldValue({ ...rest });
-            setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+            setFinalFormdata({ applicationDetails: rest, applicationAction: applicationAction?.map(el => ({...el})), documentType, accessibleLocation });
             setIsReadOnly(false);
             setIsFieldDisable(true);
         } else if (FROM_ACTION_TYPE.CHILD === type && applicationDetailsData?.length) {
@@ -229,8 +231,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
 
     const onClose = () => {
-        setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
+        // if (finalFormdata?.applicationDetails?.applicationId) {
+        //     setTimeout(() => applicationCall(finalFormdata?.applicationDetails?.applicationId), 300);
+        // }
         setisVisible(false);
+        const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
+        setFinalFormdata({ applicationDetails: rest, applicationAction, documentType, accessibleLocation });
+
     };
 
     const myProps = {
@@ -247,6 +254,8 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     };
     const formProp = {
         isReadOnly,
+        parentAppCode,
+        setparentAppCode,
         isVisible,
         isFieldDisable,
         applicationForm,

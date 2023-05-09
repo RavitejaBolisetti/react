@@ -20,7 +20,7 @@ export const ProductMasterPageBase = () => {
 
     const rendFn = (key) => {
         return (
-            <Form form={form}>
+            <Form autoComplete="off" form={form}>
                 <Form.Item name={key} rules={[validateRequiredInputField('Enter data')]}>
                     <Input placeholder={key} />
                 </Form.Item>
@@ -89,7 +89,7 @@ export const ProductMasterPageBase = () => {
                         <div className="right col" style={{ padding: '0' }}>
                             <Collapse defaultActiveKey={['1']} expandIconPosition="end">
                                 <Panel header="Product Details" key="1">
-                                    <Form layout="vertical">
+                                    <Form autoComplete="off" layout="vertical">
                                         <Row gutter={20}>
                                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                                 <Form.Item name="Attribute Level" label="Attribute Level" rules={[validateRequiredSelectField('Attribute Level')]}>

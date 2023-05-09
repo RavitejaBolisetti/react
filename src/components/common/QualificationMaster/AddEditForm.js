@@ -29,7 +29,7 @@ const AddEditFormMain = ({ setIsFormVisible, selectedRecord, isFormVisible, isVi
     };
 
     return (
-        <Form form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={form} onFieldsChange={handleForm} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
                     <Row gutter={20}>

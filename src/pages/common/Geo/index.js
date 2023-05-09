@@ -1,7 +1,7 @@
-import { GeoPage } from "./GeoPage";
-import { StateGeoPage } from "./StateGeo/StateGeoPage"
-import { DistrictGeoPage } from "./DistrictGeo/DistrictGeoPage"
-import { TehsilGeoPage } from "./TehsilGeo/TehsilGeoPage"
-import { CityGeoPage } from "./CityGeo/CityGeoPage"
+import StatePage from './StatePage';
+import DistrictPage from './DistrictPage';
+import TehsilPage from './TehsilPage';
+import CityPage from './CityPage';
+import PinCodePage from './PinCodePage';
 
-export { GeoPage,StateGeoPage,DistrictGeoPage, TehsilGeoPage,CityGeoPage };
+export {  StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage };

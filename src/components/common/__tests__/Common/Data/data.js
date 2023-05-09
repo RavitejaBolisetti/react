@@ -472,3 +472,88 @@ export const rolemanagementdata = [
         Status: 'Y',
     },
 ];
+export const District = [
+    {
+        districtCode: 'D3124',
+        districtName: 'Mandla',
+        stateName: 'Madhya Pradesh',
+
+    },
+];
+export const DistrictData = [
+    {
+        DistrictCode: 'D3124',
+        DistrictName: 'Mandla',
+        StateName: 'Madhya Pradesh',
+
+    },
+];
+export const City = [
+    {
+        cityCode: 'U55',
+        cityName: 'Jabalpur',
+        districtName: 'Jabalpur',
+        stateName: 'Madhya Pradesh',
+
+    },
+];
+export const CityData = [
+    {
+        CityCode: 'U55',
+        CityName: 'Jabalpur',
+        DistrictName: 'Jabalpur',
+        StateName: 'Madhya Pradesh',
+
+    },
+];
+export const Pin = [
+    {
+        pinCode: '483504',
+        localityName: 'Murwara',
+       
+
+    },
+];
+export const PinData = [
+    {
+        PinCode: '483504',
+        LocalityName: 'Murwara',
+       
+
+    },
+];
+export const Tehsil = [
+    {
+        tehsilCode: 'T2412',
+        tehsilName: 'Barella',
+        districtName: 'Jabalpur',
+        stateName: 'Madhya Pradesh',
+
+    },
+];
+export const TehsilData = [
+    {
+        TehsilCode: 'T2412',
+        TehsilName: 'Barella',
+        DistrictName: 'Jabalpur',
+        StateName: 'Madhya Pradesh',
+
+    },
+];
+export const State = [
+    {
+        stateCode: '14',
+        stateName: 'Manipur',
+        countryName: 'India',
+
+    },
+];
+export const StateData = [
+    {
+        StateCode: '14',
+        StateName: 'Manipur',
+        CountryName: 'India',
+
+    },
+];
+

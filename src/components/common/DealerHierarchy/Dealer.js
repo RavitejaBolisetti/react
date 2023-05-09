@@ -74,7 +74,6 @@ export const DealerMain = ({ userId, isDataLoaded, dealerHierarchyData, fetchLis
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
-    //unCheckedChildren="Inactive"
 
     const [searchValue, setSearchValue] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);

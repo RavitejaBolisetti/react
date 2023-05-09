@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { GeoPage, CityGeoPage, ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, StateGeoPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, DistrictGeoPage, TehsilGeoPage, DealerLocationTypePage,BayTypeMasterPage } from 'pages/common';
-import { LoginPage } from 'pages/auth';
+import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, DealerManpowerPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage,DealerLocationTypePage,BayTypeMasterPage } from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -17,7 +16,6 @@ export const AuthenticatedUserPage = () => {
     return (
         <Routes>
             <Route path={routing.ROUTING_HOME} element={<SplashPage />} exact />
-            <Route path={routing.ROUTING_COMMON_GEO} element={<GeoPage />} />
             <Route path={routing.ROUTING_DASHBOARD} element={<DashboardPage />} />
 
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ORGANIZATION_HIERARCHY} element={<ManufacturerOrgHierarchyPage />} />
@@ -27,10 +25,12 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
-            <Route path={routing.ROUTING_COMMON_GEO_STATE} element={<StateGeoPage />} />
-            <Route path={routing.ROUTING_COMMON_GEO_CITY} element={<CityGeoPage />} />
-            <Route path={routing.ROUTING_COMMON_GEO_DISTRICT} element={<DistrictGeoPage />} />
-            <Route path={routing.ROUTING_COMMON_GEO_TEHSIL} element={<TehsilGeoPage />} />
+            <Route path={routing.ROUTING_COMMON_GEO_STATE} element={<StatePage />} />
+            <Route path={routing.ROUTING_COMMON_GEO_CITY} element={<CityPage />} />
+            <Route path={routing.ROUTING_COMMON_GEO_DISTRICT} element={<DistrictPage />} />
+            <Route path={routing.ROUTING_COMMON_GEO_TEHSIL} element={<TehsilPage />} />
+            <Route path={routing.ROUTING_COMMON_GEO_PINCODE} element={<PinCodePage />} />
+
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />

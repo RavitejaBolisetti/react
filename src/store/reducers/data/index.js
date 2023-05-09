@@ -16,6 +16,7 @@ import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
+import { DealerLocationType } from './dealerManpower/dealerLocationtypeMaster';
 
 export const data = combineReducers({
     Menu,
@@ -34,4 +35,5 @@ export const data = combineReducers({
     UserManagement,
     UserManagementManufacturer,
     Geo,
+    DealerLocationType,
 });

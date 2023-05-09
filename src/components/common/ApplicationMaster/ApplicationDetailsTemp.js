@@ -59,7 +59,7 @@ const ApplicationDetailsMain = ({ form, isReadOnly, formActionType, setSelectedL
 
     return (
         <div>
-            <Form scrollToFirstError={true} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}  >
+            <Form autoComplete="off" scrollToFirstError={true} form={form} layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}  >
 
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>

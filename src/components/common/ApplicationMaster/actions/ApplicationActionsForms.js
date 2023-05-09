@@ -17,7 +17,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form form={form} id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Form form={form} autoComplete="off" id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item label="Action" name="applicationName" rules={[validateRequiredSelectField('application action'), { validator: (rule, value) => duplicateValidator(value?.label, 'actionName', finalFormdata?.applicationAction)   }]}>  
@@ -28,6 +28,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                                         fieldNames={fieldNames}
                                         options={actions?.filter((el) => el?.actionName)}
                                         disabled={isBtnDisabled || disableStatus}
+                                        allowClear
                                     />
                                 </Form.Item>
                             </Col>

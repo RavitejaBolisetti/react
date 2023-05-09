@@ -8,7 +8,7 @@ import DocumentTypesForm from './DocumentTypesForm';
 const { Text } = Typography;
 
 const CardDocumentType = (prop) => {
-    const { id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
+    const { id,status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, forceUpdate, setIsBtnDisabled, isBtnDisabled } = prop;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -19,7 +19,6 @@ const CardDocumentType = (prop) => {
         };
     }, []);
 
-    // on Click edit button sets form fields
     const onEdit = (id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode) => {
         form.setFieldsValue({
             id,
@@ -32,17 +31,22 @@ const CardDocumentType = (prop) => {
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
-    const onUpdate = () => {
-        const newFormData = form.getFieldsValue();
-        setfinalFormdata((prev) => {
-            const newList = prev;
-            const indx = prev?.documentType.findIndex((el) => el?.documentTypeCode === documentTypeCode);
-            newList?.documentType?.splice(indx, 1, { ...newFormData });
-            return { ...prev, documentType: newList?.documentType };
-        });
-        setIsEditing(false);
-        setIsBtnDisabled(false);
-        form.resetFields();
+    const onUpdate = (value) => {
+        form.validateFields()
+            .then((newFormData) => {
+                setfinalFormdata((prev) => {
+                    const newList = prev;
+                    const indx = prev?.documentType.findIndex((el) => el?.documentTypeCode === documentTypeCode);
+                    newList?.documentType?.splice(indx, 1, { ...newFormData });
+                    return { ...prev, documentType: newList?.documentType };
+                });
+                setIsEditing(false);
+                setIsBtnDisabled(false);
+                form.resetFields();
+            })
+            .catch((err) => {
+                return;
+            });
     };
 
     const handleDeleteDocType = (val) => {
@@ -90,7 +94,7 @@ const CardDocumentType = (prop) => {
                             {!isEditing ? (
                                 <>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
+                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(id,status,  termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)} />
                                     </Col>
                                     {!id?.length > 0 && (
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
