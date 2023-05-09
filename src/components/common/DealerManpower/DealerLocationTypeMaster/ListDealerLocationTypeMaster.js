@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerManpower: {
-                State: { isLoaded: isDataLoaded = false, isLoading, data },
+                DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
@@ -103,7 +103,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationCode) || filterFunction(keyword)(item?.locationDescription) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -218,7 +218,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
                                         {`${moduleTitle} List`}
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
@@ -230,7 +230,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
                             <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add State
+                                    Add Type
                                 </Button>
                             </Col>
                         </Row>

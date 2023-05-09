@@ -4,7 +4,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const DealerLocationTypePageBase = (props) => {
-    const pageTitle = 'State Master';
+    const pageTitle = 'Dealer Location Type Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
