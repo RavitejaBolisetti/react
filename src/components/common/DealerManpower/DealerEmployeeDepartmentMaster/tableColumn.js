@@ -10,11 +10,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Department Code',
             dataIndex: 'departmentCode',
-            width: '15%',
+            width: '20%',
         }),
 
         tblPrepareColumns({
-            title: 'Department Description',
+            title: 'Department Name',
             dataIndex: 'departmentName',
             width: '25%',
         }),
