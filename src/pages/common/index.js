@@ -13,8 +13,9 @@ import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
 import { UserManagementManufacturerPage } from './UserManagementManufacturer';
+import { RoleMasterPage } from './DealerManpower';
 
 import { StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage } from './DealerManpower';
 
-export { ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage };
+export { ProductMasterPage, ProductHierarchyPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, QualificationMasterPage, HierarchyAttributeMasterPage, UserManagementPage, UserManagementManufacturerPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage };

@@ -4,7 +4,7 @@ import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'an
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
-import { dealerManpowerLocationTypeMasterDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
+import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -53,9 +53,10 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchDivisionList: dealerManpowerDivisionMasterDataActions.fetchList,
             listDivisionShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
-            fetchList: dealerManpowerLocationTypeMasterDataActions.fetchList,
-            saveData: dealerManpowerLocationTypeMasterDataActions.saveData,
-            listShowLoading: dealerManpowerLocationTypeMasterDataActions.listShowLoading,
+
+            fetchList: dealerManpowerEmployeeDepartmentDataActions.fetchList,
+            saveData: dealerManpowerEmployeeDepartmentDataActions.saveData,
+            listShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -114,7 +115,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                console.log("🚀 ~ file: ListEmployeeDepartmentMaster.js:117 ~ useEffect ~ filterString:", filterString)
                 const keyword = filterString?.keyword;
                 const division = filterString?.division;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));

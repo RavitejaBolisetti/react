@@ -10,7 +10,7 @@ export const DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER_RESET_DATA = 'DEALER_MAN
 
 const baseURL = BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT;
 
-export const dealerManpowerLocationTypeMasterDataActions = dataActions({
+export const dealerManpowerEmployeeDepartmentDataActions = dataActions({
     baseURL,
     moduleName: 'Dealer Employee Department Master',
     RECEIVE_DATA_LOADING_ACTION_CONSTANT: DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER_LOADING_DATA,
