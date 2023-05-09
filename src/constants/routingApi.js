@@ -27,7 +27,7 @@ export const BASE_URL_GEO_GRAPHY_PINCODE = BASE_URL + 'geography/pincodes';
 
 export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';
 export const BASE_URL_DEALER_MANPOWER_LOCATION_TYPE = BASE_URL_DEALER_MANPOWER + '/locationtypes';
-
+export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/departments';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';

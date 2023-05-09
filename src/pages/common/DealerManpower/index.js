@@ -1,3 +1,4 @@
 import DealerLocationTypePage from './DealerLocationTypePage';
+import DealerEmployeeDepartmentPage from './DealerLocationTypePage'
 
-export { DealerLocationTypePage };
+export { DealerLocationTypePage,DealerEmployeeDepartmentPage };
