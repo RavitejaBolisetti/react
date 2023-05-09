@@ -25,6 +25,10 @@ export const BASE_URL_GEO_GRAPHY_CITY = BASE_URL + 'geography/cities';
 export const BASE_URL_GEO_GRAPHY_PINCODE = BASE_URL + 'geography/pincodes';
 
 
+export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealer';
+export const BASE_URL_DEALER_MANPOWER_LOCATION_TYPE = BASE_URL_DEALER_MANPOWER + '/locationtypes';
+
+
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
 export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';
 export const BASE_URL_ROLE_MANAGEMENT_ROLES = BASE_URL + 'application/rolemanagement';
@@ -66,8 +70,6 @@ export const BASE_URL_APPLICATION_CRITICALITY_GROUP = BASE_URL + 'application/cr
 export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/dealerlocation';
 
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
-
-export const BASE_URL_DEALER_MANPOWER = BASE_URL + 'dealermanpower';
 
 export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';

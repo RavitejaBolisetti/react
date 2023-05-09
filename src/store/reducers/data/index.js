@@ -9,12 +9,12 @@ import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ChangePassword } from './changePassword';
 import { DealerHierarchy } from './dealerHierarchy';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
-import { dealerManpower } from './dealerManpower';
 import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
+import { DealerManpower } from './dealerManpower';
 
 export const data = combineReducers({
     Menu,
@@ -27,10 +27,10 @@ export const data = combineReducers({
     ChangePassword,
     DealerHierarchy,
     ConfigurableParameterEditing,
-    dealerManpower,
     ApplicationMaster,
     QualificationMaster,
     UserManagement,
     UserManagementManufacturer,
     Geo,
+    DealerManpower,
 });

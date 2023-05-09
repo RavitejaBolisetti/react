@@ -1,3 +1,3 @@
-import { DealerManpower } from './DealerManpower';
+import { ListDealerLocationTypeMaster } from './DealerLocationTypeMaster/ListDealerLocationTypeMaster';
 
-export { DealerManpower };
+export { ListDealerLocationTypeMaster };

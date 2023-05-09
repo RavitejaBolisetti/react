@@ -1,11 +1,10 @@
 import React from 'react';
-
+import { ListDealerLocationTypeMaster } from 'components/common/DealerManpower';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { DealerManpower } from '../../../components/common/DealerManpower';
 
-export const DealerManpowerPageBase = (props) => {
-    const pageTitle = 'Dealer Manpower';
+export const DealerLocationTypePageBase = (props) => {
+    const pageTitle = 'State Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
@@ -16,9 +15,11 @@ export const DealerManpowerPageBase = (props) => {
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <DealerManpower />
+            <ListDealerLocationTypeMaster />
         </>
     );
 };
 
-export const DealerManpowerPage = withLayoutMaster(DealerManpowerPageBase);
+const DealerLocationTypePage = withLayoutMaster(DealerLocationTypePageBase);
+
+export default DealerLocationTypePage;
