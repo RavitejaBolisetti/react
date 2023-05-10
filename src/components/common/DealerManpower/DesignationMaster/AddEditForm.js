@@ -10,6 +10,8 @@ import { UploadOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 
+const { Option } = Select;
+
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
