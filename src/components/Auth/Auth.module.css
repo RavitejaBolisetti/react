@@ -313,7 +313,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
-    /* border-color: #FFFFFF; */
+    border: 0;
 }
 
 .loginSection input:-webkit-autofill,

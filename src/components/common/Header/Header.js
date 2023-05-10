@@ -246,7 +246,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                         </Col>
 
                         {pagePath === routing.ROUTING_DASHBOARD && (
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7} xxl={7}>
+                            <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
                                 <div className={styles.headerRight} style={{ width: '100%' }}>
                                     <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                 </div>

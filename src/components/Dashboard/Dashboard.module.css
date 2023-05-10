@@ -33,6 +33,7 @@
     border-radius: 0 0 8px 8px;
     height: 270px;
 }
+
 .dashboardPageHeading {
     margin-bottom: 0px;
 }
@@ -297,16 +298,13 @@
     width: 100%;
 }
 
-@media (min-width: 997px) and (max-width: 1280px) {
-}
+@media (min-width: 997px) and (max-width: 1280px) {}
 
 @media (max-width: 768px) {
-    .dashboardContainer {
-        margin-top: 50px;
-    }
-    .dashboardPageHeading {
+
+    /* .dashboardPageHeading {
         margin-bottom: 10px;
-    }
+    } */
     .headingGradient {
         padding-bottom: 2px;
         border-bottom: 2px solid;

@@ -415,7 +415,101 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 768px) {
+    .dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
+        padding-top: 0px;
+        padding-left: 10px;
+    }
+
+    .columnInterchange {
+        flex-direction: column-reverse;
+    }
+
+    .headerLeft {
+        padding-left: 10px;
+    }
+
+    .mrt6 {
+        margin-top: 0;
+    }
+
+    .dropdownArrow {
+        padding: 0%;
+    }
+
+    .headerLeft .userAvatar .userAvatarInside {
+        font-size: 16px;
+        line-height: 25px;
+        height: 30px;
+        width: 30px;
+        margin-right: -3px;
+    }
+
+    .welcomeUser .userAvatar {
+        padding-top: 2px;
+    }
+
+    .welcomeUser .userAvatar .userAvatarInside {
+        font-size: 12px;
+        width: 26px;
+        height: 26px;
+        line-height: 22px;
+    }
+
+    .menuIcon {
+        display: inline;
+        position: absolute;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .menuIcon :global .anticon {
+        vertical-align: 0.75em;
+    }
+
+    .navbarExpand .navbarNav .navLink {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .dealerName {
+        font-size: 14px;
+        padding-bottom: 0;
+        margin-bottom: -5px;
+    }
+
+    .userServiceArea {
+        font-size: 10px;
+    }
+
+    .welcomeUser .userServiceArea {
+        display: none;
+    }
+
+    .userText {
+        padding-top: 6px;
+    }
+
+    .headerRight {
+        padding: 14px 10px 0px 10px;
+        float: none;
+    }
+
+    .navbarNav {
+        /* justify-content: space-between; */
+        justify-content: flex-end;
+    }
+
+    .helpLineText {
+        display: none;
+    }
+
+    .welcomeUser {
+        margin-top: -10px;
+    }
+}
+
+@media (max-width: 576px) {
     .dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
         padding-top: 0px;
         padding-left: 10px;
