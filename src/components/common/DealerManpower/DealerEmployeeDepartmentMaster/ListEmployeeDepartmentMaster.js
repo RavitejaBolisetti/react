@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
+import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
@@ -19,18 +19,20 @@ import { TfiReload } from 'react-icons/tfi';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             DealerManpower: {
-                DealerDivisionMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+                DealerDivisionMaster: { isLoaded: isDivisionDataLoaded = false, isLoading: isDivisionLoading, data: divisionData },
+                DealerEmployeeDepartmentMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
 
-    const moduleTitle = 'Dealer Division Master';
+    const moduleTitle = 'Dealer Employee Department Master';
 
     let returnValue = {
         userId,
@@ -38,6 +40,9 @@ const mapStateToProps = (state) => {
         data,
         isLoading,
         moduleTitle,
+        isDivisionDataLoaded,
+        isDivisionLoading,
+        divisionData,
     };
     return returnValue;
 };
@@ -46,17 +51,21 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: dealerManpowerDivisionMasterDataActions.fetchList,
-            saveData: dealerManpowerDivisionMasterDataActions.saveData,
-            listShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
+            fetchDivisionList: dealerManpowerDivisionMasterDataActions.fetchList,
+            listDivisionShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
+
+            fetchList: dealerManpowerEmployeeDepartmentDataActions.fetchList,
+            saveData: dealerManpowerEmployeeDepartmentDataActions.saveData,
+            listShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const ListDealerDivisionMasterBase = (props) => {
+export const ListEmployeeDepartmentMasterBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
 
     const [form] = Form.useForm();
 
@@ -89,8 +98,12 @@ export const ListDealerDivisionMasterBase = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
+
+        if (userId && !isDivisionDataLoaded) {
+            fetchDivisionList({ setIsLoading: listDivisionShowLoading, userId });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, isDataLoaded, isDivisionDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -103,7 +116,8 @@ export const ListDealerDivisionMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.divisionName) : true));
+                const division = filterString?.division;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -136,6 +150,10 @@ export const ListDealerDivisionMasterBase = (props) => {
 
     const onChangeHandle = (e) => {
         setFilterString({ ...filterString, keyword: e.target.value });
+    };
+
+    const handleDivisionChange = (value) => {
+        setFilterString({ ...filterString, division: value });
     };
 
     const onFinish = (values) => {
@@ -193,8 +211,11 @@ export const ListDealerDivisionMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Division'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Employee Department'),
         tableData: searchData,
+
+        isDivisionLoading,
+        divisionData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -221,7 +242,14 @@ export const ListDealerDivisionMasterBase = (props) => {
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
                                         {`${moduleTitle}`}
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Select placeholder="Division" loading={isDivisionLoading} onChange={handleDivisionChange} allowClear className={styles.headerSelectField}>
+                                            {divisionData?.map((item) => (
+                                                <Option value={item?.code}>{item?.divisionName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
@@ -230,7 +258,7 @@ export const ListDealerDivisionMasterBase = (props) => {
                             <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Division
+                                    Add Department
                                 </Button>
                             </Col>
                         </Row>
@@ -263,7 +291,7 @@ export const ListDealerDivisionMasterBase = (props) => {
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Division
+                                                    Add Department
                                                 </Button>
                                             </Col>
                                         </Row>
@@ -285,4 +313,4 @@ export const ListDealerDivisionMasterBase = (props) => {
     );
 };
 
-export const ListDealerDivisionMaster = connect(mapStateToProps, mapDispatchToProps)(ListDealerDivisionMasterBase);
+export const ListEmployeeDepartmentMaster = connect(mapStateToProps, mapDispatchToProps)(ListEmployeeDepartmentMasterBase);
