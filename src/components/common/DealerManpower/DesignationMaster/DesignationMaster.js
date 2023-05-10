@@ -30,6 +30,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
+   // console.log(state,'STATE CHECK');
+
     const moduleTitle = 'Designation Master';
 
     let returnValue = {
