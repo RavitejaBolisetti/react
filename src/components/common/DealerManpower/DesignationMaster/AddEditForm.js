@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Switch, Select, Checkbox, Upload, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -18,8 +18,6 @@ const AddEditFormMain = (props) => {
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const [filteredRoleData, setFilteredRoletData] = useState([]);
 
-    
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -36,8 +34,6 @@ const AddEditFormMain = (props) => {
         form.setFieldValue('roleDescription', undefined);
         setFilteredRoletData(roleData?.filter((i) => i?.departmentCode === department));
     };
-
-  
 
     const viewProps = {
         isVisible: viewMode,
@@ -79,7 +75,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode" rules={[validateRequiredSelectField('Role Description')]}>
@@ -96,7 +91,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validateAlphanumericWithSpace('Location Type Description')]} name="designationDescription">
@@ -109,7 +103,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.isCommonIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCommonIndicatorRequired">
@@ -157,6 +150,14 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={editMode ? formData.isCreateUserIdRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCreateUserIdRequired">
+                                <Checkbox>Create User Id</Checkbox>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    
                     {/* <Upload {...props}>
                         <Button icon={<UploadOutlined />}>Upload Job Description</Button>
                     </Upload> */}

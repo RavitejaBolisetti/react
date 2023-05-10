@@ -183,8 +183,9 @@ export const DesignationMasterBase = (props) => {
         if (name === 'division') {
             setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === value));
         }
-        if (name === 'role') {
+        if (name === 'department') {
             setFilteredRoleData(roleData?.filter((i) => i?.departmentCode === value));
+            console.log(filteredRoleData)
         }
         setFilterString({ ...filterString, [name]: value });
     };

@@ -27,6 +27,8 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="NEFT Details">{formData?.isNeftDetailsIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Capability (L1/L2/L3)">{formData?.isCapabilityIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="FFT Department Approval">{formData?.isFftDepartmentApprovalIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label="Create User Id">{formData?.isCreateUserIdRequired ? 'Yes' : 'No'}</Descriptions.Item>
+
                 </Descriptions>
             </>
         </div>
