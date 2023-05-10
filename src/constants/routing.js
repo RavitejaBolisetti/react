@@ -28,6 +28,8 @@ export const ROUTING_COMMON_USER_MANAGEMENT = ROUTING_COMMON.concat('user-manage
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
 export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branch-dealer-mapping');
 
+export const ROUTING_COMMON_PARTY_MASTER = ROUTING_COMMON.concat('party-master');
+
 export const ROUTING_COMMON_QUALIFICATION_MASTER = ROUTING_COMMON.concat('qualification-master');
 
 export const ROUTING_COMMON_DEALER_MANPOWER = ROUTING_COMMON.concat('dealer-manpower/');

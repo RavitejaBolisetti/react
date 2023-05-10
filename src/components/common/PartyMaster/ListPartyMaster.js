@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { dealerManpowerLocationTypeMasterDataActions } from 'store/actions/data/dealerManpower/dealerLocationTypeMaster';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -24,18 +25,22 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            DealerManpower: {
-                DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
-            },
+            ConfigurableParameterEditing: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: configData = [], paramdata: typeData = [] },
+            PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
         },
     } = state;
 
-    const moduleTitle = 'Dealer Location Type Master';
+    const moduleTitle = 'Party Master List';
 
     let returnValue = {
         userId,
+        isPartyDataLoaded,
+        isPartyDataLoading,
+        configData,
+        typeData,
         isDataLoaded,
         data,
+        detailData,
         isLoading,
         moduleTitle,
     };
@@ -46,17 +51,21 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: dealerManpowerLocationTypeMasterDataActions.fetchList,
-            saveData: dealerManpowerLocationTypeMasterDataActions.saveData,
-            listShowLoading: dealerManpowerLocationTypeMasterDataActions.listShowLoading,
+            configFetchList: configParamEditActions.fetchList,
+            configListShowLoading: configParamEditActions.listShowLoading,
+            fetchList: partyMasterDataActions.fetchList,
+            fetchDetail: partyMasterDataActions.fetchDetail,
+            saveData: partyMasterDataActions.saveData,
+            listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const ListDealerLocationTypeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+export const ListPartyMasterBase = (props) => {
+    const { data, detailData, saveData, fetchList, fetchDetail, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { typeData, configFetchList, configListShowLoading } = props;
 
     const [form] = Form.useForm();
 
@@ -74,6 +83,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [recordData, setRecordData] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -88,6 +98,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     useEffect(() => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            configFetchList({ setIsLoading: configListShowLoading, userId, parameterType: 'PTY_CAT' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
@@ -103,7 +114,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.locationCode) || filterFunction(keyword)(item?.locationDescription) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.partyCode) || filterFunction(keyword)(item?.partyName) || filterFunction(keyword)(item?.partyCategory) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -122,11 +133,13 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
+        if (buttonAction === EDIT_ACTION || buttonAction === VIEW_ACTION) {
+            fetchDetail({ setIsLoading: listShowLoading, userId, partyCode: `${record?.partyCode}` });
+            setRecordData(record);
+        }
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-        record && setFormData(record);
         setIsFormVisible(true);
     };
 
@@ -139,7 +152,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values };
+        let data = { ...values, creditLimit: parseFloat(values?.creditLimit) };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -193,8 +206,15 @@ export const ListDealerLocationTypeMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Location'),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         tableData: searchData,
+        typeData,
+        fetchDetail,
+        recordData,
+        listShowLoading,
+        userId,
+        setFormData,
+        detailData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -218,9 +238,10 @@ export const ListDealerLocationTypeMasterBase = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
-                                        {`${moduleTitle}`}
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
+                                        Party List
                                     </Col>
+
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
@@ -230,7 +251,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
                             <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add Location Type
+                                    Add Party
                                 </Button>
                             </Col>
                         </Row>
@@ -263,7 +284,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Location Type
+                                                    Add Party
                                                 </Button>
                                             </Col>
                                         </Row>
@@ -285,4 +306,4 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     );
 };
 
-export const ListDealerLocationTypeMaster = connect(mapStateToProps, mapDispatchToProps)(ListDealerLocationTypeMasterBase);
+export const ListPartyMaster = connect(mapStateToProps, mapDispatchToProps)(ListPartyMasterBase);

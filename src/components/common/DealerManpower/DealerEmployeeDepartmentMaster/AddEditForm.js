@@ -59,7 +59,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Code" initialValue={formData?.divisionCode} name="divisionCodeDisplay" rules={[validateRequiredInputField('Division Code')]}>
+                            <Form.Item label="Division Code" initialValue={formData?.divisionCode} name="divisionCodeDisplay" rules={[validateRequiredInputField('Division Code')]}>
                                 <Input placeholder={preparePlaceholderText('Division Code')} className={styles.inputBox} maxLength={6} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -69,8 +69,8 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.departmentName} label="Location Type Description" name="departmentName" rules={[validateRequiredInputField('Department Description'), validateAlphanumericWithSpace('Department Description')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Description')} maxLength={50} />
+                            <Form.Item initialValue={formData?.departmentName} label="Employee Department Name" name="departmentName" rules={[validateRequiredInputField('Department Name'), validateAlphanumericWithSpace('Department Name')]}>
+                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Department Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
