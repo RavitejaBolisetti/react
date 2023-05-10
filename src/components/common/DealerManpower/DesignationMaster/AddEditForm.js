@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { Col, Input, Form, Row, Switch, Select, Checkbox, Upload, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -11,12 +11,14 @@ import { UploadOutlined } from '@ant-design/icons';
 import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
+    const [filteredRoleData, setFilteredRoletData] = useState([]);
+
+    
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -25,6 +27,17 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
+
+    const handleDivisionChange = (division) => {
+        form.setFieldValue('departmentName', undefined);
+        setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
+    };
+    const handleDepartmentChange = (department) => {
+        form.setFieldValue('roleDescription', undefined);
+        setFilteredRoletData(roleData?.filter((i) => i?.departmentCode === department));
+    };
+
+  
 
     const viewProps = {
         isVisible: viewMode,
@@ -49,7 +62,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Division Name')}>
+                                <Select placeholder={preparePlaceholderSelect('Division Name')} allowClear onChange={handleDivisionChange}>
                                     {divisionData?.map((item) => (
                                         <Option value={item?.code}>{item?.divisionName}</Option>
                                     ))}
@@ -58,8 +71,8 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" rules={[validateRequiredSelectField('Department Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Department Name')}>
-                                    {departmentData?.map((item) => (
+                                <Select placeholder={preparePlaceholderSelect('Department Name')} allowClear onChange={handleDepartmentChange}>
+                                    {filteredDepartmentData?.map((item) => (
                                         <Option value={item?.departmentCode}>{item?.departmentName}</Option>
                                     ))}
                                 </Select>
@@ -71,7 +84,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode" rules={[validateRequiredSelectField('Role Description')]}>
                                 <Select placeholder={preparePlaceholderSelect('Role Description')}>
-                                    {roleData?.map((item) => (
+                                    {filteredRoleData?.map((item) => (
                                         <Option value={item?.roleCode}>{item?.roleDescription}</Option>
                                     ))}
                                 </Select>
@@ -96,8 +109,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
-                    {console.log(formData,'check')}
 
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>

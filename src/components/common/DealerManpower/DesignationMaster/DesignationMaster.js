@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
@@ -22,6 +22,7 @@ import { TfiReload } from 'react-icons/tfi';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
@@ -36,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-   // console.log(state,'STATE CHECK');
+    // console.log(state,'STATE CHECK');
 
     const moduleTitle = 'Designation Master';
 
@@ -79,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchRoleList, listRoleShowLoading, roleData, isRoleDataLoaded, fetchList, fetchDepartmentList, isDepartmentDataLoaded, listDepartmentShowLoading, departmentData, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchRoleList, listRoleShowLoading, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentList, isDepartmentDataLoaded, listDepartmentShowLoading, departmentData, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
 
@@ -87,6 +88,8 @@ export const DesignationMasterBase = (props) => {
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
+    const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
+    const [filteredRoleData, setFilteredRoleData] = useState([]);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -123,7 +126,7 @@ export const DesignationMasterBase = (props) => {
             fetchRoleList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, isDivisionDataLoaded, isDepartmentDataLoaded,isRoleDataLoaded]);
+    }, [userId, isDataLoaded, isDivisionDataLoaded, isDepartmentDataLoaded, isRoleDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -137,7 +140,11 @@ export const DesignationMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true));
+                const division = filterString?.division;
+                const department = filterString?.department;
+                const role = filterString?.role;
+
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -170,6 +177,16 @@ export const DesignationMasterBase = (props) => {
 
     const onChangeHandle = (e) => {
         setFilterString({ ...filterString, keyword: e.target.value });
+    };
+
+    const handleFilterChange = (name) => (value) => {
+        if (name === 'division') {
+            setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === value));
+        }
+        if (name === 'role') {
+            setFilteredRoleData(roleData?.filter((i) => i?.departmentCode === value));
+        }
+        setFilterString({ ...filterString, [name]: value });
     };
 
     const onFinish = (values) => {
@@ -258,7 +275,28 @@ export const DesignationMasterBase = (props) => {
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
                                         {`${moduleTitle}`}
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                        <Select placeholder="Division" loading={isDivisionLoading} allowClear className={styles.headerSelectField} onChange={handleFilterChange('division')}>
+                                            {divisionData?.map((item) => (
+                                                <Option value={item?.code}>{item?.divisionName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                        <Select placeholder="Department" allowClear className={styles.headerSelectField} onChange={handleFilterChange('department')}>
+                                            {filteredDepartmentData?.map((item) => (
+                                                <Option value={item?.departmentCode}>{item?.departmentName}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                        <Select placeholder="Role" allowClear className={styles.headerSelectField} onChange={handleFilterChange('role')}>
+                                            {filteredRoleData?.map((item) => (
+                                                <Option value={item?.roleCode}>{item?.roleDescription}</Option>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
