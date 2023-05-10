@@ -9,11 +9,12 @@ import { DrawerFormButton } from 'components/common/Button';
 import { UploadOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
+const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
-    const { buttonData, setButtonData, handleButtonClick ,divisionData} = props;
+    const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -45,8 +46,8 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="Division Name" name="name" rules={[validateRequiredSelectField('Division Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('Division Name')} >
+                            <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division Name')]}>
+                                <Select placeholder={preparePlaceholderSelect('Division Name')}>
                                     {divisionData?.map((item) => (
                                         <Option value={item?.code}>{item?.divisionName}</Option>
                                     ))}
@@ -54,11 +55,11 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.DeptName} label="Department Name" name="name" rules={[validateRequiredSelectField('Department Name')]}>
+                            <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" rules={[validateRequiredSelectField('Department Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('Department Name')}>
-                                    {/* {filteredDistrictData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))} */}
+                                    {departmentData?.map((item) => (
+                                        <Option value={item?.departmentCode}>{item?.departmentName}</Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
@@ -66,16 +67,16 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="Role Description" name="roleDescription" rules={[validateRequiredSelectField('Role Description')]}>
+                            <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode" rules={[validateRequiredSelectField('Role Description')]}>
                                 <Select placeholder={preparePlaceholderSelect('Role Description')}>
-                                    {/* {filteredDistrictData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))} */}
+                                    {roleData?.map((item) => (
+                                        <Option value={item?.roleCode}>{item?.roleDescription}</Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Designation Code" name="code" rules={[validateRequiredInputField('Designation Code'), validationFieldLetterAndNumber('Location Type Code')]}>
+                            <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code'), validationFieldLetterAndNumber('Location Type Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
@@ -83,7 +84,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Designation Description" initialValue={formData?.name} rules={[validateRequiredInputField('Designation Description'), validateAlphanumericWithSpace('Location Type Description')]} name="name">
+                            <Form.Item label="Designation Description" initialValue={formData?.designationDescription} rules={[validateRequiredInputField('Designation Description'), validateAlphanumericWithSpace('Location Type Description')]} name="designationDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Designation Description')} maxLength={50} />
                             </Form.Item>
                         </Col>

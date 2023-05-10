@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
+import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
+import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -28,6 +30,8 @@ const mapStateToProps = (state) => {
             DealerManpower: {
                 DesignationMaster: { isLoaded: isDataLoaded = false, isLoading, data },
                 DealerDivisionMaster: { isLoaded: isDivisionDataLoaded = false, isDivisionLoading, data: divisionData = [] },
+                DealerEmployeeDepartmentMaster: { isLoaded: isDepartmentDataLoaded = false, isDepartmentLoading, data: departmentData = [] },
+                RoleMaster: { isLoaded: isRoleDataLoaded = false, isRoleLoading, data: roleData = [] },
             },
         },
     } = state;
@@ -41,6 +45,12 @@ const mapStateToProps = (state) => {
         isLoading,
         isDivisionDataLoaded,
         isDivisionLoading,
+        isDepartmentDataLoaded,
+        isDepartmentLoading,
+        isRoleDataLoaded,
+        isRoleLoading,
+        roleData,
+        departmentData,
         divisionData,
         moduleTitle,
     };
@@ -56,6 +66,10 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: dealerManpowerDesignationMasterDataActions.listShowLoading,
             fetchDivisionList: dealerManpowerDivisionMasterDataActions.fetchList,
             listDivisionShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
+            fetchDepartmentList: dealerManpowerEmployeeDepartmentDataActions.fetchList,
+            listDepartmentShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
+            fetchRoleList: roleMasterDataActions.fetchList,
+            listRoleShowLoading: roleMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -63,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchList, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchRoleList, listRoleShowLoading, roleData, isRoleDataLoaded, fetchList, fetchDepartmentList, isDepartmentDataLoaded, listDepartmentShowLoading, departmentData, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
 
@@ -99,8 +113,15 @@ export const DesignationMasterBase = (props) => {
         if (!isDivisionDataLoaded) {
             fetchDivisionList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
+        if (!isDepartmentDataLoaded) {
+            fetchDepartmentList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+
+        if (!isRoleDataLoaded) {
+            fetchRoleList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, isDataLoaded, isDivisionDataLoaded, isDepartmentDataLoaded,isRoleDataLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -207,6 +228,8 @@ export const DesignationMasterBase = (props) => {
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Designation'),
         tableData: searchData,
         divisionData,
+        departmentData,
+        roleData,
 
         ADD_ACTION,
         EDIT_ACTION,
