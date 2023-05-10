@@ -78,7 +78,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode" rules={[validateRequiredSelectField('Role Description')]}>
-                                <Select placeholder={preparePlaceholderSelect('Role Description')}>
+                                <Select placeholder={preparePlaceholderSelect('Role Description')} allowClear>
                                     {filteredRoleData?.map((item) => (
                                         <Option value={item?.roleCode}>{item?.roleDescription}</Option>
                                     ))}
