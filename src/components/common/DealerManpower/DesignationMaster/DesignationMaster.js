@@ -4,6 +4,7 @@ import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
+import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => {
         data: {
             DealerManpower: {
                 DesignationMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+                DealerDivisionMaster: { isLoaded: isDivisionDataLoaded = false, isDivisionLoading, data: divisionData = [] },
             },
         },
     } = state;
@@ -37,6 +39,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         data,
         isLoading,
+        isDivisionDataLoaded,
+        isDivisionLoading,
+        divisionData,
         moduleTitle,
     };
     return returnValue;
@@ -49,6 +54,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerManpowerDesignationMasterDataActions.fetchList,
             saveData: dealerManpowerDesignationMasterDataActions.saveData,
             listShowLoading: dealerManpowerDesignationMasterDataActions.listShowLoading,
+            fetchDivisionList: dealerManpowerDivisionMasterDataActions.fetchList,
+            listDivisionShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -56,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
 
@@ -89,6 +96,9 @@ export const DesignationMasterBase = (props) => {
         if (userId && !isDataLoaded) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
+        if (!isDivisionDataLoaded) {
+            fetchDivisionList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
 
@@ -96,6 +106,7 @@ export const DesignationMasterBase = (props) => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
@@ -195,6 +206,7 @@ export const DesignationMasterBase = (props) => {
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
         tableData: searchData,
+        divisionData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -205,7 +217,6 @@ export const DesignationMasterBase = (props) => {
         handleButtonClick,
     };
 
-    
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,

@@ -13,7 +13,7 @@ const { Option } = Select;
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { buttonData, setButtonData, handleButtonClick ,divisionData} = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -47,9 +47,9 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.name} label="Division Name" name="name" rules={[validateRequiredSelectField('Division Name')]}>
                                 <Select placeholder={preparePlaceholderSelect('Division Name')} >
-                                    {/* {filteredDistrictData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))} */}
+                                    {divisionData?.map((item) => (
+                                        <Option value={item?.code}>{item?.divisionName}</Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
