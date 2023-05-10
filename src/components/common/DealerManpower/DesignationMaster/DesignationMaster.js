@@ -225,7 +225,7 @@ export const DesignationMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -270,39 +270,39 @@ export const DesignationMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                            <Col xs={24} sm={24} md={19} lg={19} xl={19} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
                                         {`${moduleTitle}`}
                                     </Col>
-                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="Division" loading={isDivisionLoading} allowClear className={styles.headerSelectField} onChange={handleFilterChange('division')}>
                                             {divisionData?.map((item) => (
                                                 <Option value={item?.code}>{item?.divisionName}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="Department" allowClear className={styles.headerSelectField} onChange={handleFilterChange('department')}>
                                             {filteredDepartmentData?.map((item) => (
                                                 <Option value={item?.departmentCode}>{item?.departmentName}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Select placeholder="Role" allowClear className={styles.headerSelectField} onChange={handleFilterChange('role')}>
                                             {filteredRoleData?.map((item) => (
                                                 <Option value={item?.roleCode}>{item?.roleDescription}</Option>
                                             ))}
                                         </Select>
                                     </Col>
-                                    <Col xs={24} sm={6} md={6} lg={6} xl={6}>
+                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
                                 </Row>
                             </Col>
 
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Col className={styles.addGroup} xs={24} sm={24} md={5} lg={5} xl={5}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add Designation

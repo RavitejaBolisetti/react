@@ -10,36 +10,36 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Designation Code',
             dataIndex: 'designationCode',
-            width: '20%',
+            width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Designation Description',
             dataIndex: 'designationDescription',
-            width: '20%',
+            width: '22%',
         }),
 
         tblPrepareColumns({
             title: 'Role Description',
             dataIndex: 'roleDescription',
-            width: '20%',
+            width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Department Name',
             dataIndex: 'departmentName',
-            width: '20%',
+            width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Division Description ',
             dataIndex: 'divisionName',
-            width: '20%',
+            width: '12%',
         }),
 
         tblStatusColumn({ styles, width: '10%' }),
 
-        tblActionColumn({ handleButtonClick, styles })
+        tblActionColumn({ handleButtonClick, styles, width: '16%' })
     );
 
     return tableColumn;
