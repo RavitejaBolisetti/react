@@ -48,29 +48,49 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     pattern: /^[a-zA-Z0-9 ]*$/,
 });
 
-
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
     pattern: /^[a-zA-Z0-9.]*$/,
     message: 'Please use only letters, numbers and period in' + fieldName,
 });
 export const validationNumber = (fieldName) => ({
-    pattern:  /^(0|[1-9][0-9]*)$/,
+    pattern: /^(0|[1-9][0-9]*)$/,
     message: 'Please enter valid ' + fieldName,
 });
 
+export const validateOnlyPositiveNumber = (fieldName) => ({
+    pattern: /^[1-9]+[0-9]*$/,
+    message: 'Please enter valid ' + fieldName,
+});
 
+export const validateGSTIN = (fieldName) => ({
+    pattern: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+    message: 'Please enter valid ' + fieldName,
+});
 
-export const duplicateValidator = (value, fieldName, dataList, updateVal) => {    
+export const validateNumberWithTwoDecimalPlaces = (fieldName) => ({
+    pattern: /^[0-9]*\.[0-9]{2}$/,
+    message: 'Please enter valid ' + fieldName,
+});
+
+export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
     let dataListToCheck = dataList || [];
     if (updateVal && dataList?.length > 1) {
         let index = dataList?.findIndex((el) => el[fieldName].toLowerCase() === updateVal);
-        if(index !== -1){
+        if (index !== -1) {
             dataListToCheck?.splice(index, 1);
         }
-    };
+    }
 
-    if (dataListToCheck?.findIndex((el) => (el[fieldName])?.toLowerCase() === value?.toLowerCase()) !== -1) {
+    if (dataListToCheck?.findIndex((el) => el[fieldName]?.toLowerCase() === value?.toLowerCase()) !== -1) {
         return Promise.reject('Duplicate found');
+    } else {
+        return Promise.resolve('');
+    }
+};
+
+export const valueBetween0to100 = (value, fieldName) => {
+    if (value > 100 || value < 0) {
+        return Promise.reject(fieldName + 'value should be greater than 0 and less than 100');
     } else {
         return Promise.resolve('');
     }

@@ -11,6 +11,7 @@ import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 
 import { CMSPage } from 'pages/cms';
+import { PartyMasterPage } from 'pages/common/PartyMaster';
 
 export const AuthenticatedUserPage = () => {
     return (
@@ -43,6 +44,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_QUALIFICATION_MASTER} element={<QualificationMasterPage />} />
             <Route path={routing.ROUTING_COMMON_CRITICALITY_GROUP} element={<CriticalityGroupPage />} />
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
+
+            <Route path={routing.ROUTING_COMMON_PARTY_MASTER} element={<PartyMasterPage />} />
 
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
