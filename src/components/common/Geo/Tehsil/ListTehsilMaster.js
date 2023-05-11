@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
 
+import { tblPrepareColumns } from 'utils/tableCloumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -17,6 +17,9 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+import { FiEdit2 } from 'react-icons/fi';
+import { FaRegEye } from 'react-icons/fa';
+import { bindActionCreators } from 'redux';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -257,7 +260,7 @@ export const ListTehsilBase = (props) => {
         isCountryLoading,
         countryData,
         defaultCountry,
-
+        
         districtData,
         stateData,
         data,

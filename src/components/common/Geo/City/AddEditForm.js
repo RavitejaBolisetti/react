@@ -16,9 +16,9 @@ const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
-    const { stateData, districtData } = props;
-    
     const { buttonData, setButtonData, handleButtonClick } = props;
+
+    const { stateData, districtData } = props;
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const handleFormValueChange = () => {
