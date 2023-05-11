@@ -4,7 +4,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const PincodeGeoBase = (props) => {
-    const pageTitle = 'PIN Master';
+    const pageTitle = 'PIN code Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

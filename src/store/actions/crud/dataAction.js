@@ -1,7 +1,9 @@
 import { message } from 'antd';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { doLogout, unAuthenticateUser } from '../../actions/auth';
+import { doLogout, unAuthenticateUser } from 'store/actions/auth';
+import { showGlobalNotification } from 'store/actions/notification';
+
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
@@ -32,11 +34,14 @@ export const dataActions = (params) => {
         type: RESET_DATA_ACTION_CONSTANT,
     });
 
+    const onError = (message) => {
+        showGlobalNotification({ message });
+    };
+
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
 
             const onSuccess = (res) => {
                 if (res?.data) {
@@ -68,7 +73,6 @@ export const dataActions = (params) => {
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
 
             const onSuccess = (res) => {
                 if (res?.data) {
@@ -99,7 +103,6 @@ export const dataActions = (params) => {
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data, id = '', type = '', partyCode = '' } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
 
             const onSuccess = (res) => {
                 if (res?.data) {

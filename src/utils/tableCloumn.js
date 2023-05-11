@@ -50,6 +50,16 @@ export const tblStatusColumn = ({ styles, width = '15%' }) => {
     };
 };
 
+export const tblApprovalStatusColumn = ({ styles, width = '15%' }) => {
+    return {
+        title: 'Approval Status',
+        dataIndex: 'approvalStatus',
+        sorter: (a, b) => (a && b ? String(a['approvalStatus']).localeCompare(String(b['approvalStatus']), undefined, { sensitivity: 'base' }) : a),
+        render: (_, record) => (record?.approvalStatus ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>),
+        width,
+    };
+};
+
 export const tblActionColumn = ({ styles, handleButtonClick, width = '8%' }) => {
     return {
         title: 'Action',

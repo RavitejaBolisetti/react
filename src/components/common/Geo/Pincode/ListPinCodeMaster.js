@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select, Checkbox, Collapse, Card } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select, Card } from 'antd';
 import { bindActionCreators } from 'redux';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tableColumn } from './tableColumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
+import { AdvancedSearch } from './AdvancedSearch';
 
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
-import styles from 'components/common/Common.module.css';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
+import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+
+import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -35,43 +37,39 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
             Geo: {
-                State: { isLoaded: isDataLoaded = false, isLoading: isStateLoading, data: geoStateData },
-                District: { isLoaded: isDistrictLoaded = false, isLoading: isDistrictLoading, data: geoDistrictData },
-                Tehsil: { isLoaded: isTehsilLoaded = false, isLoading: isTehsilLoading, data: geoTehsilData },
-                City: { isLoaded: isCityLoaded = false, isLoading: isCityLoading, data: geoCityData },
-                Pincode: { isLoaded: isPinDataLoaded = false, isLoading: isPinLoading, data: geoPindata },
-                
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading, data: stateData },
+                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
+                Tehsil: { isLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, data: tehsilData },
+                City: { isLoaded: isCityDataLoaded = false, isLoading: isCityLoading, data: cityData },
+                Pincode: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
 
-   
     const moduleTitle = 'Pincode Master List';
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        isPinLoading,
+        isStateDataLoaded,
+        isLoading,
         isDistrictLoading,
         isStateLoading,
-        isDistrictLoaded,
-        geoDistrictData,
-        isTehsilLoaded,
+        isDistrictDataLoaded,
+        districtData,
+        isTehsilDataLoaded,
         isTehsilLoading,
-        geoTehsilData,
-        isCityLoaded,
+        tehsilData,
+        isCityDataLoaded,
         isCityLoading,
-        geoCityData,
-        geoPindata,
-        geoStateData,
+        cityData,
+        data,
+        stateData,
+        isDataLoaded,
         isConfigDataLoaded,
         isConfigLoading,
         typeData,
-        isPinDataLoaded,
-        //isStateDataLoaded,
-        moduleTitle,
 
-        // geoPinData: geoPinData?.filter((i) => i),
+        moduleTitle,
     };
     return returnValue;
 };
@@ -80,21 +78,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchStateList: geoStateDataActions.fetchList,
-            listStateShowoading: geoStateDataActions.listShowLoading,
-
-            fetchDistrictList: geoDistrictDataActions.fetchList,
-            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-
-            fetchTehsilList: geoTehsilDataActions.fetchList,
-            listTehsilShowLoading: geoTehsilDataActions.listShowLoading,
-
-            fetchCityList: geoCityDataActions.fetchList,
-            listCityShowLoading: geoCityDataActions.listShowLoading,
-
             fetchConfigList: configParamEditActions.fetchList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
-
+            fetchCountryList: geoCountryDataActions.fetchList,
+            listCountryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
+            fetchDistrictList: geoDistrictDataActions.fetchList,
+            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchTehsilList: geoTehsilDataActions.fetchList,
+            listTehsilShowLoading: geoTehsilDataActions.listShowLoading,
+            fetchCityList: geoCityDataActions.fetchList,
+            listCityShowLoading: geoCityDataActions.listShowLoading,
             fetchList: geoPincodeDataActions.fetchList,
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
@@ -103,323 +98,166 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
-const ListPinCodeMasterBase = ({
-    isLoading,
-    moduleTitle,
-    tableData,
-    isPinLoading,
-    fetchDataList,
-    fetchCityList,
-    fetchTehsilList,
-    fetchConfigList,
-    listCityShowLoading,
-    fetchList,
-    listTehsilShowLoading,
-    listPinShowLoading,
-    listStateShowLoading,
-    listStateShowoading,
-    listDistrictShowLoading,
-    listConfigShowLoading,
-    isConfigLoading,
-    fetchStateList,
-    fetchDistrictList,
-    isDistrictLoaded,
-    isPinDataLoaded,
-    isStateDataLoaded,
-    isDistrictLoading,
-    isConfigDataLoaded,
-    geoDistrictData,
-    isTehsilLoaded,
-    isTehsilLoading,
-    isStateLoading,
-    geoTehsilData,
-    isCityLoaded,
-    isCityLoading,
-    geoCityData,
-    geoPindata,
-    geoStateData,
-    data,
-    saveData,
-    typeData,
-    userId,
-    configData,
-    isDataLoaded,
-    listShowLoading,
-    isDataAttributeLoaded,
-    showGlobalNotification,
-    attributeData,
-}) => {
+const ListPinCodeMasterBase = (props) => {
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
+    const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
+    const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictList } = props;
+    const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilList } = props;
+    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityList } = props;
+    const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
+
     const [form] = Form.useForm();
-    const [actionform] = Form.useForm();
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
-    const [formActionType, setFormActionType] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [pin, setPin] = useState([]);
 
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
-    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-    const [savebtnclick, setsavebtnclick] = useState(false);
+    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [filteredStateData, setFilteredStateData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+    const [filteredCityData, setFilteredCityData] = useState([]);
+    const [filteredTehsilData, setFilteredTehsilData] = useState([]);
 
-    const [footerEdit, setFooterEdit] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [page, setPage] = useState(1);
+
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [advanceSearch, setAdvanceSearch] = useState([]);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
-    const [closePanels, setClosePanels] = React.useState([]);
-    const [rowdata, setrowdata] = useState();
-    const [showTehsil, setShowTehsil] = useState([]);
-    const [show, setShow] = useState([]);
-    const [showCity, setShowCity] = useState([]);
-    const [ditrict, setDistrict] = useState();
-    const [myFilter, setmyFilter] = useState({});
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
 
     useEffect(() => {
-        console.log('refersh data', refershData);
-        if (!isDataLoaded && userId) {
-            const onSuccessAction = (res) => {
-                refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            };
+        if (userId) {
+            if (!isDataCountryLoaded) {
+                fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
+            }
+            if (!isStateDataLoaded) {
+                fetchStateList({ setIsLoading: listStateShowLoading, userId });
+            }
+            if (!isDistrictDataLoaded) {
+                fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+            }
+            if (!isCityDataLoaded) {
+                fetchCityList({ setIsLoading: listCityShowLoading, userId });
+            }
+            if (!isTehsilDataLoaded) {
+                fetchTehsilList({ setIsLoading: listTehsilShowLoading, userId });
+            }
+            if (!isDataLoaded) {
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            }
 
-            fetchStateList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-
-            fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchTehsilList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchCityList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchConfigList({ setIsLoading: listShowLoading, userId, parameterType: 'PIN_CATG' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData, isPinDataLoaded]);
-    useEffect(() => {
-        if (geoPindata) {
-            setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
-        }
-    }, [geoPindata, isAdvanceSearchVisible]);
-    useEffect(() => {
-        if (geoPindata?.length > 0) {
-            const apiParams = `?stateCode=${myFilter?.State}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
-
-            fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
-            setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
-        }
-    }, [refershData]);
+    }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     useEffect(() => {
-        if (geoPindata && userId) {
+        if (userId && refershData) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
+
+    useEffect(() => {
+        setFilterString({ countryCode: defaultCountry });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCountry]);
+
+    useEffect(() => {
+        if (isDataLoaded && data && userId) {
             if (filterString) {
-                const filterDataItem = geoPindata?.filter((item) => filterFunction(filterString)(item?.localityName) || filterFunction(filterString)(item?.pinCode));
+                const keyword = filterString?.keyword;
+                const state = filterString?.state;
+                const district = filterString?.district;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             } else {
-                setSearchdata(geoPindata?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, userId, geoPindata]);
+    }, [filterString, isDataLoaded, data, userId]);
 
-    const handleEditBtn = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType('update');
-        setFooterEdit(false);
-        setIsReadOnly(false);
+    const handleButtonClick = ({ record = null, buttonAction }) => {
+        form.resetFields();
+        setFormData([]);
 
-        setFormData(record);
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
+
+        record && setFormData(record);
         setIsFormVisible(true);
     };
 
-    const handleView = (record) => {
-        setFormActionType('view');
-        setIsViewModeVisible(true);
-
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(true);
-
-        // const data = tableData.find((i) => i.code === record.code);
-        // if (data) {
-        //     data && setFormData(data);
-        //     setIsFormVisible(true);
-        // }
-
-        setFormData(record);
-
-        setIsFormVisible(true);
-
-        setIsReadOnly(true);
+    const handleReferesh = () => {
+        setShowDataLoading(true);
+        setRefershData(!refershData);
     };
-    const handleSelectState = (e) => {
-        console.log('This is the state', e);
-        setmyFilter({ ...myFilter, State: e });
-        setShow(geoDistrictData.filter((i) => i.stateCode === e));
-    };
-    const handleSelectDistrict = (e) => {
-        setmyFilter({ ...myFilter, District: e });
 
-        setDistrict(e);
-
-        setShowCity(geoCityData.filter((i) => i.districtCode === e));
-    };
-    const handleselectcity = (e) => {
-        setmyFilter({ ...myFilter, City: e });
-
-        setShowTehsil(geoTehsilData?.filter((i) => i.districtCode === ditrict));
-    };
-    const handleTehsil = (values) => {
-        setmyFilter({ ...myFilter, Tehsil: values });
-    };
-    const onChangeSearch = (event) => {
-        console.log('apiParams', event?.target?.value);
-
-        setFilterString(event?.target?.value);
-    };
     const onSearchHandle = (value) => {
         fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
     };
-    const handlefilteredSearch = (value) => {
-        const apiParams = `?stateCode=${myFilter?.State}&districtCode=${myFilter?.District}&tehsilCode=${myFilter?.Tehsil}`;
-        console.log('apiParams', apiParams);
-        form.validateFields()
-            .then(() => {
-                fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
-            })
-            .catch((error) => {});
-    };
-    const tableColumn = [];
-    tableColumn.push(
-        tblPrepareColumns({
-            title: 'Srl.',
-            dataIndex: 'srl',
-            sorter: false,
-            width: '5%',
-        }),
-
-        tblPrepareColumns({
-            title: 'PIN Category',
-            dataIndex: 'pinCategory',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'PIN Code',
-            dataIndex: 'pinCode',
-            width: '15%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Locality',
-            dataIndex: 'localityName',
-            width: '20%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Within 50Km from the GPO',
-            dataIndex: 'withIn50KmFromGpo',
-            width: '20%',
-            render: (text, record) => {
-                return <Checkbox disabled defaultChecked={text ? true : false} className={styles.registered}></Checkbox>;
-            },
-        }),
-
-        tblPrepareColumns({
-            title: 'Approval Status',
-            dataIndex: 'approvalStatus',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>}</>,
-            width: '15%',
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'status',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '15%',
-        }),
-
-        {
-            title: 'Action',
-            dataIndex: '',
-            width: '8%',
-            render: (record) => [
-                <Space wrap>
-                    {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                            <FiEdit2 />
-                        </Button>
-                    }
-                    {
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
-                            <FaRegEye />
-                        </Button>
-                    }
-                </Space>,
-            ],
-        }
-    );
-
-    const handleReferesh = () => {
-        setRefershData(!refershData);
-        setPin(geoPindata);
-    };
-
-    const hanndleEditData = (record) => {
-        actionform.resetFields();
-
-        setShowSaveAndAddNewBtn(false);
-        setIsViewModeVisible(false);
-        setFormActionType('update');
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-    };
-
-    const handleAdd = () => {
-        actionform.resetFields();
-        setFormActionType('add');
-        setShowSaveAndAddNewBtn(true);
-        setIsViewModeVisible(false);
-
-        setFooterEdit(false);
-        setIsFormVisible(true);
-        setIsReadOnly(false);
-        setFormData([]);
-    };
 
     const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+        setFilterString({ ...filterString, keyword: e.target.value });
     };
-    const requestaData = {
-        pinCode: '764748',
-        localityCode: 'F1795',
-        tehsilCode: 'T11841',
-        districtCode: 'D00565',
-        stateCode: '23',
-        countryCode: 'IN',
-        status: true,
-        approvalStatus: true,
-        localityName: 'TEST',
-        pinDescription: 'TESTING',
-        withIn50KmFromGpo: true,
-        jdpUniverse: true,
-    };
-    const onFinish = (values) => {
-        const recordId = formData?.data || '';
-        // let data = { ...values, data: recordId };
-        const finalSubmitdata = { ...values, countryCode: 'IND', pinCategory: 'URBAN' };
-        console.log('finalSubmitdata', finalSubmitdata);
-        const onSuccess = (res) => {
-            actionform.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchDataList({ setIsLoading: listShowLoading, userId });
 
-            if (saveAndAddNewBtnClicked === false) {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            } else {
+    const handleFilterChange = (name) => (value) => {
+        if (name === 'country') {
+            setFilteredStateData(stateData?.filter((i) => i?.countryCode === value));
+        }
+
+        if (name === 'state') {
+            setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
+        }
+
+        if (name === 'district') {
+            setFilteredCityData(districtData?.filter((i) => i?.stateCode === value));
+        }
+
+        if (name === 'city') {
+            setFilteredTehsilData(tehsilData?.filter((i) => i?.cityCode === value));
+        }
+
+        // if (name === 'tehsil') {
+        //     setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
+        // }
+
+        setFilterString({ ...filterString, [name]: value });
+    };
+
+    const onFinish = (values) => {
+        let data = { ...values };
+        const onSuccess = (res) => {
+            form.resetFields();
+            setShowDataLoading(true);
+
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId });
+
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             }
-            handleReferesh();
         };
 
         const onError = (message) => {
@@ -427,255 +265,154 @@ const ListPinCodeMasterBase = ({
         };
 
         const requestData = {
-            data: finalSubmitdata,
+            data: data,
+            method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
-            method: formActionType === 'update' ? 'put' : 'post',
             userId,
             onError,
             onSuccess,
         };
 
-        console.log(requestData, 'REQDATA');
-
         saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
-        actionform.validateFields().then((values) => {});
+        form.validateFields().then((values) => {});
     };
-    const tableProps = {
-        tableColumn: tableColumn,
-        tableData: searchData,
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
+        form,
+        formData,
         formActionType,
         setFormActionType,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        isReadOnly,
-        formData,
-        footerEdit,
-        setFooterEdit,
-        isVisible: isFormVisible,
-        onCloseAction: () => (setIsFormVisible(false), setFormBtnActive(false)),
-        titleOverride: (isViewModeVisible ? 'View ' : formData?.stateCode ? 'Edit ' : 'Add ').concat('PIN Details'),
         onFinish,
         onFinishFailed,
-        isFormBtnActive,
-        setFormBtnActive,
-        tableData: geoPindata,
-        setClosePanels,
-        hanndleEditData,
-        setSaveAndAddNewBtnClicked,
-        showSaveBtn,
-        saveAndAddNewBtnClicked,
-        geoStateData,
-        geoDistrictData,
-        geoTehsilData,
-        geoCityData,
-        geoPindata,
-        setrowdata,
-        rowdata,
+
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        tableData: searchData,
+
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+        defaultCountry,
+
+        districtData,
+        stateData,
+        data,
+
         typeData,
-        setsavebtnclick,
-        ditrict,
-        setDistrict,
-        actionform,
-        showSaveAndAddNewBtn,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
     };
 
-    const viewProps = {
-        isVisible: isAdvanceSearchVisible,
-        formData,
-        styles,
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
+        tableData: searchData,
+        setPage,
     };
-    const handleButtonClick = () => {
-        setAdvanceSearchVisible(!isAdvanceSearchVisible);
+
+    const advanceFilterProps = {
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+        defaultCountry,        
+
+        districtData,
+        stateData,
+        data,
+        handleFilterChange,
+        filteredStateData,
+        filteredDistrictData,
+        filteredCityData,
+        filteredTehsilData,
+        filterString
     };
     return (
         <>
-            <Form layout="vertical" form={form} id="searchFields">
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Card className={styles.CardFormitemMargin}>
-                            <Row gutter={20}>
-                                <Col xs={20} sm={20} md={18} lg={18} xl={18}>
-                                    <Row gutter={20}>
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                            <Form.Item label="Country" initialValue={'India'} rules={[validateRequiredInputField('Country')]} name="countryCode">
-                                                <Select disabled={true} allowClear placeholder={preparePlaceholderSelect('Country')}>
-                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-
-                                                    <Option value={'IND'}>{'India'}</Option>
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
-                                            <Form.Item label="State" initialValue={myFilter?.State} rules={[validateRequiredInputField('State')]} name="stateCode">
-                                                <Select
-                                                    showSearch
-                                                    filterOption={(input, option) => {
-                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                                    }}
-                                                    allowClear
-                                                    placeholder={preparePlaceholderSelect('state')}
-                                                    onChange={handleSelectState}
-                                                >
-                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                    {geoStateData?.map((item) => (
-                                                        <Option value={item?.code}>{item?.name}</Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
-                                            <Form.Item label="District" initialValue={myFilter?.District} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                                <Select
-                                                    showSearch
-                                                    filterOption={(input, option) => {
-                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                                    }}
-                                                    allowClear
-                                                    placeholder={preparePlaceholderSelect('District')}
-                                                    onChange={handleSelectDistrict}
-                                                >
-                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                    {show?.map((item) => (
-                                                        <Option value={item?.code}>{item?.name}</Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
-                                            <Form.Item label="City" initialValue={myFilter?.City} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                                <Select
-                                                    showSearch
-                                                    filterOption={(input, option) => {
-                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                                    }}
-                                                    allowClear
-                                                    placeholder={preparePlaceholderSelect('City')}
-                                                    onChange={handleselectcity}
-                                                >
-                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                    {showCity?.map((item) => (
-                                                        <Option value={item?.code}>{item?.name}</Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-
-                                        <Col xs={4} sm={4} md={5} lg={5} xl={5}>
-                                            <Form.Item label="Tehsil" allowClear initialValue={myFilter?.Tehsil} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                                <Select
-                                                    showSearch
-                                                    filterOption={(input, option) => {
-                                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                                    }}
-                                                    allowClear
-                                                    placeholder={preparePlaceholderSelect('Tehsil')}
-                                                    onChange={handleTehsil}
-                                                >
-                                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                                    {showTehsil?.map((item) => (
-                                                        <Option value={item?.code}>{item?.name}</Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                                <Col xs={4} sm={4} md={6} lg={6} xl={6}>
-                                    <Row gutter={20}>
-                                        <Col xs={12} sm={12} md={8} lg={8} xl={8} offset={8} className={styles.alignSearchButton}>
-                                            <Button form="searchFields" style={{ marginRight: '20px' }} type="primary" onClick={handlefilteredSearch} icon={<SearchOutlined />}>
-                                                Search
-                                            </Button>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={8} lg={8} xl={8} className={styles.alignSearchButton}>
-                                            <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
-                                                Add
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Col>
-                </Row>
-            </Form>
-            {geoPindata?.length > 0 && (
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className={styles.contentHeaderBackground}>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                            PIN Code List
-                                        </Col>
-                                        <Col xs={24} sm={24} md={16} lg={19} xl={19}>
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                }}
-                                                onChange={onChangeSearch}
-                                            />{' '}
-                                        </Col>
-                                    </Row>
-                                </Col>
-
-                                {searchData?.length ? (
-                                    <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
+                                        PIN Code List
                                     </Col>
-                                ) : (
-                                    ''
-                                )}
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-            )}
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
+                                    </Col>
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Button type="link" className={styles.refreshBtn} onClick={handleReferesh} danger>
+                                            Advanced Filters
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+
+                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    Add PIN Code
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+            {/* <AdvancedSearch {...advanceFilterProps} /> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !searchData?.length ? (
-                                        <span>
-                                            No records found. Please add new Pincode here <br />
-                                            using below button
-                                        </span>
+                        renderEmpty={() =>
+                            isDataLoaded && (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        !searchData?.length ? (
+                                            <span>
+                                                No records found. Please add new parameter <br />
+                                                using below button
+                                            </span>
+                                        ) : (
+                                            <span> No records found.</span>
+                                        )
+                                    }
+                                >
+                                    {!searchData?.length ? (
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                    Add PIN Code
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!searchData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                                Add Pincode
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
+                                        ''
+                                    )}
+                                </Empty>
+                            )
+                        }
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable isLoading={!isCityLoaded} {...tableProps} />
+                            <DataTable isLoading={showDataLoading} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>
