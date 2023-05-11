@@ -234,7 +234,7 @@ export const ListRoleMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Role'),
         tableData: searchData,
 
         isDivisionDataLoaded,
@@ -266,7 +266,7 @@ export const ListRoleMasterBase = (props) => {
                             <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        {`${moduleTitle} List`}
+                                        {`${moduleTitle}`}
                                     </Col>
                                     <Col xs={24} sm={6} md={6} lg={6} xl={6}>
                                         <Select placeholder="Division" loading={isDivisionLoading} allowClear className={styles.headerSelectField} onChange={handleFilterChange('division')}>

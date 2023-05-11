@@ -477,7 +477,6 @@ export const District = [
         districtCode: 'D3124',
         districtName: 'Mandla',
         stateName: 'Madhya Pradesh',
-
     },
 ];
 export const DistrictData = [
@@ -485,7 +484,6 @@ export const DistrictData = [
         DistrictCode: 'D3124',
         DistrictName: 'Mandla',
         StateName: 'Madhya Pradesh',
-
     },
 ];
 export const City = [
@@ -494,7 +492,6 @@ export const City = [
         cityName: 'Jabalpur',
         districtName: 'Jabalpur',
         stateName: 'Madhya Pradesh',
-
     },
 ];
 export const CityData = [
@@ -503,23 +500,18 @@ export const CityData = [
         CityName: 'Jabalpur',
         DistrictName: 'Jabalpur',
         StateName: 'Madhya Pradesh',
-
     },
 ];
 export const Pin = [
     {
         pinCode: '483504',
         localityName: 'Murwara',
-       
-
     },
 ];
 export const PinData = [
     {
         PinCode: '483504',
         LocalityName: 'Murwara',
-       
-
     },
 ];
 export const Tehsil = [
@@ -528,7 +520,6 @@ export const Tehsil = [
         tehsilName: 'Barella',
         districtName: 'Jabalpur',
         stateName: 'Madhya Pradesh',
-
     },
 ];
 export const TehsilData = [
@@ -537,7 +528,6 @@ export const TehsilData = [
         TehsilName: 'Barella',
         DistrictName: 'Jabalpur',
         StateName: 'Madhya Pradesh',
-
     },
 ];
 export const State = [
@@ -545,7 +535,6 @@ export const State = [
         stateCode: '14',
         stateName: 'Manipur',
         countryName: 'India',
-
     },
 ];
 export const StateData = [
@@ -553,7 +542,36 @@ export const StateData = [
         StateCode: '14',
         StateName: 'Manipur',
         CountryName: 'India',
-
     },
 ];
-
+export const DealerDivisionMasterData = [
+    {
+        code: 'DIV001',
+        divisionName: 'Dealer One',
+    },
+];
+export const BayTypeMasterData = [
+    {
+        code: 'COD3',
+        name: 'CODE',
+    },
+];
+export const RoleMasterData = [
+    {
+        roleCode: 'ROLE1',
+        roleDescription: 'ROLE ONE',
+    },
+];
+export const DealerLocationTypeMasterData = [
+    {
+        locationCode: 'A02',
+        locationDescription: 'Agartala',
+    },
+];
+export const DealerEmployeeDepartmentMasterData = [
+    {
+        departmentCode: 'A02',
+        departmentName: 'Agartala',
+        divisionCodeDisplay: 'A01',
+    },
+];

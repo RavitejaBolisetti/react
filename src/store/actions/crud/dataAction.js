@@ -97,7 +97,7 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, id = '', type = '' } = params;
+            const { setIsLoading, data, id = '', type = '', partyCode = '' } = params;
             setIsLoading(true);
             const onError = (errorMessage) => message.error(errorMessage);
 
@@ -112,7 +112,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : ''),
+                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (partyCode ? '?partyCode=' + partyCode : ''),
                 token,
                 accessToken,
                 userId,

@@ -193,7 +193,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat('Dealer Division'),
         tableData: searchData,
 
         ADD_ACTION,
@@ -219,7 +219,7 @@ export const ListDealerDivisionMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
-                                        {`${moduleTitle} List`}
+                                        {`${moduleTitle}`}
                                     </Col>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
@@ -263,7 +263,7 @@ export const ListDealerDivisionMasterBase = (props) => {
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Type
+                                                    Add Division
                                                 </Button>
                                             </Col>
                                         </Row>

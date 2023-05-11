@@ -285,8 +285,8 @@ p {
 
 .loginSection :global .ant-input-affix-wrapper:hover,
 .loginSection :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
-    border-color: transparent;
-    border-inline-end-width: 0;
+    border-color: #FFFFFF;
+    /* border-inline-end-width: 0; */
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
@@ -313,7 +313,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
-    border: 0;
+    border-color: #FFFFFF;
 }
 
 .loginSection input:-webkit-autofill,

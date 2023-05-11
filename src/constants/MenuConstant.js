@@ -79,7 +79,6 @@ export const MenuConstant = {
     //     parentMenuId: 'FAV',
     // },
 
-    
     // [getMenyKey('COMN-07.02')]: {
     //     key: 'COMN-07.02',
     //     link: routing.ROUTING_COMMON_GEO_COUNTRY,
@@ -122,11 +121,60 @@ export const MenuConstant = {
         parentMenuId: 'COMN-07',
     },
 
-    [getMenyKey('COMN-03.01')]: {
-        key: 'COMN-03.01',
-        link: routing.ROUTING_COMMON_CRITICALITY_GROUP,
+    [getMenyKey('COMN-07.07')]: {
+        key: 'COMN-07.07',
+        link: routing.ROUTING_COMMON_GEO_PINCODE,
         icon: undefined,
-        parentMenuId: 'COMN-03',
+        parentMenuId: 'COMN-07',
+    },
+
+    [getMenyKey('COMN-10.02')]: {
+        key: 'COMN-10.02',
+        link: routing.ROUTING_COMMON_PARTY_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-10',
+    },
+
+    [getMenyKey('MILE-01.04')]: {
+        key: 'MILE-01.04',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-08',
+    },
+
+    [getMenyKey('MILE-02.02')]: {
+        key: 'MILE-02.02',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_DIVISION_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+
+    [getMenyKey('MILE-02.03')]: {
+        key: 'MILE-02.03',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+
+    [getMenyKey('MILE-02.05')]: {
+        key: 'MILE-02.05',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+
+    [getMenyKey('MILE-02.08')]: {
+        key: 'MILE-02.08',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER,
+        icon: undefined,
+        parentMenuId: 'MILE-02',
+    },
+
+    [getMenyKey('MILE-01.04')]: {
+        key: 'MILE-01.04',
+        link: routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER,
+        icon: undefined,
+        parentMenuId: 'COMN-08',
     },
 
     [getMenyKey('COMN-02.01')]: {
@@ -195,7 +243,7 @@ export const MenuConstant = {
 
     [getMenyKey('MILE-02.19')]: {
         key: 'MILE-02.19',
-        link: routing.ROUTING_COMMON_DEALER_MANPOWER,
+        link: routing.ROUTING_MILE_DEALER_MANPOWER,
         icon: undefined,
         parentMenuId: 'MILE-02',
     },

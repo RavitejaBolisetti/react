@@ -213,13 +213,16 @@
     height: 32px !important;
 }
 
-/* border color on input search in left-menu */
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
     height: 34px !important;
     border-radius: 4px;
     border-color: transparent;
     padding: 6px 12px;
+}
+
+/* border color on input search in left-menu */
+.searchContainer :global .ant-input-affix-wrapper {
     border-width: 0px;
 }
 
