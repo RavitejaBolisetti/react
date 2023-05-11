@@ -20,6 +20,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
+import { useIdleTimer } from 'react-idle-timer';
 
 import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, SettingsIcon } from 'Icons';
 
@@ -69,6 +70,49 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
 
+    const [state, setState] = useState('Active');
+    const [count, setCount] = useState(0);
+    const [remaining, setRemaining] = useState(0);
+    const [noClick, setNoClick] = useState(false);
+
+    const onIdle = () => {
+        sessionConfirm();
+        setTimeout(() => {
+            doLogout({
+                onSuccess,
+                onError,
+                userId,
+            });
+            Modal.destroyAll();
+        }, 4000);
+    };
+
+    const onActive = () => {
+        setState('Active');
+    };
+
+    const onAction = () => {
+        setCount(count + 1);
+    };
+
+    const { getRemainingTime } = useIdleTimer({
+        onIdle,
+        onActive,
+        onAction,
+        timeout: 7000,
+        throttle: 500,
+    });
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setRemaining(Math.ceil(getRemainingTime() / 1000));
+        }, 500);
+
+        return () => {
+            clearInterval(interval);
+        };
+    });
+
     // const delarAvtarData = dealerName?.split(' ');
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
 
@@ -90,6 +134,21 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
     };
 
+    const sessionConfirm = () => {
+        confirm({
+            title: 'Logout',
+            icon: <IoIosLogOut size={22} className={styles.modalIconLogout} />,
+            content: 'Your session will expire. Do you want to logout?',
+            okText: 'Yes, Logout',
+            okType: 'danger',
+            cancelText: 'No',
+            wrapClassName: styles.confirmModal,
+            centered: true,
+            closable: true,
+           
+        });
+    };
+
     const showConfirm = () => {
         confirm({
             title: 'Logout',
@@ -101,6 +160,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             wrapClassName: styles.confirmModal,
             centered: true,
             closable: true,
+
             onOk() {
                 doLogout({
                     onSuccess,
