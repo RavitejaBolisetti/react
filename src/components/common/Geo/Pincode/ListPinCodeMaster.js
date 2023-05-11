@@ -11,7 +11,7 @@ import { AddEditForm } from './AddEditForm';
 
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
@@ -344,7 +344,7 @@ const ListPinCodeMasterBase = ({
                 <Space wrap>
                     {
                         <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                            <FiEdit2 />
+                            <FiEdit />
                         </Button>
                     }
                     {

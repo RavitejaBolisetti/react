@@ -18,7 +18,7 @@ import { AddEditForm } from './AddEditForm';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
@@ -227,7 +227,7 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
                 <Space wrap>
                     {
                         <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
-                            <FiEdit2 />
+                            <FiEdit />
                         </Button>
                     }
                     {
