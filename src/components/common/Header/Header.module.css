@@ -422,7 +422,7 @@
     }
 
     .headerLeft {
-        padding-left: 10px;
+        padding-left: 20px;
     }
 
     .mrt6 {
@@ -489,8 +489,7 @@
     }
 
     .headerRight {
-        padding: 14px 10px 0px 10px;
-        float: none;
+        padding: 14px 20px 0px 10px;
     }
 
     .navbarNav {

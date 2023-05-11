@@ -319,9 +319,7 @@
     /* } */
 
     .pageHeaderNameSection {
-        /* border-bottom: 1px solid #DEDEDE; */
         border-bottom: 0px;
         padding: 0px;
-        margin: 0 0 5px 0;
     }
 }
