@@ -21,6 +21,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
         isAddBtnDisabled,
         setAddBtnDisabled,
         onFinish: onActionFormFinish,
+        
     };
 
     return (

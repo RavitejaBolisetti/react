@@ -8,8 +8,8 @@ import ProductActionForms from './ProductActionForms';
 const { Text } = Typography;
 
 const CardItemProductAttribute = (props) => {
-    const { code, value, id, setSKUAttributes, forceUpdate, isAddBtnDisabled, setAddBtnDisabled, skuData, viewMode } = props;
-
+    const { code, value, id, setSKUAttributes, forceUpdate, isAddBtnDisabled, setAddBtnDisabled, skuData, viewMode, setFormBtnActive } = props;
+    console.log('SUCK IT NEW', setFormBtnActive);
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
 
@@ -23,6 +23,8 @@ const CardItemProductAttribute = (props) => {
         setIsEditing(true);
         setAddBtnDisabled(true);
     };
+
+    
 
     const onUpdate = () => {
         const newFormData = form.getFieldsValue();
@@ -67,7 +69,8 @@ const CardItemProductAttribute = (props) => {
                     <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
                         {!isEditing ? (
                             <div className={styles.cardItemBtn}>
-                                <Button disabled={isAddBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ id, code, value })} />
+                                <Button disabled={isAddBtnDisabled} type="link" icon={<FiEdit />}
+                                 onClick={() => { onEdit({ id, code, value }); setFormBtnActive(true)} } />
                             </div>
                         ) : (
                             <div className={styles.cardItemBtn}>

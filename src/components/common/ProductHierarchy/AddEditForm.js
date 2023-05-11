@@ -93,6 +93,7 @@ const AddEditFormMain = (props) => {
         isAddBtnDisabled,
         setAddBtnDisabled,
         onFinish: onActionFormFinish,
+        setFormBtnActive,
     };
 
     return (

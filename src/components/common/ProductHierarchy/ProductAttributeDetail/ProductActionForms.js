@@ -35,49 +35,46 @@ const ProductActionForms = ({ form, onFinish, status, name, id, value, isEditing
     };
 
     return (
-        <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form autoComplete="off" form={form} onFieldsChange={handleForm} id="productHierarchy" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item get label="Attribute Name" name="attributeName" rules={[!isBtnDisabled && validateRequiredSelectField('Attribute Name')]}>
-                                    <Select
-                                    
-                                        getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                                        placeholder="Select Application Action"
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                        allowClear
-                                        options={applicationData}
-                                        fieldNames={fieldNames}
-                                        initialValue={id}
-                                        disabled={isBtnDisabled}
-                                    >
-                                        {skuData?.map((item) => (
-                                            <Option value={item?.code}>{item?.name}</Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>sdsdsd
+        <Row gutter={20}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Form autoComplete="off" form={form} onFieldsChange={handleForm} id="productHierarchy" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Row gutter={20}>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item get label="Attribute Name" name="attributeName" rules={[!isBtnDisabled && validateRequiredSelectField('Attribute Name')]}>
+                                <Select
+                                    getPopupContainer={(triggerNode) => triggerNode.parentElement}
+                                    placeholder="Select Application Action"
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    allowClear
+                                    options={applicationData}
+                                    fieldNames={fieldNames}
+                                    initialValue={id}
+                                    disabled={isBtnDisabled}
+                                >
+                                    {skuData?.map((item) => (
+                                        <Option value={item?.code}>{item?.name}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item initialValue={value} labelAlign="left" name="attributeValue" label="Attribute Value" rules={[!isBtnDisabled && validateRequiredSelectField('Attribute Value')]}>
+                                <Input disabled={isBtnDisabled} placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
+                            </Form.Item>
+                        </Col>
+                        {!isEditing && (
+                            <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
+                                    Add
+                                </Button>
                             </Col>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={value} labelAlign="left" name="attributeValue" label="Attribute Value" rules={[!isBtnDisabled &&  validateRequiredSelectField('Attribute Value')]}>
-                                    <Input disabled={isBtnDisabled} placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
-                                </Form.Item>
-                            </Col>
-                            {!isEditing && (
-                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                    <Button disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary" danger>
-                                        Add
-                                    </Button>
-                                </Col>
-                            )}
-                        </Row>
-                    </Form>
-                </Col>
-            </Row>
-        </>
+                         )}
+                    </Row>
+                </Form>
+            </Col>
+        </Row>
     );
 };
 
