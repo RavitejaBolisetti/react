@@ -1,167 +1,106 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber,Switch, DatePicker } from 'antd';
+import React, { useState } from 'react';
+import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { withModal } from 'components/withModal';
+
 import styles from 'components/common/Common.module.css';
-import { STATE_DROPDOWN } from '../District/InputType';
-import { GeoDistrict } from 'store/reducers/data/geoDistrict';
 
 const { Option } = Select;
-const { TextArea } = Input;
+const { Search } = Input;
 
-const AdvanceSearchMain = (props) => {
-    const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
-    const { footerEdit, form,setClosePanels, isReadOnly, showSaveBtn, formData,onCloseAction, isViewModeVisible, setisViewModeVisible } = props;
-    const { isFormBtnActive, setFormBtnActive,geoStateData,geoDistrictData,geoTehsilData,geoCityData } = props;
-    const disabledProps = { disabled: isReadOnly };
-    const [searchForm] = Form.useForm();
-    const [show, setShow] = useState([]);
-    const [showCity, setShowCity] = useState([]);
-    const [showTehsil, setShowTehsil] = useState([]);
+export const AdvancedSearchFrom = (props) => {
+    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData, filterString } = props;
+    console.log('🚀 ~ file: AdvancedSearch.js:14 ~ AdvancedSearchFrom ~ filterString:', filterString);
 
-    const handleSelectState = (e) =>{
-        setShow(geoDistrictData.filter((i)=>i.stateCode === e))
-    }
-    const handleSelectDistrict = (e) => {
-        setShowCity(geoCityData.filter((i)=>i.districtCode === e))
-    };
-    const handleSelectTehsil = (e) => {
-        setShowTehsil(geoTehsilData.filter((i)=>i.districtCode === e));
+    const [formFieldActive, handleFormFieldChange] = useState(true);
+
+    const [form] = Form.useForm();
+
+    const onFinish = (values) => {
+        console.log('advance values', values);
     };
 
-    const handleFormValueChange = () => {
-        setFormBtnActive(true);
-    };
-
-    const handleFormFieldChange = () => {
-        setFormBtnActive(true);
-    };
-
-    const changeSelectOptionHandler = (event) => {
-        setParameterType(event);
-    };
-    const onFinish = (values) =>{
-        console.log('advance values',values)
-    }
-    const onFinishFailed =()=>{
+    const onFinishFailed = () => {
         return;
-    }
-    // useEffect(() => {
-    //     form.setFieldsValue();
-    // }, [selectedState,form])
-    // useEffect(() => {
-    //     form.setFieldsValue();
-    // }, [selectedCity,form])
-    // useEffect(() => {
-    //     form.setFieldsValue();
-    // }, [selectedDistrict,form])
-    // useEffect(() => {
-    //     form.setFieldsValue();
-    // }, [selectedTehsil,form])
-
-    // const handleSelectState = (props) =>{
-    //     isSelectedState(props)
-    // }
-    // const handleSelectCity = (props) => {
-    //     isSelectedCity(props);
-    // };
-    // const handleSelectTehsil = (props) => {
-    //     isSelectedTehsil(props);
-    // };
-    // const handleSelectDistrict = (props) => {
-    //     isSelectedDistrict(props);
-    // };
-    const viewProps = {
-        isVisible: isViewModeVisible,
-        formData,
-        styles,
     };
-    
 
     return (
-        <Form layout="vertical" searchForm={searchForm} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...viewProps}>
-                <>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={'India'} label="Select Country" name="countryName">
-                                <Select disabled>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {STATE_DROPDOWN?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Select State" initialValue={formData?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('state')} onChange={handleSelectState}>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {geoStateData?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Select District" initialValue={formData?.districtName} name="districtName" rules={[validateRequiredSelectField('District')]}>
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('district')} onChange={handleSelectDistrict} >
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {show?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Select City" initialValue={formData?.cityName} name="cityName" rules={[validateRequiredSelectField('City')]}>
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('city')} onChange={handleSelectTehsil}>
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {showCity?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                            {console.log(geoCityData,'GEOCITY')}
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Select Tehsil" initialValue={formData?.tehsilName} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
-                            <Select disabled={isReadOnly} placeholder={preparePlaceholderSelect('tehsil')} >
-                                    {/* {typeData && typeData[PARAM_MASTER.CTRL_GRP.id] && typeData[PARAM_MASTER.CTRL_GRP.id]?.map((item) => <Option value={item?.key}>{item?.value}</Option>)} */}
-                                    {setShowTehsil?.map((item) => (
-                                        <Option value={item?.code}>{item?.name}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                            {console.log(geoTehsilData,'GEOTEHSIL')}
-                        </Col>
-                    </Row>
-                </>
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
-                    </Button>
+        <Form layout="vertical" form={form} onValuesChange={() => handleFormFieldChange(true)} onFieldsChange={() => handleFormFieldChange(true)} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item initialValue={'India'} label="Select Country" name="countryName">
+                        {defaultCountry && (
+                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                                {countryData?.map((item) => (
+                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
+                                ))}
+                            </Select>
+                        )}
+                    </Form.Item>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Search
-                        </Button>
-                    )}
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Select State" initialValue={filterString?.state} rules={[validateRequiredInputField('State')]} name="stateCode">
+                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
+                            {filteredStateData?.map((item) => (
+                                <Option value={item?.code}>{item?.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Select District" initialValue={filterString?.district} name="districtName" rules={[validateRequiredSelectField('District')]}>
+                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
+                            {filteredDistrictData?.map((item) => (
+                                <Option value={item?.code}>{item?.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Select City" initialValue={filterString?.city} name="cityName" rules={[validateRequiredSelectField('City')]}>
+                        <Select placeholder="City" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('city')}>
+                            {filteredCityData?.map((item) => (
+                                <Option value={item?.code}>{item?.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="Select Tehsil" initialValue={filterString?.tehsil} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
+                        <Select placeholder="Tehsil" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('tehsil')}>
+                            {filteredTehsilData?.map((item) => (
+                                <Option value={item?.code}>{item?.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="PIN Code" initialValue={filterString?.pincode} name="pincode" rules={[validateRequiredSelectField('pincode')]}>
+                        <Input placeholder="Search" allowClear onChange={handleFilterChange('pincode', 'text')} />
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <Row gutter={20}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+                    <Button danger>Reset</Button>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
+                    <Button disabled={!formFieldActive} htmlType="submit" type="primary">
+                        Search
+                    </Button>
                 </Col>
             </Row>
         </Form>
     );
 };
 
-export const AdvancedSearch = withDrawer(AdvanceSearchMain, {title: 'Advanced Search'});
+export const AdvancedSearch = withModal(AdvancedSearchFrom, {});
