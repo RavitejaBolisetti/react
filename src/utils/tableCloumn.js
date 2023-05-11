@@ -57,12 +57,13 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '8%' }) => 
         width,
         render: (record) => [
             <Space wrap>
+                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                    <FaRegEye />
+                </Button>
                 <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
                     <FiEdit />
                 </Button>
-                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    <FaRegEye />
-                </Button>
+               
             </Space>,
         ],
     };

@@ -226,15 +226,16 @@ export const ConfigurableParameterEditingBase = ({ moduleTitle, fetchDataList, i
             render: (record) => [
                 <Space wrap>
                     {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
-                            <FiEdit />
-                        </Button>
-                    }
-                    {
                         <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
+                    {
+                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
+                            <FiEdit />
+                        </Button>
+                    }
+                    
                 </Space>,
             ],
         }
