@@ -126,10 +126,10 @@
     padding-left: 22px !important;
 }
 
-:global .ant-menu .ant-menu-item .ant-menu-item-icon + span,
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span,
-:global .ant-menu .ant-menu-item .anticon + span,
-:global .ant-menu .ant-menu-submenu-title .anticon + span {
+:global .ant-menu .ant-menu-item .ant-menu-item-icon+span,
+:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span,
+:global .ant-menu .ant-menu-item .anticon+span,
+:global .ant-menu .ant-menu-submenu-title .anticon+span {
     padding-left: 20px !important;
 }
 
@@ -140,8 +140,8 @@
 
 /* changes on menu list items on select/visited/focus */
 :global .ant-menu-light .ant-menu-item-selected,
-:global .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title,
-:global .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title span.ant-menu-title-content a {
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title span.ant-menu-title-content a {
     background-color: white;
     border-radius: 4px;
     color: #ff3e5b !important;
@@ -180,7 +180,7 @@
     /* color: #000000 !important; */
 }
 
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span {
+:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
     text-transform: uppercase;
     padding-left: 0 !important;
 }
@@ -209,21 +209,24 @@
     width: 8px;
 }
 
-:global .ant-menu-inline .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+:global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
     height: 32px !important;
 }
 
-/* border color on input search in left-menu */
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
     height: 34px !important;
     border-radius: 4px;
     border-color: transparent;
     padding: 6px 12px;
+}
+
+/* border color on input search in left-menu */
+.searchContainer :global .ant-input-affix-wrapper {
     border-width: 0px;
 }
 
-:global .ant-input-affix-wrapper > input.ant-input {
+:global .ant-input-affix-wrapper>input.ant-input {
     line-height: 0;
 }
 
@@ -262,7 +265,7 @@
     border: 0px;
 }
 
-.searchField :global .ant-input-search .ant-input:focus + .ant-input-group-addon .ant-input-search-button:not(.ant-btn-primary) {
+.searchField :global .ant-input-search .ant-input:focus+.ant-input-group-addon .ant-input-search-button:not(.ant-btn-primary) {
     border-inline-start-color: #ffffff;
 }
 
@@ -340,8 +343,8 @@
     width: auto;
 }
 
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content span:first-child,
-:global .ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content span:first-child {
+:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
+:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
     padding-left: 4px;
 }
 
@@ -369,7 +372,7 @@
     padding: 4px;
 }
 
-.changeTheme button > span {
+.changeTheme button>span {
     font-size: 12px;
     font-weight: 500;
     line-height: 20px;
