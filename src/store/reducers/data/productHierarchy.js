@@ -1,4 +1,4 @@
-import { PRODUCT_HIERARCHY_DATA_LOADED, PRODUCT_HIERARCHY_DATA_LOADED_SKU, PRODUCT_HIERARCHY_DATA_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE,PRODUCT_HIERARCHY_CARD_BTN_DISABLE } from 'store/actions/data/productHierarchy';
+import { PRODUCT_HIERARCHY_DATA_LOADED, PRODUCT_HIERARCHY_DATA_LOADED_SKU, PRODUCT_HIERARCHY_DATA_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_DATA_LOADED, PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING, PRODUCT_HIERARCHY_CHANGE_HISTORY_VISIBLE, PRODUCT_HIERARCHY_CARD_BTN_DISABLE, PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN } from 'store/actions/data/productHierarchy';
 
 const initialState = {
     isLoaded: false,
@@ -29,6 +29,8 @@ export const ProductHierarchy = (state = initialState, action) => {
             return { ...state, changeHistoryVisible: action.visible };
         case PRODUCT_HIERARCHY_CARD_BTN_DISABLE:
             return { ...state, actionVisible: action.isDisable };
+        case PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN:
+            return { ...state, isLoaded: action.isLoaded, attributeData: action.data };
         default:
             return { ...state };
     }

@@ -13,17 +13,57 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber,validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+
+
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, attributeData: productHierarchyAttributeData = [], },
+        },
+        common: {
+            LeftSideBar: { collapsed = false },
+        },
+    } = state;
+
+    console.log(state,'STATE')
+
+    let returnValue = {
+        isLoading,
+        collapsed,
+        userId,
+        isDataLoaded,
+        productHierarchyAttributeData,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
+            listShowLoading: productHierarchyDataActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
+
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData,productHierarchyAttributeData } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    const { form, skuAttributes, setSKUAttributes } = props;
+    const { form, skuAttributes, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId } = props;
 
-    console.log('formData', formData);
+    // console.log('formData', formData);
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
@@ -51,8 +91,17 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setSelectedTreeSelectKey(treeCodeId);
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
+
+    useEffect(() => {
+        if ( userId) {
+            fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
+           // setIsLoading: listShowLoading,
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ userId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -81,6 +130,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onActionFormFinish = (val) => {
+        console.log("val", val)
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
@@ -94,6 +144,8 @@ const AddEditFormMain = (props) => {
         setAddBtnDisabled,
         onFinish: onActionFormFinish,
         setFormBtnActive,
+        productHierarchyAttributeData,
+
     };
 
     return (
@@ -172,4 +224,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = connect(mapStateToProps, mapDispatchToProps)(withDrawer(AddEditFormMain, {}));
