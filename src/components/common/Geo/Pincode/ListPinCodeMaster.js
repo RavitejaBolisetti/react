@@ -425,74 +425,86 @@ const ListPinCodeMasterBase = (props) => {
 
                         {filterString?.advanceFilter && (
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterContainer}>
-                                    <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                    {extraParams?.map((filter) => {
-                                        return (
-                                            filter?.value && (
-                                                <div className={styles.advanceFilterItem}>
-                                                    {filter?.title} - {filter?.value}
-                                                    <span>
-                                                        <RxCross2 />
-                                                    </span>
-                                                </div>
-                                            )
-                                        );
-                                    })}
-                                    <Button className={styles.clearBtn} onClick={handleReferesh} danger>
-                                        Clear
-                                    </Button>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={22} lg={22} xl={22} className={styles.advanceFilterContainer}>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                                    <Col />
+                                                    {extraParams?.map((filter) => {
+                                                        return (
+                                                            filter?.value && (
+                                                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                                    <div className={styles.advanceFilterItem}>
+                                                                        {filter?.title} - {filter?.value}
+                                                                        <span>
+                                                                            <RxCross2 />
+                                                                        </span>
+                                                                    </div>
+                                                                </Col>
+                                                            )
+                                                        );
+                                                    })}
+                                            </Row>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={2} lg={2} xl={2}>
+                                            <Button className={styles.clearBtn} onClick={handleReferesh} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                 </Col>
-                            </Row>
-                        )}
-                    </div>
-                </Col>
-            </Row >
+                            </Row >
+                        )};
 
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !data?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <ConfigProvider
+                                    renderEmpty={() =>
+                                        isDataLoaded && (
+                                            <Empty
+                                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                imageStyle={{
+                                                    height: 60,
+                                                }}
+                                                description={
+                                                    !data?.length ? (
+                                                        <span>
+                                                            No records found. Please add new parameter <br />
+                                                            using below button
+                                                        </span>
+                                                    ) : (
+                                                        <span> No records found.</span>
+                                                    )
+                                                }
+                                            >
+                                                {!data?.length ? (
+                                                    <Row>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                                Add PIN Code
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                                ) : (
+                                                    ''
+                                                )}
+                                            </Empty>
                                         )
                                     }
                                 >
-                                    {!data?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add PIN Code
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable scroll={1800} isLoading={false} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                                    <div className={styles.tableProduct}>
+                                        <DataTable scroll={1800} isLoading={false} {...tableProps} />
+                                    </div>
+                                </ConfigProvider>
+                            </Col>
+                        </Row>
+                        <AdvancedSearch {...advanceFilterProps} />
+                        <AddEditForm {...formProps} />
+                    </div>
                 </Col>
             </Row>
-            <AdvancedSearch {...advanceFilterProps} />
-            <AddEditForm {...formProps} />
         </>
     );
 };
