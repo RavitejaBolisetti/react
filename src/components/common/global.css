@@ -124,6 +124,14 @@
     max-height: 300vh;
 }
 
+:global .ant-modal .ant-modal-content .ant-modal-close {
+    color: #ff3e5b;
+}
+
+:global .ant-modal .ant-modal-header {
+    margin-bottom: 16px;
+}
+
 :global .ant-modal .ant-modal-title {
     border-bottom: 1px solid #dedede;
     padding-bottom: 16px;
@@ -136,7 +144,7 @@
 :global .ant-modal .ant-modal-title svg {
     vertical-align: sub;
     color: #ff3e5b;
-    margin-right: 4px;
+    margin-right: 8px;
     width: 20px;
     height: 20px;
 }
@@ -196,11 +204,6 @@
 :global .ant-tree .ant-tree-list-holder-inner {
     align-items: flex-start;
     margin-bottom: 50px;
-}
-
-:global .ant-modal .ant-modal-content {
-    padding: 20px;
-    max-height: 300vh;
 }
 
 :global .ant-switch .ant-switch-inner {

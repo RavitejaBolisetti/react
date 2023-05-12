@@ -1221,6 +1221,7 @@
 .advanceFilterTop .advanceFilterTitle {
     padding: 10px 0px;
     margin-right: 10px;
+    width: 160px;
 }
 
 .advanceFilterTop .advanceFilterItem {
@@ -1231,7 +1232,7 @@
     border: solid 1px #FF3E5B;
     color: #FF3E5B;
     line-height: 18px;
-    margin-right: 10px;
+    margin-left: 12px;
 }
 
 .advanceFilterTop .advanceFilterItem span {
