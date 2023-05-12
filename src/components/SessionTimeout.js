@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer';
 import { Modal } from 'antd';
 
@@ -33,9 +33,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     const navigate = useNavigate();
-    
-    const timeout = process.env.IDLE_TIMEOUT;
-    const promptBeforeIdle = process.env.PROMPT_BEFORE_IDLE_TIMEOUT;
+
+    const timeout = 60_000;
+    const promptBeforeIdle = 30_000;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [remaining, setRemaining] = useState(timeout);
