@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Button, Dropdown, Modal, Avatar, Input } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Input } from 'antd';
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
@@ -20,13 +20,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
-import { useIdleTimer } from 'react-idle-timer';
 
 import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, SettingsIcon } from 'Icons';
 
 const { Search } = Input;
 const { confirm } = Modal;
-
 const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId, passwordStatus },
@@ -70,69 +68,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const timeout = 15_000;
-    const promptBeforeIdle = 5_000;
-
-    const handleStillHere = () => {
-        activate();
-        Modal.destroyAll();
-        setIsModalOpen(false);
-    };
-
-    const [state, setState] = useState('Active');
-    const [remaining, setRemaining] = useState(timeout);
-
-    useEffect(() => {
-        if (remaining <= 0) {
-        }
-    }, remaining);
-
-    const onIdle = () => {
-        setState('Idle');
-        setIsModalOpen(false);
-        setTimeout(() => {
-            doLogout({
-                onSuccess,
-                onError,
-                userId,
-            });
-            Modal.destroyAll();
-        });
-    };
-
-    const onActive = () => {
-        setState('Active');
-        setIsModalOpen(false);
-    };
-
-    const onPrompt = () => {
-        setState('Prompted');
-        setIsModalOpen(true);
-    };
-
-    const { getRemainingTime, activate } = useIdleTimer({
-        onIdle,
-        onActive,
-        onPrompt,
-        timeout,
-        promptBeforeIdle,
-        throttle: 500,
-    });
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setRemaining(Math.ceil(getRemainingTime() / 1000));
-        }, 500);
-
-        return () => {
-            clearInterval(interval);
-        };
-    });
-
-    const timeTillPrompt = Math.max(remaining - promptBeforeIdle / 1000, 0);
-    const seconds = timeTillPrompt > 1 ? 'seconds' : 'second';
 
     // const delarAvtarData = dealerName?.split(' ');
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
@@ -155,11 +90,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
     };
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    
     const showConfirm = () => {
         confirm({
             title: 'Logout',
@@ -171,7 +101,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             wrapClassName: styles.confirmModal,
             centered: true,
             closable: true,
-
             onOk() {
                 doLogout({
                     onSuccess,
@@ -277,20 +206,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     };
     return (
         <>
-            <Modal
-                title="Basic Modal"
-                open={isModalOpen}
-                onOk={() =>
-                    doLogout({
-                        onSuccess,
-                        onError,
-                        userId,
-                    })
-                }
-                onCancel={handleStillHere}
-            >
-                <p>Your session will expire in ${remaining} seconds. Do you want to logout?</p>
-            </Modal>
             {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row gutter={0} className={styles.columnInterchange}>
@@ -337,7 +252,6 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                                 </div>
                             </Col>
                         )}
-
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
