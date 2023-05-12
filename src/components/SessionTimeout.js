@@ -38,8 +38,8 @@ const mapDispatchToProps = (dispatch) => ({
 const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     const navigate = useNavigate();
 
-    const timeout = 60_000;
-    const promptBeforeIdle = 30_000;
+    const timeout = 10_000;
+    const promptBeforeIdle = 5_000;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [remaining, setRemaining] = useState(timeout);
@@ -120,4 +120,4 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     );
 };
 
-export const SessionTimeout = withModal(connect(mapStateToProps, mapDispatchToProps)(SessionTimeoutMain), {});
+export const SessionTimeout = connect(mapStateToProps, mapDispatchToProps)(SessionTimeoutMain);
