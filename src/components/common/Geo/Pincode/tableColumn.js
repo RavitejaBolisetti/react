@@ -17,19 +17,19 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'PIN Code',
             dataIndex: 'pinCode',
-            width: '35%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Locality',
             dataIndex: 'localityName',
-            width: '35%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Within 50Km from the GPO',
             dataIndex: 'withIn50KmFromGpo',
-            width: '35%',
+            width: '15%',
             render: (text, record) => {
                 return <Checkbox disabled defaultChecked={text ? true : false} className={styles.registered}></Checkbox>;
             },
