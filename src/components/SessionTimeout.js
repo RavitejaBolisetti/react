@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer';
+import { withModal } from 'components/withModal';
+import { FilterIcon } from 'Icons';
+
 import { Modal } from 'antd';
 
 import * as routing from 'constants/routing';
@@ -17,6 +20,7 @@ const mapStateToProps = (state) => {
 
     return {
         userId,
+        
     };
 };
 
@@ -99,7 +103,7 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     return (
         <Modal
             title="Session Timeout"
-            open={isModalOpen}
+            open={true}
             onOk={() =>
                 doLogout({
                     onSuccess,
@@ -116,4 +120,4 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     );
 };
 
-export const SessionTimeout = connect(mapStateToProps, mapDispatchToProps)(SessionTimeoutMain);
+export const SessionTimeout = withModal(connect(mapStateToProps, mapDispatchToProps)(SessionTimeoutMain), {});
