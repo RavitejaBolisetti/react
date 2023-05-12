@@ -26,6 +26,7 @@ import { ChangePasswordIcon, HeadPhoneIcon, LogoutIcon, MenuArrow, ProfileIcon, 
 
 const { Search } = Input;
 const { confirm } = Modal;
+
 const mapStateToProps = (state) => {
     const {
         auth: { token, isLoggedIn, userId, passwordStatus },
@@ -70,36 +71,52 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
     const fullName = firstName.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName.slice(0, 1) + (lastName ? lastName.slice(0, 1) : '');
 
+    const timeout = 10_000;
+    const promptBeforeIdle = 5_000;
+
     const [state, setState] = useState('Active');
-    const [count, setCount] = useState(0);
-    const [remaining, setRemaining] = useState(0);
-    const [noClick, setNoClick] = useState(false);
+    const [remaining, setRemaining] = useState(timeout);
+    const [openTimeoutModel, setTimeoutModel] = useState(false);
+
+    useEffect(() => {
+        if (remaining <= 0) {
+        }
+    }, remaining);
+
+    // const onIdle = () => {
+    //     sessionConfirm();
+    //     setTimeout(() => {
+    //         doLogout({
+    //             onSuccess,
+    //             onError,
+    //             userId,
+    //         });
+    //         Modal.destroyAll();
+    //     }, 4000);
+    // };
 
     const onIdle = () => {
-        sessionConfirm();
-        setTimeout(() => {
-            doLogout({
-                onSuccess,
-                onError,
-                userId,
-            });
-            Modal.destroyAll();
-        }, 4000);
+        setState('Idle');
+        setTimeoutModel(false);
     };
 
     const onActive = () => {
         setState('Active');
+        setTimeoutModel(false);
     };
 
-    const onAction = () => {
-        setCount(count + 1);
+    const onPrompt = () => {
+        setState('Prompted');
+        setTimeoutModel(true);
+        sessionConfirm(remaining);
     };
 
-    const { getRemainingTime } = useIdleTimer({
+    const { getRemainingTime, activate } = useIdleTimer({
         onIdle,
         onActive,
-        onAction,
-        timeout: 7000,
+        onPrompt,
+        timeout,
+        promptBeforeIdle,
         throttle: 500,
     });
 
@@ -112,6 +129,15 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
             clearInterval(interval);
         };
     });
+
+    const handleStillHere = () => {
+        activate();
+    };
+
+    const timeTillPrompt = Math.max(remaining - promptBeforeIdle / 1000, 0);
+    console.log('remaining', remaining, getRemainingTime(), timeTillPrompt);
+
+    const seconds = timeTillPrompt > 1 ? 'seconds' : 'second';
 
     // const delarAvtarData = dealerName?.split(' ');
     // const dealerAvatar = delarAvtarData && delarAvtarData.at(0).slice(0, 1) + (delarAvtarData.length > 1 ? delarAvtarData.at(-1).slice(0, 1) : '');
@@ -134,18 +160,17 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
     };
 
-    const sessionConfirm = () => {
+    const sessionConfirm = (remaining) => {
         confirm({
-            title: 'Logout',
+            title: 'Session Timeout',
             icon: <IoIosLogOut size={22} className={styles.modalIconLogout} />,
-            content: 'Your session will expire. Do you want to logout?',
+            content: ` Your session will expire in ${remaining} seconds. Do you want to logout?`,
             okText: 'Yes, Logout',
             okType: 'danger',
             cancelText: 'No',
             wrapClassName: styles.confirmModal,
             centered: true,
             closable: true,
-           
         });
     };
 
@@ -309,9 +334,12 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
                             <Col xs={24} sm={24} md={7} lg={7} xl={7} xxl={7}>
                                 <div className={styles.headerRight} style={{ width: '100%' }}>
                                     <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
+
+                                    <p>Logging out in {remaining} seconds</p>
                                 </div>
                             </Col>
                         )}
+
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                             <div className={styles.headerRight}>
                                 <div className={styles.navbarExpand}>
