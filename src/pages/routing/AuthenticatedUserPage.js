@@ -32,13 +32,13 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_GEO_TEHSIL} element={<TehsilPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_PINCODE} element={<PinCodePage />} />
 
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_LOCATION_TYPE_MASTER} element={<DealerLocationTypePage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_EMPLOYEE_DEPARTMENT_MASTER} element={<DealerEmployeeDepartmentPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER} element={<DealerLocationTypePage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT_MASTER} element={<DealerEmployeeDepartmentPage />} />
 
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_DIVISION_MASTER} element={<DealerDivisionMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_DEALER_MANPOWER_DESIGNATION_MASTER} element={<DesignationMasterPage />} />
-            <Route path={routing.ROUTING_COMMON_ROLE_MASTER} element={<RoleMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_DIVISION_MASTER} element={<DealerDivisionMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_BAY_TYPE_MASTER} element={<BayTypeMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_DESIGNATION_MASTER} element={<DesignationMasterPage />} />
+            <Route path={routing.ROUTING_MILE_DEALER_MANPOWER_ROLE_MASTER} element={<RoleMasterPage />} />
 
             <Route path={routing.ROUTING_COMMON_PRODUCT_MASTER} element={<ProductMasterPage />} />
             <Route path={routing.ROUTING_COMMON_APPLICATION_MASTER} element={<ApplicationMasterPage />} />

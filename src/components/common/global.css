@@ -133,6 +133,14 @@
     color: #342c2c;
 }
 
+:global .ant-modal .ant-modal-title svg {
+    vertical-align: sub;
+    color: #ff3e5b;
+    margin-right: 4px;
+    width: 20px;
+    height: 20px;
+}
+
 :global .ant-modal .ant-modal-close:hover {
     color: #ff3e5b;
     background-color: transparent !important;
@@ -140,6 +148,10 @@
 
 :global .ant-modal .ant-modal-close {
     top: 22px;
+}
+
+:global .ant-modal-body .ant-form .ant-form-item .ant-input-affix-wrapper {
+    border: 1px solid #D9D9D9;
 }
 
 :global .ant-tree {
