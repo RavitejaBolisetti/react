@@ -81,7 +81,7 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const onSuccess = (res) => {
         if (res?.data) {
-            showGlobalNotification({ notificationType: 'success', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
             navigate(routing.ROUTING_LOGIN);
         }
     };
@@ -92,9 +92,9 @@ const HeaderMain = ({ isDataLoaded, isLoading, collapsed, setCollapsed, loginUse
 
     const showConfirm = () => {
         confirm({
-            title: 'Are you sure you want to logout?',
+            title: 'Logout',
             icon: <IoIosLogOut size={22} className={styles.modalIconLogout} />,
-            content: 'Your password has been changed successfully. Please login with your new credentials',
+            content: 'Are you sure you want to logout?',
             okText: 'Yes, Logout',
             okType: 'danger',
             cancelText: 'No',

@@ -1,5 +1,5 @@
 import { Button, Space } from 'antd';
-import { FiEdit2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
@@ -57,12 +57,13 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '8%' }) => 
         width,
         render: (record) => [
             <Space wrap>
-                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
-                    <FiEdit2 />
-                </Button>
-                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                     <FaRegEye />
                 </Button>
+                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <FiEdit />
+                </Button>
+               
             </Space>,
         ],
     };

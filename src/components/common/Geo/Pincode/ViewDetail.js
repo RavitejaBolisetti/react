@@ -15,6 +15,7 @@ export const ViewDetail = ({ formData, styles, parameterType }) => {
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="PIN Code">{formData?.pinCode}</Descriptions.Item>
+                    <Descriptions.Item label="PIN Category">{formData?.pinCategory}</Descriptions.Item>
                     <Descriptions.Item label="Locality">{formData?.localityName}</Descriptions.Item>
                     <Descriptions.Item label="Within 50 Km of GPO">{formData?.withIn50KmFromGpo ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>

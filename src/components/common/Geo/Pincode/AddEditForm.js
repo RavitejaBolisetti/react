@@ -59,8 +59,11 @@ const AddEditFormMain = (props) => {
         geoTehsilData,
         geoCityData,
         geoPindata,
+    
     };
 
+
+    console.log(typeData,'xhvgsvx')
     return (
         <Form id="configForm" layout="vertical" form={actionform} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} {...formProps}>
             {!isViewModeVisible ? (
@@ -149,28 +152,46 @@ const AddEditFormMain = (props) => {
                                 </Select>
                             </Form.Item>
                         </Col>
+
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code'), validationNumber('Pincode')]}>
-                                <Input placeholder={preparePlaceholderText('PIN code')} className={styles.inputBox} disabled={isReadOnly} />
+                            <Form.Item label="Pin Category" initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField('Pin Category')]}>
+                                <Select
+                                    showSearch
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
+                                    }}
+                                    disabled={isReadOnly}
+                                    placeholder={preparePlaceholderSelect('Pin Category')}
+                                    
+                                >
+                                    {typeData?.PIN_CATG?.map((item) => (
+                                        <Option value={item?.key}>{item?.value}</Option>
+                                    ))}
+                                </Select>
                             </Form.Item>
                         </Col>
                     </Row>
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            <Form.Item initialValue={formData?.pinCode} label="PIN Code" name="pinCode" rules={[validateRequiredInputField('PIN code'), validationNumber('Pincode')]}>
+                                <Input placeholder={preparePlaceholderText('PIN code')} className={styles.inputBox} disabled={isReadOnly} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.localityName} label="Locality" name="localityName" rules={[validateRequiredInputField('Locality')]}>
                                 <Input placeholder={preparePlaceholderText('Locality')} className={styles.inputBox} disabled={isReadOnly} />
                             </Form.Item>
                         </Col>
+                    </Row>
+
+                    <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formActionType === 'update' ? formData?.withIn50KmFromGpo : true} label="Is Locality Under 50Km of GPO" name="withIn50KmFromGpo">
                                 <Switch checkedChildren="Yes" unCheckedChildren="No" defaultChecked={formActionType === 'update' ? formData?.withIn50KmFromGpo : true} />
                                 {/* {...disabledProps} onChange={() => setIsChecked(!isChecked)} defaultChecked={isChecked}  */}
                             </Form.Item>
                         </Col>
-                    </Row>
-
-                    <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
                             <Form.Item initialValue={formActionType === 'update' ? formData?.status : true} label="Status" name="status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'update' ? formData?.status : true} />

@@ -55,7 +55,7 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
         const data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Password Changed', message: res?.responseMessage });
 
             doLogout({
                 onSuccess: (res) => {

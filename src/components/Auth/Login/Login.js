@@ -5,7 +5,7 @@ import { Form, Row, Col, Button, Input, message, notification, Space } from 'ant
 import { CiCircleRemove, CiCircleAlert } from 'react-icons/ci';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
-import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye, AiOutlineWarning } from 'react-icons/ai';
 
 import { doLogin, doCloseLoginError, doCloseUnAuthenticatedError, authPostLogin, authPreLogin } from 'store/actions/auth';
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
@@ -109,7 +109,7 @@ const Login = (props) => {
     };
 
     const onError = ({ title, message }) => {
-        showGlobalNotification({ title, message });
+        showGlobalNotification({ notificationType: 'errorBeforeLogin', title, message });
         setIsLoading(false);
     };
 
@@ -139,7 +139,7 @@ const Login = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const updatePasswordStatusInfo = (data) => {
@@ -163,7 +163,7 @@ const Login = (props) => {
         );
 
         alertNotification.open({
-            icon: status === 'A' ? <CiCircleAlert /> : <CiCircleRemove />,
+            icon: status === 'A' ? <AiOutlineWarning /> : <CiCircleRemove />,
             message: title,
             description: message,
             btn: btn(data),
@@ -208,7 +208,7 @@ const Login = (props) => {
                                         <div className={styles.centerInner}>
                                             <div className={styles.loginForm}>
                                                 <div className={styles.loginHeading}>
-                                                    <h1>Welcome!</h1>
+                                                    <h1>Welcome</h1>
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
@@ -231,7 +231,7 @@ const Login = (props) => {
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button data-testid="Login"className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
+                                                        <Button data-testid="Login" className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
                                                     </Col>

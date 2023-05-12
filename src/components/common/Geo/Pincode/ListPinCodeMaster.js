@@ -11,7 +11,7 @@ import { AddEditForm } from './AddEditForm';
 
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
@@ -20,6 +20,8 @@ import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
@@ -31,16 +33,19 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { isLoaded: isConfigDataLoaded = false, isLoading: isConfigLoading, paramdata: typeData = [] },
             Geo: {
                 State: { isLoaded: isDataLoaded = false, isLoading: isStateLoading, data: geoStateData },
                 District: { isLoaded: isDistrictLoaded = false, isLoading: isDistrictLoading, data: geoDistrictData },
                 Tehsil: { isLoaded: isTehsilLoaded = false, isLoading: isTehsilLoading, data: geoTehsilData },
                 City: { isLoaded: isCityLoaded = false, isLoading: isCityLoading, data: geoCityData },
                 Pincode: { isLoaded: isPinDataLoaded = false, isLoading: isPinLoading, data: geoPindata },
+                
             },
         },
     } = state;
 
+   
     const moduleTitle = 'Pincode Master List';
 
     let returnValue = {
@@ -59,6 +64,9 @@ const mapStateToProps = (state) => {
         geoCityData,
         geoPindata,
         geoStateData,
+        isConfigDataLoaded,
+        isConfigLoading,
+        typeData,
         isPinDataLoaded,
         //isStateDataLoaded,
         moduleTitle,
@@ -84,6 +92,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCityList: geoCityDataActions.fetchList,
             listCityShowLoading: geoCityDataActions.listShowLoading,
 
+            fetchConfigList: configParamEditActions.fetchList,
+            listConfigShowLoading: configParamEditActions.listShowLoading,
+
             fetchList: geoPincodeDataActions.fetchList,
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
@@ -100,6 +111,7 @@ const ListPinCodeMasterBase = ({
     fetchDataList,
     fetchCityList,
     fetchTehsilList,
+    fetchConfigList,
     listCityShowLoading,
     fetchList,
     listTehsilShowLoading,
@@ -107,12 +119,15 @@ const ListPinCodeMasterBase = ({
     listStateShowLoading,
     listStateShowoading,
     listDistrictShowLoading,
+    listConfigShowLoading,
+    isConfigLoading,
     fetchStateList,
     fetchDistrictList,
     isDistrictLoaded,
     isPinDataLoaded,
     isStateDataLoaded,
     isDistrictLoading,
+    isConfigDataLoaded,
     geoDistrictData,
     isTehsilLoaded,
     isTehsilLoading,
@@ -125,6 +140,7 @@ const ListPinCodeMasterBase = ({
     geoStateData,
     data,
     saveData,
+    typeData,
     userId,
     configData,
     isDataLoaded,
@@ -174,6 +190,7 @@ const ListPinCodeMasterBase = ({
             fetchDistrictList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchTehsilList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             fetchCityList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchConfigList({ setIsLoading: listShowLoading, userId, parameterType: 'PIN_CATG' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData, isPinDataLoaded]);
@@ -268,7 +285,7 @@ const ListPinCodeMasterBase = ({
             .then(() => {
                 fetchList({ setIsLoading: listShowLoading, userId, mytype: apiParams });
             })
-            .catch((error) => { });
+            .catch((error) => {});
     };
     const tableColumn = [];
     tableColumn.push(
@@ -277,6 +294,12 @@ const ListPinCodeMasterBase = ({
             dataIndex: 'srl',
             sorter: false,
             width: '5%',
+        }),
+
+        tblPrepareColumns({
+            title: 'PIN Category',
+            dataIndex: 'pinCategory',
+            width: '15%',
         }),
 
         tblPrepareColumns({
@@ -321,7 +344,7 @@ const ListPinCodeMasterBase = ({
                 <Space wrap>
                     {
                         <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record, 'edit')}>
-                            <FiEdit2 />
+                            <FiEdit />
                         </Button>
                     }
                     {
@@ -418,7 +441,7 @@ const ListPinCodeMasterBase = ({
     };
 
     const onFinishFailed = (errorInfo) => {
-        actionform.validateFields().then((values) => { });
+        actionform.validateFields().then((values) => {});
     };
     const tableProps = {
         tableColumn: tableColumn,
@@ -454,6 +477,7 @@ const ListPinCodeMasterBase = ({
         geoPindata,
         setrowdata,
         rowdata,
+        typeData,
         setsavebtnclick,
         ditrict,
         setDistrict,

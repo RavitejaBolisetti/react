@@ -124,7 +124,7 @@ export const MenuConstant = {
 
     [getMenyKey('MILE-02.19')]: {
         key: 'MILE-02.19',
-        link: routing.ROUTING_COMMON_DEALER_MANPOWER,
+        link: routing.ROUTING_MILE_DEALER_MANPOWER,
         icon: undefined,
         parentMenuId: 'MILE-02',
     },
