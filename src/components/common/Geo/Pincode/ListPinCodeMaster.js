@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select, Card } from 'antd';
 import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -15,7 +15,6 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { TfiReload } from 'react-icons/tfi';
 
 import { PlusOutlined } from '@ant-design/icons';
-
 import { FilterIcon } from 'Icons';
 
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
@@ -124,6 +123,8 @@ const ListPinCodeMasterBase = (props) => {
 
     const [form] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
+
+    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredStateData, setFilteredStateData] = useState([]);
@@ -262,25 +263,24 @@ const ListPinCodeMasterBase = (props) => {
         resetData();
         setFilterString(undefined);
     };
-
     const handleFilterChange =
         (name, type = 'value') =>
-            (value) => {
-                const filterValue = type === 'text' ? value.target.value : value;
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-                if (name === 'countryCode') {
-                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-                }
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+            }
 
-                if (name === 'stateCode') {
-                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-                }
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+            }
 
-                if (name === 'districtCode') {
-                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-                }
-            };
+            if (name === 'districtCode') {
+                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -317,7 +317,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -424,7 +424,6 @@ const ListPinCodeMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-
                         {filterString?.advanceFilter && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
@@ -433,21 +432,21 @@ const ListPinCodeMasterBase = (props) => {
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                     <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                                    <Col />
-                                                    {extraParams?.map((filter) => {
-                                                        return (
-                                                            filter?.value && (
-                                                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                                    <div className={styles.advanceFilterItem}>
-                                                                        {filter?.title} - {filter?.value}
-                                                                        <span>
-                                                                            <RxCross2 />
-                                                                        </span>
-                                                                    </div>
-                                                                </Col>
-                                                            )
-                                                        );
-                                                    })}
+                                                </Col>
+                                                {extraParams?.map((filter) => {
+                                                    return (
+                                                        filter?.value && (
+                                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                                                <div className={styles.advanceFilterItem}>
+                                                                    {filter?.title} - {filter?.value}
+                                                                    <span>
+                                                                        <RxCross2 />
+                                                                    </span>
+                                                                </div>
+                                                            </Col>
+                                                        )
+                                                    );
+                                                })}
                                             </Row>
                                         </Col>
                                         <Col xs={24} sm={24} md={2} lg={2} xl={2}>
@@ -457,58 +456,59 @@ const ListPinCodeMasterBase = (props) => {
                                         </Col>
                                     </Row>
                                 </Col>
-                            </Row >
-                        )};
+                            </Row>
+                        )}
+                        ;
                     </div>
-                    <Col />
-                    <Row />
+                </Col>
+            </Row>
 
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <ConfigProvider
-                                renderEmpty={() =>
-                                    isDataLoaded && (
-                                        <Empty
-                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                            imageStyle={{
-                                                height: 60,
-                                            }}
-                                            description={
-                                                !data?.length ? (
-                                                    <span>
-                                                        No records found. Please add new parameter <br />
-                                                        using below button
-                                                    </span>
-                                                ) : (
-                                                    <span> No records found.</span>
-                                                )
-                                            }
-                                        >
-                                            {!data?.length ? (
-                                                <Row>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                            Add PIN Code
-                                                        </Button>
-                                                    </Col>
-                                                </Row>
-                                            ) : (
-                                                ''
-                                            )}
-                                        </Empty>
-                                    )
-                                }
-                            >
-                                <div className={styles.tableProduct}>
-                                    <DataTable scroll={1800} isLoading={false} {...tableProps} />
-                                </div>
-                            </ConfigProvider>
-                        </Col>
-                    </Row>
-                    <AdvancedSearch {...advanceFilterProps} />
-                    <AddEditForm {...formProps} />
-                </>
-                );
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <ConfigProvider
+                        renderEmpty={() =>
+                            isDataLoaded && (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        !data?.length ? (
+                                            <span>
+                                                No records found. Please add new parameter <br />
+                                                using below button
+                                            </span>
+                                        ) : (
+                                            <span> No records found.</span>
+                                        )
+                                    }
+                                >
+                                    {!data?.length ? (
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                    Add PIN Code
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    ) : (
+                                        ''
+                                    )}
+                                </Empty>
+                            )
+                        }
+                    >
+                        <div className={styles.tableProduct}>
+                            <DataTable scroll={1800} isLoading={false} {...tableProps} />
+                        </div>
+                    </ConfigProvider>
+                </Col>
+            </Row>
+            <AdvancedSearch {...advanceFilterProps} />
+            <AddEditForm {...formProps} />
+        </>
+    );
 };
 
-                export const ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);
+export const ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);
