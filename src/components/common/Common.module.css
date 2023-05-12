@@ -1194,6 +1194,27 @@
     text-align: right;
 }
 
+.advanceFilterContainer {
+    margin-top: 15px;
+    padding-top: 5px;
+    display: flex;
+    border-top: solid 1px #E6E6E6;
+}
+
+.advanceFilterContainer .advanceFilterTitle {
+    padding: 10px 0px;
+    margin-right: 10px;
+}
+
+.advanceFilterContainer .advanceFilterItem {
+    height: 35px;
+    border-radius: 20px;
+    padding: 6px 10px;
+    border: solid 1px #FF3E5B;
+    color: #FF3E5B;
+    margin-right: 10px;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
     /* .contentHeaderBackground{text-align: center;} */

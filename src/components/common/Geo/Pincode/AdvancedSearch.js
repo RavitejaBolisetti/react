@@ -10,15 +10,15 @@ const { Option } = Select;
 const { Search } = Input;
 
 export const AdvancedSearchFrom = (props) => {
-    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData, filterString } = props;
-    console.log('🚀 ~ file: AdvancedSearch.js:14 ~ AdvancedSearchFrom ~ filterString:', filterString);
+    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
+    const { filterString, setFilterString } = props;
 
     const [formFieldActive, handleFormFieldChange] = useState(true);
 
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        console.log('advance values', values);
+        setFilterString({ ...values, advanceFilter: true });
     };
 
     const onFinishFailed = () => {
@@ -29,7 +29,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form layout="vertical" form={form} onValuesChange={() => handleFormFieldChange(true)} onFieldsChange={() => handleFormFieldChange(true)} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={'India'} label="Select Country" name="countryName">
+                    <Form.Item initialValue={defaultCountry} label="Select Country" name="countryCode">
                         {defaultCountry && (
                             <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
@@ -41,8 +41,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Select State" initialValue={filterString?.state} rules={[validateRequiredInputField('State')]} name="stateCode">
-                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
+                    <Form.Item label="Select State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
+                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
                             ))}
@@ -52,8 +52,8 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Select District" initialValue={filterString?.district} name="districtName" rules={[validateRequiredSelectField('District')]}>
-                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
+                    <Form.Item label="Select District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
                             ))}
@@ -62,8 +62,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Select City" initialValue={filterString?.city} name="cityName" rules={[validateRequiredSelectField('City')]}>
-                        <Select placeholder="City" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('city')}>
+                    <Form.Item label="Select City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
+                        <Select placeholder="City" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
                             ))}
@@ -73,8 +73,8 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Select Tehsil" initialValue={filterString?.tehsil} name="tehsilName" rules={[validateRequiredSelectField('Tehsil')]}>
-                        <Select placeholder="Tehsil" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('tehsil')}>
+                    <Form.Item label="Select Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
+                        <Select placeholder="Tehsil" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('tehsilCode')}>
                             {filteredTehsilData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
                             ))}
@@ -83,8 +83,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="PIN Code" initialValue={filterString?.pincode} name="pincode" rules={[validateRequiredSelectField('pincode')]}>
-                        <Input placeholder="Search" allowClear onChange={handleFilterChange('pincode', 'text')} />
+                    <Form.Item label="PIN Code" initialValue={filterString?.code} name="pinCode" rules={[validateRequiredSelectField('Pincode')]}>
+                        <Input placeholder="Search" allowClear onChange={handleFilterChange('code', 'text')} />
                     </Form.Item>
                 </Col>
             </Row>

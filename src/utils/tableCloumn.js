@@ -31,12 +31,13 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
     };
 };
 
-export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE }) => {
+export const tblSerialNumberColumn = ({ page = 1, pageSize = DEFAULT_PAGE_SIZE, width = '10%', fixed = '' }) => {
     return {
         title: 'Srl.',
         dataIndex: 'srl',
         render: (_, __, index) => (page - 1) * pageSize + (index + 1),
-        width: '5%',
+        fixed: fixed,
+        width: width,
     };
 };
 
@@ -50,21 +51,23 @@ export const tblApprovalStatusColumn = ({ styles, width = '15%' }) => {
     };
 };
 
-export const tblStatusColumn = ({ styles, width = '15%' }) => {
+export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
     return {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
         render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
         width,
+        fixed: fixed,
     };
 };
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '8%' }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '8%', fixed = '' }) => {
     return {
         title: 'Action',
         dataIndex: '',
         width,
+        fixed: fixed,
         render: (record) => [
             <Space wrap>
                 <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
