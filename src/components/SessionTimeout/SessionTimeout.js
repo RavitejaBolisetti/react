@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer';
-import { withModal } from 'components/withModal';
-import { FilterIcon } from 'Icons';
+import { SessionTimeoutModal } from './SessionTimeoutModal';
+import { AiOutlineWarning } from 'react-icons/ai';
 
 import { Modal } from 'antd';
-
 import * as routing from 'constants/routing';
-
 import { showGlobalNotification } from 'store/actions/notification';
 
 const mapStateToProps = (state) => {
@@ -20,7 +18,6 @@ const mapStateToProps = (state) => {
 
     return {
         userId,
-        
     };
 };
 
@@ -38,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
     const navigate = useNavigate();
 
-    const timeout = 600_000;
+    const timeout = 120_000;
     const promptBeforeIdle = 30_000;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,25 +96,15 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
     };
 
-    const seconds = remaining > 1 ? 'seconds' : 'second';
-    return (
-        <Modal
-            title="Session Timeout"
-            open={isModalOpen}
-            onOk={() =>
-                doLogout({
-                    onSuccess,
-                    onError,
-                    userId,
-                })
-            }
-            onCancel={handleStillHere}
-        >
-            <p>
-                Your session is about to expire. You will be logged out in {remaining} {seconds}. Click "Continue" if you want to continue and stay logged in.
-            </p>
-        </Modal>
-    );
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <AiOutlineWarning />,
+        titleOverride: 'Session Timeout',
+        remaining,
+        closable: false,
+        onCloseAction: handleStillHere,
+    };
+    return <SessionTimeoutModal {...modalProps} />;
 };
 
 export const SessionTimeout = connect(mapStateToProps, mapDispatchToProps)(SessionTimeoutMain);

@@ -4,7 +4,7 @@ import { ConfigProvider, notification } from 'antd';
 import { MainPage } from './components/MainPage';
 import { readFromStorageAndValidateAuth } from 'store/actions/auth';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle, AiOutlineWarning } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 import { hideGlobalNotification } from 'store/actions/notification';
 
