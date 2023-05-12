@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select, Card } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { DataTable } from 'utils/dataTable';
-import { filterFunction } from 'utils/filterFunction';
 import { RxCross2 } from 'react-icons/rx';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -14,9 +13,8 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { TfiReload } from 'react-icons/tfi';
-import { BsFilterSquare } from 'react-icons/bs';
 
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { FilterIcon } from 'Icons';
 
@@ -34,10 +32,8 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
-    // console.log('state', state);
     const {
         auth: { userId },
         data: {
@@ -110,13 +106,14 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
             setFilterString: geoPincodeDataActions.setFilter,
+            resetData: geoPincodeDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const ListPinCodeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
@@ -127,7 +124,6 @@ const ListPinCodeMasterBase = (props) => {
 
     const [form] = Form.useForm();
 
-    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredStateData, setFilteredStateData] = useState([]);
@@ -262,24 +258,29 @@ const ListPinCodeMasterBase = (props) => {
         // fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
     };
 
+    const handleFilterClear = (value) => {
+        resetData();
+        setFilterString(undefined);
+    };
+
     const handleFilterChange =
         (name, type = 'value') =>
-            (value) => {
-                const filterValue = type === 'text' ? value.target.value : value;
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-                if (name === 'countryCode') {
-                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-                }
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+            }
 
-                if (name === 'stateCode') {
-                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-                }
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+            }
 
-                if (name === 'districtCode') {
-                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-                }
-            };
+            if (name === 'districtCode') {
+                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -316,7 +317,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -439,7 +440,7 @@ const ListPinCodeMasterBase = (props) => {
                                             )
                                         );
                                     })}
-                                    <Button className={styles.clearBtn} onClick={handleReferesh} danger>
+                                    <Button className={styles.clearBtn} onClick={handleFilterClear} danger>
                                         Clear
                                     </Button>
                                 </Col>
@@ -447,7 +448,7 @@ const ListPinCodeMasterBase = (props) => {
                         )}
                     </div>
                 </Col>
-            </Row >
+            </Row>
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
