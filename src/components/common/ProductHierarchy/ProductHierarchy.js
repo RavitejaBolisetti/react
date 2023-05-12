@@ -108,6 +108,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
+    const [attributeList, setAttriuteList] = useState([])
+
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     useEffect(() => {

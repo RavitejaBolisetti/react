@@ -16,6 +16,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import ProductAttribueMaster from './ProductAttribute/ProductAttribueMaster'
 
 
 const { Option } = Select;
@@ -214,8 +215,10 @@ const AddEditFormMain = (props) => {
                 {showProductAttribute ? (
                     <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                         <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
-                            <ProductAttributeAddEditForm {...attributeFormProps} />
-                            <ListProductAttribute {...attributeFormProps} />
+                            <ProductAttribueMaster {...attributeFormProps}/>
+
+                            {/* <ProductAttributeAddEditForm {...attributeFormProps} />
+                            <ListProductAttribute {...attributeFormProps} /> */}
                         </Panel>
                     </Collapse>
                 ) : null}
