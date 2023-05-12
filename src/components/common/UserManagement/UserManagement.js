@@ -21,7 +21,7 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 
 import DrawerUtil from './DrawerUtil';
 import { AddEditForm } from './AddEditForm';
-import { FiEdit2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import styles from 'components/common/Common.module.css';
@@ -384,7 +384,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                 return (
                     <Space>
                         <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleUpdate(record)}>
-                            <FiEdit2 />
+                            <FiEdit />
                         </Button>
                         <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />

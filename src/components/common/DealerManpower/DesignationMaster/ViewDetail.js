@@ -20,7 +20,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                     <Descriptions.Item label="Common">{formData?.isCommonIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Manpower Required">{formData?.isManpowerIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Leadship">{formData?.isLeadershipIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    <Descriptions.Item label="Leadership">{formData?.isLeadershipIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Accounts Data">{formData?.isAccountsDataIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Dealer HR">{formData?.isDealerHrIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Certified">{formData?.isCertifiedIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>

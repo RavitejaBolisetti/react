@@ -116,7 +116,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={editMode ? formData.isLeadershipIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isLeadershipIndicatorRequired">
-                                <Checkbox>Leadship</Checkbox>
+                                <Checkbox>Leadership</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>

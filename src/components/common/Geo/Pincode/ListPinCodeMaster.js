@@ -13,6 +13,8 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { TfiReload } from 'react-icons/tfi';
+import { FiEdit } from 'react-icons/fi';
+import { FaRegEye } from 'react-icons/fa';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
