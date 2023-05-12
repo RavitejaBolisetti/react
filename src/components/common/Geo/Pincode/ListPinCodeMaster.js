@@ -265,22 +265,22 @@ const ListPinCodeMasterBase = (props) => {
     };
     const handleFilterChange =
         (name, type = 'value') =>
-        (value) => {
-            const filterValue = type === 'text' ? value.target.value : value;
+            (value) => {
+                const filterValue = type === 'text' ? value.target.value : value;
 
-            if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-            }
+                if (name === 'countryCode') {
+                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                }
 
-            if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-            }
+                if (name === 'stateCode') {
+                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                }
 
-            if (name === 'districtCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-            }
-        };
+                if (name === 'districtCode') {
+                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+                }
+            };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -317,7 +317,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -372,17 +372,12 @@ const ListPinCodeMasterBase = (props) => {
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         onCloseAction: onAdvanceSearchCloseAction,
-        titleOverride: (
-            <>
-                <FilterIcon size={20} />
-                {' Advance Filter'}
-            </>
-        ),
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
         defaultCountry,
-
         districtData,
         stateData,
         data,
@@ -428,28 +423,28 @@ const ListPinCodeMasterBase = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                                     <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={22} lg={22} xl={22} className={styles.advanceFilterContainer}>
+                                        <Col xs={24} sm={24} md={22} lg={22} xl={22}>
                                             <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                     <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
                                                 </Col>
                                                 {extraParams?.map((filter) => {
                                                     return (
                                                         filter?.value && (
-                                                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                                <div className={styles.advanceFilterItem}>
-                                                                    {filter?.title} - {filter?.value}
-                                                                    <span>
-                                                                        <RxCross2 />
-                                                                    </span>
-                                                                </div>
-                                                            </Col>
+                                                            // <Col xs={24} sm={24} md={19} lg={19} xl={19}>
+                                                            <div className={styles.advanceFilterItem}>
+                                                                {filter?.title} - {filter?.value}
+                                                                <span>
+                                                                    <RxCross2 />
+                                                                </span>
+                                                            </div>
+                                                            // </Col>
                                                         )
                                                     );
                                                 })}
                                             </Row>
                                         </Col>
-                                        <Col xs={24} sm={24} md={2} lg={2} xl={2}>
+                                        <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.advanceFilterContainer}>
                                             <Button className={styles.clearBtn} onClick={handleReferesh} danger>
                                                 Clear
                                             </Button>
@@ -458,7 +453,6 @@ const ListPinCodeMasterBase = (props) => {
                                 </Col>
                             </Row>
                         )}
-                        ;
                     </div>
                 </Col>
             </Row>

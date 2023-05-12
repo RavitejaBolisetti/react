@@ -1213,14 +1213,17 @@
 
 .advanceFilterContainer {
     display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    margin-bottom: -2px;
 }
 
-.advanceFilterContainer .advanceFilterTitle {
+.advanceFilterTop .advanceFilterTitle {
     padding: 10px 0px;
     margin-right: 10px;
 }
 
-.advanceFilterContainer .advanceFilterItem {
+.advanceFilterTop .advanceFilterItem {
     height: 30px;
     border-radius: 20px;
     margin-top: 6px;
@@ -1231,7 +1234,7 @@
     margin-right: 10px;
 }
 
-.advanceFilterContainer .advanceFilterItem span {
+.advanceFilterTop .advanceFilterItem span {
     vertical-align: middle;
     margin-left: 4px;
     cursor: pointer;
@@ -1239,6 +1242,8 @@
 
 .advanceFilterTop .clearBtn {
     float: right !important;
+    height: 30px !important;
+    line-height: 16px;
 }
 
 @media (max-width: 768px) {
