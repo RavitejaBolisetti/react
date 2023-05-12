@@ -4,14 +4,12 @@ import { generateRandomNumber } from 'utils/generateRandomNumber';
 
 const { Link } = require('react-router-dom');
 export const addToolTip =
-    (title, placement = 'bottom', color = '') =>
+    (title, placement = 'bottom', color = '', className = '') =>
     (inputComponent) =>
         inputComponent ? (
-            <>
-                <Tooltip title={title} placement={placement} color={color}>
-                    {inputComponent}
-                </Tooltip>
-            </>
+            <Tooltip overlayClassName={className} title={title} placement={placement} color={color}>
+                {inputComponent}
+            </Tooltip>
         ) : (
             title
         );

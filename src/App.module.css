@@ -12,7 +12,144 @@
 
  :global .ant-notification-topRight .ant-notification-notice {
      width: 320px !important;
-     padding: 10px 16px !important;
+     padding: 12px 18px !important;
+ }
+
+ /*--------- Notification Pop Up Design Start ---------*/
+
+ /* .error :global .ant-notification-notice,
+ .warning :global .ant-notification-notice,
+ .success :global .ant-notification-notice,
+ .errorBeforeLogin :global .ant-notification-notice,
+ .successBeforeLogin :global .ant-notification-notice {
+     width: 320px !important;
+     padding: 10px !important;
+ } */
+
+ .error :global .ant-notification-notice-icon,
+ .warning :global .ant-notification-notice-icon,
+ .success :global .ant-notification-notice-icon,
+ .errorBeforeLogin :global .ant-notification-notice-icon,
+ .successBeforeLogin :global .ant-notification-notice-icon {
+     font-weight: 700;
+ }
+
+ .error :global .ant-notification-notice-message,
+ .warning :global .ant-notification-notice-message,
+ .success :global .ant-notification-notice-message,
+ .errorBeforeLogin :global .ant-notification-notice-message,
+ .successBeforeLogin :global .ant-notification-notice-message {
+     font-weight: 500;
+     margin-bottom: 0px !important;
+     font-size: 14px !important;
+     line-height: 24px !important;
+ }
+
+ .error :global .ant-notification-close-icon,
+ .error :global .ant-notification-notice-message,
+ .errorBeforeLogin :global .ant-notification-close-icon,
+ .errorBeforeLogin :global .ant-notification-notice-message {
+     color: #ED302D;
+ }
+
+ .warning :global .ant-notification-close-icon,
+ .warning :global .ant-notification-notice-message {
+     color: #F99C22;
+ }
+
+ .success :global .ant-notification-close-icon,
+ .success :global .ant-notification-notice-message,
+ .successBeforeLogin :global .ant-notification-close-icon,
+ .successBeforeLogin :global .ant-notification-notice-message {
+     color: #70C922;
+ }
+
+ /* .success :global .ant-notification-notice-icon,
+ .successBeforeLogin :global .ant-notification-notice-icon {
+     font-weight: 700;
+     color: #00A310;
+ } */
+
+ .error :global .ant-notification-notice-description,
+ .warning :global .ant-notification-notice-description,
+ .success :global .ant-notification-notice-description,
+ .errorBeforeLogin :global .ant-notification-notice-description,
+ .successBeforeLogin :global .ant-notification-notice-description {
+     line-height: 24px !important;
+     font-weight: 400 !important;
+     padding-right: 20px;
+ }
+
+ .error :global .ant-notification-notice-btn,
+ .warning :global .ant-notification-notice-btn,
+ .errorBeforeLogin :global .ant-notification-notice-btn {
+     margin-left: 35px;
+     float: left;
+     font-size: 12px;
+ }
+
+ .error :global .ant-notification-notice-btn .ant-btn-primary,
+ .errorBeforeLogin :global .ant-notification-notice-btn .ant-btn-primary {
+     background-color: #EF0000;
+     color: #FFFFFF;
+ }
+
+ .warning :global .ant-notification-notice-btn .ant-btn-primary {
+     background-color: #F99C22;
+     color: #FFFFFF;
+ }
+
+ .error :global .ant-notification-notice-btn .ant-btn-dangerous,
+ .errorBeforeLogin :global .ant-notification-notice-btn .ant-btn-dangerous {
+     color: #EF0000;
+     border-color: #EF0000;
+ }
+
+ .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
+     color: #F99C22 !important;
+     border-color: #F99C22;
+     background-color: transparent;
+ }
+
+ .error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover,
+ .errorBeforeLogin :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+     background-color: #ea3434 !important;
+ }
+
+ .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+     background-color: #F99C22 !important;
+ }
+
+ .error :global .ant-notification-notice-close,
+ .warning :global .ant-notification-notice-close,
+ .success :global .ant-notification-notice-close,
+ .errorBeforeLogin :global .ant-notification-notice-close,
+ .successBeforeLogin :global .ant-notification-notice-close {
+     top: 10px !important;
+     right: 15px !important;
+ }
+
+ .error :global .ant-notification-notice-close:hover,
+ .warning :global .ant-notification-notice-close:hover,
+ .success :global .ant-notification-notice-close:hover,
+ .errorBeforeLogin :global .ant-notification-notice-close:hover,
+ .successBeforeLogin :global .ant-notification-notice-close:hover {
+     background-color: transparent !important;
+ }
+
+ .error :global .ant-btn.ant-btn-sm,
+ .warning :global .ant-btn.ant-btn-sm,
+ .errorBeforeLogin :global .ant-btn.ant-btn-sm {
+     height: 28px !important;
+     padding: 4px 16px;
+     margin-bottom: 0px !important;
+     font-size: 12px !important;
+ }
+
+ .warning :global .ant-notification-notice-description,
+ .errorBeforeLogin :global .ant-notification-notice-description,
+ .successBeforeLogin :global .ant-notification-notice-description {
+     color: #FFFFFF;
  }
 
  /*--------- Error Notification Start ---------*/
@@ -22,123 +159,9 @@
      border: 1px solid #ED302D;
  }
 
- .error :global .ant-notification-notice {
-     width: 320px !important;
-     padding: 10px !important;
- }
-
- .error :global .ant-notification-notice-icon {
-     font-weight: 700;
- }
-
- .error :global .ant-notification-close-icon {
-     color: #EF0000;
- }
-
- .error :global .ant-notification-notice-message {
-     color: #EF0000;
-     font-weight: 700;
-     margin-bottom: 0px !important;
-     font-size: 14px !important;
-     line-height: 22px !important;
- }
-
  .error :global .ant-notification-notice-description {
      color: #342C2C;
-     font-size: 12px !important;
-     line-height: 20px !important;
-     font-weight: 400 !important;
-     padding-right: 20px;
  }
-
- .error :global .ant-notification-notice-btn {
-     margin-left: 35px;
-     float: left;
-     font-size: 12px;
- }
-
- .error :global .ant-notification-notice-btn .ant-btn-primary {
-     background-color: #EF0000;
-     color: #FFFFFF;
- }
-
- .error :global .ant-notification-notice-btn .ant-btn-dangerous {
-     color: #EF0000;
-     border-color: #EF0000;
- }
-
- .error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-     background-color: #ea3434 !important;
- }
-
- .error :global .ant-notification-notice-close {
-     top: 10px !important;
-     right: 15px !important;
- }
-
- .error :global .ant-notification-notice-close:hover {
-     background-color: transparent !important;
- }
-
- .error :global .ant-btn.ant-btn-sm {
-     height: 28px !important;
-     padding: 4px 16px;
-     margin-bottom: 0px !important;
-     font-size: 12px !important;
- }
-
- /*--------- Error Notification End ---------*/
-
- /*--------- Success Notification Start ---------*/
- .success {
-     color: #70C922;
-     background-color: #EEFCD2;
-     border: 1px solid #70C922;
- }
-
- .success :global .ant-notification-notice-icon {
-     font-weight: 700;
-     color: #00A310;
- }
-
- .success :global .ant-notification-close-icon {
-     color: #00A310;
- }
-
- .success :global .ant-notification-notice-message {
-     color: #00A310;
-     font-weight: 700;
-     margin-bottom: 0px !important;
-     font-size: 14px !important;
-     line-height: 22px !important;
- }
-
- .success :global .ant-notification-notice-description {
-     color: #342C2C;
-     font-size: 12px !important;
-     line-height: 20px !important;
-     font-weight: 400 !important;
-     padding-right: 20px;
- }
-
- .success :global .ant-notification-notice-close {
-     top: 10px !important;
-     right: 15px !important;
- }
-
- .success :global .ant-notification-notice-close:hover {
-     background-color: transparent !important;
- }
-
- .success :global .ant-btn.ant-btn-sm {
-     height: 28px !important;
-     padding: 4px 16px;
-     margin-bottom: 0px !important;
-     font-size: 12px !important;
- }
-
- /*--------- Success Notification End ---------*/
-
 
  /*--------- Warning Notification Start ---------*/
  .warning {
@@ -147,71 +170,29 @@
      border: 1px solid #F99C22;
  }
 
- .warning :global .ant-notification-notice {
-     width: 320px !important;
-     padding: 10px !important;
+ /*--------- Error Notification Before Login Start ---------*/
+ .errorBeforeLogin {
+     color: #ED302D;
+     background-color: #2B2025;
+     border: 1px solid #ED302D;
  }
 
- .warning :global .ant-notification-notice-icon {
-     font-weight: 700;
+ /*--------- Success Notification Start ---------*/
+ .success {
+     color: #70C922;
+     background-color: #EEFCD2;
+     border: 1px solid #70C922;
  }
 
- .warning :global .ant-notification-close-icon {
-     color: #F99C22;
+ .success :global .ant-notification-notice-description {
+     color: #0B0B0C;
  }
 
- .warning :global .ant-notification-notice-message {
-     color: #F99C22;
-     font-weight: 500;
-     margin-bottom: 0px !important;
-     font-size: 14px !important;
-     line-height: 22px !important;
+ /*--------- Success Notification Before Login Start ---------*/
+ .successBeforeLogin {
+     color: #70C922;
+     background-color: #222921;
+     border: 1px solid #70C922;
  }
 
- .warning :global .ant-notification-notice-description {
-     color: #FFFFFF;
-     font-size: 14px !important;
-     line-height: 22px !important;
-     font-weight: 400 !important;
-     padding-right: 20px;
- }
-
- .warning :global .ant-notification-notice-btn {
-     margin-left: 35px;
-     float: left;
-     font-size: 12px;
- }
-
- .warning :global .ant-notification-notice-btn .ant-btn-primary {
-     background-color: #F99C22;
-     color: #FFFFFF;
- }
-
- .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
-     color: #F99C22 !important;
-     border-color: #F99C22;
-     background-color: transparent;
- }
-
- .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
-     background-color: #F99C22 !important;
- }
-
- .warning :global .ant-notification-notice-close {
-     top: 10px !important;
-     right: 15px !important;
- }
-
- .warning :global .ant-notification-notice-close:hover {
-     background-color: transparent !important;
- }
-
- .warning :global .ant-btn.ant-btn-sm {
-     height: 28px !important;
-     padding: 4px 16px;
-     margin-bottom: 0px !important;
-     font-size: 12px !important;
-     font-weight: 600;
- }
-
- /*--------- Warning Notification End ---------*/
+ /*--------- Notification Pop Up Design End ---------*/
