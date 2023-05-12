@@ -805,6 +805,17 @@
     margin-bottom: 5px;
 }
 
+.contentHeaderBackground .subheading .filterBtn {
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.contentHeaderBackground .subheading .filterBtn svg {
+    margin-right: 6px;
+    margin-top: -4px;
+    vertical-align: middle;
+}
+
 .contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
@@ -1213,6 +1224,10 @@
     border: solid 1px #FF3E5B;
     color: #FF3E5B;
     margin-right: 10px;
+}
+
+.advanceFilterContainer .clearBtn {
+    float: right;
 }
 
 @media (max-width: 768px) {

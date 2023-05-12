@@ -18,6 +18,8 @@ import { BsFilterSquare } from 'react-icons/bs';
 
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
+import { FilterIcon } from 'Icons';
+
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
@@ -262,22 +264,22 @@ const ListPinCodeMasterBase = (props) => {
 
     const handleFilterChange =
         (name, type = 'value') =>
-        (value) => {
-            const filterValue = type === 'text' ? value.target.value : value;
+            (value) => {
+                const filterValue = type === 'text' ? value.target.value : value;
 
-            if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-            }
+                if (name === 'countryCode') {
+                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                }
 
-            if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-            }
+                if (name === 'stateCode') {
+                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                }
 
-            if (name === 'districtCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-            }
-        };
+                if (name === 'districtCode') {
+                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+                }
+            };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -314,7 +316,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -371,7 +373,7 @@ const ListPinCodeMasterBase = (props) => {
         onCloseAction: onAdvanceSearchCloseAction,
         titleOverride: (
             <>
-                <BsFilterSquare size={18} color={'#ff3e5b'} />
+                <FilterIcon size={20} />
                 {' Advance Filter'}
             </>
         ),
@@ -406,7 +408,7 @@ const ListPinCodeMasterBase = (props) => {
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button type="link" className={styles.refreshBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
                                             Advanced Filters
                                         </Button>
                                     </Col>
@@ -437,7 +439,7 @@ const ListPinCodeMasterBase = (props) => {
                                             )
                                         );
                                     })}
-                                    <Button className={styles.refreshBtn} onClick={handleReferesh} danger>
+                                    <Button className={styles.clearBtn} onClick={handleReferesh} danger>
                                         Clear
                                     </Button>
                                 </Col>
@@ -445,7 +447,7 @@ const ListPinCodeMasterBase = (props) => {
                         )}
                     </div>
                 </Col>
-            </Row>
+            </Row >
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
