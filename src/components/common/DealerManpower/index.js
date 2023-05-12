@@ -3,6 +3,6 @@ import { ListDealerDivisionMaster } from './DealerDivisionMaster/ListDealerDivis
 import { BayTypeMaster } from './BayTypeMaster/BayTypeMaster';
 import { ListEmployeeDepartmentMaster } from './DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
 import { ListRoleMaster } from './RoleMaster/ListRoleMaster';
-import { DesignationMaster } from './DesignationMaster/DesignationMaster';
+import { DesignationMaster } from './DesignationMaster/DesignationMaster'; 
 
 export { ListDealerLocationTypeMaster, ListDealerDivisionMaster, BayTypeMaster, ListEmployeeDepartmentMaster, ListRoleMaster, DesignationMaster };

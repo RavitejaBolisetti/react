@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -12,13 +12,19 @@ const { Search } = Input;
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
     const { filterString, setFilterString } = props;
+    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
 
     const [formFieldActive, handleFormFieldChange] = useState(true);
 
     const [form] = Form.useForm();
 
+    useEffect(() => {
+        form.resetFields();
+    }, [filterString]);
+
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
+        handleFilterChange(false);
     };
 
     const onFinishFailed = () => {
@@ -41,6 +47,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    {filterString?.stateCode}
                     <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
                         <Select placeholder="Select" allowClear className={styles.headerSelectField} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
@@ -83,8 +90,8 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="PIN Code" initialValue={filterString?.code} name="pinCode" rules={[validateRequiredSelectField('Pincode')]}>
-                        <Input placeholder="Search" allowClear onChange={handleFilterChange('code', 'text')} />
+                    <Form.Item label="PIN Code" initialValue={filterString?.code} name="code" rules={[validateRequiredSelectField('Pincode')]}>
+                        <Input placeholder="Search" allowClear />
                     </Form.Item>
                 </Col>
             </Row>

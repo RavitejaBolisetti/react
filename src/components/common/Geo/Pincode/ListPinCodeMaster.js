@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select, Card } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { DataTable } from 'utils/dataTable';
-import { filterFunction } from 'utils/filterFunction';
 import { RxCross2 } from 'react-icons/rx';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -14,9 +13,8 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { TfiReload } from 'react-icons/tfi';
-import { BsFilterSquare } from 'react-icons/bs';
 
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { FilterIcon } from 'Icons';
 
@@ -34,10 +32,8 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
-const { Option } = Select;
 
 const mapStateToProps = (state) => {
-    // console.log('state', state);
     const {
         auth: { userId },
         data: {
@@ -110,13 +106,14 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
             setFilterString: geoPincodeDataActions.setFilter,
+            resetData: geoPincodeDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 const ListPinCodeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
@@ -127,7 +124,6 @@ const ListPinCodeMasterBase = (props) => {
 
     const [form] = Form.useForm();
 
-    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredStateData, setFilteredStateData] = useState([]);
@@ -260,6 +256,11 @@ const ListPinCodeMasterBase = (props) => {
     const onSearchHandle = (value) => {
         value && setFilterString({ ...filterString, code: value });
         // fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
+    };
+
+    const handleFilterClear = (value) => {
+        resetData();
+        setFilterString(undefined);
     };
 
     const handleFilterChange =
@@ -457,56 +458,56 @@ const ListPinCodeMasterBase = (props) => {
                                 </Col>
                             </Row >
                         )};
-
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <ConfigProvider
-                                    renderEmpty={() =>
-                                        isDataLoaded && (
-                                            <Empty
-                                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                imageStyle={{
-                                                    height: 60,
-                                                }}
-                                                description={
-                                                    !data?.length ? (
-                                                        <span>
-                                                            No records found. Please add new parameter <br />
-                                                            using below button
-                                                        </span>
-                                                    ) : (
-                                                        <span> No records found.</span>
-                                                    )
-                                                }
-                                            >
-                                                {!data?.length ? (
-                                                    <Row>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                                Add PIN Code
-                                                            </Button>
-                                                        </Col>
-                                                    </Row>
-                                                ) : (
-                                                    ''
-                                                )}
-                                            </Empty>
-                                        )
-                                    }
-                                >
-                                    <div className={styles.tableProduct}>
-                                        <DataTable scroll={1800} isLoading={false} {...tableProps} />
-                                    </div>
-                                </ConfigProvider>
-                            </Col>
-                        </Row>
-                        <AdvancedSearch {...advanceFilterProps} />
-                        <AddEditForm {...formProps} />
                     </div>
-                </Col>
-            </Row>
-        </>
-    );
+                    <Col />
+                    <Row />
+
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <ConfigProvider
+                                renderEmpty={() =>
+                                    isDataLoaded && (
+                                        <Empty
+                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                            imageStyle={{
+                                                height: 60,
+                                            }}
+                                            description={
+                                                !data?.length ? (
+                                                    <span>
+                                                        No records found. Please add new parameter <br />
+                                                        using below button
+                                                    </span>
+                                                ) : (
+                                                    <span> No records found.</span>
+                                                )
+                                            }
+                                        >
+                                            {!data?.length ? (
+                                                <Row>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                                            Add PIN Code
+                                                        </Button>
+                                                    </Col>
+                                                </Row>
+                                            ) : (
+                                                ''
+                                            )}
+                                        </Empty>
+                                    )
+                                }
+                            >
+                                <div className={styles.tableProduct}>
+                                    <DataTable scroll={1800} isLoading={false} {...tableProps} />
+                                </div>
+                            </ConfigProvider>
+                        </Col>
+                    </Row>
+                    <AdvancedSearch {...advanceFilterProps} />
+                    <AddEditForm {...formProps} />
+                </>
+                );
 };
 
-export const ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);
+                export const ListPinCodeMaster = connect(mapStateToProps, mapDispatchToProps)(ListPinCodeMasterBase);
