@@ -97,9 +97,9 @@ const LeftSideBarMain = (props) => {
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => {} });
+            fetchList({ setIsLoading: listShowLoading, userId, errorAction: () => { } });
         }
-        return () => {};
+        return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
 

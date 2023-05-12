@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { FaRegCheckCircle } from 'react-icons/fa';
+import { FcCancel } from 'react-icons/fc';
 import { addToolTip } from 'utils/customMenuLink';
 import styles from './PasswordStrengthMeter.module.css';
 
@@ -67,11 +69,30 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
         <div className={styles.tooltipDesign}>
             <span>Password must include:</span>
             <ul>
-                <li>Have at least 1 uppercase</li>
-                <li>Have at least 1 lowercase</li>
-                <li>Have at least 1 number</li>
-                <li>Have at least 1 symbol</li>
-                <li>Be at least 8 characters</li>
+                <li className={styles.rulesIconGreen}>
+                    <FaRegCheckCircle />
+                    Have at least 1 uppercase
+                </li>
+                <li className={styles.rulesIconRed}>
+                    <FcCancel size={18} />
+                    Have at least 1 number and symbol
+                </li>
+                <li className={styles.rulesIconGreen}>
+                    <FaRegCheckCircle />
+                    Have at least 1 letter
+                </li>
+                <li className={styles.rulesIconRed}>
+                    <FcCancel size={18} />
+                    Be at least 8 characters
+                </li>
+                <li className={styles.rulesIconGreen}>
+                    <FaRegCheckCircle />
+                    Not be a common password
+                </li>
+                <li className={styles.rulesIconGreen}>
+                    <FaRegCheckCircle />
+                    Not be as the same account name
+                </li>
             </ul>
         </div>
     );
@@ -88,7 +109,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                     {strengthText && (
                         <div className={styles.strength}>
                             <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
-                            <span className={styles.infoIcon}>{addToolTip(infoText, 'right', '#2B2521')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText, 'right', '#F99C22')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
                         </div>
                     )}
                 </Col>

@@ -70,7 +70,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
         const onSuccess = (res) => {
             if (res) {
                 form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'Password Updated', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Password Updated', message: res?.responseMessage });
                 navigate(ROUTING_LOGIN);
             }
         };
