@@ -52,10 +52,12 @@ export const validationFieldLetteNumberandPeriod = (fieldName) => ({
     pattern: /^[a-zA-Z0-9.]*$/,
     message: 'Please use only letters, numbers and period in' + fieldName,
 });
+
 export const validationNumber = (fieldName) => ({
     pattern: /^(0|[1-9][0-9]*)$/,
     message: 'Please enter valid ' + fieldName,
 });
+
 
 export const validateOnlyPositiveNumber = (fieldName) => ({
     pattern: /^[1-9]+[0-9]*$/,

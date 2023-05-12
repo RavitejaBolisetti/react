@@ -11,15 +11,13 @@ const { Search } = Input;
 
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
-    const { filterString, setFilterString } = props;
+    const { filterString, setFilterString, advanceFilterForm } = props;
     console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
 
     const [formFieldActive, handleFormFieldChange] = useState(true);
 
-    const [form] = Form.useForm();
-
     useEffect(() => {
-        form.resetFields();
+        advanceFilterForm.resetFields();
     }, [filterString]);
 
     const onFinish = (values) => {
@@ -32,7 +30,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     return (
-        <Form layout="vertical" form={form} onValuesChange={() => handleFormFieldChange(true)} onFieldsChange={() => handleFormFieldChange(true)} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" form={advanceFilterForm} onValuesChange={() => handleFormFieldChange(true)} onFieldsChange={() => handleFormFieldChange(true)} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label="Country" name="countryCode">

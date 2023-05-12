@@ -123,7 +123,7 @@ const ListPinCodeMasterBase = (props) => {
     const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
 
     const [form] = Form.useForm();
-
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredStateData, setFilteredStateData] = useState([]);
@@ -393,6 +393,7 @@ const ListPinCodeMasterBase = (props) => {
         filteredTehsilData,
         filterString,
         setFilterString,
+        advanceFilterForm,
     };
     return (
         <>
