@@ -54,7 +54,7 @@ export const dataActions = (params) => {
 
             let sExtraParamsString = '?';
             extraParams?.forEach((item, index) => {
-                sExtraParamsString += item?.value && item?.key + '=' + item?.value + '&';
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
             });
 
             sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);

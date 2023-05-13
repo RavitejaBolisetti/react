@@ -58,7 +58,6 @@ export const validationNumber = (fieldName) => ({
     message: 'Please enter valid ' + fieldName,
 });
 
-
 export const validateOnlyPositiveNumber = (fieldName) => ({
     pattern: /^[1-9]+[0-9]*$/,
     message: 'Please enter valid ' + fieldName,
@@ -72,6 +71,11 @@ export const validateGSTIN = (fieldName) => ({
 export const validateNumberWithTwoDecimalPlaces = (fieldName) => ({
     pattern: /^[0-9]*\.[0-9]{2}$/,
     message: 'Please enter valid ' + fieldName,
+});
+
+export const validatePincodeField = (fieldName, digit = '6') => ({
+    pattern: /^\d{6}(?:\s*,\s*\d{6})*$/,
+    message: 'Please enter 6 digit valid ' + fieldName,
 });
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
