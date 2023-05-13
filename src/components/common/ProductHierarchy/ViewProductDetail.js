@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions, Space, Row, Col } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
-import ProductAttributePanel from './ProductAttributeDetail/ProductAttributePanel';
+import CardProductAttribute from './ProductAttribute/CardProductAttribute';
 
 export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled, setAddBtnDisabled, onActionFormFinish, viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
     const viewProps = {
@@ -21,7 +21,6 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
         isAddBtnDisabled,
         setAddBtnDisabled,
         onFinish: onActionFormFinish,
-        
     };
 
     return (
@@ -36,7 +35,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
                 <Space direction="vertical" size="small" className={styles.accordianContainer}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            {selectedTreeData?.skuAttributes && selectedTreeData?.skuAttributes.length > 0 && <ProductAttributePanel {...attributeFormProps} />}
+                            {selectedTreeData?.skuAttributes.length > 0 && selectedTreeData?.skuAttributes?.map((item) => <CardProductAttribute attributeName={item.code} attributeValue={item.value} />)}
                         </Col>
                     </Row>
                 </Space>

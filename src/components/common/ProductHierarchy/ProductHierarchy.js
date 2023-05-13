@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], skudata: skuData = [], changeHistoryVisible,attributeData: productHierarchyAttributeData = [], },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
         },
         common: {
@@ -55,6 +55,7 @@ const mapStateToProps = (state) => {
         isDataAttributeLoaded,
         attributeData: attributeData?.filter((item) => item?.status),
         unFilteredAttributeData: attributeData,
+        productHierarchyAttributeData,
         //attributeData: attributeData?.filter((i) => i),
     };
     return returnValue;
@@ -77,12 +78,15 @@ const mapDispatchToProps = (dispatch) => ({
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
             showGlobalNotification,
             // onOpenAction: productHierarchyDataActions.changeHistoryVisible,
+
+            fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
+            listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, cardBtnDisableAction, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData,fetchListHierarchyAttributeName,productHierarchyAttributeData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -105,12 +109,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [isChildAllowed, setIsChildAllowed] = useState(true);
     const [selectedId, setSelectedId] = useState();
 
+    const [showProductAttribute, setShowProductAttribute] = useState(false);
+
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const [attributeList, setAttriuteList] = useState([])
-
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+
+    //console.log(productHierarchyAttributeData,'productHierarchyAttributeDataproductHierarchyAttributeData')
 
     useEffect(() => {
         if (userId) {
@@ -125,6 +131,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         if (selectedId && userId) {
@@ -236,10 +249,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
         setIsFormVisible(true);
         setFormActionType(type);
+        //productAttributeEdit(true);
     };
 
     const handleAttributeChange = (value) => {
         const selectedAttribute = attributeData?.find((i) => i.id === value);
+        selectedAttribute.hierarchyAttribueCode === "SKU" ? setShowProductAttribute(true) : setShowProductAttribute(false);
         setIsChildAllowed(selectedAttribute?.isChildAllowed);
     };
 
@@ -325,6 +340,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setFormBtnActive,
         skuAttributes,
         setSKUAttributes,
+        productHierarchyAttributeData,
+        showProductAttribute,
     };
 
     const viewProps = {
@@ -341,8 +358,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
-
-    console.log(isFormBtnActive,'checkActive');
 
     return (
         <>

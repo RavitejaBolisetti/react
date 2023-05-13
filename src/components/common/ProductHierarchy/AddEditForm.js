@@ -1,74 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Collapse, Select, Switch, Button } from 'antd';
+import { Col, Input, Form, Row, Collapse, Select, Switch, Button, Space, Spin } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import style from '../../common/DrawerAndTable.module.css';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
-import ProductAttributeAddEditForm from './ProductAttributeDetail/ProductAttributeAddEditForm';
-import ListProductAttribute from './ProductAttributeDetail/ListProductAttribute';
-
-import styles from 'components/common/Common.module.css';
-import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber,validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
+import ProductDetail from './ProductDetail';
+import styles from 'components/common/Common.module.css';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import ProductAttribueMaster from './ProductAttribute/ProductAttribueMaster'
-
-
-const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
 
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, attributeData: productHierarchyAttributeData = [], },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
-        },
-    } = state;
-
-    console.log(state,'STATE')
-
-    let returnValue = {
-        isLoading,
-        collapsed,
-        userId,
-        isDataLoaded,
-        productHierarchyAttributeData,
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
-            listShowLoading: productHierarchyDataActions.listShowLoading,
-        },
-        dispatch
-    ),
-});
-
-
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData,productHierarchyAttributeData } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData,showProductAttribute } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    const { form, skuAttributes, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId } = props;
+    const { form, skuAttributes, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
 
-    // console.log('formData', formData);
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
     const [isAddBtnDisabled, setAddBtnDisabled] = useState(false);
-    const [showProductAttribute, setShowProductAttribute] = useState(true);
 
     const { onFinish, onFinishFailed } = props;
 
@@ -92,17 +43,17 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         setSelectedTreeSelectKey(treeCodeId);
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeCodeId]);
 
     useEffect(() => {
-        if ( userId) {
-            fetchListHierarchyAttributeName({  userId, setIsLoading: listShowLoading });
-           // setIsLoading: listShowLoading,
+        if (userId) {
+            fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading });
+            //setIsLoading: listShowLoading,
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ userId]);
+    }, [userId]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -127,11 +78,11 @@ const AddEditFormMain = (props) => {
 
     const handleProductchange = (e) => {
         const value = e.target.textContent;
-        setShowProductAttribute(value);
+        // setShowProductAttribute(value);
     };
 
     const onActionFormFinish = (val) => {
-        console.log("val", val)
+        console.log('val', val);
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
@@ -146,85 +97,42 @@ const AddEditFormMain = (props) => {
         onFinish: onActionFormFinish,
         setFormBtnActive,
         productHierarchyAttributeData,
+        isVisible,
+    };
 
+    const productDetailsProps = {
+        mainForm: form,
+        handleFormValueChange,
+        handleFormFieldChange,
+        onMainFormFinish: onFinish,
+        onFinishFailed,
+        formData,
+        handleAttributeChange,
+        handleProductchange,
+        isDataAttributeLoaded,
+        disabledProps,
+        attributeData,
+        treeCodeId,
+        treeSelectFieldProps,
+        formActionType,
+        onCloseAction,
+        isFormBtnActive,
+        isReadOnly,
     };
 
     return (
         <>
-            <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                            <Select onChange={handleAttributeChange} onClick={handleProductchange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
-                                {attributeData?.map((item) => (
-                                    <Option value={item?.id}>{item?.hierarchyAttribueName}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
-                            <TreeSelectField {...treeSelectFieldProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                            <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description'),validateAlphanumericWithSpaceHyphenPeriod('short description')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description'),validateAlphanumericWithSpaceHyphenPeriod('long description')]}>
-                            <TextArea rows={2} placeholder={preparePlaceholderText('long description')} showCount maxLength={100} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
-                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" danger type="primary" disabled={!isFormBtnActive}>
-                            Save
-                        </Button>
-                    </Col>
-                </Row>
-
-                {showProductAttribute ? (
-                    <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
-                        <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
-                            <ProductAttribueMaster {...attributeFormProps}/>
-
-                            {/* <ProductAttributeAddEditForm {...attributeFormProps} />
-                            <ListProductAttribute {...attributeFormProps} /> */}
-                        </Panel>
-                    </Collapse>
-                ) : null}
-            </Form>
+            <ProductDetail {...productDetailsProps} />
+            {showProductAttribute && (
+                <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
+                    <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
+                        <ProductAttributeMaster {...attributeFormProps} />
+                    </Panel>
+                </Collapse>
+            )}
+             
         </>
     );
 };
 
-export const AddEditForm = connect(mapStateToProps, mapDispatchToProps)(withDrawer(AddEditFormMain, {}));
+export const AddEditForm = withDrawer(AddEditFormMain, {});
