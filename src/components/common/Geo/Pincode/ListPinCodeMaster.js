@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select, Card } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
 import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -13,8 +13,6 @@ import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import { TfiReload } from 'react-icons/tfi';
-import { FiEdit } from 'react-icons/fi';
-import { FaRegEye } from 'react-icons/fa';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
@@ -27,8 +25,7 @@ import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validatePincodeField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -141,6 +138,7 @@ const ListPinCodeMasterBase = (props) => {
     // const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    // const [extraParams, setExtraParams] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -152,39 +150,6 @@ const ListPinCodeMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const extraParams = [
-        {
-            key: 'countryCode',
-            title: 'Country',
-            value: filterString?.countryCode,
-        },
-        {
-            key: 'stateCode',
-            title: 'State',
-            value: filterString?.stateCode,
-        },
-        {
-            key: 'districtCode',
-            title: 'District',
-            value: filterString?.districtCode,
-        },
-        {
-            key: 'tehsilCode',
-            title: 'Tehsil',
-            value: filterString?.tehsilCode,
-        },
-        {
-            key: 'cityCode',
-            title: 'City',
-            value: filterString?.cityCode,
-        },
-        {
-            key: 'code',
-            title: 'Pincode',
-            value: filterString?.code,
-        },
-    ];
-
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
@@ -194,24 +159,28 @@ const ListPinCodeMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            if (!isDataCountryLoaded) {
+            if (!isDataCountryLoaded && !isCountryLoading) {
                 fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
             }
-            if (!isStateDataLoaded) {
+
+            if (!isStateDataLoaded && !isStateLoading) {
                 fetchStateList({ setIsLoading: listStateShowLoading, userId });
             }
-            if (!isDistrictDataLoaded) {
+
+            if (!isDistrictDataLoaded && !isDistrictLoading) {
                 fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
             }
-            if (!isCityDataLoaded) {
+
+            if (!isCityDataLoaded && !isCityLoading) {
                 fetchCityList({ setIsLoading: listCityShowLoading, userId });
             }
-            if (!isTehsilDataLoaded) {
+
+            if (!isTehsilDataLoaded && !isTehsilLoading) {
                 fetchTehsilList({ setIsLoading: listTehsilShowLoading, userId });
             }
 
-            if (!isConfigDataLoaded) {
-                fetchConfigList({ setIsLoading: listShowLoading, userId, parameterType: 'PIN_CATG' });
+            if (!isConfigDataLoaded && !isConfigLoading) {
+                fetchConfigList({ setIsLoading: listConfigShowLoading, userId, parameterType: 'PIN_CATG' });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -231,6 +200,45 @@ const ListPinCodeMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
+
+    const extraParams = [
+        {
+            key: 'countryCode',
+            title: 'Country',
+            value: filterString?.countryCode,
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+        },
+        {
+            key: 'stateCode',
+            title: 'State',
+            value: filterString?.stateCode,
+            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+        },
+        {
+            key: 'districtCode',
+            title: 'District',
+            value: filterString?.districtCode,
+            name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+        },
+        {
+            key: 'tehsilCode',
+            title: 'Tehsil',
+            value: filterString?.tehsilCode,
+            name: filteredTehsilData?.find((i) => i?.code === filterString?.tehsilCode)?.name,
+        },
+        {
+            key: 'cityCode',
+            title: 'City',
+            value: filterString?.cityCode,
+            name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
+        },
+        {
+            key: 'code',
+            title: 'Pincode',
+            value: filterString?.code,
+            name: filterString?.code,
+        },
+    ];
 
     useEffect(() => {
         if (userId && filterString) {
@@ -256,33 +264,33 @@ const ListPinCodeMasterBase = (props) => {
         setRefershData(!refershData);
     };
 
-    const onSearchHandle = (value) => {
-        value && setFilterString({ ...filterString, code: value });
-        // fetchList({ setIsLoading: listShowLoading, userId, mytype: '?code='.concat(value) });
-    };
-
-    const handleFilterClear = (value) => {
-        resetData();
-        setFilterString(undefined);
-    };
     const handleFilterChange =
         (name, type = 'value') =>
-            (value) => {
-                const filterValue = type === 'text' ? value.target.value : value;
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-                if (name === 'countryCode') {
-                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-                }
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
 
-                if (name === 'stateCode') {
-                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-                }
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
 
-                if (name === 'districtCode') {
-                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-                }
-            };
+            if (name === 'districtCode') {
+                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -319,7 +327,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -369,6 +377,14 @@ const ListPinCodeMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {
@@ -391,6 +407,17 @@ const ListPinCodeMasterBase = (props) => {
         filterString,
         setFilterString,
         advanceFilterForm,
+        resetData,
+        handleResetFilter,
+    };
+
+    const onSearchHandle = (value) => {
+        value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
+    };
+
+    const removeFilter = (key) => {
+        const { [key]: names, ...rest } = filterString;
+        setFilterString({ ...rest });
     };
     return (
         <>
@@ -400,11 +427,12 @@ const ListPinCodeMasterBase = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        PIN Code
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label="PIN Code" initialValue={filterString?.code} name="keyword" rules={[validatePincodeField('Pincode')]}>
+                                                <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                            </Form.Item>
+                                        </Form>
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                                         <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
@@ -435,9 +463,9 @@ const ListPinCodeMasterBase = (props) => {
                                                         filter?.value && (
                                                             // <Col xs={24} sm={24} md={19} lg={19} xl={19}>
                                                             <div className={styles.advanceFilterItem}>
-                                                                {filter?.title} - {filter?.value}
+                                                                {filter?.name}
                                                                 <span>
-                                                                    <RxCross2 />
+                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
                                                                 </span>
                                                             </div>
                                                             // </Col>
@@ -447,7 +475,7 @@ const ListPinCodeMasterBase = (props) => {
                                             </Row>
                                         </Col>
                                         <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.advanceFilterContainer}>
-                                            <Button className={styles.clearBtn} onClick={handleReferesh} danger>
+                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
                                                 Clear
                                             </Button>
                                         </Col>
@@ -496,7 +524,7 @@ const ListPinCodeMasterBase = (props) => {
                         }
                     >
                         <div className={styles.tableProduct}>
-                            <DataTable scroll={1800} isLoading={false} {...tableProps} />
+                            <DataTable scroll={2400} isLoading={false} {...tableProps} />
                         </div>
                     </ConfigProvider>
                 </Col>

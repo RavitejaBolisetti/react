@@ -11,7 +11,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'PIN Category',
             dataIndex: 'pinCategory',
-            width: '15%',
+            width: '150px',
         }),
 
         tblPrepareColumns({
@@ -23,30 +23,64 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Locality',
             dataIndex: 'localityName',
-            width: '15%',
+            width: '200px',
         }),
+
+        tblPrepareColumns({
+            title: 'Tehsil',
+            dataIndex: 'tehsilName',
+            width: '200px',
+        }),
+
+        tblPrepareColumns({
+            title: 'City',
+            dataIndex: 'cityName',
+            width: '200px',
+        }),
+
+        tblPrepareColumns({
+            title: 'District',
+            dataIndex: 'districtName',
+            width: '200px',
+        }),
+
+        tblPrepareColumns({
+            title: 'State',
+            dataIndex: 'stateName',
+            width: '200px',
+        }),
+
+        tblPrepareColumns({
+            title: 'Country',
+            dataIndex: 'countryName',
+            width: '200px',
+        }),
+
+        // tblPrepareColumns({
+        //     title: 'Detail',
+        //     width: '300px',
+        //     render: (text, record) => {
+        //         let $sDetail = 'Country:' + record?.countryName;
+        //         $sDetail += 'District:' + record?.districtName;
+
+        //         return $sDetail;
+        //     },
+        // }),
 
         tblPrepareColumns({
             title: 'Within 50Km from the GPO',
             dataIndex: 'withIn50KmFromGpo',
-            width: '15%',
+            width: '250px',
             render: (text, record) => {
                 return <Checkbox disabled defaultChecked={text ? true : false} className={styles.registered}></Checkbox>;
             },
         }),
 
-        tblPrepareColumns({
-            title: 'Approval Status',
-            dataIndex: 'approvalStatus',
-            render: (text, record) => <>{text ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>}</>,
-            width: '15%',
-        }),
-
         tblApprovalStatusColumn({ styles }),
 
-        tblStatusColumn({ styles, fixed: 'right' }),
+        tblStatusColumn({ styles }),
 
-        tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '15%' })
+        tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
     );
 
     return tableColumn;
