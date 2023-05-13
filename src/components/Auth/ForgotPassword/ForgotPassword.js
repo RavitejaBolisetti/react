@@ -143,7 +143,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
             const onSuccess = (res) => {
                 setValidationKey(res?.data?.validationKey);
-                showGlobalNotification({ notificationType: 'success', title: 'OTP Verified', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'OTP Verified', message: res?.responseMessage });
                 setCurrentStep(4);
             };
 
@@ -165,7 +165,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
         const onSuccess = (res) => {
             form.resetFields();
 
-            showGlobalNotification({ notificationType: 'success', title: 'Password Changed', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'Password Changed', message: res?.responseMessage });
             navigate(ROUTING_LOGIN);
         };
 

@@ -10,7 +10,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Tehsil Code',
             dataIndex: 'code',
-            width: '15%',
+            width: '12%',
         }),
 
         tblPrepareColumns({
@@ -31,7 +31,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '20%',
         }),
 
-        tblStatusColumn({ styles, width: '12%' }),
+        tblStatusColumn({ styles, width: '10%' }),
 
         tblActionColumn({ handleButtonClick, styles })
     );

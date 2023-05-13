@@ -213,6 +213,10 @@
     height: 32px !important;
 }
 
+:global .ant-input-affix-wrapper {
+    padding-right: 2px !important;
+}
+
 :global .ant-input-affix-wrapper,
 :global .ant-btn-default {
     height: 34px !important;

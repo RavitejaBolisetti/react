@@ -1,0 +1,12 @@
+.modalContainer :global .ant-modal-footer button:first-child {
+    float: left;
+}
+
+@media screen and (max-width: 1199px) {
+   
+
+}
+
+@media screen and (max-width: 767px) {
+  
+}
