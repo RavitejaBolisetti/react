@@ -18,8 +18,8 @@
     margin-bottom: 20px;
 }
 
-.allowedTiming :global .ant-picker-input > input:placeholder-shown,
-.allowedTiming :global .ant-picker-input > input {
+.allowedTiming :global .ant-picker-input>input:placeholder-shown,
+.allowedTiming :global .ant-picker-input>input {
     font-size: 14px;
 }
 
@@ -130,28 +130,31 @@
 .contentHeaderBackground :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
     padding-left: 0px !important;
 }
+
 .contentHeaderBackground {
     background-color: #f4f4f4;
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 7px;
 }
+
 .addGroup {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0px !important;
 }
+
 .contentHeaderBackground .addGroup button {
     margin-bottom: 0px !important;
     margin-left: 10px;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -241,6 +244,7 @@
 .srchbtn :global .ant-btn-default {
     background-color: #ffffff;
 }
+
 .addGroup {
     display: flex;
     justify-content: right;
@@ -324,6 +328,7 @@
     background-color: #f4f4f4;
 }
 
+:global .ant-picker .ant-picker-input span.ant-picker-suffix .anticon.anticon-clock-circle,
 :global .ant-picker-focused .ant-picker-input span.ant-picker-suffix .anticon.anticon-clock-circle {
     color: #ff3e5b;
 }
@@ -446,7 +451,7 @@
     color: #e31837 !important;
 }
 
-:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-texts {
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
     font-size: 16px;
 }
