@@ -266,31 +266,31 @@ const ListPinCodeMasterBase = (props) => {
 
     const handleFilterChange =
         (name, type = 'value') =>
-        (value) => {
-            const filterValue = type === 'text' ? value.target.value : value;
+            (value) => {
+                const filterValue = type === 'text' ? value.target.value : value;
 
-            if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-                advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-            }
+                if (name === 'countryCode') {
+                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                    advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                    advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                    advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                }
 
-            if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-                advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-            }
+                if (name === 'stateCode') {
+                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                    advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                    advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                }
 
-            if (name === 'districtCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-            }
-        };
+                if (name === 'districtCode') {
+                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                    advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+                }
+            };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -327,7 +327,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -453,28 +453,24 @@ const ListPinCodeMasterBase = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                                     <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={22} lg={22} xl={22}>
-                                            <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                    <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                                </Col>
-                                                {extraParams?.map((filter) => {
-                                                    return (
-                                                        filter?.value && (
-                                                            // <Col xs={24} sm={24} md={19} lg={19} xl={19}>
-                                                            <div className={styles.advanceFilterItem}>
-                                                                {filter?.name}
-                                                                <span>
-                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                                </span>
-                                                            </div>
-                                                            // </Col>
-                                                        )
-                                                    );
-                                                })}
-                                            </Row>
+                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
                                         </Col>
-                                        <Col xs={24} sm={24} md={2} lg={2} xl={2} className={styles.advanceFilterContainer}>
+                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value && (
+                                                        <div className={styles.advanceFilterItem}>
+                                                            {filter?.name}
+                                                            <span>
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                             <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
                                                 Clear
                                             </Button>

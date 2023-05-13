@@ -891,25 +891,25 @@
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track,
-:global .ant-table .ant-table-content::-webkit-scrollbar-track {
+:global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar,
-:global .ant-table .ant-table-content::-webkit-scrollbar {
+:global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar {
     background-color: #f4f4f4;
     width: 5px;
 }
 
-:global .ant-descriptions .ant-descriptions-view:hover::-webkit-scrollbar {
-    width: 5px !important;
-}
-
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
-:global .ant-table .ant-table-content::-webkit-scrollbar-thumb {
+:global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-thumb {
     background-color: rgba(52, 44, 44, 0.34);
     border-radius: 10px;
     /* border: 2px solid ; */
+}
+
+:global .ant-descriptions .ant-descriptions-view:hover::-webkit-scrollbar {
+    width: 5px !important;
 }
 
 /* Crticality group allowed timing css*/
@@ -1216,6 +1216,12 @@
 
 .advanceFilterContainer {
     display: flex;
+    flex-flow: wrap;
+    /* align-items: center; */
+}
+
+.advanceFilterClear {
+    display: flex;
     align-items: center;
     flex-direction: row-reverse;
     margin-bottom: -2px;
@@ -1227,6 +1233,10 @@
     width: 160px;
 }
 
+/* .advanceFilterTop .advanceFilterItem:first-child {
+    margin-left: -40px;
+} */
+
 .advanceFilterTop .advanceFilterItem {
     height: 30px;
     border-radius: 20px;
@@ -1235,7 +1245,7 @@
     border: solid 1px #FF3E5B;
     color: #FF3E5B;
     line-height: 18px;
-    margin-left: 12px;
+    margin-right: 12px;
 }
 
 .advanceFilterTop .advanceFilterItem span {
