@@ -65,8 +65,8 @@ const CardProductAttribute = (props) => {
     useEffect(() => {
         return () => {
             setProductAttributeEdit(false);
-            {view === true ? null : setFormDecider(true)}
-            ;
+            {!view && setFormDecider(true)}
+ 
         };
     }, []);
 
