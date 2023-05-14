@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect, useReducer } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
@@ -8,13 +8,74 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
+    const { isVisible, setFinalFormdata, attributeForm, forceUpdate,setFormDecider,formDecider } = props;
 
-    const viewMode = false;
+    const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
+    const [editForm] = Form.useForm();
+ 
 
-    const { isVisible } = props;
+    const onAttributeEdit = (props) => {
+        setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
+    };
 
-    const colLeft = viewMode ? 24 : 18;
-    const colRight = viewMode ? 24 : 6;
+    const onAttributeSave = (val) => {
+
+        setFormDecider(true);
+        const newFormData = editForm.getFieldsValue();
+
+        console.log(newFormData,'getField')
+        
+        setFinalFormdata((prev) => {
+            const updatedValue = prev;
+            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
+            const formatData = {
+                attributeName: {label: newFormData?.attributeName},
+                attributeValue: newFormData?.attributeValue
+            }
+            updatedValue?.splice(indx, 1,{...formatData});
+            //console.log(updatedValue,'FINAL')
+            return updatedValue
+        });
+        // setIsBtnDisabled(false);
+        setProductAttributeEdit(false);
+        attributeForm.resetFields();
+        forceUpdate();
+    };
+
+    const onAttributeDelete = (val) => {
+        //console.log(val,'delete1')
+
+        setFinalFormdata((prev) => {
+            //console.log(prev,'delete2')
+            const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
+            let updatedValue = prev;
+            updatedValue?.splice(indx, 1);
+            return updatedValue;
+        });
+
+        attributeForm.resetFields();
+        forceUpdate();
+    };
+
+    const onAttributeCancel = () => {
+        setProductAttributeEdit(false);
+        // setIsBtnDisabled(false);
+    };
+
+    useEffect(() => {
+        return () => {
+            setProductAttributeEdit(false);
+            setFormDecider(true);
+        };
+    }, []);
+
+    useEffect( () =>{
+
+    },[] )
+
+    const colLeft = !isVisible ? 24 : 18;
+    const colRight = !isVisible ? 24 : 6;
+
 
     return (
         <Card
@@ -32,37 +93,33 @@ const CardProductAttribute = (props) => {
                         <Text type="secondary">{props.attributeValue}</Text>
                     </div>
                 </Col>
-                {!isVisible && (
+
+                {isVisible && (
                     <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
-                        {productAttributeEdit ? (
+                        {!productAttributeEdit ? (
                             <div className={styles.cardItemBtn}>
                                 <>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6} style={{ margin: '0 8px 0 0' }}>
                                         <Button
                                             type="link"
                                             icon={<FiEdit />}
-                                            //onClick={() => onEdit(id,status,  termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode)}
+                                            onClick={() => {
+                                                onAttributeEdit(props);
+                                                setProductAttributeEdit(true);
+                                            }}
                                         />
                                     </Col>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button
-                                            //onClick={() => handleDeleteDocType({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode })}
-                                            type="link"
-                                            icon={<FiTrash />}
-                                        />
+                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} />
                                     </Col>
                                 </>
                             </div>
                         ) : (
                             <div className={styles.cardItemBtn}>
-                                <Button type="link" 
-                               // onClick={() => onCancel()}
-                                >
+                                <Button type="link" onClick={onAttributeCancel}>
                                     Cancel
                                 </Button>
-                                <Button type="link" 
-                                //onClick={onUpdate}
-                                >
+                                <Button type="link" onClick={() => onAttributeSave(props)}>
                                     Save
                                 </Button>
                             </div>
@@ -71,12 +128,12 @@ const CardProductAttribute = (props) => {
                 )}
             </Row>
 
-            {/* {isEditing && (
+            {productAttributeEdit && (
                 <>
                     <Divider />
-                    <ProductAttributeAddEditForm {...productActionFormsProps} />
+                    <FormProductAttribute {...editedAAttributeValue} editForm={editForm} formDecider={formDecider} />
                 </>
-            )} */}
+            )}
         </Card>
     );
 };

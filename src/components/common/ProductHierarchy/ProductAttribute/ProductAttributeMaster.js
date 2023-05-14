@@ -1,40 +1,44 @@
-import React, { Fragment, useReducer, useState } from 'react';
+import React, { Fragment, useReducer, useState,useEffect } from 'react';
 import { Form } from 'antd';
 import CardProductAttribute from './CardProductAttribute';
 import FormProductAttribute from './FormProductAttribute';
 
-const ProductAttributeMaster = ({ setIsBtnDisabled, isBtnDisabled, onFinish = () => {}, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, productHierarchyAttributeData,isVisible }) => {
+const ProductAttributeMaster = (props) => {
+    const { productHierarchyAttributeData,isVisible } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
 
     const [finalFormdata, setFinalFormdata] = useState([]);
+    const [ editedValue, setEditedValue ] = useState(null);
+    const [ formDecider, setFormDecider] = useState(false);
 
     const onAttributeFormFinish = (val) => {
-        setFinalFormdata([...finalFormdata, val]);
+        finalFormdata.push(val)
         attributeForm.resetFields();
         forceUpdate();
-    };
-
-    const formProductAttributeProps = {
-        setIsBtnDisabled,
-        isBtnDisabled,
-        productHierarchyAttributeData,
-        finalFormdata,
-        attributeForm,
-        onAttributeFormFinish,
-        isVisible
     };
 
     const cardAttributeProps = {
         attributeForm,
         onAttributeFormFinish,
-        finalFormdata,
-        //setfinalFormdata,
         forceUpdate,
-        setIsBtnDisabled,
-        isBtnDisabled,
         isVisible,
+        finalFormdata,
+        setFinalFormdata,
+        editedValue,
+        setEditedValue,
+        formDecider, 
+        setFormDecider,
     };
+
+    const formProductAttributeProps = {
+        ...cardAttributeProps,
+        productHierarchyAttributeData,
+    };
+
+     useEffect(() => {
+       
+    }, [finalFormdata]);
 
     return (
         <Fragment>
@@ -47,9 +51,9 @@ const ProductAttributeMaster = ({ setIsBtnDisabled, isBtnDisabled, onFinish = ()
                 finalFormdata?.map((action) => {
                     return (
                         <CardProductAttribute {...cardAttributeProps} 
-                            attributeName={action.attributeName.label}
-                            attributeValue={action.attributeValue}
-                            attributeId={action.attributeName.key}
+                            attributeName={action?.attributeName?.label}
+                            attributeValue={action?.attributeValue}
+                            attributeId={action?.attributeName?.key}
                         />
                     )
                 })

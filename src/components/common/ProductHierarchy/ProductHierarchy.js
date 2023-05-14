@@ -194,6 +194,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const handleTreeViewClick = (keys) => {
         setButtonData({ ...defaultBtnVisiblity });
+        setShowProductAttribute(false)
 
         form.resetFields();
         setFormData([]);
@@ -249,6 +250,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
         setIsFormVisible(true);
         setFormActionType(type);
+        setShowProductAttribute(false);
         //productAttributeEdit(true);
     };
 
