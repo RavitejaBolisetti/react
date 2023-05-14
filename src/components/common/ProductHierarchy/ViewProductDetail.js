@@ -16,18 +16,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
     };
     // console.log('selectedTreeData', selectedTreeData, selectedTreeData?.skuAttributes);
 
-    const [open, setOpen] = useState(false);
-
-
-    const attributeFormProps = {
-        form,
-        viewMode: true,
-        skuAttributes: selectedTreeData?.skuAttributes,
-        setSKUAttributes,
-        isAddBtnDisabled,
-        setAddBtnDisabled,
-        onFinish: onActionFormFinish,
-    };
+    const [view, setView] = useState(true);
 
     return (
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
@@ -46,7 +35,7 @@ export const ViewProductDetailMain = ({ form, setSKUAttributes, isAddBtnDisabled
                                     <Panel header={<span>Product SKU</span>} key="2">
                                        
                                         {selectedTreeData?.skuAttributes?.map((item) => (
-                                            <CardProductAttribute attributeName={item.code} attributeValue={item.value} />
+                                            <CardProductAttribute attributeName={item.code} attributeValue={item.value}  view={view} setView={setView}/>
                                         ))}
                                         
                                     </Panel>

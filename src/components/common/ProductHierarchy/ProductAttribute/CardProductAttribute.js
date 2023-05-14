@@ -8,7 +8,7 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, setFinalFormdata, attributeForm, forceUpdate,setFormDecider,formDecider } = props;
+    const { isVisible, setFinalFormdata, attributeForm, forceUpdate,setFormDecider,formDecider,view } = props;
 
     const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
@@ -65,7 +65,8 @@ const CardProductAttribute = (props) => {
     useEffect(() => {
         return () => {
             setProductAttributeEdit(false);
-            setFormDecider(true);
+            {view === true ? null : setFormDecider(true)}
+            ;
         };
     }, []);
 

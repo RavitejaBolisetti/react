@@ -4,7 +4,7 @@ import CardProductAttribute from './CardProductAttribute';
 import FormProductAttribute from './FormProductAttribute';
 
 const ProductAttributeMaster = (props) => {
-    const { productHierarchyAttributeData,isVisible } = props;
+    const { productHierarchyAttributeData,isVisible,setSKUAttributes } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
 
@@ -16,6 +16,15 @@ const ProductAttributeMaster = (props) => {
         finalFormdata.push(val)
         attributeForm.resetFields();
         forceUpdate();
+
+        //console.log(finalFormdata,'formatData');
+        const formatData = []
+
+    finalFormdata.map( (item) => (
+        formatData.push( {code: item?.attributeName?.label, value : item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key, })
+    ) )
+
+    setSKUAttributes(formatData);
     };
 
     const cardAttributeProps = {
@@ -35,10 +44,6 @@ const ProductAttributeMaster = (props) => {
         ...cardAttributeProps,
         productHierarchyAttributeData,
     };
-
-     useEffect(() => {
-       
-    }, [finalFormdata]);
 
     return (
         <Fragment>
