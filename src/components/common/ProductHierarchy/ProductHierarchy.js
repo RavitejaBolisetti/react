@@ -116,8 +116,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
-    //console.log(productHierarchyAttributeData,'productHierarchyAttributeDataproductHierarchyAttributeData')
-
     useEffect(() => {
         if (userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy' });
@@ -293,6 +291,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             onError,
             onSuccess,
         };
+        console.log(requestData,'final')
         saveData(requestData);
     };
 
