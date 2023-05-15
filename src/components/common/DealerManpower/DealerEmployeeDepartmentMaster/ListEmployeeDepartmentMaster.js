@@ -322,6 +322,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         advanceFilterForm,
         resetData,
         handleResetFilter,
+        setAdvanceSearchVisible,
     };
 
     const onSearchHandle = (value) => {

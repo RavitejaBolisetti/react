@@ -8,7 +8,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { handleFilterChange, filteredDivisionData, divisionData } = props;
+    const { handleFilterChange, divisionData, setAdvanceSearchVisible } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
 
     useEffect(() => {
@@ -20,6 +20,7 @@ export const AdvancedSearchFrom = (props) => {
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
+        setAdvanceSearchVisible(false);
     };
 
     const onFinishFailed = () => {
@@ -52,48 +53,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                     
                 </Col>
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.keyword} name="keyword" rules={[]}>
-                        <Input placeholder="Search" maxLength={50} allowClear />
-                    </Form.Item>
-                </Col> */}
             </Row>
-
-            {/* <Row gutter={16}> */}
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
-                            {filteredDistrictData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
-
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
-                            {filteredCityData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
-            </Row> */}
-{/* 
-            <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('tehsilCode')}>
-                            {filteredTehsilData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
-
-                
-            </Row> */}
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
@@ -103,7 +63,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
+                    <Button htmlType="submit" type="primary" >
                         Search
                     </Button>
                 </Col>
