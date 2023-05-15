@@ -47,7 +47,7 @@
     background-color: #f4f4f4;
     padding: 10px !important;
     margin-bottom: 20px;
-    border-radius: 7px;
+    border-radius: 8px !important;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
@@ -737,6 +737,14 @@
 .headerSearchField {
     vertical-align: middle;
     width: 100%;
+}
+
+.headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
+    border: 0;
+}
+
+.headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
 }
 
 .headerSearchField :global .anticon svg {
