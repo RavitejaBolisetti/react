@@ -366,7 +366,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
                                         <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item label={`${moduleTitle}`} initialValue={filterString?.code} name="keyword" rules={[validateRequiredInputField(`${moduleTitle}`)]}>
-                                                <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                                <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>
                                     </Col>
