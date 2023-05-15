@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
+
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { withModal } from 'components/withModal';
 
@@ -9,7 +10,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter,setAdvanceSearchVisible } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();

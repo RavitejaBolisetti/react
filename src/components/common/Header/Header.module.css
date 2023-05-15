@@ -38,7 +38,7 @@
 }
 
 .userText .userName {
-    max-width: 112px;
+    max-width: 140px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
