@@ -9,7 +9,7 @@ import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { validatePincodeField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -365,7 +365,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
                                         <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.code} name="keyword" rules={[validatePincodeField('Pincode')]}>
+                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.code} name="keyword" rules={[validateRequiredInputField(`${moduleTitle}`)]}>
                                                 <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>
