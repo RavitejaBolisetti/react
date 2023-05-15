@@ -47,10 +47,16 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department" initialValue={filterString?.departmentName} name="departmentCode" rules={[validateRequiredInputField('Department')]}>
+                    <Form.Item label="Department" initialValue={filterString?.keyword} name="keyword" rules={[validateRequiredInputField('Department')]}>
                         <Input placeholder="Search" allowClear />
                     </Form.Item>
+                    
                 </Col>
+                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="State" initialValue={filterString?.keyword} name="keyword" rules={[]}>
+                        <Input placeholder="Search" maxLength={50} allowClear />
+                    </Form.Item>
+                </Col> */}
             </Row>
 
             {/* <Row gutter={16}> */}
