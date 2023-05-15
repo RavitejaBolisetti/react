@@ -9,12 +9,17 @@ import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
+import { validatePincodeField } from 'utils/validation';
+
+import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+import { FilterIcon } from 'Icons';
+import { RxCross2 } from 'react-icons/rx';
 
 import styles from 'components/common/Common.module.css';
 
@@ -32,7 +37,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer Employee Department Master';
+    const moduleTitle = 'Dealer Employee Department';
 
     let returnValue = {
         userId,
@@ -57,17 +62,22 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerManpowerEmployeeDepartmentDataActions.fetchList,
             saveData: dealerManpowerEmployeeDepartmentDataActions.saveData,
             listShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
+            resetData: dealerManpowerEmployeeDepartmentDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
+
+
 export const ListEmployeeDepartmentMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, resetData } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
 
     const [form] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
@@ -77,12 +87,15 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [filteredDivisionData, setFilteredDivisionData] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -128,6 +141,14 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
+    // useEffect(() => {
+    //     if ( isDivisionDataLoaded && isDataLoaded ) {
+    //         // setFilterString({ countryCode: defaultCountry });
+    //         //setFilteredDivisionData(divisionData?.filter((i) => i?.code === defaultCountry));
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, isDivisionDataLoaded]);
+
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -144,17 +165,53 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
-    };
+    // const onSearchHandle = (value) => {
+    //     setFilterString({ ...filterString, keyword: value });
+    // };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
-    };
+    // const onChangeHandle = (e) => {
+    //     setFilterString({ ...filterString, keyword: e.target.value });
+    // };
 
-    const handleDivisionChange = (value) => {
-        setFilterString({ ...filterString, division: value });
-    };
+    // const handleDivisionChange = (value) => {
+    //     setFilterString({ ...filterString, division: value });
+    // };
+
+    const extraParams = [
+        {
+            key: 'code',
+            title: 'Division',
+            value: filterString?.code,
+            name: divisionData?.find((i) => i?.code === filterString?.code)?.divisionName,
+        },
+        {
+            key: 'departmentCode',
+            title: 'Department',
+            value: filterString?.departmentCode,
+            name: filterString?.departmentCode,
+        },
+    ];
+
+    useEffect(() => {
+        if (userId && filterString) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, userId]);
+
+    console.log(divisionData, 'divisionDatadivisionData');
+
+    const handleFilterChange =
+        (name, type = 'value') =>
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
+
+            if (name === 'code') {
+                setFilteredDivisionData(data?.filter((i) => i?.divisionCode === filterValue));
+                advanceFilterForm.setFieldsValue({ departmentCode: undefined });
+            }
+
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -201,6 +258,18 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
+    };
+
     const formProps = {
         form,
         formData,
@@ -231,13 +300,40 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        handleFilterChange,
+        // filteredStateData,
+        // filteredDistrictData,
+        // filteredCityData,
+        // filteredTehsilData,
+        // filterString,
+        // setFilterString,
+        // advanceFilterForm,
+        // resetData,
+        // handleResetFilter,
+    };
+
+    const onSearchHandle = (value) => {
+        value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
+    };
+
+    const removeFilter = (key) => {
+        const { [key]: names, ...rest } = filterString;
+        setFilterString({ ...rest });
+    };
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                            {/* <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
                                         {`${moduleTitle}`}
@@ -252,6 +348,28 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
                                     </Col>
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                            Advanced Filters
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Col> */}
+
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={14} md={14} lg={16} xl={16}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.code} name="keyword" rules={[validatePincodeField('Pincode')]}>
+                                                <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                            </Form.Item>
+                                        </Form>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                            Advanced Filters
+                                        </Button>
+                                    </Col>
                                 </Row>
                             </Col>
 
@@ -262,6 +380,37 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
+
+                        {filterString?.advanceFilter && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                        </Col>
+                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value && (
+                                                        <div className={styles.advanceFilterItem}>
+                                                            {filter?.name}
+                                                            <span>
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )}
                     </div>
                 </Col>
             </Row>
@@ -308,6 +457,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                     </ConfigProvider>
                 </Col>
             </Row>
+            <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
         </>
     );

@@ -193,6 +193,8 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
+    console.log(stateData,'checkstateData');
+
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             // setFilterString({ countryCode: defaultCountry });
@@ -399,6 +401,7 @@ const ListPinCodeMasterBase = (props) => {
         districtData,
         stateData,
         data,
+
         handleFilterChange,
         filteredStateData,
         filteredDistrictData,
@@ -449,6 +452,11 @@ const ListPinCodeMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
+
+
+
+
+
                         {filterString?.advanceFilter && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
@@ -479,6 +487,8 @@ const ListPinCodeMasterBase = (props) => {
                                 </Col>
                             </Row>
                         )}
+
+                        
                     </div>
                 </Col>
             </Row>
