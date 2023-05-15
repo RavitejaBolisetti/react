@@ -271,6 +271,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
+        setFilterString();
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
@@ -324,7 +325,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, code: value }) : handleResetFilter();
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
     };
 
     const removeFilter = (key) => {
@@ -365,11 +366,10 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
                                         <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.code} name="keyword" rules={[validateRequiredInputField(`${moduleTitle}`)]}>
+                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword" rules={[validateRequiredInputField(`${moduleTitle}`)]}>
                                                 <Search placeholder="Search" value={filterString?.keyword} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                             <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        
                                     </Col>
                                         </Form>
                                     </Col>
