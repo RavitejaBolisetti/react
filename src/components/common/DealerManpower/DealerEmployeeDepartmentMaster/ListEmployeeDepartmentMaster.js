@@ -85,7 +85,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
+    const [filterString, setFilterString] = useState({ advanceFilter: true });
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [filteredDivisionData, setFilteredDivisionData] = useState([]);
 
@@ -183,12 +183,14 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             title: 'Division',
             value: filterString?.code,
             name: divisionData?.find((i) => i?.code === filterString?.code)?.divisionName,
+            canRemove: true,
         },
         {
-            key: 'departmentCode',
-            title: 'Department',
-            value: filterString?.departmentCode,
-            name: filterString?.departmentCode,
+            key: 'keyword',
+            title: 'Keyword',
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+            canRemove: true,
         },
     ];
 
@@ -199,8 +201,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, userId]);
 
-    console.log(divisionData, 'divisionDatadivisionData');
-
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -210,8 +210,15 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 setFilteredDivisionData(data?.filter((i) => i?.divisionCode === filterValue));
                 advanceFilterForm.setFieldsValue({ departmentCode: undefined });
             }
-
         };
+
+        // const handleFilterChange =
+        // (name, type = 'value') =>
+        // (value) => {
+        //     if (name === 'countryCode') {
+        //         advanceFilterForm.setFieldsValue({ stateCode: undefined });
+        //     }
+        // };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -307,15 +314,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
         handleFilterChange,
-        // filteredStateData,
-        // filteredDistrictData,
-        // filteredCityData,
-        // filteredTehsilData,
-        // filterString,
-        // setFilterString,
-        // advanceFilterForm,
-        // resetData,
-        // handleResetFilter,
+        divisionData,
+        filteredDivisionData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
     };
 
     const onSearchHandle = (value) => {
