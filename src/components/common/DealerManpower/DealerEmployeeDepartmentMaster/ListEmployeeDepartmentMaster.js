@@ -370,8 +370,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                             <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword" rules={[validateRequiredInputField(`${moduleTitle}`)]}>
                                                 <Search placeholder="Search" value={filterString?.keyword} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
-                                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    </Col>
                                         </Form>
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
