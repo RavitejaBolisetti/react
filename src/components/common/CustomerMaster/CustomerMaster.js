@@ -19,7 +19,6 @@ import { userManagementDataActions } from 'store/actions/data/userManagement';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 
-import DrawerUtil from './DrawerUtil';
 import { AddEditForm } from './AddEditForm';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
