@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button,  InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 
@@ -8,15 +8,12 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-import { CustomerProfile } from './CustomerProfile/CustomerProfile'
+import { CustomerProfile } from './CustomerProfile/CustomerProfile';
 import styles from 'components/common/Common.module.css';
-
-
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import Address from './Address/Address';
-
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -101,12 +98,13 @@ const AddEditFormMain = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
-                <Address/>
-                <CustomerProfile/>
+                <>
+                    <Address />
+                    <CustomerProfile />
+                </>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
-     
 
             <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -133,4 +131,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {width : 1200});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
