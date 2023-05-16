@@ -8,9 +8,8 @@ import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { CustomerProfile } from './CustomerProfile/CustomerProfile'
+import { FamilyDetails } from './FamilyDetails/FamilyDetails'
 import styles from 'components/common/Common.module.css';
-
-
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
@@ -99,7 +98,8 @@ const AddEditFormMain = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
-                <CustomerProfile/>
+                 <FamilyDetails/>
+
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
