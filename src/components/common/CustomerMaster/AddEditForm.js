@@ -7,7 +7,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-
+import { CustomerProfile } from './CustomerProfile/CustomerProfile'
 import styles from 'components/common/Common.module.css';
 
 
@@ -99,50 +99,7 @@ const AddEditFormMain = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
-                <Space
-                    direction="vertical"
-                    size="middle"
-                    style={{
-                        display: 'flex',
-                        marginBottom: '30px',
-                    }}
-                >
-               
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                label="MAC ID"
-                                name="macid"
-                                rules={[
-                                    validateRequiredInputField('MAC id'),
-                                    validationFieldLetterAndNumber('MAC id'),
-                                    {
-                                        validator: (_, value) => Checkduplicate(value),
-                                    },
-                                ]}
-                            >
-                                <Input onChange={(event) => setMacid(event.target.value)} minLength={14} maxLength={14} placeholder={preparePlaceholderText('MAC id')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary" disabled={disableadd}>
-                                Add
-                            </Button>
-                        </Col>
-                    </Row>
-              
-
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <div className={styles.manageAccessHeader}>
-                                <p>
-                                    Access Management<span>*</span>
-                                </p>
-                            </div>
-                        </Col>
-                    </Row>
-
-                </Space>
+                <CustomerProfile/>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
@@ -173,4 +130,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, {width : 1200});
