@@ -69,10 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-
-
 export const ListEmployeeDepartmentMasterBase = (props) => {
-    
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, resetData } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
 
@@ -85,7 +82,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState({ advanceFilter: true });
+    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [filteredDivisionData, setFilteredDivisionData] = useState([]);
 
@@ -128,9 +125,19 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const keyword = filterString?.keyword;
-                const division = filterString?.division;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
+                console.log('filterString', filterString);
+                const keyword = filterString?.keyword === undefined ? filterString?.code : filterString?.keyword;
+                const division = filterString?.code;
+                console.log('division', division);
+                console.log('data',data);
+
+                const filterDataItem = data?.filter((item) => 
+                
+                (keyword ? filterFunction(keyword)(item?.divisionCode) || 
+                filterFunction(keyword)(item?.divisionName) : true)
+                &&
+                (division ? filterFunction(division)(item?.divisionCode) : true));
+
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -194,13 +201,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         },
     ];
 
-    useEffect(() => {
-        if (userId && filterString) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, userId]);
-
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -212,13 +212,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             }
         };
 
-        // const handleFilterChange =
-        // (name, type = 'value') =>
-        // (value) => {
-        //     if (name === 'countryCode') {
-        //         advanceFilterForm.setFieldsValue({ stateCode: undefined });
-        //     }
-        // };
+    // const handleFilterChange =
+    // (name, type = 'value') =>
+    // (value) => {
+    //     if (name === 'countryCode') {
+    //         advanceFilterForm.setFieldsValue({ stateCode: undefined });
+    //     }
+    // };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -326,12 +326,16 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
+        advanceFilterForm
+            .validateFields()
+            .then(() => (value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter()))
+            .catch((error) => console.error(error));
     };
 
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         setFilterString({ ...rest });
+        advanceFilterForm.resetFields();
     };
 
     return (
@@ -366,8 +370,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword" rules={[validateRequiredInputField(`${moduleTitle}`)]}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword">
                                                 <Search placeholder="Search" value={filterString?.keyword} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>

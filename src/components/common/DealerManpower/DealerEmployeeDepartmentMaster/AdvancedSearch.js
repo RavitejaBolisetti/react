@@ -18,6 +18,7 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
+        console.log('values',values);
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
         setAdvanceSearchVisible(false);
@@ -39,7 +40,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division" initialValue={filterString?.divisionName} rules={[validateRequiredSelectField('Division')]} name="code">
+                    <Form.Item label="Division" initialValue={filterString?.divisionName}  name="code">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('code')}>
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
@@ -48,7 +49,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department" initialValue={filterString?.keyword} name="keyword" rules={[validateRequiredInputField('Department')]}>
+                    <Form.Item label="Department" initialValue={filterString?.keyword} name="keyword" >
                         <Input placeholder="Search" allowClear />
                     </Form.Item>
                     
