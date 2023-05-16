@@ -8,8 +8,8 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
+    const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, isAdvanceSearchVisible, setAdvanceSearchVisible } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -18,6 +18,7 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
+        console.log('onfinish values', values);
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
         setAdvanceSearchVisible(false);
@@ -27,6 +28,14 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
+    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+
+    const selectProps = {
+        filterOption,
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
@@ -43,11 +52,35 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.keyword} name="keyword" rules={[]}>
+                    <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
+                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
+                            {filteredStateData?.map((item) => (
+                                <Option value={item?.code}>{item?.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <Row gutter={16}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
+                            {filteredDistrictData?.map((item) => (
+                                <Option value={item?.code}>{item?.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Col>
+
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item label="City Name" initialValue={filterString?.code} name="keyword">
                         <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>
                 </Col>
             </Row>
+
+            <Row gutter={16}></Row>
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>

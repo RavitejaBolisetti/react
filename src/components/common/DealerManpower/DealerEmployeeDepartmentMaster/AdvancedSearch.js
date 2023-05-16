@@ -18,7 +18,6 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values',values);
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
         setAdvanceSearchVisible(false);

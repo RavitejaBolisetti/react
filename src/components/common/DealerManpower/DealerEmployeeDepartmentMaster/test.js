@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
 import { bindActionCreators } from 'redux';
-
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-
-import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
-import { showGlobalNotification } from 'store/actions/notification';
+import { geoCountryDataActions } from 'store/actions/data/geo/country';
+import { tableColumn } from './tableColumn';
 
 import { ListDataTable } from 'utils/ListDataTable';
+import { filterFunction } from 'utils/filterFunction';
+import { showGlobalNotification } from 'store/actions/notification';
+import { AddEditForm } from './AddEditForm';
+import { geoStateDataActions } from 'store/actions/data/geo/state';
+import { geoCityDataActions } from 'store/actions/data/geo/city';
+import { AdvancedSearch } from './AdvancedSearch';
+import { FilterIcon } from 'Icons';
+
+import { PlusOutlined } from '@ant-design/icons';
+import { TfiReload } from 'react-icons/tfi';
 import { RxCross2 } from 'react-icons/rx';
 
-import { filterFunction } from 'utils/filterFunction';
-import { AdvancedSearch } from './AdvancedSearch';
-import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { FilterIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
-
 import styles from 'components/common/Common.module.css';
+import { geoDistrictDataActions } from 'store/actions/data/geo/district';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -32,13 +31,14 @@ const mapStateToProps = (state) => {
         data: {
             Geo: {
                 Country: { isLoaded: isDataCountryLoaded = false, isLoading: isCountryLoading = false, data: countryData = [] },
-                State: { isLoaded: isDataLoaded = false, isLoading, data },
+                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
+                District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading = false, data: districtData = [] },
+                City: { isLoaded: isDataLoaded = false, isLoading, data = [] },
             },
         },
     } = state;
 
-    const moduleTitle = 'State Master List';
-
+    const moduleTitle = 'City Master List';
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
@@ -50,9 +50,15 @@ const mapStateToProps = (state) => {
         isCountryLoading,
         countryData: finalCountryData,
         defaultCountry,
+        isStateDataLoaded,
+        isStateLoading,
+        stateData,
+        isDistrictDataLoaded,
+        isDistrictLoading,
+        districtData,
         isDataLoaded,
-        data,
         isLoading,
+        data,
         moduleTitle,
     };
     return returnValue;
@@ -63,34 +69,42 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchCountryList: geoCountryDataActions.fetchList,
-            countryShowLoading: geoCountryDataActions.listShowLoading,
-
-            fetchList: geoStateDataActions.fetchList,
-            saveData: geoStateDataActions.saveData,
-            resetData: geoStateDataActions.reset,
-            listShowLoading: geoStateDataActions.listShowLoading,
+            listCountryShowLoading: geoCountryDataActions.listShowLoading,
+            fetchStateList: geoStateDataActions.fetchList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
+            fetchDistrictList: geoDistrictDataActions.fetchList,
+            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+            fetchList: geoCityDataActions.fetchList,
+            saveData: geoCityDataActions.saveData,
+            listShowLoading: geoCityDataActions.listShowLoading,
+            resetData: geoCityDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
+export const ListCityMasterBase = (props) => {
+    const { data, saveData, fetchList, userId, resetData, isLoading, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
-export const ListStateMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, isLoading, listShowLoading, resetData, showGlobalNotification, moduleTitle } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
+    const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
+    const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [form] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [filteredStateData, setFilteredStateData] = useState([]);
+    const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState({ advanceFilter: true });
+    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -102,44 +116,30 @@ export const ListStateMasterBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const extraParams = [
-        {
-            key: 'countryCode',
-            title: 'Country',
-            value: filterString?.countryCode,
-            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: false,
-        },
-        {
-            key: 'keyword',
-            title: 'Keyword',
-            value: filterString?.keyword,
-            name: filterString?.keyword,
-            canRemove: true,
-        },
-    ];
-
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {
-        setFilterString({ countryCode: defaultCountry });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultCountry]);
-
-    useEffect(() => {
-        if (userId && !isDataCountryLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        if (userId) {
             if (!isDataCountryLoaded) {
-                fetchCountryList({ setIsLoading: countryShowLoading, userId });
+                fetchCountryList({ setIsLoading: listCountryShowLoading, userId });
+            }
+            if (!isStateDataLoaded) {
+                fetchStateList({ setIsLoading: listStateShowLoading, userId });
+            }
+            if (!isDistrictDataLoaded) {
+                fetchDistrictList({ setIsLoading: listDistrictShowLoading, userId });
+            }
+            if (!isDataLoaded) {
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataCountryLoaded]);
-
+    }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -148,11 +148,21 @@ export const ListStateMasterBase = (props) => {
     }, [userId, refershData]);
 
     useEffect(() => {
+        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
+            // setFilterString({ countryCode: defaultCountry });
+            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataCountryLoaded, isStateDataLoaded]);
+
+    useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const keyword = filterString?.keyword;
-                const countryCode = filterString?.countryCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (countryCode ? filterFunction(countryCode)(item?.countryCode) : true));
+                console.log('filterString', filterString);
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const state = filterString?.stateCode;
+                const district = filterString?.districtCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -162,19 +172,39 @@ export const ListStateMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+    const extraParams = [
+        {
+            key: 'countryCode',
+            title: 'Country',
+            value: filterString?.countryCode,
+            canRemove: false,
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+        },
+        {
+            key: 'stateCode',
+            title: 'State',
+            value: filterString?.stateCode,
+            canRemove: true,
 
-    const handleReferesh = () => {
-        setShowDataLoading(true);
-        setRefershData(!refershData);
-    };
+            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+        },
+        {
+            key: 'districtCode',
+            title: 'District',
+            canRemove: true,
 
-    const handleFilterChange =
-        (name, type = 'value') =>
-        (value) => {
-            if (name === 'countryCode') {
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-            }
-        };
+            value: filterString?.districtCode,
+            name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+        },
+
+        {
+            key: 'keyword',
+            title: 'keyword',
+            canRemove: true,
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+        },
+    ];
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -187,19 +217,61 @@ export const ListStateMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
+    const handleReferesh = () => {
+        setShowDataLoading(true);
+        setRefershData(!refershData);
+    };
+    const removeFilter = (key) => {
+        const { [key]: names, ...rest } = filterString;
+        setFilterString({ ...rest });
+    };
+
     const onSearchHandle = (value) => {
         value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
     };
 
+    const onChangeHandle = (e) => {
+        setFilterString({ ...filterString, keyword: e.target.value });
+    };
+
+    // const handleFilterChange = (name) => (value) => {
+    //     if (name === 'state') {
+    //         setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
+    //         advanceFilterForm.setFieldsValue({ districtCode: undefined });
+    //         advanceFilterForm.setFieldsValue({ cityCode: undefined });
+    //         advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+    //     }
+    //     setFilterString({ ...filterString, [name]: value });
+    // };
+    const handleFilterChange =
+        (name, type = 'value') =>
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
+
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+        };
+
     const onFinish = (values) => {
         let data = { ...values };
-
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -225,6 +297,7 @@ export const ListStateMasterBase = (props) => {
 
         saveData(requestData);
     };
+    const handleadd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -234,37 +307,6 @@ export const ListStateMasterBase = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-    };
-
-    const onAdvanceSearchCloseAction = () => {
-        setAdvanceSearchVisible(false);
-        advanceFilterForm.resetFields();
-    };
-
-    const handleResetFilter = () => {
-        resetData();
-        advanceFilterForm.resetFields();
-        setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
-    };
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-        onCloseAction: onAdvanceSearchCloseAction,
-        setAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-        isDataCountryLoaded,
-        isCountryLoading,
-        countryData,
-        defaultCountry,
-
-        data,
-        handleFilterChange,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        resetData,
-        handleResetFilter,
     };
 
     const formProps = {
@@ -278,12 +320,16 @@ export const ListStateMasterBase = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
-        tableData: searchData,
+        tableData: data,
 
         isDataCountryLoaded,
         isCountryLoading,
         countryData,
         defaultCountry,
+
+        districtData,
+        stateData,
+        data,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -293,21 +339,48 @@ export const ListStateMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
     };
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        setFilterString();
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
+    };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+        defaultCountry,
+        districtData,
+        stateData,
+        data,
+        handleFilterChange,
+        filteredStateData,
+        filteredDistrictData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
+        isAdvanceSearchVisible,
+        setAdvanceSearchVisible,
+    };
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
         tableData: searchData,
         setPage,
     };
-
-    const removeFilter = (key) => {
-        console.log("🚀 ~ file: ListStateMaster.js:304 ~ removeFilter ~ key:", key)
-        const { [key]: names, ...rest } = filterString;
-        setFilterString({ ...rest });
-    };
-
-    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
-
     return (
         <>
             <Row gutter={20}>
@@ -316,11 +389,16 @@ export const ListStateMasterBase = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        State List
+                                    <Col xs={24} sm={12} md={4} lg={4} xl={4} className={styles.lineHeight33}>
+                                        City List
                                     </Col>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Search placeholder="Search" value={filterString?.keyword} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label="" initialValue={filterString?.code} name="keyword">
+                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                            </Form.Item>
+                                        </Form>
                                     </Col>
                                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                                         <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
@@ -330,12 +408,17 @@ export const ListStateMasterBase = (props) => {
                                 </Row>
                             </Col>
 
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add State
-                                </Button>
-                            </Col>
+                            {data?.length ? (
+                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleadd}>
+                                        Add City
+                                    </Button>
+                                </Col>
+                            ) : (
+                                ''
+                            )}
                         </Row>
                         {filterString?.advanceFilter && (
                             <Row gutter={20}>
@@ -350,10 +433,12 @@ export const ListStateMasterBase = (props) => {
                                                     filter?.value && (
                                                         <div className={styles.advanceFilterItem}>
                                                             {filter?.name}
-                                                            {filter?.canRemove && (
+                                                            {filter?.canRemove ? (
                                                                 <span>
                                                                     <RxCross2 onClick={() => removeFilter(filter?.key)} />
                                                                 </span>
+                                                            ) : (
+                                                                ''
                                                             )}
                                                         </div>
                                                     )
@@ -373,15 +458,15 @@ export const ListStateMasterBase = (props) => {
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={'State'} />
-                </Col>
-            </Row>
+            <div className={styles.tableProduct}>
+                <ListDataTable scroll={2400} isLoading={false} {...tableProps} />
+            </div>
+
             <AdvancedSearch {...advanceFilterProps} />
+
             <AddEditForm {...formProps} />
         </>
     );
 };
 
-export const ListStateMaster = connect(mapStateToProps, mapDispatchToProps)(ListStateMasterBase);
+export const ListCityMaster = connect(mapStateToProps, mapDispatchToProps)(ListCityMasterBase);
