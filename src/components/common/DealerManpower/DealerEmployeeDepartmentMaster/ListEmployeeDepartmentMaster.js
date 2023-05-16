@@ -126,13 +126,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
                 console.log('filterString', filterString);
-                const keyword = filterString?.keyword === undefined ? filterString?.code : filterString?.keyword;
-                const division = filterString?.code;
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const division = filterString?.divisonCode;
                 console.log('division', division);
                 console.log('data',data);
 
                 const filterDataItem = data?.filter((item) => 
-                
+
                 (keyword ? filterFunction(keyword)(item?.divisionCode) || 
                 filterFunction(keyword)(item?.divisionName) : true)
                 &&
@@ -171,18 +171,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         record && setFormData(record);
         setIsFormVisible(true);
     };
-
-    // const onSearchHandle = (value) => {
-    //     setFilterString({ ...filterString, keyword: value });
-    // };
-
-    // const onChangeHandle = (e) => {
-    //     setFilterString({ ...filterString, keyword: e.target.value });
-    // };
-
-    // const handleDivisionChange = (value) => {
-    //     setFilterString({ ...filterString, division: value });
-    // };
 
     const extraParams = [
         {
@@ -344,29 +332,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            {/* <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.lineHeight33}>
-                                        {`${moduleTitle}`}
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Select placeholder="Division" loading={isDivisionLoading} onChange={handleDivisionChange} allowClear className={styles.headerSelectField}>
-                                            {divisionData?.map((item) => (
-                                                <Option value={item?.code}>{item?.divisionName}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col> */}
-
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
