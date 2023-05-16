@@ -66,7 +66,6 @@ const CardProductAttribute = (props) => {
         return () => {
             setProductAttributeEdit(false);
             {!view && setFormDecider(true)}
- 
         };
     }, []);
 

@@ -159,6 +159,14 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChildAllowed]);
 
+    
+    // if (formActionType === FROM_ACTION_TYPE.EDIT) {
+    //     setShowProductAttribute(true);
+    // } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
+    //     setShowProductAttribute(false);
+    // } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
+    // }
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -192,8 +200,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const handleTreeViewClick = (keys) => {
         setButtonData({ ...defaultBtnVisiblity });
-        setShowProductAttribute(false)
-
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
@@ -248,8 +254,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
         setIsFormVisible(true);
         setFormActionType(type);
-        setShowProductAttribute(false);
-        //productAttributeEdit(true);
     };
 
     const handleAttributeChange = (value) => {
@@ -343,6 +347,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setSKUAttributes,
         productHierarchyAttributeData,
         showProductAttribute,
+        selectedTreeData,
+        setShowProductAttribute,
     };
 
     const viewProps = {

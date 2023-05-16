@@ -12,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData,showProductAttribute } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData,showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
     const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, skuAttributes, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
@@ -32,14 +32,16 @@ const AddEditFormMain = (props) => {
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.parntProdctId;
+       // setShowProductAttribute(true);
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        //console.log(selectedTreeKey,'parent')
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
+        //setShowProductAttribute(false);
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => selectedTreeKey[0] === i.key);
         treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
+        //setShowProductAttribute(false);
     }
 
     useEffect(() => {
@@ -55,6 +57,15 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect( () => {
+        if (formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING) {
+            setShowProductAttribute(false);
+        } 
+        if (formActionType === FROM_ACTION_TYPE.EDIT) {
+            setShowProductAttribute(true);
+        }
+    }, [] )
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -83,7 +94,6 @@ const AddEditFormMain = (props) => {
     };
 
     const onActionFormFinish = (val) => {
-        console.log('val', val);
         const { value, label } = val?.attributeName;
         setSKUAttributes((prev) => [...prev, { attributeName: label, id: value, attributeValue: val.attributeValue }]);
         actionForm.resetFields();
@@ -99,6 +109,8 @@ const AddEditFormMain = (props) => {
         setFormBtnActive,
         productHierarchyAttributeData,
         isVisible,
+        selectedTreeData,
+        formActionType,
     };
 
     const productDetailsProps = {
@@ -124,6 +136,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <ProductDetail {...productDetailsProps} />
+            { console.log(showProductAttribute,'Boolean') }
             {showProductAttribute && (
                 <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                     <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">
