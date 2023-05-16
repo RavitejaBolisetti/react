@@ -2,7 +2,6 @@ import React from 'react';
 import CommonCard from './CommonCard';
 import { Col, Input, Form, Descriptions, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
 import styles from 'components/common/Common.module.css';
-import style from './UserManagement.module.css';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import MacIdCard from './MacIdCard';
 import AssignUserRole from './AssignUserRole';
@@ -11,7 +10,7 @@ import ProductMapping from './ProductMapping';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
-const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, handleCollapse, openAccordian, productHierarchyData, finalFormdata, AccessMacid, isViewModeVisible, handleDelete, DealerData, setfinalFormdata }) => {
+const ViewCustomerMasterMain = ({ formData, styles, DealerSearchvalue, handleCollapse, openAccordian, productHierarchyData, finalFormdata, AccessMacid, isViewModeVisible, handleDelete, DealerData, setfinalFormdata }) => {
     console.log('AccessMacid in View', AccessMacid);
     const viewProps = {
         bordered: false,
@@ -32,7 +31,7 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
                 <Space
                     direction="vertical"
                     size="middle"
-                    style={{
+                    styles={{
                         display: 'flex',
                     }}
                 >
@@ -50,7 +49,7 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
                     <MacIdCard AccessMacid={AccessMacid} handleDelete={handleDelete} isViewModeVisible={isViewModeVisible} />
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            Access Management<span style={{ color: 'red' }}>*</span>
+                            Access Management<span styles={{ color: 'red' }}>*</span>
                         </Col>
                     </Row>
 
@@ -75,4 +74,4 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
     );
 };
 
-export const ViewUserManagementDealer = ViewUserManagementDealerMain;
+export const ViewCustomerMaster = ViewCustomerMasterMain;

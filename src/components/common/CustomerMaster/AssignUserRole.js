@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Checkbox } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-import style from 'components/common/DrawerAndTable.module.css';
-import style3 from './UserManagement.module.css';
 import styles from 'components/common/Common.module.css';
 
 import { PlusOutlined } from '@ant-design/icons';
@@ -42,7 +40,7 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
         <Space
             direction="vertical"
             size="middle"
-            style={{
+            styles={{
                 display: 'flex',
             }}
         >
@@ -75,7 +73,7 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
                     /> */}
                     <Select
                         mode="multiple"
-                        style={{
+                        styles={{
                             width: '100%',
                         }}
                         placeholder="Select user Role"
@@ -107,7 +105,7 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
                         checked?.map((el) => {
                             console.log('This is the el', el['0']?.roleName);
                             return (
-                                <Card className={style.usermanagementCard}>
+                                <Card className={styles.usermanagementCard}>
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Row gutter={20}>
@@ -123,10 +121,10 @@ const AssignUserRole = ({ userRoleOptions, DealerSearchvalue, finalFormdata, set
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <div className={styles.cardItemBtn}>
-                                                <Button className={style3.dealerBtn} type="primary" ghost onClick={handleApplicationAccess}>
+                                                <Button className={styles.dealerBtn} type="primary" ghost onClick={handleApplicationAccess}>
                                                     <PlusOutlined /> Application Access
                                                 </Button>
-                                                <Button className={style.crossButton} type="danger">
+                                                <Button className={styles.crossButton} type="danger">
                                                     <AiOutlineClose />
                                                 </Button>
                                             </div>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { CustomerMaster } from '../../common/CustomerMaster/CustomerMaster'
+import { CustomerMaster } from '../../../components/common/CustomerMaster/CustomerMaster'
 
 const mapStateToProps = (state) => {
     const {

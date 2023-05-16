@@ -141,7 +141,7 @@ const savePayload = {
     ],
 };
 
-const CustomertMasterMain = ({ saveData, userId, moduleTitle, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementDealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
     const [form] = Form.useForm();
 
     const [formActionType, setFormActionType] = useState('');
@@ -755,4 +755,4 @@ const CustomertMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDa
     );
 };
 
-export const CustomertMaster = connect(mapStateToProps, mapDispatchToProps)(CustomertMasterMain);
+export const CustomerMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerMasterMain);

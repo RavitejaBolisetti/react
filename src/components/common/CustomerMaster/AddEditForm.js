@@ -9,13 +9,12 @@ import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 
 import styles from 'components/common/Common.module.css';
-import style from './UserManagement.module.css';
-import style3 from './UserManagement.module.css';
+
 
 import AssignUserRole from './AssignUserRole';
 import BranchMapping from './BranchMapping';
 import ProductMapping from './ProductMapping';
-import { ViewUserManagementDealer } from './ViewUserManagementDealer';
+import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import CommonCard from './CommonCard';
 import MacIdCard from './MacIdCard';
@@ -195,7 +194,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <div className={style3.manageAccessHeader}>
+                            <div className={styles.manageAccessHeader}>
                                 <p>
                                     Access Management<span>*</span>
                                 </p>
@@ -288,7 +287,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </Space>
             ) : (
-                <ViewUserManagementDealer {...viewProps} />
+                <ViewCustomerMaster {...viewProps} />
             )}
             {/* <Row gutter={20} className={styles.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
