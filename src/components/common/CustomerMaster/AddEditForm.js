@@ -8,7 +8,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-
+import { CustomerProfile } from './CustomerProfile/CustomerProfile'
 import styles from 'components/common/Common.module.css';
 
 
@@ -102,6 +102,7 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <Address/>
+                <CustomerProfile/>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
@@ -132,4 +133,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {width: "1200px"});
+export const AddEditForm = withDrawer(AddEditFormMain, {width : 1200});
