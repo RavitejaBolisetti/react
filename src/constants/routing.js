@@ -26,6 +26,8 @@ export const ROUTING_COMMON_APPLICATION_MASTER = ROUTING_COMMON.concat('applicat
 export const ROUTING_COMMON_CRITICALITY_GROUP = ROUTING_COMMON.concat('criticality-group');
 export const ROUTING_COMMON_ROLE_MANAGEMENT = ROUTING_COMMON.concat('role-management');
 export const ROUTING_COMMON_USER_MANAGEMENT = ROUTING_COMMON.concat('user-management');
+export const ROUTING_COMMON_CUSTOMER_MASTER = ROUTING_COMMON.concat('customer-master');
+
 export const ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER = ROUTING_COMMON.concat('hierarchy-attribute-master');
 export const ROUTING_COMMON_BRANCH_DEALER_MAPPING = ROUTING_COMMON.concat('branch-dealer-mapping');
 
@@ -67,3 +69,4 @@ export const ROUTING_ADMIN = '/admin/';
 export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-management/');
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
+

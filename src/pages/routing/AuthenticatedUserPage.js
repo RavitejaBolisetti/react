@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
-import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DesignationMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage } from 'pages/common';
+import { ProductHierarchyPage, UserManagementPage, UserManagementManufacturerPage, ProductMasterPage, HierarchyAttributeMasterPage, ManufacturerAdministrativeHierarchyPage, ManufacturerOrgHierarchyPage, DealerHierarchyPage, ConfigurableParameterEditingPage, QualificationMasterPage, ApplicationMasterPage, CriticalityGroupPage, RoleManagementPage, StatePage, DistrictPage, CityPage, TehsilPage, PinCodePage, DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DesignationMasterPage, DealerEmployeeDepartmentPage, RoleMasterPage, CustomerMasterPage } from 'pages/common';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -51,6 +51,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_DEALER_HIERARCHY} element={<DealerHierarchyPage />} />
             <Route path={routing.ROUTING_USER_PROFILE} element={<ProfilePage />} exact />
             <Route path={routing.ROUTING_COMMON_ROLE_MANAGEMENT} element={<RoleManagementPage />} />
+            <Route path={routing.ROUTING_COMMON_CUSTOMER_MASTER} element={<CustomerMasterPage />} />
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
