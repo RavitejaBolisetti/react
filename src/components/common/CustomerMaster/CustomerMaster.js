@@ -620,25 +620,30 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
-                                        Manufacturer
+                                        Individual
                                     </Button>
                                     <Button type="link" ghost>
-                                        Dealer
+                                        Firm/Company
                                     </Button>
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.padT5}>
-                                <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
-                                    {dealersData?.map((item) => (
-                                        <Option value={item}>{item}</Option>
-                                    ))}
-                                </Select>
+                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                <div className={styles.selectSearchBg}>
+                                    <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter" allowClear>
+                                        {dealersData?.map((item) => (
+                                            <Option value={item}>{item}</Option>
+                                        ))}
+                                    </Select>
+                                    <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
+                                </div>
                             </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.padT5}>
-                                <Search placeholder="Search" value={DealerSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} disabled={disabled} className={styles.headerSearchField} />
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
+                                <Button danger type='link' onClick={handleAdd}>
+                                    View Draft
+                                </Button>
                             </Col>
                         </Row>
                         {DealerData?.employeeCode ? (
