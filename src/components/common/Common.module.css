@@ -1388,6 +1388,144 @@
     color: #B5B5B6;
 }
 
+/* Customer Master Drawer */
+.customerMasterDrawer {
+    margin-top: -20px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.timelineBg {
+    background: #f2f2f2;
+    padding: 30px !important;
+    height: 90vh;
+}
+
+.timelineBg :global .ant-collapse {
+    background: #E6E6E6;
+    border: 1px solid #B5B5B6;
+    margin-bottom: 30px;
+}
+
+.timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+    padding: 20px;
+}
+
+.timelineBg :global .ant-collapse .ant-collapse-content {
+    border-top: none;
+}
+
+.timelineBg :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    background: #E6E6E6;
+    border-radius: 0 0 8px 8px;
+    padding: 20px;
+    padding-top: 0 !important;
+}
+
+.timelineBg :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p {
+    padding-left: 0 !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #545454;
+}
+
+.timelineBg :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p span {
+    float: right !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #0B0B0C;
+}
+
+.timelineBg :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p:first-child {
+    padding-top: 20px !important;
+    border-top: 1px solid #B5B5B6;
+}
+
+.timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+    position: absolute;
+    right: 0;
+    top: 26px;
+    padding-inline-end: 14px;
+    color: #ff3e5b;
+}
+
+.timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-avatar-circle {
+    vertical-align: sub;
+}
+
+.timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space-vertical {
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:first-child {
+    color: #ff3e5b;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+}
+
+.timelineBg :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:last-child {
+    color: #0B0B0C;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item {
+    padding-bottom: 10px;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p {
+    padding-left: 0 !important;
+    padding-bottom: 10px;
+    font-size: 14px;
+    color: #0B0B0C;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
+    color: #70c922;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
+    color: #70c922;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.timelineBg :global .ant-progress .ant-progress-bg {
+    background-color: #ff3e5b;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-tail {
+    background: #70c922 !important;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-head-custom {
+    background-color: transparent;
+    font-size: 24px;
+    color: #70c922;
+}
+
+.timelineBg :global .ant-progress.ant-progress-status-success .ant-progress-bg {
+    background-color: #70c922 !important;
+}
+
+.timelineBg :global .ant-progress:not(.ant-progress-status-success) .ant-progress-text {
+    color: #ff3e5b !important;
+    font-size: 14px;
+    font-weight: 700;
+    margin-inline-start: 4px;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
     /* .contentHeaderBackground{text-align: center;} */
