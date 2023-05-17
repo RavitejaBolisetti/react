@@ -10,13 +10,13 @@ import { IoTrashOutline } from 'react-icons/io5';
 import { FaCheckCircle } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { CustomerProfile } from './CustomerProfile/CustomerProfile';
-import { FamilyDetails } from './FamilyDetails/FamilyDetails';
 import styles from 'components/common/Common.module.css';
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import Address from './Address/Address';
 import { AccountRelated } from './AccountRelated/AccountRelated';
+import { FamilyDetails } from './FamilyDetails';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -102,7 +102,7 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
-                    <CustomerProfile /> <AccountRelated />{' '}
+                    <CustomerProfile /> <AccountRelated /> <FamilyDetails />{' '}
                 </>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
