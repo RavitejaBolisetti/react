@@ -7,7 +7,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose, AiFillCheckCircle } from 'react-icons/ai';
 import { FaCheckCircle } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { CustomerProfile } from './CustomerProfile/CustomerProfile';
@@ -130,11 +129,8 @@ const AddEditFormMain = (props) => {
                     )}
                 </Col>
             </Row>
-
         </Form>
     );
 };
 
-
 export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
-
