@@ -10,6 +10,7 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { validateRequiredInputField } from 'utils/validation';
+import { searchValidator } from 'utils/validation';
 
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -196,8 +197,19 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
 
             if (name === 'code') {
                 setFilteredDivisionData(data?.filter((i) => i?.divisionCode === filterValue));
-                advanceFilterForm.setFieldsValue({ departmentCode: undefined });
+                advanceFilterForm.setFieldsValue({ divisionCode: undefined });
             }
+            // if (name === 'code') {
+            //     setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === filterValue));
+            //     advanceFilterForm.setFieldsValue({ departmentCode: undefined });
+            //     advanceFilterForm.setFieldsValue({ roleCode: undefined });
+            // }
+
+            // if (name === 'departmentCode') {
+            //     setFilteredRoleData(roleData?.filter((i) => i?.departmentCode === filterValue));
+            //     advanceFilterForm.setFieldsValue({ roleCode: undefined });
+            // }
+            
         };
 
     // const handleFilterChange =
@@ -314,6 +326,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
+        console.log(value,'ValueCheck')
         advanceFilterForm
             .validateFields()
             .then(() => (value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter()))
@@ -335,8 +348,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword">
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
                                                 <Search placeholder="Search" value={filterString?.keyword} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>
