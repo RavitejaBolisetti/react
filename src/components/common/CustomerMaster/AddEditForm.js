@@ -7,20 +7,17 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
-<<<<<<< HEAD
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose, AiFillCheckCircle } from 'react-icons/ai';
 import { FaCheckCircle } from 'react-icons/fa';
-
-=======
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { CustomerProfile } from './CustomerProfile/CustomerProfile';
-import { FamilyDetails } from './FamilyDetails/FamilyDetails'
->>>>>>> 1ac51dde0ecb76b0115e4ca085e64452b76a7a80
+import { FamilyDetails } from './FamilyDetails/FamilyDetails';
 import styles from 'components/common/Common.module.css';
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import Address from './Address/Address';
+import { AccountRelated } from './AccountRelated/AccountRelated';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -103,127 +100,11 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-<<<<<<< HEAD
-        <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.customerMasterDrawer}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.timelineBg}>
-                            <Timeline
-                                items={[
-                                    {
-                                        dot: (
-                                            <FaCheckCircle />
-                                        ),
-                                        children: (
-                                            <>
-                                                <p>Customer Details</p>
-                                                <Progress percent={100} size="small" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <FaCheckCircle />
-                                        ),
-                                        children: (
-                                            <>
-                                                <p>Customer Profile</p>
-                                                <Progress percent={100} size="small" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <FaCheckCircle />
-                                        ),
-                                        children: (
-                                            <>
-                                                <p>Address</p>
-                                                <Progress percent={100} size="small" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <FaCheckCircle />
-                                        ),
-                                        children: (
-                                            <>
-                                                <p>Contact</p>
-                                                <Progress percent={100} size="small" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <FaCheckCircle />
-                                        ),
-                                        children: (
-                                            <>
-                                                <p>Account Related</p>
-                                                <Progress percent={100} size="small" />
-                                            </>
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <FaCheckCircle />
-                                        ),
-                                        children: 'Thank You',
-                                    },
-                                ]}
-                            />
-                        </Col>
-                        <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                            <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {!isViewModeVisible ? (
-                                    <Space
-                                        direction="vertical"
-                                        size="middle"
-                                        style={{
-                                            display: 'flex',
-                                            marginBottom: '30px',
-                                        }}
-                                    >
-
-
-
-
-                                    </Space>
-                                ) : (
-                                    <ViewCustomerMaster {...viewProps} />
-                                )}
-
-
-                                <Row gutter={20} className={styles.formFooter}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                                        <Button danger onClick={onCloseAction}>
-                                            {footerEdit ? 'Close' : 'Cancel'}
-                                        </Button>
-                                    </Col>
-
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                                        {!footerEdit && showSaveBtn && (
-                                            <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                                                Save
-                                            </Button>
-                                        )}
-
-                                        {footerEdit && (
-                                            <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                                                Edit
-                                            </Button>
-                                        )}
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </Col>
-                    </Row>
-=======
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
-                <CustomerProfile/>
+                <>
+                    <CustomerProfile /> <AccountRelated />{' '}
+                </>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
@@ -247,16 +128,13 @@ const AddEditFormMain = (props) => {
                             Edit
                         </Button>
                     )}
->>>>>>> 1ac51dde0ecb76b0115e4ca085e64452b76a7a80
                 </Col>
             </Row>
 
-        </>
+        </Form>
     );
 };
 
-<<<<<<< HEAD
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '1200' });
-=======
+
 export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
->>>>>>> 1ac51dde0ecb76b0115e4ca085e64452b76a7a80
+
