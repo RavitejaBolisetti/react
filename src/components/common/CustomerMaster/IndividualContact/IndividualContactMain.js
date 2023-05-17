@@ -15,7 +15,6 @@ const { Text } = Typography;
 const IndividualContact = () => {
     const [form] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState('');
-    const [isFieldDisable, setIsFieldDisable] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
