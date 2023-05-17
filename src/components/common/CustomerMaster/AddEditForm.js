@@ -18,6 +18,7 @@ import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import Address from './Address/Address';
 import { AccountRelated } from './AccountRelated/AccountRelated';
 import IndividualProfile from './IndividualProfile/IndividualProfile';
+import IndividualContact from './IndividualContact/IndividualContactMain'
 
 
 const { Option } = Select;
@@ -104,7 +105,8 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
-                    <CustomerProfile /> <AccountRelated />{' '}   <IndividualProfile />
+                    <CustomerProfile /> <AccountRelated />{' '}   <IndividualProfile /> 
+                    <IndividualContact />
                 </>
            
             ) : (
