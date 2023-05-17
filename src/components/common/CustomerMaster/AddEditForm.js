@@ -7,14 +7,12 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
+import { CustomerDetailsMaster } from './CustomerDetails';
 
 import styles from 'components/common/Common.module.css';
 
-
-
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
-
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -96,81 +94,7 @@ const AddEditFormMain = (props) => {
         productHierarchyData,
     };
 
-    return (
-        <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {!isViewModeVisible ? (
-                <Space
-                    direction="vertical"
-                    size="middle"
-                    style={{
-                        display: 'flex',
-                        marginBottom: '30px',
-                    }}
-                >
-               
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item
-                                label="MAC ID"
-                                name="macid"
-                                rules={[
-                                    validateRequiredInputField('MAC id'),
-                                    validationFieldLetterAndNumber('MAC id'),
-                                    {
-                                        validator: (_, value) => Checkduplicate(value),
-                                    },
-                                ]}
-                            >
-                                <Input onChange={(event) => setMacid(event.target.value)} minLength={14} maxLength={14} placeholder={preparePlaceholderText('MAC id')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button onClick={(event, key) => handleAddMacid(event, key)} form="myForm" key="Add" type="primary" disabled={disableadd}>
-                                Add
-                            </Button>
-                        </Col>
-                    </Row>
-              
-
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <div className={styles.manageAccessHeader}>
-                                <p>
-                                    Access Management<span>*</span>
-                                </p>
-                            </div>
-                        </Col>
-                    </Row>
-
-                </Space>
-            ) : (
-                <ViewCustomerMaster {...viewProps} />
-            )}
-     
-
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    )}
-
-                    {footerEdit && (
-                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
-                </Col>
-            </Row>
-        </Form>
-    );
+    return <CustomerDetailsMaster />;
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: '1200' });
