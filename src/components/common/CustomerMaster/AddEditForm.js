@@ -19,7 +19,6 @@ import { AccountRelated } from './AccountRelated/AccountRelated';
 import { FamilyDetails } from './FamilyDetails';
 import IndividualProfile from './IndividualProfile/IndividualProfile';
 
-
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -104,9 +103,8 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
-                    <CustomerProfile /> <AccountRelated /> <FamilyDetails />{' '}
+                    <CustomerProfile /> <AccountRelated />{' '}   <IndividualProfile />
                 </>
-           
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
@@ -136,4 +134,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {width:1200});
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });

@@ -15,22 +15,19 @@ const { Text } = Typography;
 const AccountRelatedBase = ({}) => {
     const [form] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState('');
-    const [isFieldDisable, setIsFieldDisable] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <FaUserCircle /> : <FaUserCircle />)} activeKey={openAccordian}>
+        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+            {/* expandIcon={({ isActive }) => (isActive ? <FaUserCircle /> : <FaUserCircle />)} */}
             <Panel
                 header={
                     <>
                         <Space>
-                            <Text> Company Account </Text>{' '}
-                            {/* <Button icon={<PlusOutlined />} type="primary">
-                                Add Account
-                            </Button> */}
+                            <Text> Indivisual Account </Text>{' '}
                         </Space>
                     </>
                 }
