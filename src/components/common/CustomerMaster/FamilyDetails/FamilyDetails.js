@@ -1,68 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Col, Input, Form, Row, Select, DatePicker } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
-import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { TextArea } = Input;
-const { Panel } = Collapse;
+
 const FamilyDetailsMain = (props) => {
     const { form } = props;
+
+    const type = [
+        { name: 'YES', value: 1 },
+        { name: 'NO', value: 0 },
+    ];
+
+    const [value, setValue] = useState(true);
+
+    const selectRef = useRef();
+
+    const onChange = useCallback((item) => {
+        selectRef.current.blur(); //whenever a user triggers value change, we call `blur()` on `Select`
+        setValue(item);
+    }, []);
 
     return (
         <>
             <Form form={form} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="M&M Customer" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('pincode')} >
-                                <Option>select</Option>
+                        <Form.Item initialValue={'YES'} label="M&M Customer" name="applicationType">
+                            <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox} allowClear ref={selectRef}>
+                                {type.map((item) => (
+                                    <Option value={item.value}>{item.name}</Option>
+                                ))}
                             </Select>
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Customer ID" name="customerId" rules={[validateRequiredInputField('Parent Firm/Company Code')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Code')} className={styles.inputBox}/>
+                        <Form.Item initialValue={'MO12'} label="Customer ID" name="customerId">
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Code')} className={styles.inputBox} disabled={value} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Customer Name" name="customerName">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Parent Concept')} />
+                        <Form.Item initialValue={'Nikhil'} label="Customer Name" name="customerName">
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Parent Concept')} disabled={value} className={styles.inputBox} />
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Relationship" name="relationship" rules={[validateRequiredInputField('application name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('tehsil')} />
+                        <Form.Item initialValue={'Father'} label="Relationship" name="relationship">
+                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear ref={selectRef} disabled={value}>
+                                {type.map((item) => (
+                                    <Option value={item.value}>{item.name}</Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Date of Birth" name="DOB" rules={[validateRequiredInputField('Date of Registration')]}>
-                            <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} />
+                        <Form.Item label="Date of Birth" name="DOB">
+                            <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} disabled={value} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Age" name="age">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Parent Concept')} />
+                        <Form.Item initialValue={42} label="Age" name="age">
+                            <Input maxLength={50} placeholder={preparePlaceholderText('Age')} disabled={value} className={styles.inputBox} />
                         </Form.Item>
                     </Col>
                 </Row>
-
+                {/*  */}
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={100} xxl={100}>
-                        <Form.Item label="Remark" name="remark" rules={[validateRequiredInputField('application name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item label="Remark" name="remark">
+                            <TextArea rows={4} maxLength={250} placeholder={preparePlaceholderText('Remark')} />
                         </Form.Item>
                     </Col>
                 </Row>
