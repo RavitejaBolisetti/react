@@ -1399,18 +1399,49 @@
     height: 90vh;
 }
 
-:global .ant-timeline .ant-timeline-item {
-    padding-bottom: 36px;
+.timelineBg :global .ant-timeline .ant-timeline-item {
+    padding-bottom: 10px;
 }
 
-:global .ant-timeline .ant-timeline-item-tail {
-    background: #70c922;
+.timelineBg :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p {
+    padding-left: 0 !important;
+    padding-bottom: 10px;
+    font-size: 14px;
+    color: #0B0B0C;
+    font-weight: 400;
+    line-height: 22px;
 }
 
-:global .ant-timeline .ant-timeline-item-head-custom {
+.timelineBg :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
+    color: #70c922;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content {
+    color: #70c922;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.timelineBg :global .ant-progress .ant-progress-bg {
+    background-color: #ff3e5b;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-tail {
+    background: #70c922 !important;
+}
+
+.timelineBg :global .ant-timeline .ant-timeline-item-head-custom {
     background-color: transparent;
     font-size: 24px;
     color: #70c922;
+}
+
+.timelineBg :global .ant-progress.ant-progress-status-success .ant-progress-bg {
+    background-color: #70c922 !important;
 }
 
 @media (max-width: 768px) {

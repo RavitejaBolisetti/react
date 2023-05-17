@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Timeline } from 'antd';
+import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Timeline, Progress } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -109,31 +109,56 @@ const AddEditFormMain = (props) => {
                                         dot: (
                                             <FaCheckCircle />
                                         ),
-                                        children: 'Customer Details',
+                                        children: (
+                                            <>
+                                                <p>Customer Details</p>
+                                                <Progress percent={100} size="small" />
+                                            </>
+                                        ),
                                     },
                                     {
                                         dot: (
                                             <FaCheckCircle />
                                         ),
-                                        children: 'Customer Profile',
+                                        children: (
+                                            <>
+                                                <p>Customer Profile</p>
+                                                <Progress percent={100} size="small" />
+                                            </>
+                                        ),
                                     },
                                     {
                                         dot: (
                                             <FaCheckCircle />
                                         ),
-                                        children: 'Address',
+                                        children: (
+                                            <>
+                                                <p>Address</p>
+                                                <Progress percent={100} size="small" />
+                                            </>
+                                        ),
                                     },
                                     {
                                         dot: (
                                             <FaCheckCircle />
                                         ),
-                                        children: 'Contact',
+                                        children: (
+                                            <>
+                                                <p>Contact</p>
+                                                <Progress percent={100} size="small" />
+                                            </>
+                                        ),
                                     },
                                     {
                                         dot: (
                                             <FaCheckCircle />
                                         ),
-                                        children: 'Account Related',
+                                        children: (
+                                            <>
+                                                <p>Account Related</p>
+                                                <Progress percent={100} size="small" />
+                                            </>
+                                        ),
                                     },
                                     {
                                         dot: (
