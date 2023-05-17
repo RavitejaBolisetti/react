@@ -126,18 +126,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                console.log('filterString', filterString);
-                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
-                const division = filterString?.divisonCode;
-                console.log('division', division);
-                console.log('data',data);
+                const keyword = filterString?.keyword;
+                const division = filterString?.divisionCode;
 
-                const filterDataItem = data?.filter((item) => 
-
-                (keyword ? filterFunction(keyword)(item?.divisionCode) || 
-                filterFunction(keyword)(item?.divisionName) : true)
-                &&
-                (division ? filterFunction(division)(item?.divisionCode) : true));
+                const filterDataItem = data?.filter((item) =>
+                 (keyword ? filterFunction(keyword)(item?.departmentCode) ||
+                  filterFunction(keyword)(item?.departmentName) : true) && 
+                  (division ? filterFunction(division)(item?.divisionCode) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -148,14 +143,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
-
-    // useEffect(() => {
-    //     if ( isDivisionDataLoaded && isDataLoaded ) {
-    //         // setFilterString({ countryCode: defaultCountry });
-    //         //setFilteredDivisionData(divisionData?.filter((i) => i?.code === defaultCountry));
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isDataLoaded, isDivisionDataLoaded]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -173,12 +160,14 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
+
+
     const extraParams = [
         {
-            key: 'code',
+            key: 'divisionCode',
             title: 'Division',
-            value: filterString?.code,
-            name: divisionData?.find((i) => i?.code === filterString?.code)?.divisionName,
+            value: filterString?.divisionCode,
+            name: divisionData?.find((i) => i?.code === filterString?.divisionCode)?.divisionName,
             canRemove: true,
         },
         {
@@ -193,32 +182,12 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            const filterValue = type === 'text' ? value.target.value : value;
+            //const filterValue = type === 'text' ? value.target.value : value;
 
-            if (name === 'code') {
-                setFilteredDivisionData(data?.filter((i) => i?.divisionCode === filterValue));
+            if (name === 'divisionCode') {
                 advanceFilterForm.setFieldsValue({ divisionCode: undefined });
             }
-            // if (name === 'code') {
-            //     setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === filterValue));
-            //     advanceFilterForm.setFieldsValue({ departmentCode: undefined });
-            //     advanceFilterForm.setFieldsValue({ roleCode: undefined });
-            // }
-
-            // if (name === 'departmentCode') {
-            //     setFilteredRoleData(roleData?.filter((i) => i?.departmentCode === filterValue));
-            //     advanceFilterForm.setFieldsValue({ roleCode: undefined });
-            // }
-            
         };
-
-    // const handleFilterChange =
-    // (name, type = 'value') =>
-    // (value) => {
-    //     if (name === 'countryCode') {
-    //         advanceFilterForm.setFieldsValue({ stateCode: undefined });
-    //     }
-    // };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -326,7 +295,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        console.log(value,'ValueCheck')
+        console.log(value, 'ValueCheck');
         advanceFilterForm
             .validateFields()
             .then(() => (value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter()))
@@ -349,8 +318,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
                                         <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
-                                                <Search placeholder="Search" value={filterString?.keyword} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                            <Form.Item label={`${moduleTitle}`} name="keyword"  rules={[{ validator: searchValidator }]}>
+                                                <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>
                                     </Col>

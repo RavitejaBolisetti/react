@@ -13,7 +13,7 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue({ code: filterString?.code });
+        advanceFilterForm.setFieldsValue({ code : filterString?.divisionCode });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
@@ -39,8 +39,8 @@ export const AdvancedSearchFrom = (props) => {
         <Form layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division" initialValue={filterString?.divisionName}  name="code">
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('code')}>
+                    <Form.Item label="Division"  name="divisionCode">
+                        <Select placeholder="Select" {...selectProps}>
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
                             ))}
