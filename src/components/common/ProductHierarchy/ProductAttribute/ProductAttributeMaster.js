@@ -50,15 +50,14 @@ const ProductAttributeMaster = (props) => {
             setFinalFormdata([]);
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
-            
-            selectedTreeData?.skuAttributes.length > 0 && 
-            selectedTreeData?.skuAttributes?.map((data) => 
-                finalFormdata.push({ attributeName: { label: data.code }, attributeValue: data.value }
-            ));
+            selectedTreeData?.skuAttributes.length > 0 &&
+                selectedTreeData?.skuAttributes?.map((data) => {
+                    setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value }]);
+                });
             attributeForm.resetFields();
             forceUpdate();
         }
-    },[]);
+    }, []);
 
     return (
         <Fragment>
