@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Timeline, Progress } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 
@@ -7,14 +7,16 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
+import { FaCheckCircle } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import { CustomerProfile } from './CustomerProfile/CustomerProfile';
-import { FamilyDetails } from './FamilyDetails/FamilyDetails'
+import { FamilyDetails } from './FamilyDetails/FamilyDetails';
 import styles from 'components/common/Common.module.css';
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import Address from './Address/Address';
+import { AccountRelated } from './AccountRelated/AccountRelated';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -99,7 +101,9 @@ const AddEditFormMain = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
-                <FamilyDetails/>
+                <>
+                    <CustomerProfile /> <AccountRelated />{' '}
+                </>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
             )}
