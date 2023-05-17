@@ -14,13 +14,10 @@ import styles from 'components/common/Common.module.css';
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import Address from './Address/Address';
-<<<<<<< HEAD
 import { AccountRelated } from './AccountRelated/AccountRelated';
 import IndividualProfile from './IndividualProfile/IndividualProfile';
 import IndividualContact from './IndividualContact/IndividualContactMain'
 
-=======
->>>>>>> 2b1c9c8b5322795cba996f7d5848c20c4ba4e24a
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -107,7 +104,7 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
-                    <CustomerProfile /> <AccountRelated />{' '}   <IndividualProfile /> 
+                     <AccountRelated />{' '}   <IndividualProfile /> 
                     <IndividualContact />
                 </>
            
