@@ -2,20 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse, Timeline, Progress } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
+
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
 import { IoTrashOutline } from 'react-icons/io5';
+<<<<<<< HEAD
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose, AiFillCheckCircle } from 'react-icons/ai';
 import { FaCheckCircle } from 'react-icons/fa';
 
+=======
+import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
+import { CustomerProfile } from './CustomerProfile/CustomerProfile';
+import { FamilyDetails } from './FamilyDetails/FamilyDetails'
+>>>>>>> 1ac51dde0ecb76b0115e4ca085e64452b76a7a80
 import styles from 'components/common/Common.module.css';
-
-
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
-
+import Address from './Address/Address';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -98,6 +103,7 @@ const AddEditFormMain = (props) => {
     };
 
     return (
+<<<<<<< HEAD
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.customerMasterDrawer}>
@@ -214,6 +220,34 @@ const AddEditFormMain = (props) => {
                             </Form>
                         </Col>
                     </Row>
+=======
+        <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            {!isViewModeVisible ? (
+                <CustomerProfile/>
+            ) : (
+                <ViewCustomerMaster {...viewProps} />
+            )}
+
+            <Row gutter={20} className={styles.formFooter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                    <Button danger onClick={onCloseAction}>
+                        {footerEdit ? 'Close' : 'Cancel'}
+                    </Button>
+                </Col>
+
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    {!footerEdit && showSaveBtn && (
+                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                            Save
+                        </Button>
+                    )}
+
+                    {footerEdit && (
+                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                            Edit
+                        </Button>
+                    )}
+>>>>>>> 1ac51dde0ecb76b0115e4ca085e64452b76a7a80
                 </Col>
             </Row>
 
@@ -221,4 +255,8 @@ const AddEditFormMain = (props) => {
     );
 };
 
+<<<<<<< HEAD
 export const AddEditForm = withDrawer(AddEditFormMain, { width: '1200' });
+=======
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
+>>>>>>> 1ac51dde0ecb76b0115e4ca085e64452b76a7a80
