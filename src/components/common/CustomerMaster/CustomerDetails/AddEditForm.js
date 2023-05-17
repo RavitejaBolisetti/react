@@ -21,29 +21,47 @@ const AddEditFormMain = (props) => {
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
-
-    const [activeKey, setactiveKey] = useState([1]);
     const [FinalFormData, setFinalFormData] = useState({
         customerForm: [],
         keyAccountForm: [],
         authorityForm: [],
     });
+    const [customerFormValues, setcustomerForm] = useState();
+    const [keyAccountFormValues, setkeyAccountFormValues] = useState();
+    const [authorityFormValues, setauthorityFormValues] = useState();
+    const [done, setDone] = useState();
+    useEffect(() => {
+        setFinalFormData({ ...FinalFormData, customerForm: customerFormValues, keyAccountForm: keyAccountFormValues, authorityForm: authorityFormValues });
+    }, [done]);
+    useEffect(() => {
+        console.log('FinalFormData', FinalFormData);
+    }, [FinalFormData]);
+
+    const [activeKey, setactiveKey] = useState([1]);
+
     const [handleActive, sethandleActive] = useState();
     const handleFormValueChange = () => {};
     const handleFormFieldChange = () => {};
     const onFinish = () => {
+        const customerFormValues = customerForm.getFieldsValue();
+        const keyAccountFormValues = keyAccountForm.getFieldsValue();
+
+        const authorityFormValues = authorityForm.getFieldsValue();
+
+        console.log('customerFormValues', customerFormValues, 'keyAccountFormValues', keyAccountFormValues, 'authorityFormValues', authorityFormValues);
+
         customerForm
             .validateFields()
-            .then((customerValues) => {
-                setFinalFormData({ ...FinalFormData, customerForm: customerValues });
-            })
-            .catch(() => {});
-        setFinalFormData({ ...FinalFormData, keyAccountForm: keyAccountForm.getFieldsValue() });
-
-        authorityForm
-            .validateFields()
-            .then((authorityvalues) => {
-                setFinalFormData({ ...FinalFormData, authorityForm: authorityvalues });
+            .then(() => {
+                authorityForm
+                    .validateFields()
+                    .then(() => {
+                        setcustomerForm(customerFormValues);
+                        setauthorityFormValues(authorityFormValues);
+                        setkeyAccountFormValues(keyAccountFormValues);
+                        setDone(!done);
+                    })
+                    .catch(() => {});
             })
             .catch(() => {});
     };
@@ -79,9 +97,6 @@ const AddEditFormMain = (props) => {
     const onFinishAuthorityDetails = (values) => {
         setFinalFormData({ ...FinalFormData, authorityForm: values });
     };
-    useEffect(() => {
-        console.log('FinalFormData', FinalFormData);
-    }, [FinalFormData]);
 
     return (
         <>
@@ -177,8 +192,8 @@ const AddEditFormMain = (props) => {
                                 <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="Account Code" name="accountCode">
-                                                <Input disabled />
+                                            <Form.Item initialValue="Shaka" label="Account Code" name="accountCode">
+                                                <Input value="Shaka" disabled />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
