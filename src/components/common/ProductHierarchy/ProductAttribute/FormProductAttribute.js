@@ -15,7 +15,6 @@ function FormProductAttribute(props) {
 
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
-    console.log(formDecider, 'ff');
     return (
         <Form form={formDecider ? editForm : attributeForm} id="myForm" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>

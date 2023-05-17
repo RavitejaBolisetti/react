@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useReducer } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
@@ -9,10 +9,8 @@ const { Text } = Typography;
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
     const { isVisible, setFinalFormdata, attributeForm, forceUpdate,setFormDecider,formDecider,view } = props;
-
     const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
- 
 
     const onAttributeEdit = (props) => {
         setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
@@ -33,20 +31,15 @@ const CardProductAttribute = (props) => {
                 attributeValue: newFormData?.attributeValue
             }
             updatedValue?.splice(indx, 1,{...formatData});
-            //console.log(updatedValue,'FINAL')
             return updatedValue
         });
-        // setIsBtnDisabled(false);
         setProductAttributeEdit(false);
         attributeForm.resetFields();
         forceUpdate();
     };
 
     const onAttributeDelete = (val) => {
-        //console.log(val,'delete1')
-
         setFinalFormdata((prev) => {
-            //console.log(prev,'delete2')
             const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
@@ -59,7 +52,6 @@ const CardProductAttribute = (props) => {
 
     const onAttributeCancel = () => {
         setProductAttributeEdit(false);
-        // setIsBtnDisabled(false);
     };
 
     useEffect(() => {
@@ -75,7 +67,6 @@ const CardProductAttribute = (props) => {
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
-
 
     return (
         <Card

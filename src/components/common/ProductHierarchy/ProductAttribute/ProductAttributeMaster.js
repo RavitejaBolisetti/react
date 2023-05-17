@@ -18,11 +18,11 @@ const ProductAttributeMaster = (props) => {
         attributeForm.resetFields();
         forceUpdate();
 
-        //console.log(finalFormdata,'formatData');
         const formatData = [];
 
         finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
-
+        
+        console.log(formatData,'finalFormdatafinalFormdatafinalFormdatafinalFormdatafinalFormdatafinalFormdata');
         setSKUAttributes(formatData);
     };
 
