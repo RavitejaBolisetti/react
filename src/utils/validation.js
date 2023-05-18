@@ -50,7 +50,7 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
 
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
     pattern: /^[a-zA-Z0-9.]*$/,
-    message: 'Please use only letters, numbers and period in' + fieldName,
+    message: 'Please use only letters, numbers and period in ' + fieldName,
 });
 
 export const validationNumber = (fieldName) => ({
@@ -77,6 +77,12 @@ export const validatePincodeField = (fieldName, digit = '6') => ({
     pattern: /^\d{6}(?:\s*,\s*\d{6})*$/,
     message: 'Please enter 6 digit valid ' + fieldName,
 });
+
+export const validatInstagramProfileUrl = (fieldName) =>({
+    pattern: /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/igm,
+    message: 'Please enter 6 digit valid ' + fieldName,
+
+})
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
     let dataListToCheck = dataList || [];
@@ -108,3 +114,4 @@ export const searchValidator = (_, value) => {
     }
     return Promise.reject(new Error('Please enter atleat 3 character to search'));
 };
+
