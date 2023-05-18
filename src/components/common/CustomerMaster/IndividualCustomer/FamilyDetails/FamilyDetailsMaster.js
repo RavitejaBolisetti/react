@@ -1,6 +1,5 @@
 import React, { useState,useRef, useCallback } from 'react';
 import { Collapse, Space, Typography, Form } from 'antd';
-import { FaUserCircle } from 'react-icons/fa';
 import { AddEditForm } from './AddEditForm';
 
 const { Panel } = Collapse;
@@ -48,20 +47,10 @@ const FamilyDetailsBase = () => {
     }
 
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <FaUserCircle style={{color:'red'}} /> : <FaUserCircle />)} activeKey={openAccordian}>
-            <Panel
-                header={
-                    <>
-                        <Space>
-                            <Text> Family Details </Text>{' '}
-                        </Space>
-                    </>
-                }
-                key="1"
-            >
-                <AddEditForm {...formProps} />
-            </Panel>
-        </Collapse>
+        <>
+            <h2>Family Details</h2>
+            <AddEditForm {...formProps} />
+        </>
     );
 };
 
