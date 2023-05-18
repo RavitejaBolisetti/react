@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Collapse, Space, Typography, Form } from 'antd';
-import { FaUserCircle } from 'react-icons/fa';
 import { AddEditForm } from './AddEditForm';
 
 const { Panel } = Collapse;
