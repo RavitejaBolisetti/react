@@ -18,6 +18,7 @@ import { filterFunction } from 'utils/filterFunction';
 import { searchValidator } from 'utils/validation';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
@@ -353,6 +354,13 @@ export const ListRoleMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
+    const advanceFilterResultProps = {
+        filterString,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+    };
+
     return (
         <>
             <Row gutter={20}>
@@ -383,36 +391,7 @@ export const ListRoleMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                            </span>
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
+                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
                     </div>
                 </Col>
             </Row>

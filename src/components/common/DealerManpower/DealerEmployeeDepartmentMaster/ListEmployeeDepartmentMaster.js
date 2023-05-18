@@ -13,6 +13,7 @@ import { validateRequiredInputField } from 'utils/validation';
 import { searchValidator } from 'utils/validation';
 
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
@@ -129,10 +130,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                 const keyword = filterString?.keyword;
                 const division = filterString?.divisionCode;
 
-                const filterDataItem = data?.filter((item) =>
-                 (keyword ? filterFunction(keyword)(item?.departmentCode) ||
-                  filterFunction(keyword)(item?.departmentName) : true) && 
-                  (division ? filterFunction(division)(item?.divisionCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.departmentCode) || filterFunction(keyword)(item?.departmentName) : true) && (division ? filterFunction(division)(item?.divisionCode) : true));
 
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -159,8 +157,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         record && setFormData(record);
         setIsFormVisible(true);
     };
-
-
 
     const extraParams = [
         {
@@ -308,6 +304,12 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
+    const advanceFilterResultProps = {
+        filterString,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+    };
     return (
         <>
             <Row gutter={20}>
@@ -318,7 +320,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
                                         <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} name="keyword"  rules={[{ validator: searchValidator }]}>
+                                            <Form.Item label={`${moduleTitle}`} name="keyword" rules={[{ validator: searchValidator }]}>
                                                 <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>
@@ -338,37 +340,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                            </span>
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
+                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
                     </div>
                 </Col>
             </Row>
