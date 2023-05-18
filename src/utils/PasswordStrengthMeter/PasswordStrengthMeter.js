@@ -117,30 +117,39 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     const strengthText = getStrengthText(strength);
     return (
         <div className={`${styles.passwordStrengthMeter} ${beforeLogin ? styles.beforeLogin : ''}`}>
-            <Row gutter={5}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.title}>
-                    Password Strength
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    {strengthText && (
-                        <div className={styles.strength}>
-                            <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
-                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#F99C22')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
-                        </div>
-                    )}
-                </Col>
-            </Row>
-            <Row gutter={5} className={styles.meterIndicator}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    {strengthLink(passwordLevel?.levelOne ? styles.levelOneColor : styles.levelDefaultColor)}
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    {strengthLink(passwordLevel?.levelTwo ? styles.levelTwoColor : styles.levelDefaultColor)}
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                    {strengthLink(passwordLevel?.levelThree ? styles.levelThreeColor : styles.levelDefaultColor)}
-                </Col>
-            </Row>
+            {addToolTip(
+                infoText(validatorStatus),
+                'right',
+                '#F99C22'
+            )(
+                <>
+                    <Row gutter={5}>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.title}>
+                            Password Strength <AiOutlineInfoCircle className={styles.infoIconColor} size={18} />
+                        </Col>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                            {strengthText && (
+                                <div className={styles.strength}>
+                                    <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
+                                    {/* <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#F99C22')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span> */}
+                                </div>
+                            )}
+                        </Col>
+                    </Row>
+
+                    <Row gutter={5} className={styles.meterIndicator}>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                            {strengthLink(passwordLevel?.levelOne ? styles.levelOneColor : styles.levelDefaultColor)}
+                        </Col>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                            {strengthLink(passwordLevel?.levelTwo ? styles.levelTwoColor : styles.levelDefaultColor)}
+                        </Col>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                            {strengthLink(passwordLevel?.levelThree ? styles.levelThreeColor : styles.levelDefaultColor)}
+                        </Col>
+                    </Row>
+                </>
+            )}
         </div>
     );
 };

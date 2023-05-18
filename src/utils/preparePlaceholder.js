@@ -1,12 +1,11 @@
-export const preparePlaceholderText = (name) => {
-    return 'Please enter ' + name;
+export const preparePlaceholderText = (name, prefix = true) => {
+    return prefix ? 'Enter ' + name : name;
 };
 
 export const preparePlaceholderSelect = (name) => {
-    return 'Please select ' + name;
+    return 'Select ' + name;
 };
 
 export const preparePlaceholderAutoComplete = (name) => {
     return 'Select' + name;
 };
-
