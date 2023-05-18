@@ -8,8 +8,8 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster, IndividualAddressMaster ,FamilyDetails} from './IndividualCustomer';
-import { CustomerProfile } from './CustomerProfile/CustomerProfile'
+import { CustomerDetailsMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
+import { CustomerProfile } from './CustomerProfile/CustomerProfile';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 
@@ -121,14 +121,8 @@ const AddEditFormMain = (props) => {
             return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile === true) {
             return <IndividualProfileMaster />;
-<<<<<<< HEAD
         } else if (leftTimeline?.FamilyDetails === true) {
-=======
-        }
-        else if(leftTimeline?.FamilyDetails===true)
-        {
-            return <FamilyDetails />
->>>>>>> b9bd3694c8de65ae707321f866ac328fc067a427
+            return <FamilyDetails />;
         }
     };
 

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 
 import { Col, Collapse, Form, Select, Space, Typography } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { FaRegUserCircle } from 'react-icons/fa';
 
-import { FaUserCircle } from 'react-icons/fa';
 
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { AddEditForm } from './AddEditForm';
 import style from '../../../Common.module.css';
 import styles from 'components/common/Common.module.css';
