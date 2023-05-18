@@ -175,6 +175,7 @@ const AddEditFormMain = (props) => {
                                 </Form>
                             </Panel>
                         </Collapse>
+                        
                         <Collapse
                             expandIcon={() => {
                                 if (activeKey.includes(2)) {
@@ -230,6 +231,7 @@ const AddEditFormMain = (props) => {
                                 </Form>
                             </Panel>
                         </Collapse>
+
                         <Collapse
                             expandIcon={() => {
                                 if (activeKey.includes(3)) {

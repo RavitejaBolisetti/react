@@ -6,7 +6,7 @@ import ApplicationActionsForm from './ApplicationActionsForms';
 
 
 const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions }) => {
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [ forceUpdate] = useReducer((x) => x + 1, 0);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [actionForm] = Form.useForm();
 
