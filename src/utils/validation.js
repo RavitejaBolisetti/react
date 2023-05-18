@@ -106,5 +106,5 @@ export const searchValidator = (_, value) => {
     if (!value || (value && value.length > 3)) {
         return Promise.resolve();
     }
-    return Promise.reject(new Error('Please enter atleat 3 character to search'));
+    return Promise.reject(new Error('Please enter atleast 3 character to search'));
 };

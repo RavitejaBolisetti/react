@@ -6,18 +6,22 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
 import { tableColumn } from './tableColumn';
 
-import { DataTable } from 'utils/dataTable';
+import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
+import { AdvancedSearch } from './AdvancedSearch';
+import { FilterIcon } from 'Icons';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
+import { RxCross2 } from 'react-icons/rx';
 
 import styles from 'components/common/Common.module.css';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
+import { searchValidator } from 'utils/validation';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -74,21 +78,25 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: geoCityDataActions.fetchList,
             saveData: geoCityDataActions.saveData,
             listShowLoading: geoCityDataActions.listShowLoading,
+            resetData: geoCityDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 export const ListCityMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, resetData, isLoading, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [form] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [filteredStateData, setFilteredStateData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
 
     const [searchData, setSearchdata] = useState('');
@@ -113,6 +121,7 @@ export const ListCityMasterBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {
@@ -132,7 +141,6 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
-
     useEffect(() => {
         if (userId && refershData) {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -141,16 +149,18 @@ export const ListCityMasterBase = (props) => {
     }, [userId, refershData]);
 
     useEffect(() => {
-        setFilterString({ countryCode: defaultCountry });
+        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
+            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultCountry]);
+    }, [isDataCountryLoaded, isStateDataLoaded]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const keyword = filterString?.keyword;
-                const state = filterString?.state;
-                const district = filterString?.district;
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const state = filterString?.stateCode;
+                const district = filterString?.districtCode;
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
@@ -161,6 +171,39 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+    const extraParams = [
+        {
+            key: 'countryCode',
+            title: 'Country',
+            value: filterString?.countryCode,
+            canRemove: false,
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+        },
+        {
+            key: 'stateCode',
+            title: 'State',
+            value: filterString?.stateCode,
+            canRemove: true,
+
+            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+        },
+        {
+            key: 'districtCode',
+            title: 'District',
+            canRemove: true,
+
+            value: filterString?.districtCode,
+            name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+        },
+
+        {
+            key: 'keyword',
+            title: 'keyword',
+            canRemove: true,
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+        },
+    ];
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -177,21 +220,44 @@ export const ListCityMasterBase = (props) => {
         setShowDataLoading(true);
         setRefershData(!refershData);
     };
+    const removeFilter = (key) => {
+        const { [key]: names, ...rest } = filterString;
+        setFilterString({ ...rest });
+        advanceFilterForm.resetFields();
+    };
 
     const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
+        advanceFilterForm
+            .validateFields()
+            .then(() => {
+                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
+            })
+            .catch((err) => {
+                console.log(err);
+                return;
+            });
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
-    };
+    const handleFilterChange =
+        (name, type = 'value') =>
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-    const handleFilterChange = (name) => (value) => {
-        if (name === 'state') {
-            setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
-        }
-        setFilterString({ ...filterString, [name]: value });
-    };
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -226,6 +292,7 @@ export const ListCityMasterBase = (props) => {
 
         saveData(requestData);
     };
+    const handleadd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
@@ -248,7 +315,7 @@ export const ListCityMasterBase = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: (formActionType?.viewMode ? 'View ' : formActionType?.editMode ? 'Edit ' : 'Add ').concat(moduleTitle),
-        tableData: searchData,
+        tableData: data,
 
         isDataCountryLoaded,
         isCountryLoading,
@@ -267,6 +334,42 @@ export const ListCityMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
     };
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        setFilterString();
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
+    };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+        defaultCountry,
+        districtData,
+        stateData,
+        data,
+        handleFilterChange,
+        filteredStateData,
+        filteredDistrictData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
+        isAdvanceSearchVisible,
+        setAdvanceSearchVisible,
+    };
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
@@ -279,36 +382,23 @@ export const ListCityMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={4} lg={4} xl={4} className={styles.lineHeight33}>
                                         City List
                                     </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        {defaultCountry && (
-                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                                {countryData?.map((item) => (
-                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                                ))}
-                                            </Select>
-                                        )}
+
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label="" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
+                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                            </Form.Item>
+                                        </Form>
                                     </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
-                                            {stateData?.map((item) => (
-                                                <Option value={item?.code}>{item?.name}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
-                                            {filteredDistrictData?.map((item) => (
-                                                <Option value={item?.code}>{item?.name}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                            Advanced Filters
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Col>
@@ -317,7 +407,7 @@ export const ListCityMasterBase = (props) => {
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleadd}>
                                         Add City
                                     </Button>
                                 </Col>
@@ -325,50 +415,53 @@ export const ListCityMasterBase = (props) => {
                                 ''
                             )}
                         </Row>
+                        {filterString?.advanceFilter && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                        </Col>
+                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value && (
+                                                        <div className={styles.advanceFilterItem}>
+                                                            {filter?.name}
+                                                            {filter?.canRemove ? (
+                                                                <span>
+                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                                </span>
+                                                            ) : (
+                                                                ''
+                                                            )}
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )}
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.tableProduct}>
+                        <ListDataTable scroll={1800} isLoading={showDataLoading} {...tableProps} />
                     </div>
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !searchData?.length ? (
-                                        <span>
-                                            No records found. Please add new parameter <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!searchData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                Add City
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
-                </Col>
-            </Row>
+            <AdvancedSearch {...advanceFilterProps} />
+
             <AddEditForm {...formProps} />
         </>
     );
