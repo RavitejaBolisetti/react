@@ -121,14 +121,10 @@ const AddEditFormMain = (props) => {
             return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile === true) {
             return <IndividualProfileMaster />;
-<<<<<<< HEAD
-        } else if (leftTimeline?.FamilyDetails === true) {
-=======
         }
         else if(leftTimeline?.FamilyDetails===true)
         {
             return <FamilyDetails />
->>>>>>> b9bd3694c8de65ae707321f866ac328fc067a427
         }
     };
 
