@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { CustomerDetailsMaster } from './IndividualCustomer';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { IndividualAddressMaster } from './IndividualCustomer/Address';
-import { FamilyDetailsMaster } from './IndividualCustomer/FamilyDetails';
+import { FamilyDetails } from './IndividualCustomer/FamilyDetails';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 
 import FormProgressBar from './FormProgressBar';
@@ -118,12 +118,12 @@ const AddEditFormMain = (props) => {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts === true) {
         } else if (leftTimeline?.CustomerProfile === true) {
-            return <CustomerProfile />;
+            // return <CustomerDetailsMaster />;
         } else if (leftTimeline.IndividualProfile === true) {
-            return <IndividualProfileMaster />;
+            // return <IndividualProfileMaster />;
         }
         else if (leftTimeline?.FamilyDetails === true) {
-
+            return <FamilyDetails />
         }
     };
 
