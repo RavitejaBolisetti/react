@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { searchValidator } from 'utils/validation';
 
@@ -9,7 +8,7 @@ import styles from 'components/common/Common.module.css';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { form, formData, handleFilterChange } = props;
+    const {  formData, handleFilterChange } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
 
     useEffect(() => {
@@ -29,7 +28,6 @@ export const AdvancedSearchFrom = (props) => {
     const [filteredDepartmentData, setFilteredDepartmentData] = useState([]);
     const handleDivisionChange = (division) => {
         handleFilterChange('divisionCode');
-        // form.setFieldValue('departmentName', undefined);
         setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
     };
 
@@ -37,10 +35,8 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
@@ -70,9 +66,9 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={12} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formData?.roleCode} label="Role Code" name="keyword" rules={[{ validator: searchValidator }]}>
-                        <Input className={styles.inputBox} maxLength={6} />
+                        <Input className={styles.inputBox} maxLength={6} placeholder="Search" />
                     </Form.Item>
                 </Col>
             </Row>

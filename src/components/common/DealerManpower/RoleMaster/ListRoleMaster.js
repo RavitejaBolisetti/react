@@ -165,18 +165,21 @@ export const ListRoleMasterBase = (props) => {
             title: 'Division Name',
             value: filterString?.divisionCode,
             name: divisionData?.find((i) => i?.code === filterString?.divisionCode)?.divisionName,
+            canRemove: true,
         },
         {
             key: 'departmentCode',
             title: 'Department Name',
             value: filterString?.departmentCode,
             name: departmentData?.find((i) => i?.departmentCode === filterString?.departmentCode)?.departmentName,
+            canRemove: true,
         },
         {
             key: 'keyword',
             title: 'keyword',
             value: filterString?.keyword,
             name: filterString?.keyword,
+            canRemove: true,
         },
     ];
 
@@ -205,22 +208,7 @@ export const ListRoleMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        // setFilterString({ ...filterString, keyword: value });
-        // value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
-
-        advanceFilterForm
-
-            .validateFields()
-
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
-            })
-
-            .catch((err) => {
-                console.log(err);
-
-                return;
-            });
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
     };
 
     const handleFilterChange =

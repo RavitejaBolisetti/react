@@ -9,7 +9,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter,setAdvanceSearchVisible,isAdvanceSearchVisible } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible, isAdvanceSearchVisible } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -18,21 +18,17 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values', values);
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
         setAdvanceSearchVisible(false);
     };
 
-
     const onFinishFailed = () => {
         return;
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
@@ -53,7 +49,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode}  name="stateCode">
+                    <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -65,7 +61,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" >
+                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -74,8 +70,8 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="keyword" >
-                    <Input placeholder="Search" maxLength={50} allowClear />
+                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="keyword">
+                        <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

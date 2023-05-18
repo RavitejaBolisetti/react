@@ -45,10 +45,8 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,

@@ -13,7 +13,7 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue({ code : filterString?.divisionCode });
+        advanceFilterForm.setFieldsValue({ code: filterString?.divisionCode });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
@@ -27,10 +27,8 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
@@ -39,7 +37,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Division"  name="divisionCode">
+                    <Form.Item label="Division" name="divisionCode">
                         <Select placeholder="Select" {...selectProps}>
                             {divisionData?.map((item) => (
                                 <Option value={item?.code}>{item?.divisionName}</Option>
@@ -48,10 +46,9 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Department" initialValue={filterString?.keyword} name="keyword" >
+                    <Form.Item label="Department" initialValue={filterString?.keyword} name="keyword">
                         <Input placeholder="Search" allowClear />
                     </Form.Item>
-                    
                 </Col>
             </Row>
 
@@ -63,7 +60,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary" >
+                    <Button htmlType="submit" type="primary">
                         Search
                     </Button>
                 </Col>

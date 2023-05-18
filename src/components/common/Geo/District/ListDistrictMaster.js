@@ -316,12 +316,7 @@ export const ListDistrictBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        advanceFilterForm
-            .validateFields()
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
-            })
-            .catch((error) => console.error(error));
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
     };
 
     const advanceFilterProps = {
@@ -373,7 +368,7 @@ export const ListDistrictBase = (props) => {
                                         District List
                                     </Col>
                                     <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm}  onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
                                             <Form.Item label="" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
                                                 <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>

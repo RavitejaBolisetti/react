@@ -173,24 +173,28 @@ export const DesignationMasterBase = (props) => {
             title: 'division',
             value: filterString?.code,
             name: divisionData?.find((i) => i?.code === filterString?.code)?.divisionName,
+            canRemove: true,
         },
         {
             key: 'departmentCode',
             title: 'department',
             value: filterString?.departmentCode,
             name: filteredDepartmentData?.find((i) => i?.departmentCode === filterString?.departmentCode)?.departmentName,
+            canRemove: true,
         },
         {
             key: 'roleCode',
             title: 'role',
             value: filterString?.roleCode,
             name: filteredRoleData?.find((i) => i?.roleCode === filterString?.roleCode)?.roleDescription,
+            canRemove: true,
         },
         {
             key: 'keyword',
             title: 'keyword',
             value: filterString?.keyword,
             name: filterString?.keyword,
+            canRemove: true,
         },
     ];
 
@@ -211,15 +215,7 @@ export const DesignationMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        advanceFilterForm
-            .validateFields()
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
-            })
-            .catch((err) => {
-                console.log(err);
-                return;
-            });
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
     };
 
     const handleFilterChange =

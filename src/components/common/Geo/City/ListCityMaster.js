@@ -227,15 +227,7 @@ export const ListCityMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        advanceFilterForm
-            .validateFields()
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
-            })
-            .catch((err) => {
-                console.log(err);
-                return;
-            });
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
     };
 
     const handleFilterChange =

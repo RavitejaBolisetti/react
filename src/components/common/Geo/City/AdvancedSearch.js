@@ -28,10 +28,8 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
@@ -64,7 +62,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" >
+                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>

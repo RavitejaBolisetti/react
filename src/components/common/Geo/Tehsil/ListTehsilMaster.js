@@ -390,19 +390,7 @@ export const ListTehsilBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        advanceFilterForm
-
-            .validateFields()
-
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
-            })
-
-            .catch((err) => {
-                console.log(err);
-
-                return;
-            });
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
     };
 
     const removeFilter = (key) => {
