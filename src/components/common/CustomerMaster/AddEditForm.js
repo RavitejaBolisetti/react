@@ -13,6 +13,7 @@ import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRela
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 
 import FormProgressBar from './FormProgressBar';
+import { IndividualProfileMaster } from './IndividualCustomer';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -116,6 +117,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Contacts === true) {
         } else if (leftTimeline?.CustomerDetails === true) {
         } else if (leftTimeline.IndividualProfile === true) {
+            return <IndividualProfileMaster />;
         }
     };
 
