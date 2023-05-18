@@ -11,19 +11,28 @@ const ProductAttributeMaster = (props) => {
 
     const [finalFormdata, setFinalFormdata] = useState([]);
     const [formDecider, setFormDecider] = useState(false);
-    const [editForm] = Form.useForm();
+    const [validation, setvalidation] = useState(false);
 
     const onAttributeFormFinish = (val) => {
         finalFormdata.push(val);
         attributeForm.resetFields();
         forceUpdate();
+        setvalidation(true);
 
-        const newFormData = editForm.getFieldsValue();
-        console.log(newFormData,'newFormDatanewFormDatanewFormDatanewFormDatanewFormData')
+        for (let i = 0; i < finalFormdata.length; i++) {
+            if (finalFormdata.attributeName.label === val.attributeName.label && finalFormdata.attributeValue === val.attributeValue) {
+                setvalidation(true);
+                break;
+            }
+        }
 
-        const formatData = [];
-        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
-        setSKUAttributes(formatData);
+        console.log(validation, 'finalFormdata');
+
+        if (!validation) {
+            const formatData = [];
+            finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+            setSKUAttributes(formatData);
+        }
     };
 
     const cardAttributeProps = {
@@ -36,13 +45,12 @@ const ProductAttributeMaster = (props) => {
         formDecider,
         setFormDecider,
         selectedTreeData,
-        setSKUAttributes,
-        editForm,
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
         productHierarchyAttributeData,
+        validation,
     };
 
     useEffect(() => {

@@ -8,9 +8,9 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, editForm } = props;
+    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes } = props;
     const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
-    
+    const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
         setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
