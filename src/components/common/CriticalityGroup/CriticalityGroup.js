@@ -141,6 +141,7 @@ export const CriticalityGroupMain = (props) => {
             setShowDataLoading(true);
             form.resetFields();
             setForceFormReset(generateRandomNumber());
+            setTimeData([]);
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
