@@ -1,2 +1,4 @@
 import { CustomerDetailsMaster } from './CustomerDetails';
-export { CustomerDetailsMaster };
+import {IndividualAddressMaster} from './Address';
+
+export { CustomerDetailsMaster, IndividualAddressMaster };
