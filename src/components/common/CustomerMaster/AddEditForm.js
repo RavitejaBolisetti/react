@@ -13,6 +13,7 @@ import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRela
 import { IndividualAddressMaster } from './IndividualCustomer/Address';
 import { FamilyDetails } from './IndividualCustomer/FamilyDetails';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
+import { CustomerProfile } from './CustomerProfile';
 
 import FormProgressBar from './FormProgressBar';
 
@@ -118,9 +119,9 @@ const AddEditFormMain = (props) => {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts === true) {
         } else if (leftTimeline?.CustomerProfile === true) {
-            // return <CustomerDetailsMaster />;
+            return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile === true) {
-            return <IndividualProfileMaster />;
+            // return <IndividualProfileMaster />;
         }
         else if (leftTimeline?.FamilyDetails === true) {
             return <FamilyDetails />
