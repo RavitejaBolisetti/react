@@ -10,13 +10,16 @@ const ProductAttributeMaster = (props) => {
     const [attributeForm] = Form.useForm();
 
     const [finalFormdata, setFinalFormdata] = useState([]);
-    const [editedValue, setEditedValue] = useState(null);
     const [formDecider, setFormDecider] = useState(false);
+    const [editForm] = Form.useForm();
 
     const onAttributeFormFinish = (val) => {
         finalFormdata.push(val);
         attributeForm.resetFields();
         forceUpdate();
+
+        const newFormData = editForm.getFieldsValue();
+        console.log(newFormData,'newFormDatanewFormDatanewFormDatanewFormDatanewFormData')
 
         const formatData = [];
         finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
@@ -30,12 +33,11 @@ const ProductAttributeMaster = (props) => {
         isVisible,
         finalFormdata,
         setFinalFormdata,
-        editedValue,
-        setEditedValue,
         formDecider,
         setFormDecider,
         selectedTreeData,
-        setSKUAttributes
+        setSKUAttributes,
+        editForm,
     };
 
     const formProductAttributeProps = {
