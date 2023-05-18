@@ -1,4 +1,4 @@
-import React, { useState,useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Collapse, Space, Typography, Form } from 'antd';
 import { FaUserCircle } from 'react-icons/fa';
 import { AddEditForm } from './AddEditForm';
@@ -30,7 +30,7 @@ const FamilyDetailsBase = () => {
     }, []);
 
     const onFamilyFinish = (values) => {
-        console.log(values,'valuesvaluesvalues')
+        console.log(values, 'valuesvaluesvalues')
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -48,7 +48,7 @@ const FamilyDetailsBase = () => {
     }
 
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <FaUserCircle style={{color:'red'}} /> : <FaUserCircle />)} activeKey={openAccordian}>
+        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <FaUserCircle style={{ color: 'red' }} /> : <FaUserCircle />)} activeKey={openAccordian}>
             <Panel
                 header={
                     <>
@@ -65,4 +65,4 @@ const FamilyDetailsBase = () => {
     );
 };
 
-export const FamilyDetails = FamilyDetailsBase;
+export const FamilyDetailsMaster = FamilyDetailsBase;

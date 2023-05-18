@@ -4,5 +4,4 @@ import { IndividualProfileMaster } from './IndividualProfile'
 import { IndividualAccountRelatedMaster } from './AccountRelated';
 import { FamilyDetailsMaster } from './FamilyDetails'
 
-export { CustomerDetailsMaster, IndividualAddressMaster };
-export { CustomerDetailsMaster, IndividualProfileMaster };
+export { CustomerDetailsMaster, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetailsMaster };
