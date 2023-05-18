@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -89,6 +89,8 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
         </span>
     );
 
+    console.log('password',password);
+
     return (
         <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
@@ -100,12 +102,9 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {/* validateFieldsPassword('New password') */}
                     <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
                         <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
-                    </Form.Item>
-                    {/* {password && <PasswordStrengthBar minLength={8} barColors={['#ddd', '#ef4836', '#f6b44d', '#2b90ef', '#25c281']} scoreWords={['poor', 'weak', 'okay', 'good', 'strong']} password={password} />}
-                    <PasswordStrength password={password} /> */}
+                    </Form.Item>                
                     <PasswordStrengthMeter Row={Row} Col={Col} password={password} />
                 </Col>
             </Row>
