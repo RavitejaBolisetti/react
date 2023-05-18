@@ -1545,3 +1545,11 @@
         width: '100%';
     }
 }
+
+.userCircle{
+    color: #ff3e5b !important;
+    margin-top: 3px !important;
+    margin-left: 3px !important;
+    height: 24px !important;
+    width: 24px !important;
+}
