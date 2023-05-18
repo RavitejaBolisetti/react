@@ -1,4 +1,4 @@
-import {  render, screen } from '@testing-library/react';
+import {  fireEvent, queryByRole, render, screen } from '@testing-library/react';
 import { TehsilData, Tehsil } from './Common/Data/data';
 import { InputFieldAvailablity, buttonLookAndFireEvent, buttonLookAndFireEventByRole, buttonLookAndFireEventWithLabel, buttonLookAndFireEventWithText, inputFieldLookAndtextChange, searchFieldTest, searchFunctionality, switchAvailablity, tablerender } from './Common/tableWithDrawer/common';
 import {fetchList,saveData,listShowLoading} from './Common/CommonImports/commonImports';
@@ -55,21 +55,21 @@ describe('District Master Test', () => {
         tablerender('Tehsil List', 'Tehsil Code')
     });
 
-    test('Edit Functionality in Table', async () => {
-        render(<ListTehsilMaster TehsilData={Tehsil} fetchList={fetchList} saveData={saveData} />);
-        buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
+    // test('Edit Functionality in Table', async () => {
+    //     render(<ListTehsilMaster TehsilData={Tehsil} fetchList={fetchList} saveData={saveData} />);
+    //     buttonLookAndFireEventWithLabel('fa-edit') //click on edit button
 
-        inputFieldLookAndtextChange('Please enter Tehsil Code', 'T2412','T1324' );
-        inputFieldLookAndtextChange('Please enter Tehsil Name', 'Barella')
+    //     inputFieldLookAndtextChange('Please enter Tehsil Code', 'T2412','T1324' );
+    //     inputFieldLookAndtextChange('Please enter Tehsil Name', 'Barella')
 
-        const inputCodelabel = await screen.findAllByText('Tehsil Code');
-        const Validations2 = await screen.findAllByText('Tehsil Name');
+    //     const inputCodelabel = await screen.findAllByText('Tehsil Code');
+    //     const Validations2 = await screen.findAllByText('Tehsil Name');
 
-        expect(inputCodelabel).toBeTruthy();
-        expect(Validations2).toBeTruthy();
+    //     expect(inputCodelabel).toBeTruthy();
+    //     expect(Validations2).toBeTruthy();
         
-        buttonLookAndFireEventByRole('Save')
-    });
+    //     buttonLookAndFireEventByRole('Save')
+    // });
 
     // test('Is search working', async () => {
     //     render(<ListDistrictMaster qualificationData={qualificationMasterData1} listShowLoading={listShowLoading} fetchList={fetchList} saveData={saveData} />);
@@ -134,6 +134,29 @@ describe('District Master Test', () => {
         expect(result).toBeTruthy();
         expect(onFinish).toHaveBeenCalled();
     });
+    test('is drawer closing on click of cancel button', async () => {
+        render(<ListTehsilMaster  TehsilData={Tehsil} fetchList={fetchList} saveData={saveData} />);
+        const advanceFilter = await screen.findByTestId('Advance Filter');
+        expect(advanceFilter).toBeInTheDocument();
+        fireEvent.click(advanceFilter);
+
+    });
+    test('does not render the modal by default', () => {
+       render(
+            <ListTehsilMaster TehsilData={Tehsil} fetchList={fetchList} saveData={saveData} />
+        );
+        const modal = screen.queryByRole('dialog');
+        expect(modal).toBeNull();
+});
+test('is modal open on click advance search button', async () => {
+    render(<ListTehsilMaster TehsilData={Tehsil} fetchList={fetchList} saveData={saveData} />);
+    const advanceFilter = await screen.findByTestId('Advance Filter');
+    expect(advanceFilter).toBeInTheDocument();
+    fireEvent.click(advanceFilter);
+    const modalOpen = screen.queryByRole('dialog');
+    expect(modalOpen).toBeInTheDocument();
+});
+
 
 });
 

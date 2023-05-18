@@ -9,23 +9,44 @@ import styles from './PasswordStrengthMeter.module.css';
 const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     const [passwordLevel, setPasswordLevel] = useState({ levelOne: false, levelTwo: false, levelThree: false });
     const [strength, setStrength] = useState(0);
+    const [validatorStatus, setValidatorStatus] = useState();
 
     const regexArr = [
-        /[A-Z]+/, // at least one uppercase letter
-        /[a-z]+/, // at least one lowercase letter
-        /\d+/, // at least one digit
-        /[^\w\d\s]/, // at least one symbol
-        /.{8,}/, // at least 8 characters
+        {
+            key: 'uppercase',
+            regex: /[A-Z]+/,
+        },
+        {
+            key: 'lowercase',
+            regex: /[a-z]+/,
+        },
+        {
+            key: 'digit',
+            regex: /[0-9]+/,
+        },
+        {
+            key: 'symbol',
+            regex: /[^\w\d\s]/,
+        },
+        {
+            key: 'length',
+            regex: /.{8,}/,
+        },
     ];
 
     useEffect(() => {
         let strength = 0;
-        regexArr.forEach((regex) => {
-            if (regex.test(password)) {
-                strength += 20;
-            }
-        });
+        let validatorArr = [];
 
+        if (password) {
+            regexArr.forEach((item) => {
+                if (item?.regex.test(password)) {
+                    strength += 20;
+                    validatorArr[item?.key] = true;
+                }
+            });
+        }
+        setValidatorStatus(validatorArr);
         setStrength(strength);
         getProgressColor(strength);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,34 +86,29 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
         }
     };
 
-    const infoText = (
+    const checkValidatorStatus = (validate, message) => {
+        return validate ? (
+            <li className={styles.rulesIconGreen}>
+                <FaRegCheckCircle />
+                {message}
+            </li>
+        ) : (
+            <li className={styles.rulesIconRed}>
+                <FcCancel size={18} />
+                {message}
+            </li>
+        );
+    };
+
+    const infoText = (validatorStatus) => (
         <div className={styles.tooltipDesign}>
             <span>Password must include:</span>
             <ul>
-                <li className={styles.rulesIconGreen}>
-                    <FaRegCheckCircle />
-                    Have at least 1 uppercase
-                </li>
-                <li className={styles.rulesIconRed}>
-                    <FcCancel size={18} />
-                    Have at least 1 number and symbol
-                </li>
-                <li className={styles.rulesIconGreen}>
-                    <FaRegCheckCircle />
-                    Have at least 1 letter
-                </li>
-                <li className={styles.rulesIconRed}>
-                    <FcCancel size={18} />
-                    Be at least 8 characters
-                </li>
-                <li className={styles.rulesIconGreen}>
-                    <FaRegCheckCircle />
-                    Not be a common password
-                </li>
-                <li className={styles.rulesIconGreen}>
-                    <FaRegCheckCircle />
-                    Not be as the same account name
-                </li>
+                {checkValidatorStatus(validatorStatus?.uppercase, 'Have at least 1 uppercase')}
+                {checkValidatorStatus(validatorStatus?.lowercase, 'Have at least 1 lowercase')}
+                {checkValidatorStatus(validatorStatus?.digit, 'Have at least 1 number')}
+                {checkValidatorStatus(validatorStatus?.symbol, 'Have at least 1 symbol')}
+                {checkValidatorStatus(validatorStatus?.length, 'Be at least 8 characters')}
             </ul>
         </div>
     );
@@ -109,7 +125,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                     {strengthText && (
                         <div className={styles.strength}>
                             <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
-                            <span className={styles.infoIcon}>{addToolTip(infoText, 'right', '#F99C22')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#F99C22')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
                         </div>
                     )}
                 </Col>

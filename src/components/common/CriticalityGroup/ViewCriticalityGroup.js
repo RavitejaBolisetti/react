@@ -1,6 +1,5 @@
 import React from 'react';
 import { Descriptions } from 'antd';
-import AllowedTimingCard from './AllowedTimingCard';
 
 const ViewCriticalityGroupMain = (props) => {
     const { cardProps } = props;
@@ -22,7 +21,6 @@ const ViewCriticalityGroupMain = (props) => {
                     <Descriptions.Item label="Default Group">{selectedRecord?.criticalityDefaultGroup === '1' ? <text className={style.activeText}>Active</text> : <text className={style.inactiveText}>InActive</text>}</Descriptions.Item>
                     <Descriptions.Item label="Status">{selectedRecord?.activeIndicator === 1 ? <text className={style.activeText}>Active</text> : <text className={style.inactiveText}>InActive</text>}</Descriptions.Item>
                 </Descriptions>
-                <AllowedTimingCard {...cardProps} />
             </>
         </div>
     );

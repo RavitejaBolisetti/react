@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { withModal } from 'components/withModal';
+import { searchValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -9,7 +10,7 @@ const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData, filteredCityData, filteredTehsilData } = props;
-    const { filterString, setFilterString, advanceFilterForm, handleResetFilter } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, isAdvanceSearchVisible, setAdvanceSearchVisible } = props;
 
     useEffect(() => {
         advanceFilterForm.resetFields();
@@ -20,6 +21,7 @@ export const AdvancedSearchFrom = (props) => {
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
         handleFilterChange(false);
+        setAdvanceSearchVisible(false);
     };
 
     const onFinishFailed = () => {
@@ -50,7 +52,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.stateCode} rules={[validateRequiredInputField('State')]} name="stateCode">
+                    <Form.Item label="State" initialValue={filterString?.stateCode} name="stateCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('stateCode')}>
                             {filteredStateData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -62,7 +64,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
+                    <Form.Item label="District" initialValue={filterString?.districtCode} name="districtCode" >
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('districtCode')}>
                             {filteredDistrictData?.map((item) => (
                                 <Option value={item?.code}>{item?.name}</Option>
@@ -72,33 +74,13 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
-                            {filteredCityData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
-                            ))}
-                        </Select>
+                    <Form.Item label="City Name" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
+                        <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>
                 </Col>
             </Row>
 
-            <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Tehsil" initialValue={filterString?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                        <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('tehsilCode')}>
-                            {filteredTehsilData?.map((item) => (
-                                <Option value={item?.code}>{item?.name}</Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                </Col>
-
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="PIN Code" initialValue={filterString?.code} name="code" rules={[validatePincodeField('Pincode')]}>
-                        <Input placeholder="Search" maxLength={6} allowClear />
-                    </Form.Item>
-                </Col>
-            </Row>
+            <Row gutter={16}></Row>
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>

@@ -16,22 +16,22 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'City Name',
             dataIndex: 'name',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'District Name',
             dataIndex: 'districtName',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'State Name',
             dataIndex: 'stateName',
-            width: '20%',
+            width: '15%',
         }),
 
-        tblStatusColumn({ styles, width: '12%' }),
+        tblStatusColumn({ styles }),
 
         tblActionColumn({ handleButtonClick, styles })
     );

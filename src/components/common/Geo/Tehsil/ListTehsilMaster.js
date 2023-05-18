@@ -16,11 +16,16 @@ import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
+import { FilterIcon } from 'Icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 import { bindActionCreators } from 'redux';
 import styles from 'components/common/Common.module.css';
+import { ListDataTable } from 'utils/ListDataTable';
+import { RxCross2 } from 'react-icons/rx';
+import { AdvancedSearch } from './AdvancedSearch';
+import { validateAtLeastThreeChar } from 'utils/validation';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -51,14 +56,14 @@ const mapStateToProps = (state) => {
         countryData: finalCountryData,
         defaultCountry,
         isStateDataLoaded,
-        isStateLoading,
-        stateData,
-        isDistrictDataLoaded,
-        isDistrictLoading,
-        districtData,
-        isDataLoaded,
         isLoading,
+        isDistrictLoading,
+        isStateLoading,
+        isDistrictDataLoaded,
+        districtData,
         data,
+        stateData,
+        isDataLoaded,
         moduleTitle,
     };
     return returnValue;
@@ -77,6 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: geoTehsilDataActions.fetchList,
             saveData: geoTehsilDataActions.saveData,
             listShowLoading: geoTehsilDataActions.listShowLoading,
+            resetData: geoTehsilDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -84,23 +90,27 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListTehsilBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId,resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, districtData, listDistrictShowLoading, fetchDistrictList } = props;
 
     const [form] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [filteredStateData, setFilteredStateData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [filterString, setFilterString] = useState();
+    
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
@@ -117,6 +127,7 @@ export const ListTehsilBase = (props) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
     };
 
     useEffect(() => {
@@ -138,8 +149,8 @@ export const ListTehsilBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded]);
 
     useEffect(() => {
-        if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        if (userId && refershData && extraParams) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -148,15 +159,64 @@ export const ListTehsilBase = (props) => {
         setFilterString({ countryCode: defaultCountry });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultCountry]);
+    useEffect(() => {
+        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
+            // setFilterString({ countryCode: defaultCountry });
+            setFilteredStateData(stateData?.filter((i) => i?.countryCode === defaultCountry));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataCountryLoaded, isStateDataLoaded]);
+
+    const extraParams = [
+        {
+            key: 'countryCode',
+            title: 'Country',
+            value: filterString?.countryCode,
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+            canRemove: false,
+        },
+        {
+            key: 'stateCode',
+            title: 'State',
+            value: filterString?.stateCode,
+            name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+            canRemove: true,
+        },
+        {
+            key: 'districtCode',
+            title: 'District',
+            value: filterString?.districtCode,
+            name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+            canRemove: true,
+        },
+        {
+            key: 'keyword',
+            title: 'tehsil',
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+            canRemove: true,
+        },
+    ];
+    // useEffect(() => {
+    //     if (userId && filterString) {
+    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
+    //     }
+
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString, userId]);
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                const keyword = filterString?.keyword;
-                const state = filterString?.state;
-                const district = filterString?.district;
-                const tehsil = filterString?.tehsil;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true) && (tehsil ? filterFunction(tehsil)(item?.tehsilCode) : true));
+                console.log('filterString',filterString)
+
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const state = filterString?.stateCode;
+                const district = filterString?.districtCode;
+
+                console.log('keyword',keyword,'state',state,'district',district);
+
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
                 setShowDataLoading(false);
             } else {
@@ -183,20 +243,34 @@ export const ListTehsilBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
-    };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
-    };
+    const handleFilterChange =
+    (name, type = 'value') =>
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-    const handleFilterChange = (name) => (value) => {
-        if (name === 'state') {
-            setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === value));
-        }
-        setFilterString({ ...filterString, [name]: value });
-    };
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+
+            // if (name === 'districtCode') {
+            //     setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+            //     setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+            //     advanceFilterForm.setFieldsValue({ cityCode: undefined });
+            //     advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            // }
+        };
+        // console.log(setFilteredDistrictData,'setFilteredDistrictData')
+
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -204,6 +278,7 @@ export const ListTehsilBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
+           
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -280,104 +355,136 @@ export const ListTehsilBase = (props) => {
         setPage,
     };
 
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        setFilterString();
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
+    };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        isDataCountryLoaded,
+        isCountryLoading,
+        countryData,
+        defaultCountry,
+        districtData,
+        stateData,
+        data,
+        handleFilterChange,
+        filteredStateData,
+        filteredDistrictData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
+        isAdvanceSearchVisible,
+        setAdvanceSearchVisible,
+    };
+
+    const onSearchHandle = (value) => {
+        advanceFilterForm
+
+            .validateFields()
+
+            .then(() => {
+                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
+            })
+
+            .catch((err) => {
+                console.log(err);
+
+                return;
+            });
+    };
+
+    const removeFilter = (key) => {
+        advanceFilterForm.resetFields();
+        const { [key]: names, ...rest } = filterString;
+        setFilterString({ ...rest });
+    };
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={3} lg={3} xl={3} className={styles.lineHeight33}>
-                                        Tehsil List
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label="Tehsil" initialValue={filterString?.code} name="keyword" rules={[]}>
+                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle}  />
+                                            </Form.Item>
+                                        </Form>
                                     </Col>
-
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
-                                        {defaultCountry && (
-                                            <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
-                                                {countryData?.map((item) => (
-                                                    <Option value={item?.countryCode}>{item?.countryName}</Option>
-                                                ))}
-                                            </Select>
-                                        )}
-                                    </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
-                                        <Select placeholder="State" allowClear className={styles.headerSelectField} onChange={handleFilterChange('state')}>
-                                            {stateData?.map((item) => (
-                                                <Option value={item?.code}>{item?.name}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
-                                        <Select placeholder="District" allowClear className={styles?.headerSelectField} onChange={handleFilterChange('district')}>
-                                            {filteredDistrictData?.map((item) => (
-                                                <Option value={item?.code}>{item?.name}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Button data-testid="Advance Filter" icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                            Advanced Filters
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Col>
 
-                            {data?.length ? (
-                                <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.addGroup}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        Add Tehsil
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
+                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    Add Tehsil
+                                </Button>
+                            </Col>
                         </Row>
+                        {filterString?.advanceFilter && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                        </Col>
+                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value && (
+                                                        <div className={styles.advanceFilterItem}>
+                                                            {filter?.name}
+                                                            {filter?.canRemove && <span>
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            </span>}
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )}
                     </div>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !data?.length ? (
-                                        <span>
-                                            No records found. Please add <span style={{ color: 'rgba(0,0,0,0.7)' }}>"New Tehsil Details"</span>
-                                            <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!data?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                Add Tehsil
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                 <ListDataTable  {...tableProps} scroll={2400}/>
                 </Col>
             </Row>
+            <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
+           
         </>
     );
 };
