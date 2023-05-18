@@ -102,7 +102,7 @@ const AddEditFormMain = (props) => {
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
                 <>
-                    <CustomerProfile /> <AccountRelated />{' '}
+                    <CustomerProfile />
                 </>
             ) : (
                 <ViewCustomerMaster {...viewProps} />
