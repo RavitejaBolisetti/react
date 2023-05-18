@@ -61,9 +61,14 @@ const AddEditFormMain = (props) => {
                         setkeyAccountFormValues(keyAccountFormValues);
                         setDone(!done);
                     })
-                    .catch(() => {});
+                    .catch(() => {
+                        console.log('error');
+                        setactiveKey([3]);
+                    });
             })
-            .catch(() => {});
+            .catch(() => {
+                setactiveKey([1]);
+            });
     };
     const onFinishFailed = () => {
         customerForm.validateFields();
@@ -106,9 +111,9 @@ const AddEditFormMain = (props) => {
                         <Collapse
                             expandIcon={() => {
                                 if (activeKey.includes(1)) {
-                                    return <MinusOutlined />;
+                                    return <MinusOutlined className={styles.iconsColor} />;
                                 } else {
-                                    return <PlusOutlined />;
+                                    return <PlusOutlined className={styles.iconsColor} />;
                                 }
                             }}
                             activeKey={activeKey}
@@ -117,16 +122,17 @@ const AddEditFormMain = (props) => {
                         >
                             <Panel
                                 header={
-                                    <>
-                                        <FaRegUserCircle /> Customer Information
-                                    </>
+                                    <div className={styles.alignUser}>
+                                        <FaRegUserCircle className={styles.userCircle} />
+                                        <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Customer Information</div>
+                                    </div>
                                 }
                                 key="1"
                             >
                                 <Form autoComplete="off" layout="vertical" form={customerForm}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item label="customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                                            <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
                                                 <Select placeholder="Select" disabled={false} showSearch loading={false} allowClear>
                                                     <Option value="customerType">customerType</Option>
                                                 </Select>
@@ -153,7 +159,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Usage/Application Sub-category" name="usageCategorizationcategory" data-testid="customerType">
-                                                <Select disabled={false} showSearch loading={false} placeholder="Select what you want" allowClear>
+                                                <Select disabled={false} showSearch loading={false} placeholder="Select" allowClear>
                                                     <Option value="Usage/Application Sub-category">Usage/Application Sub-category</Option>
                                                 </Select>
                                             </Form.Item>
@@ -172,9 +178,9 @@ const AddEditFormMain = (props) => {
                         <Collapse
                             expandIcon={() => {
                                 if (activeKey.includes(2)) {
-                                    return <MinusOutlined />;
+                                    return <MinusOutlined className={styles.iconsColor} />;
                                 } else {
-                                    return <PlusOutlined />;
+                                    return <PlusOutlined className={styles.iconsColor} />;
                                 }
                             }}
                             activeKey={activeKey}
@@ -183,17 +189,18 @@ const AddEditFormMain = (props) => {
                         >
                             <Panel
                                 header={
-                                    <>
-                                        <FaRegUserCircle /> Key Account details
-                                    </>
+                                    <div className={styles.alignUser}>
+                                        <FaRegUserCircle className={styles.userCircle} />
+                                        <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>Key Account details</div>
+                                    </div>
                                 }
                                 key="2"
                             >
                                 <Form autoComplete="off" layout="vertical" form={keyAccountForm}>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue="Shaka" label="Account Code" name="accountCode">
-                                                <Input value="Shaka" disabled />
+                                            <Form.Item label="Account Code" name="accountCode">
+                                                <Input disabled />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -226,9 +233,9 @@ const AddEditFormMain = (props) => {
                         <Collapse
                             expandIcon={() => {
                                 if (activeKey.includes(3)) {
-                                    return <MinusOutlined />;
+                                    return <MinusOutlined className={styles.iconsColor} />;
                                 } else {
-                                    return <PlusOutlined />;
+                                    return <PlusOutlined className={styles.iconsColor} />;
                                 }
                             }}
                             activeKey={activeKey}
@@ -237,9 +244,10 @@ const AddEditFormMain = (props) => {
                         >
                             <Panel
                                 header={
-                                    <>
-                                        <FaRegUserCircle /> Authority details
-                                    </>
+                                    <div className={styles.alignUser}>
+                                        <FaRegUserCircle className={styles.userCircle} />
+                                        <div style={{ paddingLeft: '10px', paddingTop: '3px' }}>Authority details</div>
+                                    </div>
                                 }
                                 key="3"
                             >
@@ -255,24 +263,24 @@ const AddEditFormMain = (props) => {
                                                     },
                                                 ]}
                                             >
-                                                <Input />
+                                                <Input placeholder={preparePlaceholderText('name')} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Position" name="postion">
-                                                <Input />
+                                                <Input placeholder={preparePlaceholderText('position')} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Company Name" name="companyName">
-                                                <Input />
+                                                <Input placeholder={preparePlaceholderText('company name')} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Form.Item name="remarks" label="Remarks">
-                                                <Input.TextArea />
+                                                <Input.TextArea placeholder={preparePlaceholderText('remarks')} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
