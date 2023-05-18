@@ -115,7 +115,7 @@ const AddEditFormMain = (props) => {
                                 } else {
                                     return <PlusOutlined className={styles.iconsColor} />;
                                 }
-                            }}
+                            }} 
                             activeKey={activeKey}
                             onChange={() => onChange(1)}
                             expandIconPosition="end"

@@ -80,9 +80,27 @@ export const validatePincodeField = (fieldName, digit = '6') => ({
 
 export const validatInstagramProfileUrl = (fieldName) =>({
     pattern: /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/igm,
-    message: 'Please enter 6 digit valid ' + fieldName,
-
+    message: 'Please enter valid url ' + fieldName,
 })
+
+export const validatFacebookProfileUrl = (fieldName) =>({
+    pattern: /(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/,
+    message: 'Please enter valid url ' + fieldName,
+})
+
+export const validatYoutubeProfileUrl = (fieldName) =>({
+    pattern: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/,
+    message: 'Please enter valid url ' + fieldName,
+})
+// pattern: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/,
+// pat1: /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/,
+
+export const validattwitterProfileUrl = (fieldName) =>({
+    pattern: /^https?:\/\/(www\.)?twitter\.com\/(#!\/)?([^\/]+)(\/\w+)*$/,
+    message: 'Please enter valid url ' + fieldName,
+})
+// pattern: /^http:\/\/)?(www\.)?twitter\.com\/(\w+)/,
+// pattern: /(?:https?:)?\/\/(?:www\.|m\.)?twitter\.com\/(\w{2,15})\/?(?:\?\S+)?(?:\#\S+)?$/igm,
 
 export const duplicateValidator = (value, fieldName, dataList, updateVal) => {
     let dataListToCheck = dataList || [];

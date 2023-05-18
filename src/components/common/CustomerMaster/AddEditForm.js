@@ -12,6 +12,7 @@ import { CustomerDetailsMaster, IndividualAddressMaster, FamilyDetails } from '.
 import { CustomerProfile } from './CustomerProfile/CustomerProfile';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
+import { IndividualContact } from './IndividualCustomer/Contacts'
 
 import FormProgressBar from './FormProgressBar';
 import { IndividualProfileMaster } from './IndividualCustomer';
@@ -110,18 +111,19 @@ const AddEditFormMain = (props) => {
         productHierarchyData,
     };
     const renderElement = () => {
-        if (leftTimeline?.AccountRelated === true) {
+        if (leftTimeline?.AccountRelated) {
             return <IndividualAccountRelatedMaster />;
-        } else if (leftTimeline?.CustomerDetails === true) {
+        } else if (leftTimeline?.CustomerDetails) {
             return <CustomerDetailsMaster />;
-        } else if (leftTimeline?.Address === true) {
+        } else if (leftTimeline?.Address) {
             return <IndividualAddressMaster />;
-        } else if (leftTimeline?.Contacts === true) {
-        } else if (leftTimeline?.CustomerProfile === true) {
+        } else if (leftTimeline?.Contacts) {
+           return <IndividualContact />
+        } else if (leftTimeline?.CustomerProfile) {
             return <CustomerProfile />;
-        } else if (leftTimeline.IndividualProfile === true) {
+        } else if (leftTimeline.IndividualProfile) {
             return <IndividualProfileMaster />;
-        } else if (leftTimeline?.FamilyDetails === true) {
+        } else if (leftTimeline?.FamilyDetails) {
             return <FamilyDetails />;
         }
     };

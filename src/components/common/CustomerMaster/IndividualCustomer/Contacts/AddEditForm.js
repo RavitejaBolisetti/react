@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import Svg from 'assets/images/Filter.svg';
 
-import style from '../../Common.module.css';
+import style from '../../../Common.module.css';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -49,16 +50,12 @@ const gender = [
 ];
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false } = props;
-    const [openAccordian, setOpenAccordian] = useState('');
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
-    };
+    const { isReadOnly = false, onFinish } = props;
 
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
-            {/* <Form autoComplete="off"> */}
+            <Form autoComplete="off" onFinish={onFinish} layout="vertical">
                 <Row>
                     <Typography.Text strong>Add New Contact</Typography.Text>
                 </Row>
@@ -95,8 +92,8 @@ const AddEditForm = (props) => {
 
                 <Row gutter={[20, 0]}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('Title')]}>
-                            <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('Title')} {...disabledProps}>
+                        <Form.Item label="Purpose of Contact" name="purposeOfContact">
+                            <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('purpose of contact')} {...disabledProps}>
                                 {contactPurpose?.map((item) => (
                                     <Option value={item.key}>{item.name}</Option>
                                 ))}
@@ -104,24 +101,24 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item suffix={<Button>Send OTP</Button>} label="Mobile Number" name="contactMobileNumber" rules={[validateRequiredSelectField('Mobile Number')]}>
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
+                        <Form.Item suffix={<Button>Send OTP</Button>} label="Mobile Number" name="contactMobileNumber">
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber" rules={[validateRequiredSelectField('alternate mobile number')]}>
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
+                        <Form.Item label="Alternate Mobile Number" name="alternativeMobileNumber">
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate mobile number')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Relation" name="relationwithCustomer" rules={[validateRequiredSelectField('relation')]}>
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('relation')} {...disabledProps} />
+                        <Form.Item label="Relation" name="relationwithCustomer">
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('relation')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Gender" name="gender">
-                            <Select value={null} placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
+                        <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
+                            <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
                                 {gender.map((item) => (
                                     <Option value={item.key}>{item.name}</Option>
                                 ))}
@@ -138,28 +135,28 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="First Name" name="contactNameFirstName" rules={[validateRequiredSelectField('First Name')]}>
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
+                        <Form.Item label="First Name" name="contactNameFirstName" rules={[validateRequiredInputField('First Name')]}>
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Middle Name" name="contactNameMiddleName">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Last/Surname" name="contactNameLastName">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="E-mail" name="contactEmail">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Alternate Email ID" name="alternativeEmail">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('alternate email id')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -168,28 +165,28 @@ const AddEditForm = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Facebook Link" name="facebook">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
+                        <Form.Item label="Facebook Link" name="facebook" rules={[validatFacebookProfileUrl('facebook')]}>
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Twitter Link" name="twitter">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                        <Form.Item label="Twitter Link" name="twitter" rules={[validattwitterProfileUrl('twitter')]}>
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Instagram Link" name="instagram">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
+                        <Form.Item label="Instagram Link" name="instagram" rules={[validatInstagramProfileUrl('instagram')]}>
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('instagram link')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item label="Youtube Channel" name="youtube">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
+                        <Form.Item label="Youtube Channel" name="youtube" rules={[validatYoutubeProfileUrl('Pincode')]}>
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('youtube channel')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Team BHP Link" name="teamBhp">
-                            <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
+                            <Input className={style.inputBox} placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -200,17 +197,17 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                <Row justify="left">
+                <Row justify="left" style={{ marginBottom: '100px' }}>
                     <Col xs={2} sm={2} md={2} lg={2} xl={2}>
-                        <Button htmlType='submit' type="primary">Save</Button>
-                    </Col>
-                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                        <Button danger>
-                            Reset
+                        <Button htmlType="submit" type="primary">
+                            Save
                         </Button>
                     </Col>
+                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                        <Button danger>Reset</Button>
+                    </Col>
                 </Row>
-            {/* </Form> */}
+            </Form>
         </>
     );
 };
