@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import Address from './Address/Address';
 import { AccountRelated } from './AccountRelated/AccountRelated';
-import IndividualProfile from './IndividualProfile/IndividualProfile';
+import {IndividualProfile} from './IndividualProfile';
 import IndividualContact from './IndividualContact/IndividualContactMain'
 
 
