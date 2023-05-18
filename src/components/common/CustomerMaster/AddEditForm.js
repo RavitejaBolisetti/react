@@ -8,7 +8,8 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster, IndividualAddressMaster } from './IndividualCustomer';
+import { CustomerDetailsMaster } from './IndividualCustomer';
+import { IndividualAddressMaster } from './IndividualCustomer/Address';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 

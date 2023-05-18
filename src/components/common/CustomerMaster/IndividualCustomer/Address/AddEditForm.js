@@ -122,7 +122,7 @@ const AddEditFormMain = ({ form }) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="contactMobile">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
+                            <Input maxLength={50} placeholder={preparePlaceholderText('contact mobile')} />
                         </Form.Item>
                     </Col>
                 </Row>
