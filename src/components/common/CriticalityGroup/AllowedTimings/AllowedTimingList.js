@@ -1,18 +1,22 @@
-import React, { Fragment, useState, useReducer } from 'react';
-import { Form, Divider, Row, Col } from 'antd';
+import React, { useState } from 'react';
+
+import { Form, Row, Col, Button } from 'antd';
+
+import { PlusOutlined } from '@ant-design/icons';
+
+import { LANGUAGE_EN } from 'language/en';
 
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
-import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'components/common/Common.module.css';
 
 const AllowedTimingList = (props) => {
-    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+    const { timeData, setTimeData, isAddTimeVisible, setIsAddTimeVisible } = props;
+    const { formActionType, formData, setFormData, showGlobalNotification, forceUpdate, handleFormValueChange, handleFormFieldChange } = props;
+
     const [timingForm] = Form.useForm();
-    const { footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions } = props;
-    const { timeData, setTimeData } = props;
-    const { formActionType, isViewModeVisible, criticalityGroupData, formData, setFormData, disabledProps, showGlobalNotification, removeItem, setTimesegmentLengthTracker, forceUpdate, TimesegmentLengthTracker } = props;
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const validatedDuplicateTime = (timeSlotFrom, timeSlotTo) => {
         let timeSegments = [...timeData, { timeSlotFrom, timeSlotTo }];
@@ -39,33 +43,59 @@ const AllowedTimingList = (props) => {
         let overlap = validatedDuplicateTime(timeSlotFrom, timeSlotTo);
         !overlap && setTimeData([...timeData, { timeSlotFrom, timeSlotTo }]);
         timingForm.resetFields();
+        setFormData(...formData, timeData);
+        forceUpdate();
+    };
+
+    const formProps = {
+        isAddTimeVisible,
+        form: timingForm,
+        onFinish: onTimingFormFinish,
+        validatedDuplicateTime,
+        handleFormValueChange,
+        handleFormFieldChange,
     };
 
     const cardProps = {
-        forceUpdate,
-        setTimeData,
+        form: timingForm,
         timeData,
+        setTimeData,
         formData,
-        removeItem,
-        setTimesegmentLengthTracker,
-        TimesegmentLengthTracker,
-        disabledProps,
-        showGlobalNotification,
         setFormData,
+        showGlobalNotification,
+        onFinish: onTimingFormFinish,
+        forceUpdate,
     };
+    const showTime = timeData?.length > 0 || ((formActionType?.addMode || formActionType?.editMode) && isAddTimeVisible);
 
     return (
-        <Fragment>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <p className={styles.allowedTimingAlignment}>
-                        Allowed Timings<span>*</span>
-                    </p>
+        <>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.graySeparator}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
+                        </Col>
+
+                        {!formActionType?.viewMode && (
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addTimeBtn}>
+                                <Button
+                                    type="link"
+                                    onClick={() => {
+                                        setIsAddTimeVisible(!isAddTimeVisible);
+                                        timingForm.resetFields();
+                                    }}
+                                    icon={<PlusOutlined />}
+                                >
+                                    Add Time
+                                </Button>
+                            </Col>
+                        )}
+                    </Row>
                 </Col>
             </Row>
-            {timeData?.length === 0 && formActionType === 'view' ? (
-                ''
-            ) : (
+
+            {showTime && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className={styles.timingHeader}>
@@ -82,17 +112,17 @@ const AllowedTimingList = (props) => {
                 </Row>
             )}
             <div className={styles.advanceTimingContainer}>
-                {!isViewModeVisible ? <AddEditForm setFormBtnDisable={setFormBtnDisable} disabledProps={disabledProps} finalFormdata={finalFormdata} form={timingForm} onFinish={onTimingFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} criticalityGroupData={criticalityGroupData} validatedDuplicateTime={validatedDuplicateTime} /> : ''}
-                {timeData.length > 0 && (
+                {!formActionType?.viewMode && isAddTimeVisible && <AddEditForm {...formProps} />}
+                {timeData?.length > 0 && (
                     <div className={styles.viewTiming}>
                         <div className={styles.seprator}></div>
                         {timeData?.map((timing) => {
-                            return <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} form={timingForm} onFinish={onTimingFormFinish} setFormData={setFormData} forceUpdate={forceUpdate} {...cardProps} {...timing} />;
+                            return <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />;
                         })}
                     </div>
                 )}
             </div>
-        </Fragment>
+        </>
     );
 };
 
