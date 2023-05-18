@@ -124,14 +124,14 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </div>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('Old password')]} className={`${styles.inputBox}`}>
+                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password')]} className={`${styles.inputBox}`}>
                                                             <Input prefix={<FiLock size={18} />} type={showPassword?.oldPassword ? 'text' : 'password'} placeholder="Old password*" visibilityToggle={true} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('New Password')]} className={`${styles.changer} ${styles.inputBox}`}>
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
                                                             <Input onChange={(e) => setPassword(e.target.value)} prefix={<FiLock size={18} />} type={showPassword?.newPassword ? 'text' : 'password'} placeholder="New password*" suffix={passwordSuffix('newPassword')} />
                                                         </Form.Item>
                                                         <PasswordStrengthMeter password={password} beforeLogin={true} />

@@ -122,7 +122,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
         <div className={`${styles.passwordStrengthMeter} ${beforeLogin ? styles.beforeLogin : ''}`}>
             <Row gutter={5}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.title}>
-                    Password Strength {addToolTip(passwordStrengthText, 'bottom', '#2782F9')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}
+                    Password Strength {addToolTip(passwordStrengthText, 'bottom', '#20232C', '1px solid #2782F9')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     {strengthText && (
