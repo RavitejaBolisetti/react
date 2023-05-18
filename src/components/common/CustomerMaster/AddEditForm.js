@@ -154,31 +154,30 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                            <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
 
-                                <Row gutter={20} className={styles.formFooter}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                                        <Button danger onClick={onCloseAction}>
-                                            {footerEdit ? 'Close' : 'Cancel'}
+                            {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
+
+                            <Row gutter={20} className={styles.formFooter}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                                    <Button danger onClick={onCloseAction}>
+                                        {footerEdit ? 'Close' : 'Cancel'}
+                                    </Button>
+                                </Col>
+
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                                    {!footerEdit && showSaveBtn && (
+                                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                                            Save
                                         </Button>
-                                    </Col>
+                                    )}
 
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                                        {!footerEdit && showSaveBtn && (
-                                            <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                                                Save
-                                            </Button>
-                                        )}
-
-                                        {footerEdit && (
-                                            <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                                                Edit
-                                            </Button>
-                                        )}
-                                    </Col>
-                                </Row>
-                            </Form>
+                                    {footerEdit && (
+                                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                                            Edit
+                                        </Button>
+                                    )}
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Col>
