@@ -1,73 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
+import React, { useState,useRef, useCallback } from 'react';
+import { Collapse, Space, Typography, Form } from 'antd';
+import { FaUserCircle } from 'react-icons/fa';
+import { AddEditForm } from './AddEditForm';
 
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
-import { IoTrashOutline } from 'react-icons/io5';
-import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-import styles from 'components/common/Common.module.css';
-
-const { Option } = Select;
-const { TextArea } = Input;
 const { Panel } = Collapse;
-const FamilyDetailsMain = (props) => {
-    const { form } = props;
+const { Text } = Typography;
+
+const FamilyDetailsBase = () => {
+    const [openAccordian, setOpenAccordian] = useState('');
+
+    const handleCollapse = (key) => {
+        setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+
+    const [form] = Form.useForm();
+
+    const type = [
+        { name: 'YES', value: 1 },
+        { name: 'NO', value: 0 },
+    ];
+
+    const [value, setValue] = useState(true);
+
+    const selectRef = useRef();
+
+    const onChange = useCallback((item) => {
+        selectRef.current.blur(); //whenever a user triggers value change, we call `blur()` on `Select`
+        setValue(item);
+    }, []);
+
+    const onFamilyFinish = (values) => {
+        console.log(values,'valuesvaluesvalues')
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => { });
+    };
+
+    const formProps = {
+        form,
+        type,
+        value,
+        onChange,
+        selectRef,
+        onFamilyFinish,
+        onFinishFailed,
+    }
 
     return (
-        <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical">
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="M&M Customer" name="applicationType" rules={[validateRequiredSelectField('application type')]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} maxLength={50} placeholder={preparePlaceholderText('pincode')} >
-                                <Option>select</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Customer ID" name="customerId" rules={[validateRequiredInputField('Parent Firm/Company Code')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Enter Code')} className={styles.inputBox}/>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Customer Name" name="customerName">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Parent Concept')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Relationship" name="relationship" rules={[validateRequiredInputField('application name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('tehsil')} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Date of Birth" name="DOB" rules={[validateRequiredInputField('Date of Registration')]}>
-                            <DatePicker format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Date of Registration')} className={styles.inputBox} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Age" name="age">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('Parent Concept')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={100} xxl={100}>
-                        <Form.Item label="Remark" name="remark" rules={[validateRequiredInputField('application name')]}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </Form>
-        </>
+        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <FaUserCircle style={{color:'red'}} /> : <FaUserCircle />)} activeKey={openAccordian}>
+            <Panel
+                header={
+                    <>
+                        <Space>
+                            <Text> Family Details </Text>{' '}
+                        </Space>
+                    </>
+                }
+                key="1"
+            >
+                <AddEditForm {...formProps} />
+            </Panel>
+        </Collapse>
     );
 };
-export const FamilyDetails = FamilyDetailsMain;
+
+export const FamilyDetails = FamilyDetailsBase;

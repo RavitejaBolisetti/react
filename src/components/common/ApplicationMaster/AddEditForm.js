@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Collapse, Row, Button, Space, Spin } from 'antd';
-
 import style from './../../common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';

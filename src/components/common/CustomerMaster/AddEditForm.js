@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker, Space, Card, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { FaRegPlusSquare, FaPlus } from 'react-icons/fa';
-import { IoTrashOutline } from 'react-icons/io5';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { BsRecordCircleFill } from 'react-icons/bs';
+import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
+
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-import { CustomerProfile } from './CustomerProfile/CustomerProfile';
-import { FamilyDetails } from './FamilyDetails/FamilyDetails';
+import { CustomerDetailsMaster } from './CustomerDetails';
+
 import styles from 'components/common/Common.module.css';
 
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 import Address from './Address/Address';
+import { AccountRelated } from './AccountRelated/AccountRelated';
+import {IndividualProfile} from './IndividualProfile';
+import IndividualContact from './IndividualContact/IndividualContactMain'
+
 
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
+const { Meta } = Card;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
@@ -132,4 +136,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
+export const AddEditForm = withDrawer(AddEditFormMain, { width: '1200' });
