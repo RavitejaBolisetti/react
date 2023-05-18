@@ -62,7 +62,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                         parentAppCode={parentAppCode}
                     />
 
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)}  activeKey={openAccordian}>
                         <Panel header={'Application Actions'} key="1">
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} />
                         </Panel>
