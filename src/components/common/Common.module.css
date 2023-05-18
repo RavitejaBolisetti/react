@@ -32,7 +32,7 @@
     box-shadow: 0px 0px 12px rgba(2, 2, 111, 0.4);
 }
 
-.text:hover + .text-tooltip {
+.text:hover+.text-tooltip {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
@@ -50,7 +50,6 @@
     margin-bottom: 20px;
     border-radius: 8px !important;
     font-weight: 500;
-    height: 60px;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
@@ -639,11 +638,11 @@
     background: rgba(190, 190, 190, 0.1);
 }
 
-.accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+.accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 12px 20px;
 }
 
-.accordianContainer :global .ant-collapse > .ant-collapse-item.ant-collapse-item-active > .ant-collapse-header {
+.accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
     color: #e31837;
     background: #f2f2f2;
 }
@@ -652,7 +651,7 @@
     border-top: transparent;
 }
 
-.accordianContainer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+.accordianContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 16px 20px;
 }
 
@@ -762,13 +761,13 @@
     background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
     background-color: #e6e6e6;
@@ -817,7 +816,7 @@
     vertical-align: middle;
 }
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -1067,12 +1066,12 @@
     width: 100%;
 }
 
-.cardDescription :global .ant-descriptions .ant-descriptions-row > th,
-:global .ant-descriptions .ant-descriptions-row > * {
+.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
+:global .ant-descriptions .ant-descriptions-row>* {
     padding: 0px;
 }
 
-:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     background: #f2f2f2;
 }
 
@@ -1330,8 +1329,8 @@
     margin-top: 10px;
 }
 
-.timingCardItem :global .ant-descriptions .ant-descriptions-row > th,
-.timingCardItem :global .ant-descriptions .ant-descriptions-row > td {
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
     padding-bottom: 0px;
 }
 
