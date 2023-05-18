@@ -1,23 +1,27 @@
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox ,Progress} from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography } from 'antd';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import style from 'components/common/Common.module.css';
+import styles from 'components/Auth/Auth.module.css';
+
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { MEMBERSHIP_TYPE } from './MembershipType';
 import Svg from 'assets/images/Filter.svg';
 import { BiUserCircle } from 'react-icons/bi';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetails';
-import { TiMinusOutline } from 'react-icons/ti';
+
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
+const { Text } = Typography;
 
 // const onChange = (e) => {
 //     console.log(`checked = ${e.target.checked}`);
@@ -31,15 +35,51 @@ const handleCheckboxChange = (event) => {
 
 const { Search } = Input;
 
-const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
+const AddEditForm = ({ form, isVisible, setisVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+    const [companyInfoform] = Form.useForm();
+    const [uploadCustomerForm] = Form.useForm();
+    const [done, setDone] = useState();
+    const [activeKey, setactiveKey] = useState([1]);
 
+    const [FinalFormData, setFinalFormData] = useState({
+        companyInfoform: [],
+        uploadCustomerForm: [],
+    });
+
+    const [companyInfoValues, setCompanyInfoValues] = useState();
+    const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
+
+    useEffect(() => {
+        setFinalFormData({ ...FinalFormData, companyInfoform: companyInfoValues, uploadCustomerForm: uploadCustomerFormValues });
+    }, [done]);
+    useEffect(() => {
+        console.log('FinalFormData', FinalFormData);
+    }, [FinalFormData]);
     const onClose = () => {
         setisVisible(false);
         setFormBtnDisable(false);
         forceUpdate();
         setIsBtnDisabled(false);
+    };
+
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.filter((item) => {
+                if (item != values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+        console.log('values', values);
     };
 
     const uploadProps = {
@@ -51,14 +91,7 @@ const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotificati
 
         onChange(info) {
             const { status } = info.file;
-
-            if (status !== 'uploading') {
-                return (
-                    <>
-                        <Progress percent={70} status="exception" />
-                    </>
-                );
-            }
+            
 
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
@@ -74,20 +107,63 @@ const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotificati
         // },
     };
 
+    const onFinish = () => {
+        const companyInfoValues = companyInfoform.getFieldsValue();
+
+        const uploadCustomerFormValues = uploadCustomerForm.getFieldsValue();
+
+        companyInfoform
+            .validateFields()
+            .then(() => {
+                uploadCustomerForm
+                    .validateFields()
+                    .then(() => {
+                        setCompanyInfoValues(companyInfoValues);
+                        setUploadCustomerFormValues(uploadCustomerFormValues);
+                        setDone(!done);
+                    })
+                    .catch(() => {
+                        console.log('error');
+                        setactiveKey([3]);
+                    });
+            })
+            .catch(() => {
+                setactiveKey([1]);
+            });
+    };
+
+    const onFinishFailed = () => {
+        companyInfoform.validateFields();
+        uploadCustomerForm.validateFields();
+    };
     return (
         <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical">
-                <Space direction="vertical" size="small" className={style.accordianContainer}>
-                    <Collapse defaultActiveKey={['1']} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} expandIconPosition="end">
-                        <Panel
-                            header={
-                                <>
-                                    <BiUserCircle  className={style.userCircle} />
-                                    Company Information
-                                </>
-                            }
-                            key="1"
-                        >
+            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+                <Collapse
+                    defaultActiveKey={['1']}
+                    expandIcon={() => {
+                        if (activeKey.includes(1)) {
+                            return <MinusOutlined className={style.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={style.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(1)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        header={
+                            <>
+                                <div className={style.alignUser}>
+                                    <BiUserCircle className={style.userCircle} />
+                                    <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Company Information</div>
+                                </div>{' '}
+                            </>
+                        }
+                        key="1"
+                    >
+                        <Form autoComplete="off" layout="vertical" form={companyInfoform}>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Firm/Company Name" name="firmName" rules={[validateRequiredInputField('Firm/Company Name')]}>
@@ -133,54 +209,74 @@ const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotificati
                                     </Form.Item>
                                 </Col>
                             </Row>
-                        </Panel>
-                    </Collapse>
+                        </Form>
+                    </Panel>
+                </Collapse>
 
-                    <Collapse defaultActiveKey={['2']} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} expandIconPosition="end">
-                        <Panel
-                            key="2"
-                            header={
-                                <>
-                                    <BiUserCircle  className={style.userCircle} />
-                                    Social Profiles
-                                </>
-                            }
-                        >
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="M1-MMFSL" name="mmfsl">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                    </Form.Item>
-                                </Col>
+                <Collapse defaultActiveKey={['2']} expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)} expandIconPosition="end">
+                    <Panel
+                        key="2"
+                        header={
+                            <>
+                                <div className={style.alignUser}>
+                                    <BiUserCircle className={style.userCircle} />
+                                    <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Social Profiles</div>
+                                </div>{' '}
+                            </>
+                        }
+                    >
+                        <Form form={form} layout="vertical">
+                        <Row gutter={20}>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Form.Item label="M1-MMFSL" name="mmfsl">
+                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
+                                </Form.Item>
+                            </Col>
 
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Facebook Link" name="fb">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                    </Form.Item>
-                                </Col>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Form.Item label="Facebook Link" name="fb">
+                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
+                                </Form.Item>
+                            </Col>
 
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Twitter Link" name="twitter">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Panel>
-                    </Collapse>
+                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                <Form.Item label="Twitter Link" name="twitter">
+                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        </Form>
+                    </Panel>
+                </Collapse>
 
-                    <Collapse defaultActiveKey={['3']} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} expandIconPosition="end">
-                        <Panel
-                            key="3"
-                            header={
-                                <>
-                                    <BiUserCircle  className={style.userCircle} />
-                                    Upload Customer Form
-                                </>
-                            }
-                        >
+                <Collapse
+                    defaultActiveKey={['3']}
+                    expandIcon={() => {
+                        if (activeKey.includes(3)) {
+                            return <MinusOutlined className={style.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={style.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(3)}
+                    expandIconPosition="end"
+                >
+                    <Panel
+                        key="3"
+                        header={
+                            <>
+                                <div className={style.alignUser}>
+                                    <BiUserCircle className={style.userCircle} />
+                                    <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Upload Customer Form</div>
+                                </div>{' '}
+                            </>
+                        }
+                    >
+                        <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Checkbox value="sentOnMobile">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                    <Checkbox value="sentOnMobile" className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
@@ -201,6 +297,8 @@ const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotificati
 
                                             padding: '1rem 0 0 0',
                                         }}
+
+                                       
                                     >
                                         <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
                                             <img src={Svg} alt="" />
@@ -215,29 +313,19 @@ const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotificati
                                             File type should be png, jpg or pdf and max file size to be 5Mb
                                         </p>
                                         <Button danger>Upload File</Button>
-                                    </Dragger>{' '}
+                                    </Dragger>
                                 </Col>{' '}
                             </Row>
-                        </Panel>
-                    </Collapse>
-                </Space>
+                        </Form>
+                    </Panel>
+                </Collapse>
 
-                <Row gutter={20} className={style.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
-                        <Button danger onClick={onClose}>
-                            Cancel
-                        </Button>
-                    </Col>
-
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
-                        <Button htmlType="submit" danger key="saveBtm" type="primary">
-                            Save and Procced
-                        </Button>
-                    </Col>
-                </Row>
-            </Form>
+                <Button type="primary" onClick={onFinish}>
+                    Save & Proceed
+                </Button>
+            </Space>
         </>
     );
 };
 
-export default AddEditForm ;
+export default AddEditForm;

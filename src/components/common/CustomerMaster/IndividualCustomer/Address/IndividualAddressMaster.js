@@ -11,6 +11,7 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
 import { AddEditForm } from './AddEditForm';
+import ViewIndividualAddressDetail from './ViewIndividualAddressDetails';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -35,7 +36,7 @@ const IndividualAddressMasterBase = () => {
                             <Text strong> Individual Address</Text>{' '}
                             <Button icon={<PlusOutlined />} type="primary">
                                 Add Address
-                            </Button>
+                            </Button> 
                         </Space>
                     </>
                 }
@@ -43,6 +44,7 @@ const IndividualAddressMasterBase = () => {
                 key="1"
             >
                 <AddEditForm form={form} />
+                <ViewIndividualAddressDetail/>
             </Panel>
         </Collapse>
     );
