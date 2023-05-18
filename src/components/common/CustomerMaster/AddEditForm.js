@@ -10,9 +10,9 @@ import styles from 'components/common/Common.module.css';
 
 import { CustomerDetailsMaster } from './IndividualCustomer';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
-import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { IndividualProfileMaster } from './IndividualCustomer/IndividualProfile';
 import { IndividualAddressMaster } from './IndividualCustomer/Address';
+import { FamilyDetailsMaster } from './IndividualCustomer/FamilyDetails';
+import { ViewCustomerMaster } from './ViewCustomerMaster';
 
 import FormProgressBar from './FormProgressBar';
 
@@ -117,7 +117,8 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Address === true) {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts === true) {
-        } else if (leftTimeline?.CustomerDetails === true) {
+        } else if (leftTimeline?.CustomerProfile === true) {
+            return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile === true) {
             return <IndividualProfileMaster />;
         }
@@ -162,7 +163,6 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-
                             {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
 
                             <Row gutter={20} className={styles.formFooter}>
