@@ -29,7 +29,7 @@ const FormProgressBar = (props) => {
                 break;
             }
             case 'family': {
-                setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false, CustomerProfile: false });
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false, CustomerProfile: false });
                 break;
             }
             case 'CustomerProfile': {
