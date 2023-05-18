@@ -30,6 +30,7 @@ const AddEditFormMain = (props) => {
         CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
+        customerProfile:false,
     });
     const [Macid, setMacid] = useState();
 
@@ -115,6 +116,10 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Contacts === true) {
         } else if (leftTimeline?.CustomerDetails === true) {
         } else if (leftTimeline.IndividualProfile === true) {
+        }
+        else if(leftTimeline?.FamilyDetails===true)
+        {
+
         }
     };
 
