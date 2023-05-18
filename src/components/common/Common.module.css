@@ -32,7 +32,7 @@
     box-shadow: 0px 0px 12px rgba(2, 2, 111, 0.4);
 }
 
-.text:hover+.text-tooltip {
+.text:hover + .text-tooltip {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
@@ -646,11 +646,11 @@
     background: rgba(190, 190, 190, 0.1);
 }
 
-.accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     padding: 12px 20px;
 }
 
-.accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
+.accordianContainer :global .ant-collapse > .ant-collapse-item.ant-collapse-item-active > .ant-collapse-header {
     color: #e31837;
     background: #f2f2f2;
 }
@@ -659,7 +659,7 @@
     border-top: transparent;
 }
 
-.accordianContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.accordianContainer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 16px 20px;
 }
 
@@ -769,13 +769,13 @@
     background-color: #ff3e5b;
 }
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     background-color: #ffffff;
     border-left: #ffffff;
     background-color: #ffffff;
 }
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
     background-color: #e6e6e6;
@@ -824,7 +824,7 @@
     vertical-align: middle;
 }
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -872,7 +872,7 @@
 .viewContainer :global .ant-descriptions .ant-descriptions-item-content {
     color: rgba(142, 133, 133, 1) !important;
     font-size: 14px !important;
-    display: inline-block
+    display: inline-block;
 }
 
 .hierarchyRightContaners {
@@ -924,23 +924,18 @@
 /* Crticality group allowed timing css*/
 
 .allowedTimingAlignment {
-    border-top: 1px solid #dedede;
     padding: 20px 0 !important;
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
 }
 
-.allowedTimingAlignment span {
-    color: #ff3e5b;
-}
+
 
 .addTimeBtn {
-    position: relative;
-    top: -28px;
-    margin-bottom: -10px;
-    text-align: right;
-    color: #ff3e5b;
+    display: flex;
+    align-items: center;
+    flex-flow: row-reverse;
 }
 
 .viewAllowedTiming button {
@@ -1079,12 +1074,12 @@
     width: 100%;
 }
 
-.cardDescription :global .ant-descriptions .ant-descriptions-row>th,
-:global .ant-descriptions .ant-descriptions-row>* {
+.cardDescription :global .ant-descriptions .ant-descriptions-row > th,
+:global .ant-descriptions .ant-descriptions-row > * {
     padding: 0px;
 }
 
-:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     background: #f2f2f2;
 }
 
@@ -1235,7 +1230,7 @@
 .advanceFilterTop {
     margin-top: 10px;
     padding-top: 8px;
-    border-top: solid 1px #E6E6E6;
+    border-top: solid 1px #e6e6e6;
 }
 
 .advanceFilterContainer {
@@ -1266,8 +1261,8 @@
     border-radius: 20px;
     margin-top: 6px;
     padding: 4px 10px;
-    border: solid 1px #FF3E5B;
-    color: #FF3E5B;
+    border: solid 1px #ff3e5b;
+    color: #ff3e5b;
     line-height: 18px;
     margin-right: 12px;
 }
@@ -1282,6 +1277,69 @@
     float: right !important;
     height: 30px !important;
     line-height: 16px;
+}
+
+.graySeparator {
+    border-top: 1px solid #dedede;
+}
+
+.advanceTimingContainer {
+    background-color: #f4f4f4;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.advanceTimingContainer :global .ant-card-bordered {
+    border: 1px solid #b5b5b6;
+    background-color: #b5b5b6;
+}
+
+.viewTiming {
+    padding: 0px 20px 10px 20px;
+}
+
+.viewTiming .seprator {
+    border-top: solid 1px #e6e6e6;
+    margin-bottom: 20px;
+}
+
+.timingCardItem {
+    margin: 10px 0px 5px 0px;
+    background-color: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+.timingCardItem .timeSlot {
+    padding: 4px 0 !important;
+    width: 190px;
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.timingCardItem .timeLabel {
+    padding-left: 0 !important;
+    color: #858585;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.timingCardItem .timeSlotClearBtn {
+    display: flex;
+    align-items: center;
+}
+
+.viewTiming .timingCardItem:first-child {
+    margin-top: 10px;
+}
+
+.timingCardItem :global .ant-descriptions .ant-descriptions-row > th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row > td {
+    padding-bottom: 0px;
 }
 
 .masterListSearchForm :global .ant-form-item {
