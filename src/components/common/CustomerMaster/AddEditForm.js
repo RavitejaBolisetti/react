@@ -8,12 +8,13 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster, IndividualAddressMaster } from './IndividualCustomer';
+import { CustomerDetailsMaster } from './IndividualCustomer';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
+import { IndividualProfileMaster } from './IndividualCustomer/IndividualProfile';
+import { IndividualAddressMaster } from './IndividualCustomer/Address';
 
 import FormProgressBar from './FormProgressBar';
-import { IndividualProfileMaster } from './IndividualCustomer';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -31,7 +32,7 @@ const AddEditFormMain = (props) => {
         CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
-        customerProfile:false,
+        customerProfile: false,
     });
     const [Macid, setMacid] = useState();
 
@@ -120,8 +121,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline.IndividualProfile === true) {
             return <IndividualProfileMaster />;
         }
-        else if(leftTimeline?.FamilyDetails===true)
-        {
+        else if (leftTimeline?.FamilyDetails === true) {
 
         }
     };
