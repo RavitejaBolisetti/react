@@ -11,7 +11,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { MinusBorderedIcon, PlusBorderedIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
-import { ViewDetail } from './ViewDetail';
+import { ViewDetail } from './ViewDetailCompanyCustomerDet';
 
 const { Option } = Select;
 const { TextArea } = Input;

@@ -3,21 +3,16 @@ import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 
-import { CaretRightOutlined } from '@ant-design/icons';
-import { BsRecordCircleFill } from 'react-icons/bs';
-import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-import { CustomerDetailsMaster } from './CustomerDetails';
-
 import styles from 'components/common/Common.module.css';
 
+import { CustomerDetailsMaster } from './IndividualCustomer/CustomerDetails';
+import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import Address from './Address/Address';
-import { AccountRelated } from './AccountRelated/AccountRelated';
-import {IndividualProfile} from './IndividualProfile';
-import IndividualContact from './IndividualContact/IndividualContactMain'
 
+import FormProgressBar from './FormProgressBar';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -28,6 +23,14 @@ const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
+    const [leftTimeline, setleftTimeline] = useState({
+        AccountRelated: false,
+        Address: false,
+        Contacts: false,
+        CustomerDetails: true,
+        FamilyDetails: false,
+        IndividualProfile: false,
+    });
     const [Macid, setMacid] = useState();
 
     const [openAccordian, setOpenAccordian] = useState(1);
@@ -84,6 +87,10 @@ const AddEditFormMain = (props) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
+    const TimelineProps = {
+        leftTimeline,
+        setleftTimeline,
+    };
 
     const viewProps = {
         isVisible: isViewModeVisible,
@@ -99,42 +106,81 @@ const AddEditFormMain = (props) => {
         DealerSearchvalue,
         productHierarchyData,
     };
+    const renderElement = () => {
+        if (leftTimeline?.AccountRelated === true) {
+            return <IndividualAccountRelatedMaster />;
+        } else if (leftTimeline?.CustomerDetails === true) {
+            return <CustomerDetailsMaster />;
+        }
+    };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {!isViewModeVisible ? (
-                <>
-                     <AccountRelated />{' '}   <IndividualProfile /> 
-                    <IndividualContact />
-                </>
-           
-            ) : (
-                <ViewCustomerMaster {...viewProps} />
-            )}
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.customerMasterDrawer}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.timelineBg}>
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Collapse bordered={true} defaultActiveKey={['1']} expandIcon={({ isActive }) => <FaChevronDown size={18} rotate={isActive ? -90 : 90} />}>
+                                        <Panel
+                                            header={
+                                                <>
+                                                    <Avatar size={40}>USER</Avatar>
+                                                    <Space direction="vertical">
+                                                        <span>John Michael</span>
+                                                        <span>C200615396</span>
+                                                    </Space>
+                                                </>
+                                            }
+                                            key="1"
+                                        >
+                                            <p>
+                                                Customer Type: <span>Corporate</span>
+                                            </p>
+                                            <p>
+                                                Mobile No.: <span>9893473843</span>
+                                            </p>
+                                        </Panel>
+                                    </Collapse>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <FormProgressBar {...TimelineProps} />
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+                            <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
 
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={onCloseAction}>
-                        {footerEdit ? 'Close' : 'Cancel'}
-                    </Button>
-                </Col>
+                                <Row gutter={20} className={styles.formFooter}>
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                                        <Button danger onClick={onCloseAction}>
+                                            {footerEdit ? 'Close' : 'Cancel'}
+                                        </Button>
+                                    </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                    {!footerEdit && showSaveBtn && (
-                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                            Save
-                        </Button>
-                    )}
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                                        {!footerEdit && showSaveBtn && (
+                                            <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                                                Save
+                                            </Button>
+                                        )}
 
-                    {footerEdit && (
-                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                            Edit
-                        </Button>
-                    )}
+                                        {footerEdit && (
+                                            <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                                                Edit
+                                            </Button>
+                                        )}
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
-        </Form>
+        </>
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '1200' });
+export const AddEditForm = withDrawer(AddEditFormMain, { width: 1200 });
