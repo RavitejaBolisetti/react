@@ -1,4 +1,4 @@
-import React, { useState,useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Collapse, Space, Typography, Form } from 'antd';
 import { AddEditForm } from './AddEditForm';
 
@@ -29,7 +29,7 @@ const FamilyDetailsBase = () => {
     }, []);
 
     const onFamilyFinish = (values) => {
-        console.log(values,'valuesvaluesvalues')
+        console.log(values, 'valuesvaluesvalues')
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -47,11 +47,21 @@ const FamilyDetailsBase = () => {
     }
 
     return (
-        <>
-            <h2>Family Details</h2>
-            <AddEditForm {...formProps} />
-        </>
+        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <FaUserCircle style={{ color: 'red' }} /> : <FaUserCircle />)} activeKey={openAccordian}>
+            <Panel
+                header={
+                    <>
+                        <Space>
+                            <Text> Family Details </Text>{' '}
+                        </Space>
+                    </>
+                }
+                key="1"
+            >
+                <AddEditForm {...formProps} />
+            </Panel>
+        </Collapse>
     );
 };
 
-export const FamilyDetails = FamilyDetailsBase;
+export const FamilyDetailsMaster = FamilyDetailsBase;
