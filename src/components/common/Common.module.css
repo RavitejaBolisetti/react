@@ -1525,6 +1525,10 @@
     font-weight: 700;
     margin-inline-start: 4px;
 }
+
+:global .ant-form-vertical {
+    margin-bottom: 100px;
+}
 .userCircle {
     color: #ff3e5b !important;
 

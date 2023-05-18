@@ -12,8 +12,24 @@ const FormProgressBar = (props) => {
                 setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: true, FamilyDetails: false, IndividualProfile: false });
                 break;
             }
+            case 'profile': {
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: true });
+                break;
+            }
+            case 'address': {
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: true, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false });
+                break;
+            }
+            case 'contact': {
+                setleftTimeline({ ...leftTimeline, AccountRelated: false, Address: false, Contacts: true, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false });
+                break;
+            }
             case 'account': {
                 setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: false, IndividualProfile: false });
+                break;
+            }
+            case 'family': {
+                setleftTimeline({ ...leftTimeline, AccountRelated: true, Address: false, Contacts: false, CustomerDetails: false, FamilyDetails: true, IndividualProfile: false });
                 break;
             }
         }
@@ -36,7 +52,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle()} type="link" danger>
+                            <Button onClick={() => onHandle('profile')} type="link" danger>
                                 Individual Profile
                             </Button>
                             <Progress percent={100} size="small" />
@@ -47,7 +63,7 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle()} type="link" danger>
+                            <Button onClick={() => onHandle('address')} type="link" danger>
                                 Address
                             </Button>
                             <Progress percent={100} size="small" />
@@ -58,8 +74,19 @@ const FormProgressBar = (props) => {
                     dot: <FaCheckCircle />,
                     children: (
                         <>
-                            <Button onClick={() => onHandle()} type="link" danger>
+                            <Button onClick={() => onHandle('contact')} type="link" danger>
                                 Contact
+                            </Button>
+                            <Progress percent={100} size="small" />
+                        </>
+                    ),
+                },
+                {
+                    dot: <FaCheckCircle />,
+                    children: (
+                        <>
+                            <Button onClick={() => onHandle('family')} type="link" danger>
+                                Family Details
                             </Button>
                             <Progress percent={100} size="small" />
                         </>

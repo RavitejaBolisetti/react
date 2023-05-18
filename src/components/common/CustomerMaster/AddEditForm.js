@@ -8,7 +8,7 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster } from './IndividualCustomer/CustomerDetails';
+import { CustomerDetailsMaster } from './IndividualCustomer';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 
@@ -111,6 +111,10 @@ const AddEditFormMain = (props) => {
             return <IndividualAccountRelatedMaster />;
         } else if (leftTimeline?.CustomerDetails === true) {
             return <CustomerDetailsMaster />;
+        } else if (leftTimeline?.Address === true) {
+        } else if (leftTimeline?.Contacts === true) {
+        } else if (leftTimeline?.CustomerDetails === true) {
+        } else if (leftTimeline.IndividualProfile === true) {
         }
     };
 
