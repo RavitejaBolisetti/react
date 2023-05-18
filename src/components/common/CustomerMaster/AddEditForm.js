@@ -8,7 +8,7 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
-import { CustomerDetailsMaster } from './CustomerDetails';
+import { CustomerProfile } from './CustomerProfile';
 
 import styles from 'components/common/Common.module.css';
 
