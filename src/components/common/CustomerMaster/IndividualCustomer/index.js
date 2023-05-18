@@ -1,2 +1,3 @@
 import { CustomerDetailsMaster } from './CustomerDetails';
-export { CustomerDetailsMaster };
+import{IndividualProfileMaster} from'./IndividualProfile'
+export { CustomerDetailsMaster,IndividualProfileMaster };

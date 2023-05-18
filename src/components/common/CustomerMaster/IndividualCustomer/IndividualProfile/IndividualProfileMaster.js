@@ -2,7 +2,6 @@ import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, S
 import { useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
-import style from '../../Common.module.css';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { BiUserCircle } from 'react-icons/bi';
@@ -21,4 +20,4 @@ const IndividualProfileBase = () => {
 }
 
 
-export const IndividualProfile=IndividualProfileBase;
+export const IndividualProfileMaster=IndividualProfileBase;

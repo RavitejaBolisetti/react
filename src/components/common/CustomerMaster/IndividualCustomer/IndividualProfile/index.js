@@ -1,3 +1,3 @@
-import { IndividualProfile } from './IndividualProfile';
+import { IndividualProfileMaster } from './IndividualProfileMaster';
 
-export { IndividualProfile };
+export { IndividualProfileMaster };
