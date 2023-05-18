@@ -31,7 +31,7 @@ const handleCheckboxChange = (event) => {
 
 const { Search } = Input;
 
-const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
+const AddEditForm = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotification, setparentAppCode, parentAppCode, applicationForm, forceUpdate, setFinalFormdata, finalFormdata, setFormBtnDisable, onFinish, onFinishFailed, form, handleAdd, setForceFormReset, isVisible, setisVisible, isChecked, setIsChecked, formActionType, isReadOnly, formData, setFormData, isDataAttributeLoaded, attributeData, setFieldValue, handleSelectTreeClick, isLoadingOnSave, criticalityGroupData, configurableParamData, actions, menuData, isApplicatinoOnSaveLoading, isFieldDisable }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
@@ -82,7 +82,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                         <Panel
                             header={
                                 <>
-                                    <BiUserCircle />
+                                    <BiUserCircle  className={style.userCircle} />
                                     Company Information
                                 </>
                             }
@@ -141,7 +141,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                             key="2"
                             header={
                                 <>
-                                    <BiUserCircle />
+                                    <BiUserCircle  className={style.userCircle} />
                                     Social Profiles
                                 </>
                             }
@@ -173,7 +173,7 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
                             key="3"
                             header={
                                 <>
-                                    <BiUserCircle />
+                                    <BiUserCircle  className={style.userCircle} />
                                     Upload Customer Form
                                 </>
                             }
@@ -240,4 +240,4 @@ const AddEditFormMain = ({ setSelectedTreeKey, selectedTreeKey, showGlobalNotifi
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export default AddEditForm ;

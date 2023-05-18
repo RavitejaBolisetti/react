@@ -8,7 +8,8 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster, IndividualAddressMaster } from './IndividualCustomer';
+import { CustomerDetailsMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
+import { CustomerProfile } from './CustomerProfile/CustomerProfile';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 
@@ -31,7 +32,7 @@ const AddEditFormMain = (props) => {
         CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
-        customerProfile:false,
+        CustomerProfile: false,
     });
     const [Macid, setMacid] = useState();
 
@@ -116,13 +117,12 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Address === true) {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts === true) {
-        } else if (leftTimeline?.CustomerDetails === true) {
+        } else if (leftTimeline?.CustomerProfile === true) {
+            return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile === true) {
             return <IndividualProfileMaster />;
-        }
-        else if(leftTimeline?.FamilyDetails===true)
-        {
-
+        } else if (leftTimeline?.FamilyDetails === true) {
+            return <FamilyDetails />;
         }
     };
 
@@ -162,7 +162,6 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-
                             {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
 
                             <Row gutter={20} className={styles.formFooter}>
