@@ -46,7 +46,7 @@ export const AdvancedSearchFrom = (props) => {
         className: styles.headerSelectField,
     };
     return (
-        <Form layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode">
