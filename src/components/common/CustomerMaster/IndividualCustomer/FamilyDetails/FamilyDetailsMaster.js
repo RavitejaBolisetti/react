@@ -54,4 +54,4 @@ const FamilyDetailsBase = () => {
     );
 };
 
-export const FamilyDetails = FamilyDetailsBase;
+export const FamilyDetailsMaster = FamilyDetailsBase;
