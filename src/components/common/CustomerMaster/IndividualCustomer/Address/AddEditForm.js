@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Col, Checkbox, Divider, Row, Button, Form, Input, Radio, Select, Space, Typography } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import styles from '../../Common.module.css';
+import styles from '../../../Common.module.css';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';

@@ -5,7 +5,7 @@ import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from '../../Common.module.css';
+import styles from '../../../Common.module.css';
 
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -15,7 +15,7 @@ import { AddEditForm } from './AddEditForm';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const Address = () => {
+const IndividualAddressMasterBase = () => {
     const [form] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState('');
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -48,4 +48,4 @@ const Address = () => {
     );
 };
 
-export default Address;
+export const IndividualAddressMaster= IndividualAddressMasterBase;
