@@ -45,6 +45,14 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+
+    const selectProps = {
+        filterOption,
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
@@ -73,7 +81,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" rules={[validateRequiredSelectField('State Name')]}>
-                                <Select placeholder={preparePlaceholderSelect('State Name')} onChange={handleStateChange}>
+                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -89,12 +97,12 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validationFieldLetterAndNumber('District Code')]}>
-                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} maxLength={50} />
+                            <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validateRequiredInputField('district Code'), validationFieldLetterAndNumber('District Code')]}>
+                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateAlphanumericWithSpace('District Name')]}>
+                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('district Name'), validateAlphanumericWithSpace('District Name')]}>
                                 <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>

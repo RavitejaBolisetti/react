@@ -375,7 +375,7 @@ export const DesignationMasterBase = (props) => {
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item label="Designation Master" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
                                                 <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>

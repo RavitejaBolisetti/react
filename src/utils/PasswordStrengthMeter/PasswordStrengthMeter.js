@@ -115,17 +115,19 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
 
     const strengthLink = (className = styles.levelOneColor) => <div className={className} />;
     const strengthText = getStrengthText(strength);
+
+    const passwordStrengthText = 'Password Strength A password strength tester gauges how long it might hypothetically take to crack your password by testing the password against a set of known criteria-such as length, randomness, and complexity.';
+
     return (
         <div className={`${styles.passwordStrengthMeter} ${beforeLogin ? styles.beforeLogin : ''}`}>
             <Row gutter={5}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.title}>
-                    Password Strength
+                    Password Strength {addToolTip(passwordStrengthText, 'bottom', '#20232C', '1px solid #2782F9')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     {strengthText && (
                         <div className={styles.strength}>
-                            <span className={styles.infoTitle}>{getStrengthText(strength)}</span>
-                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#F99C22')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#F99C22', '', password?.length > 0)(<span className={styles.infoTitle}>{getStrengthText(strength)}</span>)}</span>
                         </div>
                     )}
                 </Col>

@@ -9,7 +9,6 @@ import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { validateRequiredInputField } from 'utils/validation';
 import { searchValidator } from 'utils/validation';
 
 import { AdvancedSearch } from './AdvancedSearch';
@@ -21,13 +20,10 @@ import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FilterIcon } from 'Icons';
-import { RxCross2 } from 'react-icons/rx';
 
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
-const { Option } = Select;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -319,8 +315,8 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={14} md={14} lg={16} xl={16}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label={`${moduleTitle}`} name="keyword" rules={[{ validator: searchValidator }]}>
+                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label={`${moduleTitle}`} name="keyword"  rules={[{ validator: searchValidator }]}>
                                                 <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>

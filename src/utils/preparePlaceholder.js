@@ -1,12 +1,11 @@
-export const preparePlaceholderText = (name) => {
-    return 'Please enter ' + name;
+export const preparePlaceholderText = (name, prefix = true) => {
+    return prefix ? 'Enter ' + name?.toLowerCase() : name?.toLowerCase();
 };
 
 export const preparePlaceholderSelect = (name) => {
-    return 'Please select ' + name;
+    return 'Select ' + name?.toLowerCase();
 };
 
 export const preparePlaceholderAutoComplete = (name) => {
-    return 'Select' + name;
+    return 'Select' + name?.toLowerCase();
 };
-
