@@ -74,7 +74,7 @@ export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationd
 
 export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
 export const BASE_URL_APPLICATION_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
-export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'application/dealerlocation';
+export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'dealer/search/locations';
 
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 

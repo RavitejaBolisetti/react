@@ -87,7 +87,7 @@ const SessionTimeoutMain = ({ doLogout, showGlobalNotification, userId }) => {
 
     const onSuccess = (res) => {
         if (res?.data) {
-            showGlobalNotification({ notificationType: 'success', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
+            showGlobalNotification({ notificationType: 'successBeforeLogin', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
             navigate(routing.ROUTING_LOGIN);
         }
     };

@@ -6,6 +6,7 @@ import { criticalityGroup } from './criticalityGroup';
 import { RoleManagement } from './roleManagement';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
+import { ForgotPassword } from './forgotPassword';
 import { ChangePassword } from './changePassword';
 import { DealerHierarchy } from './dealerHierarchy';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
@@ -25,6 +26,7 @@ export const data = combineReducers({
     RoleManagement,
     ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
+    ForgotPassword,
     ChangePassword,
     DealerHierarchy,
     ConfigurableParameterEditing,

@@ -47,7 +47,7 @@
     background-color: #f4f4f4;
     padding: 10px !important;
     margin-bottom: 20px;
-    border-radius: 7px;
+    border-radius: 8px !important;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
@@ -739,6 +739,14 @@
     width: 100%;
 }
 
+.headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
+    border: 0;
+}
+
+.headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper-focused {
+    box-shadow: none !important;
+}
+
 .headerSearchField :global .anticon svg {
     width: 1.25em;
     height: 1.25em;
@@ -832,8 +840,9 @@
 .content {
     border: 1px solid #e8e8e8;
     border-radius: 0 0 4px 4px;
-    margin-top: 0px;
+    margin-top: -21px;
     overflow-y: hidden;
+    height: 62.6vh;
 }
 
 .emptyContainer {

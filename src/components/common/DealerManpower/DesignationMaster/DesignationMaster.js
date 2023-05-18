@@ -10,16 +10,21 @@ import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMas
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { FilterIcon } from 'Icons';
+import { RxCross2 } from 'react-icons/rx';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { DataTable } from 'utils/dataTable';
+import { searchValidator } from 'utils/validation';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
+import { AdvancedSearch } from './AdvancedSearch';
 import { TfiReload } from 'react-icons/tfi';
 
 import styles from 'components/common/Common.module.css';
+import { ListDataTable } from 'utils/ListDataTable';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -73,6 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
             listDepartmentShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
             fetchRoleList: roleMasterDataActions.fetchList,
             listRoleShowLoading: roleMasterDataActions.listShowLoading,
+            resetData: dealerManpowerDesignationMasterDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -80,11 +87,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchRoleList, listRoleShowLoading, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentList, isDepartmentDataLoaded, listDepartmentShowLoading, departmentData, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchRoleList, resetData, listRoleShowLoading, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentList, isDepartmentDataLoaded, listDepartmentShowLoading, departmentData, divisionData, fetchDivisionList, listDivisionShowLoading, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
 
     const [form] = Form.useForm();
+    const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
     const [page, setPage] = useState(1);
@@ -92,8 +102,8 @@ export const DesignationMasterBase = (props) => {
     const [filteredRoleData, setFilteredRoleData] = useState([]);
 
     const [formData, setFormData] = useState([]);
-    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [filterString, setFilterString] = useState({ advanceFilter: false });
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -130,7 +140,7 @@ export const DesignationMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,11 +148,12 @@ export const DesignationMasterBase = (props) => {
 
     useEffect(() => {
         if (isDataLoaded && data && userId) {
+            console.log(filterString);
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const division = filterString?.division;
-                const department = filterString?.department;
-                const role = filterString?.role;
+                const division = filterString?.code;
+                const department = filterString?.departmentCode;
+                const role = filterString?.roleCode;
 
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.designationCode) || filterFunction(keyword)(item?.designationDescription) : true) && (division ? filterFunction(division)(item?.divisionCode) : true) && (department ? filterFunction(department)(item?.departmentCode) : true) && (role ? filterFunction(role)(item?.roleCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -154,6 +165,33 @@ export const DesignationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+
+    const extraParams = [
+        {
+            key: 'code',
+            title: 'division',
+            value: filterString?.code,
+            name: divisionData?.find((i) => i?.code === filterString?.code)?.divisionName,
+        },
+        {
+            key: 'departmentCode',
+            title: 'department',
+            value: filterString?.departmentCode,
+            name: filteredDepartmentData?.find((i) => i?.departmentCode === filterString?.departmentCode)?.departmentName,
+        },
+        {
+            key: 'roleCode',
+            title: 'role',
+            value: filterString?.roleCode,
+            name: filteredRoleData?.find((i) => i?.roleCode === filterString?.roleCode)?.roleDescription,
+        },
+        {
+            key: 'keyword',
+            title: 'keyword',
+            value: filterString?.keyword,
+            name: filterString?.keyword,
+        },
+    ];
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -172,23 +210,33 @@ export const DesignationMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        setFilterString({ ...filterString, keyword: value });
+        advanceFilterForm
+            .validateFields()
+            .then(() => {
+                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
+            })
+            .catch((err) => {
+                console.log(err);
+                return;
+            });
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
-    };
+    const handleFilterChange =
+        (name, type = 'value') =>
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-    const handleFilterChange = (name) => (value) => {
-        if (name === 'division') {
-            setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === value));
-        }
-        if (name === 'department') {
-            setFilteredRoleData(roleData?.filter((i) => i?.departmentCode === value));
-            console.log(filteredRoleData)
-        }
-        setFilterString({ ...filterString, [name]: value });
-    };
+            if (name === 'code') {
+                setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === filterValue));
+                advanceFilterForm.setFieldsValue({ departmentCode: undefined });
+                advanceFilterForm.setFieldsValue({ roleCode: undefined });
+            }
+
+            if (name === 'departmentCode') {
+                setFilteredRoleData(roleData?.filter((i) => i?.departmentCode === filterValue));
+                advanceFilterForm.setFieldsValue({ roleCode: undefined });
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -226,7 +274,7 @@ export const DesignationMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -265,6 +313,51 @@ export const DesignationMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
+    const onAdvanceSearchCloseAction = () => {
+        setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        resetData();
+        advanceFilterForm.resetFields();
+        setShowDataLoading(false);
+        setAdvanceSearchVisible(false);
+        setFilterString();
+    };
+
+    const advanceFilterProps = {
+        isVisible: isAdvanceSearchVisible,
+        onCloseAction: onAdvanceSearchCloseAction,
+        setAdvanceSearchVisible,
+        icon: <FilterIcon size={20} />,
+        titleOverride: 'Advance Filters',
+        isDivisionDataLoaded,
+        isDivisionLoading,
+        isDepartmentDataLoaded,
+        isDepartmentLoading,
+        isRoleDataLoaded,
+        isRoleLoading,
+        divisionData,
+        departmentData,
+        roleData,
+        handleFilterChange,
+        filteredDepartmentData,
+        filteredRoleData,
+        filterString,
+        setFilterString,
+        advanceFilterForm,
+        resetData,
+        handleResetFilter,
+    };
+
+    const removeFilter = (key) => {
+        advanceFilterForm.resetFields();
+        const { [key]: names, ...rest } = filterString;
+        setFilterString({ ...rest });
+    };
+
     return (
         <>
             <Row gutter={20}>
@@ -273,32 +366,17 @@ export const DesignationMasterBase = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={19} lg={19} xl={19} className={styles.subheading}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        {`${moduleTitle}`}
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                            <Form.Item label="Designation Master" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
+                                                <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
+                                            </Form.Item>
+                                        </Form>
                                     </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Select placeholder="Division" loading={isDivisionLoading} allowClear className={styles.headerSelectField} onChange={handleFilterChange('division')}>
-                                            {divisionData?.map((item) => (
-                                                <Option value={item?.code}>{item?.divisionName}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Select placeholder="Department" allowClear className={styles.headerSelectField} onChange={handleFilterChange('department')}>
-                                            {filteredDepartmentData?.map((item) => (
-                                                <Option value={item?.departmentCode}>{item?.departmentName}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Select placeholder="Role" allowClear className={styles.headerSelectField} onChange={handleFilterChange('role')}>
-                                            {filteredRoleData?.map((item) => (
-                                                <Option value={item?.roleCode}>{item?.roleDescription}</Option>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={5} lg={5} xl={5}>
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={onChangeHandle} />
+                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
+                                            Advanced Filters
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Col>
@@ -310,52 +388,48 @@ export const DesignationMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
+
+                        {filterString?.advanceFilter && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                        </Col>
+                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
+                                            {extraParams?.map((filter) => {
+                                                return (
+                                                    filter?.value && (
+                                                        <div className={styles.advanceFilterItem}>
+                                                            {filter?.name}
+                                                            <span>
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                );
+                                            })}
+                                        </Col>
+                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                                Clear
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        )}
                     </div>
                 </Col>
             </Row>
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Designation
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable {...tableProps} scroll={2400} />
                 </Col>
             </Row>
+            <AdvancedSearch {...advanceFilterProps} />
+
             <AddEditForm {...formProps} />
         </>
     );

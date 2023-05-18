@@ -26,6 +26,20 @@ import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
+const mapStateToProps = (state) => {
+    console.log("🚀 ~ file: ForgotPassword.js:30 ~ mapStateToProps ~ state:", state)
+    const {
+        data: {
+            ForgotPassword: { isLoading },
+        },
+    } = state;
+    
+    console.log("🚀 ~ file: ForgotPassword.js:34 ~ mapStateToProps ~ isLoading:", isLoading)
+    return {
+        isLoading,
+    };
+};
+
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
@@ -42,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading }) => {
+const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, showGlobalNotification, hideGlobalNotification, listShowLoading, isLoading }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
@@ -236,7 +250,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                            <Button form="verifyUser" className={styles.button} type="primary" htmlType="submit">
+                                                            <Button form="verifyUser" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
                                                                 Verify User
                                                             </Button>
                                                         </Col>
@@ -307,7 +321,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button form="sendOTP" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button form="sendOTP" loading={isLoading} className={styles.button} type="primary" htmlType="submit">
                                                                     Send OTP
                                                                 </Button>
                                                             </Col>
@@ -369,7 +383,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                     </Col>
                                                 </Row>
 
-                                                <Button onClick={handleVerifyOTP} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
@@ -420,7 +434,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                <Button form="updatePassword" className={styles.button} type="primary" htmlType="submit">
+                                                                <Button loading={isLoading} form="updatePassword" className={styles.button} type="primary" htmlType="submit">
                                                                     Submit
                                                                 </Button>
                                                             </Col>
@@ -441,4 +455,4 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
     );
 };
 
-export const ForgotPassword = connect(null, mapDispatchToProps)(ForgotPasswordBase);
+export const ForgotPassword = connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordBase);

@@ -4,7 +4,7 @@ import { Button, Empty, ConfigProvider } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
 
-export default function ListDataTable({ isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', noDataMessage = '' }) {
+export default function ListDataTable({ isLoading, tableColumn, tableData, handleAdd, addTitle = 'Group', noDataMessage = '', scroll = 'auto' }) {
     return (
         <>
             <ConfigProvider
@@ -36,7 +36,7 @@ export default function ListDataTable({ isLoading, tableColumn, tableData, handl
                 )}
             >
                 <div className={styles.tableProduct}>
-                    <DataTable isLoading={isLoading} tableData={tableData} tableColumn={tableColumn} />
+                    <DataTable isLoading={isLoading} tableData={tableData} tableColumn={tableColumn} scroll={scroll} />
                 </div>
             </ConfigProvider>
         </>

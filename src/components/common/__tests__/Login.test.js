@@ -64,7 +64,7 @@ describe('Login component', () => {
             </BrowserRouter>
         );
         const userId = await screen.getByPlaceholderText('User ID (MILE ID.Parent ID)');
-        const forgotPasswordLink = await screen.getByText('Forgot password?');
+        const forgotPasswordLink = await screen.getByText('Forget Password?');
         fireEvent.click(forgotPasswordLink);
         const verifyUserBtn = await screen.getByText('Verify User');
         expect(userId).toBeTruthy();

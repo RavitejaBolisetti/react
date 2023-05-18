@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { DataTable } from 'utils/dataTable';
+import { ListDataTable } from 'utils/ListDataTable';
 import { RxCross2 } from 'react-icons/rx';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 const ListPinCodeMasterBase = (props) => {
-    const { data, saveData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, resetData, userId, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
@@ -122,8 +122,6 @@ const ListPinCodeMasterBase = (props) => {
 
     const [form] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
-
-    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredStateData, setFilteredStateData] = useState([]);
@@ -405,10 +403,6 @@ const ListPinCodeMasterBase = (props) => {
         handleFilterChange,
         filteredStateData,
         filteredDistrictData,
-        filteredCityData,
-        filteredTehsilData,
-        filterString,
-        setFilterString,
         advanceFilterForm,
         resetData,
         handleResetFilter,
@@ -419,9 +413,30 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
-        const { [key]: names, ...rest } = filterString;
-        setFilterString({ ...rest });
+        if (key === 'countryCode') {
+            setFilterString(undefined);
+        } else if (key === 'stateCode') {
+            setFilterString({ countryCode: filterString?.countryCode, stateCode: filterString?.stateCode });
+            const { stateCode, districtCode, tehsilCode, cityCode, code, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'districtCode') {
+            setFilterString({ countryCode: filterString?.countryCode, stateCode: filterString?.stateCode, districtCode: filterString?.districtCode });
+            const { districtCode, tehsilCode, cityCode, code, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'tehsilCode') {
+            const { tehsilCode, cityCode, code, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'cityCode') {
+            const { cityCode, code, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'code') {
+            const { [key]: names, ...rest } = filterString;
+            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
+            setFilterString({ ...rest });
+        }
     };
+
+    const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
     return (
         <>
             <Row gutter={20}>
@@ -447,8 +462,8 @@ const ListPinCodeMasterBase = (props) => {
 
                             <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add PIN Code
+                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    Add Code
                                 </Button>
                             </Col>
                         </Row>
@@ -495,44 +510,7 @@ const ListPinCodeMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !data?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!data?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add PIN Code
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable scroll={2400} isLoading={false} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={'Code'} scroll={2400} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

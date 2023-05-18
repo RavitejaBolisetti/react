@@ -224,7 +224,7 @@ const Login = (props) => {
                                                             <Input type={showPassword ? 'text' : 'password'} placeholder="Password*" prefix={<FiLock size={18} />} suffix={passowrdSuffix} />
                                                         </Form.Item>
                                                         <div className={styles.forgotPasswordLink}>
-                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot password?</Link>
+                                                            <Link to={ROUTING_FORGOT_PASSWORD}>Forgot Password?</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -239,7 +239,9 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className={styles.loginFooter}>
-                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>M&M User Login</Link>
+                                                            <Link to={process.env.REACT_APP_SSO_LOGIN_URL}>
+                                                                M&M User Login
+                                                            </Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
