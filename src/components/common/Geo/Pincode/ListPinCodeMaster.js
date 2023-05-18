@@ -123,8 +123,6 @@ const ListPinCodeMasterBase = (props) => {
     const [form] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    console.log('🚀 ~ file: ListPinCodeMaster.js:124 ~ ListPinCodeMasterBase ~ filterString:', filterString);
-
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [filteredStateData, setFilteredStateData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
