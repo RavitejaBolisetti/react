@@ -1,3 +1,3 @@
-import { FamilyDetails } from './FamilyDetails';
+import { FamilyDetails } from './FamilyDetailsMaster';
 
 export { FamilyDetails }

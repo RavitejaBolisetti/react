@@ -133,7 +133,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                                <Select placeholder="Select" disabled={false} showSearch loading={false} allowClear>
+                                                <Select placeholder="Select" disabled={false} loading={false} allowClear>
                                                     <Option value="customerType">customerType</Option>
                                                 </Select>
                                             </Form.Item>
@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Corporate Code" name="corporateCode" data-testid="corporateCode">
-                                                <Select disabled={false} showSearch loading={false} placeholder="Select" allowClear>
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                     <Option value="corporateCode">customerType</Option>
                                                 </Select>
                                             </Form.Item>
@@ -152,21 +152,21 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Usage/Application Categorization" name="usageCategorization" data-testid="usageCategorization">
-                                                <Select disabled={false} showSearch loading={false} placeholder="Select" allowClear>
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                     <Option value="usageCategorization">usageCategorization</Option>
                                                 </Select>
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Usage/Application Sub-category" name="usageCategorizationcategory" data-testid="customerType">
-                                                <Select disabled={false} showSearch loading={false} placeholder="Select" allowClear>
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                     <Option value="Usage/Application Sub-category">Usage/Application Sub-category</Option>
                                                 </Select>
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Customer Category" name="CustomerCategory" data-testid="CustomerCategory">
-                                                <Select disabled={false} showSearch loading={false} placeholder="Select" allowClear>
+                                                <Select disabled={false} loading={false} placeholder="Select" allowClear>
                                                     <Option value="CustomerCategory">CustomerCategory</Option>
                                                 </Select>
                                             </Form.Item>

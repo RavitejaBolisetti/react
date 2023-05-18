@@ -9,12 +9,12 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 
 import { CustomerDetailsMaster } from './IndividualCustomer';
-import { IndividualAddressMaster } from './IndividualCustomer/Address';
 import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
+import { IndividualAddressMaster } from './IndividualCustomer/Address';
+import { FamilyDetails } from './IndividualCustomer/FamilyDetails';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 
 import FormProgressBar from './FormProgressBar';
-import { IndividualProfileMaster } from './IndividualCustomer';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -32,6 +32,7 @@ const AddEditFormMain = (props) => {
         CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
+        customerProfile: false,
     });
     const [Macid, setMacid] = useState();
 
@@ -116,9 +117,13 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Address === true) {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts === true) {
-        } else if (leftTimeline?.CustomerDetails === true) {
+        } else if (leftTimeline?.CustomerProfile === true) {
+            // return <CustomerDetailsMaster />;
         } else if (leftTimeline.IndividualProfile === true) {
-            return <IndividualProfileMaster />;
+            // return <IndividualProfileMaster />;
+        }
+        else if (leftTimeline?.FamilyDetails === true) {
+            return <FamilyDetails />
         }
     };
 
@@ -158,31 +163,29 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                            <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
+                            {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
 
-                                <Row gutter={20} className={styles.formFooter}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                                        <Button danger onClick={onCloseAction}>
-                                            {footerEdit ? 'Close' : 'Cancel'}
+                            <Row gutter={20} className={styles.formFooter}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                                    <Button danger onClick={onCloseAction}>
+                                        {footerEdit ? 'Close' : 'Cancel'}
+                                    </Button>
+                                </Col>
+
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                                    {!footerEdit && showSaveBtn && (
+                                        <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                                            Save
                                         </Button>
-                                    </Col>
+                                    )}
 
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                                        {!footerEdit && showSaveBtn && (
-                                            <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                                                Save
-                                            </Button>
-                                        )}
-
-                                        {footerEdit && (
-                                            <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
-                                                Edit
-                                            </Button>
-                                        )}
-                                    </Col>
-                                </Row>
-                            </Form>
+                                    {footerEdit && (
+                                        <Button onClick={hanndleEditData} form="configForm" key="submitAndNew" htmlType="submit" type="primary">
+                                            Edit
+                                        </Button>
+                                    )}
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Col>

@@ -1526,7 +1526,7 @@
     margin-inline-start: 4px;
 }
 
-:global .ant-form-vertical {
+:global .ant-space-vertical {
     margin-bottom: 100px;
 }
 .userCircle {
@@ -1548,7 +1548,7 @@
 }
 .iconsColor
 {
-    color: #ff3e5b;
+    color: #ff3e5b !important;
 }
 
 @media (max-width: 768px) {
