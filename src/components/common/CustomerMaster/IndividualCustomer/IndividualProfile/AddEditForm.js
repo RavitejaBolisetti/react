@@ -1,14 +1,18 @@
 import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, Switch, DatePicker, Empty, Progress, Checkbox, Divider } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Svg from 'assets/images/Filter.svg';
 
-import style from '../../Common.module.css';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { gender, income, maritialStatus, memberShip, occupation, religion, title, tongue, vehicle } from 'constants/modules/CustomerMaster/individualProfile';
 import { withDrawer } from 'components/withDrawer';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+
+
+import styles from 'components/common/Common.module.css';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 
 const { Panel } = Collapse;
@@ -19,6 +23,81 @@ const { Dragger } = Upload;
 const AddEditForm = (props) => {
     const { isReadOnly = false } = props;
     const [openAccordian, setOpenAccordian] = useState([1]);
+    const [individualForm] = Form.useForm();
+    const [uploadCustomerForm] = Form.useForm();
+    const [FinalFormData, setFinalFormData] = useState({
+        individualForm: [],
+        uploadCustomerForm: [],
+    });
+    const [individualFormValues, setIndividualFormValues] = useState();
+    const [uploadCustomerFormValues, setUploadCustomerFormValues] = useState();
+    const [done, setDone] = useState();
+    useEffect(() => {
+        setFinalFormData({ ...FinalFormData, individualForm: individualFormValues, uploadCustomerForm: uploadCustomerFormValues });
+    }, [done]);
+    useEffect(() => {
+        console.log('FinalFormData', FinalFormData);
+    }, [FinalFormData]);
+
+    const [activeKey, setactiveKey] = useState([1]);
+
+    const [handleActive, sethandleActive] = useState();
+    const handleFormValueChange = () => {};
+    const handleFormFieldChange = () => {};
+    const onFinish = () => {
+        const individualFormValues = individualForm.getFieldsValue();
+
+        const uploadCustomerFormValues = uploadCustomerForm.getFieldsValue();
+
+        console.log('individualFormValues', individualFormValues, 'uploadCustomerFormValues', uploadCustomerFormValues);
+
+        individualForm
+            .validateFields()
+            .then(() => {
+                uploadCustomerForm
+                    .validateFields()
+                    .then(() => {
+                        setIndividualFormValues(individualFormValues);
+                        setUploadCustomerFormValues(uploadCustomerFormValues);
+                        setDone(!done);
+                    })
+                    .catch(() => {
+                        console.log('error');
+                        setactiveKey([3]);
+                    });
+            })
+            .catch(() => {
+                setactiveKey([1]);
+            });
+    };
+    const onFinishFailed = () => {
+        individualForm.validateFields();
+        uploadCustomerForm.validateFields();
+    };
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.filter((item) => {
+                if (item != values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+        console.log('values', values);
+    };
+
+    const onFinishCustomerInformation = (values) => {
+        setFinalFormData({ ...FinalFormData, individualForm: values });
+    };
+    const onFinishAuthorityDetails = (values) => {
+        setFinalFormData({ ...FinalFormData, uploadCustomerForm: values });
+    };
 
 
     const uploadProps = {
@@ -47,24 +126,37 @@ const AddEditForm = (props) => {
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
-            <Space direction="vertical" size="small" className={style.accordianContainer}>
-                <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} activeKey={openAccordian} expandIconPosition="end">
+            <Space direction="vertical" size="small" className={styles.accordianContainer}>
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(1)) {
+                            return <MinusOutlined className={styles.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={styles.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(1)}
+                    expandIconPosition="end"
+                >
                     <Panel
                         header={
-                            <>
-                                <BiUserCircle />
-                                Individual Information
-                            </>
+                            <div className={styles.alignUser}>
+                                <FaRegUserCircle className={styles.userCircle} />
+                                <Text styles={{ paddingLeft: '10px', paddingTop: '3px' }} strong>
+                                    Individual Information
+                                </Text>
+                            </div>
                         }
                         key="1"
                     >
                         <Divider />
-                        <Form autoComplete="off">
+                        <Form autoComplete="off" layout="vertical" form={individualForm}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Dragger
                                         {...uploadProps}
-                                        style={{
+                                        styles={{
                                             marginBottom: '1.5rem',
                                             background: '#F2F2F2',
                                             border: '1px dashed #B5B5B5',
@@ -73,21 +165,19 @@ const AddEditForm = (props) => {
                                             padding: '1rem 0 0 0',
                                         }}
                                     >
-                                        <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
+                                        <p className="ant-upload-drag-icon" styles={{ textAlign: 'center' }}>
                                             <img src={Svg} alt="" />
                                         </p>
-                                        <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '600', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                        <p className="ant-upload-text" styles={{ textAlign: 'center', fontWeight: '600', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
                                             Upload Your Profile Picture
                                         </p>
-                                        <p style={{ textAlign: 'center', fontWeight: '500', fontSize: '12px', lineHeight: '20px', color: '#0B0B0C' }}>File type should be .png and .jpg and max file size to be 5MB</p>
-                                        <Button danger style={{ textAlign: 'center', marginTop: '5px', marginLeft:'25px' }}>
+                                        <p styles={{ textAlign: 'center', fontWeight: '500', fontSize: '12px', lineHeight: '20px', color: '#0B0B0C' }}>File type should be .png and .jpg and max file size to be 500kb</p>
+                                        <Button danger styles={{ textAlign: 'center', marginTop: '5px', marginLeft: '25px' }}>
                                             Upload File
                                         </Button>
                                     </Dragger>
                                 </Col>
                             </Row>
-                        </Form>
-                        <Form>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Title" name="title" rules={[validateRequiredSelectField('Title')]}>
@@ -99,26 +189,26 @@ const AddEditForm = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="First Name" name="firstName" rules={[validateRequiredSelectField('First Name')]}>
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
+                                    <Form.Item label="First Name" name="firstName" rules={[validateRequiredSelectField('first name')]}>
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('first name')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Middle Name" name="middleName">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('middle name')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Last Name" name="lastName">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredSelectField('Mobile Number')]}>
-                                        {/* <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
-                                        <Input placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<Button style={{ marginRight: '-3px', borderColor: '#B5B5B6', color: '#B5B5B6' }}>Send OTP</Button>} />
+                                        {/* <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('mobile number')} {...disabledProps} /> */}
+                                        <Input placeholder={preparePlaceholderText('mobile number')} allowClear enterButton="Send OTP" size="small" suffix={<Button styles={{ marginRight: '-3px', borderColor: '#B5B5B6', color: '#B5B5B6' }}>Send OTP</Button>} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -130,7 +220,7 @@ const AddEditForm = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Whatsapp Number" name="mobileNumber" rules={[validateRequiredSelectField('Last Name')]}>
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('last name')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -140,14 +230,14 @@ const AddEditForm = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Email ID" name="email">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('email id')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Number')]}>
-                                        <DatePicker style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                    <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('date')]}>
+                                        <DatePicker disabled={isReadOnly} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -171,8 +261,8 @@ const AddEditForm = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Anniversary Date" name="weddingAnniversary" rules={[validateRequiredInputField('Number')]}>
-                                        <DatePicker style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                    <Form.Item label="Anniversary Date" name="weddingAnniversary">
+                                        <DatePicker styles={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -197,17 +287,17 @@ const AddEditForm = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="PAN" name="panNumber">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Aadhar No." name="adharNumber">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Voter ID" name="voterId">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -253,12 +343,12 @@ const AddEditForm = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Driving License No" name="drivingLicenseNumber">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="GSTIN" name="gstin">
-                                        <Input value={null} className={style.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                        <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -266,104 +356,138 @@ const AddEditForm = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} expandIconPosition="end">
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(2)) {
+                            return <MinusOutlined className={styles.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={styles.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(2)}
+                    expandIconPosition="end"
+                >
                     <Panel
                         header={
-                            <>
-                                <BiUserCircle />
-                                Social Profile
-                            </>
+                            <div className={styles.alignUser}>
+                                <FaRegUserCircle className={styles.userCircle} />
+                                <Text styles={{ paddingLeft: '10px', paddingTop: '3px' }} strong>
+                                    Social Profile
+                                </Text>
+                            </div>
                         }
                         key="2"
                     >
                         <Divider />
-                        <Row gutter={20}>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="M1-MMFSL" name="mmfsl">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                </Form.Item>
-                            </Col>
+                        <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="M1-MMFSL" name="mmfsl">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
+                                    </Form.Item>
+                                </Col>
 
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Facebook Link" name="facebookId">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                </Form.Item>
-                            </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Facebook Link" name="facebookId">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
+                                    </Form.Item>
+                                </Col>
 
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Twitter Link" name="twitterId">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Instagram Link" name="instagramId">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                </Form.Item>
-                            </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Twitter Link" name="twitterId">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Instagram Link" name="instagramId">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
+                                    </Form.Item>
+                                </Col>
 
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Youtube Channel" name="youtubeChannel">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                </Form.Item>
-                            </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Youtube Channel" name="youtubeChannel">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
+                                    </Form.Item>
+                                </Col>
 
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Team BHP Link" name="teamBhp">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Team BHP Link" name="teamBhp">
+                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
                     </Panel>
                 </Collapse>
 
-                <Collapse expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} expandIconPosition="end">
+                <Collapse
+                    expandIcon={() => {
+                        if (activeKey.includes(3)) {
+                            return <MinusOutlined className={styles.iconsColor} />;
+                        } else {
+                            return <PlusOutlined className={styles.iconsColor} />;
+                        }
+                    }}
+                    activeKey={activeKey}
+                    onChange={() => onChange(3)}
+                    expandIconPosition="end"
+                >
                     <Panel
                         header={
-                            <>
-                                <BiUserCircle />
-                                Upload Customer Form
-                            </>
+                            <div className={styles.alignUser}>
+                                <FaRegUserCircle className={styles.userCircle} />
+                                <Text styles={{ paddingLeft: '10px', paddingTop: '3px' }} strong>
+                                    Upload Customer Form
+                                </Text>
+                            </div>
                         }
                         key="3"
                     >
                         <Divider />
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Checkbox value="sentOnMobile">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Dragger
-                                    {...uploadProps}
-                                    style={{
-                                        // margin: '1.5rem 0 0 0',
-                                        background: '#F2F2F2',
-                                        border: '1px dashed #B5B5B5',
-                                        borderRadius: '6px',
-                                        minHeight: '172px',
-                                        padding: '1rem 0 0 0',
-                                    }}
-                                >
-                                    <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                        <img src={Svg} alt="" />
-                                    </p>
-                                    <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                    </p>
-                                    <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                    </p>
-                                    <Button danger>Upload File</Button>
-                                </Dragger>
-                            </Col>
-                        </Row>
+                        <Form autoComplete="off" layout="vertical">
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Checkbox value="sentOnMobile">I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Dragger
+                                        {...uploadProps}
+                                        styles={{
+                                            // margin: '1.5rem 0 0 0',
+                                            background: '#F2F2F2',
+                                            border: '1px dashed #B5B5B5',
+                                            borderRadius: '6px',
+                                            minHeight: '172px',
+                                            padding: '1rem 0 0 0',
+                                        }}
+                                    >
+                                        <p className="ant-upload-drag-icon" styles={{ textAlign: 'center' }}>
+                                            <img src={Svg} alt="" />
+                                        </p>
+                                        <p className="ant-upload-text" styles={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                            Click or drop your file here to upload the signed and <br /> scanned customer form.
+                                        </p>
+                                        <p className="ant-upload-text" styles={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                            File type should be png, jpg or pdf and max file size to be 5Mb
+                                        </p>
+                                        <Button danger>Upload File</Button>
+                                    </Dragger>
+                                </Col>
+                            </Row>
+                        </Form>
                     </Panel>
                 </Collapse>
+                <Button type="primary" onClick={onFinish}>
+                    Save & Proceed
+                </Button>
             </Space>
         </>
     );
 };
 export default AddEditForm ;
+
