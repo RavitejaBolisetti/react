@@ -108,6 +108,7 @@ const AddEditFormMain = (props) => {
     };
     const CustomerDetailsMasterProps = {
         onCloseAction,
+        isViewModeVisible,
     };
     const renderElement = () => {
         if (leftTimeline?.AccountRelated) {
@@ -163,7 +164,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                            {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
+                            {!isViewModeVisible ? renderElement() : renderElement()}
 
                             <Row gutter={20} className={styles.formFooter}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>

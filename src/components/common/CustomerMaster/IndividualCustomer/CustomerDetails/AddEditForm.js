@@ -19,7 +19,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
-    const { onCloseAction } = props;
+    const { onCloseAction, isViewModeVisible } = props;
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
@@ -113,7 +113,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {true && (
+            {!isViewModeVisible ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
@@ -295,7 +295,7 @@ const AddEditFormMain = (props) => {
                                     </Form>
                                 </Panel>
                             </Collapse>
-                            <Row gutter={20} >
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Button danger onClick={onCloseAction}>
                                         Cancel
@@ -310,9 +310,9 @@ const AddEditFormMain = (props) => {
                         </Space>
                     </Col>
                 </Row>
+            ) : (
+                <ViewDetail {...viewProps} />
             )}
-
-            {false && <ViewDetail {...viewProps} />}
         </>
     );
 };
