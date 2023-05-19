@@ -50,7 +50,7 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
 
 export const validateLettersWithWhitespaces = (fieldName) => ({
     message: fieldName + ' can contain only letters with whitespaces',
-    pattern: /^[a-z][a-z\s]*$/,
+    pattern: /^[a-zA-Z ]*$/,
 });
 
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
