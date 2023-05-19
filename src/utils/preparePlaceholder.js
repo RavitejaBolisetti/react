@@ -1,5 +1,5 @@
 export const preparePlaceholderText = (name, prefix = true) => {
-    return prefix ? 'Enter ' + name?.toLowerCase() : name?.toLowerCase();
+    return prefix ? 'Enter ' + name?.toLowerCase() : name;
 };
 
 export const preparePlaceholderSelect = (name) => {

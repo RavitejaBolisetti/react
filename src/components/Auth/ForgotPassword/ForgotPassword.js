@@ -412,7 +412,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={`${styles.changer} ${styles.inputBox}`}>
-                                                                    <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('new password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
+                                                                    <Input onChange={(e) => setPassword(e.target.value)} type={showPassword?.newPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('New password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} />
                                                                 </Form.Item>
                                                                 <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} />
                                                             </Col>
@@ -435,7 +435,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                                     ]}
                                                                     className={styles.inputBox}
                                                                 >
-                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('confirm password')} prefix={<FiLock size={18} />} suffix={passwordSuffix('confirmNewPassword')} />
+                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} placeholder={preparePlaceholderText('Confirm password*', false)} prefix={<FiLock size={18} />} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
                                                             </Col>
                                                         </Row>

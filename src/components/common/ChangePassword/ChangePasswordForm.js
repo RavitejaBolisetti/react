@@ -89,7 +89,6 @@ const ChangePasswordBase = ({ form, password, setPassword, showGlobalNotificatio
         </span>
     );
 
-    console.log('password',password);
 
     return (
         <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
