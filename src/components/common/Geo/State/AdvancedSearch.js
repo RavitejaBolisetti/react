@@ -50,7 +50,7 @@ export const AdvancedSearchFrom = (props) => {
                             },
                         ]}
                         
-                        validateTrigger= {['onSearch']}
+                        validateTrigger= {['onFinish']}
                     >
                         <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>

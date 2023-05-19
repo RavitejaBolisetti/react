@@ -11,6 +11,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
 import { TfiReload } from 'react-icons/tfi';
 
@@ -191,7 +192,7 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
-    console.log(stateData,'checkstateData');
+    console.log(stateData, 'checkstateData');
 
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
@@ -206,37 +207,43 @@ const ListPinCodeMasterBase = (props) => {
             key: 'countryCode',
             title: 'Country',
             value: filterString?.countryCode,
-            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,            
+            canRemove: false,
         },
         {
             key: 'stateCode',
             title: 'State',
             value: filterString?.stateCode,
             name: filteredStateData?.find((i) => i?.code === filterString?.stateCode)?.name,
+            canRemove: true,
         },
         {
             key: 'districtCode',
             title: 'District',
             value: filterString?.districtCode,
             name: filteredDistrictData?.find((i) => i?.code === filterString?.districtCode)?.name,
+            canRemove: true,
         },
         {
             key: 'tehsilCode',
             title: 'Tehsil',
             value: filterString?.tehsilCode,
             name: filteredTehsilData?.find((i) => i?.code === filterString?.tehsilCode)?.name,
+            canRemove: true,
         },
         {
             key: 'cityCode',
             title: 'City',
             value: filterString?.cityCode,
             name: filteredCityData?.find((i) => i?.code === filterString?.cityCode)?.name,
+            canRemove: true,
         },
         {
             key: 'code',
             title: 'Pincode',
             value: filterString?.code,
             name: filterString?.code,
+            canRemove: true,
         },
     ];
 
@@ -266,31 +273,31 @@ const ListPinCodeMasterBase = (props) => {
 
     const handleFilterChange =
         (name, type = 'value') =>
-            (value) => {
-                const filterValue = type === 'text' ? value.target.value : value;
+        (value) => {
+            const filterValue = type === 'text' ? value.target.value : value;
 
-                if (name === 'countryCode') {
-                    setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
-                    advanceFilterForm.setFieldsValue({ stateCode: undefined });
-                    advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                    advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-                }
+            if (name === 'countryCode') {
+                setFilteredStateData(stateData?.filter((i) => i?.countryCode === filterValue));
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
 
-                if (name === 'stateCode') {
-                    setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
-                    advanceFilterForm.setFieldsValue({ districtCode: undefined });
-                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                    advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-                }
+            if (name === 'stateCode') {
+                setFilteredDistrictData(districtData?.filter((i) => i?.stateCode === filterValue));
+                advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
 
-                if (name === 'districtCode') {
-                    setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
-                    setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
-                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                    advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
-                }
-            };
+            if (name === 'districtCode') {
+                setFilteredCityData(cityData?.filter((i) => i?.districtCode === filterValue));
+                setFilteredTehsilData(tehsilData?.filter((i) => i?.districtCode === filterValue));
+                advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
+            }
+        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -327,7 +334,7 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -437,6 +444,13 @@ const ListPinCodeMasterBase = (props) => {
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
+
+    const advanceFilterResultProps = {
+        filterString,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+    };
     return (
         <>
             <Row gutter={20}>
@@ -446,7 +460,7 @@ const ListPinCodeMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item label="PIN Code" initialValue={filterString?.code} name="keyword" rules={[validatePincodeField('Pincode')]}>
                                                 <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
@@ -467,43 +481,7 @@ const ListPinCodeMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-
-
-
-
-
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                            </span>
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
-
-                        
+                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
                     </div>
                 </Col>
             </Row>

@@ -25,6 +25,7 @@ import styles from 'components/common/Common.module.css';
 import { ListDataTable } from 'utils/ListDataTable';
 import { RxCross2 } from 'react-icons/rx';
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { validateAtLeastThreeChar } from 'utils/validation';
 
 const { Search } = Input;
@@ -90,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListTehsilBase = (props) => {
-    const { data, saveData, fetchList, userId,resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, resetData, isDataLoaded, isLoading, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, listCountryShowLoading } = props;
 
     const { isStateDataLoaded, stateData, listStateShowLoading, fetchStateList } = props;
@@ -104,7 +105,6 @@ export const ListTehsilBase = (props) => {
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [filterString, setFilterString] = useState();
-    
 
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -208,13 +208,13 @@ export const ListTehsilBase = (props) => {
     useEffect(() => {
         if (isDataLoaded && data && userId) {
             if (filterString) {
-                console.log('filterString',filterString)
+                console.log('filterString', filterString);
 
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
 
-                console.log('keyword',keyword,'state',state,'district',district);
+                console.log('keyword', keyword, 'state', state, 'district', district);
 
                 const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
@@ -243,9 +243,8 @@ export const ListTehsilBase = (props) => {
         setIsFormVisible(true);
     };
 
-
     const handleFilterChange =
-    (name, type = 'value') =>
+        (name, type = 'value') =>
         (value) => {
             const filterValue = type === 'text' ? value.target.value : value;
 
@@ -269,8 +268,7 @@ export const ListTehsilBase = (props) => {
             //     advanceFilterForm.setFieldsValue({ tehsilCode: undefined });
             // }
         };
-        // console.log(setFilteredDistrictData,'setFilteredDistrictData')
-
+    // console.log(setFilteredDistrictData,'setFilteredDistrictData')
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -278,7 +276,6 @@ export const ListTehsilBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-           
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
@@ -335,7 +332,7 @@ export const ListTehsilBase = (props) => {
         isCountryLoading,
         countryData,
         defaultCountry,
-        
+
         districtData,
         stateData,
         data,
@@ -393,19 +390,7 @@ export const ListTehsilBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        advanceFilterForm
-
-            .validateFields()
-
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
-            })
-
-            .catch((err) => {
-                console.log(err);
-
-                return;
-            });
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
     };
 
     const removeFilter = (key) => {
@@ -414,6 +399,12 @@ export const ListTehsilBase = (props) => {
         setFilterString({ ...rest });
     };
 
+    const advanceFilterResultProps = {
+        filterString,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+    };
     return (
         <>
             <Row gutter={20}>
@@ -423,9 +414,9 @@ export const ListTehsilBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item label="Tehsil" initialValue={filterString?.code} name="keyword" rules={[]}>
-                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle}  />
+                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
                                         </Form>
                                     </Col>
@@ -444,47 +435,17 @@ export const ListTehsilBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            {filter?.canRemove && <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                            </span>}
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
+                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
                     </div>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                 <ListDataTable  {...tableProps} scroll={2400}/>
+                    <ListDataTable {...tableProps}  />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
-           
         </>
     );
 };
