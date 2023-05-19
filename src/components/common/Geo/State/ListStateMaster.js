@@ -79,6 +79,7 @@ export const ListStateMasterBase = (props) => {
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -187,7 +188,10 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
+        if (value?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
     };
 
     const onFinish = (values) => {
@@ -243,11 +247,12 @@ export const ListStateMasterBase = (props) => {
     const handleResetFilter = () => {
         resetData();
         const { keyword, ...rest } = filterString;
-        setFilterString({ ...rest });
+        setFilterString({ ...rest, advanceFilter: false });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
         setShowDataLoading(false);
-        advanceFilterForm.setFieldsValue({ keyword: undefined });
+        listFilterForm.setFieldsValue({ code: undefined });
+        advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
     };
 
     const advanceFilterProps = {
@@ -306,7 +311,7 @@ export const ListStateMasterBase = (props) => {
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
-        setFilterString({ ...rest });
+        setFilterString({ ...rest, advanceFilter: false });
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
@@ -326,16 +331,16 @@ export const ListStateMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={listFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item
                                                 label="State List"
-                                                initialValue={filterString?.keyword}
-                                                name="keyword"
+                                                name="code"
                                                 rules={[
                                                     {
                                                         validator: searchValidator,
                                                     },
                                                 ]}
+                                                validateTrigger={['onSearch']}
                                             >
                                                 <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
