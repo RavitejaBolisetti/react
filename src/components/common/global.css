@@ -1,5 +1,5 @@
 :global .ant {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif !important;
 }
 
 :global .ant-tree .ant-tree-switcher-leaf-line:before {
