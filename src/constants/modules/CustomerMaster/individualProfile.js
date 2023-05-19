@@ -60,3 +60,8 @@ export const memberShip = [
     {key:'SLR', name:'Silver'},
     {key:'NC', name:'New Customer'},
 ];
+
+export const contactPurpose = [
+    { key: 'payment', name: 'Payment' },
+    { key: 'followUp', name: 'Follow up' },
+];

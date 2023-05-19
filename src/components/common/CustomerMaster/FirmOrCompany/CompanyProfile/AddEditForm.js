@@ -1,2 +1,0 @@
-AddEditForm.js
-index.js

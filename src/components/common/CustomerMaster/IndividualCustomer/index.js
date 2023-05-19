@@ -1,7 +1,8 @@
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { IndividualAddressMaster } from './Address';
-import { IndividualProfileMaster } from './IndividualProfile'
+import { IndividualProfileMaster } from './IndividualProfile';
 import { IndividualAccountRelatedMaster } from './AccountRelated';
-import { FamilyDetails } from './FamilyDetails'
+import { FamilyDetails } from './FamilyDetails';
+import { IndividualContact } from './Contacts';
 
-export { CustomerDetailsMaster, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails };
+export { CustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails };
