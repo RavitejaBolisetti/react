@@ -13,10 +13,10 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { searchValidator } from 'utils/validation';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { RxCross2 } from 'react-icons/rx';
 
 import { filterFunction } from 'utils/filterFunction';
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
 import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
@@ -90,6 +90,7 @@ export const ListStateMasterBase = (props) => {
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [ show , setShow ] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -125,7 +126,7 @@ export const ListStateMasterBase = (props) => {
     };
 
     useEffect(() => {
-        setFilterString({ countryCode: defaultCountry, advanceFilter: true });
+        setFilterString({ countryCode: defaultCountry, advanceFilter: false });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultCountry]);
 
@@ -187,7 +188,13 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value }) : handleResetFilter();
+
+        console.log(value,"valuevalue")
+        setShow(true);
+
+        if(value?.length >=3){
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value })
+        }
     };
 
     const onFinish = (values) => {
@@ -241,6 +248,7 @@ export const ListStateMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
+        setShow(false);
         resetData();
         const { keyword, ...rest } = filterString;
         setFilterString({ ...rest });
@@ -304,13 +312,23 @@ export const ListStateMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
+        console.log(key,'console.Key')
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
         setFilterString({ ...rest });
+
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
+    const advanceFilterResultProps = {
+        filterString,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+    };
+
+    console.log(removeFilter,'checking')
     return (
         <>
             <Row gutter={20}>
@@ -330,6 +348,8 @@ export const ListStateMasterBase = (props) => {
                                                         validator: searchValidator,
                                                     },
                                                 ]}
+                                                
+                                                validateTrigger= {['onSearch']}
                                             >
                                                 <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
@@ -350,38 +370,8 @@ export const ListStateMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            {filter?.canRemove && (
-                                                                <span>
-                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
+                        {show ? <AppliedAdvanceFilter {...advanceFilterResultProps} /> : null}
+                        
                     </div>
                 </Col>
             </Row>
