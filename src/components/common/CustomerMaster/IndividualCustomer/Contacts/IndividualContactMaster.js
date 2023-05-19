@@ -60,7 +60,7 @@ const IndividualContactMain = () => {
         form.resetFields();
         console.log('clicked');
         setShowAddEditForm(true);
-        setOpenAccordian('1')
+        setOpenAccordian('1');
     };
 
     const formProps = {
@@ -69,28 +69,31 @@ const IndividualContactMain = () => {
         setContactData,
         formData,
         onFinish,
-        form
+        form,
     };
 
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
-            <Panel
-                header={
-                    <Space>
-                        <FaRegUserCircle className={styles.userCircle} />
-                        <Text strong> Individual Contact</Text>{' '}
-                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                            Add Contact
-                        </Button>
-                    </Space>
-                }
-                key="1"
-            >
-                {showAddEditForm && <AddEditForm {...formProps} />}
-                {/* <ViewDetail {...formProps} /> */}
-                <ViewContactList {...formProps} />
-            </Panel>
-        </Collapse>
+        <Space direction='vertical' size='middle' style={{display: 'flex'}}>
+            <h2>Contacts</h2>
+            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
+                <Panel
+                    header={
+                        <Space>
+                            <FaRegUserCircle className={styles.userCircle} />
+                            <Text strong> Individual Contact</Text>{' '}
+                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                Add Contact
+                            </Button>
+                        </Space>
+                    }
+                    key="1"
+                >
+                    {showAddEditForm && <AddEditForm {...formProps} />}
+                    {/* <ViewDetail {...formProps} /> */}
+                    <ViewContactList {...formProps} />
+                </Panel>
+            </Collapse>
+        </Space>
     );
 };
 

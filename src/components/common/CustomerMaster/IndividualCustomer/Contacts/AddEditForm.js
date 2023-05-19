@@ -8,6 +8,9 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
+import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
+
+
 const { Panel } = Collapse;
 const { Option } = Select;
 const { Text } = Typography;
@@ -33,26 +36,15 @@ const uploadProps = {
     // },
 };
 
-const contactPurpose = [
-    { key: 'payment', name: 'Payment' },
-    { key: 'followUp', name: 'Follow up' },
-];
-
-const title = [
-    { key: 'Mr', name: 'Mr.' },
-    { key: 'Mrs', name: 'Mrs.' },
-];
-
-const gender = [
-    { key: 'male', name: 'Male' },
-    { key: 'female', name: 'Female' },
-    { key: 'transgender', name: 'Transgender' },
-];
 
 const AddEditForm = (props) => {
     const { isReadOnly = false, onFinish, form } = props;
-
     const disabledProps = { disabled: isReadOnly };
+
+    const handleResetForm = () => {
+        form.resetFields();
+    };
+
     return (
         <>
             <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
@@ -119,7 +111,7 @@ const AddEditForm = (props) => {
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Gender" name="gender" rules={[validateRequiredSelectField('gender')]}>
                             <Select placeholder={preparePlaceholderSelect('gender')} {...disabledProps}>
-                                {gender.map((item) => (
+                                {gender?.map((item) => (
                                     <Option value={item.key}>{item.name}</Option>
                                 ))}
                             </Select>
@@ -129,7 +121,7 @@ const AddEditForm = (props) => {
                         <Form.Item label="Title" name="contactNameTitle" rules={[validateRequiredSelectField('title')]}>
                             <Select intialValue={'Select'} placeholder={preparePlaceholderSelect('title')} {...disabledProps}>
                                 {title?.map((item) => (
-                                    <Option value={item.key}>{item.name}</Option>
+                                    <Option value={item?.key}>{item?.name}</Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -193,18 +185,20 @@ const AddEditForm = (props) => {
                 <Row>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item valuePropName="checked" name="defaultaddress">
-                            <Checkbox >Mark As Default</Checkbox>
+                            <Checkbox>Mark As Default</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
-                <Row justify="left" style={{ marginBottom: '100px' }}>
+                <Row justify="left">
                     <Col xs={2} sm={2} md={2} lg={2} xl={2}>
                         <Button htmlType="submit" type="primary">
                             Save
                         </Button>
                     </Col>
                     <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                        <Button danger>Reset</Button>
+                        <Button onClick={handleResetForm} danger>
+                            Reset
+                        </Button>
                     </Col>
                 </Row>
             </Form>
