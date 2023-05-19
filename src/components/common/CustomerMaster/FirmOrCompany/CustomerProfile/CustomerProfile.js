@@ -4,14 +4,11 @@ import { withDrawer } from 'components/withDrawer';
 
 import  AddEditForm  from './AddEditForm';
 
-
-const CustomerProfileBase = ({  }) => {
-    
-
+const CustomerProfileBase = (props) => {
     return (
         <>
-           <h2>Company Profile</h2>
-           <AddEditForm />
+            <h2>Company Profile</h2>
+            <AddEditForm {...props} />
         </>
     );
 };
