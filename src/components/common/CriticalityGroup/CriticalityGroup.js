@@ -271,7 +271,7 @@ export const CriticalityGroupMain = (props) => {
                                 </Row>
                             </Col>
 
-                            {criticalityGroupData?.length && (
+                            {criticalityGroupData?.length > 0 && (
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button className={styles.refreshBtn} aria-label="fa-ref" onClick={handleReferesh} danger>
                                         <TfiReload />
