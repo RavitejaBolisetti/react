@@ -50,12 +50,12 @@ const gender = [
 ];
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onFinish } = props;
+    const { isReadOnly = false, onFinish, form } = props;
 
     const disabledProps = { disabled: isReadOnly };
     return (
         <>
-            <Form autoComplete="off" onFinish={onFinish} layout="vertical">
+            <Form form={form} autoComplete="off" onFinish={onFinish} layout="vertical">
                 <Row>
                     <Typography.Text strong>Add New Contact</Typography.Text>
                 </Row>
@@ -192,8 +192,8 @@ const AddEditForm = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Form.Item name="defaultaddress">
-                            <Checkbox>Mark As Default</Checkbox>
+                        <Form.Item valuePropName="checked" name="defaultaddress">
+                            <Checkbox >Mark As Default</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>

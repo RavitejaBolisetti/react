@@ -1,7 +1,7 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewDetailBase = ({ formData, styles, parameterType }) => {
+const ViewDetailBase = ({ formData, styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,

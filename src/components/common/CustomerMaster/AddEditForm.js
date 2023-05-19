@@ -30,8 +30,8 @@ const AddEditFormMain = (props) => {
     const [leftTimeline, setleftTimeline] = useState({
         AccountRelated: false,
         Address: false,
-        Contacts: false,
-        CustomerDetails: true,
+        Contacts: true,
+        CustomerDetails: false,
         FamilyDetails: false,
         IndividualProfile: false,
         customerProfile: false,
