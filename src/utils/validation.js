@@ -132,4 +132,9 @@ export const searchValidator = (_, value) => {
     }
     return Promise.reject(new Error('Please enter atleat 3 character to search'));
 };
+export const validateDrivingLicenseNo = (fieldName) => ({
+    pattern:  /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/,
+    message: 'Please enter valid ' + fieldName,
+    
+});
 
