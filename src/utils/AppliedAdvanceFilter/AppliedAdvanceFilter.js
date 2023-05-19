@@ -9,7 +9,7 @@ export default function AppliedAdvanceFilter(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                        <Col xs={24} sm={24} md={24} lg={3} xl={3}>
                             <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
                         </Col>
                         <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
