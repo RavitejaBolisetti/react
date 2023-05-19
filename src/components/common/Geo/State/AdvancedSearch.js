@@ -30,7 +30,7 @@ export const AdvancedSearchFrom = (props) => {
     return (
         <Form layout="vertical" autoComplete="off" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label="Country" name="countryCode">
                         {defaultCountry && (
                             <Select disabled={!!defaultCountry} defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
@@ -42,15 +42,17 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="State" initialValue={filterString?.keyword} name="keyword" 
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Form.Item
+                        label="State"
+                        initialValue={filterString?.keyword}
+                        name="keyword"
                         rules={[
                             {
                                 validator: searchValidator,
                             },
                         ]}
-                        
-                        validateTrigger= {['onFinish']}
+                        validateTrigger={['onFinish']}
                     >
                         <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>
