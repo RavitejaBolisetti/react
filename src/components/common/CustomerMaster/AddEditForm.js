@@ -110,9 +110,13 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
+    const IndividualAccountRelatedMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
     const renderElement = () => {
         if (leftTimeline?.AccountRelated) {
-            return <IndividualAccountRelatedMaster />;
+            return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
         } else if (leftTimeline?.CustomerDetails) {
             return <CustomerDetailsMaster {...CustomerDetailsMasterProps} />;
         } else if (leftTimeline?.Address) {
