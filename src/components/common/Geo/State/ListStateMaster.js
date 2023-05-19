@@ -188,7 +188,7 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        if (value?.length >= 3) {
+        if (value?.trim()?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
             listFilterForm.setFieldsValue({ code: undefined });
         }
