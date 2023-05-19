@@ -279,6 +279,7 @@ export const MenuConstant = {
         icon: <TbReport fontSize={22} />,
         parentMenuId: 'WEB',
     },
+
     [getMenyKey('RPT-BI')]: {
         key: 'RPT-BI',
         link: routing.ROUTING_REPORT_BI_REPORT,
@@ -292,6 +293,22 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'RPT',
     },
+
+    
+    [getMenyKey('RPT-ER')]: {
+        key: 'RPT-ER',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+    },
+
+    [getMenyKey('RPT-FR')]: {
+        key: 'RPT-FR',
+        link: routing.ROUTING_REPORT_URL_FILTER_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+    },
+
 
     [getMenyKey('COMN-03.02')]: {
         key: 'COMN-03.02',
