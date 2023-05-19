@@ -14,7 +14,7 @@ import { IndividualAddressMaster } from './IndividualCustomer/Address';
 import { FamilyDetails } from './IndividualCustomer/FamilyDetails';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { IndividualContact } from './IndividualCustomer/Contacts'
-import { CustomerProfile } from './CustomerProfile';
+import { CustomerProfile } from './FirmOrCompany/CompanyProfile';
 import { IndividualProfileMaster } from './IndividualCustomer';
 import FormProgressBar from './FormProgressBar';
 
@@ -34,7 +34,7 @@ const AddEditFormMain = (props) => {
         CustomerDetails: false,
         FamilyDetails: false,
         IndividualProfile: false,
-        customerProfile: false,
+        CustomerProfile: false,
     });
     const [Macid, setMacid] = useState();
 
