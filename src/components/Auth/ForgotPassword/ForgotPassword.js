@@ -389,8 +389,7 @@ const ForgotPasswordBase = ({ verifyUser, sendOTP, validateOTP, updatePassword, 
                                                         </Row>
                                                     </Col>
                                                 </Row>
-
-                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6} loading={isLoading} className={styles.button} type="primary">
+                                                <Button onClick={handleVerifyOTP} disabled={otpInput?.length < 6 || typeof otpInput == 'undefined' } loading={isLoading} className={styles.button} type="primary">
                                                     Verify OTP
                                                 </Button>
 
