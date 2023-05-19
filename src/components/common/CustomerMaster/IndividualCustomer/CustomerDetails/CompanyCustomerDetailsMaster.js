@@ -8,11 +8,12 @@ import { AddEditForm } from './AddEditForm';
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const CustomerDetailsMaster = () => {
+const CustomerDetailsMaster = (props) => {
+    const { onCloseAction } = props;
     return (
         <>
             <h2>Customer Details</h2>
-            <AddEditForm />
+            <AddEditForm onCloseAction={onCloseAction} />
         </>
     );
 };

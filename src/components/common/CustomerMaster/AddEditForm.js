@@ -8,14 +8,9 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster } from './IndividualCustomer';
-import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
-import { IndividualAddressMaster } from './IndividualCustomer/Address';
-import { FamilyDetails } from './IndividualCustomer/FamilyDetails';
+import { CustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { IndividualContact } from './IndividualCustomer/Contacts'
-import { CustomerProfile } from './CustomerProfile';
-import { IndividualProfileMaster } from './IndividualCustomer';
+import { CustomerProfile } from './FirmOrCompany/CustomerProfile';
 import FormProgressBar from './FormProgressBar';
 
 const { Option } = Select;
@@ -30,8 +25,8 @@ const AddEditFormMain = (props) => {
     const [leftTimeline, setleftTimeline] = useState({
         AccountRelated: false,
         Address: false,
-        Contacts: true,
-        CustomerDetails: false,
+        Contacts: false,
+        CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
         customerProfile: false,
@@ -111,15 +106,18 @@ const AddEditFormMain = (props) => {
         DealerSearchvalue,
         productHierarchyData,
     };
+    const CustomerDetailsMasterProps = {
+        onCloseAction,
+    };
     const renderElement = () => {
         if (leftTimeline?.AccountRelated) {
             return <IndividualAccountRelatedMaster />;
         } else if (leftTimeline?.CustomerDetails) {
-            return <CustomerDetailsMaster />;
+            return <CustomerDetailsMaster {...CustomerDetailsMasterProps} />;
         } else if (leftTimeline?.Address) {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts) {
-           return <IndividualContact />
+            return <IndividualContact />;
         } else if (leftTimeline?.CustomerProfile) {
             return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile) {
