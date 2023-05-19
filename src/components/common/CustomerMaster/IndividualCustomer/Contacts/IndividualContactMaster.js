@@ -12,31 +12,7 @@ import { ViewDetail } from './ViewContactDetails';
 import ViewContactList from './ViewContactList';
 
 const { Panel } = Collapse;
-
 const { Text } = Typography;
-
-const formData = {
-    id: '076da86e-010c-445c-ac6c-6b905ca29338',
-    contactMobileNumber: '9876543856',
-    purposeOfContact: 'offers',
-    relationwithCustomer: 'brother',
-    PreferredFollowUpTimeFrom: '09:00AM',
-    PreferredFollowUpTimeTo: '06:00AM',
-    contactNameTitle: 'mr',
-    contactNameFirstName: 'jhon',
-    contactNameMiddleName: 'little',
-    contactNameLastName: 'hashn',
-    gender: 'Male',
-    alternativeMobileNumber: '6789034567',
-    contactEmail: 'abc435@gmail.com',
-    alternativeEmail: 'cfdc321@gmail.com',
-    facebook: 'ABC18',
-    twitter: 'ABC18',
-    instagram: 'ABC18',
-    youtube: 'ABC18',
-    teamBhp: 'Team 1',
-    defaultcontact: true,
-};
 
 const IndividualContactMain = () => {
     const [form] = Form.useForm();
@@ -50,7 +26,20 @@ const IndividualContactMain = () => {
 
     const onFinish = (value) => {
         console.log('on finish value ', value);
-        setContactData((prev) => [...prev, { ...value }]);
+        setContactData((prev) => {
+            let formData = [...prev];
+            if(formData?.length<=1){
+                return [...prev, { ...value }]
+            }else {
+                formData?.forEach(contact => {
+                    if(contact?.defaultaddress === true){
+                        contact.defaultaddress = false;
+                    }
+                });
+                return [...formData, value];
+               
+            }
+        });
         setShowAddEditForm(false);
     };
 
@@ -64,11 +53,11 @@ const IndividualContactMain = () => {
     };
 
     const formProps = {
-        styles,
-        contactData,
+        setShowAddEditForm,
         setContactData,
-        formData,
+        contactData,
         onFinish,
+        styles,
         form,
     };
 
@@ -88,7 +77,7 @@ const IndividualContactMain = () => {
                     }
                     key="1"
                 >
-                    {showAddEditForm && <AddEditForm {...formProps} />}
+                    {(showAddEditForm || !contactData?.length>0) && <AddEditForm {...formProps} />}
                     {/* <ViewDetail {...formProps} /> */}
                     <ViewContactList {...formProps} />
                 </Panel>

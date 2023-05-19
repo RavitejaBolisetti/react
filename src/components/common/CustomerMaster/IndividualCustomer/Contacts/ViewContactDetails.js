@@ -30,7 +30,7 @@ const ViewDetailBase = ({ formData, styles }) => {
                     <Descriptions.Item label="Instagram Link">{formData?.instagram}</Descriptions.Item>
                     <Descriptions.Item label="Youtube Channel">{formData?.youtube}</Descriptions.Item>
                     <Descriptions.Item label="Team BHP Link">{formData?.teamBhp}</Descriptions.Item>
-                    <Descriptions.Item label="Mark As Default">{formData?.defaultaddress}</Descriptions.Item>
+                    <Descriptions.Item label="Mark As Default">{formData?.defaultaddress ? 'Yes' : 'No'}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>
