@@ -90,7 +90,7 @@ export const ListStateMasterBase = (props) => {
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [ show , setShow ] = useState(false);
+    const [show, setShow] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -188,12 +188,11 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-
-        console.log(value,"valuevalue")
+        console.log(value, 'valuevalue');
         setShow(true);
 
-        if(value?.length >=3){
-            setFilterString({ ...filterString, advanceFilter: true, keyword: value })
+        if (value?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
         }
     };
 
@@ -312,11 +311,10 @@ export const ListStateMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
-        console.log(key,'console.Key')
+        console.log(key, 'console.Key');
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
         setFilterString({ ...rest });
-
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
@@ -328,7 +326,7 @@ export const ListStateMasterBase = (props) => {
         handleResetFilter,
     };
 
-    console.log(removeFilter,'checking')
+    console.log(removeFilter, 'checking');
     return (
         <>
             <Row gutter={20}>
@@ -348,8 +346,7 @@ export const ListStateMasterBase = (props) => {
                                                         validator: searchValidator,
                                                     },
                                                 ]}
-                                                
-                                                validateTrigger= {['onSearch']}
+                                                validateTrigger={['onSearch']}
                                             >
                                                 <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
@@ -370,8 +367,7 @@ export const ListStateMasterBase = (props) => {
                                 </Button>
                             </Col>
                         </Row>
-                        {show ? <AppliedAdvanceFilter {...advanceFilterResultProps} /> : null}
-                        
+                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
                     </div>
                 </Col>
             </Row>
