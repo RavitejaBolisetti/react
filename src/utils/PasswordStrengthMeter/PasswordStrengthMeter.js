@@ -109,6 +109,8 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                 {checkValidatorStatus(validatorStatus?.digit, 'Have at least 1 number')}
                 {checkValidatorStatus(validatorStatus?.symbol, 'Have at least 1 symbol')}
                 {checkValidatorStatus(validatorStatus?.length, 'Be at least 8 characters')}
+                {/* {checkValidatorStatus(validatorStatus?.length, 'Not be a common password')}
+                {checkValidatorStatus(validatorStatus?.length, 'Not be as the same account name')} */}
             </ul>
         </div>
     );
@@ -122,7 +124,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
         <div className={`${styles.passwordStrengthMeter} ${beforeLogin ? styles.beforeLogin : ''}`}>
             <Row gutter={5}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.title}>
-                    Password Strength {addToolTip(passwordStrengthText, 'bottom', '#20232C', '1px solid #2782F9')(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}
+                    Password Strength {addToolTip(passwordStrengthText, 'bottom', '#20232C', styles.infoTooltipDesign)(<AiOutlineInfoCircle className={styles.infoIconColor} size={18} />)}
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     {strengthText && (
