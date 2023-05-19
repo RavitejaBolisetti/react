@@ -101,7 +101,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     };
 
     const infoText = (validatorStatus) => (
-        <div className={styles.tooltipDesign}>
+        <div className={`${styles.tooltipDesign} ${beforeLogin ? styles.tooltipBGLogin : styles.tooltipBG}`}>
             <span>Password must include:</span>
             <ul>
                 {checkValidatorStatus(validatorStatus?.uppercase, 'Have at least 1 uppercase')}
