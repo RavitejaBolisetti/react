@@ -79,6 +79,7 @@ export const ListStateMasterBase = (props) => {
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, fetchCountryList, countryShowLoading } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -189,7 +190,7 @@ export const ListStateMasterBase = (props) => {
     const onSearchHandle = (value) => {
         if (value?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
-            advanceFilterForm.setFieldsValue({ code: undefined });
+            listFilterForm.setFieldsValue({ code: undefined });
         }
     };
 
@@ -250,6 +251,7 @@ export const ListStateMasterBase = (props) => {
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
         setShowDataLoading(false);
+        listFilterForm.setFieldsValue({ code: undefined });
         advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
     };
 
@@ -329,10 +331,9 @@ export const ListStateMasterBase = (props) => {
                             <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={listFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item
                                                 label="State List"
-                                                // initialValue={filterString?.keyword}
                                                 name="code"
                                                 rules={[
                                                     {
