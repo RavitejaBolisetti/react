@@ -90,7 +90,6 @@ export const ListStateMasterBase = (props) => {
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [show, setShow] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -188,11 +187,9 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        console.log(value, 'valuevalue');
-        setShow(true);
-
         if (value?.length >= 3) {
             setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            advanceFilterForm.setFieldsValue({ code: undefined });
         }
     };
 
@@ -247,14 +244,13 @@ export const ListStateMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
-        setShow(false);
         resetData();
         const { keyword, ...rest } = filterString;
-        setFilterString({ ...rest });
+        setFilterString({ ...rest, advanceFilter: false });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
         setShowDataLoading(false);
-        advanceFilterForm.setFieldsValue({ keyword: undefined });
+        advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
     };
 
     const advanceFilterProps = {
@@ -311,10 +307,9 @@ export const ListStateMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
-        console.log(key, 'console.Key');
         const { [key]: names, ...rest } = filterString;
         advanceFilterForm.setFieldsValue({ [key]: undefined });
-        setFilterString({ ...rest });
+        setFilterString({ ...rest, advanceFilter: false });
     };
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
@@ -325,8 +320,6 @@ export const ListStateMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
     };
-
-    console.log(removeFilter, 'checking');
     return (
         <>
             <Row gutter={20}>
@@ -339,8 +332,8 @@ export const ListStateMasterBase = (props) => {
                                         <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                             <Form.Item
                                                 label="State List"
-                                                initialValue={filterString?.keyword}
-                                                name="keyword"
+                                                // initialValue={filterString?.keyword}
+                                                name="code"
                                                 rules={[
                                                     {
                                                         validator: searchValidator,

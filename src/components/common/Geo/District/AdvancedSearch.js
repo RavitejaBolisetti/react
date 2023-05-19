@@ -27,16 +27,14 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
     const selectProps = {
-        filterOption,
+        optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
     };
     return (
-        <Form layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label="Country" name="countryCode">
@@ -59,7 +57,10 @@ export const AdvancedSearchFrom = (props) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+            </Row>
+            
+            <Row gutter={16}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="District" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
                         <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>

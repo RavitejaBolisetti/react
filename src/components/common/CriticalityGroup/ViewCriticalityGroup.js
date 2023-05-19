@@ -3,7 +3,7 @@ import { Descriptions } from 'antd';
 
 const ViewCriticalityGroupMain = (props) => {
     const { cardProps } = props;
-    const { selectedRecord, style } = props;
+    const { formData, style } = props;
 
     const viewProps = {
         bordered: false,
@@ -16,10 +16,10 @@ const ViewCriticalityGroupMain = (props) => {
         <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Criticality Group Id">{selectedRecord?.criticalityGroupCode}</Descriptions.Item>
-                    <Descriptions.Item label="Criticality Group Name">{selectedRecord?.criticalityGroupName}</Descriptions.Item>
-                    <Descriptions.Item label="Default Group">{selectedRecord?.criticalityDefaultGroup === '1' ? <text className={style.activeText}>Active</text> : <text className={style.inactiveText}>InActive</text>}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{selectedRecord?.activeIndicator === 1 ? <text className={style.activeText}>Active</text> : <text className={style.inactiveText}>InActive</text>}</Descriptions.Item>
+                    <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>
+                    <Descriptions.Item label="Criticality Group Name">{formData?.criticalityGroupName}</Descriptions.Item>
+                    <Descriptions.Item label="Default Group">{formData?.criticalityDefaultGroup ? <div className={style.activeText}>Active</div> : <div className={style.inactiveText}>InActive</div>}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{formData?.activeIndicator ? <div className={style.activeText}>Active</div> : <div className={style.inactiveText}>InActive</div>}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

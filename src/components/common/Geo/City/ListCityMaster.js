@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+import { Button, Col, Input, Form, Row, Select } from 'antd';
 import { bindActionCreators } from 'redux';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
@@ -13,11 +13,11 @@ import { AddEditForm } from './AddEditForm';
 import { geoStateDataActions } from 'store/actions/data/geo/state';
 import { geoCityDataActions } from 'store/actions/data/geo/city';
 import { AdvancedSearch } from './AdvancedSearch';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { FilterIcon } from 'Icons';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
-import { RxCross2 } from 'react-icons/rx';
 
 import styles from 'components/common/Common.module.css';
 import { geoDistrictDataActions } from 'store/actions/data/geo/district';
@@ -227,15 +227,7 @@ export const ListCityMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        advanceFilterForm
-            .validateFields()
-            .then(() => {
-                value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
-            })
-            .catch((err) => {
-                console.log(err);
-                return;
-            });
+        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
     };
 
     const handleFilterChange =
@@ -376,6 +368,13 @@ export const ListCityMasterBase = (props) => {
         tableData: searchData,
         setPage,
     };
+
+    const advanceFilterResultProps = {
+        filterString,
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+    };
     return (
         <>
             <Row gutter={20}>
@@ -389,7 +388,7 @@ export const ListCityMasterBase = (props) => {
                                     </Col>
 
                                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Form colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
+                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
                                             <Form.Item label="" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
                                                 <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
                                             </Form.Item>
@@ -415,40 +414,7 @@ export const ListCityMasterBase = (props) => {
                                 ''
                             )}
                         </Row>
-                        {filterString?.advanceFilter && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                                            <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                        </Col>
-                                        <Col xs={24} sm={22} md={22} lg={18} xl={18} className={styles.advanceFilterContainer}>
-                                            {extraParams?.map((filter) => {
-                                                return (
-                                                    filter?.value && (
-                                                        <div className={styles.advanceFilterItem}>
-                                                            {filter?.name}
-                                                            {filter?.canRemove ? (
-                                                                <span>
-                                                                    <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                                </span>
-                                                            ) : (
-                                                                ''
-                                                            )}
-                                                        </div>
-                                                    )
-                                                );
-                                            })}
-                                        </Col>
-                                        <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                            <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
-                                                Clear
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
-                        )}
+                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
                     </div>
                 </Col>
             </Row>

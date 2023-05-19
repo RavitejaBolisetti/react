@@ -102,14 +102,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('State')}
-                                    onChange={handleStateChange}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('State')} onChange={handleStateChange}>
                                     {stateData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -121,14 +114,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="District" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('District')}
-                                    onChange={handleDistrictChange}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('District')} onChange={handleDistrictChange}>
                                     {filteredDistrictData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -137,14 +123,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="City" initialValue={formData?.cityName} name="cityCode" rules={[validateRequiredSelectField('City')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('City')}
-                                    onChange={handleTehsilChange}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('City')} onChange={handleTehsilChange}>
                                     {filteredCityData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -156,13 +135,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Tehsil" initialValue={formData?.tehsilCode} name="tehsilCode" rules={[validateRequiredSelectField('Tehsil')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('Tehsil')}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('Tehsil')}>
                                     {filteredTehsilData?.map((item) => (
                                         <Option value={item?.code}>{item?.name}</Option>
                                     ))}
@@ -172,13 +145,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Pin Category" initialValue={formData?.pinCategory} name="pinCategory" rules={[validateRequiredSelectField('Pin Category')]}>
-                                <Select
-                                    showSearch
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase()?.includes(input?.toLowerCase());
-                                    }}
-                                    placeholder={preparePlaceholderSelect('Pin Category')}
-                                >
+                                <Select showSearch optionFilterProp={'children'} placeholder={preparePlaceholderSelect('Pin Category')}>
                                     {typeData?.PIN_CATG?.map((item) => (
                                         <Option value={item?.key}>{item?.value}</Option>
                                     ))}

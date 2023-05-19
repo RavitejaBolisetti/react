@@ -45,9 +45,11 @@
 
 .contentHeaderBackground {
     background-color: #f4f4f4;
+    border: 1px solid #e8e8e8;
     padding: 10px !important;
     margin-bottom: 20px;
     border-radius: 8px !important;
+    font-weight: 500;
 }
 
 .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
@@ -597,16 +599,6 @@
     margin-top: 0px;
 }
 
-.contentHeaderBackground {
-    background-color: #f4f4f4;
-    padding: 8px 20px;
-    border-radius: 4px 4px 0px 0px;
-    -moz-border-radius: 4px 4px 0px 0px;
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border: 1px solid #e8e8e8;
-    font-weight: 500;
-}
-
 .contentHeaderRightBackground {
     background-color: #f4f4f4;
     padding: 13px;
@@ -872,7 +864,7 @@
 .viewContainer :global .ant-descriptions .ant-descriptions-item-content {
     color: rgba(142, 133, 133, 1) !important;
     font-size: 14px !important;
-    display: inline-block
+    display: inline-block;
 }
 
 .hierarchyRightContaners {
@@ -924,23 +916,18 @@
 /* Crticality group allowed timing css*/
 
 .allowedTimingAlignment {
-    border-top: 1px solid #dedede;
     padding: 20px 0 !important;
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
 }
 
-.allowedTimingAlignment span {
-    color: #ff3e5b;
-}
+
 
 .addTimeBtn {
-    position: relative;
-    top: -28px;
-    margin-bottom: -10px;
-    text-align: right;
-    color: #ff3e5b;
+    display: flex;
+    align-items: center;
+    flex-flow: row-reverse;
 }
 
 .viewAllowedTiming button {
@@ -1235,7 +1222,7 @@
 .advanceFilterTop {
     margin-top: 10px;
     padding-top: 8px;
-    border-top: solid 1px #E6E6E6;
+    border-top: solid 1px #e6e6e6;
 }
 
 .advanceFilterContainer {
@@ -1266,8 +1253,8 @@
     border-radius: 20px;
     margin-top: 6px;
     padding: 4px 10px;
-    border: solid 1px #FF3E5B;
-    color: #FF3E5B;
+    border: solid 1px #ff3e5b;
+    color: #ff3e5b;
     line-height: 18px;
     margin-right: 12px;
 }
@@ -1282,6 +1269,69 @@
     float: right !important;
     height: 30px !important;
     line-height: 16px;
+}
+
+.graySeparator {
+    border-top: 1px solid #dedede;
+}
+
+.advanceTimingContainer {
+    background-color: #f4f4f4;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.advanceTimingContainer :global .ant-card-bordered {
+    border: 1px solid #b5b5b6;
+    background-color: #b5b5b6;
+}
+
+.viewTiming {
+    padding: 0px 20px 10px 20px;
+}
+
+.viewTiming .seprator {
+    border-top: solid 1px #e6e6e6;
+    margin-bottom: 20px;
+}
+
+.timingCardItem {
+    margin: 10px 0px 5px 0px;
+    background-color: #e6e6e6;
+    border: 1px solid #b5b5b6;
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+.timingCardItem .timeSlot {
+    padding: 4px 0 !important;
+    width: 190px;
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.timingCardItem .timeLabel {
+    padding-left: 0 !important;
+    color: #858585;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.timingCardItem .timeSlotClearBtn {
+    display: flex;
+    align-items: center;
+}
+
+.viewTiming .timingCardItem:first-child {
+    margin-top: 10px;
+}
+
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
+    padding-bottom: 0px;
 }
 
 .masterListSearchForm :global .ant-form-item {
