@@ -8,14 +8,9 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster } from './IndividualCustomer';
-import { IndividualAccountRelatedMaster } from './IndividualCustomer/AccountRelated';
-import { IndividualAddressMaster } from './IndividualCustomer/Address';
-import { FamilyDetails } from './IndividualCustomer/FamilyDetails';
+import { CustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { IndividualContact } from './IndividualCustomer/Contacts'
-import { CustomerProfile } from './FirmOrCompany/CompanyProfile';
-import { IndividualProfileMaster } from './IndividualCustomer';
+import { CustomerProfile } from './FirmOrCompany/CustomerProfile';
 import FormProgressBar from './FormProgressBar';
 
 const { Option } = Select;
@@ -30,8 +25,8 @@ const AddEditFormMain = (props) => {
     const [leftTimeline, setleftTimeline] = useState({
         AccountRelated: false,
         Address: false,
-        Contacts: true,
-        CustomerDetails: false,
+        Contacts: false,
+        CustomerDetails: true,
         FamilyDetails: false,
         IndividualProfile: false,
         CustomerProfile: false,
@@ -111,15 +106,19 @@ const AddEditFormMain = (props) => {
         DealerSearchvalue,
         productHierarchyData,
     };
+    const CustomerDetailsMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
     const renderElement = () => {
         if (leftTimeline?.AccountRelated) {
             return <IndividualAccountRelatedMaster />;
         } else if (leftTimeline?.CustomerDetails) {
-            return <CustomerDetailsMaster />;
+            return <CustomerDetailsMaster {...CustomerDetailsMasterProps} />;
         } else if (leftTimeline?.Address) {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts) {
-           return <IndividualContact />
+            return <IndividualContact />;
         } else if (leftTimeline?.CustomerProfile) {
             return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile) {
@@ -165,7 +164,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Col>
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
-                            {!isViewModeVisible ? renderElement() : <ViewCustomerMaster {...viewProps} />}
+                            {!isViewModeVisible ? renderElement() : renderElement()}
 
                             <Row gutter={20} className={styles.formFooter}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
