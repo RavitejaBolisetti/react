@@ -1,53 +1,96 @@
 import React, { useState } from 'react';
 
-import { Col, Collapse, Row, Button, Form, Input, Select, Space, Typography } from 'antd';
-import { BiUserCircle } from 'react-icons/bi';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { PlusOutlined } from '@ant-design/icons';
+import { Col, Collapse, Form, Select, Space, Typography, Button } from 'antd';
+import { UserOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import styles from '../../../Common.module.css';
+import { FaUserCircle, FaRegUserCircle } from 'react-icons/fa';
 
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetteNumberandPeriod, validateRequiredSelectField, validateAlphanumericWithSpace } from 'utils/validation';
-import { AddEditForm } from './AddEditForm';
-import ViewIndividualAddressDetail from './ViewIndividualAddressDetails';
+import { accordianExpandIcon, expandIcon } from 'utils/accordianExpandIcon';
+
+import styles from 'components/common/Common.module.css';
+
+import { ViewIndividualAddressDetails } from './ViewIndividualAddressDetails';
+
+import ViewAddressList from './ViewAddressList';
+import AddEditForm from './AddEditForm';
+
+
 
 const { Panel } = Collapse;
+
 const { Text } = Typography;
+
+const formData = {
+    id: '076da86e-010c-445c-ac6c-6b905ca29338',
+    addressType: '9876543856',
+    address: 'offers',
+    address2: 'brother',
+    pincode: '09:00AM',
+    tehsil: '06:00AM',
+    city: 'mr',
+    district: 'jhon',
+    state: 'little',
+    contactpersonName: 'hashn',
+    contactmobilenumber: 'Male',
+    defaultaddress: true,
+};
+
+
+
 
 const IndividualAddressMasterBase = () => {
     const [form] = Form.useForm();
-    const [openAccordian, setOpenAccordian] = useState('');
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [codeIsReadOnly, setcodeIsReadOnly] = useState(false);
+    const [contactData, setContactData] = useState([]);
+    const [openAccordian, setOpenAccordian] = useState('1');
+    const [showAddEditForm, setShowAddEditForm] = useState(false);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
+    const onFinish = (value) => {
+        console.log('on finish value ', value);
+        setContactData((prev) => [...prev, { ...value }]);
+        setShowAddEditForm(false);
+    };
+
+    const addContactHandeler = (e) => {
+        // e.preventDefault();
+        e.stopPropagation();
+        form.resetFields();
+        console.log('clicked');
+        setShowAddEditForm(true);
+        setOpenAccordian('1')
+    };
+
+    const formProps = {
+        styles,
+        contactData,
+        setContactData,
+        formData,
+        onFinish,
+        form
+    };
+
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} activeKey={openAccordian} expandIconPosition="end">
+        <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
             <Panel
                 header={
-                    <>
-                        <Space>
-                            <BiUserCircle className={styles.userCircle} />
-                            <Text strong> Individual Address</Text>{' '}
-                            <Button icon={<PlusOutlined />} type="primary">
-                                Add Address
-                            </Button> 
-                        </Space>
-                    </>
+                    <Space>
+                        <FaRegUserCircle className={styles.userCircle} />
+                        <Text strong> Individual Address</Text>{' '}
+                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                            Add Address
+                        </Button>
+                    </Space>
                 }
-                suffix={<PlusOutlined />}
                 key="1"
             >
-                <AddEditForm form={form} />
-                <ViewIndividualAddressDetail/>
+                {showAddEditForm && <AddEditForm {...formProps} />}
+                <ViewAddressList {...formProps} />
             </Panel>
         </Collapse>
     );
 };
 
-export const IndividualAddressMaster= IndividualAddressMasterBase;
+export const IndividualAddressMaster = IndividualAddressMasterBase;

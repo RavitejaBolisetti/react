@@ -10,11 +10,12 @@ import { gender, income, maritialStatus, memberShip, occupation, religion, title
 import  AddEditForm  from './AddEditForm';
 import { connect } from 'react-redux';
 
-const IndividualProfileBase = () => {
+const IndividualProfileBase = (props) => {
+    const { onCloseAction } = props;
     return(
         <>
         <h2>Individual Profile</h2>
-        <AddEditForm/>
+        <AddEditForm {...props} />
         </>
     )
 }
