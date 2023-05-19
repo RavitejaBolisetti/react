@@ -101,7 +101,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     };
 
     const infoText = (validatorStatus) => (
-        <div className={`${styles.tooltipDesign} ${beforeLogin ? styles.tooltipBGLogin : styles.tooltipBG}`}>
+        <div className={`${beforeLogin ? styles.tooltipBGLogin : styles.tooltipBG}`}>
             <span>Password must include:</span>
             <ul>
                 {checkValidatorStatus(validatorStatus?.uppercase, 'Have at least 1 uppercase')}
@@ -129,7 +129,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     {strengthText && (
                         <div className={styles.strength}>
-                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#F99C22', '', password?.length > 0)(<span className={styles.infoTitle}>{getStrengthText(strength)}</span>)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#2B2521', styles.passwordTooltipDesign, password?.length > 0)(<span className={styles.infoTitle}>{getStrengthText(strength)}</span>)}</span>
                         </div>
                     )}
                 </Col>
