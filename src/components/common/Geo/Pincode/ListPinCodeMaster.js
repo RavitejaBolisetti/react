@@ -12,6 +12,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+import { filterFunction } from 'utils/filterFunction';
 
 import { TfiReload } from 'react-icons/tfi';
 
@@ -43,7 +44,7 @@ const mapStateToProps = (state) => {
                 District: { isLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, data: districtData },
                 Tehsil: { isLoaded: isTehsilDataLoaded = false, isLoading: isTehsilLoading, data: tehsilData },
                 City: { isLoaded: isCityDataLoaded = false, isLoading: isCityLoading, data: cityData },
-                Pincode: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString = undefined },
+                Pincode: { isLoaded: isDataLoaded = false, isLoading, data },
             },
         },
     } = state;
@@ -74,7 +75,6 @@ const mapStateToProps = (state) => {
         isCityLoading,
         cityData,
         data,
-        filterString,
         stateData,
         isDataLoaded,
         isConfigDataLoaded,
@@ -104,7 +104,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: geoPincodeDataActions.fetchList,
             listShowLoading: geoPincodeDataActions.listShowLoading,
             saveData: geoPincodeDataActions.saveData,
-            setFilterString: geoPincodeDataActions.setFilter,
             resetData: geoPincodeDataActions.reset,
             showGlobalNotification,
         },
@@ -118,13 +117,15 @@ const ListPinCodeMasterBase = (props) => {
     const { isStateDataLoaded, isStateLoading, stateData, listStateShowLoading, fetchStateList } = props;
     const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictList } = props;
     const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilList } = props;
-    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityList, filterString, setFilterString } = props;
+    const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityList } = props;
     const { isConfigDataLoaded, isConfigLoading, typeData, listConfigShowLoading, fetchConfigList } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
+
     const [advanceFilterForm] = Form.useForm();
 
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [filteredStateData, setFilteredStateData] = useState([]);
     const [filteredDistrictData, setFilteredDistrictData] = useState([]);
     const [filteredCityData, setFilteredCityData] = useState([]);
@@ -134,10 +135,10 @@ const ListPinCodeMasterBase = (props) => {
     const [page, setPage] = useState(1);
 
     const [formData, setFormData] = useState([]);
-    // const [filterString, setFilterString] = useState();
+    const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    // const [extraParams, setExtraParams] = useState([]);
+    const [searchData, setSearchdata] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -192,8 +193,6 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
 
-    console.log(stateData, 'checkstateData');
-
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             // setFilterString({ countryCode: defaultCountry });
@@ -202,12 +201,30 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
+
+    useEffect(() => {
+        if (!showDataLoading && data && userId) {
+            if (filterString) {
+                const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
+                const state = filterString?.stateCode;
+                const district = filterString?.districtCode;
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pinCode) || filterFunction(keyword)(item?.pinCategory) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
+            } else {
+                setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
+                setShowDataLoading(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isDataLoaded, data, userId]);
+
     const extraParams = [
         {
             key: 'countryCode',
             title: 'Country',
             value: filterString?.countryCode,
-            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,            
+            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
             canRemove: false,
         },
         {
@@ -300,6 +317,7 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
+        console.log(values);
         let data = { ...values };
         const onSuccess = (res) => {
             form.resetFields();
@@ -363,6 +381,8 @@ const ListPinCodeMasterBase = (props) => {
 
         districtData,
         stateData,
+        cityData,
+        tehsilData,
         data,
 
         typeData,
@@ -378,7 +398,7 @@ const ListPinCodeMasterBase = (props) => {
 
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick, page?.current, page?.pageSize),
-        tableData: data,
+        tableData: searchData,
         setPage,
     };
 
@@ -389,6 +409,7 @@ const ListPinCodeMasterBase = (props) => {
 
     const handleResetFilter = () => {
         resetData();
+        setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setAdvanceSearchVisible(false);
@@ -410,9 +431,14 @@ const ListPinCodeMasterBase = (props) => {
         handleFilterChange,
         filteredStateData,
         filteredDistrictData,
+        filteredCityData,
+        filteredTehsilData,
         advanceFilterForm,
         resetData,
         handleResetFilter,
+        filterString,
+        setFilterString,
+        setAdvanceSearchVisible,
     };
 
     const onSearchHandle = (value) => {
@@ -445,53 +471,38 @@ const ListPinCodeMasterBase = (props) => {
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
+    const title = 'Pincode';
     const advanceFilterResultProps = {
+        advanceFilter: true,
         filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        filterString,
+        setFilterString,
+        title,
     };
     return (
         <>
-            <Row gutter={20}>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
+            <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label="PIN Code" initialValue={filterString?.code} name="keyword" rules={[validatePincodeField('Pincode')]}>
-                                                <Search placeholder="Search" maxLength={6} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                    Add Code
-                                </Button>
-                            </Col>
-                        </Row>
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
+                    <div className={styles.tableProduct}>
+                        <ListDataTable isLoading={showDataLoading} scroll={2400} {...tableProps} />
                     </div>
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={'Code'} scroll={2400} />
-                </Col>
-            </Row>
             <AdvancedSearch {...advanceFilterProps} />
+
             <AddEditForm {...formProps} />
         </>
     );

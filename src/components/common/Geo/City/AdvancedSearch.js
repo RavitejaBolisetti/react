@@ -72,7 +72,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City Name" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
+                    <Form.Item label="City Name" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>
                         <Input placeholder="Search" maxLength={50} allowClear />
                     </Form.Item>
                 </Col>

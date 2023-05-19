@@ -46,7 +46,7 @@
 .contentHeaderBackground {
     background-color: #f4f4f4;
     border: 1px solid #e8e8e8;
-    padding: 10px !important;
+    padding: 18px 20px !important;
     margin-bottom: 20px;
     border-radius: 8px !important;
     font-weight: 500;
@@ -728,7 +728,7 @@
 
 .headerSearchField {
     vertical-align: middle;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
@@ -808,6 +808,7 @@
 .contentHeaderBackground .subheading .filterBtn {
     line-height: 24px;
     font-weight: 600;
+    margin-left: -10px;
 }
 
 .contentHeaderBackground .subheading .filterBtn svg {
@@ -1339,7 +1340,12 @@
 }
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
-    margin-right: 30px;
+    margin-right: 12px;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
+    margin-bottom: -18px;
+    margin-top: -2px;
 }
 
 .advanceTimingContainer {
@@ -1401,6 +1407,59 @@
     padding-bottom: 0px;
 }
 
+.advanceFilterTop {
+    margin-top: 18px;
+    margin-bottom: -8px;
+    padding-top: 8px;
+    border-top: solid 1px #e6e6e6;
+}
+
+.advanceFilterContainer {
+    display: flex;
+    flex-flow: wrap;
+    /* margin: 0 0 0 8px; */
+    /* align-items: center; */
+}
+
+.advanceFilterClear {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    margin-bottom: -2px;
+}
+
+.advanceFilterTop .advanceFilterTitle {
+    padding: 10px 0px;
+    margin-right: 10px;
+    width: 160px;
+}
+
+/* .advanceFilterTop .advanceFilterItem:first-child {
+    margin-left: -40px;
+} */
+
+.advanceFilterTop .advanceFilterItem {
+    height: 30px;
+    border-radius: 20px;
+    margin-top: 6px;
+    padding: 4px 10px;
+    border: solid 1px #ff3e5b;
+    color: #ff3e5b;
+    line-height: 18px;
+    margin-right: 12px;
+}
+
+.advanceFilterTop .advanceFilterItem span {
+    vertical-align: middle;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.advanceFilterTop .clearBtn {
+    float: right !important;
+    height: 30px !important;
+    line-height: 16px;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */

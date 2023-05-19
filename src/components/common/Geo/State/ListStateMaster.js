@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row } from 'antd';
+import { Col, Input, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { geoCountryDataActions } from 'store/actions/data/geo/country';
@@ -10,7 +10,6 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { searchValidator } from 'utils/validation';
 
 import { ListDataTable } from 'utils/ListDataTable';
 
@@ -18,13 +17,8 @@ import { filterFunction } from 'utils/filterFunction';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
-import { TfiReload } from 'react-icons/tfi';
 
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -170,11 +164,11 @@ export const ListStateMasterBase = (props) => {
 
     const handleFilterChange =
         (name, type = 'value') =>
-        (value) => {
-            if (name === 'countryCode') {
-                advanceFilterForm.setFieldsValue({ stateCode: undefined });
-            }
-        };
+            (value) => {
+                if (name === 'countryCode') {
+                    advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                }
+            };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -230,7 +224,7 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -246,13 +240,11 @@ export const ListStateMasterBase = (props) => {
 
     const handleResetFilter = () => {
         resetData();
-        const { keyword, ...rest } = filterString;
-        setFilterString({ ...rest, advanceFilter: false });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
         setShowDataLoading(false);
+        advanceFilterForm.setFieldsValue({ keyword: undefined });
         listFilterForm.setFieldsValue({ code: undefined });
-        advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
     };
 
     const advanceFilterProps = {
@@ -316,59 +308,30 @@ export const ListStateMasterBase = (props) => {
 
     const handleAdd = () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD });
 
+    const title = 'State';
     const advanceFilterResultProps = {
+        advanceFilter: true,
         filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
     };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Form autoComplete="off" colon={false} form={listFilterForm} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                            <Form.Item
-                                                label="State List"
-                                                name="code"
-                                                rules={[
-                                                    {
-                                                        validator: searchValidator,
-                                                    },
-                                                ]}
-                                                validateTrigger={['onSearch']}
-                                            >
-                                                <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                    Add State
-                                </Button>
-                            </Col>
-                        </Row>
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
-                    </div>
-                </Col>
-            </Row>
-
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={'State'} />
+                    <ListDataTable isLoading={isLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

@@ -13,9 +13,9 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue({ code: filterString?.code });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+    console.log('🚀 ~ file: AdvancedSearch.js:18 ~ AdvancedSearchFrom ~ filterString:', filterString);
 
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });
@@ -58,7 +58,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            
+
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="District" initialValue={filterString?.keyword} name="keyword" rules={[{ validator: searchValidator }]}>

@@ -67,7 +67,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={formData?.roleCode} label="Role Code" name="keyword" rules={[{ validator: searchValidator }]}>
+                    <Form.Item initialValue={formData?.keyword} label="Role Code" name="keyword" rules={[{ validator: searchValidator }]}>
                         <Input className={styles.inputBox} maxLength={6} placeholder="Search" />
                     </Form.Item>
                 </Col>

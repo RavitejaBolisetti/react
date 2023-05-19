@@ -86,6 +86,7 @@ export const ListDistrictBase = (props) => {
     const { isStateDataLoaded, fetchStateList, listStateShowLoading, stateData } = props;
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -312,11 +313,14 @@ export const ListDistrictBase = (props) => {
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setAdvanceSearchVisible(false);
-        setFilterString([]);
+        setFilterString();
     };
 
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
     };
 
     const advanceFilterProps = {
@@ -349,54 +353,26 @@ export const ListDistrictBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
+    const title = 'District';
     const advanceFilterResultProps = {
+        advanceFilter: true,
         filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
     };
-
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        District List
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label="" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
-                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            {data?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                        Add District
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row>
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <div className={styles.tableProduct}>

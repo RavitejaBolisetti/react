@@ -93,6 +93,7 @@ export const ListCityMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -220,14 +221,22 @@ export const ListCityMasterBase = (props) => {
         setShowDataLoading(true);
         setRefershData(!refershData);
     };
+
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         setFilterString({ ...rest });
         advanceFilterForm.resetFields();
     };
 
+    // const onSearchHandle = (value) => {
+    //     value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
+    // };
+
     const onSearchHandle = (value) => {
-        value ? setFilterString({ ...filterString, advanceFilter: true, keyword: value, countryCode: 'IND' }) : handleResetFilter();
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
+            listFilterForm.setFieldsValue({ code: undefined });
+        }
     };
 
     const handleFilterChange =
@@ -369,59 +378,31 @@ export const ListCityMasterBase = (props) => {
         setPage,
     };
 
+    const title = 'City';
     const advanceFilterResultProps = {
+        advanceFilter: true,
         filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
         extraParams,
         removeFilter,
         handleResetFilter,
+        onSearchHandle,
+        setAdvanceSearchVisible,
+        handleReferesh,
+        handleButtonClick,
+        advanceFilterProps,
+        title,
     };
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={4} lg={4} xl={4} className={styles.lineHeight33}>
-                                        City List
-                                    </Col>
-
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Form autoComplete="off" colon={false} form={advanceFilterForm} className={styles.masterListSearchForm} onFinishFailed={onFinishFailed}>
-                                            <Form.Item label="" initialValue={filterString?.code} name="keyword" rules={[{ validator: searchValidator }]}>
-                                                <Search placeholder="Search" maxLength={50} allowClear className={styles.headerSearchField} onSearch={onSearchHandle} />
-                                            </Form.Item>
-                                        </Form>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                                        <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-                            {data?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleadd}>
-                                        Add City
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row>
-                        <AppliedAdvanceFilter {...advanceFilterResultProps} />
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.tableProduct}>
-                        <ListDataTable scroll={1800} isLoading={showDataLoading} {...tableProps} />
+                        <ListDataTable isLoading={showDataLoading} {...tableProps} />
                     </div>
                 </Col>
             </Row>
