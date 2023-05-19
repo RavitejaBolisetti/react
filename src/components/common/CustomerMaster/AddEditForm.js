@@ -118,7 +118,7 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Address) {
             return <IndividualAddressMaster />;
         } else if (leftTimeline?.Contacts) {
-            return <IndividualContact />;
+            return <IndividualContact {...CustomerDetailsMasterProps}/>;
         } else if (leftTimeline?.CustomerProfile) {
             return <CustomerProfile />;
         } else if (leftTimeline.IndividualProfile) {
