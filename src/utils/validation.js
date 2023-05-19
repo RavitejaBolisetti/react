@@ -48,6 +48,11 @@ export const validateAlphanumericWithSpace = (fieldName) => ({
     pattern: /^[a-zA-Z0-9 ]*$/,
 });
 
+export const validateLettersWithWhitespaces = (fieldName) => ({
+    message: fieldName + ' can contain only letters with whitespaces',
+    pattern: /^[a-zA-Z ]*$/,
+});
+
 export const validationFieldLetteNumberandPeriod = (fieldName) => ({
     pattern: /^[a-zA-Z0-9.]*$/,
     message: 'Please use only letters, numbers and period in' + fieldName,
@@ -103,8 +108,9 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const searchValidator = (_, value) => {
-    if (!value || (value && value.length > 3)) {
+    if (value === "" || (value && value.length >= 3)) {
         return Promise.resolve();
     }
     return Promise.reject(new Error('Please enter atleast 3 character to search'));
 };
+

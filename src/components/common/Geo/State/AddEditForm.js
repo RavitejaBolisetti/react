@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateAlphanumericWithSpace, validateLettersWithWhitespaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
@@ -73,7 +73,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name'), validateAlphanumericWithSpace('State Name')]} name="name">
+                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name'), validateLettersWithWhitespaces('State Name')]} name="name">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
