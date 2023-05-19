@@ -307,6 +307,15 @@ p {
     color: #FF3E5B;
 }
 
+
+.loginForm :global .ant-btn-primary:disabled {
+    color: #858585
+}
+
+.loginForm :global .ant-btn-primary:disabled:hover {
+    color: #ffffff
+}
+
 /* .loginSection :global .ant-input-affix-wrapper .anticon.ant-input-password-icon {
     color: #ffffff;
     font-size: 18px;

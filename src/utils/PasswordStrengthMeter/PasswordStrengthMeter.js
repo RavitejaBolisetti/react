@@ -118,7 +118,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
     const strengthLink = (className = styles.levelOneColor) => <div className={className} />;
     const strengthText = getStrengthText(strength);
 
-    const passwordStrengthText = 'Password Strength A password strength tester gauges how long it might hypothetically take to crack your password by testing the password against a set of known criteria-such as length, randomness, and complexity.';
+    const passwordStrengthText = 'A password strength tester gauges how long it might hypothetically take to crack your password by testing the password against a set of known criteria-such as length, randomness, and complexity.';
 
     return (
         <div className={`${styles.passwordStrengthMeter} ${beforeLogin ? styles.beforeLogin : ''}`}>
