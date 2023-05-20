@@ -8,7 +8,7 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes } = props;
+    const { isVisible,finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes } = props;
     const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
 
@@ -31,7 +31,9 @@ const CardProductAttribute = (props) => {
             return updatedValue;
         });
 
-        setSKUAttributes((prev) => [...prev, { code: val.attributeName.label, adPhProductAttributeMstId: val.attributeName.key, value: val.attributeValue }]);
+        const formatData = [];
+            finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+            setSKUAttributes(formatData);
 
         setProductAttributeEdit(false);
         forceUpdate();
