@@ -136,7 +136,6 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <ProductDetail {...productDetailsProps} />
-            { console.log(showProductAttribute,'Boolean') }
             {showProductAttribute && (
                 <Collapse className={openAccordian === 1 ? style.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />)}>
                     <Panel header={<span className={openAccordian === 1 ? style.accordianHeader : ''}>Product Atrribute Details</span>} key="1">

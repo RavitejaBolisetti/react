@@ -11,24 +11,27 @@ const ProductAttributeMaster = (props) => {
 
     const [finalFormdata, setFinalFormdata] = useState([]);
     const [formDecider, setFormDecider] = useState(false);
-    const [validation, setvalidation] = useState(false);
+    const [ validationProp, setValidationProp ] = useState(false);
+    let validation = false;
 
     const onAttributeFormFinish = (val) => {
-        finalFormdata.push(val);
-        attributeForm.resetFields();
-        forceUpdate();
-        setvalidation(true);
+        validation = false;
+        setValidationProp(false);
 
-        for (let i = 0; i < finalFormdata.length; i++) {
-            if (finalFormdata.attributeName.label === val.attributeName.label && finalFormdata.attributeValue === val.attributeValue) {
-                setvalidation(true);
-                break;
+        if (finalFormdata.length > 0) {
+            for (let i = 0; i < finalFormdata.length; i++) {
+                if (finalFormdata[i].attributeName.label === val.attributeName.label && finalFormdata[i].attributeValue === val.attributeValue) {
+                    validation = true;
+                    setValidationProp(true);
+                    break;
+                }
             }
         }
 
-        console.log(validation, 'finalFormdata');
-
         if (!validation) {
+            finalFormdata.push(val);
+            attributeForm.resetFields();
+            forceUpdate();
             const formatData = [];
             finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
             setSKUAttributes(formatData);
@@ -45,12 +48,13 @@ const ProductAttributeMaster = (props) => {
         formDecider,
         setFormDecider,
         selectedTreeData,
+        setSKUAttributes,
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
         productHierarchyAttributeData,
-        validation,
+        validationProp,
     };
 
     useEffect(() => {

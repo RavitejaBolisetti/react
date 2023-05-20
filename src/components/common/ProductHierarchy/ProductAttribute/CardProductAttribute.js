@@ -8,7 +8,7 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes } = props;
+    const { isVisible, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes } = props;
     const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
 
@@ -30,15 +30,10 @@ const CardProductAttribute = (props) => {
             updatedValue?.splice(indx, 1, { ...formatData });
             return updatedValue;
         });
-      
-        const formatData = [];
-        finalFormdata.forEach((item) => {
-            formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key });
-        });
 
-        setSKUAttributes(formatData);
+        setSKUAttributes((prev) => [...prev, { code: val.attributeName.label, adPhProductAttributeMstId: val.attributeName.key, value: val.attributeValue }]);
+
         setProductAttributeEdit(false);
-        attributeForm.resetFields();
         forceUpdate();
     };
 
@@ -66,8 +61,6 @@ const CardProductAttribute = (props) => {
             }
         };
     }, []);
-
-    useEffect(() => {}, []);
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
