@@ -8,8 +8,8 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes,setFormBtnActive } = props;
-    const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
+    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes,setFormBtnActive, productHierarchyAttributeData } = props;
+    const [editedAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
@@ -72,6 +72,12 @@ const CardProductAttribute = (props) => {
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
+    
+    const FormProductAttributeProp = {
+        productHierarchyAttributeData,
+        editForm,
+        formDecider,
+    }
 
     return (
         <Card
@@ -127,7 +133,7 @@ const CardProductAttribute = (props) => {
             {productAttributeEdit && (
                 <>
                     <Divider />
-                    <FormProductAttribute {...editedAAttributeValue} editForm={editForm} formDecider={formDecider} />
+                    <FormProductAttribute {...editedAttributeValue} {...FormProductAttributeProp}/>
                 </>
             )}
         </Card>

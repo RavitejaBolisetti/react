@@ -7,14 +7,14 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formDecider, editForm } = props;
+    const {  attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formDecider, editForm } = props;
 
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
     const fieldNames = { label: 'attributeCode', value: 'id' };
-
+    
     return (
         <Form form={formDecider ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>

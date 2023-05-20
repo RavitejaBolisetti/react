@@ -131,7 +131,7 @@ const AddEditFormMain = (props) => {
         isReadOnly,
     };
 
-    console.log(showProductAttribute, 'qwertyuio');
+    //console.log(showProductAttribute, 'qwertyuio');
 
     return (
         <>

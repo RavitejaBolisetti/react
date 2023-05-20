@@ -50,11 +50,12 @@ const ProductAttributeMaster = (props) => {
         selectedTreeData,
         setSKUAttributes,
         setFormBtnActive,
+        productHierarchyAttributeData,
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
-        productHierarchyAttributeData,
+        
         validationProp,
     };
 
@@ -63,7 +64,7 @@ const ProductAttributeMaster = (props) => {
             setFinalFormdata([]);
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
-            selectedTreeData?.skuAttributes.length > 0 &&
+            selectedTreeData?.skuAttributes &&
                 selectedTreeData?.skuAttributes?.map((data) => {
                     setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value }]);
                 });
