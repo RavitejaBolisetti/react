@@ -8,12 +8,13 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible,finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes } = props;
+    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes,setFormBtnActive } = props;
     const [editedAAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
         setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
+        setFormBtnActive(true);
     };
 
     const onAttributeSave = (val) => {
@@ -32,8 +33,8 @@ const CardProductAttribute = (props) => {
         });
 
         const formatData = [];
-            finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
-            setSKUAttributes(formatData);
+        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+        setSKUAttributes(formatData);
 
         setProductAttributeEdit(false);
         forceUpdate();
@@ -46,6 +47,10 @@ const CardProductAttribute = (props) => {
             updatedValue?.splice(indx, 1);
             return updatedValue;
         });
+
+        const formatData = [];
+        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+        setSKUAttributes(formatData);
 
         attributeForm.resetFields();
         forceUpdate();

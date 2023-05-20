@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Collapse, Select, Switch, Button, Space, Spin } from 'antd';
+import { Form,Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import style from '../../common/DrawerAndTable.module.css';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import ProductAttributeMaster from './ProductAttribute/ProductAttributeMaster';
 import ProductDetail from './ProductDetail';
-import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData,showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
-    const { selectedTreeKey, setSelectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
+    const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
-    const { form, skuAttributes, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
+    const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
 
     const [actionForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState(1);
@@ -90,7 +89,6 @@ const AddEditFormMain = (props) => {
 
     const handleProductchange = (e) => {
         const value = e.target.textContent;
-        // setShowProductAttribute(value);
     };
 
     const onActionFormFinish = (val) => {
