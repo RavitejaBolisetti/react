@@ -63,11 +63,12 @@ const CardProductAttribute = (props) => {
     useEffect(() => {
         return () => {
             setProductAttributeEdit(false);
+            // eslint-disable-next-line no-lone-blocks
             {
                 !view && setFormDecider(true);
             }
         };
-    }, []);
+    }, [setFormDecider, view]);
 
     const colLeft = !isVisible ? 24 : 18;
     const colRight = !isVisible ? 24 : 6;
