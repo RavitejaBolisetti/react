@@ -16,7 +16,7 @@ function FormProductAttribute(props) {
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
     return (
-        <Form form={formDecider ? editForm : attributeForm} id="myForm" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
+        <Form form={formDecider ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Attribute Name" name="attributeName" rules={[validateRequiredSelectField('Attribute Name'),{ validator: (rule, value) =>

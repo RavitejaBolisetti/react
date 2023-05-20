@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form,Collapse } from 'antd';
+import { Form, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import style from '../../common/DrawerAndTable.module.css';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
@@ -11,7 +11,7 @@ import ProductDetail from './ProductDetail';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData,showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
+    const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, productHierarchyData, productHierarchyAttributeData, showProductAttribute, selectedTreeData, setShowProductAttribute } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
     const { isFormBtnActive, setFormBtnActive } = props;
     const { form, setSKUAttributes, fetchListHierarchyAttributeName, listShowLoading, userId, isVisible } = props;
@@ -31,7 +31,7 @@ const AddEditFormMain = (props) => {
 
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.parntProdctId;
-       // setShowProductAttribute(true);
+        // setShowProductAttribute(true);
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
@@ -57,14 +57,14 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    useEffect( () => {
+    useEffect(() => {
         if (formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING) {
             setShowProductAttribute(false);
-        } 
-        if (formActionType === FROM_ACTION_TYPE.EDIT) {
-            setShowProductAttribute(true);
         }
-    }, [] )
+        if (formActionType === FROM_ACTION_TYPE.EDIT) {
+            selectedTreeData?.skuAttributes ? setShowProductAttribute(true) : setShowProductAttribute(false);
+        }
+    }, []);
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -131,6 +131,8 @@ const AddEditFormMain = (props) => {
         isReadOnly,
     };
 
+    console.log(showProductAttribute, 'qwertyuio');
+
     return (
         <>
             <ProductDetail {...productDetailsProps} />
@@ -141,7 +143,6 @@ const AddEditFormMain = (props) => {
                     </Panel>
                 </Collapse>
             )}
-             
         </>
     );
 };
