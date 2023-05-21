@@ -21,11 +21,13 @@ const CardProductAttribute = (props) => {
         setFormDecider(true);
         const newFormData = editForm.getFieldsValue();
 
+        console.log(newFormData,'formEsitedData')
+
         setFinalFormdata((prev) => {
             const updatedValue = prev;
             const indx = prev.findIndex((el) => el.attributeName?.key === val?.attributeId && el.attributeValue === val?.attributeValue);
             const formatData = {
-                attributeName: { label: newFormData?.attributeName },
+                attributeName: { label: typeof newFormData?.attributeName === 'object' ? newFormData?.attributeName?.label : newFormData?.attributeName },
                 attributeValue: newFormData?.attributeValue,
             };
             updatedValue?.splice(indx, 1, { ...formatData });
@@ -48,6 +50,7 @@ const CardProductAttribute = (props) => {
             return updatedValue;
         });
 
+        setFormBtnActive(true);
         const formatData = [];
         finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
         setSKUAttributes(formatData);
@@ -112,7 +115,7 @@ const CardProductAttribute = (props) => {
                                         />
                                     </Col>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} />
+                                        <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props.fromApi} />
                                     </Col>
                                 </>
                             </div>

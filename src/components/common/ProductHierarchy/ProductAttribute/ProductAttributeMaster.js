@@ -51,6 +51,7 @@ const ProductAttributeMaster = (props) => {
         setSKUAttributes,
         setFormBtnActive,
         productHierarchyAttributeData,
+
     };
 
     const formProductAttributeProps = {
@@ -66,12 +67,14 @@ const ProductAttributeMaster = (props) => {
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
             selectedTreeData?.skuAttributes &&
                 selectedTreeData?.skuAttributes?.map((data) => {
-                    setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value }]);
+                    setFinalFormdata([...finalFormdata, { attributeName: { label: data.code }, attributeValue: data.value, fromApi: true }]);
                 });
             attributeForm.resetFields();
             forceUpdate();
         }
     }, []);
+
+    console.log(finalFormdata,'checkDta')
 
     return (
         <Fragment>
@@ -82,7 +85,7 @@ const ProductAttributeMaster = (props) => {
 
             {finalFormdata?.length > 0 &&
                 finalFormdata?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} attributeId={action?.attributeName?.key} />;
+                    return <CardProductAttribute {...cardAttributeProps} attributeName={action?.attributeName?.label} attributeValue={action?.attributeValue} attributeId={action?.attributeName?.key} fromApi={action?.fromApi} />;
                 })}
         </Fragment>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, Col, Row, Button, Select } from 'antd';
+import { Input, Form, Col, Row, Button, Select,Checkbox } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
@@ -44,7 +44,17 @@ function FormProductAttribute(props) {
                     >
                         <Input placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
                     </Form.Item>
-                </Col>                
+                </Col>   
+
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item
+                        labelAlign="left"
+                        name="fromApi"
+                        initialValue={props?.fromApi}
+                    >
+                        <Checkbox value={false} />
+                    </Form.Item>
+                </Col>              
                 
                 {isVisible && (
                     <Button icon={<PlusOutlined />} type="primary" danger htmlType="submit" style={{ margin: '0 0 0 12px' }}>

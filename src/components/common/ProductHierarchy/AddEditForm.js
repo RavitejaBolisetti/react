@@ -64,7 +64,7 @@ const AddEditFormMain = (props) => {
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
             selectedTreeData?.skuAttributes ? setShowProductAttribute(true) : setShowProductAttribute(false);
         }
-    }, []);
+    }, [formActionType, selectedTreeData?.skuAttributes, setShowProductAttribute]);
 
     const treeSelectFieldProps = {
         treeFieldNames,
