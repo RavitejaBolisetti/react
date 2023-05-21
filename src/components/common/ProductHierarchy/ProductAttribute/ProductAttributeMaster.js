@@ -5,37 +5,20 @@ import FormProductAttribute from './FormProductAttribute';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const ProductAttributeMaster = (props) => {
-    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType,setFormBtnActive } = props;
+    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, setFormBtnActive } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
 
     const [finalFormdata, setFinalFormdata] = useState([]);
     const [formDecider, setFormDecider] = useState(false);
-    const [ validationProp, setValidationProp ] = useState(false);
-    let validation = false;
 
     const onAttributeFormFinish = (val) => {
-        validation = false;
-        setValidationProp(false);
-
-        if (finalFormdata.length > 0) {
-            for (let i = 0; i < finalFormdata.length; i++) {
-                if (finalFormdata[i].attributeName.label === val.attributeName.label && finalFormdata[i].attributeValue === val.attributeValue) {
-                    validation = true;
-                    setValidationProp(true);
-                    break;
-                }
-            }
-        }
-
-        if (!validation) {
-            finalFormdata.push(val);
-            attributeForm.resetFields();
-            forceUpdate();
-            const formatData = [];
-            finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
-            setSKUAttributes(formatData);
-        }
+        finalFormdata.push(val);
+        attributeForm.resetFields();
+        forceUpdate();
+        const formatData = [];
+        finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
+        setSKUAttributes(formatData);
     };
 
     const cardAttributeProps = {
@@ -51,13 +34,10 @@ const ProductAttributeMaster = (props) => {
         setSKUAttributes,
         setFormBtnActive,
         productHierarchyAttributeData,
-
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
-        
-        validationProp,
     };
 
     useEffect(() => {
@@ -73,8 +53,6 @@ const ProductAttributeMaster = (props) => {
             forceUpdate();
         }
     }, []);
-
-    console.log(finalFormdata,'checkDta')
 
     return (
         <Fragment>
