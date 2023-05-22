@@ -34,7 +34,7 @@ const handleCheckboxChange = (event) => {
 
 const { Search } = Input;
 
-const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
+const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [companyInfoform] = Form.useForm();
@@ -328,9 +328,18 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
                                 </Panel>
                             </Collapse>
 
-                            <Button type="primary" onClick={onFinish}>
-                                Save & Proceed
-                            </Button>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Button danger onClick={onCloseAction}>
+                                        Cancel
+                                    </Button>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Button type="primary" onClick={onFinish} className={styles.floatRight}>
+                                        Save & Proceed
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Space>
                     </Col>
                 </Row>
@@ -341,4 +350,4 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
     );
 };
 
-export default  AddEditForm;
+export default AddEditForm;
