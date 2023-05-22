@@ -141,6 +141,12 @@ export const ListDealerDivisionMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
@@ -232,6 +238,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         onFinishFailed,
         onSearchHandle,
         handleResetFilter,
+        handleClearInSearch,
         handleReferesh,
         handleButtonClick,
         title,

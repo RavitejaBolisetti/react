@@ -138,6 +138,12 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+    };
+
+    const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
@@ -228,6 +234,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         onFinishFailed,
         onSearchHandle,
         handleResetFilter,
+        handleClearInSearch,
         handleReferesh,
         handleButtonClick,
         title,
