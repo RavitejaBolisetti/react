@@ -106,6 +106,10 @@ const AddEditFormMain = (props) => {
         DealerSearchvalue,
         productHierarchyData,
     };
+    const CustomerProfileMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    }; 
     const CustomerDetailsMasterProps = {
         onCloseAction,
         isViewModeVisible,
