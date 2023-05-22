@@ -1,2 +1,3 @@
 import { CustomerProfile } from './CustomerProfile';
-export { CustomerProfile };
+import { CompanyContact } from './Contacts';
+export { CustomerProfile, CompanyContact };

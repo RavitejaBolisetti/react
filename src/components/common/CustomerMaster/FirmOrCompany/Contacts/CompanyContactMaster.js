@@ -79,7 +79,9 @@ const CompanyContactMain = ({ isViewModeVisible }) => {
                     key="1"
                 >
                     {(showAddEditForm || !contactData?.length > 0) && <AddEditForm {...formProps} />}
-                    <ViewContactList {...formProps} />
+                   {
+                //    viewMode &&
+                    <ViewContactList {...formProps} />}
                 </Panel>
             </Collapse>
         </Space>
