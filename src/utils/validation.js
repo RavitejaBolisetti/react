@@ -117,16 +117,19 @@ export const duplicateProductValidator = (value, dataList) => {
     console.log(dataList, 'arrayList');
 
     let status = false;
-    for (let i = 0; i < dataList?.length; i++) {
-        if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-            status = true;
-            return Promise.reject('Duplicate found');
-        }
+    if (dataList?.length > 0) {
+        for (let i = 0; i < dataList?.length; i++) {
+            if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+                status = true;
+                return Promise.reject('Duplicate found');
+            }
 
-        if (!status) {
-            return Promise.resolve('');
+            if (!status) {
+                return Promise.resolve('');
+            }
         }
     }
+    return Promise.resolve('');
 };
 export const searchValidator = (_, value) => {
     if (!value || (value && value.trim().length >= 3)) {
