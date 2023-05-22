@@ -8,7 +8,7 @@ import { FaChevronDown } from 'react-icons/fa';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react-icons/ai';
 import styles from 'components/common/Common.module.css';
 
-import { CustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
+import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
 import { CustomerProfile } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
@@ -22,6 +22,7 @@ const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
     const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
+    const { toggleButton, settoggleButton } = props;
     const [leftTimeline, setleftTimeline] = useState({
         AccountRelated: false,
         Address: false,
@@ -90,6 +91,8 @@ const AddEditFormMain = (props) => {
     const TimelineProps = {
         leftTimeline,
         setleftTimeline,
+        toggleButton,
+        settoggleButton,
     };
 
     const viewProps = {
@@ -109,7 +112,7 @@ const AddEditFormMain = (props) => {
     const CustomerProfileMasterProps = {
         onCloseAction,
         isViewModeVisible,
-    }; 
+    };
     const CustomerDetailsMasterProps = {
         onCloseAction,
         isViewModeVisible,
@@ -122,21 +125,28 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
+
     const renderElement = () => {
-        if (leftTimeline?.AccountRelated) {
-            return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
-        } else if (leftTimeline?.CustomerDetails) {
-            return <CustomerDetailsMaster {...CustomerDetailsMasterProps} />;
-        } else if (leftTimeline?.Address) {
-            return <IndividualAddressMaster />;
-        } else if (leftTimeline?.Contacts) {
-            return <IndividualContact />;
-        } else if (leftTimeline?.CustomerProfile) {
-            return <CustomerProfile />;
-        } else if (leftTimeline?.IndividualProfile) {
-            return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
-        } else if (leftTimeline?.FamilyDetails) {
-            return <FamilyDetails />;
+        if (toggleButton?.individual) {
+            if (leftTimeline?.AccountRelated) {
+                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
+            } else if (leftTimeline?.CustomerDetails) {
+                return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
+            } else if (leftTimeline?.Address) {
+                return <IndividualAddressMaster />;
+            } else if (leftTimeline?.Contacts) {
+                return <IndividualContact />;
+            } else if (leftTimeline?.IndividualProfile) {
+                return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
+            } else if (leftTimeline?.FamilyDetails) {
+                return <FamilyDetails />;
+            }
+        } else {
+            if (leftTimeline?.CustomerDetails) {
+                return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
+            } else if (leftTimeline?.CustomerProfile) {
+                return <CustomerProfile />;
+            }
         }
     };
 
