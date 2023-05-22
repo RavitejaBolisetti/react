@@ -164,11 +164,11 @@ export const ListStateMasterBase = (props) => {
 
     const handleFilterChange =
         (name, type = 'value') =>
-            (value) => {
-                if (name === 'countryCode') {
-                    advanceFilterForm.setFieldsValue({ stateCode: undefined });
-                }
-            };
+        (value) => {
+            if (name === 'countryCode') {
+                advanceFilterForm.setFieldsValue({ stateCode: undefined });
+            }
+        };
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -224,7 +224,7 @@ export const ListStateMasterBase = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -239,11 +239,11 @@ export const ListStateMasterBase = (props) => {
     };
 
     const handleResetFilter = () => {
+        setFilterString();
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        advanceFilterForm.setFieldsValue({ keyword: undefined });
-        listFilterForm.setFieldsValue({ code: undefined });
+        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {

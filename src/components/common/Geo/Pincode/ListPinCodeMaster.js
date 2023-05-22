@@ -201,7 +201,6 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
-
     useEffect(() => {
         if (!showDataLoading && data && userId) {
             if (filterString) {
@@ -317,14 +316,13 @@ const ListPinCodeMasterBase = (props) => {
         };
 
     const onFinish = (values) => {
-        console.log(values);
-        let data = { ...values };
+        let data = { ...values, localityCode: '01' };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, userId, onSuccessAction });
 
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
