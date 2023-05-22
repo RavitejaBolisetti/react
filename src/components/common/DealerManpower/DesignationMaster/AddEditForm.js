@@ -27,11 +27,13 @@ const AddEditFormMain = (props) => {
     };
 
     const handleDivisionChange = (division) => {
-        form.setFieldValue('departmentName', undefined);
+        form.setFieldValue('departmentCode', undefined);
+        form.setFieldValue('roleCode', undefined);
+
         setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === division));
     };
     const handleDepartmentChange = (department) => {
-        form.setFieldValue('roleDescription', undefined);
+        form.setFieldValue('roleCode', undefined);
         setFilteredRoletData(roleData?.filter((i) => i?.departmentCode === department));
     };
 
@@ -157,7 +159,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    
+
                     {/* <Upload {...props}>
                         <Button icon={<UploadOutlined />}>Upload Job Description</Button>
                     </Upload> */}
