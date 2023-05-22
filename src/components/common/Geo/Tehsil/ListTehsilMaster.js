@@ -401,11 +401,20 @@ export const ListTehsilBase = (props) => {
         if (key === 'countryCode') {
             setFilterString(undefined);
         } else if (key === 'stateCode') {
-            setFilterString(undefined);
+            const { stateCode, districtCode, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'districtCode') {
+            const { districtCode, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
-            setFilterString({ ...rest });
+
+            if (!rest?.stateCode && !rest?.districtCode && !rest?.keyword) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 
