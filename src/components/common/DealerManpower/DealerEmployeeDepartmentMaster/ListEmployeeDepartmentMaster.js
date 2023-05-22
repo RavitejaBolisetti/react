@@ -172,13 +172,25 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         },
     ];
 
+    // const handleFilterChange =
+    //     (name, type = 'value') =>
+    //     (value) => {
+            
+    //         const filterValue = type === 'text' ? value.target.value : value;
+
+    //         if (name === 'divisionCode') {
+    //             advanceFilterForm.setFieldsValue({ divisionCode: undefined });
+    //         }
+    //     };
+
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
-            //const filterValue = type === 'text' ? value.target.value : value;
+            const filterValue = type === 'text' ? value.target.value : value;
 
-            if (name === 'divisionCode') {
-                advanceFilterForm.setFieldsValue({ divisionCode: undefined });
+            if (name === 'code') {
+                //setFilteredDepartmentData(departmentData?.filter((i) => i?.divisionCode === filterValue));
+                advanceFilterForm.setFieldsValue({ departmentCode: undefined });
             }
         };
 
@@ -297,16 +309,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'divisionCode') {
             setFilterString(undefined);
-        } else if (key === 'departmentCode') {
-            const { departmentCode, keyword, ...rest } = filterString;
-            setFilterString({ ...rest });
         } else if (key === 'keyword') {
             const { [key]: names, ...rest } = filterString;
 
             listFilterForm.setFieldsValue({ code: undefined });
             advanceFilterForm.setFieldsValue({ keyword: undefined });
 
-            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+            if (!rest?.divisionCode && !rest?.divisionCode && !rest?.divisionCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });
