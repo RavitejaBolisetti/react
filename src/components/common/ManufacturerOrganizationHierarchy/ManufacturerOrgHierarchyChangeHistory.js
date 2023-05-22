@@ -67,7 +67,7 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         }),
         tblPrepareColumns({
             title: 'Parent',
-            dataIndex: 'parent',
+            dataIndex: 'parentName',
         }),
         tblPrepareColumns({
             title: 'Short Description',

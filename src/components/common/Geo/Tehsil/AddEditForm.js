@@ -63,6 +63,8 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    console.log(formData,'formData')
+
     const dateInitialValue = { initialValue: editMode ? convertCalenderDate(formData?.includeOn, 'YYYY/MM/DD') : null };
 
     const selectProps = {
@@ -127,7 +129,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.districtCodeDisplay} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code')]}>
+                            <Form.Item initialValue={formData?.districtCode} label="District Code" name="districtCodeDisplay" rules={[validateRequiredInputField('District Code')]}>
                                 <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} disabled={true} />
                             </Form.Item>
                         </Col>
@@ -135,7 +137,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code'), validateLettersWithWhitespaces('Tehsil Code')]}>
+                            <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code'), validationFieldLetterAndNumber('Tehsil Code')]}>
                                 <Input placeholder={preparePlaceholderText('Tehsil Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
