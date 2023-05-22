@@ -1,2 +1,2 @@
-import { CustomerProfile } from './CustomerProfile';
-export { CustomerProfile };
+import { CompanyProfile } from './CompanyProfile';
+export { CompanyProfile };

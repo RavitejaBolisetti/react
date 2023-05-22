@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CustomerProfile } from './FirmOrCompany';
+import { CompanyProfile } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 
 const { Option } = Select;
@@ -145,7 +145,7 @@ const AddEditFormMain = (props) => {
             if (leftTimeline?.CustomerDetails) {
                 return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
             } else if (leftTimeline?.CustomerProfile) {
-                return <CustomerProfile />;
+                return <CompanyProfile {...CustomerProfileMasterProps} />;
             } else if (leftTimeline?.AccountRelated) {
                 return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
             }
