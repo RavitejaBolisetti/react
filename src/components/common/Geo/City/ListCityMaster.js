@@ -223,9 +223,15 @@ export const ListCityMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
-        const { [key]: names, ...rest } = filterString;
-        setFilterString({ ...rest });
-        advanceFilterForm.resetFields();
+        if (key === 'countryCode') {
+            setFilterString(undefined);
+        } else if (key === 'stateCode') {
+            setFilterString(undefined);
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            advanceFilterForm.setFieldsValue({ keyword: undefined, code: undefined });
+            setFilterString({ ...rest });
+        }
     };
 
     // const onSearchHandle = (value) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Col, Input, Form, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerBayTypeMasterDataActions } from 'store/actions/data/dealerManpower/bayMasterType';
@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const BayTypeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -134,6 +134,13 @@ export const BayTypeMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        
+    };
+
+    const handleClearInSearch = (e) => {
         if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
@@ -224,6 +231,7 @@ export const BayTypeMasterBase = (props) => {
         onFinishFailed,
         onSearchHandle,
         handleResetFilter,
+        handleClearInSearch,
         handleReferesh,
         handleButtonClick,
         title,
