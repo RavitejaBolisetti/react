@@ -12,13 +12,13 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Credit Limit">{formData?.limitAmt}</Descriptions.Item>
-                    <Descriptions.Item label="Credit Limit Days">{formData?.limitDays}</Descriptions.Item>
-                    <Descriptions.Item label="Outstanding Amount">{formData?.outstandingAmt}</Descriptions.Item>
-                    <Descriptions.Item label="Parts Discount">{formData?.partsDiscount}</Descriptions.Item>
-                    <Descriptions.Item label="Labour Discount">{formData?.laborDiscount}</Descriptions.Item>
-                    <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
-                    <Descriptions.Item label="VIP Customer">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label="M&M Customer">{formData?.mnmCustomer}</Descriptions.Item>
+                    <Descriptions.Item label="Customer ID">{formData?.customerCode}</Descriptions.Item>
+                    <Descriptions.Item label="Customer Name">{formData?.familyMembername}</Descriptions.Item>
+                    <Descriptions.Item label="Relationship">{formData?.relationship}</Descriptions.Item>
+                    <Descriptions.Item label="Date of Birth">{formData?.dateOfBirth}</Descriptions.Item>
+                    <Descriptions.Item label="Age">{formData?.relationAge}</Descriptions.Item>
+                    <Descriptions.Item label="Remark">{formData?.remarks}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>
