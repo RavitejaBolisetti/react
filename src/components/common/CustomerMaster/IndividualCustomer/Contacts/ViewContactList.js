@@ -9,6 +9,8 @@ const { Text } = Typography;
 
 const ViewContactList = (formProps) => {
     const { styles, contactData } = formProps;
+    const { setShowAddEditForm,showAddEditForm, setContactData, onFinish, form } = formProps;
+
     const [openAccordian, setOpenAccordian] = useState('');
 
     const handleCollapse = (key) => {
@@ -19,7 +21,14 @@ const ViewContactList = (formProps) => {
         console.log('event', event);
         event.preventDefault();
         event.stopPropagation();
+    };
 
+    const detailProps = {
+        setShowAddEditForm,
+        showAddEditForm,
+        setContactData,
+        onFinish,
+        form,
     };
 
     return (
@@ -30,14 +39,14 @@ const ViewContactList = (formProps) => {
                         <Collapse onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={({ isActive }) => expandIcon(isActive)} activeKey={openAccordian}>
                             <Panel
                                 header={
-                                    <Row >
+                                    <Row>
                                         <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                             <Space>
                                                 <FaRegUserCircle className={styles.userCircle} />
                                                 <Text strong> {`${data?.contactNameFirstName ? data?.contactNameFirstName : ''} ${data?.contactNameMiddleName ? data?.contactNameMiddleName : ''} ${data?.contactNameLastName ? data?.contactNameLastName : ''}`}</Text>{' '}
                                             </Space>
                                         </Col>
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} >
+                                        <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                             {data?.defaultaddress && (
                                                 <>
                                                     <Checkbox valuePropName="checked" defaultValue={data?.defaultaddress} onChange={handleCheckboxChange}>
@@ -46,16 +55,13 @@ const ViewContactList = (formProps) => {
                                                     <Divider type="vertical" />
                                                 </>
                                             )}
-                                             <Text type="secondary">
-                                                {data?.purposeOfContact}
-                                            </Text>
+                                            <Text type="secondary">{data?.purposeOfContact}</Text>
                                         </Col>
-                          
                                     </Row>
                                 }
                                 key={i}
                             >
-                                <ViewDetail styles={styles} formData={data} />
+                                <ViewDetail styles={styles} formData={data} {...detailProps} />
                             </Panel>
                         </Collapse>
                     );

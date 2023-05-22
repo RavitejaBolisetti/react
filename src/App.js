@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 import { hideGlobalNotification } from 'store/actions/notification';
-
+import { CustomerMasterPage } from './pages/common/CustomerMaster'
 import styles from './App.module.css';
 
 const mapStateToProps = (state) => ({});
@@ -79,7 +79,8 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                 >
                     <NotificationContext.Provider value={informationModalBox}>
                         {contextInformationNotification}
-                        <MainPage />
+                        {/* <MainPage /> */}
+                        <CustomerMasterPage />
                     </NotificationContext.Provider>
                 </ConfigProvider>
             </Router>
