@@ -113,19 +113,21 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const duplicateProductValidator = (value, dataList) => {
-    console.log(value, 'changeValue');
-    console.log(dataList, 'arrayList');
 
     let status = false;
-    for (let i = 0; i < dataList?.length; i++) {
-        if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
-            status = true;
-            return Promise.reject('Duplicate found');
-        }
+    if (dataList?.length > 0) {
+        for (let i = 0; i < dataList?.length; i++) {
+            if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+                status = true;
+                return Promise.reject('Duplicate found');
+            }
 
-        if (!status) {
-            return Promise.resolve('');
+            if (!status) {
+                return Promise.resolve('');
+            }
         }
+    } else {
+        return Promise.resolve('');
     }
 };
 export const searchValidator = (_, value) => {

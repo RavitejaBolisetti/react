@@ -35,7 +35,6 @@ const CardProductAttribute = (props) => {
         const formatData = [];
         finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
         setSKUAttributes(formatData);
-
         setProductAttributeEdit(false);
         forceUpdate();
     };
@@ -47,7 +46,6 @@ const CardProductAttribute = (props) => {
             updatedValue?.splice(indx, 1);
             return updatedValue;
         });
-
 
         const formatData = [];
         finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
@@ -66,9 +64,9 @@ const CardProductAttribute = (props) => {
         return () => {
             setProductAttributeEdit(false);
             // eslint-disable-next-line no-lone-blocks
-            // {
-            //     !view && setFormDecider(true);
-            // }
+            {
+                !view && setFormDecider(true);
+            }
         };
     }, [setFormDecider, view]);
 
