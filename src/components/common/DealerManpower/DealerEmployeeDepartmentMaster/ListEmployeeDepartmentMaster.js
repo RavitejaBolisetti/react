@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider, Select } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
@@ -9,21 +9,15 @@ import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { searchValidator } from 'utils/validation';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { showGlobalNotification } from 'store/actions/notification';
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
 
-const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -68,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListEmployeeDepartmentMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle, resetData } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, resetData } = props;
     const { isDivisionDataLoaded, listDivisionShowLoading, fetchDivisionList, isDivisionLoading, divisionData } = props;
 
     const [form] = Form.useForm();
@@ -83,7 +77,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [filteredDivisionData, setFilteredDivisionData] = useState([]);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -171,16 +164,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
             canRemove: true,
         },
     ];
-
-    const handleFilterChange =
-        (name, type = 'value') =>
-        (value) => {
-            //const filterValue = type === 'text' ? value.target.value : value;
-
-            if (name === 'divisionCode') {
-                advanceFilterForm.setFieldsValue({ divisionCode: undefined });
-            }
-        };
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -276,9 +259,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         onCloseAction: onAdvanceSearchCloseAction,
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-        handleFilterChange,
         divisionData,
-        filteredDivisionData,
         filterString,
         setFilterString,
         advanceFilterForm,
@@ -297,16 +278,13 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'divisionCode') {
             setFilterString(undefined);
-        } else if (key === 'departmentCode') {
-            const { departmentCode, keyword, ...rest } = filterString;
-            setFilterString({ ...rest });
         } else if (key === 'keyword') {
             const { [key]: names, ...rest } = filterString;
 
             listFilterForm.setFieldsValue({ code: undefined });
             advanceFilterForm.setFieldsValue({ keyword: undefined });
 
-            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+            if (!rest?.divisionCode && !rest?.divisionCode && !rest?.divisionCode) {
                 setFilterString();
             } else {
                 setFilterString({ ...rest });

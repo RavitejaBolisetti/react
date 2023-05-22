@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, DatePicker } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpace, validateLettersWithWhitespaces } from 'utils/validation';
+import React from 'react';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace, validationFieldLetterAndNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 import { DrawerFormButton } from 'components/common/Button';
-import dayjs from 'dayjs';
 
 const { Option } = Select;
 
@@ -101,7 +100,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name'), validateLettersWithWhitespaces('District Name')]}>
+                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name'), validationFieldLetter('District Name')]}>
                                 <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>

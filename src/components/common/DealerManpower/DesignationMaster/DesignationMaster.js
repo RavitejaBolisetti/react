@@ -323,7 +323,6 @@ export const DesignationMasterBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
         setFilterString();
     };
 
@@ -352,10 +351,34 @@ export const DesignationMasterBase = (props) => {
         handleResetFilter,
     };
 
+    // const removeFilter = (key) => {
+    //     advanceFilterForm.resetFields();
+    //     const { [key]: names, ...rest } = filterString;
+    //     setFilterString({ ...rest });
+    // };
+
     const removeFilter = (key) => {
-        advanceFilterForm.resetFields();
-        const { [key]: names, ...rest } = filterString;
-        setFilterString({ ...rest });
+        if (key === 'divisionCode') {
+            setFilterString(undefined);
+        } else if (key === 'departmentCode') {
+            const { departmentCode, keyword, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'roleCode') {
+            const { roleCode, keyword, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } 
+        else if (key === 'keyword') {
+            const { [key]: names, ...rest } = filterString;
+
+            listFilterForm.setFieldsValue({ code: undefined });
+            advanceFilterForm.setFieldsValue({ keyword: undefined });
+
+            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
+        }
     };
 
     const title = 'Designation Master';
@@ -369,7 +392,7 @@ export const DesignationMasterBase = (props) => {
         removeFilter,
         handleResetFilter,
         onSearchHandle,
-        setAdvanceSearchVisible,
+        setAdvanceSearchVisible,    
         handleReferesh,
         handleButtonClick,
         advanceFilterProps,

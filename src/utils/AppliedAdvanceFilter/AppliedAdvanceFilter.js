@@ -12,9 +12,9 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, pincode } = props;
-    const onKeyPressHandler = ( e) => {
-         e.key === 'Enter' && e.preventDefault()
+    const { advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, pincode } = props;
+    const onKeyPressHandler = (e) => {
+        e.key === 'Enter' && e.preventDefault();
     };
     return (
         <>
@@ -22,24 +22,24 @@ export default function AppliedAdvanceFilter(props) {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} form={from} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                     <Form.Item
                                         label={`${title}`}
                                         name="code"
                                         rules={[
                                             {
-                                                validator: pincode ? searchValidatorPincode : searchValidator ,
+                                                validator: pincode ? searchValidatorPincode : searchValidator,
                                             },
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onPressEnter={false} />
+                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} onPressEnter={false} />
                                     </Form.Item>
                                 </Form>
                             </Col>
                             {advanceFilter && (
-                                <Col xs={24} sm={12} md={10} lg={10} xl={10}>
+                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                     <Button icon={<FilterIcon />} type="link" className={styles.filterBtn} onClick={() => setAdvanceSearchVisible(true)} danger>
                                         Advanced Filters
                                     </Button>
@@ -77,7 +77,7 @@ export default function AppliedAdvanceFilter(props) {
                                     })}
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                    <Button className={styles.clearBtn} onClick={handleResetFilter} danger>
+                                    <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
                                         Clear
                                     </Button>
                                 </Col>

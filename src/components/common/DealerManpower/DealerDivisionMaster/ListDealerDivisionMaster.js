@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Form, Row, Empty, ConfigProvider } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
@@ -12,15 +12,10 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 
-import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { AddEditForm } from './AddEditForm';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
 
-import styles from 'components/common/Common.module.css';
-
-const { Search } = Input;
+import { ListDataTable } from 'utils/ListDataTable';
 
 const mapStateToProps = (state) => {
     const {
@@ -58,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListDealerDivisionMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -134,13 +129,23 @@ export const ListDealerDivisionMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        // if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
-        // }
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
+    const handleResetFilter = (e) => {
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
+    };
+
+    const handleClearInSearch = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
     const onFinish = (values) => {
@@ -208,6 +213,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        handleResetFilter,
     };
 
     const tableProps = {
@@ -217,6 +223,7 @@ export const ListDealerDivisionMasterBase = (props) => {
     };
 
     const title = 'Division Master';
+
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
@@ -224,6 +231,8 @@ export const ListDealerDivisionMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearchHandle,
+        handleResetFilter,
+        handleClearInSearch,
         handleReferesh,
         handleButtonClick,
         title,
@@ -235,44 +244,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Division
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
