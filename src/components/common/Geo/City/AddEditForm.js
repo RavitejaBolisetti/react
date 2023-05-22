@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace,validateLettersWithWhitespaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';

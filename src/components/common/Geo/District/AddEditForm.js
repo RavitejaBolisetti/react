@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, DatePicker } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace, validateLettersWithWhitespaces } from 'utils/validation';
+import React from 'react';
+import { Col, Input, Form, Row, Select, Switch } from 'antd';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 import { DrawerFormButton } from 'components/common/Button';
-import dayjs from 'dayjs';
 
 const { Option } = Select;
 

@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Col, Input, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
+import { Col, Form, Row } from 'antd';
+
 import { dealerManpowerLocationTypeMasterDataActions } from 'store/actions/data/dealerManpower/dealerLocationTypeMaster';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-
 import { filterFunction } from 'utils/filterFunction';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import { AddEditForm } from './AddEditForm';
-
-
-const { Search } = Input;
 
 const mapStateToProps = (state) => {
     const {
@@ -56,11 +53,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListDealerLocationTypeMasterBase = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');

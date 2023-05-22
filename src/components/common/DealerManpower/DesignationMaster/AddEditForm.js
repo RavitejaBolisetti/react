@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Switch, Select, Checkbox, Upload, Button } from 'antd';
-import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter, validateAlphanumericWithSpace } from 'utils/validation';
+import { Col, Input, Form, Row, Switch, Select, Checkbox } from 'antd';
+
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { UploadOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 const { Option } = Select;
