@@ -8,13 +8,13 @@ import { AddEditForm } from './AddEditForm';
 const { Panel } = Collapse;
 const { Option } = Select;
 
-const CustomerDetailsMaster = () => {
+const CompanyCustomerDetailsMaster = (props) => {
     return (
         <>
             <h2>Customer Details</h2>
-            <AddEditForm />
+            <AddEditForm {...props} />
         </>
     );
 };
 
-export default CustomerDetailsMaster;
+export default CompanyCustomerDetailsMaster;

@@ -9,9 +9,11 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare, AiOutlineClose } from 'react
 import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
+import { CompanyCustomerDetailsMaster } from './FirmOrCompany';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CompanyAddressMaster, CustomerProfile } from './FirmOrCompany';
+import { CompanyAddressMaster, CompanyProfile } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
+import CommonFooterButton from './CommonFooterButton';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -125,9 +127,10 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
-    const IndividualAddressMasterProps = {
+    const commonfooterProps = {
         onCloseAction,
         isViewModeVisible,
+        styles,
     };
 
     const renderElement = () => {
@@ -147,9 +150,11 @@ const AddEditFormMain = (props) => {
             }
         } else {
             if (leftTimeline?.CustomerDetails) {
-                return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
+                return <CompanyCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
             } else if (leftTimeline?.CustomerProfile) {
-                return <CustomerProfile />;
+                return <CompanyProfile {...CustomerProfileMasterProps} />;
+            } else if (leftTimeline?.AccountRelated) {
+                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
             } else if (leftTimeline?.Address) {
                 return <CompanyAddressMaster/>;
             }
@@ -194,7 +199,7 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                             {renderElement()}
 
-                            <Row gutter={20} className={styles.formFooter}>
+                            {/* <Row gutter={20} className={styles.formFooter}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                                     <Button danger onClick={onCloseAction}>
                                         {footerEdit ? 'Close' : 'Cancel'}
@@ -214,7 +219,8 @@ const AddEditFormMain = (props) => {
                                         </Button>
                                     )}
                                 </Col>
-                            </Row>
+                            </Row> */}
+                            {/* <CommonFooterButton {...commonfooterProps} /> */}
                         </Col>
                     </Row>
                 </Col>

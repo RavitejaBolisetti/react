@@ -4,7 +4,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import  AddEditForm  from './AddEditForm';
 
-const CustomerProfileBase = (props) => {
+const CompanyProfileBase = (props) => {
     return (
         <>
             <h2>Company Profile</h2>
@@ -13,4 +13,4 @@ const CustomerProfileBase = (props) => {
     );
 };
 
-export const CustomerProfile = CustomerProfileBase;
+export const CompanyProfile = CompanyProfileBase;
