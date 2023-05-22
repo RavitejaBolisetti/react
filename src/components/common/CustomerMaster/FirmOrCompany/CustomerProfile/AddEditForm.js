@@ -16,7 +16,6 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetails';
 
-
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -35,7 +34,7 @@ const handleCheckboxChange = (event) => {
 
 const { Search } = Input;
 
-const AddEditForm = ({ form, isVisible, setisVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
+const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadOnly, formData, setFormData, forceUpdate, setFormBtnDisable }) => {
     const [openAccordian, setOpenAccordian] = useState('');
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [companyInfoform] = Form.useForm();
@@ -91,7 +90,6 @@ const AddEditForm = ({ form, isVisible, setisVisible, isReadOnly, formData, setF
 
         onChange(info) {
             const { status } = info.file;
-            
 
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
@@ -136,196 +134,211 @@ const AddEditForm = ({ form, isVisible, setisVisible, isReadOnly, formData, setF
         companyInfoform.validateFields();
         uploadCustomerForm.validateFields();
     };
+
+    const viewProps = {
+        activeKey,
+        setactiveKey,
+        onChange,
+        styles,
+    };
     return (
         <>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse
-                    defaultActiveKey={['1']}
-                    expandIcon={() => {
-                        if (activeKey.includes(1)) {
-                            return <MinusOutlined className={style.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={style.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(1)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
-                            <>
-                                <div className={style.alignUser}>
-                                    <BiUserCircle className={style.userCircle} />
-                                    <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Company Information</div>
-                                </div>{' '}
-                            </>
-                        }
-                        key="1"
-                    >
-                        <Form autoComplete="off" layout="vertical" form={companyInfoform}>
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Firm/Company Name" name="firmName" rules={[validateRequiredInputField('Firm/Company Name')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Name')} />
-                                    </Form.Item>
-                                </Col>
+            {!isViewModeVisible ? (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+                            <Collapse
+                                defaultActiveKey={['1']}
+                                expandIcon={() => {
+                                    if (activeKey.includes(1)) {
+                                        return <MinusOutlined className={style.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={style.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(1)}
+                                expandIconPosition="end"
+                            >
+                                <Panel
+                                    header={
+                                        <>
+                                            <div className={style.alignUser}>
+                                                <BiUserCircle className={style.userCircle} />
+                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Company Information</div>
+                                            </div>{' '}
+                                        </>
+                                    }
+                                    key="1"
+                                >
+                                    <Form autoComplete="off" layout="vertical" form={companyInfoform}>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Firm/Company Name" initialValue={formData?.companyName} name="companyName" rules={[validateRequiredInputField('Firm/Company Name')]}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Name')} />
+                                                </Form.Item>
+                                            </Col>
 
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Parent Firm/Company Code" name="companyCode" rules={[validateRequiredInputField('Parent Firm/Company Code')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('Enter Code')} />
-                                    </Form.Item>
-                                </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Parent Firm/Company Code" initialValue={formData?.companyCode} name="companyCode" rules={[validateRequiredInputField('Parent Firm/Company Code')]}>
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Code')} />
+                                                </Form.Item>
+                                            </Col>
 
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Parent Firm/Company Name" name="parentFirm">
-                                        <Input maxLength={50} disabled placeholder={preparePlaceholderText('Parent Concept')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Parent Firm/Company Name" initialValue={formData?.companyName} name="companyName">
+                                                    <Input maxLength={50} disabled placeholder={preparePlaceholderText('Parent Concept')} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
 
-                            <Row gutter={20}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="PAN" name="PAN">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('PAN')} />
-                                    </Form.Item>
-                                </Col>
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('PAN')} />
+                                                </Form.Item>
+                                            </Col>
 
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="GSTIN" name="GSTIN">
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
-                                    </Form.Item>
-                                </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="GSTIN" initialValue={formData?.gstinNumber} name="gstinNumber">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
+                                                </Form.Item>
+                                            </Col>
 
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Membership Type" name="membership" rules={[validateRequiredInputField('Membership Type')]}>
-                                        <Select maxLength={50} placeholder={preparePlaceholderText('Membership Type')}>
-                                            <Option>Select</Option>
-                                            <Option value={MEMBERSHIP_TYPE.GOLD.KEY}>{MEMBERSHIP_TYPE.GOLD.TITLE}</Option>
-                                            <Option value={MEMBERSHIP_TYPE.SILVER.KEY}>{MEMBERSHIP_TYPE.SILVER.TITLE}</Option>
-                                            <Option value={MEMBERSHIP_TYPE.PLATINUM.KEY}>{MEMBERSHIP_TYPE.PLATINUM.TITLE}</Option>
-                                            <Option value={MEMBERSHIP_TYPE.NEW_CUSTOMER.KEY}>{MEMBERSHIP_TYPE.NEW_CUSTOMER.TITLE}</Option>
-                                        </Select>{' '}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </Panel>
-                </Collapse>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Membership Type" name="membershipType" initialValue={formData?.membershipType} rules={[validateRequiredInputField('Membership Type')]}>
+                                                    <Select maxLength={50} placeholder={preparePlaceholderText('Membership Type')}>
+                                                        <Option>Select</Option>
+                                                        <Option value={MEMBERSHIP_TYPE.GOLD.KEY}>{MEMBERSHIP_TYPE.GOLD.TITLE}</Option>
+                                                        <Option value={MEMBERSHIP_TYPE.SILVER.KEY}>{MEMBERSHIP_TYPE.SILVER.TITLE}</Option>
+                                                        <Option value={MEMBERSHIP_TYPE.PLATINUM.KEY}>{MEMBERSHIP_TYPE.PLATINUM.TITLE}</Option>
+                                                        <Option value={MEMBERSHIP_TYPE.NEW_CUSTOMER.KEY}>{MEMBERSHIP_TYPE.NEW_CUSTOMER.TITLE}</Option>
+                                                    </Select>{' '}
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
 
-                <Collapse defaultActiveKey={['2']} expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)} expandIconPosition="end">
-                    <Panel
-                        key="2"
-                        header={
-                            <>
-                                <div className={style.alignUser}>
-                                    <BiUserCircle className={style.userCircle} />
-                                    <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Social Profiles</div>
-                                </div>{' '}
-                            </>
-                        }
-                    >
-                        <Form form={form} layout="vertical">
-                        <Row gutter={20}>
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="M1-MMFSL" name="mmfsl">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
-                                </Form.Item>
-                            </Col>
+                            <Collapse defaultActiveKey={['2']} expandIcon={({ isActive }) => (isActive ? <MinusOutlined /> : <PlusOutlined />)} expandIconPosition="end">
+                                <Panel
+                                    key="2"
+                                    header={
+                                        <>
+                                            <div className={style.alignUser}>
+                                                <BiUserCircle className={style.userCircle} />
+                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Social Profiles</div>
+                                            </div>{' '}
+                                        </>
+                                    }
+                                >
+                                    <Form form={form} layout="vertical">
+                                        <Row gutter={20}>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="M1-MMFSL" initialValue={formData?.m1mmfsl} name="m1mmfsl">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter id')} />
+                                                </Form.Item>
+                                            </Col>
 
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Facebook Link" name="fb">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
-                                </Form.Item>
-                            </Col>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Facebook Link" initialValue={formData?.facebookId} name="facebookId">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter link')} />
+                                                </Form.Item>
+                                            </Col>
 
-                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item label="Twitter Link" name="twitter">
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        </Form>
-                    </Panel>
-                </Collapse>
+                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                <Form.Item label="Twitter Link" initialValue={formData?.twitterId} name="twitterId">
+                                                    <Input maxLength={50} placeholder={preparePlaceholderText('Enter Link')} />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
 
-                <Collapse
-                    defaultActiveKey={['3']}
-                    expandIcon={() => {
-                        if (activeKey.includes(3)) {
-                            return <MinusOutlined className={style.iconsColor} />;
-                        } else {
-                            return <PlusOutlined className={style.iconsColor} />;
-                        }
-                    }}
-                    activeKey={activeKey}
-                    onChange={() => onChange(3)}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        key="3"
-                        header={
-                            <>
-                                <div className={style.alignUser}>
-                                    <BiUserCircle className={style.userCircle} />
-                                    <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Upload Customer Form</div>
-                                </div>{' '}
-                            </>
-                        }
-                    >
-                        <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Checkbox value="sentOnMobile" className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                {' '}
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Dragger
-                                        {...uploadProps}
-                                        style={{
-                                            // margin: '1.5rem 0 0 0',
+                            <Collapse
+                                defaultActiveKey={['3']}
+                                expandIcon={() => {
+                                    if (activeKey.includes(3)) {
+                                        return <MinusOutlined className={style.iconsColor} />;
+                                    } else {
+                                        return <PlusOutlined className={style.iconsColor} />;
+                                    }
+                                }}
+                                activeKey={activeKey}
+                                onChange={() => onChange(3)}
+                                expandIconPosition="end"
+                            >
+                                <Panel
+                                    key="3"
+                                    header={
+                                        <>
+                                            <div className={style.alignUser}>
+                                                <BiUserCircle className={style.userCircle} />
+                                                <div style={{ paddingLeft: '10px', paddingTop: '3px' }}> Upload Customer Form</div>
+                                            </div>{' '}
+                                        </>
+                                    }
+                                >
+                                    <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Checkbox value="sentOnMobile" className={styles.registered}>
+                                                    I Consent to share my details with Mahindra & Mahindra.{' '}
+                                                </Checkbox>
+                                            </Col>
+                                        </Row>
+                                        <Row gutter={20}>
+                                            {' '}
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Dragger
+                                                    {...uploadProps}
+                                                    style={{
+                                                        // margin: '1.5rem 0 0 0',
 
-                                            background: '#F2F2F2',
+                                                        background: '#F2F2F2',
 
-                                            border: '1px dashed #B5B5B5',
+                                                        border: '1px dashed #B5B5B5',
 
-                                            borderRadius: '6px',
+                                                        borderRadius: '6px',
 
-                                            minHeight: '172px',
+                                                        minHeight: '172px',
 
-                                            padding: '1rem 0 0 0',
-                                        }}
+                                                        padding: '1rem 0 0 0',
+                                                    }}
+                                                >
+                                                    <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
+                                                        <img src={Svg} alt="" />
+                                                    </p>
 
-                                       
-                                    >
-                                        <p className="ant-upload-drag-icon" style={{ textAlign: 'center' }}>
-                                            <img src={Svg} alt="" />
-                                        </p>
+                                                    <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                                        Click or drop your file here to upload the signed and <br />
+                                                        scanned customer form.
+                                                    </p>
 
-                                        <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '500', fontSize: '14px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                            Click or drop your file here to upload the signed and <br />
-                                            scanned customer form.
-                                        </p>
+                                                    <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
+                                                        File type should be png, jpg or pdf and max file size to be 5Mb
+                                                    </p>
+                                                    <Button danger>Upload File</Button>
+                                                </Dragger>
+                                            </Col>{' '}
+                                        </Row>
+                                    </Form>
+                                </Panel>
+                            </Collapse>
 
-                                        <p className="ant-upload-text" style={{ textAlign: 'center', fontWeight: '400', fontSize: '12px', lineHeight: '23px', color: '#0B0B0C' }}>
-                                            File type should be png, jpg or pdf and max file size to be 5Mb
-                                        </p>
-                                        <Button danger>Upload File</Button>
-                                    </Dragger>
-                                </Col>{' '}
-                            </Row>
-                        </Form>
-                    </Panel>
-                </Collapse>
-
-                <Button type="primary" onClick={onFinish}>
-                    Save & Proceed
-                </Button>
-            </Space>
+                            <Button type="primary" onClick={onFinish}>
+                                Save & Proceed
+                            </Button>
+                        </Space>
+                    </Col>
+                </Row>
+            ) : (
+                <ViewDetail {...viewProps} />
+            )}
         </>
     );
 };
 
-export default AddEditForm;
+export default  AddEditForm;
