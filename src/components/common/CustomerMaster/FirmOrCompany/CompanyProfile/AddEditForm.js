@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
-import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography } from 'antd';
+import { Col, Input, Collapse, Row, Button, Space, Spin, Form, Select, Upload, message, Checkbox, Progress, Typography, Divider} from 'antd';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -146,7 +146,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
             {!isViewModeVisible ? (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+                        <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={style.accordianContainer}>
                             <Collapse
                                 defaultActiveKey={['1']}
                                 expandIcon={() => {
@@ -171,6 +171,8 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                     }
                                     key="1"
                                 >
+                                    <Divider />
+
                                     <Form autoComplete="off" layout="vertical" form={companyInfoform}>
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -233,6 +235,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                         </>
                                     }
                                 >
+                                    <Divider />
                                     <Form form={form} layout="vertical">
                                         <Row gutter={20}>
                                             <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -281,6 +284,7 @@ const AddEditForm = ({ form, isVisible, onCloseAction, setisVisible, isViewModeV
                                         </>
                                     }
                                 >
+                                    <Divider />
                                     <Form autoComplete="off" layout="vertical" form={uploadCustomerForm}>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

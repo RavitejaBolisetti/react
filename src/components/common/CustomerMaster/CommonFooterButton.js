@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Input, Form, Row, Select, Button, Collapse, Avatar, Card, Timeline, Progress, Space } from 'antd';
 
 const CommonFooterButton = (props) => {
-    const { isHtmltype, onFinish } = props;
+    const { isHtmltype, onFinish, onCloseAction, isViewModeVisible, styles } = props;
     const Random = () => {
         return;
     };
