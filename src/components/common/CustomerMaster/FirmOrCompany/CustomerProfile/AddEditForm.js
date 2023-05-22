@@ -139,7 +139,7 @@ const AddEditForm = ({ form, isVisible, setisVisible, isViewModeVisible, isReadO
         activeKey,
         setactiveKey,
         onChange,
-        styles,
+        style,
     };
     return (
         <>
