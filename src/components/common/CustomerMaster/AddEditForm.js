@@ -146,6 +146,8 @@ const AddEditFormMain = (props) => {
                 return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
             } else if (leftTimeline?.CustomerProfile) {
                 return <CustomerProfile />;
+            } else if (leftTimeline?.AccountRelated) {
+                return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
             }
         }
     };

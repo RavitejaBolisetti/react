@@ -3,7 +3,7 @@ import { React } from 'react';
 import { Col, Row, Form, Input, Checkbox, Space, Button } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { ViewDetail } from './ViewIndividualAccountDetails';
+import { ViewDetail } from '../../FirmOrCompany/AccountRelated/ViewAccountDetails';
 import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;

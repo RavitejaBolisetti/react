@@ -1,42 +1,46 @@
 import React, { useState } from 'react';
 
 import { Col, Collapse, Form, Select, Space, Typography } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-
-import { FaUserCircle } from 'react-icons/fa';
-
-import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { FaRegUserCircle } from 'react-icons/fa';
 import { AddEditForm } from './AddEditForm';
+import style from '../../../Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 
 const { Text } = Typography;
 
-const AccountRelatedBase = ({}) => {
+const AccountRelatedBase = (props) => {
     const [form] = Form.useForm();
-    const [openAccordian, setOpenAccordian] = useState('');
+    const [openAccordian, setOpenAccordian] = useState([1]);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => accordianExpandIcon(isActive)} activeKey={openAccordian}>
-            {/* expandIcon={({ isActive }) => (isActive ? <FaUserCircle /> : <FaUserCircle />)} */}
-            <Panel
-                header={
-                    <>
-                        <Space>
-                            <Text> Indivisual Account </Text>{' '}
-                        </Space>
-                    </>
-                }
-                key="1"
-            >
-                <AddEditForm />
-            </Panel>
-        </Collapse>
+        <>
+            <h2>Account Related</h2>
+            <Space direction="vertical" size="small" style={{ display: 'flex' }}>
+                <Collapse onChange={() => handleCollapse(1)} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus /> : <AiOutlinePlus />)} activeKey={openAccordian} expandIconPosition="end">
+                    <Panel
+                        header={
+                            <div className={styles.alignUser}>
+                                <FaRegUserCircle className={styles.userCircle} />
+                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                    Company Account
+                                </Text>
+                            </div>
+                        }
+                        key="1"
+                    >
+                        <AddEditForm {...props} />
+                    </Panel>
+                </Collapse>
+            </Space>
+        </>
     );
 };
 
-export const AccountRelated = AccountRelatedBase;
+export const AccountRelatedMaster = AccountRelatedBase;
