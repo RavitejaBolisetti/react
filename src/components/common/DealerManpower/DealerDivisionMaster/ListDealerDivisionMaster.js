@@ -19,6 +19,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 
 import styles from 'components/common/Common.module.css';
+import { ListDataTable } from 'utils/ListDataTable';
 
 const { Search } = Input;
 
@@ -134,13 +135,17 @@ export const ListDealerDivisionMasterBase = (props) => {
     };
 
     const onSearchHandle = (value) => {
-        // if (value?.trim()?.length >= 3) {
-            setFilterString({ ...filterString, advanceFilter: true, keyword: value });
-        // }
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString({ ...filterString, keyword: e.target.value });
+    const handleResetFilter = (e) => {
+        if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
     };
 
     const onFinish = (values) => {
@@ -208,6 +213,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        handleResetFilter,
     };
 
     const tableProps = {
@@ -217,6 +223,7 @@ export const ListDealerDivisionMasterBase = (props) => {
     };
 
     const title = 'Division Master';
+
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
@@ -224,6 +231,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         onSearchHandle,
+        handleResetFilter,
         handleReferesh,
         handleButtonClick,
         title,
@@ -235,44 +243,7 @@ export const ListDealerDivisionMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() =>
-                            isDataLoaded && (
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        !searchData?.length ? (
-                                            <span>
-                                                No records found. Please add new parameter <br />
-                                                using below button
-                                            </span>
-                                        ) : (
-                                            <span> No records found.</span>
-                                        )
-                                    }
-                                >
-                                    {!searchData?.length ? (
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                                    Add Division
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ) : (
-                                        ''
-                                    )}
-                                </Empty>
-                            )
-                        }
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={showDataLoading} {...tableProps} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
