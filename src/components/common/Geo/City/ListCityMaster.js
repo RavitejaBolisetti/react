@@ -351,7 +351,6 @@ export const ListCityMasterBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {

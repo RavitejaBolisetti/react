@@ -363,7 +363,6 @@ export const ListTehsilBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {

@@ -243,7 +243,6 @@ export const ListStateMasterBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {

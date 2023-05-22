@@ -312,7 +312,6 @@ export const ListDistrictBase = (props) => {
         resetData();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
         setFilterString();
     };
 
