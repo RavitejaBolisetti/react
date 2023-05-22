@@ -113,3 +113,12 @@ export const searchValidator = (_, value) => {
     }
     return Promise.reject(new Error('Please enter atleast 3 character to search'));
 };
+
+export const searchValidatorPincode = (_, value) => {
+    if ( value === '' || (value && value.trim().length >= 6)  ) {
+        return Promise.resolve();
+    }
+    return Promise.reject(new Error('Please enter atleast 6 character to search'));
+ };
+
+
