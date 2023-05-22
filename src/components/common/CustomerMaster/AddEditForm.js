@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 
 import { IndivisualCustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CustomerProfile } from './FirmOrCompany';
+import { CompanyAddressMaster, CustomerProfile } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 
 const { Option } = Select;
@@ -125,6 +125,10 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
+    const IndividualAddressMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
 
     const renderElement = () => {
         if (toggleButton?.individual) {
@@ -146,6 +150,8 @@ const AddEditFormMain = (props) => {
                 return <IndivisualCustomerDetailsMaster {...CustomerDetailsMasterProps} />;
             } else if (leftTimeline?.CustomerProfile) {
                 return <CustomerProfile />;
+            } else if (leftTimeline?.Address) {
+                return <CompanyAddressMaster/>;
             }
         }
     };

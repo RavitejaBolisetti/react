@@ -1,2 +1,6 @@
 import { CustomerProfile } from './CustomerProfile';
-export { CustomerProfile };
+import {CompanyAddressMaster} from './Address';
+
+export { CustomerProfile, CompanyAddressMaster };
+
+
