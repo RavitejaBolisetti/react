@@ -15,7 +15,12 @@ export const validateEmailField = (fieldName) => ({
 
 export const validationFieldLetterAndNumber = (fieldName) => ({
     pattern: /^[A-Za-z0-9]*$/,
-    message: 'Please use only letters and numbers In ' + fieldName,
+    message: 'Please use only letters and numbers in ' + fieldName,
+});
+
+export const validationFieldLetter = (fieldName) => ({
+    pattern: /^[A-Za-z0-9]*$/,
+    message: 'Please use only letters in ' + fieldName,
 });
 
 export const validatePanField = (fieldName) => ({
