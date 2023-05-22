@@ -8,20 +8,18 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const [productAttributeEdit, setProductAttributeEdit] = useState(false);
-    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes,setFormBtnActive, productHierarchyAttributeData } = props;
+    const { isVisible, finalFormdata, setFinalFormdata, attributeForm, forceUpdate, setFormDecider, formDecider, view, setSKUAttributes, productHierarchyAttributeData } = props;
     const [editedAttributeValue, setEditedAttributeValue] = useState(null);
     const [editForm] = Form.useForm();
 
     const onAttributeEdit = (props) => {
         setEditedAttributeValue({ attributeName: props.attributeName, attributeValue: props.attributeValue });
-        setFormBtnActive(true);
+        setFormDecider(true);
     };
 
     const onAttributeSave = (val) => {
-        setFormDecider(true);
+        setFormDecider(false);
         const newFormData = editForm.getFieldsValue();
-
-        console.log(newFormData,'formEsitedData')
 
         setFinalFormdata((prev) => {
             const updatedValue = prev;
@@ -50,7 +48,7 @@ const CardProductAttribute = (props) => {
             return updatedValue;
         });
 
-        setFormBtnActive(true);
+
         const formatData = [];
         finalFormdata.map((item) => formatData.push({ code: item?.attributeName?.label, value: item?.attributeValue, adPhProductAttributeMstId: item?.attributeName?.key }));
         setSKUAttributes(formatData);
@@ -60,6 +58,7 @@ const CardProductAttribute = (props) => {
     };
 
     const onAttributeCancel = () => {
+        setFormDecider(false);
         setProductAttributeEdit(false);
     };
 
@@ -67,9 +66,9 @@ const CardProductAttribute = (props) => {
         return () => {
             setProductAttributeEdit(false);
             // eslint-disable-next-line no-lone-blocks
-            {
-                !view && setFormDecider(true);
-            }
+            // {
+            //     !view && setFormDecider(true);
+            // }
         };
     }, [setFormDecider, view]);
 
@@ -80,6 +79,7 @@ const CardProductAttribute = (props) => {
         productHierarchyAttributeData,
         editForm,
         formDecider,
+        finalFormdata,
     }
 
     return (

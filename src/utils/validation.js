@@ -95,3 +95,21 @@ export const valueBetween0to100 = (value, fieldName) => {
         return Promise.resolve('');
     }
 };
+
+export const duplicateProductValidator = (value, dataList) => {
+
+    console.log(value,'changeValue')
+    console.log(dataList,'arrayList')
+
+    let status = false;
+    for (let i = 0; i < dataList?.length; i++) {
+        if (dataList[i]?.attributeName?.label === value?.attributeName?.label) {
+            status = true;
+            return Promise.reject('Duplicate found');
+        }
+
+        if (!status) {
+            return Promise.resolve('');
+        }
+    }
+};

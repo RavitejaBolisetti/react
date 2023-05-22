@@ -1,13 +1,14 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Input, Form, Col, Row, Button, Select, Checkbox } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField,duplicateProductValidator } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formDecider, editForm, finalFormdata } = props;
+    const [ changeValue, setChangeValue ] = useState(null)
 
     const onFinishFailed = (err) => {
         console.error(err);
@@ -15,38 +16,17 @@ function FormProductAttribute(props) {
 
     const fieldNames = { label: 'attributeCode', value: 'id' };
 
-    console.log(finalFormdata, 'checkDta');
-
-    // let forDuplicateAlertData = [];
-    // finalFormdata?.map((item) => forDuplicateAlertData?.push({ attributeName: item?.attributeName?.label, attributeValue: item?.attributeValue }));
-  
-    const duplicateValidator = (value, dataList) => {
-        if (!value) {
-            return Promise.reject('Please Select Attribute Name');
-        } else {
-
-            let status = false;
-            for(let i = 0; i < dataList.length ; i++){
-                if( dataList[i].attributeName.label === value ){
-                    status = true;
-                    return Promise.reject('Duplicate found');
-                }
-            }
-
-            if(!status){
-                return Promise.resolve('');
-            }
-            
-        }
-    };
-
-    //validateRequiredSelectField('Attribute Name'),
+    const getValues = () =>{
+        let newFormData = formDecider ? editForm.getFieldsValue() : attributeForm.getFieldsValue();
+        setChangeValue(newFormData);
+    }
 
     return (
         <Form form={formDecider ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.attributeName} rules={[ { validator: (value) => duplicateValidator(value, finalFormdata) }]}>
+                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.attributeName} rules={[ validateRequiredSelectField('Attribute Name'), { validator: (value) =>
+                     duplicateProductValidator(changeValue, finalFormdata) }]}>
                         <Select
                             getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             placeholder={preparePlaceholderSelect('attribute name')}
@@ -57,7 +37,9 @@ function FormProductAttribute(props) {
                             fieldNames={fieldNames}
                             allowClear
                             labelInValue
-                        ></Select>
+                            onChange={getValues}
+                            //disabled={ formDecider ? true : false}
+                        />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -73,7 +55,7 @@ function FormProductAttribute(props) {
                 </Col>
 
                 {isVisible && (
-                    <Button icon={<PlusOutlined />} type="primary" danger htmlType="submit" style={{ margin: '0 0 0 12px' }}>
+                    <Button icon={<PlusOutlined />} type="primary" danger htmlType="submit" style={{ margin: '0 0 0 12px' }} >
                         Add
                     </Button>
                 )}

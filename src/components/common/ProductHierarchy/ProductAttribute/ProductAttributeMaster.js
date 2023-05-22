@@ -5,7 +5,7 @@ import FormProductAttribute from './FormProductAttribute';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const ProductAttributeMaster = (props) => {
-    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType, setFormBtnActive } = props;
+    const { productHierarchyAttributeData, isVisible, setSKUAttributes, selectedTreeData, formActionType } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
 
@@ -32,7 +32,6 @@ const ProductAttributeMaster = (props) => {
         setFormDecider,
         selectedTreeData,
         setSKUAttributes,
-        setFormBtnActive,
         productHierarchyAttributeData,
     };
 
