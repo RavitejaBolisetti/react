@@ -184,6 +184,7 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
         BranchMapping: [],
         ProductMapping: [],
     });
+    const [toggleButton, settoggleButton] = useState({ individual: true, company: false });
 
     const FetchError = (message) => {
         setError(true);
@@ -439,7 +440,7 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const handleAdd = () => {
@@ -610,6 +611,8 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
         hanndleEditData,
         AccessMacid,
         setAccessMacid,
+        toggleButton,
+        settoggleButton,
     };
 
     return (
@@ -621,10 +624,10 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
+                                    <Button className={styles.marR5} type={toggleButton?.individual ? 'primary' : 'link'} danger onClick={() => settoggleButton({ ...toggleButton, individual: true, company: false })}>
                                         Individual
                                     </Button>
-                                    <Button type="link" ghost>
+                                    <Button type={toggleButton?.company ? 'primary' : 'link'} danger onClick={() => settoggleButton({ ...toggleButton, company: true, individual: false })}>
                                         Firm/Company
                                     </Button>
                                 </div>
@@ -640,7 +643,7 @@ const CustomerMasterMain = ({ saveData, userId, moduleTitle, productHierarchyDat
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.advanceFilterClear}>
-                                <Button danger type='link' onClick={handleAdd}>
+                                <Button danger type="link" onClick={handleAdd}>
                                     View Draft
                                 </Button>
                             </Col>
