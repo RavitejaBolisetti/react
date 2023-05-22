@@ -192,6 +192,13 @@ export const ListRoleMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, userId]);
 
+    useEffect(() => {
+        if (userId && refershData) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershData]);
+
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -316,7 +323,6 @@ export const ListRoleMasterBase = (props) => {
         listFilterForm.resetFields();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
-        setAdvanceSearchVisible(false);
     };
 
     const advanceFilterProps = {
@@ -349,9 +355,15 @@ export const ListRoleMasterBase = (props) => {
             setFilterString({ ...rest });
         } else if (key === 'keyword') {
             const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-            listFilterForm.setFieldsValue({  code: undefined });
+
+            listFilterForm.setFieldsValue({ code: undefined });
             advanceFilterForm.setFieldsValue({ keyword: undefined });
+
+            if (!rest?.departmentCode && !rest?.departmentCode && !rest?.departmentCode) {
+                setFilterString();
+            } else {
+                setFilterString({ ...rest });
+            }
         }
     };
 

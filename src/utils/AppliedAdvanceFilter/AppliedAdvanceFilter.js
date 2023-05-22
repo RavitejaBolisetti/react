@@ -16,9 +16,6 @@ export default function AppliedAdvanceFilter(props) {
     const onKeyPressHandler = ( e) => {
          e.key === 'Enter' && e.preventDefault()
     };
-
-    console.log(pincode ,'checkPincode')
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>
