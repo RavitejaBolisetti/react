@@ -12,7 +12,17 @@ const { Option } = Select;
 const { Search } = Input;
 let index = 0;
 
-const AddEditFormMain = ({ form }) => {
+const addressType = [
+    { key: 'office', name: 'Office' },
+    { key: 'residence', name: 'Residence' },
+    { key: 'permanent', name: 'Permanent' },
+    { key: 'other', name: 'Other' },
+];
+
+const AddEditForm = (props) => {
+    const { isReadOnly = false, onFinish, form } = props;
+
+    const disabledProps = { disabled: isReadOnly };
     const [items, setItems] = useState(['Office', 'Residence', 'Permanent', 'Other']);
     const [name, setName] = useState('');
     const [isOther, setIsOther] = useState(false);
@@ -38,10 +48,9 @@ const AddEditFormMain = ({ form }) => {
     const handleOther = (key) => {
         setIsOther(key === 4);
     };
-
     return (
         <>
-            <Form form={form} id="myAdd" autoComplete="off" layout="vertical">
+            <Form form={form} id="myAdd" onFinish={onFinish} autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type')]}>
@@ -57,7 +66,6 @@ const AddEditFormMain = ({ form }) => {
                                             }}
                                         >
                                             <Input placeholder="enter type" ref={inputRef} value={name} onChange={onNameChange} allowClear />
-                                            
                                         </Space>
                                     </>
                                 )}
@@ -70,13 +78,13 @@ const AddEditFormMain = ({ form }) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Line 1" name="addressLine1" rules={[validateRequiredInputField('address Line 1'), validateAlphanumericWithSpace('application name')]}>
+                        <Form.Item label="Address Line 1" name="address" rules={[validateRequiredInputField('address Line 1'), validateAlphanumericWithSpace('application name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('address Line 1')} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Address Line 2" name="addressLine2">
+                        <Form.Item label="Address Line 2" name="address2">
                             <Input maxLength={50} placeholder={preparePlaceholderText('address Line 2')} />
                         </Form.Item>
                     </Col>
@@ -84,7 +92,7 @@ const AddEditFormMain = ({ form }) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Pincode" name="pincode" rules={[validateRequiredSelectField('pincode')]}>
-                            <Input suffix={<SearchOutlined/>} placeholder="Search" />
+                            <Input suffix={<SearchOutlined />} placeholder="Search" />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -113,7 +121,7 @@ const AddEditFormMain = ({ form }) => {
                     </Col>
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Name" name="contactName">
+                        <Form.Item label="Contact Name" name="contactpersonName">
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
@@ -121,14 +129,16 @@ const AddEditFormMain = ({ form }) => {
 
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Contact Mobile" name="contactMobile">
-                            <Input maxLength={50} placeholder={preparePlaceholderText('contact mobile')} />
+                        <Form.Item label="Contact Mobile" name="contactmobilenumber">
+                            <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Checkbox>Mark as Default</Checkbox>
+                        <Form.Item valuePropName="checked" name="defaultaddress">
+                            <Checkbox>Mark As Default</Checkbox>
+                        </Form.Item>
                     </Col>
                 </Row>
                 <br></br>
@@ -149,4 +159,4 @@ const AddEditFormMain = ({ form }) => {
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export default AddEditForm;

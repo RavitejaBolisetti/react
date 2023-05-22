@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 
 import { CustomerDetailsMaster, IndividualContact, IndividualProfileMaster, IndividualAccountRelatedMaster, IndividualAddressMaster, FamilyDetails } from './IndividualCustomer';
 import { ViewCustomerMaster } from './ViewCustomerMaster';
-import { CustomerProfile } from './FirmOrCompany/CustomerProfile';
+import { CustomerProfile } from './FirmOrCompany';
 import FormProgressBar from './FormProgressBar';
 
 const { Option } = Select;
@@ -114,9 +114,17 @@ const AddEditFormMain = (props) => {
         onCloseAction,
         isViewModeVisible,
     };
+    const IndividualProfileMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
+    const IndividualAccountRelatedMasterProps = {
+        onCloseAction,
+        isViewModeVisible,
+    };
     const renderElement = () => {
         if (leftTimeline?.AccountRelated) {
-            return <IndividualAccountRelatedMaster />;
+            return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
         } else if (leftTimeline?.CustomerDetails) {
             return <CustomerDetailsMaster {...CustomerDetailsMasterProps} />;
         } else if (leftTimeline?.Address) {
@@ -124,9 +132,9 @@ const AddEditFormMain = (props) => {
         } else if (leftTimeline?.Contacts) {
             return <IndividualContact />;
         } else if (leftTimeline?.CustomerProfile) {
-            return <CustomerProfile {...CustomerProfileMasterProps} />;
-        } else if (leftTimeline.IndividualProfile) {
-            return <IndividualProfileMaster />;
+            return <CustomerProfile />;
+        } else if (leftTimeline?.IndividualProfile) {
+            return <IndividualProfileMaster {...IndividualProfileMasterProps} />;
         } else if (leftTimeline?.FamilyDetails) {
             return <FamilyDetails />;
         }
