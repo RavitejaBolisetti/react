@@ -6,7 +6,7 @@ import { FcCancel } from 'react-icons/fc';
 import { addToolTip } from 'utils/customMenuLink';
 import styles from './PasswordStrengthMeter.module.css';
 
-const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
+const PasswordStrengthMeter = ({ password, beforeLogin = false, tooltipVisible }) => {
     const [passwordLevel, setPasswordLevel] = useState({ levelOne: false, levelTwo: false, levelThree: false });
     const [strength, setStrength] = useState(0);
     const [validatorStatus, setValidatorStatus] = useState();
@@ -129,7 +129,7 @@ const PasswordStrengthMeter = ({ password, beforeLogin = false }) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     {strengthText && (
                         <div className={styles.strength}>
-                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#2B2521', styles.passwordTooltipDesign, password?.length > 0)(<span className={styles.infoTitle}>{getStrengthText(strength)}</span>)}</span>
+                            <span className={styles.infoIcon}>{addToolTip(infoText(validatorStatus), 'right', '#2B2521', styles.passwordTooltipDesign, tooltipVisible)(<span className={styles.infoTitle}>{getStrengthText(strength)}</span>)}</span>
                         </div>
                     )}
                 </Col>
