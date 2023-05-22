@@ -1,2 +1,2 @@
-import CustomerDetailsMaster from './CompanyCustomerDetailsMaster';
-export { CustomerDetailsMaster };
+import CompanyCustomerDetailsMaster from './CompanyCustomerDetailsMaster';
+export { CompanyCustomerDetailsMaster };
