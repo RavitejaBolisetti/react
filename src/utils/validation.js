@@ -108,7 +108,7 @@ export const valueBetween0to100 = (value, fieldName) => {
 };
 
 export const searchValidator = (_, value) => {
-   if (value === '' || (value && value.trim().length >= 3)) {
+   if (!value || (value && value.trim().length >= 3)) {
         return Promise.resolve();
     }
     return Promise.reject(new Error('Please enter atleast 3 character to search'));
