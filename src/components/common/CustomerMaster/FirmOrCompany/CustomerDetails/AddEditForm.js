@@ -18,7 +18,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
-    const { onCloseAction, isViewModeVisible } = props;
+    const { onCloseAction, isViewModeVisible, setIsViewModeVisible } = props;
     const [customerForm] = Form.useForm();
     const [keyAccountForm] = Form.useForm();
     const [authorityForm] = Form.useForm();
@@ -46,6 +46,9 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {};
     const handleCustomerCategory = (value) => {
         setcustomerCategory(value);
+    };
+    const handleEdit = () => {
+        setIsViewModeVisible(false);
     };
     const onFinish = () => {
         const customerFormValues = customerForm.getFieldsValue();
@@ -111,7 +114,9 @@ const AddEditFormMain = (props) => {
         activeKey,
         setactiveKey,
         onChange,
+        onCloseAction,
         styles,
+        handleEdit,
     };
 
     return (

@@ -22,7 +22,7 @@ const { Meta } = Card;
 const attributeData = ['mh1', 'mh2', 'mh3', 'mh4'];
 const AddEditFormMain = (props) => {
     const { saveclick, onCloseAction, productHierarchyData, DealerSearchvalue, handleEditData, showSaveBtn, setSaveAndAddNewBtnClicked, isDataAttributeLoaded, setsaveclick, setsaveandnewclick, saveandnewclick, isLoadingOnSave, formBtnDisable, saveAndSaveNew, saveBtn, setFormBtnDisable, onFinishFailed, onFinish, form, handleAdd, drawer, data, setDrawer, isChecked, formData, setIsChecked, formActionType, isReadOnly, setFormData, setForceFormReset, footerEdit, handleUpdate2, DealerData, tableDetailData } = props;
-    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
+    const { isFormBtnActive, setFormBtnActive, isViewModeVisible, setIsViewModeVisible, setClosePanels, AccessMacid, setAccessMacid, setShowSaveBtn, hanndleEditData } = props;
     const { finalFormdata, setfinalFormdata } = props;
     const { toggleButton, settoggleButton } = props;
     const [leftTimeline, setleftTimeline] = useState({
@@ -118,6 +118,7 @@ const AddEditFormMain = (props) => {
     const CustomerDetailsMasterProps = {
         onCloseAction,
         isViewModeVisible,
+        setIsViewModeVisible,
     };
     const IndividualProfileMasterProps = {
         onCloseAction,
@@ -156,7 +157,7 @@ const AddEditFormMain = (props) => {
             } else if (leftTimeline?.AccountRelated) {
                 return <IndividualAccountRelatedMaster {...IndividualAccountRelatedMasterProps} />;
             } else if (leftTimeline?.Address) {
-                return <CompanyAddressMaster/>;
+                return <CompanyAddressMaster />;
             }
         }
     };
